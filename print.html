@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>javascript print button method</title>
+    <script src="./assets/js/BrowserPrint.js"></script>
+    <script src="./assets/js/DevDemo.js"></script>
+</head>
+<body>
+<span style="padding-right:50px; font-size:200%">Zebra Browser Print Test Page</span><br/>
+<span style="font-size:75%">This page must be loaded from a web server to function properly.</span><br><br>
+Selected Device: <select id="selected_device" onchange=onDeviceSelected(this);></select> <!--  <input type="button" value="Change" onclick="changeDevice();">--> <br/><br/>
+<input type="button" value="Get Application Configuration" onclick="getConfig()"><br/><br/>
+<input type="button" value="Send Config Label" onclick="writeToSelectedPrinter('~wc')"><br/><br/>
+<input type="button" value="Send ZPL Label" onclick="writeToSelectedPrinter('CT~~CD,~CC^~CT~\n'+
+'^XA\n'+
+'~TA000\n'+
+'~JSN\n'+
+'^LT0\n'+
+'^MNW\n'+
+'^MTT\n'+
+'^PON\n'+
+'^PMN\n'+
+'^LH0,0\n'+
+'^JMA\n'+
+'^PR3,3\n'+
+'~SD30\n'+
+'^JUS\n'+
+'^LRN\n'+
+'^CI27\n'+
+'^PA0,1,1,0\n'+
+'^XZ\n'+
+'^XA\n'+
+'^MMT\n'+
+'^PW468\n'+
+'^LL168\n'+
+'^LS0\n'+
+'^FPH,2^FT454,92^A0I,27,25^FH\\^CI28^FDCustomerNo^FS^CI27\n'+
+'^FPH,2^FT454,58^A0I,27,25^FH\\^CI28^FDDescription^FS^CI27\n'+
+'^FPH,2^FT454,24^A0I,27,25^FH\\^CI28^FDDate                                       ^FS^CI27\n'+
+'^FPH,2^FT456,131^A0I,33,38^FH\\^CI28^FDX  UserName^FS^CI27\n'+
+'^PQ1,0,1,Y\n'+
+'^XZ')"><br/><br/>
+<input type="button" value="Get Status" onclick="writeToSelectedPrinter('~hs'); readFromSelectedPrinter()"><br/><br/>
+<input type="button" value="Get Local Devices" onclick="BrowserPrint.getLocalDevices(getDeviceCallback, errorCallback);"><br/><br/>
+<input type="text" name="write_text" id="write_text"><input type="button" value="Write" onclick="writeToSelectedPrinter(document.getElementById('write_text').value)"><br/><br/>
+<input type="button" value="Read" onclick="readFromSelectedPrinter()"><br/><br/>
+<input type="button" value="Send BMP" onclick="sendImage('Zebra_logobox.bmp');"><br/><br/>
+<input type="button" value="Send JPG" onclick="sendImage('ZebraGray.jpg');"><br/><br/>
+<input type="button" value="Send File 1" onclick="sendFile('f1');"><br/><br/>
+<input type="button" value="Send File 2" onclick="sendFile('f2');"><br/><br/>
+
+<p>lets print something for this page</p>
+
+<button onclick="myfun()">print page</button> <!--this function is used in script tag and onclick is used to call the function-->
+<script type="text/javascript">
+    function myfun() {
+        // window.print();
+        window.open('f1').print();
+
+    }
+</script>
+</body>
+</html>

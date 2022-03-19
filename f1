@@ -1,0 +1,29 @@
+﻿CT~~CD,~CC^~CT~
+^XA
+~TA000
+~JSN
+^LT0
+^MNW
+^MTT
+^PON
+^PMN
+^LH0,0
+^JMA
+^PR3,3
+~SD30
+^JUS
+^LRN
+^CI27
+^PA0,1,1,0
+^XZ
+^XA
+^MMT
+^PW468
+^LL168
+^LS0
+^FPH,2^FT454,92^A0I,27,25^FH\^CI28^FDCustomerNo^FS^CI27
+^FPH,2^FT454,58^A0I,27,25^FH\^CI28^FDDescription^FS^CI27
+^FPH,2^FT454,24^A0I,27,25^FH\^CI28^FDDate                                       ^FS^CI27
+^FPH,2^FT456,131^A0I,33,38^FH\^CI28^FDX  UserName^FS^CI27
+^PQ1,0,1,Y
+^XZ

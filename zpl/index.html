@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script data-require="jquery@*" data-semver="3.2.1" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <script src="BrowserPrint.js"></script>
+   <script src="DevDemo.js"></script>
+   
+   <script type="text/javascript">
+    // $(document).ready(setup_web_print);
+	</script>
+  </head>
+
+
+<span style="padding-right:50px; font-size:200%">Zebra Browser Print Test Page</span><br/>
+<span style="font-size:75%">This page must be loaded from a web server to function properly.</span><br><br>
+Selected Device: <select id="selected_device" onchange=onDeviceSelected(this);></select> <!--  <input type="button" value="Change" onclick="changeDevice();">--> <br/><br/> 
+<input type="button" value="Get Application Configuration" onclick="getConfig()"><br/><br/>
+<input type="button" value="Send Config Label" onclick="writeToSelectedPrinter('~wc')"><br/><br/>
+<input type="button" value="Send ZPL Label" onclick="writeToSelectedPrinter('^XA^FO200,200^A0N36,36^FDTest Label^FS^XZ')"><br/><br/>
+<input type="button" value="Get Status" onclick="writeToSelectedPrinter('~hs'); readFromSelectedPrinter()"><br/><br/>
+<input type="button" value="Get Local Devices" onclick="BrowserPrint.getLocalDevices(getDeviceCallback, errorCallback);"><br/><br/>
+<input type="text" name="write_text" id="write_text"><input type="button" value="Write" onclick="writeToSelectedPrinter(document.getElementById('write_text').value)"><br/><br/>
+<input type="button" value="Read" onclick="readFromSelectedPrinter()"><br/><br/>
+<input type="button" value="Send BMP" onclick="sendImage('Zebra_logobox.bmp');"><br/><br/>
+<input type="button" value="Send JPG" onclick="sendImage('ZebraGray.jpg');"><br/><br/>
+<input type="button" value="Send File" onclick="sendFile('wc.zpl');"><br/><br/>
+</body>
+
+</html>
