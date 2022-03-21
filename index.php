@@ -20,7 +20,7 @@ if (count($_POST) > 0){
 		"exp" => time()+1000
 	);
 	try{
-		$jwt = JWT::encode($payload, $secretkey);
+		$jwt = JWT::encode($payload, $secretkey , 'HS256');
 	}catch (UnexpectedValueException $e) {
 		echo $e->getMessage();
 	}
