@@ -385,7 +385,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <h6 class="modal-title">Update Equipment</h6>
                                     </div>
                                     <form action="" id="user_form" class="form-horizontal" method="post">
-                                        <div class="modal-body" style="color: #fff5f5;">
+                                        <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-9">
                                                     <div class="form-group">
@@ -414,7 +414,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <h6 class="modal-title">Update Description</h6>
                                     </div>
                                     <form action="" id="user_form" class="form-horizontal" method="post">
-                                        <div class="modal-body" style="color: #fff5f5;">
+                                        <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-9">
                                                     <div class="form-group">
@@ -443,7 +443,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <h6 class="modal-title">Update Property</h6>
                                     </div>
                                     <form action="" id="user_form" class="form-horizontal" method="post">
-                                        <div class="modal-body" style="color: #fff5f5;">
+                                        <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-9">
                                                     <div class="form-group">
@@ -472,7 +472,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <h6 class="modal-title">Update Building</h6>
                                     </div>
                                     <form action="" id="user_form" class="form-horizontal" method="post">
-                                        <div class="modal-body"  style="color: #fff5f5;">
+                                        <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-9">
                                                     <div class="form-group">

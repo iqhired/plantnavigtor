@@ -224,7 +224,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <div class="form-group">
-                                                    <label class="col-lg-3 control-label" style="color: white;">Shift/Location:*</label>
+                                                    <label class="col-lg-3 control-label">Shift/Location:*</label>
                                                     <div class="col-lg-7">
                                                         <input type="text" name="edit_name" id="edit_name" class="form-control" required>
                                                         <input type="hidden" name="edit_id" id="edit_id" >

@@ -263,7 +263,7 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-5 control-label" style="color: #fff;">Form Type:*</label>
+                                            <label class="col-lg-5 control-label">Form Type:*</label>
                                             <div class="col-lg-6">
                                                 <input type="text" name="edit_name" id="edit_name" class="form-control"
                                                        required>
@@ -274,7 +274,7 @@ include("../heading_banner.php");
                                     </div>
                                         <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-5 control-label" style="color: #fff;">Work Order/Lot:*</label>
+                                            <label class="col-lg-5 control-label">Work Order/Lot:*</label>
 
                                             <div class="col-lg-6">
 
