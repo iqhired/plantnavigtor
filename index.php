@@ -4,7 +4,7 @@ use \Firebase\JWT\JWT;
 $message = "";
 include("config.php");
 $chicagotime = date("Y-m-d H:i:s");
-if (count($_POST) > 0){
+if (!empty($_POST['user']) && !empty($_POST['pass']) ){
     $user = $_POST["user"];
     $password = md5($_POST["pass"]);
     //API url
