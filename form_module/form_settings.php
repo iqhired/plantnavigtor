@@ -51,8 +51,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/colors.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/style_main.css" rel="stylesheet" type="text/css">
-    <link rel=stylesheet href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
-    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css>
+<!--    <link rel=stylesheet href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>-->
+<!--    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css>-->
 
     <!-- /global stylesheets -->
     <!-- Core JS files -->
@@ -74,6 +74,28 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 
 
     <style>
+
+        @media (min-width: 576px)
+            .d-sm-block {
+                display: block!important;
+            }
+            .bg-white {
+                background-color: #191e3a!important;
+                height: 30px;
+            }
+            .shadow-sm {
+                box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+            }
+            .d-none {
+                display: none!important;
+            }
+            @media (min-width: 992px)
+                .navbar-expand-lg {
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                }
+
+            }
         .sidebar-default .navigation li>a {
             color: #f5f5f5
         }
@@ -110,32 +132,6 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 
         .contextMenu{ position:absolute;  width:min-content; left: -18px; background:#e5e5e5; z-index:999;}
 
-        .arrow {
-            border: solid black;
-            border-width: 0 3px 3px 0;
-            display: inline-block;
-            padding: 3px;
-        }
-
-        .right {
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-        }
-
-        .left {
-            transform: rotate(135deg);
-            -webkit-transform: rotate(135deg);
-        }
-
-        .up {
-            transform: rotate(-135deg);
-            -webkit-transform: rotate(-135deg);
-        }
-
-        .down {
-            transform: rotate(45deg);
-            -webkit-transform: rotate(45deg);
-        }
         .red {
             color: red;
             display: none;
