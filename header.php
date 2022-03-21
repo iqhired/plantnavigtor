@@ -1,5 +1,5 @@
 <?php
-include("../config.php");
+include("config.php");
 $available_var = $_SESSION['available'];
 $taskvar = $_SESSION['taskavailable'];
 $is_cust_dash = $_SESSION['is_cust_dash'];
