@@ -1,30 +1,26 @@
 <?php
 @ob_start();
 session_start();
-ini_set('display_errors', false);
+ini_set('display_errors', FALSE);
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "server";
+$username = "u0rraniwebfga";
+$password = "j1e85aazb5tf";
+$dbname = "dbdn8ggvr3ljbd";
 
 // to check whether pin is updated or not
 
-$db = mysqli_connect('localhost','root','','server');
-$mysqli = new mysqli('localhost', 'root', '', 'server');
+$db = mysqli_connect('localhost','u0rraniwebfga','j1e85aazb5tf','dbdn8ggvr3ljbd');
+$mysqli = new mysqli('localhost', 'u0rraniwebfga', 'j1e85aazb5tf', 'dbdn8ggvr3ljbd');
 
-
-//echo $mysqli;
 //$db = mysqli_connect('localhost','sg_crew_assign_mgr','sg_crew_assign_mgr@2020','sg_crew_assign_mgmt');
 //$mysqli = new mysqli('localhost', 'sg_crew_assign_mgr', 'sg_crew_assign_mgr@2020', 'sg_crew_assign_mgmt');
 
 date_default_timezone_set("America/chicago");
 
-$sitename = "plantnavigator";
+$sitename = "SaarGummi";
 
-$scriptName = "http://localhost/plantnavigator/";
-$siteURL = "http://localhost/plantnavigator/";
+$scriptName = "https://plantworkx.com/";
+$siteURL = "https://plantworkx.com/";
 
 ?>
-
-
