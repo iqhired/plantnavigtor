@@ -300,7 +300,7 @@ include("../admin_menu.php");
                             <h6 class="modal-title">Update Part Family</h6>
                         </div>
                         <form action="" id="user_form" class="form-horizontal" method="post">
-                            <div class="modal-body" style="color: #fff">
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">

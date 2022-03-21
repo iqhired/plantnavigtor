@@ -482,16 +482,14 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
         <?php } ?>
         <?php if (in_array('7', $msg)) { ?>
         <div class="mobile-toggle">
-            <a data-bs-toggle="collapse" href="<?php echo $siteURL; ?>assignment_module/assign_crew.php" role="button">
+            <a href="<?php echo $siteURL; ?>assignment_module/assign_crew.php" role="button">
 
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lazyload blur-up mobile" style="float: left;">
                                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                                         <line x1="12" y1="22.08" x2="12" y2="12"></line>
                                     </svg></span><span class="ms-2 ">Crew Assignment</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="arrow">   <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+
             </a>
 
         </div>
@@ -1081,7 +1079,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php } ?>
                 <?php if (in_array('45', $msg)) { ?>
                 <li class="nav-item" id="ic">
-                    <a class="nav-link" href="#" >Station Events <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 120px;">
+                    <a class="nav-link" href="#" >Station Events <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 112px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg></a>
                     <div class="menu ">
@@ -1095,7 +1093,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php } ?>
                 <?php if (in_array('65', $msg)) { ?>
                 <li class="nav-item" id="ic">
-                    <a class="nav-link">Communicator <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 128px;">
+                    <a class="nav-link">Communicator <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 115px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg></a>
                     <div class="menu ">
@@ -1112,7 +1110,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php if (in_array('66', $msg)) { ?>
                 <li class="nav-item dropdown mega-dropdown">
                     <a class="nav-link" role="button" id="learnId">
-                       Admin Config<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 120px;">
+                       Admin Config<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 106px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg>
                     </a>
@@ -1346,7 +1344,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                                             <line x1="1" y1="9" x2="4" y2="9"></line>
                                             <line x1="1" y1="14" x2="4" y2="14"></line>
                                         </svg>
-                                    </span>                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    </span> <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg> </span>
                                         <span class="ms-2 fw-light">User Config</span>

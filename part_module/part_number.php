@@ -682,7 +682,7 @@ include("../admin_menu.php");
                         </div>
                         <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
                               method="post">
-                            <div class="modal-body" style="color: #fff">
+                            <div class="modal-body">
                                 <!--Part Number-->
                                 <div class="row">
                                     <div class="col-md-12">

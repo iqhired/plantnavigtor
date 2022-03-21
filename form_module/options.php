@@ -82,12 +82,11 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .page-container {
             margin-top: 0px!important;
         }
-        .fade-carousel .slides .slide-1, .fade-carousel .slides .slide-2, .fade-carousel .slides .slide-3{
-            height: 30vh!important;
-        }
+
 
 
     </style>
+
 </head>
 
 <!-- Main navbar -->

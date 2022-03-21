@@ -489,7 +489,7 @@ $sessiontraiong = $_SESSION['training'];
                                     <h6 class="modal-title">Create User</h6>
                                 </div>
                                 <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal" method="post">
-                                    <div class="modal-body" style="color: #fff5f5">
+                                    <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -664,7 +664,7 @@ $sessiontraiong = $_SESSION['training'];
                                     <h6 class="modal-title">Update User</h6>
                                 </div>
                                 <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal" method="post">
-                                    <div class="modal-body" style="color: #fff5f5">
+                                    <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -873,7 +873,7 @@ $sessiontraiong = $_SESSION['training'];
                                     <h6 class="modal-title">Update Trainee Info</h6>
                                 </div>
                                 <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal" method="post">
-                                    <div class="modal-body" style="color: #fff5f5">
+                                    <div class="modal-body">
                                         
                                         <div class="row" id="update_station1">
                                             <div class="col-md-12">
