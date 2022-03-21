@@ -24,8 +24,10 @@ if (isset($cell_id) && '' != $cell_id) {
 
 $sql1 = "SELECT * FROM `tm_task` where assign_to = '$iid' and status='1'";
 $result1 = $mysqli->query($sql1);
-while ($row1 = $result1->fetch_assoc()) {
-    $tm_task_id = $row1['tm_task_id'];
+if(!empty($result1)) {
+	while ($row1 = $result1->fetch_assoc()) {
+		$tm_task_id = $row1['tm_task_id'];
+	}
 }
 ?>
 
