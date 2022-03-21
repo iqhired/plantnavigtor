@@ -93,12 +93,13 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 <!-- Main navbar -->
 <?php $cust_cam_page_header = "Submit Form ";
 include("../header.php");
-include("../heading_banner.php");
+
 if (($is_tab_login || $is_cell_login)) {
 	include("../tab_menu.php");
 } else {
 	include("../admin_menu.php");
 }
+include("../heading_banner.php");
 ?>
 <body class="alt-menu sidebar-noneoverflow">
 <div class="page-container">

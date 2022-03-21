@@ -4,14 +4,14 @@ session_start();
 ini_set('display_errors', false);
 
 $servername = "localhost";
-$username = "ashams001";
-$password = "iqHired@123";
-$dbname = "sg_crewAssignmentMgmt";
+$username = "root";
+$password = "";
+$dbname = "server";
 
 // to check whether pin is updated or not
 
-$db = mysqli_connect('localhost','ashams001','iqHired@123','sg_crewAssignmentMgmt');
-$mysqli = new mysqli('localhost', 'ashams001', 'iqHired@123', 'sg_crewAssignmentMgmt');
+$db = mysqli_connect('localhost','root','','server');
+$mysqli = new mysqli('localhost', 'root', '', 'server');
 
 
 //echo $mysqli;
@@ -20,10 +20,10 @@ $mysqli = new mysqli('localhost', 'ashams001', 'iqHired@123', 'sg_crewAssignment
 
 date_default_timezone_set("America/chicago");
 
-$sitename = "SaarGummi";
+$sitename = "plantnavigator";
 
-$scriptName = "http://crewassignmentmgmt:8888/";
-$siteURL = "http://crewassignmentmgmt:8888/";
+$scriptName = "http://localhost/plantnavigator/";
+$siteURL = "http://localhost/plantnavigator/";
 
 ?>
 

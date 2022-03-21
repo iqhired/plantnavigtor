@@ -103,8 +103,8 @@ if (count($_POST) > 0) {
         <!-- Main navbar -->
 <?php $cust_cam_page_header = "Position Configuration Management";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
     <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->

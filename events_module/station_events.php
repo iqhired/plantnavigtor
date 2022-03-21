@@ -256,13 +256,13 @@ if (count($_POST) > 0) {
 <?php
 $cust_cam_page_header = "Station Events";
 include("../header_folder.php");
-include("../heading_banner.php");
+
 if (($is_tab_login || $is_cell_login)) {
 	include("../tab_menu.php");
 } else {
 	include("../admin_menu.php");
 }
-
+include("../heading_banner.php");
 ?>
 <body class="alt-menu sidebar-noneoverflow">
 <div class="page-container">

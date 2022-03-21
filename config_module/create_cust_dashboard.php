@@ -190,9 +190,10 @@ if (count($_POST) > 0) {
 </head>
 
 <!-- Main navbar -->
-<?php $cam_page_header = "Dashboard Configuration";
+<?php $cust_cam_page_header = "Dashboard Configuration";
 include("../header.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 //include("../tab_menu.php");
 ?>
 <body>

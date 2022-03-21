@@ -96,17 +96,15 @@ if (count($_POST) > 0) {
         <!--    <script type="text/javascript" src="../assets/js/pages/form_select2.js"></script>-->
     </head>
     <style>
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #ffffff!important;
-            line-height: 20px!important;
-        }
+
     </style>
 
         <!-- Main navbar -->
         <?php
-        $cam_page_header = "Create Taskboard";
+        $cust_cam_page_header = "Create Taskboard";
         include("../header.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->

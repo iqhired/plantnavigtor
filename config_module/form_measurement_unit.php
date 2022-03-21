@@ -118,8 +118,8 @@ if (count($_POST) > 0) {
         <?php
         $cust_cam_page_header = "Form Measurement Unit";
         include("../header.php");
-        include("../heading_banner.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->

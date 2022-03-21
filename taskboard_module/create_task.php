@@ -202,9 +202,10 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
     </head>
 
         <?php
-        $cam_page_header = "Create Task";
+        $cust_cam_page_header = "Create Task";
         include("../header.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->
