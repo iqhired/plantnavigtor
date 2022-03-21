@@ -192,8 +192,8 @@ if (count($_POST) > 0) {
 <!-- Main navbar -->
 <?php $cust_cam_page_header = "Account";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
 <body>
 <!-- /main navbar -->
@@ -436,7 +436,7 @@ include("../admin_menu.php");
                         </div>
                         <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
                               method="post">
-                            <div class="modal-body" style="color: #fff5f5">
+                            <div class="modal-body">
                                 <!--Part Number-->
                                 <div class="row">
                                     <div class="col-md-12">

@@ -91,8 +91,8 @@ if ($i != "super" && $i != "admin") {
         <!-- Main navbar -->
 <?php $cust_cam_page_header = "Defect List";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
         <!-- /main navbar -->
         <!-- Page container -->

@@ -92,6 +92,7 @@ if ($i != "super" && $i != "admin") {
 <?php $cam_page_header = "Defect List";
 include("../header_folder.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
 <!-- /main navbar -->
 <!-- Page container -->
@@ -142,7 +143,7 @@ include("../admin_menu.php");
                                                     <div class="form-group" style="margin-bottom: auto;">
                                                         <label class="col-md-4 control-label">Part Name:*</label>
                                                     </div>
-                                                    <div class="form=group">
+                                                    <div class="form-group">
                                                         <div class="col-md-8">
 
 

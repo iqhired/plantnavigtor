@@ -157,8 +157,8 @@ if (count($_POST) > 0) {
 <?php
 $cust_cam_page_header = "Defect Group(s)";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
 <body class="alt-menu sidebar-noneoverflow">
 <!-- /main navbar -->
@@ -300,7 +300,7 @@ include("../admin_menu.php");
 							<h6 class="modal-title">Update Group</h6>
 						</div>
 						<form action="" id="user_form" class="form-horizontal" method="post">
-							<div class="modal-body" style="color: #fff5f5;">
+							<div class="modal-body" >
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

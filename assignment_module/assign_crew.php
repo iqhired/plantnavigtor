@@ -154,8 +154,9 @@ if ($ps != "") {
         <?php
         $cust_cam_page_header = "Assign Unassign Crew Members";
         include("../header.php");
-        include("../heading_banner.php");
+
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <body class="alt-menu sidebar-noneoverflow">
         <div class="page-container">

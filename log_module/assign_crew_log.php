@@ -130,8 +130,9 @@ $datefrom = $yesdate;
         <?php
         $cust_cam_page_header = "Assigned Crew Log";
         include("../header.php");
-        include("../heading_banner.php");
+
         include("../admin_menu.php");
+        include("../heading_banner.php");
 
         ?>
         <!-- /main navbar -->

@@ -917,7 +917,7 @@ include("../heading_banner.php");
 </script>
 
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js"></script>
+
 </body>
 
 </html>

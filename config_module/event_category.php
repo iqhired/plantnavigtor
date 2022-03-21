@@ -117,8 +117,8 @@ if (count($_POST) > 0) {
 <?php
 $cust_cam_page_header = "Add / Edit Events Category";
 include("../header.php");
-include("../heading_banner.php");
-include("../admin_menu.php"); ?>
+include("../admin_menu.php");
+include("../heading_banner.php");?>
 <!-- /main navbar -->
 <body class="alt-menu sidebar-noneoverflow">
 <!-- Page container -->
@@ -243,7 +243,7 @@ include("../admin_menu.php"); ?>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
-                                            <label class="col-lg-7 control-label" style="color: #f1f2f3;" >Event Category:*</label>
+                                            <label class="col-lg-7 control-label" >Event Category:*</label>
                                             <div class="col-lg-5">
                                                 <input type="text" name="edit_events_cat_name" id="edit_events_cat_name"
                                                        class="form-control" required>
@@ -255,7 +255,7 @@ include("../admin_menu.php"); ?>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
-                                            <label class="col-lg-7 control-label" style="color: #f1f2f3;">Is reason required ? *</label>
+                                            <label class="col-lg-7 control-label">Is reason required ? *</label>
                                             <div class="col-lg-5">
                                             <div class="form-check form-check-inline form_col_option">
                                                 <input type="radio" id="edit_yes" name="edit_reason" value="yes">

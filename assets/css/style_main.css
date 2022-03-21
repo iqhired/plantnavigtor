@@ -628,6 +628,7 @@ span {
 }
 .dropdown-menu>li>a {
     font-size: 1.2rem !important;
+    color: #fff!important;
 }
 span.select2.select2-container.select2-container--default.select2-container--focus.select2-container--below {
     color:#060818;

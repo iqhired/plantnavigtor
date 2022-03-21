@@ -101,8 +101,8 @@ if (count($_POST) > 0) {
         <!-- Main navbar -->
 <?php $cust_cam_page_header = "Job Title Configuration Management";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
     <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->
@@ -214,7 +214,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-3 control-label" style="color: #fff;">Job-Title:*</label>
+                                                    <label class="col-lg-3 control-label">Job-Title:*</label>
                                                     <div class="col-lg-7 mob_modal">
                                                         <input type="text" name="edit_name" id="edit_name" class="form-control" required>
                                                         <input type="hidden" name="edit_id" id="edit_id" >

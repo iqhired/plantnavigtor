@@ -118,8 +118,8 @@ if (count($_POST) > 0) {
         <?php
         $cust_cam_page_header = "Form Measurement Unit";
         include("../header.php");
-        include("../heading_banner.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <body class="alt-menu sidebar-noneoverflow">
         <!-- /main navbar -->
@@ -228,7 +228,7 @@ if (count($_POST) > 0) {
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <div class="form-group">
-                                                    <label class="col-lg-5 control-label" style="color: #fff;">Name:*</label>
+                                                    <label class="col-lg-5 control-label">Name:*</label>
                                                     <div class="col-lg-7">
                                                         <input type="text" name="edit_name" id="edit_name" class="form-control" required>
                                                         <input type="hidden" name="edit_id" id="edit_id" >
@@ -239,7 +239,7 @@ if (count($_POST) > 0) {
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <div class="form-group">
-                                                    <label class="col-lg-5 control-label" style="color: #fff;">Description:</label>
+                                                    <label class="col-lg-5 control-label">Description:</label>
                                                     <div class="col-lg-7">
                                                         <input type="text" name="edit_description" id="edit_description" class="form-control" >
                                                     </div>
@@ -250,7 +250,7 @@ if (count($_POST) > 0) {
 										<div class="row">
                                             <div class="col-md-9">
                                                 <div class="form-group">
-                                                    <label class="col-lg-5 control-label" style="color: #fff;">Unit Of Measurement:*</label>
+                                                    <label class="col-lg-5 control-label">Unit Of Measurement:*</label>
                                                     <div class="col-lg-7">
                                                         <input type="text" name="edit_unit_of_measurement" id="edit_unit_of_measurement" class="form-control" required>
                                                     </div>

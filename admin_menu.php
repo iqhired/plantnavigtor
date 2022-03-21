@@ -56,9 +56,9 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
         .show {
             display: grid!important;
         }
-        .navbar{
-            z-index: 0!important;
-        }
+        /*.navbar{*/
+        /*    z-index: 0!important;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -863,13 +863,13 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                <?php if (in_array('67', $msg)) { ?>
                 <li class="nav-item dropdown mega-dropdown">
                     <a class="nav-link" role="button" id="learnId">
-                        Boards<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20" style="margin-left: 54px;">
+                        Boards<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20" style="margin-left: 62px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg>
                     </a>
                     <!-- start mega menu -->
                     <div class="menu container">
-                        <div id="mainDropdown" style="position: absolute;width: 80%;margin: 0 35px;z-index: 1000;">
+                        <div id="mainDropdown" style="position: absolute;width: 80%;margin: 12px 70px;z-index: 1000;">
                             <?php if (in_array('68', $msg)) { ?>
                             <div class='tutorial_section'>
 
@@ -1062,7 +1062,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                             <?php if (in_array('42', $msg)) { ?>
                             <li><a href="<?php echo $siteURL; ?>form_module/form_settings.php">Add/Create Form</a></li>
                             <?php } if (in_array('50', $msg)) { ?>
-                            <li><a href=<?php echo $siteURL; ?>form_module/edit_form_options.php">Edit Form</a></li>
+                            <li><a href="<?php echo $siteURL; ?>form_module/edit_form_options.php">Edit Form</a></li>
                             <?php } if (in_array('38', $msg)) { ?>
                             <li><a href="<?php echo $siteURL; ?>form_module/options.php">Submit Form</a></li>
                             <?php } if (in_array('44', $msg)) { ?>
@@ -1076,12 +1076,12 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php } ?>
                 <?php if (in_array('7', $msg)) { ?>
                 <li class="nav-item">
-                    <a class="nav-link">Crew Assignment</a>
+                    <a href="<?php echo $siteURL; ?>assignment_module/assign_crew.php" class="nav-link">Crew Assignment</a>
                 </li>
                 <?php } ?>
                 <?php if (in_array('45', $msg)) { ?>
                 <li class="nav-item" id="ic">
-                    <a class="nav-link" href="#" >Station Events <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 116px;">
+                    <a class="nav-link" href="#" >Station Events <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 120px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg></a>
                     <div class="menu ">
@@ -1095,7 +1095,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php } ?>
                 <?php if (in_array('65', $msg)) { ?>
                 <li class="nav-item" id="ic">
-                    <a class="nav-link">Communicator <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 122px;">
+                    <a class="nav-link">Communicator <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 128px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg></a>
                     <div class="menu ">
@@ -1112,13 +1112,13 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php if (in_array('66', $msg)) { ?>
                 <li class="nav-item dropdown mega-dropdown">
                     <a class="nav-link" role="button" id="learnId">
-                       Admin Config<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 110px;">
+                       Admin Config<svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"  style="margin-left: 120px;">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg>
                     </a>
                     <!-- start mega menu -->
                     <div class="menu container">
-                        <div id="mainDropdown" style="position: relative;width: 80%;margin: 0 auto;height: 400px;">
+                        <div id="mainDropdown" style="position: relative;width: 80%;margin: 12px auto;height: 400px;">
                             <?php if (in_array('18', $msg)) { ?>
                             <div class='tutorial_section'>
                                 <div class="toggle" id="toggle-1" >
@@ -1519,11 +1519,25 @@ $("#bell_count").text(res);
 });
 }, 1000);
 </script>
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+<script src="<?php echo $siteURL; ?>bootstrap/js/popper.min.js"></script>
+<script src="<?php echo $siteURL; ?>bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo $siteURL; ?>plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="<?php echo $siteURL; ?>assets/js/app.js"></script>
+<script>
+    $(document).ready(function() {
+        App.init();
+    });
+</script>
+<script src="<?php echo $siteURL; ?>assets/js/custom.js"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+<script src="<?php echo $siteURL; ?>assets/js/dashboard/dash_2.js"></script>
 
-
-<script src="https://static.studytonight.com/js/bootstrap.v3.min.1646913715.js"></script>
-<script src="https://static.studytonight.com/js/jquery.1646913715.js"></script>
-<script src="https://static.studytonight.com/js/lazysizes.min.1646913715.js"></script>
+<script>
+    $(document).ready(function() {
+        App.init();
+    });
+</script>
 
 </body>
 </html>

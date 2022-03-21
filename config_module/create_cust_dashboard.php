@@ -190,9 +190,10 @@ if (count($_POST) > 0) {
 </head>
 
 <!-- Main navbar -->
-<?php $cam_page_header = "Dashboard Configuration";
+<?php $cust_cam_page_header = "Dashboard Configuration";
 include("../header.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 //include("../tab_menu.php");
 ?>
 <body>
@@ -389,7 +390,7 @@ include("../admin_menu.php");
 					</div>
 					<form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
 						  method="post">
-						<div class="modal-body" style="color: #fff5f5;">
+						<div class="modal-body">
 							<!--Part Number-->
 							<div class="row">
 								<div class="col-md-12">
