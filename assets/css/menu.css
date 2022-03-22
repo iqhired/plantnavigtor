@@ -95,7 +95,7 @@ svg.arrow.dropbtn {
     bottom: 0px;
 }
 .footer-section.f-section-1 {
-    font-size: 15px;
+    font-size: 15px!important;
     padding: 15px;
 }
 

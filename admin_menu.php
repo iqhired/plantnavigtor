@@ -61,7 +61,6 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
         /*}*/
     </style>
 </head>
-<body>
 <?php
 					$msg = $_SESSION["side_menu"];
 					$msg = explode(',', $msg); ?>
@@ -1381,6 +1380,3 @@ $("#bell_count").text(res);
         App.init();
     });
 </script>
-
-</body>
-</html>
