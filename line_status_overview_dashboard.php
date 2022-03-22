@@ -69,9 +69,6 @@ $line_cust_dash = $_SESSION['line_cust_dash'];
         .line_card{
             background-color: #181d50;
         }
-        .bg-blue-400 {
-            background-color: #181d50;
-        }
 
         .bg-orange-400 {
             background-color: #dc6805;

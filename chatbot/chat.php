@@ -212,9 +212,7 @@ if(isset($_POST['status'])){
                 color: black!important;
 
             }
-            a:hover {
-                background-color: #1e73be!important;
-            }
+
             .sidebar-secondary {
                 z-index: 0;
             }
