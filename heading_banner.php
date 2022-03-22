@@ -111,10 +111,7 @@ Image credits: unsplash.com
     @media screen and (max-width: 640px){
         .hero h1 { font-size: 1em; }
     }
-    .content {
-        padding: 52px 30px !important;
-        background-color: #fff;
-    }
+
 
 
 </style>

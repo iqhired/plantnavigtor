@@ -78,14 +78,15 @@ $message = date("Y-m-d H:i:s");
     </head>
 
 <?php
-$cam_page_header = "Taskboard Overview";
+$cust_cam_page_header = "Taskboard Overview";
 ?>
 <?php
 include("../header.php");
-include("../admin_menu.php"); ?>
+include("../admin_menu.php");
+include("../heading_banner.php");?>
 <body class="alt-menu sidebar-noneoverflow">
            <!-- Content area -->
-                        <div class="content" style="padding: 180px 30px !important;">
+                        <div class="content">
                             <div class="row">
                                 <?php
                                 $query = sprintf("SELECT * FROM  sg_taskboard ");

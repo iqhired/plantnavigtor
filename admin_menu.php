@@ -215,37 +215,25 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                                          class="arrow" >   <polyline points="6 9 12 15 18 9"></polyline>
                                     </svg>
                                 </a>
-                                <?php if (in_array('68', $msg)) { ?>
+                                <?php if (in_array('9', $msg)) { ?>
                                     <div class="collapse my-2" id="collapseInteractive4">
                                         <div class="ms-4">
-                                            <?php if (in_array('42', $msg)) { ?>
+                                            <?php if (in_array('9', $msg)) { ?>
                                                 <div class="mt-3">
                                                     <a href="<?php echo $siteURL; ?>form_module/form_settings.php" class="text-muted mobile">
-                                                        Add/Create Form
+                                                        Taskboard
                                                     </a>
                                                 </div>
-                                            <?php } if (in_array('50', $msg)) { ?>
+                                            <?php } if (in_array('11', $msg)) { ?>
                                                 <div class="mt-3">
                                                     <a href="<?php echo $siteURL; ?>form_module/edit_form_options.php" class="text-muted mobile">
-                                                        Edit Form
+                                                        Create Taskboard
                                                     </a>
                                                 </div>
-                                            <?php } if (in_array('38', $msg)) { ?>
+                                            <?php } if (in_array('12', $msg)) { ?>
                                                 <div class="mt-3">
                                                     <a href="<?php echo $siteURL; ?>form_module/options.php" class="text-muted mobile">
-                                                        Submit Form
-                                                    </a>
-                                                </div>
-                                            <?php } if (in_array('44', $msg)) { ?>
-                                                <div class="mt-3">
-                                                    <a href="<?php echo $siteURL; ?>form_module/form_search.php" class="text-muted mobile">
-                                                        View Form
-                                                    </a>
-                                                </div>
-                                            <?php } if (in_array('60', $msg)) { ?>
-                                                <div class="mt-3">
-                                                    <a href="<?php echo $siteURL; ?>form_module/forms_recycle_bin.php" class="text-muted mobile">
-                                                        Restore Form
+                                                       Create/Edit Task
                                                     </a>
                                                 </div>
                                             <?php } ?>
@@ -260,150 +248,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
                 <?php } ?>
             </div>
         <?php } ?>
-<!--      --><?php // if (in_array('67', $msg)) { ?>
-<!--        <div class="mobile-toggle">-->
-<!--            <a data-bs-toggle="collapse" href="#collapseInteractive" role="button" aria-expanded="false" aria-controls="collapseInteractive">-->
-<!--                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lazyload blur-up mobile" style="-->
-<!--                        float: left;">-->
-<!--                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>-->
-<!--                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>-->
-<!--                                </svg></span><span class="ms-2 fw-light mobile">Dashboard</span>-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
-<!--                     class="arrow" >   <polyline points="6 9 12 15 18 9"></polyline>-->
-<!--                </svg>-->
-<!--            </a>-->
-<!--            --><?php //if (in_array('68', $msg)) { ?>
-<!--            <div class="collapse my-2" id="collapseInteractive">-->
-<!--                <div class="ms-4">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a href="--><?php //echo $siteURL; ?><!--line_status_grp_dashboard.php" class="text-muted mobile">-->
-<!--                           Cell Overview-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                    <div class="mt-3">-->
-<!--                        <a href="--><?php //echo $siteURL; ?><!--dashboard.php" class="text-muted mobile" >-->
-<!--                           Crew status Overview-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-<!--            </div>-->
-<!--            --><?php //} ?>
-<!--        </div>-->
-<!--      --><?php //} ?>
-<!--        --><?php //if (in_array('69', $msg)) { ?>
-<!--        <div class="mobile-toggle">-->
-<!--            <a data-bs-toggle="collapse" href="#collapseInteractive1" role="button" aria-expanded="false" aria-controls="collapseInteractive1">-->
-<!---->
-<!--                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lazyload blur-up mobile" style="-->
-<!--    float: left;">-->
-<!--                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>-->
-<!--                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>-->
-<!--                                </svg></span><span class="ms-2 fw-light">GBP Dashboard</span>-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
-<!--                     class="arrow">   <polyline points="6 9 12 15 18 9"></polyline>-->
-<!--                </svg>-->
-<!--            </a>-->
-<!--            <div class="collapse my-2" id="collapseInteractive1">-->
-<!--                <div class="ms-4">-->
-<!--                    --><?php
-//                    $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-//                    $result1 = $mysqli->query($sql1);
-//
-//                    while ($row1 = mysqli_fetch_array($result1)) {
-//
-//                        $gbd_id = $row1['gbd_id'];
-//                        $line_name = $row1['line_name'];
-//                        $line_id = $row1['line_id'];
-//                    if ($gbd_id == 1) { ?>
-<!--                    <div class="mt-3">-->
-<!--                        <a target="_blank" href="--><?php //echo $siteURL; ?><!--config_module/gbp_dashboard.php?id=--><?php //echo $line_id ?><!--" class="text-muted mobile">-->
-<!--                        --><?php //echo $line_name ?>
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                --><?php //} }  ?>
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        --><?php //} ?>
-<!--        --><?php //if (in_array('70', $msg)) { ?>
-<!--        <div class="mobile-toggle">-->
-<!--            <a data-bs-toggle="collapse" href="#collapseInteractive2" role="button" aria-expanded="false" aria-controls="collapseInteractive2">-->
-<!--                 <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lazyload blur-up mobile" style="-->
-<!--    float: left;">-->
-<!--                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>-->
-<!--                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>-->
-<!--                                </svg></span><span class="ms-2 fw-light">Custom Dashboard</span>-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
-<!--                     class="arrow">   <polyline points="6 9 12 15 18 9"></polyline>-->
-<!--                </svg>-->
-<!--            </a>-->
-<!--            <div class="collapse my-2" id="collapseInteractive2">-->
-<!--                <div class="ms-4">-->
-<!--                    --><?php // $query = sprintf("SELECT * FROM sg_cust_dashboard where enabled = 1");
-//                    $qur = mysqli_query($db, $query);
-//
-//                    while ($rowc = mysqli_fetch_array($qur)) {
-//                    $c_id = $rowc["sg_cust_group_id"];
-//                    $c_name = $rowc["sg_cust_dash_name"];
-//                    $enabled = $rowc["enabled"];
-//
-//                    if ($enabled == 1) { ?>
-<!--                    <div class="mt-3">-->
-<!--                        <a target="_blank"  href="--><?php //echo $siteURL; ?><!--config_module/sg_cust_dashboard.php?id=--><?php //echo $c_id ?><!--" class="text-muted mobile">-->
-<!--                            --><?php //echo $c_name ?>
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                    --><?php //} } ?>
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        --><?php //} ?>
-<!--        --><?php //if (in_array('4', $msg)) { ?>
-<!--        <div class="mobile-toggle">-->
-<!--            <a data-bs-toggle="collapse" href="#collapseInteractive3" role="button" aria-expanded="false" aria-controls="collapseInteractive3">-->
-<!---->
-<!--                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lazyload blur-up mobile" style="-->
-<!--    float: left;">-->
-<!--                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>-->
-<!--                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>-->
-<!--                                </svg></span><span class="ms-2 fw-light">Taskboard</span>-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
-<!--                     class="arrow">   <polyline points="6 9 12 15 18 9"></polyline>-->
-<!--                </svg>-->
-<!--            </a>-->
-<!--            <div class="collapse my-2" id="collapseInteractive3">-->
-<!--                --><?php //if (in_array('9', $msg)) { ?>
-<!--                <div class="ms-4">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a href="--><?php //echo $siteURL; ?><!--taskboard_module/taskboard.php" class="text-muted mobile">-->
-<!--                           Taskboard-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-<!--                --><?php //}	if (in_array('11', $msg)) { ?>
-<!--                <div class="ms-4">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a href="--><?php //echo $siteURL; ?><!--taskboard_module/create_taskboard.php" class="text-muted mobile">-->
-<!--                           Create Taskboard-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-<!--                --><?php //} if (in_array('12', $msg)) { ?>
-<!--                <div class="ms-4">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a href="--><?php //echo $siteURL; ?><!--taskboard_module/create_task.php" class="text-muted mobile">-->
-<!--                           Create/Edit Taskboard-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-<!--                --><?php //} ?>
-<!--            </div>-->
-<!--        </div>-->
-<!--        --><?php //}  ?>
+
         <?php if (in_array('23', $msg)) { ?>
         <div class="mobile-toggle">
             <a data-bs-toggle="collapse" href="#collapseC" role="button" aria-expanded="false" aria-controls="collapseC">

@@ -73,6 +73,15 @@ if ($i != "super" && $i != "admin") {
     color: red;
     display: none;
 }
+
+        #ic .menu ul {
+            margin-top: -1.5rem!important;
+
+        }
+        #mainDropdown {
+            top: -30px!important;
+
+        }
 		</style>
     </head>
 
@@ -202,7 +211,7 @@ include("../heading_banner.php");
 							}
 							?>		
 													
-											</div><br/>
+											</div>
 											<div class="row">
 												<div class="col-md-6 mobile">
 														<div class="form-group">

@@ -198,6 +198,10 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
             .red {
                 color: red;
             }
+
+                .col-lg-3 {
+                    width: 12%!important;
+                }
         </style>
     </head>
 

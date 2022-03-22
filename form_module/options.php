@@ -82,6 +82,14 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .page-container {
             margin-top: 0px!important;
         }
+        #ic .menu ul {
+            margin-top: -1.5rem!important;
+
+        }
+        #mainDropdown {
+            top: -30px!important;
+
+        }
 
 
 
@@ -239,7 +247,7 @@ include("../heading_banner.php");
 
 
                                     </div>
-                                    <br/>
+
                                     <div class="row">
                                         <div class="col-md-6 mobile">
                                             <div class="form-group">

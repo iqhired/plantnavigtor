@@ -158,7 +158,8 @@ $rem_line_array = array_diff($act_line_array, $ass_line_array);
 $cust_cam_page_header = "Production Cell Overview";
  include("header.php");
  include("admin_menu.php");
- include("heading_bannner.php");?>
+ include("heading_banner.php");
+ ?>
 <body class="alt-menu sidebar-noneoverflow">
 
             <!-- Content area -->
