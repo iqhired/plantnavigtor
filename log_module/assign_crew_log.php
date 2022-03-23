@@ -125,6 +125,33 @@ $datefrom = $yesdate;
         }
         ?>
     </head>
+    <style>
+        .p_footer {
+            padding-top: 7px;
+            padding-bottom: 5px;
+            padding-left: 15px;
+            background: #f7f7f7;
+            margin-top: 22px;
+        }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            .col-md-1 {
+                width: 10%;
+            }
+            .col-md-3 {
+                width: 30%;
+                float: left;
+            }
+            .col-md-8 {
+                width: 100%;
+                float: right;
+                margin-top: 18px;
+            }
+            .col-md-2 {
+                width: 30%;
+                float: left;
+            }
+        }
+    </style>
     <body>
         <!-- Main navbar -->
         <?php

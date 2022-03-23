@@ -100,6 +100,31 @@ $datefrom = $yesdate;
             .col-md-2{
                 width:auto!important;
             }
+            @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+                .col-md-1.5 {
+                    width: 10%;
+                }
+                .col-md-3 {
+                    width: 30%;
+                    float: left;
+                }
+                .col-md-8 {
+                    width: 100%;
+                    float: right;
+                    margin-top: 18px;
+                }
+                .col-md-2 {
+                    width: 30%;
+                    float: left;
+                }
+            }
+            .p_footer {
+                padding-top: 7px;
+                padding-bottom: 5px;
+                padding-left: 15px;
+                background: #f7f7f7;
+                margin-top: 22px;
+            }
         </style>        
         <script>
             window.onload = function() {
@@ -157,7 +182,7 @@ $datefrom = $yesdate;
 
                                     <form action="" id="user_form" class="form-horizontal" method="post">
                                         <div class="row">
-                                        <div class="col-md-1.5">
+                                        <div class="col-md-1">
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Taskboard :</label>
                                         </div>
                                         <div class="col-md-3">
@@ -200,7 +225,7 @@ $datefrom = $yesdate;
                                         <br>
                                 <div class="row">
 
-                                    <div class="col-md-0.5">
+                                    <div class="col-md-1">
                                         <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">User :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                     </div>
                                     <div class="col-md-3">
@@ -308,15 +333,15 @@ $datefrom = $yesdate;
                             <div class="panel-footer p_footer">
                             <div class="row">
                         
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <button type="clear" class="btn btn-primary" onclick='window.location.reload();' style="background-color:#1e73be;">Reset</button>
                                     </div>
                                     </form>
 
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <form action="export_task_log.php" method="post" name="export_excel">
                                         <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export" data-loading-text="Loading...">Export Data</button>
                                     </form>

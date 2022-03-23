@@ -158,7 +158,7 @@ include("../heading_banner.php");
 				?>
                 <form action="delete_station_pos_rel.php" method="post" class="form-horizontal">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="float: left;">
                             <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Delete
                             </button>
                         </div>
