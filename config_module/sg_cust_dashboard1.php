@@ -53,7 +53,7 @@ include("../hp_header.php");
 
 <body>
 <div class="page-container">
-    <div class="content">
+    <div class="content" style="background-color:#333">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
 
@@ -84,17 +84,17 @@ include("../hp_header.php");
 			$row_count = ceil($row_count_val);
 			?>
             <!-- Carousel indicators -->
-            <ol class="carousel-indicators">
-				<?php for ($x = 0; $x < $row_count; $x++) {
-					if ($x == 0) { ?>
-                        <li data-bs-target="#myCarousel" data-bs-wrap="true"  data-bs-slide-to="<?php echo $x  ?>" class="active"></li>
-					<?php }else {
-						?>
-                        <li data-bs-target="#myCarousel" data-bs-wrap="true"  data-bs-slide-to="<?php echo $x ?>"></li>
-						<?php
-					}
-				} ?>
-            </ol>
+<!--            <ol class="carousel-indicators">-->
+<!--				--><?php //for ($x = 0; $x < $row_count; $x++) {
+//					if ($x == 0) { ?>
+<!--                        <li data-bs-target="#myCarousel" data-bs-wrap="true"  data-bs-slide-to="--><?php //echo $x  ?><!--" class="active"></li>-->
+<!--					--><?php //}else {
+//						?>
+<!--                        <li data-bs-target="#myCarousel" data-bs-wrap="true"  data-bs-slide-to="--><?php //echo $x ?><!--"></li>-->
+<!--						--><?php
+//					}
+//				} ?>
+<!--            </ol>-->
             <!-- Wrapper for carousel items -->
             <div class="carousel-inner">
 
@@ -152,9 +152,9 @@ include("../hp_header.php");
                                          style="background-color:<?php echo $card_color; ?> !important;">
                                         <div class="heading-elements"></div>
                                         <h3 class="no-margin dashboard_line_heading"
-                                            style="font-size:x-large !important;"><?php echo $rowc["line_name"]; ?></h3>
+                                            style="font-size:x-large !important;color: #fff;"><?php echo $rowc["line_name"]; ?></h3>
                                         <hr/>
-                                        <div style="font-size:x-large !important;color: #fff;text-align: center;">
+                                        <div style="font-size:x-large !important;color: #fff;text-align: center;height: 200px;">
                                             <div style="margin-top: 10px;"><?php echo $p_num;
 												$p_num = ''; ?></div>
                                             <div style="margin-top: 10px;"><?php echo $pf_name;
@@ -204,7 +204,7 @@ include("../hp_header.php");
 									<?php } ?>
                                     <div style="height: 100%;">
                                         <h4 class="text_white"
-                                            style="font-size:x-large !important;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
+                                            style="font-size:x-large !important;color: #fff;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
                                             <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> -
                                                 <span
                                                         style="padding: 0px 0px 10px 0px;"
@@ -225,9 +225,9 @@ include("../hp_header.php");
                                 <div class="panel-body" style="background-color:<?php echo $card_color; ?> !important;">
                                     <div class="heading-elements"></div>
                                     <h3 class="no-margin dashboard_line_heading"
-                                        style="font-size:x-large !important;"><?php echo $rowc["line_name"]; ?></h3>
+                                        style="font-size:x-large !important; color: #fff;"><?php echo $rowc["line_name"]; ?></h3>
                                     <hr/>
-                                    <div style="font-size:x-large !important;color: #fff;text-align: center;">
+                                    <div style="font-size:x-large !important;color: #fff;text-align: center;height: 200px;">
                                         <div style="margin-top: 10px;"><?php echo $p_num;
 											$p_num = ''; ?></div>
                                         <div style="margin-top: 10px;"><?php echo $pf_name;
@@ -277,7 +277,7 @@ include("../hp_header.php");
 								<?php } ?>
                                 <div style="height: 100%">
                                     <h4 class="text_white"
-                                        style="font-size:x-large !important;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
+                                        style="font-size:x-large !important;color: #fff;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
                                         <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> - <span
                                                     style="padding: 0px 0px 10px 0px;"
                                                     id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
@@ -306,7 +306,6 @@ include("../hp_header.php");
 
         </div>
     </div>
-	<?php include('../footer.php') ?>
     <script>
         var myCarousel = document.querySelector('#myCarousel')
         var carousel = new bootstrap.Carousel(myCarousel, {
