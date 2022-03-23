@@ -256,7 +256,7 @@ $msg = explode(',', $msg); ?>
                                         <div class="ms-4">
 											<?php if (in_array('9', $msg)) { ?>
                                                 <div class="mt-3">
-                                                    <a href="<?php echo $siteURL; ?>form_module/form_settings.php"
+                                                    <a href="<?php echo $siteURL; ?>taskboard_module/taskboard.php"
                                                        class="text-muted mobile">
                                                         Taskboard
                                                     </a>
@@ -264,7 +264,7 @@ $msg = explode(',', $msg); ?>
 											<?php }
 											if (in_array('11', $msg)) { ?>
                                                 <div class="mt-3">
-                                                    <a href="<?php echo $siteURL; ?>form_module/edit_form_options.php"
+                                                    <a href="<?php echo $siteURL; ?>taskboard_module/create_taskboard.php"
                                                        class="text-muted mobile">
                                                         Create Taskboard
                                                     </a>
@@ -272,7 +272,7 @@ $msg = explode(',', $msg); ?>
 											<?php }
 											if (in_array('12', $msg)) { ?>
                                                 <div class="mt-3">
-                                                    <a href="<?php echo $siteURL; ?>form_module/options.php"
+                                                    <a href="<?php echo $siteURL; ?>taskboard_module/create_task.php"
                                                        class="text-muted mobile">
                                                         Create/Edit Task
                                                     </a>

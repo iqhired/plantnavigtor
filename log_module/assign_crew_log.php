@@ -223,69 +223,69 @@ $datefrom = $yesdate;
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-5">
-                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Select Period : &nbsp;&nbsp;</label>
-                                        <?php
-                                        if ($button == "button2") {
-                                            $checked = "checked";
-                                        } else {
-                                            $checked = "";
-                                        }
-                                        ?>
-                                        <input type="radio" name="button" id="button2" value="button2" class="form-control" style="float: left;width: initial;" <?php echo $checked; ?>></input>
-                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <select  name="timezone" id="timezone" class="form-control" style="float: left;width: initial;" >
-                                            <option value="" selected disabled>--- Select Period ---</option>
-                                            <?php
-                                            if ($timezone == "1") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="1" <?php echo $selected; ?>>One Day</option>
-                                            <?php
-                                            if ($timezone == "7") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="7" <?php echo $selected; ?>>One Week</option>
-                                            <?php
-                                            if ($timezone == "30") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="30" <?php echo $selected; ?>>One Month</option>
-                                            <?php
-                                            if ($timezone == "90") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="90" <?php echo $selected; ?>>Three Month</option>
-                                            <?php
-                                            if ($timezone == "180") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="180" <?php echo $selected; ?>>Six Month</option>
-                                            <?php
-                                            if ($timezone == "365") {
-                                                $selected = "selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="365" <?php echo $selected; ?>>One Year</option>
-                                        </select>
-                                    </div>
+<!--                                    <div class="col-md-5">-->
+<!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Select Period : &nbsp;&nbsp;</label>-->
+<!--                                        --><?php
+//                                        if ($button == "button2") {
+//                                            $checked = "checked";
+//                                        } else {
+//                                            $checked = "";
+//                                        }
+//                                        ?>
+<!--                                        <input type="radio" name="button" id="button2" value="button2" class="form-control" style="float: left;width: initial;" --><?php //echo $checked; ?><!--</input>-->
+<!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
+<!--                                        <select  name="timezone" id="timezone" class="form-control" style="float: left;width: initial;" >-->
+<!--                                            <option value="" selected disabled>--- Select Period ---</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "1") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="1" --><?php //echo $selected; ?><!--One Day</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "7") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="7" --><?php //echo $selected; ?><!--One Week</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "30") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="30" --><?php //echo $selected; ?><!--One Month</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "90") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="90" --><?php //echo $selected; ?><!--Three Month</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "180") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="180" --><?php //echo $selected; ?><!--Six Month</option>-->
+<!--                                            --><?php
+//                                            if ($timezone == "365") {
+//                                                $selected = "selected";
+//                                            } else {
+//                                                $selected = "";
+//                                            }
+//                                            ?>
+<!--                                            <option value="365" --><?php //echo $selected; ?><!--One Year</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
                                 </div>
                                
                                 <?php
