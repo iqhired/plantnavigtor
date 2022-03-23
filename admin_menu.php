@@ -890,12 +890,12 @@ $msg = explode(',', $msg); ?>
                                         <div class="col-md-6 mt-2">
                                             <div class="p-3">
                                                     <div class="mb-3">
-                                                        <a href="<?php echo $siteURL; ?>config_module/create_assets.php"
+                                                        <a href="<?php echo $siteURL; ?>line_status_grp_dashboard.php"
                                                            class="mega-link"><h3 class="text-muted fs-6">Cell
                                                                 Overview</h3></a>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <a href="<?php echo $siteURL; ?>config_module/dashboard_config.php"
+                                                        <a href="<?php echo $siteURL; ?>dashboard.php"
                                                            class="mega-link"><h3 class="text-muted fs-6">Crew Status
                                                                 Overview</h3></a>
                                                     </div>
