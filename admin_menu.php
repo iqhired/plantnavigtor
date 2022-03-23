@@ -850,222 +850,243 @@ $msg = explode(',', $msg); ?>
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<?php if (in_array('67', $msg)) { ?>
-                    <li class="nav-item dropdown mega-dropdown">
-                        <a class="nav-link" role="button" id="learnId">
-                            Boards
-                            <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"
-                                 style="margin-left: 62px;">
-                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <!-- start mega menu -->
-                        <div class="menu container">
-                            <div id="mainDropdown"
-                                 style="position: absolute;width: 80%;margin: 12px 70px;z-index: 1000;">
-								<?php if (in_array('68', $msg)) { ?>
-                                <div class='tutorial_section'>
-                                    <div class="toggle" id="toggle-1">
-                                        <div class="toggle" id="toggle-1">
-                                   <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                               stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                <?php if (in_array('67', $msg)) { ?>
+                <li class="nav-item dropdown mega-dropdown">
+                    <a class="nav-link" role="button" id="learnId">
+                        Boards
+                        <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"
+                             style="margin-left: 60px;">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                        </svg>
+                    </a>
+                    <!-- start mega menu -->
+                    <div class="menu container">
+                        <div id="mainDropdown" style="position: relative;width: 80%;margin: 12px auto;height: 400px;">
+                            <?php if (in_array('68', $msg)) { ?>
+                            <div class='tutorial_section'>
+                                <div class="toggle" id="toggle-1">
+                                    <span>
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                    </svg>
+                                    </span>
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                     </svg> </span>
-                                            <span class="ms-2 fw-light">Dashboard</span>
-                                            <span class="float-end" id="toggle-1-arrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             fill="currentColor" class="text-danger" viewBox="0 0 16 16"
-                                             style="margin-left: 54px;">
-                                            <path fill-rule="evenodd"
-                                                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                        </svg>
-                                    </span>
-                                        </div>
-                                        <div class="slidenew active" id="slide-1">
-                                            <div class="row">
-                                                <div class="col-md-6 mt-2">
-                                                    <div class="p-3">
-                                                        <div class="mb-3">
-                                                            <a href="<?php echo $siteURL; ?>line_status_grp_dashboard.php"
-                                                               class="mega-link"><h3 class="text-muted fs-6">Cell
-                                                                    Overview</h3></a>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <a href="<?php echo $siteURL; ?>dashboard.php"
-                                                               class="mega-link"><h3 class="text-muted fs-6">Crew Status
-                                                                    Overview</h3></a>
-                                                        </div>
+                                    <span class="ms-2 fw-light">Dashboard</span></a>
+                                    <span class="float-end" id="toggle-1-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                     class="text-danger" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                </svg>
+                            </span>
+                                </div>
+                                <div class="slidenew active" id="slide-1">
+                                    <div class="row">
+                                        <div class="col-md-6 mt-2">
+                                            <div class="p-3">
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>config_module/create_assets.php"
+                                                           class="mega-link"><h3 class="text-muted fs-6">Cell
+                                                                Overview</h3></a>
                                                     </div>
-                                                </div>
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>config_module/dashboard_config.php"
+                                                           class="mega-link"><h3 class="text-muted fs-6">Crew Status
+                                                                Overview</h3></a>
+                                                    </div>
+
+
                                             </div>
                                         </div>
+
+                                        </div>
+
                                     </div>
-									<?php } ?>
-									<?php if (in_array('69', $msg)) { ?>
-                                        <div class='tutorial_section'>
-                                            <div class="toggle" id="toggle-2">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                </div>
+                            <?php } ?>
+
+                            <?php if (in_array('69', $msg)) { ?>
+                                <div class='tutorial_section'>
+                                    <div class="toggle" id="toggle-2">
+
+                                           <span>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
                                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                         </svg>
                                     </span>
-                                                <span class="ms-2 fw-light">GBP Dashboard</span>
-                                                <span class="float-end" id="toggle-2-arrow">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg> </span>
+                                        <span class="ms-2 fw-light">GBP Dashboard</span>
+                                        <span class="float-end" id="toggle-2-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                         class="text-danger" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                    </svg>
+                                </span>
+
+                                    </div>
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
+                                                    $result1 = $mysqli->query($sql1);
+
+                                                    while ($row1 = mysqli_fetch_array($result1)) {
+
+                                                        $gbd_id = $row1['gbd_id'];
+                                                        $line_name = $row1['line_name'];
+                                                        $line_id = $row1['line_id'];
+                                                        if ($gbd_id == 1) { ?>
+                                                            <div class="mb-3">
+                                                                <a target="_blank"
+                                                                   href="<?php echo $siteURL; ?>config_module/gbp_dashboard.php?id=<?php echo $line_id ?>"
+                                                                   class="mega-link"><h3
+                                                                            class="text-muted fs-6"><?php echo $line_name ?></h3>
+                                                                </a>
+                                                            </div>
+                                                        <?php }
+                                                    } ?>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php if (in_array('70', $msg)) { ?>
+                                <div class='tutorial_section'>
+                                    <div class="toggle" id="toggle-2">
+
+                                           <span>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                    </span>
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg> </span>
+                                        <span class="ms-2 fw-light">Custom Dashboard</span>
+                                        <span class="float-end" id="toggle-2-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                         class="text-danger" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                    </svg>
+                                </span>
+
+                                    </div>
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+                                                    <?php $query = sprintf("SELECT * FROM sg_cust_dashboard where enabled = 1");
+                                                    $qur = mysqli_query($db, $query);
+                                                    while ($rowc = mysqli_fetch_array($qur)) {
+                                                        $c_id = $rowc["sg_cust_group_id"];
+                                                        $c_name = $rowc["sg_cust_dash_name"];
+                                                        $enabled = $rowc["enabled"];
+                                                        if ($enabled == 1) { ?>
+                                                            <div class="mb-3">
+                                                                <a target="_blank"
+                                                                   href="<?php echo $siteURL; ?>config_module/sg_cust_dashboard.php?id=<?php echo $c_id ?>"
+                                                                   class="mega-link"><h3
+                                                                            class="text-muted fs-6"> <?php echo $c_name ?></h3>
+                                                                </a>
+                                                            </div>
+                                                        <?php }
+                                                    } ?>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <?php if (in_array('4', $msg)) { ?>
+                                <div class='tutorial_section'>
+                                    <div class="toggle" id="toggle-4">
+
+  <span>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                    </span>
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg> </span>
+                                        <span class="ms-2 fw-light">Taskboard</span>
+                                        <span class="float-end" id="toggle-4-arrow">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                          class="text-danger" viewBox="0 0 16 16" style="margin-left: 54px;">
                                         <path fill-rule="evenodd"
                                               d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                     </svg>
-                                    </span>
-                                            </div>
-                                            <div class="slidenew" id="slide-2">
-                                                <div class="row">
-                                                    <div class="col-md-6 mt-2">
-                                                        <div class="p-3">
-															<?php
-															$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-															$result1 = $mysqli->query($sql1);
+                                </span>
 
-															while ($row1 = mysqli_fetch_array($result1)) {
+                                    </div>
+                                    <div class="slidenew" id="slide-4">
 
-																$gbd_id = $row1['gbd_id'];
-																$line_name = $row1['line_name'];
-																$line_id = $row1['line_id'];
-																if ($gbd_id == 1) { ?>
-                                                                    <div class="mb-3">
-                                                                        <a target="_blank"
-                                                                           href="<?php echo $siteURL; ?>config_module/gbp_dashboard.php?id=<?php echo $line_id ?>"
-                                                                           class="mega-link"><h3
-                                                                                    class="text-muted fs-6"><?php echo $line_name ?></h3>
-                                                                        </a>
-                                                                    </div>
-																<?php }
-															} ?>
+                                        <div class="row">
+                                            <div class="col-md-6 mt-1">
+                                                <div class="p-3">
+                                                    <?php if (in_array('9', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>taskboard_module/taskboard.php"
+                                                               class="mega-link"><h3 class="text-muted fs-6">
+                                                                    Taskboard</h3></a>
                                                         </div>
-                                                    </div>
+                                                    <?php }
+                                                    if (in_array('11', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>taskboard_module/create_taskboard.php"
+                                                               class="mega-link"><h3 class="text-muted fs-6">
+                                                                    Create Taskboard</h3></a>
+                                                        </div>
+                                                    <?php }
+                                                    if (in_array('12', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>taskboard_module/create_task.php"
+                                                               class="mega-link">
+                                                                <h3 class="text-muted fs-6">
+                                                                    Create/Edit Task
+                                                                </h3>
+                                                            </a>
+                                                        </div>
+                                                    <?php } ?>
+
                                                 </div>
                                             </div>
+
                                         </div>
-									<?php } ?>
-									<?php if (in_array('70', $msg)) { ?>
-                                        <div class='tutorial_section'>
-                                            <div class="toggle" id="toggle-3">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                        </svg>
-                                    </span>
-                                                <span class="ms-2 fw-light">Custom Dashboard</span>
-                                                <span class="float-end" id="toggle-3-arrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             fill="currentColor" class="text-danger" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                        </svg>
-                                    </span>
-                                            </div>
-                                            <div class="slidenew" id="slide-3">
-                                                <div class="row">
-                                                    <div class="col-md-6 mt-2">
-                                                        <div class="p-3">
-															<?php $query = sprintf("SELECT * FROM sg_cust_dashboard where enabled = 1");
-															$qur = mysqli_query($db, $query);
-															while ($rowc = mysqli_fetch_array($qur)) {
-																$c_id = $rowc["sg_cust_group_id"];
-																$c_name = $rowc["sg_cust_dash_name"];
-																$enabled = $rowc["enabled"];
-																if ($enabled == 1) { ?>
-                                                                    <div class="mb-3">
-                                                                        <a target="_blank"
-                                                                           href="<?php echo $siteURL; ?>config_module/sg_cust_dashboard.php?id=<?php echo $c_id ?>"
-                                                                           class="mega-link"><h3
-                                                                                    class="text-muted fs-6"> <?php echo $c_name ?></h3>
-                                                                        </a>
-                                                                    </div>
-																<?php }
-															} ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-									<?php } ?>
-									<?php if (in_array('4', $msg)) { ?>
-                                        <div class='tutorial_section'>
-                                            <div class="toggle" id="toggle-4">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
-                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                        </svg>
-                                    </span>
-                                                <span class="ms-2 fw-light">Taskboard</span>
-                                                <span class="float-end" id="toggle-4-arrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             fill="currentColor" class="text-danger" viewBox="0 0 16 16"
-                                             style="margin-left: 54px;">
-                                            <path fill-rule="evenodd"
-                                                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                        </svg>
-                                    </span>
-                                            </div>
-                                            <div class="slidenew" id="slide-4">
 
-                                                <div class="row">
-                                                    <div class="col-md-6 mt-1">
-                                                        <div class="p-3">
-															<?php if (in_array('9', $msg)) { ?>
-                                                                <div class="mb-3">
-                                                                    <a href="<?php echo $siteURL; ?>taskboard_module/taskboard.php"
-                                                                       class="mega-link"><h3 class="text-muted fs-6">
-                                                                            Taskboard</h3></a>
-                                                                </div>
-															<?php }
-															if (in_array('11', $msg)) { ?>
-                                                                <div class="mb-3">
-                                                                    <a href="<?php echo $siteURL; ?>taskboard_module/create_taskboard.php"
-                                                                       class="mega-link"><h3 class="text-muted fs-6">
-                                                                            Create Taskboard</h3></a>
-                                                                </div>
-															<?php }
-															if (in_array('12', $msg)) { ?>
-                                                                <div class="mb-3">
-                                                                    <a href="<?php echo $siteURL; ?>taskboard_module/create_task.php"
-                                                                       class="mega-link">
-                                                                        <h3 class="text-muted fs-6">
-                                                                            Create/Edit Task
-                                                                        </h3>
-                                                                    </a>
-                                                                </div>
-															<?php } ?>
-
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-									<?php }
-									?>
-
+                                    </div>
                                 </div>
-
-                            </div>
-                            <!-- end mega nav bar-->
-                    </li>
-				<?php } ?>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </li>
+                <?php } ?>
                 <!-- Forms Menu -->
 				<?php if (in_array('23', $msg)) { ?>
                     <li class="nav-item" id="ic">
@@ -1143,7 +1164,7 @@ $msg = explode(',', $msg); ?>
                         </div>
                     </li>
 				<?php } ?>
-				<?php if (in_array('66', $msg)) { ?>
+                            <?php if (in_array('66', $msg)) { ?>
                 <li class="nav-item dropdown mega-dropdown">
                     <a class="nav-link" role="button" id="learnId">
                         Admin Config
@@ -1312,7 +1333,7 @@ $msg = explode(',', $msg); ?>
                                 <div class='tutorial_section'>
                                     <div class="toggle" id="toggle-2">
 
-  <span>
+                                           <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
