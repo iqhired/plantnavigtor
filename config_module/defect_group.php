@@ -128,9 +128,12 @@ if (count($_POST) > 0) {
 		.sidebar-default .navigation li>a:focus, .sidebar-default .navigation li>a:hover {
 			background-color: #20a9cc;
 		}
+        .form-group {
+            margin-top: 20px;
+        }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-md-5{
-                width: 50%!important;
+                width: 40%!important;
                 float: left;
             }
             .col-md-6{
@@ -138,7 +141,7 @@ if (count($_POST) > 0) {
                 float: right;
             }
             .form-group {
-                margin-top: 40px;
+                margin-top: 50px;
             }
             form#user_form {
                 width: 100%;
@@ -185,7 +188,7 @@ include("../heading_banner.php");
 											<input type="text" name="disc" id="disc" class="form-control" placeholder="Enter Defect Group Description" required>
 										</div>
                                         </div>
-                                        <div class="col-md-11" style="padding:20px;">
+                                        <div class="col-md-11">
                                             <div class="form-group">
                                                 <select class="select-border-color select-access-multiple-open" data-placeholder="Select Defects..." name="defect_list[]" id="defect_list" multiple="multiple" >
 <!--                                                    <option value="" disabled selected>Select Defects </option>-->

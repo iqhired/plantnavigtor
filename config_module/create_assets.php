@@ -218,7 +218,7 @@ include("../heading_banner.php");
                                             <div class="col-md-4">
                                                 <input type="text" name="equipment" id="equipment" class="form-control" placeholder="Enter Equipment" required>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 mobile">
                                                 <button type="submit" class="btn btn-primary mob_btn" style="background-color:#1e73be;">Add</button>
                                             </div>
                                         </form>

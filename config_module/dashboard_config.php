@@ -250,11 +250,11 @@ if (count($_POST) > 0) {
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-8 {
                 float: right;
-                width: 60% !important;
+                width: 58% !important;
             }
             .col-lg-7 {
                 float: right;
-                width: 60% !important;
+                width: 58% !important;
             }
             .col-lg-6 {
                 float: right;
@@ -266,7 +266,7 @@ if (count($_POST) > 0) {
                 width: 40%;
             }
             label.col-lg-5.control-label {
-                width: 40%;
+                width: 42%;
             }
 
         }
@@ -297,8 +297,8 @@ include("../heading_banner.php");
                                 <!-- Customer Name -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Cell Group Name * : </label>
-                                        <div class="col-lg-8">
+                                        <label class="col-lg-5 control-label">Cell Group Name * : </label>
+                                        <div class="col-lg-7">
                                             <input type="text" name="c_grp_name" id="c_grp_name" class="form-control"
                                                    placeholder="Enter Cell Group Name" required>
                                             <div id="error6" class="red">

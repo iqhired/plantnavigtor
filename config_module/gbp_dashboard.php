@@ -122,6 +122,9 @@ fclose($fp);
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 
     <style>
+        body.alt-menu.sidebar-noneoverflow.pace-done {
+            background-color: #ccc!important;
+        }
         .anychart-credits{
             display: none !important;
         }

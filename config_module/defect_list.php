@@ -82,7 +82,15 @@ if ($i != "super" && $i != "admin") {
                 .form-horizontal {
                     width: 100%;
                 }
+                .select2-selection--multiple .select2-search--inline .select2-search__field{
+                    padding: 8px 52px!important;
+                }
+                .select2-selection--multiple:not([class*=bg-]) .select2-search--inline:first-child .select2-search__field {
+                    margin-left: -45px!important;
+                }
             }
+
+
 
 
         </style>

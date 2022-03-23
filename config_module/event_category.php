@@ -110,6 +110,14 @@ if (count($_POST) > 0) {
             width: 40%!important;
             float: right!important;
         }
+        .form_col_option{
+            width: 60%!important;
+            float: right;
+        }
+        .form-horizontal .control-label:not(.text-right){
+            text-align: left;
+            width: 40%!important;
+        }
     }
 </style>
 

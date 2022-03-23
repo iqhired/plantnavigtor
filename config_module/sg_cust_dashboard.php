@@ -51,6 +51,9 @@ $line_cust_dash_arr = explode(',', $line_cust_dash);
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 
 	<style>
+        body.alt-menu.sidebar-noneoverflow.pace-done {
+            background-color: #ccc;
+        }
 		.anychart-credits{
 			display: none !important;
 		}

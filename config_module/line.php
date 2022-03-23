@@ -56,6 +56,39 @@ if (count($_POST) > 0) {
         }
     }
 }
+//upload file
+$file = $_FILES['label_file'];
+if (isset($_FILES['label_file'])) {
+    $errors = array();
+    $file_name = $_FILES['label_file']['name'];
+    $file_size = $_FILES['label_file']['size'];
+    $file_tmp = $_FILES['label_file']['tmp_name'];
+    $file_type = $_FILES['label_file']['type'];
+    $file_ext = strtolower(end(explode('.', $file_name)));
+    $extensions = array("jpeg", "jpg", "png", "pdf");
+if (in_array($file_ext, $extensions) === false) {
+    $errors[] = "extension not allowed, please choose a doc file.";
+    $message_stauts_class = 'alert-danger';
+    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
+
+}
+    if ($file_size > 2097152) {
+        $errors[] = 'File size must be excately 2 MB';
+        $message_stauts_class = 'alert-danger';
+        $import_status_message = 'Error: File size must be less than 2 MB';
+    }
+    if (empty($errors) == true) {
+        move_uploaded_file($file_tmp, "../supplier_logo/" . $file_name);
+        $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+    }
+}
+else
+{
+        $message_stauts_class = 'alert-danger';
+        $import_status_message = 'Error: Try again';
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -145,6 +178,12 @@ if (count($_POST) > 0) {
                                                         <option value="1" >Yes</option>
                                                     </select>
                                                 </div>
+                                                    <label class="col-lg-2 control-label">File : </label>
+                                                    <div class="col-md-6">
+                                                        <input type="file" name="label_file" id="label_file" required
+                                                               class="form-control">
+                                                        <div id="preview"></div>
+                                                    </div>
                                                 <div class="col-md-2 mob_user">
                                                     <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create Station</button>
                                                 </div>
@@ -183,7 +222,8 @@ if (count($_POST) > 0) {
                                             <th>Station</th>
                                             <th>Priority Order</th>
                                             <th>Enabled</th>
-                                            <th>Good Bad Pieces Required</th>
+                                            <th>GBP Dashboard Required</th>
+                                            <th>Label Required</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -205,9 +245,15 @@ if (count($_POST) > 0) {
         <!--                                        <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
                                                 <td>
 
-<!--                                                    <label class="checkbox-switchery" style="margin-bottom:16px;" >-->
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
-<!--                                                    </label>-->
+
+                                                </td>
+                                                <td>
+
+                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary1">Enabled </button>
+                                                    <!--									&nbsp;
+                                                                                                                            <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
+                                                    -->
                                                 </td>
 
                                                 <td>
@@ -282,6 +328,36 @@ if (count($_POST) > 0) {
                             </div>
                         </div>
                     </div>
+            <!-- enabled modal -->
+            <div id="edit_modal_theme_primary1" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h6 class="modal-title">Upload file</h6>
+                        </div>
+                        <form action="" id="user_form" class="form-horizontal" method="post">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">File : </label>
+                                    <div class="col-md-6">
+                                        <input type="file" name="label_file" id="label_file" required
+                                               class="form-control">
+                                        <div id="preview"></div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
                     <!-- Dashboard content -->
                     <!-- /dashboard content -->
                     <script> $(document).on('click', '#delete', function () {
@@ -307,6 +383,19 @@ if (count($_POST) > 0) {
                             });
                         });
                     </script>
+
+            <script>
+                jQuery(document).ready(function ($) {
+                    $(document).on('click', '#edit_label', function () {
+                        var element = $(this);
+                        var edit_id = element.attr("data-id");
+
+                        $("#label_file").val(label_file);
+
+                        //alert(role);
+                    });
+                });
+            </script>
                     
                     <script>
                         window.onload = function() {
