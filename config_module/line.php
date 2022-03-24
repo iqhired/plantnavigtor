@@ -57,29 +57,44 @@ if (count($_POST) > 0) {
     }
 }
 //upload file
-$file = $_FILES['label_file'];
-if (isset($_FILES['label_file'])) {
+
+if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['rework_file'])) {
     $errors = array();
-    $file_name = $_FILES['label_file']['name'];
-    $file_size = $_FILES['label_file']['size'];
-    $file_tmp = $_FILES['label_file']['tmp_name'];
-    $file_type = $_FILES['label_file']['type'];
-    $file_ext = strtolower(end(explode('.', $file_name)));
-    $extensions = array("jpeg", "jpg", "png", "pdf");
-if (in_array($file_ext, $extensions) === false) {
+    $good_name = $_POST['good_file']['name'];
+    $bad_name = $_POST['bad_file']['name'];
+    $rework_name = $_POST['rework_file']['name'];
+    $good_size = $_POST['good_file']['size'];
+    $bad_size = $_POST['bad_file']['size'];
+    $rework_size = $_POST['rework_file']['size'];
+    $good_tmp = $_POST['good_file']['tmp_name'];
+    $bad_tmp = $_POST['bad_file']['tmp_name'];
+    $rework_tmp = $_POST['rework_file']['tmp_name'];
+    $good_type = $_POST['good_file']['type'];
+    $bad_type = $_POST['bad_file']['type'];
+    $rework_type = $_POST['rework_file']['type'];
+
+    $good_ext = strtolower(end(explode('.', $good_name)));
+    $bad_ext = strtolower(end(explode('.', $bad_name)));
+    $rework_ext = strtolower(end(explode('.', $rework_name)));
+    $good_extensions = array("doc","docx");
+    $bad_extensions = array("doc","docx");
+    $rework_extensions = array("doc","docx");
+    if (in_array($good_ext, $good_extensions) === false && in_array($bad_ext, $bad_extensions) === false && in_array($rework_ext, $rework_extensions) === false) {
     $errors[] = "extension not allowed, please choose a doc file.";
     $message_stauts_class = 'alert-danger';
     $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
 
 }
-    if ($file_size > 2097152) {
+    if ($good_size > 2097152 && $bad_size > 2097152 && $rework_size > 2097152) {
         $errors[] = 'File size must be excately 2 MB';
         $message_stauts_class = 'alert-danger';
         $import_status_message = 'Error: File size must be less than 2 MB';
     }
     if (empty($errors) == true) {
-        move_uploaded_file($file_tmp, "../supplier_logo/" . $file_name);
-        $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+        move_uploaded_file($file_tmp, "../assets/label_files/" . $file_name);
+    //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+        $message_stauts_class = 'alert-success';
+        $import_status_message = 'Upload Files Successfully';
     }
 }
 else
@@ -178,15 +193,8 @@ else
                                                         <option value="1" >Yes</option>
                                                     </select>
                                                 </div>
-                                                    <label class="col-lg-2 control-label">File : </label>
-                                                    <div class="col-md-6">
-                                                        <input type="file" name="label_file" id="label_file" required
-                                                               class="form-control">
-                                                        <div id="preview"></div>
-                                                    </div>
-                                                <div class="col-md-2 mob_user">
-                                                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create Station</button>
-                                                </div>
+
+
                                                 </div>
                                             </form>
 
@@ -339,9 +347,27 @@ else
                         <form action="" id="user_form" class="form-horizontal" method="post">
                             <div class="modal-body">
                                 <div class="row">
-                                    <label class="col-lg-2 control-label">File : </label>
+                                    <label class="col-lg-2 control-label">Good Piece File : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="label_file" id="label_file" required
+                                        <input type="file" name="good_file" id="good_file" required
+                                               class="form-control">
+                                        <div id="preview"></div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Bad Piece File : </label>
+                                    <div class="col-md-6">
+                                        <input type="file" name="bad_file" id="bad_file" required
+                                               class="form-control">
+                                        <div id="preview"></div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Rework File : </label>
+                                    <div class="col-md-6">
+                                        <input type="file" name="rework_file" id="rework_file" required
                                                class="form-control">
                                         <div id="preview"></div>
                                     </div>
@@ -384,18 +410,7 @@ else
                         });
                     </script>
 
-            <script>
-                jQuery(document).ready(function ($) {
-                    $(document).on('click', '#edit_label', function () {
-                        var element = $(this);
-                        var edit_id = element.attr("data-id");
 
-                        $("#label_file").val(label_file);
-
-                        //alert(role);
-                    });
-                });
-            </script>
                     
                     <script>
                         window.onload = function() {
