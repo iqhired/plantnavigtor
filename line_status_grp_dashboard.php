@@ -837,8 +837,6 @@ $cust_cam_page_header = "Production Cell Overview";
 															$p_name = ''; ?></span></td>
                                                 </tr>
                                             </table>
-
-
                                         </div>
                                         <!--                                <h4 style="text-align: center;background-color:#<?php echo $buttonclass; ?>;"><div id="txt" >&nbsp; </div></h4>
                                         -->
