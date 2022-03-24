@@ -30,9 +30,9 @@ if(!empty($result1)) {
 	}
 }
 ?>
-<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-<script type="text/javascript" src="assets/js/pages/components_dropdowns.js"></script>
+<script type="text/javascript" src="./assets/js/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="./assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="./assets/js/pages/components_dropdowns.js"></script>
 <style>
     .header {
         overflow: hidden;

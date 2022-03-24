@@ -1685,7 +1685,7 @@ $msg = explode(',', $msg); ?>
 <script src="<?php echo $siteURL; ?>bootstrap/js/popper.min.js"></script>
 <script src="<?php echo $siteURL; ?>bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo $siteURL; ?>plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="<?php echo $siteURL; ?>assets/js/app.js"></script>
+<!--<script src="--><?php //echo $siteURL; ?><!--assets/js/app.js"></script>-->
 <script>
     $(document).ready(function () {
         App.init();
@@ -1695,8 +1695,8 @@ $msg = explode(',', $msg); ?>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 <script src="<?php echo $siteURL; ?>assets/js/dashboard/dash_2.js"></script>
 
-<script>
-    $(document).ready(function () {
-        App.init();
-    });
-</script>
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        App.init();-->
+<!--    });-->
+<!--</script>-->
