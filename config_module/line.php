@@ -60,15 +60,15 @@ if (count($_POST) > 0) {
 
 if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['rework_file'])) {
     $errors = array();
-    $good_name = $_POST['good_file']['name'];
-    $bad_name = $_POST['bad_file']['name'];
-    $rework_name = $_POST['rework_file']['name'];
-    $good_size = $_POST['good_file']['size'];
-    $bad_size = $_POST['bad_file']['size'];
-    $rework_size = $_POST['rework_file']['size'];
-    $good_tmp = $_POST['good_file']['tmp_name'];
-    $bad_tmp = $_POST['bad_file']['tmp_name'];
-    $rework_tmp = $_POST['rework_file']['tmp_name'];
+    $good_name = $_POST['good_file'];
+    $bad_name = $_POST['bad_file'];
+    $rework_name = $_POST['rework_file'];
+//    $good_size = $_POST['good_file']['size'];
+//    $bad_size = $_POST['bad_file']['size'];
+//    $rework_size = $_POST['rework_file']['size'];
+//    $good_tmp = $_POST['good_file']['tmp_name'];
+//    $bad_tmp = $_POST['bad_file']['tmp_name'];
+//    $rework_tmp = $_POST['rework_file']['tmp_name'];
     $good_type = $_POST['good_file']['type'];
     $bad_type = $_POST['bad_file']['type'];
     $rework_type = $_POST['rework_file']['type'];
@@ -79,17 +79,17 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
     $good_extensions = array("doc","docx");
     $bad_extensions = array("doc","docx");
     $rework_extensions = array("doc","docx");
-    if (in_array($good_ext, $good_extensions) === false && in_array($bad_ext, $bad_extensions) === false && in_array($rework_ext, $rework_extensions) === false) {
+    if (in_array($good_ext, $good_extensions) == false && in_array($bad_ext, $bad_extensions) == false && in_array($rework_ext, $rework_extensions) == false) {
     $errors[] = "extension not allowed, please choose a doc file.";
     $message_stauts_class = 'alert-danger';
     $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
 
 }
-    if ($good_size > 2097152 && $bad_size > 2097152 && $rework_size > 2097152) {
-        $errors[] = 'File size must be excately 2 MB';
-        $message_stauts_class = 'alert-danger';
-        $import_status_message = 'Error: File size must be less than 2 MB';
-    }
+//    if ($good_size > 2097152 && $bad_size > 2097152 && $rework_size > 2097152) {
+//        $errors[] = 'File size must be excately 2 MB';
+//        $message_stauts_class = 'alert-danger';
+//        $import_status_message = 'Error: File size must be less than 2 MB';
+//    }
     if (empty($errors) == true) {
         move_uploaded_file($file_tmp, "../assets/label_files/" . $file_name);
     //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
@@ -97,12 +97,12 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
         $import_status_message = 'Upload Files Successfully';
     }
 }
-else
-{
-        $message_stauts_class = 'alert-danger';
-        $import_status_message = 'Error: Try again';
-
-}
+//else
+//{
+//        $message_stauts_class = 'alert-danger';
+//        $import_status_message = 'Error: Try again';
+//
+//}
 
 ?>
 <!DOCTYPE html>
