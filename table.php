@@ -68,6 +68,15 @@ if($_GET['line'])
     .content {
         padding: 100px 30px !important;
     }
+    @media
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+        .col-md-3.btn_mob {
+            margin-top: 15px;
+        }
+
+
+    }
 </style>
 <?php  $cust_cam_page_header = "Training Matrix";
 include("header.php");

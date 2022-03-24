@@ -17,7 +17,7 @@ only screen and (max-width: 760px),
 
     .col-md-8 {
         width: 70%;
-        float: right;
+
     }
     .col-md-8.form_col_item {
         float: left;
@@ -46,15 +46,17 @@ only screen and (max-width: 760px),
         float: right;
     }
     .col-lg-7 {
-        /*float: right;*/
-        /*width: 50%!important;*/
+        float: right;
+        width: 50%!important;
     }
     .col-md-6.mobile {
         float: left;
+        width: 50%;
     }
     .col-md-7 {
-        float: left;
-        margin-left: -11px;
+        float: right;
+        width: 60%;
+
     }
     .col-lg-9 {
         float: right;
@@ -93,6 +95,9 @@ only screen and
     }
     .collapse.in {
         display: block!important;
+    }
+    .col-md-4.mobile {
+        margin-top: 16px;
     }
 }
 tr {

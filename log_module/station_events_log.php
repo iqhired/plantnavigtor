@@ -107,6 +107,7 @@ $datefrom = $yesdate;
         }
         .col-md-2{
             width:auto!important;
+            float: left;
         }
         .col-lg-2{
             max-width: 30%!important;
@@ -118,6 +119,12 @@ $datefrom = $yesdate;
 
             .select2-container{
                 width: 50%!important;
+            }
+            .col-md-8 {
+                width: 100%;
+            }
+            input[type=checkbox], input[type=radio]{
+                margin: 4px 19px 0px;
             }
         }
 
@@ -203,51 +210,53 @@ include("../admin_menu.php");
 
                             <div class="row">
 
-                                <div class="col-md-5">
-                                    <div class="col-lg-2">
-                                    <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">Event Type :</label>
-                                    </div>
-									<?php
-									if ($button_event == "button3") {
-										$checked = "checked";
-									} else {
-										$checked = "";
-									}
-									?>
-                                    <div class="col-lg-1">
-                                    <input type="radio" name="button_event" id="button3" value="button3"
-                                           class="form-control"
-                                           style="float: left;width: initial;" <?php echo $checked; ?>>
-                                    </div>
-                                    <div class="col-lg-5">
+                                <div class="col-md-1.5" style="margin-left: 16px;">
+
+                                    <label class="control-label"  style="float: left;padding-top: 15px; font-weight: 500;">Event Type :&nbsp;&nbsp;</label>
+                                </div>
+
+
+                                    <?php
+                                    if ($button_event == "button3") {
+                                        $checked = "checked";
+                                    } else {
+                                        $checked = "";
+                                    }
+                                    ?>
+
+                                        <input type="radio" name="button_event" id="button3" value="button3"
+                                               class="form-control"
+                                               style="float: left;width: initial;" <?php echo $checked; ?>>
+
+                                <div class="col-md-3">
+
                                     <select name="event_type" id="event_type" class="select form-control"
                                             style="float: left;width: 60%;">
                                         <option value="" selected disabled>--- Select Event Type ---</option>
-										<?php
-										$ev_ty_post = $_POST['event_type'];
-										$sql1 = "SELECT * FROM `event_type` ";
-										$result1 = $mysqli->query($sql1);
-										//                                            $entry = 'selected';
-										while ($row1 = $result1->fetch_assoc()) {
-											$lin = $row1['event_type_id'];
+                                        <?php
+                                        $ev_ty_post = $_POST['event_type'];
+                                        $sql1 = "SELECT * FROM `event_type` ";
+                                        $result1 = $mysqli->query($sql1);
+                                        //                                            $entry = 'selected';
+                                        while ($row1 = $result1->fetch_assoc()) {
+                                            $lin = $row1['event_type_id'];
 
-											if ($lin == $ev_ty_post) {
-												$entry = 'selected';
-											} else {
-												$entry = '';
-											}
-											echo "<option value='" . $row1['event_type_id'] . "' $entry >" . $row1['event_type_name'] . "</option>";
-										}
-										?>
+                                            if ($lin == $ev_ty_post) {
+                                                $entry = 'selected';
+                                            } else {
+                                                $entry = '';
+                                            }
+                                            echo "<option value='" . $row1['event_type_id'] . "' $entry >" . $row1['event_type_name'] . "</option>";
+                                        }
+                                        ?>
                                     </select>
-                                    </div>
-
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="col-lg-2">
+
+
+                                <div class="row">
+                                    <div class="col-lg-2" style=" margin-left: 10px;">
                                     <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">Event Catagory :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                           style="float: left;padding: 10px 10px 12px 5px; font-weight: 500;">Event Catagory :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                     </div>
 									<?php
 									if ($button_event == "button4") {
@@ -289,8 +298,7 @@ include("../admin_menu.php");
 
                                     <div class="col-md-1.5" style="margin-left: 16px;">
 
-                                        <label class="control-label"  style="float: left;padding-top: 15px; font-weight: 500;">Station :
-                                                                                    &nbsp;&nbsp;</label>
+                                        <label class="control-label"  style="float: left;padding-top: 15px; font-weight: 500;">Station :&nbsp;&nbsp;</label>
                                     </div>
                                         <div class="col-md-3">
                                         <select name="station" id="station" class="select form-control"
@@ -388,7 +396,7 @@ include("../admin_menu.php");
                                 <div class="col-md-8">
 
                                     <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">Date Range&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                           style="float: left;padding: 10px 10px 10px 5px; font-weight: 500;">Date Range&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
 									<?php
 									if ($button != "button2") {

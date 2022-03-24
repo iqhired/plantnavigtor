@@ -186,6 +186,18 @@ fclose($fp);
             width: 100%;
             overflow-x: scroll;
         }
+        @media
+        only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px) {
+            .col-md-3 {
+                width: 30%;
+                float: left;
+            }
+            .col-md-2 {
+                width: 20%;
+                float: left;
+            }
+        }
     </style>
     <script>
         window.onload = function () {
@@ -436,7 +448,7 @@ include("../heading_banner.php");
                                     <label class="control-label"
                                            style="float: left;padding-top: 10px; font-weight: 500;">Date Range  :</label>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-10">
 									<?php
 									if ($button = "button1") {
 										$checked = "checked";
