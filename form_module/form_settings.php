@@ -159,6 +159,18 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
             .content:first-child {
                 padding-top: 90px!important;
             }
+            .col-md-0\.5 {
+                float: right;
+                width: 5%;
+            }
+            .col-md-6 {
+                width: 60%;
+                float: left;
+            }
+            .col-lg-2 {
+                width: 35%!important;
+                float: left;
+            }
         }
 
         .form-check-inline .form-check-input {
@@ -411,8 +423,8 @@ include("../heading_banner.php");
 
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
 
@@ -443,8 +455,8 @@ include("../heading_banner.php");
 
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -467,8 +479,8 @@ include("../heading_banner.php");
                                                 </select>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group3()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group3()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row" style="padding: 10px 0px 20px 0px;">
@@ -518,8 +530,8 @@ include("../heading_banner.php");
                                                 </select>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group4()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group4()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">

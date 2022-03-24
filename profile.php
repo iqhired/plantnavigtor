@@ -142,7 +142,20 @@ if (count($_POST) > 0) {
             .sidebar-default .navigation li>a:focus, .sidebar-default .navigation li>a:hover {
                 background-color: #20a9cc;
             }
+            @media
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px) {
+                .thumb {
+                    width: 20%;
+                    /* height: 144px; */
+                }
+            }
+            .text-right {
+                text-align: right;
+                margin-top: 25px;
+            }
         </style>
+
     </head>
 
         <!-- Main navbar -->
@@ -290,6 +303,7 @@ if (count($_POST) > 0) {
                                                         </div>							
                                                     </div>
                                                 </div>
+
                                                 <div class="row">
                                                     <div class="col-md-9">
                                                         <div class="form-group">
@@ -297,6 +311,7 @@ if (count($_POST) > 0) {
                                                             <div class="col-lg-9">
                                                                 <input type="file" name="file" id="file" />
                                                                 <input type="hidden" name="rotation" id="rotation" value="0"/>
+                                                                <hr>
                                                                 <div class="text-right">
                                                                     <button type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
