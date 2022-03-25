@@ -661,3 +661,14 @@ span.select2.select2-container.select2-container--default.select2-container--foc
     color: #333!important;
 
 }
+.modal, .modal-backdrop {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+    opacity: 5.1;
+}

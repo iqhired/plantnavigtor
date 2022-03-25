@@ -193,6 +193,9 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
                                                         <option value="1" >Yes</option>
                                                     </select>
                                                 </div>
+                                                    <div class="col-md-2 mob_user">
+                                                        <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create Station</button>
+                                                    </div>
 
 
                                                 </div>

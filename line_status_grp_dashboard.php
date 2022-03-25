@@ -133,6 +133,7 @@ $rem_line_array = array_diff($act_line_array, $ass_line_array);
             padding-top: 5px;
             font-size: 22px !important;
             color: #191e3a;
+            height: 50px;
         }
 
         @media screen and (min-width: 2560px) {

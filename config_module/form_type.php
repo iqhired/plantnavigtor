@@ -99,13 +99,32 @@ if (count($_POST) > 0) {
 </head>
 <style>
     @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-        .col-md-4 {
+
+        .col-md-2 {
+            margin-top: 60px;
+        }
+        .col-md-5 {
+            width: 40%;
             float: left;
         }
+        .col-md-4 {
+             float: left;
+            width: 30%;
+        }
         .col-md-8 {
+            width: 70%;
             float: right;
         }
     }
+    @media (min-width: 769px), (min-device-width: 820px) and (max-device-width: 1180px)
+        .form-horizontal .control-label:not(.text-right) {
+            text-align: left;
+            width: 40%;
+        }
+        .col-lg-6 {
+            width: 50%;
+            float: right;
+        }
 </style>
 
 <!-- Main navbar -->
@@ -136,11 +155,11 @@ include("../heading_banner.php");
                                                    placeholder="Enter Form Type" required>
                                         </div>
                                         <div class="col-md-8">
-                                        <div class="col-md-4">
+                                        <div class="col-md-5">
                                             <label class="control-label" style=" padding: 15px 10px;"> Is Work
                                                 Order / Lot required : </label>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-check form-check-inline form_col_option">
                                                 <input type="radio" id="yes" name="wol" value="yes">
                                                 <label for="yes" class="item_label" id="">Yes</label>
