@@ -3,14 +3,39 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-	header('location: ../logout.php');
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
 }
+//Set the session duration for 10800 seconds - 3 hours
+$duration = $auto_logout_duration;
+//Read the request time of the user
+$time = $_SERVER['REQUEST_TIME'];
+//Check the user's session exist or not
+if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
+
+//	header('location: ../logout.php');
+	exit;
+}
+//Set the time of the user's last activity
+$_SESSION['LAST_ACTIVITY'] = $time;
+$is_tab_login = $_SESSION['is_tab_user'];
+$is_cell_login = $_SESSION['is_cell_login'];
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin") {
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
 	header('location: ../dashboard.php');
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,8 +57,8 @@ if ($i != "super" && $i != "admin") {
     <!-- /global stylesheets -->
     <!-- Core JS files -->
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/libs/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/bootstrap.min.js"></script>
 <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
 <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
@@ -81,37 +106,9 @@ if ($i != "super" && $i != "admin") {
             border-bottom: 1px solid #1e73be !important;
         }
 
-
-
         .contextMenu{ position:absolute;  width:min-content; left: -18px; background:#e5e5e5; z-index:999;}
 
 
-        .arrow {
-            border: solid black;
-            border-width: 0 3px 3px 0;
-            display: inline-block;
-            padding: 3px;
-        }
-
-        .right {
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-        }
-
-        .left {
-            transform: rotate(135deg);
-            -webkit-transform: rotate(135deg);
-        }
-
-        .up {
-            transform: rotate(-135deg);
-            -webkit-transform: rotate(-135deg);
-        }
-
-        .down {
-            transform: rotate(45deg);
-            -webkit-transform: rotate(45deg);
-        }
 		.red {
     color: red;
     display: none;
