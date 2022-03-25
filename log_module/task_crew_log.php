@@ -349,8 +349,6 @@ $datefrom = $yesdate;
 
                                 </div>
                             </div>
-
-
                             </div>
                         </div>
                         <div class="panel panel-flat">					

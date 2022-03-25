@@ -59,6 +59,10 @@ $is_admin = (($role != null) && (isset($role)) && ($role == 'admin'))?1:0;
 	<script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
 	<!--chart -->
 	<style>
+        @media (max-width: 768px), (min-device-width: 820px) and (max-device-width: 1180px)
+            .breadcrumb-elements, .heading-elements {
+                display: block!important;
+            }
 		td{
 			width:50% !important;
 		}
@@ -102,6 +106,7 @@ $is_admin = (($role != null) && (isset($role)) && ($role == 'admin'))?1:0;
 		.thumb img:not(.media-preview) {
 			height: 150px !important;
 		}
+
 	</style>    <!-- /theme JS files -->
 </head>
 

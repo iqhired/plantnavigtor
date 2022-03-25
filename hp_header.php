@@ -33,7 +33,7 @@ while ($row1 = $result1->fetch_assoc()) {
 <script type="text/javascript" src="assets/js/pages/components_dropdowns.js"></script>
 <style>
     .header {
-        overflow: hidden;
+        overflow: initial;
         background-color: #060818;
         padding: 8px 25px;
     }
@@ -171,7 +171,7 @@ if(!empty($is_cell_login) && $is_cell_login == 1){
 <div class="header">
 
     <a href="<?php echo $path?>" class="logo">
-        <img class = "logo_img" src="<?php echo $siteURL; ?>assets/img/SGG_logo.png" alt="logo">
+        <img class = "logo_img" alt="logo">
     </a>
 
         <h3 class="navbar-center" id="screen_header" style=""><span class="text-semibold"><?php echo $cam_page_header; ?></span></h3>
