@@ -73,6 +73,9 @@ if (isset($cellID)) {
     <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
     <!--chart -->
     <style>
+        .col-lg-3 {
+            font-size: 12px!important;
+        }
         .open > .dropdown-menu {
             min-width: 210px !important;
         }
@@ -115,6 +118,7 @@ if (isset($cellID)) {
             padding-top: 5px;
             font-size: 15px !important;
         }
+
 
         @media screen and (min-width: 2560px) {
             .dashboard_line_heading {
@@ -817,11 +821,11 @@ include("heading_banner.php");
                         </script>
 					<?php } ?>
                     <div style="height: 100%">
-                        <h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
+                        <h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>; color:#fff">
                             <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> - <span
                                         style="padding: 0px 0px 10px 0px;"
-                                        id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
-                                        id="server-load"></span></div>
+                                        id="demo<?php echo $countervariable; ?>">&nbsp;</span>
+                                 <span id="server-load"></span></div>
                             <!--                                        <div style="padding: 0px 0px 10px 0px;" id="demo-->
 							<?php //echo $countervariable;
 							?><!--" >&nbsp;</div>-->
