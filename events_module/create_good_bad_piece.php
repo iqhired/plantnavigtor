@@ -1,3 +1,5 @@
+
+
 <?php
 include("../config.php");
 if (!isset($_SESSION['user'])) {
@@ -27,6 +29,27 @@ if ($good_name != "") {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Error: Good Pieces Couldnt Added';
 		} else {
+			$station_event_id = $_POST['station_event_id'];
+			$add_defect_name = $_POST['add_defect_name'];
+
+			$good_bad_piece_name = $_POST['good_bad_piece_name'];
+
+			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+			$qur = mysqli_query($db, $query);
+			while ($rowc = mysqli_fetch_array($qur)) {
+
+				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
+				$station_event_id = $rowc['station_event_id'];
+			}
+			$query1 = sprintf("SELECT line_id FROM sg_station_event where  line_id = '$station_event_id'");
+			$qur1 = mysqli_query($db, $query1);
+			while ($rowc1 = mysqli_fetch_array($qur1)) {
+				$line_id = $rowc['line_id'];
+			}
+
+			if($good_bad_pieces_id){
+				sendFile('../assets/label_files/$line_id/f1');
+			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		}
@@ -37,6 +60,27 @@ if ($good_name != "") {
 		$sql1 = "update good_bad_pieces set good_pieces ='$good_pieces' , modified_at = '$chicagotime' where station_event_id ='$station_event_id' and event_status = '1'";
 		$result11 = mysqli_query($db, $sql1);
 		if ($result11) {
+			$station_event_id = $_POST['station_event_id'];
+			$add_defect_name = $_POST['add_defect_name'];
+
+			$good_bad_piece_name = $_POST['good_bad_piece_name'];
+
+			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+			$qur = mysqli_query($db, $query);
+			while ($rowc = mysqli_fetch_array($qur)) {
+
+				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
+				$station_event_id = $rowc['station_event_id'];
+			}
+			$query1 = sprintf("SELECT line_id FROM sg_station_event where  line_id = '$station_event_id'");
+			$qur1 = mysqli_query($db, $query1);
+			while ($rowc1 = mysqli_fetch_array($qur1)) {
+				$line_id = $rowc['line_id'];
+			}
+
+			if($good_bad_pieces_id){
+				sendFile('../assets/label_files/$line_id/f1');
+			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		} else {
@@ -44,6 +88,10 @@ if ($good_name != "") {
 			$_SESSION['import_status_message'] = 'Error: Please Retry';
 		}
 	}
+
+
+
+
 //	if ( $g != "") {
 //		$good_pieces = $rowc['good_pieces'] + $good_name;
 //		$sql1 = "INSERT INTO `good_bad_pieces_details`(`station_event_id`, `good_pieces`,  `created_at`, `created_by`) VALUES ('$station_event_id','$good_name','$chicagotime','$user')";
@@ -204,6 +252,8 @@ else if($edit_id != "")
 
 	}
 }
+
+
 
 header("Location:good_bad_piece.php");
 ?>

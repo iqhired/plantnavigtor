@@ -103,6 +103,8 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+    <script src="./assets/js/BrowserPrint.js"></script>
+    <script src="./assets/js/DevDemo.js"></script>
     <style> .sidebar-default .navigation li > a {
             color: #f5f5f5
         }
@@ -122,11 +124,7 @@ $logo = $rowccus['logo'];
             padding: 20px !important;
         }
 
-        .form-group label, label {
-            font-size: 15px;
-            color: #fff !important;
-            letter-spacing: 1px;
-        }
+
 
         .bg-primary {
             background-color: #606060!important;
