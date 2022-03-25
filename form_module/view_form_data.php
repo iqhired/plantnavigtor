@@ -61,6 +61,7 @@ $temp = "";
             color: #999;
             border-bottom-style: inset;
         }
+
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-2{
                 width: 35%!important;
