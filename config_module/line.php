@@ -58,28 +58,28 @@ if (count($_POST) > 0) {
 }
 //upload file
 
-if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['rework_file'])) {
+if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
     $errors = array();
-    $good_name = $_POST['good_file'];
-    $bad_name = $_POST['bad_file'];
-    $rework_name = $_POST['rework_file'];
-//    $good_size = $_POST['good_file']['size'];
-//    $bad_size = $_POST['bad_file']['size'];
-//    $rework_size = $_POST['rework_file']['size'];
-//    $good_tmp = $_POST['good_file']['tmp_name'];
-//    $bad_tmp = $_POST['bad_file']['tmp_name'];
-//    $rework_tmp = $_POST['rework_file']['tmp_name'];
-    $good_type = $_POST['good_file']['type'];
-    $bad_type = $_POST['bad_file']['type'];
-    $rework_type = $_POST['rework_file']['type'];
+    $good_name = $_FILES['good_file']['name'];;
+    $bad_name = $_FILES['bad_file']['name'];;
+//    $rework_name = $_FILES['rework_file'];
+    $good_size = $_FILES['good_file']['size'];
+    $bad_size = $_FILES['bad_file']['size'];
+//    $rework_size = $_FILES['rework_file']['size'];
+    $good_tmp = $_FILES['good_file']['tmp_name'];
+    $bad_tmp = $_FILES['bad_file']['tmp_name'];
+//    $rework_tmp = $_FILES['rework_file']['tmp_name'];
+    $good_type = $_FILES['good_file']['type'];
+    $bad_type = $_FILES['bad_file']['type'];
+//    $rework_type = $_FILES['rework_file']['type'];
 
-    $good_ext = strtolower(end(explode('.', $good_name)));
-    $bad_ext = strtolower(end(explode('.', $bad_name)));
-    $rework_ext = strtolower(end(explode('.', $rework_name)));
-    $good_extensions = array("doc","docx");
-    $bad_extensions = array("doc","docx");
-    $rework_extensions = array("doc","docx");
-    if (in_array($good_ext, $good_extensions) == false && in_array($bad_ext, $bad_extensions) == false && in_array($rework_ext, $rework_extensions) == false) {
+
+//    $good_ext = strtolower(end(explode('.', $good_name)));
+//    $bad_ext = strtolower(end(explode('.', $bad_name)));
+    $good_extensions = array("application/octet-stream","doc","docx");
+    $bad_extensions = array("application/octet-stream","doc","docx");
+//    $rework_extensions = array("doc","docx");
+    if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false ) {
     $errors[] = "extension not allowed, please choose a doc file.";
     $message_stauts_class = 'alert-danger';
     $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
@@ -91,7 +91,13 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
 //        $import_status_message = 'Error: File size must be less than 2 MB';
 //    }
     if (empty($errors) == true) {
-        move_uploaded_file($file_tmp, "../assets/label_files/" . $file_name);
+        $dir_path = "../assets/label_files/" . $_POST['label_line_id'];
+		if (!file_exists($dir_path)) {
+			mkdir($dir_path, 0777, true);
+		}
+        move_uploaded_file($good_tmp, $dir_path .'/'. 'g' ."_".time().'_'. $good_name);
+        move_uploaded_file($good_tmp, $dir_path .'/'. 'r' ."_".time().'_'. $good_name);
+        move_uploaded_file($bad_tmp, $dir_path .'/'. 'b' ."_".time().'_'. $bad_name);
     //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
         $message_stauts_class = 'alert-success';
         $import_status_message = 'Upload Files Successfully';
@@ -345,16 +351,17 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h6 class="modal-title">Upload file</h6>
+                            <h6 class="modal-title">Upload Label File</h6>
                         </div>
-                        <form action="" id="user_form" class="form-horizontal" method="post">
+                        <form action="" id="" class="form-horizontal" method="post" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Good Piece File : </label>
                                     <div class="col-md-6">
+                                        <input type="hidden" name="label_line_id" id="label_line_id" >
                                         <input type="file" name="good_file" id="good_file" required
                                                class="form-control">
-                                        <div id="preview"></div>
+<!--                                        <div id="preview"></div>-->
                                     </div>
 
                                 </div>
@@ -363,21 +370,10 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
                                     <div class="col-md-6">
                                         <input type="file" name="bad_file" id="bad_file" required
                                                class="form-control">
-                                        <div id="preview"></div>
+<!--                                        <div id="preview"></div>-->
                                     </div>
 
                                 </div>
-                                <div class="row">
-                                    <label class="col-lg-2 control-label">Rework File : </label>
-                                    <div class="col-md-6">
-                                        <input type="file" name="rework_file" id="rework_file" required
-                                               class="form-control">
-                                        <div id="preview"></div>
-                                    </div>
-
-                                </div>
-
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -395,7 +391,14 @@ if (isset($_POST['good_file']) && isset($_POST['bad_file']) &&  isset($_POST['re
                             var info = 'id=' + del_id;
                             $.ajax({type: "POST", url: "ajax_line_delete.php", data: info, success: function (data) { }});
                             $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-                        });</script>
+                        });
+
+                        $(document).on('click', '#edit_label', function () {
+                            var element = $(this);
+                            var edit_id = element.attr("data-id");
+                            $("#label_line_id").val(edit_id);
+                        });
+                    </script>
                     <script>
                         jQuery(document).ready(function ($) {
                             $(document).on('click', '#edit', function () {
