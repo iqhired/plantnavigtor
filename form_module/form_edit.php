@@ -167,7 +167,7 @@ include("../heading_banner.php");
                         <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">Add/Create New Form</button>
                     </a>
                 </div>
-            <div class="content">
+            <div class="content" style="padding-top: 60px !important;">
                 <!-- Main charts -->
 
                 <!-- Basic datatable -->
