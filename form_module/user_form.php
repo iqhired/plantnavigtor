@@ -1058,8 +1058,8 @@ $('#reject').on('change', function () {
 <script>
     $(".compare_text").keyup(function () {
         var text_id = $(this).attr("id");
-        var lower_compare = parseInt($(".lower_compare[data-id='" + text_id + "']").val());
-        var upper_compare = parseInt($(".upper_compare[data-id='" + text_id + "']").val());
+        var lower_compare = parseFloat($(".lower_compare[data-id='" + text_id + "']").val());
+        var upper_compare = parseFloat($(".upper_compare[data-id='" + text_id + "']").val());
         var text_val = $(this).val();
 
         if ($(".compare_text").val().length == 0) {
