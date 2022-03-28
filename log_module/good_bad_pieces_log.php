@@ -371,76 +371,6 @@ include("../heading_banner.php");
 										?>
                                     </select>
                                 </div>
-
-<!--                                <div class="col-md-2">-->
-<!--                                    <label class="control-label"-->
-<!--                                           style="float: left;padding-top: 10px; font-weight: 500;">Select Period  :</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-4">-->
-<!--									--><?php
-//									if ($button == "button2") {
-//										$checked = "checked";
-//									} else {
-//										$checked = "";
-//									}
-//									?>
-<!--                                    <input type="radio" name="button" id="button2" value="button2" class="form-control"-->
-<!--                                           style="float: left;width: initial;" --><?php //echo $checked; ?><!--
-<!--                                    <label class="control-label"-->
-<!--                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
-<!--                                    <select name="period" id="period" class="form-control"-->
-<!--                                            style="float: left;width: 60%;">-->
-<!--                                        <option value="" selected disabled>--- Select Period ---</option>-->
-<!--										--><?php
-//										if ($timezone == "1") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="1" --><?php //echo $selected; ?><!--One Day</option>-->
-<!--										--><?php
-//										if ($timezone == "7") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="7" --><?php //echo $selected; ?><!--One Week</option>-->
-<!--										--><?php
-//										if ($timezone == "30") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="30" --><?php //echo $selected; ?><!--One Month</option>-->
-<!--										--><?php
-//										if ($timezone == "90") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="90" --><?php //echo $selected; ?><!--Three Month</option>-->
-<!--										--><?php
-//										if ($timezone == "180") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="180" --><?php //echo $selected; ?><!--Six Month</option>-->
-<!--										--><?php
-//										if ($timezone == "365") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="365" --><?php //echo $selected; ?><!--One Year</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
                             </div>
                             <br/>
                             <div class="row">
@@ -503,12 +433,12 @@ include("../heading_banner.php");
                         </form>
 
                         <div class="col-md-2">
-                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">
+<!--                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">-->
                                                             <button type="submit" class="btn btn-primary"
                                                                     style="background-color:#1e73be;width:120px;"
                                                                     id="export" name="export" data-loading-text="Loading...">Export Data
                                                             </button>
-                                                        </form>
+<!--                                                        </form>-->
                         </div>
                     </div>
 
@@ -537,6 +467,21 @@ include("../heading_banner.php");
     <script>
         $('#station').on('change', function (e) {
             $("#good_bad_piece_form").submit();
+        });
+
+        $('#export').on('click', function (e) {
+            var data = $("#good_bad_piece_form").serialize();
+            var main_url = "<?php echo $siteURL . "log_module/export_good_bad_piece.php"; ?>";
+            $.ajax({
+                type: 'POST',
+                url: main_url,
+                data: data,
+                success: function (data) {
+                    // window.location.href = window.location.href + "?aa=Line 1";
+                    // $(':input[type="button"]').prop('disabled', false);
+                    // location.reload();
+                }
+            });
         });
         $('#part_family').on('change', function (e) {
             $("#good_bad_piece_form").submit();
