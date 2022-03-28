@@ -29,7 +29,7 @@ $button_event = "button3";
 $curdate = date('Y-m-d');
 $dateto = $curdate;
 $datefrom = $curdate;
-$button = "";
+$button = "button3";
 $temp = "";
 // if (!isset($_SESSION['user'])) {
 // 	header('location: logout.php');
@@ -40,23 +40,44 @@ $dateto = $_SESSION['date_to'];
 $pf = $_SESSION['pf'];
 $pn = $_SESSION['pn'];
 $wc = '';
+$print_data='';
 
 if (!empty($station)) {
+	$qurtemp = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$station' ");
+	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+		$line_name = $rowctemp["line_name"];
+		$print_data .= "Station : " . $line_name . "\n";
+	}
+
 	$wc = $wc . " and sg_station_event.line_id = '$station'";
 }
-if (!empty($pf)) {
-	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
-}
+
 if (!empty($pn)) {
+	$qurtemp = mysqli_query($db, "SELECT part_number , part_name FROM `pm_part_number` where pm_part_number_id = '$pn' ");
+	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+		$part_number = $rowctemp["part_number"];
+		$part_name = $rowctemp["part_name"];
+		$print_data .= "Part Number  : " . $part_number . "\n";
+		$print_data .= "Part Description / Name  : " . $part_name . "\n";
+	}
 	$wc = $wc . " and sg_station_event.part_number_id = '$pn'";
 }
-
+if (!empty($pf)) {
+	$qurtemp = mysqli_query($db, "SELECT part_family_name FROM `pm_part_family` where pm_part_family_id = '$pf' ");
+	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+		$part_family_name = $rowctemp["part_family_name"];
+		$print_data .= "Part Family  : " . $part_family_name . "\n";
+	}
+	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
+}
 /* If Data Range is selected */
-if ($button == "button1") {
+if ($button == "button3") {
 	if (!empty($datefrom)) {
+		$print_data .= "From Date : " . $datefrom . "\n";
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' ";
 	}
 	if (!empty($dateto)) {
+		$print_data .= "To Date : " . $dateto . "\n\n\n";
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 	}
 } else if ($button == "button2") {
@@ -139,6 +160,6 @@ header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=Good Bad Piece Log.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
-print "\n\n$header1\n$result1\n\n\n\n";
+print "\n\n$print_data\n$header1\n$result1\n\n\n\n";
 print "$header\n$result";
 ?>
