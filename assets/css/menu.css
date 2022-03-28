@@ -102,7 +102,7 @@ svg.arrow.dropbtn {
 @media (max-width:768px) and (min-width:305px){
     .d-sm-none {
         display: block!important;
-        z-index: -1;
+
     }
     .d-sm-block {
         display: none!important;
@@ -111,7 +111,7 @@ svg.arrow.dropbtn {
 @media (max-width:1180px) and (min-width:820px){
     .d-sm-none {
         display: block!important;
-        z-index: -1;
+
     }
     .d-sm-block {
         display: none!important;
@@ -121,7 +121,7 @@ svg.arrow.dropbtn {
 @media (max-width:991px) and (min-width:761px){
     .d-sm-none {
         display: block!important;
-        z-index: -1;
+
     }
     .d-sm-block {
         display: none!important;
