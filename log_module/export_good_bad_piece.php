@@ -1,4 +1,30 @@
 <?php include("../config.php");
+$curdate = date('Y-m-d');
+//$dateto = $curdate;
+//$datefrom = $curdate;
+$button = "";
+$temp = "";
+if (!isset($_SESSION['user'])) {
+	header('location: logout.php');
+}
+
+
+//Set the session duration for 10800 seconds - 3 hours
+$duration = $auto_logout_duration;
+//Read the request time of the user
+$time = $_SERVER['REQUEST_TIME'];
+//Check the user's session exist or not
+if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	header($redirect_logout_path);
+//	header('location: ../logout.php');
+	exit;
+}
+//Set the time of the user's last activity
+$_SESSION['LAST_ACTIVITY'] = $time;
 $button_event = "button3";
 $curdate = date('Y-m-d');
 $dateto = $curdate;
@@ -15,22 +41,22 @@ $pf = $_SESSION['pf'];
 $pn = $_SESSION['pn'];
 $wc = '';
 
-if (isset($station)) {
+if (!empty($station)) {
 	$wc = $wc . " and sg_station_event.line_id = '$station'";
 }
-if (isset($pf)) {
+if (!empty($pf)) {
 	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
 }
-if (isset($pn)) {
+if (!empty($pn)) {
 	$wc = $wc . " and sg_station_event.part_number_id = '$pn'";
 }
 
 /* If Data Range is selected */
 if ($button == "button1") {
-	if (isset($datefrom)) {
+	if (!empty($datefrom)) {
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' ";
 	}
-	if (isset($dateto)) {
+	if (!empty($dateto)) {
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 	}
 } else if ($button == "button2") {
@@ -49,7 +75,7 @@ if ($button == "button1") {
 	} else if ($timezone == "365") {
 		$countdate = date('Y-m-d', strtotime('-365 days'));
 	}
-	if (isset($countdate)) {
+	if (!empty($countdate)) {
 		$wc = $wc . " AND DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(created_at,'%Y-%m-%d') <= '$curdate' ";
 	}
 } else {
@@ -66,7 +92,7 @@ while ($row = mysqli_fetch_row($gp_result)) {
 	$line = '';
 	$j = 1;
 	foreach ($row as $value) {
-		if ((!isset($value)) || ($value == "")) {
+		if ((empty($value)) || ($value == "")) {
 			$value = "-"."\t";
 		} else {
 			$value = str_replace('"', '""', $value);
@@ -93,7 +119,7 @@ while ($row = mysqli_fetch_row($exportData)) {
 	$line = '';
 	$j = 1;
 	foreach ($row as $value) {
-		if ((!isset($value)) || ($value == "")) {
+		if ((empty($value)) || ($value == "")) {
 			$value = "-"."\t";
 		} else {
 			$value = str_replace('"', '""', $value);
