@@ -16,6 +16,8 @@ $_SESSION['timezone'] = "";
 $_SESSION['button_event'] = "";
 $_SESSION['event_type'] = "";
 $_SESSION['event_category'] = "";
+$_SESSION['pf'] = "";
+$_SESSION['pn'] = "";
 
 if (count($_POST) > 0) {
 	$_SESSION['station'] = $_POST['station'];
@@ -58,9 +60,11 @@ if(isset($station)){
 	$wc = $wc . " and sg_station_event.line_id = '$station'";
 }
 if(isset($pf)){
+	$_SESSION['pf'] = $pf;
 	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
 }
 if(isset($pn)){
+	$_SESSION['pn'] = $pn;
 	$wc = $wc . " and sg_station_event.part_number_id = '$pn'";
 }
 
@@ -433,12 +437,12 @@ include("../heading_banner.php");
                         </form>
 
                         <div class="col-md-2">
-<!--                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">-->
+                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">
                                                             <button type="submit" class="btn btn-primary"
                                                                     style="background-color:#1e73be;width:120px;"
                                                                     id="export" name="export" data-loading-text="Loading...">Export Data
                                                             </button>
-<!--                                                        </form>-->
+                                                        </form>
                         </div>
                     </div>
 
@@ -469,20 +473,20 @@ include("../heading_banner.php");
             $("#good_bad_piece_form").submit();
         });
 
-        $('#export').on('click', function (e) {
-            var data = $("#good_bad_piece_form").serialize();
-            var main_url = "<?php echo $siteURL . "log_module/export_good_bad_piece.php"; ?>";
-            $.ajax({
-                type: 'POST',
-                url: main_url,
-                data: data,
-                success: function (data) {
-                    // window.location.href = window.location.href + "?aa=Line 1";
-                    // $(':input[type="button"]').prop('disabled', false);
-                    // location.reload();
-                }
-            });
-        });
+        //$('#export').on('click', function (e) {
+        //    var data = $("#good_bad_piece_form").serialize();
+        //    var main_url = "<?php //echo $siteURL . "log_module/export_good_bad_piece.php"; ?>//";
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: main_url,
+        //        data: data,
+        //        success: function (data) {
+        //            // window.location.href = window.location.href + "?aa=Line 1";
+        //            // $(':input[type="button"]').prop('disabled', false);
+        //            // location.reload();
+        //        }
+        //    });
+        //});
         $('#part_family').on('change', function (e) {
             $("#good_bad_piece_form").submit();
         });
