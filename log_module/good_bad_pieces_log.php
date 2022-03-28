@@ -488,23 +488,30 @@ include("../heading_banner.php");
 							?>
 
                     <div class="panel-footer p_footer">
-                        <div>
+                        <div class="row">
+                            <div class="col-md-2">
                             <button type="submit" class="btn btn-primary"
                                     style="width:120px;margin-right: 20px;background-color:#1e73be;">
                                 Submit
                             </button>
+                            </div>
+                            <div class="col-md-2">
                             <button type="button" class="btn btn-primary" onclick='window.location.reload();'
                                     style="background-color:#1e73be;margin-right: 20px;width:120px;">Reset
                             </button>
-                            <!--                            <form action="export_station_events_log.php" method="post" name="export_excel">-->
-                            <!--                                <button type="submit" class="btn btn-primary"-->
-                            <!--                                        style="background-color:#1e73be;width:120px;"-->
-                            <!--                                        id="export" name="export" data-loading-text="Loading...">Export Data-->
-                            <!--                                </button>-->
-                            <!--                            </form>-->
+                            </div>
+                        </form>
+
+                        <div class="col-md-2">
+                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                    style="background-color:#1e73be;width:120px;"
+                                                                    id="export" name="export" data-loading-text="Loading...">Export Data
+                                                            </button>
+                                                        </form>
                         </div>
                     </div>
-                    </form>
+
                     </div>
                 </div>
 

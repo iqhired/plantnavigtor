@@ -425,13 +425,13 @@ $msg = explode(',', $msg); ?>
                                 </a>
                             </div>
 						<?php }
-						if (in_array('6', $msg)) { ?>
-                            <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>chatbot/chat.php" class="text-muted mobile">
-                                    Chat
-                                </a>
-                            </div>
-						<?php } ?>
+//						if (in_array('6', $msg)) { ?>
+<!--                            <div class="mt-3">-->
+<!--                                <a href="--><?php //echo $siteURL; ?><!--chatbot/chat.php" class="text-muted mobile">-->
+<!--                                    Chat-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--						--><?php //} ?>
                     </div>
                 </div>
             </div>
@@ -1157,9 +1157,9 @@ $msg = explode(',', $msg); ?>
 								<?php if (in_array('5', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>group_mail_module.php">Mail</a></li>
 								<?php }
-								if (in_array('6', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>chatbot/chat.php">Chat</a></li>
-								<?php } ?>
+//								if (in_array('6', $msg)) { ?>
+<!--                                    <li><a href="--><?php //echo $siteURL; ?><!--chatbot/chat.php">Chat</a></li>-->
+<!--								--><?php //} ?>
                             </ul>
                         </div>
                     </li>
@@ -1632,55 +1632,55 @@ $msg = explode(',', $msg); ?>
         </div>
     </div>
 </nav>
-<script>
-    $(".use1_namelist").click(function (event) {
-        $(".chat-list").html(" ");
-        var user_id = $(this).data("id");
-        var chat_id = $(this).attr("value");
-//alert(chat_id);
-        $.ajax({
-            type: 'POST',
-            url: 'chatbot/chat_div.php',
-            data: {
-                user_id: user_id,
-                chat_id: chat_id,
-            },
-            success: function (data) {
-                window.setTimeout(function () {
-                    window.location.href = "chatbot/chat.php";
-
-                }, 10);
-
-            }
-        });
-    });
-
-    //notification status checking
-    var data_interval = setInterval(function () {
-        var id = $("#login_id").val();
-//alert(data);
-        $.ajax({
-            url: "chatbot/status_count.php",
-            method: "POST",
-            data: {id: id},
-            dataType: 'json',
-            encode: true,
-            success: function (res) {
-
-                if (res > 0) {
-//alert(res);
-                    $("#bell_icon").css('color', 'red');
-//$("#bell_icon").css('margin-top','0px');
-                    $("#bell_count").text(res);
-
-                } else {
-
-                }
-
-            }
-        });
-    }, 1000);
-</script>
+<!--<script>-->
+<!--    $(".use1_namelist").click(function (event) {-->
+<!--        $(".chat-list").html(" ");-->
+<!--        var user_id = $(this).data("id");-->
+<!--        var chat_id = $(this).attr("value");-->
+<!--//alert(chat_id);-->
+<!--        $.ajax({-->
+<!--            type: 'POST',-->
+<!--            url: '../chatbot/chat_div.php',-->
+<!--            data: {-->
+<!--                user_id: user_id,-->
+<!--                chat_id: chat_id,-->
+<!--            },-->
+<!--            success: function (data) {-->
+<!--                window.setTimeout(function () {-->
+<!--                    window.location.href = "../chatbot/chat.php";-->
+<!---->
+<!--                }, 10);-->
+<!---->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!---->
+<!--    //notification status checking-->
+<!--    var data_interval = setInterval(function () {-->
+<!--        var id = $("#login_id").val();-->
+<!--//alert(data);-->
+<!--        $.ajax({-->
+<!--            url: "../chatbot/status_count.php",-->
+<!--            method: "POST",-->
+<!--            data: {id: id},-->
+<!--            dataType: 'json',-->
+<!--            encode: true,-->
+<!--            success: function (res) {-->
+<!---->
+<!--                if (res > 0) {-->
+<!--//alert(res);-->
+<!--                    $("#bell_icon").css('color', 'red');-->
+<!--//$("#bell_icon").css('margin-top','0px');-->
+<!--                    $("#bell_count").text(res);-->
+<!---->
+<!--                } else {-->
+<!---->
+<!--                }-->
+<!---->
+<!--            }-->
+<!--        });-->
+<!--    }, 1000);-->
+<!--</script>-->
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 <script src="<?php echo $siteURL; ?>bootstrap/js/popper.min.js"></script>
 <script src="<?php echo $siteURL; ?>bootstrap/js/bootstrap.min.js"></script>
@@ -1688,8 +1688,7 @@ $msg = explode(',', $msg); ?>
 <!--<script src="--><?php //echo $siteURL; ?><!--assets/js/app.js"></script>-->
 
 <script src="<?php echo $siteURL; ?>assets/js/custom.js"></script>
-<!-- END GLOBAL MANDATORY SCRIPTS -->
-<script src="<?php echo $siteURL; ?>assets/js/dashboard/dash_2.js"></script>
+
 
 <!--<script>-->
 <!--    $(document).ready(function () {-->

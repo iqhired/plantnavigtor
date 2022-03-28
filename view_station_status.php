@@ -117,7 +117,7 @@ $assign_line = htmlspecialchars($_GET["station"]);
 
             #screen_header{
                 font-size:  2em;
-                margin-top: 20px !important;
+                margin-top: 0px !important;
                 /*color:#286090;*/
                 color: #f7f7f7;
                 /*margin-top: 15px !important;*/

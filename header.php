@@ -68,6 +68,7 @@ if(!empty($result1)) {
 
     .header-right {
         float: right;
+        margin-top: 5.5px;
     }
 
     @media screen and (max-width: 500px) {

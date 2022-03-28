@@ -171,6 +171,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 width: 35%!important;
                 float: left;
             }
+            .col-md-3 {
+                width: 25%;
+                float: left;
+            }
         }
 
         .form-check-inline .form-check-input {
