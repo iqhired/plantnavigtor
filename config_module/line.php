@@ -267,7 +267,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                 </td>
                                                 <td>
 
-                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary1">Enabled </button>
+                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" style="background-color:#d84315;" data-target="#edit_modal_theme_primary1">On/Off </button>
                                                     <!--									&nbsp;
                                                                                                                             <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
                                                     -->
