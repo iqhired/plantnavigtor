@@ -94,10 +94,11 @@ if ($button == "button1") {
 } else{
 	$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 }
-$sql1 = "SELECT good_bad_pieces_details.defect_name,SUM(good_bad_pieces_details.rework) AS rework,SUM(good_bad_pieces_details.bad_pieces) AS bad_pieces FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " GROUP BY defect_name";
+
+$sql1 = "SELECT (good_bad_pieces_details.bad_pieces) AS bad_pieces  , (good_bad_pieces_details.rework) AS rework , good_bad_pieces_details.defect_name , good_bad_pieces_details.created_by as Personnel , good_bad_pieces_details.created_at Created_At FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " Order By created_at DESC";
 $exportData = mysqli_query($db,$sql1);
 
-$header = "Sr. No" . "\t" . "Good Piece" . "\t" . "Bad Pieces" . "\t" . "Rework" . "\t" . "Defect Name" . "\t" . "Time" ;
+$header = "Sr. No" ."\t" . "Bad Pieces" . "\t" . "Rework" . "\t" . "Defect Name" ."\t" . "Personnel" . "\t" . "Time" ;
 $result = '';
 $fields = mysqli_num_fields($db, $exportData);
 for ($i = 0; $i < $fields; $i++) {
@@ -111,48 +112,6 @@ while ($row = mysqli_fetch_row($exportData)) {
             $value = "\t";
         } else {
             $value = str_replace('"', '""', $value);
-            if ($j == 1) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT taskboard_name FROM  sg_taskboard where sg_taskboard_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $lnn = $rowc04["taskboard_name"];
-                }
-                $value = $lnn;
-
-            }
-            if ($j == 2) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT firstname,lastname FROM  cam_users where users_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $first = $rowc04["firstname"];
-                    $last = $rowc04["lastname"];
-                }
-                $value = $first . " " . $last;
-            }
-            if ($j == 3) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT tm_equipment_name FROM  tm_equipment where tm_equipment_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $pnn = $rowc04["tm_equipment_name"];
-                }
-                $value = $pnn;
-            }
-            if ($j == 4) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT tm_property_name FROM  tm_property where tm_property_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $pnn = $rowc04["tm_property_name"];
-                }
-                $value = $pnn;
-            }
-            if ($j == 5) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT tm_building_name FROM  tm_building where tm_building_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $pnn = $rowc04["tm_building_name"];
-                }
-                $value = $pnn;
-            }
             $value = '"' . $value . '"' . "\t";
         }
         $line .= $value;
