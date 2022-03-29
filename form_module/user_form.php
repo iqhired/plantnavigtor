@@ -959,15 +959,17 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if (arr_data["all_dept_approved"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'green'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #d84315'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
-                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#reject_'+this.id.split("_")[1]).attr('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'green'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#reject_'+this.id.split("_")[1]).attr('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
@@ -1018,21 +1020,22 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if(arr_data["all_dept_rejected"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'red'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #d84315'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-
+                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#approve_'+this.id.split("_")[1]).attr('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_rejected"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'red'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #d84315'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
-                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#approve_'+this.id.split("_")[1]).attr('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#btnSubmit_1').removeAttr('disabled');
                 }
