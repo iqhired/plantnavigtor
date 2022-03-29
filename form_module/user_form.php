@@ -649,8 +649,13 @@ include("../heading_banner.php");
 
                                     <b><h4 class="panel-title form_panel_title">Approval List</h4></b>
                                     <form action="" id="approve_form" class="form-horizontal" method="post" autocomplete="off">
-                                    <div class="form_table">
-
+                                    <table class="form_table">
+                                        <tr class="form_tab_tr">
+                                            <th class="form_tab_th">Department</th>
+                                            <th class="form_tab_th">Approver</th>
+                                            <th class="form_tab_th">Digital Signature</th>
+                                            <th class="form_tab_th">Actions</th>
+                                        </tr>
 										<?php
 										$query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$item_id' and need_approval = 'yes'");
 										$qur1 = mysqli_query($db, $query1);
@@ -669,12 +674,12 @@ include("../heading_banner.php");
 														$groupname = $rowctemp["group_name"]
 
 														?>
-                                                        <div class="form_tab_label">
+                                                        <td class="form_tab_td">
                                                             <input type="hidden" name="approval_dept"
                                                                    id="approval_dept_<?php echo $j ?>"
                                                                    value="<?php echo $arr; ?>">
 															<?php echo $groupname; ?>
-                                                        </div>
+                                                        </td>
                                                         <td class="form_tab_td">
                                                             <select class="select-border-color"
                                                                     name="approval_initials"
@@ -702,7 +707,7 @@ include("../heading_banner.php");
                                                             </select>
                                                             <span style="font-size: x-small;color: darkred;display: none;" id="u_error_<?php echo $j; ?>">Select User.</span>
                                                         </td>
-                                                        <td class="form_tab_btn" id="approve_msg">
+                                                        <td class="form_tab_td" id="approve_msg">
                                                             <input type="password" name="pin[]" id="pin_<?php echo $j ?>"
                                                                    class="form-control" style=" margin-bottom: 5px;"
                                                                    placeholder="Enter Pin..."  autocomplete="off" >
@@ -758,7 +763,7 @@ include("../heading_banner.php");
 										}
 										?>
 
-                                    </div>
+                                    </table>
                                     <tr>
                                         <hr class="form_hr"/>
 
@@ -956,15 +961,13 @@ $('#reject').on('change', function () {
                 }else if (arr_data["all_dept_approved"] == 1) {
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #d84315'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
-                    // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).attr('display', 'none');
+                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color: #43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).attr('display', 'none');
+                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
@@ -1019,8 +1022,8 @@ $('#reject').on('change', function () {
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).attr('display', 'none');
+                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_rejected"] == 0){
@@ -1029,8 +1032,7 @@ $('#reject').on('change', function () {
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
-                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).attr('display', 'none');
+                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#btnSubmit_1').removeAttr('disabled');
                 }
