@@ -707,13 +707,13 @@ include("../heading_banner.php");
                                                                    name="approval_dept_cnt" value=""/>
                                                             <button type="submit" id="approve_<?php echo $j ?>"
                                                                     name="approve"
-                                                                    class="btn btn-primary tooltip approve">
+                                                                    class="btn btn-primary approve">
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
 
                                                             </button>
                                                             <button type="submit" id="reject_<?php echo $k ?>"
                                                                     name="reject"
-                                                                    class="btn btn-primary tooltip reject">
+                                                                    class="btn btn-primary reject">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
 
                                                             </button>
@@ -970,7 +970,7 @@ $('#reject').on('change', function () {
         y.style.display = "none";
         var z = document.getElementById("rej_reason_div_"+index);
         if (z.style.display === "none") {
-            z.style.display = "table-row";
+            z.style.display = "block";
         //<td class="form_tab_td" colspan="4">
         //        <textarea class="form-control" placeholder="Enter Reject Reason..." oninvalid="this.setCustomValidity('Enter Reject reason')"
         //    onvalid="this.setCustomValidity('')" id="rej_reason_<?php //echo $j ?>//" name = "rej_reason_<?php //echo $j ?>//" rows="1"></textarea>
