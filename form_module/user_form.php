@@ -722,14 +722,14 @@ include("../heading_banner.php");
                                                             <button type="submit" id="approve_<?php echo $j ?>"
                                                                     name="approve"
                                                                     class="btn btn-primary tooltip approve"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -30px;">
+                                                                    style="background-color:#1e73be;font-size: 12px;margin-left: 16px;margin-top: 9px;">
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Approve</span>
                                                             </button>
                                                             <button type="submit" id="reject_<?php echo $k ?>"
                                                                     name="reject"
                                                                     class="btn btn-primary tooltip reject"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -30px;">
+                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -60px;">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Reject</span>
                                                             </button>
