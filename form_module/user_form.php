@@ -112,14 +112,14 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .approve {
             background-color: #1e73be;
             font-size: 12px;
-            margin-left: 16px;
-            margin-top: 9px;
+            /*margin-left: 16px;*/
+            margin-top: 1px;
         }
         .reject {
             background-color: #1e73be;
             font-size: 12px;
-            margin-left: 16px;
-            margin-top: 5px;
+            /*margin-left: 16px;*/
+            margin-top: 1px;
         }
 
 
@@ -726,11 +726,11 @@ include("../heading_banner.php");
 
                                                         </span>
                                                         </div>
-                                                        <hr/>
                                                     </div>
                                                     <div id="rej_reason_div_<?php echo $j ?>" style="display: none">
                                                         <span class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" >
                                                     </div>
+                                                    <hr/>
 													<?php
 													$j++;
 													$k++;
