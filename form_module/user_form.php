@@ -112,13 +112,13 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .approve {
             background-color: #1e73be;
             font-size: 12px;
-            /*margin-left: 16px;*/
+            margin-left: 16px;
             margin-top: 1px;
         }
         .reject {
             background-color: #1e73be;
             font-size: 12px;
-            /*margin-left: 16px;*/
+            margin-left: 16px;
             margin-top: 1px;
         }
 
