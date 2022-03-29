@@ -989,13 +989,13 @@ $('#reject').on('change', function () {
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
                     // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).addClass('display', 'none');
+                    $('#reject_'+this.id.split("_")[1]).css('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).addClass('display', 'none');
+                    $('#reject_'+this.id.split("_")[1]).css('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
@@ -1051,7 +1051,7 @@ $('#reject').on('change', function () {
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).addClass('display', 'none');
+                    $('#approve_'+this.id.split("_")[1]).css('display', 'none');
 
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
@@ -1062,7 +1062,7 @@ $('#reject').on('change', function () {
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).addClass('display', 'none');
+                    $('#approve_'+this.id.split("_")[1]).css('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#btnSubmit_1').removeAttr('disabled');
                 }
