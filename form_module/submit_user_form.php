@@ -113,6 +113,14 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .content:first-child {
                 padding-top: 90px!important;
             }
+            .col-md-3 {
+                width: 35%;
+                float: left;
+            }
+            .col-md-1 {
+                width: 5%;
+                float: right;
+            }
 
 
         }
@@ -526,7 +534,7 @@ include("../heading_banner.php");
                                                 <div style="font-size: medium;font-color:#c1c1c1"><?php echo "(" . htmlspecialchars($rowc['discription']) . ")" ?></div>
 											<?php } ?>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form">
                                             <input type="hidden" name="form_item_array[]"
                                                    value="<?php echo $rowc['form_item_id']; ?>"/>
                                             <div class="form-check form-check-inline">
@@ -706,7 +714,7 @@ include("../heading_banner.php");
                                             <div style="font-size: medium;font-color:#c1c1c1"><?php echo "(" . $rowc['discription'] . ")" ?></div>
 										<?php } ?>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 form">
                                         <input type="hidden" name="form_item_array[]"
                                                value="<?php echo $rowc['form_item_id']; ?>">
 										<?php if ($rowc['optional'] != '1') { ?>
@@ -836,7 +844,7 @@ include("../heading_banner.php");
 
                                     <input type="hidden" name="form_item_array[]"
                                            value="<?php echo $rowc['form_item_id']; ?>">
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 form">
                                         <div class="form-check form-check-inline">
 
 
@@ -904,7 +912,7 @@ include("../heading_banner.php");
 											echo '<span class="red-star">★</span>';
 										}
 										echo htmlspecialchars($rowc['item_desc']); ?> </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 form">
                                         <input type="hidden" name="form_item_array[]"
                                                value="<?php echo $rowc['form_item_id']; ?>">
                                         <input type="text" name="<?php echo $rowc['form_item_id']; ?>"

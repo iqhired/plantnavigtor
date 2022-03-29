@@ -162,12 +162,21 @@ if (count($_POST) > 0) {
             .col-lg-3{
                 width: 40%!important;
             }
-            .content:first-child {
-                padding-top: 90px!important;
-            }
+
             .col-lg-9 {
                 float: right;
                 width: 60%!important;
+            }
+            .col-md-4 {
+                margin-top: 15px;
+            }
+            .col-md-6.mob_main {
+                width: 50%;
+                float: left;
+            }
+            .col-md-6.mob_main1 {
+                width: 50%;
+                float: right;
             }
         }
         #myTabContent {
@@ -303,7 +312,7 @@ if (!empty($_SESSION[import_status_message])) {
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-6 mob_main">
+                            <div class="col-md-6 mob_main1">
                                 <div class="panel panel-flat">					
                                     <table class="table datatable-basic">
                                         <thead>

@@ -176,7 +176,7 @@ $message = date("Y-m-d H:i:s");
                                                 ?> &nbsp;</div>
                                         </div>
     <!--                                <h4 style="text-align: center;background-color:#<?php echo $buttonclass; ?>;"><div id="txt" >&nbsp; </div></h4>
-                                        -->                             <h4 style="text-align: center;background-color:#<?php echo $buttonclass; ?>;">
+                                        -->                             <h4 style="text-align: center;background-color:#<?php echo $buttonclass; ?>;color: #fff;">
                                             <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div></h4>
                                         <?php
                                         $variable123 = $time;

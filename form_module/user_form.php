@@ -163,9 +163,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .form_row_item{
                 width: 100%;
             }
-            .form_col_item{
-                width: 40%;
-            }
+
             .col-md-3.mob{
                 width:40%;
             }
@@ -194,9 +192,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .col-lg-3{
                 width: 35%!important;
             }
-            .content:first-child {
-                padding-top: 90px!important;
-            }
+
             .select2-selection--single{
                 border-block-start: inherit;
             }
@@ -602,7 +598,7 @@ include("../heading_banner.php");
 
                                             <!-- <div class="col-md-4 form_col_item">-->
 											<?php //echo $rowc['item_desc']; ?><!-- </div>-->
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 form">
                                                 <input type="hidden" name="form_item_array[]"
                                                        value="<?php echo $rowc['form_item_id']; ?>"/>
                                                 <input type="text" class="form-control" name="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"

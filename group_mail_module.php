@@ -81,10 +81,21 @@ if ($i != "super" && $i != "admin") {
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
                 .col-lg-2{
                     width: 35%!important;
+                    float: left;
                 }
-                .content:first-child {
-                    padding-top: 90px!important;
+
+                .col-md-6 {
+                    width: 60%;
+                    float: left;
                 }
+                .col-md-1 {
+                    width: 5%;
+                    float: right;
+                }
+                .col-md-4 {
+                    width: 65%;
+                    float: right;
+                }x
 
 
             }
@@ -155,8 +166,8 @@ if ($i != "super" && $i != "admin") {
                                                         </select>
                                                     </div>	
                                                 </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>										
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -174,8 +185,8 @@ if ($i != "super" && $i != "admin") {
                                                         </select>
                                                     </div>	
                                                 </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="user1()">Add More</button>										
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="user1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                             <div class="row">
