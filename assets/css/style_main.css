@@ -553,6 +553,7 @@ span {
     text-transform: inherit;
     font-size: large;
     font-family: monospace;
+    text-align: justify;
 }
 
 .form_col_option{
@@ -561,6 +562,7 @@ span {
     text-transform: inherit;
     font-size: medium;
     font-family: monospace;
+    float: right;
 }
 
 .form_sub_header{
