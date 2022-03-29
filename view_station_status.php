@@ -335,9 +335,13 @@ $assign_line = htmlspecialchars($_GET["station"]);
             .logo_img{
                 height: auto;
                 width: 120px;
+                margin-top: -12px;
             }
             .content_noheader {
                 padding: 50px 30px !important;
+            }
+            #screen_header{
+                margin-top: -32px;
             }
 
         }
