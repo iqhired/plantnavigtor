@@ -86,7 +86,7 @@ only screen and (max-width: 760px),
     }
     textarea.form-control {
         height: auto;
-        font-size: 18px;
+        font-size: 15px;
     }
     .approve {
         margin-top: 28px;

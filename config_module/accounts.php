@@ -155,9 +155,16 @@ if (count($_POST) > 0) {
             }
 
             label.col-lg-5.control-label {
-                width: 47%;
+                width: 30%;
             }
+            .modal-dialog {
+                position: relative;
+                width: auto;
+                margin: 90px!important;
+            }
+
         }
+
     </style>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
