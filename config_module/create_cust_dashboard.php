@@ -176,10 +176,24 @@ if (count($_POST) > 0) {
 
 			label.col-lg-4.control-label {
 				width: 40%;
+                float: left;
 			}
 			label.col-lg-5.control-label {
 				width: 40%;
 			}
+            .col-md-6.mobile_select {
+                width: 80%;
+                float: left;
+                margin-left: 1px;
+            }
+            .col-lg-6 {
+                float: left;
+                width: 55% !important;
+            }
+            .col-lg-2 {
+                width: 5%;
+                float: right;
+            }
 
 		}
         .panel.panel-flat {
@@ -242,11 +256,11 @@ include("../heading_banner.php");
                         </div>
 					</div>
 					<div class="row">
-						<div class="col-md-8 mobile" style="margin-top: 15px;">
+						<div class="col-md-6  mobile_select">
 							<div class="form-group">
 								<label class="col-lg-4 control-label mobile">Select Stations * : </label>
 
-								<div class="col-lg-6" style="margin-left: -66px;">
+								<div class="col-lg-6">
 									<select required class="select-border-color" data-placeholder="Add Stations..."  name="stations[]" id="stations" multiple="multiple"  >
 										<?php
 										//$assigned_stations = implode("', '", $line_array);
@@ -261,8 +275,8 @@ include("../heading_banner.php");
 									</select>
 								</div>
 
-								<div>
-									<button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>
+								<div class="col-lg-2">
+									<button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
 								</div>
 							</div>
 						</div>

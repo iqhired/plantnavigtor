@@ -82,6 +82,7 @@ if ($i != "super" && $i != "admin") {
             top: -30px!important;
 
         }
+
 		</style>
     </head>
 
@@ -319,11 +320,12 @@ if(count($_POST) > 0)
                             <tr>
 								<th><input type="checkbox" id="checkAll" ></th>                                           
                                 <th>Sl. No</th>
+                                <th>Action</th>
                                 <th>Form Name</th>
                                 <th>Form Type</th>
                                 <th>PO Number</th>
                                 <th>DA Number</th>
-                                <th>Action</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -359,6 +361,10 @@ if(count($_POST) > 0)
 									<td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["form_create_id"]; ?>"></td>
                                                 
                                     <td><?php echo ++$counter; ?></td>
+                                    <td>
+                                        <!--                                        <button type="button" id="edit" class="btn btn-info btn-xs">ED</button>-->
+                                        <a href="form_edit.php?id=<?php echo $rowc['form_create_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
+                                    </td>
                                     <td><?php echo $rowc["name"]; ?></td>
 									<?php
 									$station1 = $rowc['form_type'];
@@ -371,10 +377,7 @@ if(count($_POST) > 0)
                                     
 									<td><?php echo $rowc["po_number"]; ?></td>
 									<td><?php echo $rowc["da_number"]; ?></td>
-									<td>
-<!--                                        <button type="button" id="edit" class="btn btn-info btn-xs">ED</button>-->
-                                        <a href="form_edit.php?id=<?php echo $rowc['form_create_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
-                                    </td>
+
                                 </tr>
 							<?php } ?>
                             </tbody>

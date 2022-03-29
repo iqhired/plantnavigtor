@@ -264,11 +264,36 @@ if (count($_POST) > 0) {
 
             label.col-lg-4.control-label {
                 width: 40%;
+                float: left;
             }
             label.col-lg-5.control-label {
                 width: 42%;
             }
+            .col-lg-6 {
+                float: left;
+                width: 55% !important;
+            }
+            .col-lg-2 {
+                width: 5%;
+                float: right;
+            }
+            .col-md-6.mobile_select {
+                width: 80%!important;
+                float: left;
+                margin-left: 1px;
+            }
 
+        }
+        .col-md-6.mobile_select {
+            width: 80%;
+            float: left;
+            margin-left: 1px;
+        }
+        .col-lg-6 {
+            width: 45%;
+        }
+        .col-lg-2 {
+            float: right;
         }
     </style>
 </head>
@@ -333,8 +358,8 @@ include("../heading_banner.php");
                                 <!-- File Upload -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label">Upload Cell Image : </label>
-                                        <div class="col-lg-8">
+                                        <label class="col-lg-5 control-label">Upload Cell Image : </label>
+                                        <div class="col-lg-7">
                                             <input type="file" name="image" id="image"
                                                    class="form-control">
                                             <div id="1" style="color:grey;">* File size must be less than 2 MB.
@@ -349,7 +374,7 @@ include("../heading_banner.php");
                                     <div class="form-group">
                                         <!--										<div class="col-lg-8 mobile">-->
                                         <label class="col-lg-5 control-label">Enabled: </label>
-                                        <div class="col-md-7">
+                                        <div class="col-lg-7">
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" id="yes" name="enabled" value="1" class="form-check-input" checked>
                                                 <label for="yes" class="item_label">Yes</label>
@@ -370,11 +395,12 @@ include("../heading_banner.php");
 <!--                                        </div>-->
                                     </div>
                                 </div>
-                                <div class="col-md-8 mobile"  style="margin-top: 15px;">
+                                <div class="col-md-6 mobile_select" >
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label mobile">Select Stations * : </label>
 
-                                        <div class="col-lg-6" style="margin-left: -62px;">
+
+                                        <div class="col-lg-6">
                                             <select required class="select-border-color" data-placeholder="Add Stations..."  name="stations[]" id="stations" multiple="multiple"  >
 
                                                 <?php
@@ -390,8 +416,8 @@ include("../heading_banner.php");
                                             </select>
                                         </div>
 
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>
+                                        <div class="col-lg-2">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </div>

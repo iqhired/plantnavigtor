@@ -146,6 +146,25 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .content{
                 padding-top: 90px!important;
             }
+                .col-md-0\.5 {
+                    float: right;
+                    width: 5%;
+                }
+
+                .col-md-6 {
+                    width: 60%;
+                    float: left;
+                }
+
+                .col-lg-2 {
+                    width: 35% !important;
+                    float: left;
+                }
+            .col-md-3 {
+                width: 30%;
+                float: left;
+            }
+
         }
     </style>
 </head>
@@ -397,8 +416,8 @@ include("../heading_banner.php");
 
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -428,8 +447,8 @@ include("../heading_banner.php");
 
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -453,8 +472,8 @@ include("../heading_banner.php");
                                                 </select>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group3()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group3()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -518,8 +537,8 @@ include("../heading_banner.php");
                                                 </select>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group4()">Add More</button>
+                                        <div class="col-md-0.5">
+                                            <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group4()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -545,7 +564,7 @@ include("../heading_banner.php");
                                                 $min = $arrteam1[1];
 										?>
                                         <div class="col-md-3">
-                                            <select name="duration_hh" id="duration_hh" value="<?php echo $hr; ?>" class="form-control">
+                                            <select name="duration_hh" id="duration_hh" value="<?php echo $hr; ?>" class="select form-control" data-style="bg-slate">
                                                 <option value="" disabled selected>--- Select Hours ---</option>
                                                 <option value="00" <?php if($hr == '00'){echo 'selected';} ?>>00</option>
                                                 <option value="01" <?php if($hr == '01'){echo 'selected';} ?>>01</option>
@@ -574,7 +593,7 @@ include("../heading_banner.php");
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <select name="duration_mm" id="duration_mm" value="<?php echo $min; ?>" class="form-control">
+                                            <select name="duration_mm" id="duration_mm" value="<?php echo $min; ?>" class="select form-control" data-style="bg-slate">
                                                 <option value="" disabled selected>--- Select Minutes ---</option>
                                                 <option value="00" <?php if($min == '00'){echo 'selected';} ?>>00</option>
                                                 <option value="01" <?php if($min == '01'){echo 'selected';} ?>>01</option>
