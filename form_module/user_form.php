@@ -185,15 +185,15 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 width:40%;
             }
             .form_tab_td{
-                padding: 0px 0px;
+                padding: 10px 100px;
             }
-            .reject {
-                background-color: #1e73be;
-                font-size: 12px;
-                margin-left: 16px;
-                margin-top: -36px;
-                float: right;
-            }
+            /*.reject {*/
+            /*    background-color: #1e73be;*/
+            /*    font-size: 12px;*/
+            /*    margin-left: 16px;*/
+            /*    margin-top: -36px;*/
+            /*    float: right;*/
+            /*}*/
             textarea.form-control {
                 height: auto;
                 font-size: 15px;
@@ -735,7 +735,7 @@ include("../heading_banner.php");
                                                             </select>
                                                             <span style="font-size: x-small;color: darkred;display: none;" id="u_error_<?php echo $j; ?>">Select User.</span>
 
-                                                        <span class="form_tab_td" id="approve_msg" style="float: left !important;padding: 0px 60px !important;width: 13% !important;">
+                                                        <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important;padding: 0px 30px !important;">
                                                             <input type="password" name="pin[]" id="pin_<?php echo $j ?>"
                                                                    class="form-control" style=" margin-bottom: 5px;width: auto !important;"
                                                                    placeholder="Enter Pin..."  autocomplete="off" >
