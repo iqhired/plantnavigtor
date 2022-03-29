@@ -183,6 +183,13 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .form_tab_td{
                 padding: 0px 0px;
             }
+            .reject {
+                background-color: #1e73be;
+                font-size: 12px;
+                margin-left: 16px;
+                margin-top: -36px;
+                float: right;
+            }
 
         }
         @media
@@ -666,7 +673,7 @@ include("../heading_banner.php");
                                         <tr class="form_tab_tr">
                                             <th class="form_tab_th">Department</th>
                                             <th class="form_tab_th">Approver</th>
-                                            <th class="form_tab_th">Digital Signature</th>
+                                            <th class="form_tab_th">Pin</th>
                                             <th class="form_tab_th">Actions</th>
                                         </tr>
 										<?php
@@ -972,13 +979,14 @@ $('#reject').on('change', function () {
                 }else if (arr_data["all_dept_approved"] == 1) {
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
-                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#reject_'+this.id.split("_")[1]).addClass('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#reject_'+this.id.split("_")[1]).addClass('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
@@ -1033,7 +1041,8 @@ $('#reject').on('change', function () {
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#approve_'+this.id.split("_")[1]).addClass('display', 'none');
 
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
@@ -1043,7 +1052,8 @@ $('#reject').on('change', function () {
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
-                    $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
+                    $('#approve_'+this.id.split("_")[1]).addClass('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#btnSubmit_1').removeAttr('disabled');
                 }
