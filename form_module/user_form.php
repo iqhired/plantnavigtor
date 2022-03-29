@@ -190,6 +190,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 margin-top: -36px;
                 float: right;
             }
+            textarea.form-control {
+                height: auto;
+                font-size: 15px;
+            }
 
         }
         @media
