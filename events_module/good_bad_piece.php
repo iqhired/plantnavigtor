@@ -188,7 +188,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
                     <div class="panel panel-flat">
 						<?php
-						$sql = "select * from good_bad_pieces where station_event_id ='$station_event_id' and event_status = '1'";
+						$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
 						$result1 = mysqli_query($db, $sql);
 						$rowc = mysqli_fetch_array($result1);
 						$gp = $rowc['good_pieces'];
@@ -312,7 +312,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                             <tbody>
 							<?php
 							$station_event_id = $_GET['station_event_id'];
-							$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+							$query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
 							$qur = mysqli_query($db, $query);
 							while ($rowc = mysqli_fetch_array($qur)) {
 								$style = "";
