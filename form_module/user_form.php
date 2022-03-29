@@ -147,6 +147,19 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             color: #999;
             border-bottom-style: inset;
         }
+        .approve {
+            background-color: #1e73be;
+            font-size: 12px;
+            margin-left: 16px;
+            margin-top: 9px;
+        }
+        .reject {
+            background-color: #1e73be;
+            font-size: 12px;
+            margin-left: 16px;
+            margin-top: 5px;
+        }
+
 
 
 
@@ -721,15 +734,13 @@ include("../heading_banner.php");
                                                                    name="approval_dept_cnt" value=""/>
                                                             <button type="submit" id="approve_<?php echo $j ?>"
                                                                     name="approve"
-                                                                    class="btn btn-primary tooltip approve"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-left: 16px;margin-top: 9px;">
+                                                                    class="btn btn-primary tooltip approve">
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Approve</span>
                                                             </button>
                                                             <button type="submit" id="reject_<?php echo $k ?>"
                                                                     name="reject"
-                                                                    class="btn btn-primary tooltip reject"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -60px;">
+                                                                    class="btn btn-primary tooltip reject">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Reject</span>
                                                             </button>
@@ -959,13 +970,13 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if (arr_data["all_dept_approved"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').text('Approved').css({'margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
                     $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').text('Approved').css({'margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
@@ -1018,7 +1029,7 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if(arr_data["all_dept_rejected"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').text('Rejected').css({'margin-left':'62px','margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#d84315'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
@@ -1027,7 +1038,7 @@ $('#reject').on('change', function () {
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_rejected"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').text('Rejected').css({'margin-left':'62px','margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#d84315'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
