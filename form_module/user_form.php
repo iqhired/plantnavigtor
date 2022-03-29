@@ -95,6 +95,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         #rej_reason_div_{
             display: none;
         }
+        .select2-container {
+            width: auto !important;
+            float: left !important;
+        }
         .tooltip {
             position: relative;
             display: inline-block;
@@ -673,13 +677,13 @@ include("../heading_banner.php");
 
                                     <b><h4 class="panel-title form_panel_title">Approval List</h4></b>
                                     <form action="" id="approve_form" class="form-horizontal" method="post" autocomplete="off">
-                                    <table class="form_table">
-                                        <tr class="form_tab_tr">
-                                            <th class="form_tab_th">Department</th>
-                                            <th class="form_tab_th">Approver</th>
-                                            <th class="form_tab_th">Pin</th>
-                                            <th class="form_tab_th">Actions</th>
-                                        </tr>
+                                    <div class="form_table">
+<!--                                        <tr class="form_tab_tr">-->
+<!--                                            <th class="form_tab_th">Department</th>-->
+<!--                                            <th class="form_tab_th">Approver</th>-->
+<!--                                            <th class="form_tab_th">Digital Signature</th>-->
+<!--                                            <th class="form_tab_th">Actions</th>-->
+<!--                                        </tr>-->
 										<?php
 										$query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$item_id' and need_approval = 'yes'");
 										$qur1 = mysqli_query($db, $query1);
@@ -691,20 +695,20 @@ include("../heading_banner.php");
 											foreach ($arrteam as $arr) {
 												if ($arr != "") {
 													?>
-                                                    <tr class="form_tab_tr">
+                                                    <div class="form_tab_tr" style="margin-bottom: 30px;">
 														<?php
 														$qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
 														$rowctemp = mysqli_fetch_array($qurtemp);
 														$groupname = $rowctemp["group_name"]
 
 														?>
-                                                        <td class="form_tab_td">
+                                                        <div style="margin-bottom: 10px;">
                                                             <input type="hidden" name="approval_dept"
                                                                    id="approval_dept_<?php echo $j ?>"
                                                                    value="<?php echo $arr; ?>">
 															<?php echo $groupname; ?>
-                                                        </td>
-                                                        <td class="form_tab_td">
+                                                        </div>
+                                                        <div style="font-size: small !important;">
                                                             <select class="select-border-color"
                                                                     name="approval_initials"
                                                                     id="approval_initials_<?php echo $j ?>"
@@ -730,15 +734,15 @@ include("../heading_banner.php");
 																?>
                                                             </select>
                                                             <span style="font-size: x-small;color: darkred;display: none;" id="u_error_<?php echo $j; ?>">Select User.</span>
-                                                        </td>
-                                                        <td class="form_tab_td" id="approve_msg">
+
+                                                        <span class="form_tab_td" id="approve_msg" style="float: left !important;padding: 0px 60px !important;width: 13% !important;">
                                                             <input type="password" name="pin[]" id="pin_<?php echo $j ?>"
-                                                                   class="form-control" style=" margin-bottom: 5px;"
+                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
                                                                    placeholder="Enter Pin..."  autocomplete="off" >
                                                             <span style="font-size: x-small;color: darkred; display: none;" id="pin_error_<?php echo $j; ?>">Invalid Pin.</span>
-                                                        </td>
+                                                        </span>
 
-                                                        <td class="form_tab_td ">
+                                                        <span class="form_tab_td ">
                                                             <input type="hidden" id="form_user_data_id"
                                                                    name="form_user_data_id" value=""/>
                                                             <input type="hidden" id="approval_dept_cnt"
@@ -762,12 +766,13 @@ include("../heading_banner.php");
                                                             <input type="hidden" id="reject_dept_cnt"
                                                                    name="reject_dept_cnt" value=""/>
 
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr id="rej_reason_div_<?php echo $j ?>" style="display: none">
+                                                        </span>
+                                                        </div>
+                                                        <hr/>
+                                                    </div>
+                                                    <div id="rej_reason_div_<?php echo $j ?>" style="display: none">
                                                         <td class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" colspan="4">
-                                                    </tr>
+                                                    </div>
 													<?php
 													$j++;
 													$k++;
@@ -785,7 +790,7 @@ include("../heading_banner.php");
 										}
 										?>
 
-                                    </table>
+                                    </div>
                                     <tr>
                                         <hr class="form_hr"/>
 
