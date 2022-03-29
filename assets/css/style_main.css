@@ -678,4 +678,7 @@ only screen and (max-width: 760px),
     .cell2{
         width: 100%;
     }
+    .select2-results>.select2-results__options{
+        font-size: 16px;
+    }
 }

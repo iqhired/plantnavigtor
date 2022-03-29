@@ -171,7 +171,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 float: left;
             }
             .col-md-3 {
-                width: 25%;
+                width: 30%;
                 float: left;
             }
         }
