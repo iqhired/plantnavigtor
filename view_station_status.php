@@ -218,6 +218,9 @@ $assign_line = htmlspecialchars($_GET["station"]);
             }
 
         }
+        .content_noheader {
+            padding: 100px 30px !important;
+        }
 
 
     </style>
