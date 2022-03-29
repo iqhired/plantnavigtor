@@ -959,13 +959,13 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if (arr_data["all_dept_approved"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').text('Approved').css({'margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'green'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
                     $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_approved"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').text('Approved').css({'margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'green'});
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
@@ -1018,7 +1018,7 @@ $('#reject').on('change', function () {
                         x.style.display = "block";
                     }
                 }else if(arr_data["all_dept_rejected"] == 1) {
-                    $('#' + this.id).attr('disabled', 'disabled').text('Rejected').css({'margin-left':'62px','margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'red'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
@@ -1027,7 +1027,7 @@ $('#reject').on('change', function () {
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#btnSubmit_1').removeAttr('disabled');
                 }else if(arr_data["all_dept_rejected"] == 0){
-                    $('#' + this.id).attr('disabled', 'disabled').text('Rejected').css({'margin-left':'62px','margin-top':'-20px'});
+                    $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'color':'red'});
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
