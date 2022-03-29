@@ -99,49 +99,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             width: auto !important;
             float: left !important;
         }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            /*border-bottom: 1px dotted black;*/
-            opacity: 1!important;
-            overflow: inherit;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #26a69a;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-
-        }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-
-        }
+       
         .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
              color: #060818!important;
              border-block-start: none;
@@ -751,13 +709,13 @@ include("../heading_banner.php");
                                                                     name="approve"
                                                                     class="btn btn-primary tooltip approve">
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
-                                                                <span class="tooltiptext">Approve</span>
+
                                                             </button>
                                                             <button type="submit" id="reject_<?php echo $k ?>"
                                                                     name="reject"
                                                                     class="btn btn-primary tooltip reject">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
-                                                                <span class="tooltiptext">Reject</span>
+
                                                             </button>
                                                             <!--                                                        </td>-->
                                                             <!--                                                        <td class="form_tab_td" style="padding: 0px;">-->
