@@ -121,6 +121,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
             border-radius: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
+            font-size: 16px;
         }
 
         span.select2-selection.select2-selection--multiple {
@@ -156,9 +157,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
             .col-lg-2{
                 width: 35%!important;
             }
-            .content:first-child {
-                padding-top: 90px!important;
-            }
+
             .col-md-0\.5 {
                 float: right;
                 width: 5%;
@@ -245,7 +244,7 @@ include("../heading_banner.php");
                             <div class="col-md-12">
                                 <form action="fs_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">Name : </label>
+                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Name : </label>
                                         <div class="col-md-6">
                                             <input type="text" name="name" id="name" class="form-control" placeholder="Enter Form Name" required> </div>
                                         <div id="error1" class="red">Please Enter Name</div>
