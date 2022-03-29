@@ -61,19 +61,7 @@ $assign_line = htmlspecialchars($_GET["station"]);
         });
     </script>
     <style type="text/css">
-        html, body {
-        }
 
-        body {
-            background-color: #f8f8f8;
-            font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-        }
-
-        * {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
 
         @media screen and (min-width: 1440px) and (max-width: 1899px){
             .line_head {
@@ -223,137 +211,144 @@ $assign_line = htmlspecialchars($_GET["station"]);
 
 
     </style>
-</head>
-<body>
-<!-- Main navbar -->
-<?php // include("hp_header.php"); ?>
+    <style>
+        .header {
+            overflow: initial;
+            background-color: #060818;
+            padding: 18px 25px;
+        }
 
-<script type="text/javascript" src="assets/js/pages/components_dropdowns.js"></script>
-<style>
-    .header {
-        overflow: initial;
-        background-color: #060818;
-        padding: 18px 25px;
-    }
-
-    .header a {
-        /*float: left;*/
-        color: #fff5f5;
-        /*text-align: center;*/
-        padding: 2px;
-        text-decoration: none;
-        font-size: 14px;
-        line-height: 25px;
-        border-radius: 4px;
-    }
-
-    .header a.logo {
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    /*.header a:hover {*/
-    /*    background-color: #ddd;*/
-    /*    color: black;*/
-    /*}*/
-
-    .header a.active {
-        background-color: dodgerblue;
-        color: white;
-    }
-
-    .header-right {
-        float: right;
-    }
-
-    @media screen and (max-width: 500px) {
         .header a {
-            float: none;
-            display: block;
-            text-align: left;
+            /*float: left;*/
+            color: #fff5f5;
+            /*text-align: center;*/
+            padding: 2px;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 25px;
+            border-radius: 4px;
+        }
+
+        .header a.logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        /*.header a:hover {*/
+        /*    background-color: #ddd;*/
+        /*    color: black;*/
+        /*}*/
+
+        .header a.active {
+            background-color: dodgerblue;
+            color: white;
         }
 
         .header-right {
             float: right;
-            margin-top: -28px;
         }
-        .logo_img {
+
+        @media screen and (max-width: 500px) {
+            .header a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+
+            .header-right {
+                float: right;
+                margin-top: -28px;
+            }
+            .logo_img {
+                height: auto;
+                width: 80px!important;
+            }
+            img.dropbtn_img {
+                height: auto;
+                width: 25px!important;
+                border-radius: 4px;
+
+            }
+            .dropbtn{
+                font-size: 12px!important;
+            }
+            svg.arrow.dropbtn {
+                margin-left: 94px!important;
+                margin-top: -18px!important;
+            }
+
+        }
+        .dropbtn {
+            background-color: #060818;
+            color: white;
+            /*padding: 16px;*/
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /*.dropbtn:hover, .dropbtn:focus {*/
+        /*    background-color: #2980B9;*/
+        /*}*/
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: fixed;
+            background-color: #191e3a;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 9999;
+            border-radius: 6px;
+        }
+
+        .dropdown-content a {
+            color: #fff5f5;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #524d4d;
+        }
+        .logo_img{
             height: auto;
-            width: 80px!important;
+            width: 150px;
         }
         img.dropbtn_img {
             height: auto;
-            width: 25px!important;
+            width: 28px!important;
             border-radius: 4px;
+        }
+        #screen_header {
+            color: #f7f7f7;
+            margin-top: -38px;
+            /* font-size: 1em; */
+            /* margin-top: 30px !important; */
+        }
+        @media
+        only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px) {
+            .logo_img{
+                height: auto;
+                width: 120px;
+            }
+            .content_noheader {
+                padding: 50px 30px !important;
+            }
 
         }
-        .dropbtn{
-            font-size: 12px!important;
-        }
-        svg.arrow.dropbtn {
-            margin-left: 94px!important;
-            margin-top: -18px!important;
-        }
-
-    }
-    .dropbtn {
-        background-color: #060818;
-        color: white;
-        /*padding: 16px;*/
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
-
-    /*.dropbtn:hover, .dropbtn:focus {*/
-    /*    background-color: #2980B9;*/
-    /*}*/
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: fixed;
-        background-color: #191e3a;
-        min-width: 160px;
-        overflow: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 9999;
-        border-radius: 6px;
-    }
-
-    .dropdown-content a {
-        color: #fff5f5;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        border-bottom: 1px solid #524d4d;
-    }
-    .logo_img{
-        height: auto;
-        width: 150px;
-    }
-    img.dropbtn_img {
-        height: auto;
-        width: 28px!important;
-        border-radius: 4px;
-    }
-    #screen_header {
-        color: #f7f7f7;
-        margin-top: -38px;
-        /* font-size: 1em; */
-        /* margin-top: 30px !important; */
-    }
 
 
-    /*.dropdown a:hover {background-color: #ddd;}*/
+        /*.dropdown a:hover {background-color: #ddd;}*/
 
-    .show {display: block;}
-</style>
-
+        .show {display: block;}
+    </style>
+</head>
+<body>
 <?php
 $path = '';
 if(!empty($is_cell_login) && $is_cell_login == 1){
