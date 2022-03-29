@@ -110,7 +110,7 @@ Image credits: unsplash.com
         .hero { width: 980px; }
     }
     @media screen and (max-width: 640px){
-        .hero h1 { font-size: 1em; }
+        .hero h1 { font-size: 1.5em; }
     }
 
 
