@@ -729,7 +729,7 @@ include("../heading_banner.php");
                                                         <hr/>
                                                     </div>
                                                     <div id="rej_reason_div_<?php echo $j ?>" style="display: none">
-                                                        <td class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" colspan="4">
+                                                        <span class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" >
                                                     </div>
 													<?php
 													$j++;
@@ -749,10 +749,10 @@ include("../heading_banner.php");
 										?>
 
                                     </div>
-                                    <tr>
+                                    <div>
                                         <hr class="form_hr"/>
 
-                                    </tr>
+                                    </div>
                                     <!--                                    </form>-->
                                     <div class="row form_row_item">
                                         <input type="hidden" name="click_id_1" id="click_id_1">
