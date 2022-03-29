@@ -18,8 +18,9 @@ $assign_line = htmlspecialchars($_GET["station"]);
     <link href="assets/css/components.css" rel="stylesheet" type="text/css">
     <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style_main.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/menu.css" rel="stylesheet" type="text/css">
 <!--    <link href="--><?php //echo $siteURL; ?><!--assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />-->
-    <link href="<?php echo $siteURL; ?>assets/css/plugins.css" rel="stylesheet" type="text/css" />
+
     <!-- /global stylesheets -->
     <!-- Core JS files -->
     <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
@@ -218,43 +219,174 @@ $assign_line = htmlspecialchars($_GET["station"]);
             }
 
         }
-        .content_noheader {
-            padding: 100px 30px !important;
-        }
+
 
 
     </style>
 </head>
 <body>
 <!-- Main navbar -->
-<?php //include("hp_header.php"); ?>
-<div class="header-container">
-    <header class="header navbar navbar-expand-sm">
+<?php // include("hp_header.php"); ?>
 
-        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+<script type="text/javascript" src="assets/js/pages/components_dropdowns.js"></script>
+<style>
+    .header {
+        overflow: initial;
+        background-color: #060818;
+        padding: 18px 25px;
+    }
 
-        <div class="nav-logo align-self-center">
-            <a class="navbar-brand" href="<?php echo $path?>"><img alt="logo" src="<?php echo $siteURL; ?>assets/img/logo.svg.png"> </a>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <!--			collaps code-->
-            <!--			<ul class="nav navbar-nav nav-collapse">-->
-            <!--				<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>-->
-            <!--			</ul>-->
-			<?php
-			$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$assign_line' ");
-			while ($rowctemp = mysqli_fetch_array($qurtemp)) {
-				$linename = $rowctemp["line_name"];
-			}
-			?>
-            <div class="col-md-3"></div>
-            <div class="navbar-center col-md-4">
-                <h3 id="screen_header"><span class="text-semibold line_head"><?php echo $linename; ?> - Status Overview
-                        </span></h3>
-            </div>
-        </div>
-    </header>
+    .header a {
+        /*float: left;*/
+        color: #fff5f5;
+        /*text-align: center;*/
+        padding: 2px;
+        text-decoration: none;
+        font-size: 14px;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+    .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    /*.header a:hover {*/
+    /*    background-color: #ddd;*/
+    /*    color: black;*/
+    /*}*/
+
+    .header a.active {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    .header-right {
+        float: right;
+    }
+
+    @media screen and (max-width: 500px) {
+        .header a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+
+        .header-right {
+            float: right;
+            margin-top: -28px;
+        }
+        .logo_img {
+            height: auto;
+            width: 80px!important;
+        }
+        img.dropbtn_img {
+            height: auto;
+            width: 25px!important;
+            border-radius: 4px;
+
+        }
+        .dropbtn{
+            font-size: 12px!important;
+        }
+        svg.arrow.dropbtn {
+            margin-left: 94px!important;
+            margin-top: -18px!important;
+        }
+
+    }
+    .dropbtn {
+        background-color: #060818;
+        color: white;
+        /*padding: 16px;*/
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /*.dropbtn:hover, .dropbtn:focus {*/
+    /*    background-color: #2980B9;*/
+    /*}*/
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #191e3a;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 9999;
+        border-radius: 6px;
+    }
+
+    .dropdown-content a {
+        color: #fff5f5;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid #524d4d;
+    }
+    .logo_img{
+        height: auto;
+        width: 150px;
+    }
+    img.dropbtn_img {
+        height: auto;
+        width: 28px!important;
+        border-radius: 4px;
+    }
+    #screen_header {
+        color: #f7f7f7;
+        margin-top: -38px;
+        /* font-size: 1em; */
+        /* margin-top: 30px !important; */
+    }
+
+
+    /*.dropdown a:hover {background-color: #ddd;}*/
+
+    .show {display: block;}
+</style>
+
+<?php
+$path = '';
+if(!empty($is_cell_login) && $is_cell_login == 1){
+    $path = $siteURL. "cell_line_dashboard.php";
+}else{
+    if(!empty($i) && ($is_tab_login != null)){
+        $path = "../line_tab_dashboard.php";
+    }else{
+        $path = $siteURL . "line_status_grp_dashboard.php";
+    }
+}
+
+
+$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$assign_line' ");
+while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+    $linename = $rowctemp["line_name"];
+}
+
+
+$cam_page_header = $linename . "- Status Overview";
+?>
+<div class="header">
+
+    <a class="logo">
+        <img class = "logo_img" src="<?php $siteURL ?>assets/img/SGG_logo.png" alt="logo">
+    </a>
+
+    <h3 class="navbar-center" id="screen_header" style=""><span class="text-semibold"><?php echo $cam_page_header; ?></span></h3>
+
+
 </div>
+
+
 <!--  END NAVBAR  -->
 <!--  BEGIN MAIN CONTAINER  -->
 <div class="main-container" id="container">
