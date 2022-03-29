@@ -406,7 +406,7 @@ include("../heading_banner.php");
                                     ?>
                            <?php if($wol != 0){  ?>
                                 <div class="form_row row">
-                                  <label class="col-lg-3 control-label">Work Order/Lot<span class="red-star" style="font-size: 10px; padding-left:10px;">★ </span>: 
+                                  <label class="col-lg-3 control-label">Work Order/Lot<span class="red-star" style="font-size: 10px; padding-left:10px;">★ </span>
                                     </label>
                                     <div class="col-md-7">
                                     <textarea class="form-control" name = "wol" rows="1" required></textarea>
@@ -722,14 +722,14 @@ include("../heading_banner.php");
                                                             <button type="submit" id="approve_<?php echo $j ?>"
                                                                     name="approve"
                                                                     class="btn btn-primary tooltip approve"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-top: -20px">
+                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -30px;">
                                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Approve</span>
                                                             </button>
                                                             <button type="submit" id="reject_<?php echo $k ?>"
                                                                     name="reject"
                                                                     class="btn btn-primary tooltip reject"
-                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -20px">
+                                                                    style="background-color:#1e73be;font-size: 12px;margin-left:90px;margin-top: -30px;">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                                 <span class="tooltiptext">Reject</span>
                                                             </button>
