@@ -219,10 +219,10 @@ if (count($_POST) > 0) {
     <style>
 
         .sidebar-default .navigation li > a {
-            color: #f5f5f5
+            color: #f5f5f5;
         }
 
-        ;
+
         a:hover {
             background-color: #20a9cc;
         }
@@ -235,6 +235,9 @@ if (count($_POST) > 0) {
     color: red;
     display: none;
 }
+        label.col-lg-4.control-label {
+            color: #333;
+        }
 
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-8 {

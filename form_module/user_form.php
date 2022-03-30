@@ -107,7 +107,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
          }
         .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
             color: #999;
-            border-bottom-style: inset;
+            border-bottom-style: none;
         }
         .approve {
             background-color: #1e73be;
@@ -371,7 +371,7 @@ include("../heading_banner.php");
 														} else {
 															$entry = '';
 														}
-														echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
+														echo "<option style=\"word-wrap:break-word;\" value='" . $row1['pm_part_number_id'] . "'  $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
 													}
 													?>
                                                 </select>
