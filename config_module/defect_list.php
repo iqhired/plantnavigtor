@@ -78,6 +78,7 @@ if ($i != "super" && $i != "admin") {
                 width: 20%
             }
 
+
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
                 .form-horizontal {
                     width: 100%;

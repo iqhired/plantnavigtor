@@ -692,4 +692,7 @@ only screen and (max-width: 760px),
     .heading-elements .dropdown-menu{
 
     }
+    .dataTables_filter input{
+        width: 130px;
+    }
 }

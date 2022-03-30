@@ -85,6 +85,23 @@ if ($i != "super" && $i != "admin") {
             text-align: left;
             font-size: 12px;
         }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            label.col-md-2.control-label {
+                width: 50%;
+            }
+            .col-md-10 {
+                width: 50%;
+                float: right;
+            }
+            label.col-md-4.control-label {
+                width: 50%;
+                float: left;
+            }
+            .col-md-8 {
+                width: 50%;
+                float: right;
+            }
+        }
     </style>
 </head>
 <body>

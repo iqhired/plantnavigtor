@@ -93,8 +93,9 @@ if (count($_POST) > 0) {
             .col-md-7 {
                 float: left;
             }
-            .col-md-5 {
-                float: right;
+
+            button.btn.btn-primary.legitRipple {
+                margin-top: 15px;
             }
         }
     </style>

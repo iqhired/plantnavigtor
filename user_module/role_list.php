@@ -129,6 +129,10 @@ if (count($_POST) > 0) {
                 .col-lg-8{
                     width: 55%!important;
                 }
+                .col-md-4 {
+                    width: 25%;
+                    margin-top: 58px;
+                }
 
             }
             .row {
@@ -192,6 +196,8 @@ if (count($_POST) > 0) {
                                     <div class="form-group">
                                         <h5 class="panel-title">Select Modules for Access & Permission</h5>
 <!--                                        <div id="error1" class="red" style="display:none;color:red;">Please select Module</div>-->
+
+
 
                                         <div class="row">
                                             <div id="error1" class="red" style="display:none;color:red;">Please select Module</div>

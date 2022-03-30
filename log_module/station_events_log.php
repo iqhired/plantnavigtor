@@ -209,13 +209,8 @@ include("../admin_menu.php");
                         <form action="" id="user_form" class="form-horizontal" method="post">
 
                             <div class="row">
-
-                                <div class="col-md-1.5" style="margin-left: 16px;">
-
-                                    <label class="control-label"  style="float: left;padding-top: 15px; font-weight: 500;">Event Type :&nbsp;&nbsp;</label>
-                                </div>
-
-
+                               <div class="col-md-6 mobile">
+                                    <label class=" col-lg-3 control-label">Event Type :</label>
                                     <?php
                                     if ($button_event == "button3") {
                                         $checked = "checked";
@@ -223,12 +218,12 @@ include("../admin_menu.php");
                                         $checked = "";
                                     }
                                     ?>
-
+                                    <div class="col-lg-1">
                                         <input type="radio" name="button_event" id="button3" value="button3"
                                                class="form-control"
                                                style="float: left;width: initial;" <?php echo $checked; ?>>
-
-                                <div class="col-md-3">
+                                    </div>
+                                <div class="col-lg-7">
 
                                     <select name="event_type" id="event_type" class="select form-control"
                                             style="float: left;width: 60%;">
@@ -252,12 +247,11 @@ include("../admin_menu.php");
                                     </select>
                                 </div>
 
+                               </div>
+                                <div class="col-md-6 mobile">
 
-                                <div class="row">
-                                    <div class="col-lg-2" style=" margin-left: 10px;">
-                                    <label class="control-label"
-                                           style="float: left;padding: 10px 10px 12px 5px; font-weight: 500;">Event Catagory :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                    </div>
+                                    <label class="col-lg-2 control-label" >Event Catagory :</label>
+
 									<?php
 									if ($button_event == "button4") {
 										$checked = "checked";
@@ -265,10 +259,11 @@ include("../admin_menu.php");
 										$checked = "";
 									}
 									?>
+                                    <div class="col-lg-1">
                                     <input type="radio" name="button_event" id="button4" value="button4"
-                                           class="form-control"
-                                           style="float: left;width: initial;" <?php echo $checked; ?>>
-                                    <div class="col-lg-5">
+                                           class="form-control"  style="float: left;width: initial;" <?php echo $checked; ?>>
+                                    </div>
+                                    <div class="col-lg-7">
                                     <select name="event_category" id="event_category" class="select form-control"
                                             style="float: left;width: 60%;">
                                         <option value="" selected disabled>--- Select Event Catagory ---</option>
@@ -295,12 +290,10 @@ include("../admin_menu.php");
                             </div>
                             <br/>
                             <div class="row">
+                             <div class="col-md-6 mobile">
+                                        <label class="col-lg-3 control-label">Station :</label>
 
-                                    <div class="col-md-1.5" style="margin-left: 16px;">
-
-                                        <label class="control-label"  style="float: left;padding-top: 15px; font-weight: 500;">Station :&nbsp;&nbsp;</label>
-                                    </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-8">
                                         <select name="station" id="station" class="select form-control"
                                                 style="float: left;width: initial;">
                                             <option value="" selected disabled>--- Select Station ---</option>
@@ -321,9 +314,33 @@ include("../admin_menu.php");
                                             ?>
                                         </select>
                                         </div>
+                             </div>
+                                <div class="col-md-6 mobile">
+
+<!--                                    <label class="control-label" >Date Range</label>-->
+
+                                    <?php
+                                    if ($button != "button2") {
+                                        $checked = "checked";
+                                    } else {
+                                        $checked == "";
+                                    }
+                                    ?>
+
+<!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"-->
+<!--                                           style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
 
 
-                                <br/>
+                                    <label class="col-lg-2 control-label">Date From :</label>
+                                    <input type="date" name="date_from" id="date_from" class="form-control"
+                                           value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
+                                           required>
+                                    <label class="col-lg-2 control-label" >Date To:</label>
+                                    <input type="date" name="date_to" id="date_to" class="form-control"
+                                           value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
+
+                                </div>
+
 <!--                                <div class="col-md-5">-->
 <!--                                    <label class="control-label"-->
 <!--                                           style="float: left;padding-top: 15px; font-weight: 500;">Select Period :-->
@@ -393,36 +410,7 @@ include("../admin_menu.php");
 <!--                                    </select>-->
 <!--                                </div>-->
 
-                                <div class="col-md-8">
 
-                                    <label class="control-label"
-                                           style="float: left;padding: 10px 10px 10px 5px; font-weight: 500;">Date Range&nbsp;&nbsp;&nbsp;&nbsp;</label>
-
-									<?php
-									if ($button != "button2") {
-										$checked = "checked";
-									} else {
-										$checked == "";
-									}
-									?>
-
-                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"
-                                           style="float: left;width: initial;"<?php echo $checked; ?>>
-
-
-                                   <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                        From : &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_from" id="date_from" class="form-control"
-                                           value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
-                                           required>
-                                    <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                        To: &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_to" id="date_to" class="form-control"
-                                           value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-
-                                </div>
                             </div>
 
 

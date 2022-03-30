@@ -101,11 +101,15 @@ if (count($_POST) > 0) {
                 float: left;
             }
             .col-md-5 {
-
                 float: left;
+                width: 65%;
             }
             .col-md-2.create {
                 margin-top: 53px;
+            }
+            .col-md-2.create {
+                margin-top: 130px!important;
+                margin-left: 30px;
             }
         }
         .col-md-2.create {

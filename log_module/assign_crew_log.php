@@ -133,14 +133,19 @@ $datefrom = $yesdate;
             background: #f7f7f7;
             margin-top: 22px;
         }
+        .col-md-4 {
+            width: 25%;
+            margin-left: -10px;
+            margin-top: 18px;
+        }
+        .col-md-6.date {
+            width: 25%;
+        }
+        .col-md-2 {
+            width: 8.666667%;
+        }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-            .col-md-1 {
-                width: 10%;
-            }
-            .col-md-3 {
-                width: 30%;
-                float: left;
-            }
+
             .col-md-8 {
                 width: 100%;
                 float: right;
@@ -150,6 +155,19 @@ $datefrom = $yesdate;
                 width: 30%;
                 float: left;
             }
+            .col-md-4 {
+                width: 80%;
+                float: left;
+            }
+            .col-lg-8 {
+                float: right;
+                width: 70%;
+            }
+            .col-md-6.date {
+                width: 100%;
+                float: left;
+            }
+
         }
     </style>
     <body>
@@ -177,10 +195,10 @@ $datefrom = $yesdate;
                                 <form action="" id="user_form" class="form-horizontal" method="post">
                                 <div class="row">
 
-                                        <div class="col-md-1">
-                                            <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">User : &nbsp;&nbsp;</label>
-                                        </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6 mobile">
+
+                                            <label class="col-lg-3 control-label">User :</label>
+                                                <div class="col-lg-8">
                                             <select  name="usr" id="usr" class="select"  style="float: left;width: initial;" >
                                                 <option value="" selected disabled>--- Select User ---</option>
                                                 <?php
@@ -204,9 +222,104 @@ $datefrom = $yesdate;
                                                 }
                                                 ?>
                                             </select>
+                                                </div>
+
                                         </div>
-                                        <div class="col-md-8">
-                                            <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>
+
+                                    <div class="col-md-6 mobile">
+                                            <label class="col-lg-3 control-label">Station : &nbsp;&nbsp;</label>
+
+                                    <div class="col-lg-8">
+                                            <select  name="station" id="station" class="select" style="float: left;width: initial;" >
+                                                <option value="" selected disabled>--- Select Station ---</option>
+                                                <?php
+                                                $sql1 = "SELECT DISTINCT `station_id` FROM `cam_assign_crew_log`";
+                                                $result1 = $mysqli->query($sql1);
+                                                //$entry = 'selected';
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    $lin = $row1['station_id'];
+                                                    if ($lin == $station) {
+                                                        $entry = 'selected';
+                                                    } else {
+                                                        $entry = '';
+                                                    }
+                                                    $qur05 = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$lin' ");
+                                                    while ($rowc05 = mysqli_fetch_array($qur05)) {
+                                                        $lnnm = $rowc05["line_name"];
+                                                    }
+                                                    echo "<option value='" . $row1['station_id'] . "' $entry >" . $lnnm . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <!--                                    <div class="col-md-5">-->
+                                        <!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Select Period : &nbsp;&nbsp;</label>-->
+                                        <!--                                        --><?php
+                                        //                                        if ($button == "button2") {
+                                        //                                            $checked = "checked";
+                                        //                                        } else {
+                                        //                                            $checked = "";
+                                        //                                        }
+                                        //                                        ?>
+                                        <!--                                        <input type="radio" name="button" id="button2" value="button2" class="form-control" style="float: left;width: initial;" --><?php //echo $checked; ?><!--</input>-->
+                                        <!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
+                                        <!--                                        <select  name="timezone" id="timezone" class="form-control" style="float: left;width: initial;" >-->
+                                        <!--                                            <option value="" selected disabled>--- Select Period ---</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "1") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="1" --><?php //echo $selected; ?><!--One Day</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "7") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="7" --><?php //echo $selected; ?><!--One Week</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "30") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="30" --><?php //echo $selected; ?><!--One Month</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "90") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="90" --><?php //echo $selected; ?><!--Three Month</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "180") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="180" --><?php //echo $selected; ?><!--Six Month</option>-->
+                                        <!--                                            --><?php
+                                        //                                            if ($timezone == "365") {
+                                        //                                                $selected = "selected";
+                                        //                                            } else {
+                                        //                                                $selected = "";
+                                        //                                            }
+                                        //                                            ?>
+                                        <!--                                            <option value="365" --><?php //echo $selected; ?><!--One Year</option>-->
+                                        <!--                                        </select>-->
+                                        <!--                                    </div>-->
+                                    </div>
+                                    <br>
+                                        <div class="row">
+<!--                                            <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
                                             <?php
                                             if ($button != "button2") {
                                                 $checked = "checked";
@@ -214,106 +327,19 @@ $datefrom = $yesdate;
                                                 $checked == "";
                                             }
                                             ?>
-                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;"<?php echo $checked; ?>>
+                                            <div class="col-md-6 date">
+<!--                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>
                                             <input type="date" name="date_from" id="date_from" class="form-control" value="<?php echo $datefrom; ?>" style="float: left;width: initial;" required>
+                                            </div>
+                                            <div class="col-md-6 date">
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date To: &nbsp;&nbsp;</label>
                                             <input type="date" name="date_to" id="date_to" class="form-control" value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
+                                            </div>
                                         </div>
-                                </div>
+
                                     <br>
-                                <div class="row">
-                                    <br/>
-                                    <div class="col-md-1">
-                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Station : &nbsp;&nbsp;</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select  name="station" id="station" class="select" style="float: left;width: initial;" >
-                                            <option value="" selected disabled>--- Select Station ---</option>
-                                            <?php
-                                            $sql1 = "SELECT DISTINCT `station_id` FROM `cam_assign_crew_log`";
-                                            $result1 = $mysqli->query($sql1);
-//$entry = 'selected';
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                $lin = $row1['station_id'];
-                                                if ($lin == $station) {
-                                                    $entry = 'selected';
-                                                } else {
-                                                    $entry = '';
-                                                }
-                                                $qur05 = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$lin' ");
-                                                while ($rowc05 = mysqli_fetch_array($qur05)) {
-                                                    $lnnm = $rowc05["line_name"];
-                                                }
-                                                echo "<option value='" . $row1['station_id'] . "' $entry >" . $lnnm . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-<!--                                    <div class="col-md-5">-->
-<!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Select Period : &nbsp;&nbsp;</label>-->
-<!--                                        --><?php
-//                                        if ($button == "button2") {
-//                                            $checked = "checked";
-//                                        } else {
-//                                            $checked = "";
-//                                        }
-//                                        ?>
-<!--                                        <input type="radio" name="button" id="button2" value="button2" class="form-control" style="float: left;width: initial;" --><?php //echo $checked; ?><!--</input>-->
-<!--                                        <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
-<!--                                        <select  name="timezone" id="timezone" class="form-control" style="float: left;width: initial;" >-->
-<!--                                            <option value="" selected disabled>--- Select Period ---</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "1") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="1" --><?php //echo $selected; ?><!--One Day</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "7") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="7" --><?php //echo $selected; ?><!--One Week</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "30") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="30" --><?php //echo $selected; ?><!--One Month</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "90") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="90" --><?php //echo $selected; ?><!--Three Month</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "180") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="180" --><?php //echo $selected; ?><!--Six Month</option>-->
-<!--                                            --><?php
-//                                            if ($timezone == "365") {
-//                                                $selected = "selected";
-//                                            } else {
-//                                                $selected = "";
-//                                            }
-//                                            ?>
-<!--                                            <option value="365" --><?php //echo $selected; ?><!--One Year</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-                                </div>
+
                                
                                 <?php
                                 if (!empty($import_status_message)) {
@@ -328,24 +354,26 @@ $datefrom = $yesdate;
                                 }
                                 ?>
 
-                            <div class="panel-footer p_footer">
-                            <div class="row">
-                                    
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
-                                    </div>
-                                    <div class="col-md-2" style="position:static;margin-left:-88px;">
-                                        <button type="button" class="btn btn-primary" onclick='window.location.reload();' style="background-color:#1e73be;">Reset</button>
-                                    </div>
 
-                                    <div class="col-md-2" style="position:static;margin-left:-109px;">
-                                        <form action="export_log.php" method="post" name="export_excel">
-                                            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
-                                        </form>
-                            </div>
+
+                                <div class="panel-footer p_footer">
+                                    <div class="row">
+
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-primary" onclick='window.location.reload();' style="background-color:#1e73be;">Reset</button>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <form action="export_log.php" method="post" name="export_excel">
+                                                <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                    </form>
+                                </form>
                             </div>
                         </div>
                         <div class="panel panel-flat">					

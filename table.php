@@ -81,6 +81,7 @@ if($_GET['line'])
 <?php  $cust_cam_page_header = "Training Matrix";
 include("header.php");
 include("admin_menu.php");
+include("heading_banner.php");
 ?>
 <body class="alt-menu sidebar-noneoverflow">
 <!-- /main navbar -->
@@ -89,18 +90,19 @@ include("admin_menu.php");
 <!-- Page container -->
 <div class="page-container">
 
-
-						<h3>	   <?php
-            $query = sprintf("SELECT DISTINCT `line_id` FROM `cam_user_rating`");
-
-            $qur =  mysqli_query($db,$query);
-            while($rowc = mysqli_fetch_array($qur)){
-
-                ?>
-                        <form action="" class="form-validate" method="post">
-					<input type="radio"  id="radio" name="radio" value="<?php echo $rowc['line_name']; ?>" required>	<?php echo $rowc['line_name']; ?>&nbsp;
-
-	<?php } ?><br/><button type="submit">submit</button></form></h3>
+<!---->
+<!--						<h3>	   --><?php
+//            $query = sprintf("SELECT DISTINCT `line_id` FROM `cam_user_rating`");
+//
+//            $qur =  mysqli_query($db,$query);
+//            while($rowc = mysqli_fetch_array($qur)){
+//
+//                ?>
+<!--                        <form action="" class="form-validate" method="post">-->
+<!--					<input type="radio"  id="radio" name="radio" value="--><?php //echo $rowc['line_name']; ?><!--" required>	--><?php //echo $rowc['line_name']; ?><!--&nbsp;-->
+<!---->
+<!--	--><?php //} ?>
+<!--                            <br/><button type="submit">submit</button></form></h3>-->
 
 
 <!--<br/> -->

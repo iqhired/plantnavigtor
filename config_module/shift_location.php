@@ -103,6 +103,10 @@ if (count($_POST) > 0) {
                 .col-md-4 {
                     float: right;
                 }
+                .col-md-4.mob_user {
+                    float: left;
+                    margin-top: 10px;
+                }
             }
         </style>
     </head>

@@ -158,6 +158,10 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
             .col-md-2 {
                 float: right;
             }
+            .col-md-2.mob_user {
+                float: left;
+                margin-top: 10px;
+            }
         }
     </style>
 

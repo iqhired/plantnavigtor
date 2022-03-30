@@ -104,15 +104,15 @@ if (count($_POST) > 0) {
             margin-top: 60px;
         }
         .col-md-5 {
-            width: 40%;
+            width: 55%;
             float: left;
         }
         .col-md-4 {
-             float: left;
-            width: 30%;
+            float: left;
+            width: 50%;
         }
         .col-md-8 {
-            width: 70%;
+            width: 100%;
             float: right;
         }
     }

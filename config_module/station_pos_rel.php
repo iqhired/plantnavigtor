@@ -114,6 +114,14 @@ if (count($_POST) > 0) {
             width: 100%;
             overflow-x: scroll;
         }
+        @media
+        only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px)  {
+            .col-md-9 {
+                width: 70%;
+                float: right;
+            }
+        }
     </style>
 </head>
 

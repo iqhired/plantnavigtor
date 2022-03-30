@@ -119,6 +119,14 @@ if (count($_POST) > 0) {
             width: 40%!important;
         }
     }
+    .form-check.form-check-inline.form_col_option {
+        width: 20%;
+        float: left;
+        padding-top: 15px!important;
+    }
+    label.control-label {
+        float: left;
+    }
 </style>
 
 <!-- Main navbar -->
