@@ -562,7 +562,7 @@ span {
     text-transform: inherit;
     font-size: medium;
     font-family: monospace;
-    float: right;
+
 }
 
 .form_sub_header{
@@ -694,5 +694,9 @@ only screen and (max-width: 760px),
     }
     .dataTables_filter input{
         width: 130px;
+    }
+    .select2-selection--single .select2-selection__rendered {
+
+        white-space: break-spaces;
     }
 }

@@ -103,9 +103,11 @@ if ($ps != "") {
         <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
         <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
         <style>
-            .row {
-                padding-left:40px;
+
+            .form-group.assign {
+                background-color: #8c959724;
             }
+
             @media
             only screen and (max-width: 760px),
             (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -122,10 +124,10 @@ if ($ps != "") {
 
                 }
                 label.col-lg-3.control-label {
-                    width: 38%;
+                    width: 50%;
                 }
                 .col-lg-4 {
-                    max-width: 33%;
+                    max-width: 50%;
                     float: left;
                 }
                 .col-lg-1 {
@@ -136,11 +138,27 @@ if ($ps != "") {
                     padding-bottom: 8px;
                     padding-top: 10px;
                 }
+
                 .col-lg-4.mob {
-                    padding-top: 20px;
+                    max-width: 100%;
+                    float: inherit;
+                    padding: 10px;
                 }
+
                 .col-md-9{
                     width:100%!important;
+                }
+                .col-md-9.group {
+                    background-color: #eee;
+                }
+                button.btn.btn-primary.legitRipple {
+                    margin-top: 12px;
+                }
+                .form-control[disabled], fieldset[disabled] .form-control {
+                    font-size: 16px;
+                }
+                label.col-lg-3.control-label.crew {
+                    width: 30%;
                 }
             }
 
@@ -254,7 +272,7 @@ if ($ps != "") {
                                                             <input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $asigncrewid; ?>"> 
                                                             <input type="hidden" id="res_type[]" name="res_type[]" value="<?php echo $res_type; ?>"> 
                                                         </div>
-                                                        <label class="col-lg-3 control-label"><?php echo $positionname; ?>:</label>
+                                                        <label class="col-lg-3 control-label crew"><?php echo $positionname; ?>:</label>
                                                         <div class="col-lg-4">
                                                             <input type="text" value="<?php echo $firstname; ?>&nbsp;<?php echo $lastname; ?>" disabled class="form-control">
                                                         </div>	
@@ -270,7 +288,7 @@ if ($ps != "") {
                                                         }
                                                         ?>
                                                         <div class="col-lg-1"></div>
-                                                        <label class="col-lg-3 control-label"><?php echo $positionname; ?>:</label>
+                                                        <label class="col-lg-3 control-label crew"><?php echo $positionname; ?>:</label>
                                                         <div class="col-lg-4">
                                                             <input type="hidden" name="position[]" value="<?php echo $rowc["position_id"]; ?>">
                                                             <input type="hidden" name="assignline" value="<?php echo $assign_line; ?>">
@@ -320,7 +338,7 @@ if ($ps != "") {
                                                         <input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $assigncrewid; ?>"> 
                                                         <input type="hidden" id="res_type[]" name="res_type[]" value="<?php echo $res_type; ?>"> 
                                                     </div>
-                                                    <label class="col-lg-3 control-label"><?php echo $po_name; ?>:</label>
+                                                    <label class="col-lg-3 control-label crew"><?php echo $po_name; ?>:</label>
                                                     <div class="col-lg-3">
                                                         <input type="text" value="<?php echo $firstname; ?>&nbsp;<?php echo $lastname; ?>" disabled class="form-control">
                                                     </div>
@@ -336,7 +354,7 @@ if ($ps != "") {
                                         for ($i = 0; $i < $priyantcount;) {
                                             ?>	
                                             <div class="row">
-                                                <div class="col-md-9">
+                                                <div class="col-md-9 group">
                                                     <div class="form-group">
 <!--                                                        <div class="col-lg-2">-->
 <!--                                                        </div>-->
@@ -356,7 +374,7 @@ if ($ps != "") {
                                                                 ?>
                                                             </select></div>
                                     <!--		<label class="col-lg-3 control-label"><?php echo $rowc["position_name"]; ?>:</label> -->
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-4 mob">
                                                             <input type="hidden" name="assignline" value="<?php echo $assign_line; ?>">
                                                             <select name="user_name[]" id="user_name<?php echo $cnt; ?>" class="select form-control " data-live-search="true" data-width="100%"  data-row="5"  data-count="<?php echo $cnt; ?>">
                                                                 <option value="1" selected >--- Select User ---</option>
@@ -370,7 +388,7 @@ if ($ps != "") {
                                                                 ?>
                                                             </select>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-4 mob">
                                                             <select name="resource_type[]" id="resource_type<?php echo $cnt; ?>" class="select form-control" data-live-search="true" data-width="100%"  data-count="<?php echo $cnt; ?>">
                                                                 <option value="Cross Training" selected >--- Select Resource Type ---</option>
                                                                 <option value="Cross Training"  >Cross Training</option>
@@ -410,8 +428,8 @@ if ($ps != "") {
 										?>
                                         <!-- if condition -->
                                         <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
+                                            <div class="col-md-9 group">
+                                                <div class="form-group assign">
                                                     <div class="col-lg-1 control-label">
                                                         <input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $assigncrewid; ?>">
                                                         <input type="hidden" id="res_type[]" name="res_type[]" value="<?php echo $res_type; ?>">
@@ -432,7 +450,7 @@ if ($ps != "") {
 										for ($i = 0; $i < $priyantcount;) {
 											?>
                                             <div class="row">
-                                                <div class="col-md-9">
+                                                <div class="col-md-9 group">
                                                     <div class="form-group">
                                                         <!--                                                        <div class="col-lg-2">-->
                                                         <!--                                                        </div>-->
@@ -452,7 +470,7 @@ if ($ps != "") {
 																?>
                                                             </select></div>
                                                         <!--		<label class="col-lg-3 control-label"><?php echo $rowc["position_name"]; ?>:</label> -->
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-4 mob">
                                                             <input type="hidden" name="assignline" value="<?php echo $assign_line; ?>">
                                                             <select name="user_name[]" id="user_name<?php echo $cnt; ?>" class="select form-control" data-live-search="true" data-width="100%"  data-row="5"  data-count="<?php echo $cnt; ?>">
                                                                 <option value="1" selected >--- Select User ---</option>
@@ -466,7 +484,7 @@ if ($ps != "") {
 																?>
                                                             </select>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-4 mob">
                                                             <select name="resource_type[]" id="resource_type<?php echo $cnt; ?>" class="select form-control" data-live-search="true" data-width="100%"  data-count="<?php echo $cnt; ?>">
                                                                 <option value="On Break" selected >--- Select Resource Type ---</option>
                                                                 <option value="On Break"  >On Break</option>

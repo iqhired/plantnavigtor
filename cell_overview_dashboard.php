@@ -73,6 +73,14 @@ if (isset($cellID)) {
     <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
     <!--chart -->
     <style>
+        .panel[class*=bg-]>.panel-body {
+            background-color: inherit;
+            height: 230px!important;
+        }
+        tbody, td, th, thead, tr {
+
+            font-size: 14px;
+        }
         .col-lg-3 {
             font-size: 12px!important;
         }

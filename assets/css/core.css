@@ -59,6 +59,13 @@ only screen and (max-width: 760px),
         width: 60%;
 
     }
+    .col-md-3.form {
+        width: 50%;
+        float: left;
+    }
+    .col-md-7.form_col_item{
+        width: 100%;
+    }
     .col-lg-9 {
         float: right;
         width: 50%;
@@ -80,10 +87,7 @@ only screen and (max-width: 760px),
     #footer {
         margin-top: -80px!important;
     }
-    .col-md-3.form {
-        width: 40%;
-        float: right;
-    }
+
     textarea.form-control {
         height: auto;
         font-size: 15px;
