@@ -1,5 +1,5 @@
 <?php
-include("../config.php");
+include("config.php");
 $available_var = $_SESSION['available'];
 $taskvar = $_SESSION['taskavailable'];
 $is_cust_dash = $_SESSION['is_cust_dash'];
@@ -28,9 +28,9 @@ while ($row1 = $result1->fetch_assoc()) {
     $tm_task_id = $row1['tm_task_id'];
 }
 ?>
-<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-<script type="text/javascript" src="assets/js/pages/components_dropdowns.js"></script>
+<script type="text/javascript" src="./assets/js/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="./assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="./assets/js/pages/components_dropdowns.js"></script>
 <style>
     .header {
         overflow: initial;
@@ -170,8 +170,8 @@ if(!empty($is_cell_login) && $is_cell_login == 1){
 ?>
 <div class="header">
 
-    <a href="<?php echo $path?>" class="logo">
-        <img class = "logo_img" alt="logo">
+    <a href="#" class="logo">
+        <img src="<?php echo $siteURL; ?>/assets/images/SGG_logo.png"  class = "logo_img" alt="logo">
     </a>
 
         <h3 class="navbar-center" id="screen_header" style=""><span class="text-semibold"><?php echo $cam_page_header; ?></span></h3>
