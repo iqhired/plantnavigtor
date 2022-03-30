@@ -1164,6 +1164,39 @@ $msg = explode(',', $msg); ?>
                         </div>
                     </li>
 				<?php } ?>
+				<?php if (in_array('22', $msg)) { ?>
+                    <li class="nav-item" id="ic">
+                        <a class="nav-link">Logs
+                            <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"
+                                 style="margin-left: 42px;">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                            </svg>
+                        </a>
+                        <div class="menu ">
+                            <ul>
+								<?php if (in_array('36', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/assign_crew_log.php">Crew Assignment
+                                            Log</a></li>
+								<?php }
+								if (in_array('40', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/task_crew_log.php">Task Crew Log</a>
+                                    </li>
+								<?php }
+								if (in_array('51', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/station_events_log.php">Station
+                                            Events Log</a></li>
+								<?php }
+								if (in_array('59', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php">Good Bad
+                                            Pieces Log</a></li>
+								<?php }
+								if (in_array('21', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
+								<?php } ?>
+                            </ul>
+                        </div>
+                    </li>
+				<?php } ?>
                             <?php if (in_array('66', $msg)) { ?>
                 <li class="nav-item dropdown mega-dropdown">
                     <a class="nav-link" role="button" id="learnId">
@@ -1594,39 +1627,7 @@ $msg = explode(',', $msg); ?>
                 </li>
 
 
-				<?php if (in_array('22', $msg)) { ?>
-                    <li class="nav-item" id="ic">
-                        <a class="nav-link">Logs
-                            <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"
-                                 style="margin-left: 42px;">
-                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <div class="menu ">
-                            <ul>
-								<?php if (in_array('36', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/assign_crew_log.php">Crew Assignment
-                                            Log</a></li>
-								<?php }
-								if (in_array('40', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/task_crew_log.php">Task Crew Log</a>
-                                    </li>
-								<?php }
-								if (in_array('51', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/station_events_log.php">Station
-                                            Events Log</a></li>
-								<?php }
-								if (in_array('59', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php">Good Bad
-                                            Pieces Log</a></li>
-								<?php }
-								if (in_array('21', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
-								<?php } ?>
-                            </ul>
-                        </div>
-                    </li>
-				<?php } ?>
+
             </ul>
 
         </div>
