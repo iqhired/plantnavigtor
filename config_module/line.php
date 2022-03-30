@@ -98,6 +98,9 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         move_uploaded_file($good_tmp, $dir_path .'/'. 'g' ."_".time().'_'. $good_name);
         move_uploaded_file($good_tmp, $dir_path .'/'. 'r' ."_".time().'_'. $good_name);
         move_uploaded_file($bad_tmp, $dir_path .'/'. 'b' ."_".time().'_'. $bad_name);
+        $zpl_id = $_POST['label_line_id'];
+        $sql1 = "update cam_line set zpl_file_status = '1' where line_id ='$zpl_id'";
+        $result1 = mysqli_query($db, $sql1);
     //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
         $message_stauts_class = 'alert-success';
         $import_status_message = 'Upload Files Successfully';
@@ -266,11 +269,16 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 
                                                 </td>
                                                 <td>
+                                                    <?php
+                                                    $zpl_result = ($rowc['zpl_file_status'] == 0) ? "Off" : "On"; ?>
 
-                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" style="background-color:#d84315;" data-target="#edit_modal_theme_primary1">On/Off </button>
-                                                    <!--									&nbsp;
-                                                                                                                            <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
-                                                    -->
+                                                   <?php if($zpl_result == "Off"){ ?>
+                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs" style="background-color: #d84315" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" data-target="#edit_modal_theme_primary1"><?php echo $zpl_result ?> </button>
+
+                                                  <?php  }else { ?>
+                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs"  style="background-color: #43a047" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" data-target="#edit_modal_theme_primary1"><?php echo $zpl_result ?> </button>
+                                                 <?php   } ?>
+
                                                 </td>
 
                                                 <td>
