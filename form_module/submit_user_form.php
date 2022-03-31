@@ -104,7 +104,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
             color: #060818!important;
             border-block-start: none;
-            border-bottom-color: #191e3a!important;
+
         }
         .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
             color: #999;
@@ -168,6 +168,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 width: 50%;
                 float: left;
             }
+            .border-primary {
+                border-color: #ffffff;
+            }
+
 
 
         }
