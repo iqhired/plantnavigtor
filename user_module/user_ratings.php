@@ -139,13 +139,16 @@ if (count($_POST) > 0) {
                 width: 70%!important;
             }
             .col-md-3{
-                max-width: 50%!important;
+                max-width: 100%!important;
             }
             .col-md-4{
-                max-width: 50%!important;
+                max-width: 100%!important;
             }
             .col-md-5{
-                max-width: 50%!important;
+                max-width: 100%!important;
+            }
+            .modal-dialog{
+                margin: 50px;
             }
         }
     </style>

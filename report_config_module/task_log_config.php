@@ -100,7 +100,7 @@ if (count($_POST) > 0) {
             }
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
                 .col-lg-2{
-                    width: 20%!important;
+                    width: 28%!important;
                 }
             }
         </style>

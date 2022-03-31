@@ -223,9 +223,6 @@ if (count($_POST) > 0) {
         }
 
 
-        a:hover {
-            background-color: #20a9cc;
-        }
 
         .sidebar-default .navigation li > a:focus, .sidebar-default .navigation li > a:hover {
             background-color: #20a9cc;
