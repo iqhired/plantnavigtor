@@ -290,7 +290,10 @@ include("../heading_banner.php");
                                                             }
                                                         }
                                                         $st_dashboard = $_POST['part_family'];
-                                                        $station22 = $_POST['station'];
+														if(empty($station22)){
+															$station22 = $_POST['station'];
+                                                        }
+
                                                         if(empty($station22) && ($is_cell_login == 1) && !empty($c_station)){
                                                             $station22 = $c_station;
                                                         }
@@ -412,7 +415,7 @@ include("../heading_banner.php");
                 </div>
                     <div class="panel-footer p_footer">
                         <div>
-                            <button type="submit" class="btn btn-primary submit_btn"  style="width:120px;margin-right: 20px;background-color:#1e73be;">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" id="submit_btn" class="btn btn-primary submit_btn"  style="width:120px;margin-right: 20px;background-color:#1e73be;">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="clear" id="btn" class="btn btn-primary"
                                     style="background-color:#1e73be;margin-right: 20px;width:120px;">Reset
                             </button>
@@ -458,16 +461,16 @@ include("../heading_banner.php");
 
                             if ($button == "button1") {
                                 if ($station != "" && $datefrom != "" && $dateto != "") {
-                                    $result = "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC";
+                                    $result = "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC";
                                     $qur = mysqli_query($db,$result);
                                 } else if ($station != "" && $user != "" && $datefrom == "" && $dateto == "") {
                                     $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station' ");
                                 } else if ($station != "" && $user == "" && $datefrom != "" && $dateto != "") {
-                                    $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC ");
+                                    $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC ");
                                 } else if ($station != "" && $user == "" && $datefrom == "" && $dateto == "") {
                                     $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE station = '$station'");
                                 } else if ($station == "" && $user != "" && $datefrom != "" && $dateto != "") {
-                                    $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+                                    $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC");
                                 } else if ($station == "" && $user != "" && $datefrom == "" && $dateto == "") {
                                     $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station'");
                                 } else if ($station == "" && $user == "" && $datefrom != "" && $dateto != "") {
@@ -696,12 +699,13 @@ include("../heading_banner.php");
         $('input:checkbox').not(this).prop('checked', this.checked);
     });
 
-    $(document).on("click",".submit_btn",function() {
+    $(document).on("click","#submit_btn",function() {
 
         var station = $("#station").val();
         var part_family = $("#part_family").val();
         var part_number = $("#part_number").val();
         var form_type = $("#form_type").val();
+        $("#user_form").submit();
         // var flag= 0;
         // if(station == null){
         //     $("#error1").show();
