@@ -65,6 +65,12 @@ $assign_line = htmlspecialchars($_GET["station"]);
                 
             }
 
+                .fade-carousel {
+                    position: relative;
+                    margin-top: 30px;
+                    z-index: -1;
+                }
+
           
             
         </style>
