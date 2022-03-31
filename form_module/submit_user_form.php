@@ -334,7 +334,7 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
                                 <div class="form_row row">
-                                    <label class="col-lg-2 control-label">Part Number : </label>
+                                    <label class="col-lg-2 control-label">Part Number </label>
                                     <div class="col-md-6">
 
 										<?php
