@@ -1068,7 +1068,7 @@ include("../heading_banner.php");
 
                                     </tr>
 									<?php if ($form_status == 'Rejected') { ?>
-                                        <tr id="rej_reason_div" style="display: table-row;border: 1px solid red;">
+                                        <tr id="rej_reason_div" style="border: 1px solid red;">
                                             <td class="form_tab_td pn_none" colspan="4"> Reject Reason : <textarea
                                                         placeholder="<?php echo $rowc05['reject_reason']; ?>"
                                                         style="color: #333333 !important;width: 100%;height: auto; border: none; border-bottom: 1px solid;" name="rej_reason" rows="1"></textarea></td>
@@ -1162,10 +1162,10 @@ include("../heading_banner.php");
                         </div>
 
                             <?php if ($form_status == 'Rejected') { ?>
-                                <div id="rej_reason_div" style="display: table-row;border: 1px solid red;">
+                                <div id="rej_reason_div" style="border: 1px solid red;padding: 10px;">
                                     <td class="form_tab_td pn_none" colspan="4"> Reject Reason : <textarea
                                                 placeholder="<?php echo $rowc05['reject_reason']; ?>"
-                                                style="color: #333333 !important;width: 100%;height: auto; border: none; border-bottom: 1px solid;" name="rej_reason" rows="1"></textarea></td>
+                                                style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea></td>
                                 </div>
                             <?php }
                             ?>
