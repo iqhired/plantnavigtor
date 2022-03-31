@@ -93,6 +93,9 @@ svg.arrow.dropbtn {
     background-color: #dedede;
     height: 50px;
     bottom: 0px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
 }
 .footer-section.f-section-1 {
     font-size: 15px!important;

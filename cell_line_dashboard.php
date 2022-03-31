@@ -65,9 +65,7 @@ $is_admin = (($role != null) && (isset($role)) && ($role == 'admin'))?1:0;
 		.bg-pink-400 {
 			background-color: #c9302c;
 		}
-        tr {
-            background-color: #f5f5f5;
-        }
+
 
 		.dashboard_line_heading {
 
@@ -261,7 +259,7 @@ include("tab_header.php");
 										<?php } ?>
 										<div style="height: 100%;">
 											<h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
-												<div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> -
+												<div style="padding: 10px 0px 5px 0px;color:#fff;"><?php echo $line_status_text; ?> -
 													<span style="padding: 0px 0px 10px 0px;"
 														  id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
 														id="server-load"></span></div>
@@ -390,7 +388,7 @@ include("tab_header.php");
 									<?php } ?>
 									<div style="height: 100%">
 										<h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
-											<div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> - <span
+											<div style="padding: 10px 0px 5px 0px;color:#fff;"><?php echo $line_status_text; ?> - <span
 													style="padding: 0px 0px 10px 0px;"
 													id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
 													id="server-load"></span></div>
