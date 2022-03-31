@@ -1,5 +1,3 @@
-
-
 <?php
 include("../config.php");
 if (!isset($_SESSION['user'])) {
@@ -27,7 +25,7 @@ if ($good_name != "") {
 		$sqlquery = "INSERT INTO `good_bad_pieces`(`station_event_id`,`good_pieces`,`created_at`,`modified_at`) VALUES ('$station_event_id','$good_name','$chicagotime','$chicagotime')";
 		if (!mysqli_query($db, $sqlquery)) {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
-			$_SESSION['import_status_message'] = 'Error: Good Pieces Couldnt Added';
+			$_SESSION['import_status_message'] = 'Error: Error Adding Good Pieces';
 		} else {
 			$station_event_id = $_POST['station_event_id'];
 			$add_defect_name = $_POST['add_defect_name'];

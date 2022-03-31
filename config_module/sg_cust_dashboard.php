@@ -21,9 +21,16 @@ $line_cust_dash_arr = explode(',', $line_cust_dash);
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/menu.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/colors.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/style_main.css" rel="stylesheet" type="text/css">
+    <!-- Core JS files -->
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
     <!-- /global stylesheets -->
 
     <style>
@@ -313,6 +320,7 @@ include("../hp_header.php");
             wrap: true
         })
     </script>
+	<?php include("../footer.php"); ?>	<!-- /page container -->
 </body>
 
 </html>
