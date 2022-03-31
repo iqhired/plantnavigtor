@@ -1101,33 +1101,35 @@ include("../heading_banner.php");
                     foreach ($arrteam as $arr) {
                     if ($arr != "") {
                     ?>
-                    <?php if($form_status = "Approved"){echo '<div class="form_table_mobile" style="background-color: #abf3ab" >';}else{echo '<div class="form_table_mobile" style="background-color: #ff57228c" >';} ?>
-                        <?php
-                        $qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
-                        $rowctemp = mysqli_fetch_array($qurtemp);
-                        $groupname = $rowctemp["group_name"];
 
-                        $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where approval_dept = '$arr' and form_user_data_id = '$id' ");
-                        $rowc05 = mysqli_fetch_array($qur05);
-                        $app_in = $rowc05["approval_initials"];
-                        $passcd = $rowc05["passcode"];
-                        $datetime = $rowc05["created_at"];
-                        $date_time = strtotime($datetime);
+                    <?php
+                    $qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
+                    $rowctemp = mysqli_fetch_array($qurtemp);
+                    $groupname = $rowctemp["group_name"];
 
-                        $approval_status = $rowc05["approval_status"];
-                        $reject_status = $rowc05["reject_status"];
+                    $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where approval_dept = '$arr' and form_user_data_id = '$id' ");
+                    $rowc05 = mysqli_fetch_array($qur05);
+                    $app_in = $rowc05["approval_initials"];
+                    $passcd = $rowc05["passcode"];
+                    $datetime = $rowc05["created_at"];
+                    $date_time = strtotime($datetime);
 
-                        if ($approval_status == '0' && $reject_status == '1') {
-                            $form_status = "Rejected";
-                        } else {
-                            $form_status = "Approved";
-                        }
+                    $approval_status = $rowc05["approval_status"];
+                    $reject_status = $rowc05["reject_status"];
 
-                        $qur04 = mysqli_query($db, "SELECT firstname,lastname FROM  cam_users where users_id = '$app_in' ");
-                        $rowc04 = mysqli_fetch_array($qur04);
-                        $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
+                    if ($approval_status == '0' && $reject_status == '1') {
+                        $form_status = "Rejected";
+                    } else {
+                        $form_status = "Approved";
+                    }
 
-                        ?>
+                    $qur04 = mysqli_query($db, "SELECT firstname,lastname FROM  cam_users where users_id = '$app_in' ");
+                    $rowc04 = mysqli_fetch_array($qur04);
+                    $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
+
+                    ?>
+                    <?php if($form_status = "Approved"){echo '<div class="form_table_mobile" style="background-color: #abf3ab" >';}else if($form_status = "rejected"){echo '<div class="form_table_mobile" style="background-color: #ff57228c" >';} ?>
+
                         <div class="row">
                          <label class="col-lg-3 control-label mobile">Department</label>
                             <div class="col-lg-8 mobile">   <?php echo $groupname; ?></div>
