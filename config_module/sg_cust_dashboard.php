@@ -161,7 +161,7 @@ include("../hp_header.php");
                                         <h3 class="no-margin dashboard_line_heading"
                                             style="font-size:x-large !important;color: #fff;"><?php echo $rowc["line_name"]; ?></h3>
                                         <hr/>
-                                        <div style="font-size:x-large !important;color: #fff;text-align: center;">
+                                        <div style="font-size:x-large !important;color: #fff;text-align: center;height: 180px;">
                                             <div style="margin-top: 10px;"><?php echo $p_num;
 												$p_num = ''; ?></div>
                                             <div style="margin-top: 10px;"><?php echo $pf_name;
@@ -234,7 +234,7 @@ include("../hp_header.php");
                                     <h3 class="no-margin dashboard_line_heading"
                                         style="font-size:x-large !important; color: #fff;"><?php echo $rowc["line_name"]; ?></h3>
                                     <hr/>
-                                    <div style="font-size:x-large !important;color: #fff;text-align: center;">
+                                    <div style="font-size:x-large !important;color: #fff;text-align: center;height: 180px;">
                                         <div style="margin-top: 10px;"><?php echo $p_num;
 											$p_num = ''; ?></div>
                                         <div style="margin-top: 10px;"><?php echo $pf_name;
