@@ -48,6 +48,7 @@ $assign_line = htmlspecialchars($_GET["station"]);
                 font-size: 16px !important;
                 /*margin-top: 30px !important;*/
                 }
+
           
             @media screen and (min-width:1440px)  {
                 .line_head{
@@ -73,9 +74,10 @@ $assign_line = htmlspecialchars($_GET["station"]);
                       $linename = $rowctemp["line_name"];
                   }
 
-                  $cam_page_header = "Today's Crew Members for&nbsp".$linename;
+                  $cust_cam_page_header = "Today's Crew Members for&nbsp".$linename;
 
-       include("hp_header.php"); ?>
+       include("hp_header.php");
+      include("heading_banner.php");?>
     <body class="alt-menu sidebar-noneoverflow">
 
         <!-- Page container -->
