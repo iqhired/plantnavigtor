@@ -79,8 +79,17 @@ if (count($_POST) > 0) {
                 box-shadow: none;
             }
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-                .col-lg-2{
-                    width: 20%!important;
+                .col-lg-2 {
+                    width: 28%!important;
+                    float: left;
+                }
+                .col-md-6 {
+                    width: 60%;
+                    float: left;
+                }
+                .col-lg-1 {
+                    width: 12%;
+                    float: right;
                 }
             }
         </style>
@@ -151,8 +160,8 @@ if (count($_POST) > 0) {
                                                             </select>
                                                         </div>	
                                                     </div>
-                                                    <div>
-                                                        <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()">Add More</button>										
+                                                    <div class="col-lg-1">
+                                                        <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -176,8 +185,8 @@ if (count($_POST) > 0) {
                                                             </select>
                                                         </div>	
                                                     </div>
-                                                    <div>
-                                                        <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()">Add More</button>										
+                                                    <div class="col-lg-1">
+                                                        <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="row">

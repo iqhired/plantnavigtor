@@ -302,6 +302,15 @@ if (!empty($_GET['import_status'])) {
                 .col-lg-8{
                     width: 55%!important;
                 }
+                .col-md-6 {
+                    width: 60%;
+                    float: left;
+                }
+                .modal-dialog {
+                    position: relative;
+                    width: auto;
+                    margin: 50px;
+                }
 
             }
         </style>

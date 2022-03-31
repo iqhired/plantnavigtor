@@ -82,6 +82,9 @@ if (count($_POST) > 0) {
             .sidebar-default .navigation li>a:focus, .sidebar-default .navigation li>a:hover {
                 background-color: #20a9cc;
             }
+            label.col-lg-5.control-label {
+                color: #333;
+            }
         </style>
     </head>
     <body>
