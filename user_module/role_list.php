@@ -202,7 +202,7 @@ if (count($_POST) > 0) {
                                         <div class="row">
                                             <div id="error1" class="red" style="display:none;color:red;">Please select Module</div>
                                             <?php
-                                            $query12 = sprintf("SELECT * FROM  side_menu where side_menu_id != '1' and parent_id = '0'");
+                                            $query12 = sprintf("SELECT * FROM  side_menu where side_menu_id != '1' and parent_id = '0' and enabled = '1'  order by menu_name ASC");
                                             $qur12 = mysqli_query($db, $query12);
                                             while ($rowc12 = mysqli_fetch_array($qur12)) {
                                                 $parentid = $rowc12["side_menu_id"];
@@ -218,7 +218,7 @@ if (count($_POST) > 0) {
                                                 </div>
 
                                                 <?php
-                                                $query121 = sprintf("SELECT * FROM  side_menu where parent_id = '$parentid'");
+                                                $query121 = sprintf("SELECT * FROM  side_menu where parent_id = '$parentid' and enabled = '1'  order by menu_name ASC");
                                                 $qur121 = mysqli_query($db, $query121);
                                                 while ($rowc121 = mysqli_fetch_array($qur121)) {
                                                     ?>
@@ -370,7 +370,7 @@ if (count($_POST) > 0) {
                                 <?php
 
 
-                                $sql1 = "SELECT * FROM `side_menu` where side_menu_id !='1' ";
+                                $sql1 = "SELECT * FROM `side_menu` where side_menu_id !='1' and enabled = '1' order by menu_name ASC";
                                 $result1 = $mysqli->query($sql1);
 
 
@@ -383,7 +383,7 @@ if (count($_POST) > 0) {
                                                 <?php
                                                 //$bansi = "hello";
                                                 //$arrteam = explode(',', );
-                                                $sql1 = "SELECT * FROM `side_menu` where side_menu_id !='1' ";
+                                                $sql1 = "SELECT * FROM `side_menu` where side_menu_id !='1' and enabled = '1' order by menu_name ASC";
                                                 $result1 = $mysqli->query($sql1);
 
                                                 while ($row1 = $result1->fetch_assoc()) {
