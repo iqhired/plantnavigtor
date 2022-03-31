@@ -234,7 +234,7 @@ include("../hp_header.php");
                                     <h3 class="no-margin dashboard_line_heading"
                                         style="font-size:x-large !important; color: #fff;"><?php echo $rowc["line_name"]; ?></h3>
                                     <hr/>
-                                    <div style="font-size:large !important;color: #fff;text-align: center;">
+                                    <div style="font-size:x-large !important;color: #fff;text-align: center;">
                                         <div style="margin-top: 10px;"><?php echo $p_num;
 											$p_num = ''; ?></div>
                                         <div style="margin-top: 10px;"><?php echo $pf_name;
@@ -284,7 +284,7 @@ include("../hp_header.php");
 								<?php } ?>
                                 <div style="height: 100%">
                                     <h4 class="text_white"
-                                        style="font-size:x-large !important;color: #fff;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
+                                        style="font-size:large !important;color: #fff;height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;">
                                         <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> - <span
                                                     style="padding: 0px 0px 10px 0px;"
                                                     id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
