@@ -466,7 +466,7 @@ $msg = explode(',', $msg); ?>
                             <div class="mt-3">
                                 <a data-bs-toggle="collapse" href="#collapseJava1" role="button" aria-expanded="false"
                                    aria-controls="collapseJava1">
-                                    Config
+                                    PN Config
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round"
@@ -1556,8 +1556,7 @@ $msg = explode(',', $msg); ?>
 													if (in_array('15', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>user_module/user_ratings.php"
-                                                               class="mega-link"><h3 class="text-muted fs-6">user
-                                                                    Station-Pos ratings</h3></a>
+                                                               class="mega-link"><h3 class="text-muted fs-6">User Station-Pos Ratings</h3></a>
                                                         </div>
 													<?php } ?>
                                                 </div>
