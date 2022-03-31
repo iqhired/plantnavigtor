@@ -48,7 +48,7 @@ only screen and (max-width: 760px),
     }
     .col-lg-7 {
         float: right;
-        width: 70%!important;
+        width: 70%;
     }
     .col-md-6.mobile {
         float: left;

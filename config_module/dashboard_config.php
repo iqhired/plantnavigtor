@@ -275,7 +275,7 @@ if (count($_POST) > 0) {
             }
             .col-lg-2 {
                 width: 5%;
-                float: right;
+
             }
             .col-md-6.mobile_select {
                 width: 80%!important;
@@ -292,9 +292,7 @@ if (count($_POST) > 0) {
         .col-lg-6 {
             width: 45%;
         }
-        .col-lg-2 {
-            float: right;
-        }
+
     </style>
 </head>
 

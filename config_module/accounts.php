@@ -151,11 +151,11 @@ if (count($_POST) > 0) {
 
             .col-lg-7 {
                 float: right;
-                width: 57% !important;
+                width: 60%!important;
             }
 
             label.col-lg-5.control-label {
-                width: 30%;
+                width: 40%;
             }
             .modal-dialog {
                 position: relative;

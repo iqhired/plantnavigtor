@@ -96,7 +96,20 @@ if (count($_POST) > 0) {
         <!--    <script type="text/javascript" src="../assets/js/pages/form_select2.js"></script>-->
     </head>
     <style>
-
+        @media
+        only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px)  {
+            .col-lg-9 {
+                float: right;
+                width: 68%;
+            }
+            label.col-lg-3.control-label {
+                width: 32%;
+            }
+            .col-md-3 {
+                width: 100%;
+            }
+        }
     </style>
 
         <!-- Main navbar -->

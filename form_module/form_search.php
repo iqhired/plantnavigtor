@@ -129,6 +129,9 @@ if (count($_POST) > 0) {
             visibility: visible;
             opacity: 1;
         }
+        .col-md-6.date {
+            width: 25%;
+        }
 
 
         @media
@@ -155,6 +158,10 @@ if (count($_POST) > 0) {
             }
             .form_create{
                 display: none;
+            }
+            .col-md-6.date {
+                width: 100%;
+                float: right;
             }
 
 
@@ -375,7 +382,7 @@ include("../heading_banner.php");
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 date">
+                                        <div class="col-md-6 date">
 <!--                                            <label class="control-label" style="float: left;padding: 10px 110px 10px 2px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
                                             <?php
                                             $myDate = date("m/d/y h:i:s");
@@ -386,6 +393,8 @@ include("../heading_banner.php");
 
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>
                                             <input type="date" name="date_from" id="date_from" class="form-control" value="<?php echo $datefrom; ?>" style="float: left;width: initial;" required>
+                                        </div>
+                                            <div class="col-md-6 date">
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date To: &nbsp;&nbsp;</label>
                                             <input type="date" name="date_to" id="date_to" class="form-control" value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
                                         </div>

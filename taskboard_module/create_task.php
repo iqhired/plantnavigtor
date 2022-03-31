@@ -202,6 +202,27 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                 .col-lg-3 {
                     width: 20%!important;
                 }
+            @media
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px)  {
+                .col-lg-9 {
+                    float: right;
+                    width: 65%;
+                }
+                .col-lg-3 {
+                    width: 35%!important;
+                }
+                .col-md-6 {
+                    width: 100%;
+
+                }
+                .col-lg-4 {
+                    width: 32%;
+                    float: left;
+                }
+
+
+            }
         </style>
     </head>
 

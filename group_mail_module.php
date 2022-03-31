@@ -90,7 +90,7 @@ if ($i != "super" && $i != "admin") {
                 }
                 .col-md-1 {
                     width: 5%;
-                    float: right;
+
                 }
                 .col-md-4 {
                     width: 65%;

@@ -192,7 +192,7 @@ if (count($_POST) > 0) {
             }
             .col-lg-2 {
                 width: 5%;
-                float: right;
+
             }
 
 		}
