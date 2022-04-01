@@ -548,7 +548,7 @@ span {
     font-weight: 400 !important;
     text-transform: inherit;
     font-size: large;
-    font-family: monospace;
+    font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
     text-align: justify;
 }
 
@@ -557,13 +557,13 @@ span {
     font-weight: 300 !important;
     text-transform: inherit;
     font-size: medium;
-    font-family: monospace;
+    font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
 
 }
 
 .form_sub_header{
     text-transform: capitalize;
-    font-family: sans-serif;
+    font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
     /* border-bottom: 1px solid #008eff; */
     padding: 0px 17px 0px 15px;
     margin-bottom: 15px;
@@ -694,5 +694,10 @@ only screen and (max-width: 760px),
     .select2-selection--single .select2-selection__rendered {
 
         white-space: break-spaces;
+    }
+    .col-md-6.date {
+        width: 100%;
+        float: right;
+        margin-top: 12px;
     }
 }
