@@ -139,7 +139,7 @@ $datefrom = $yesdate;
             margin-top: 18px;
         }
         .col-md-6.date {
-            width: 25%;
+            width: 15%;
         }
         .col-md-2 {
             width: 8.666667%;
@@ -365,7 +365,7 @@ $datefrom = $yesdate;
                                         <div class="col-md-2">
                                             <button type="button" class="btn btn-primary" onclick='window.location.reload();' style="background-color:#1e73be;">Reset</button>
                                         </div>
-
+                                </form>
                                         <div class="col-md-2">
                                             <form action="export_log.php" method="post" name="export_excel">
                                                 <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
@@ -373,7 +373,7 @@ $datefrom = $yesdate;
                                         </div>
                                     </div>
                                 </div>
-                                </form>
+
                             </div>
                         </div>
                         <div class="panel panel-flat">					
