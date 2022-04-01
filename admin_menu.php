@@ -154,41 +154,7 @@ $msg = explode(',', $msg); ?>
                     <div class="collapse my-2" id="collapseInteractive">
                         <div class="ms-4">
                             <div class="mt-3">
-                                <a data-bs-toggle="collapse" href="#collapseInteractive2" role="button"
-                                   aria-expanded="false" aria-controls="collapseInteractive2">
-                                    GBP Dashboard
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round"
-                                         class="arrow">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </a>
-								<?php if (in_array('68', $msg)) { ?>
-                                    <div class="collapse my-2" id="collapseInteractive2">
-                                        <div class="ms-4">
-											<?php
-											$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-											$result1 = $mysqli->query($sql1);
-
-											while ($row1 = mysqli_fetch_array($result1)) {
-
-												$gbd_id = $row1['gbd_id'];
-												$line_name = $row1['line_name'];
-												$line_id = $row1['line_id'];
-												if ($gbd_id == 1) { ?>
-                                                    <div class="mt-3">
-                                                        <a target="_blank"
-                                                           href="<?php echo $siteURL; ?>config_module/gbp_dashboard.php?id=<?php echo $line_id ?>"
-                                                           class="text-muted mobile">
-															<?php echo $line_name ?>
-                                                        </a>
-                                                    </div>
-												<?php }
-											} ?>
-                                        </div>
-                                    </div>
-								<?php } ?>
+                                    <a href="<?php echo $siteURL; ?>config_module/gbp_dashboard_station.php" class="nav-link"> GBP Dashboard</a>
                             </div>
 
                         </div>
@@ -912,7 +878,9 @@ $msg = explode(',', $msg); ?>
 
                             <?php if (in_array('69', $msg)) { ?>
                                 <div class='tutorial_section'>
+
                                     <div class="toggle" id="toggle-2">
+                                        <a href="<?php echo $siteURL; ?>config_module/gbp_dashboard_station.php">
 
                                            <span>
                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -927,43 +895,43 @@ $msg = explode(',', $msg); ?>
                                         </svg> </span>
                                         <span class="ms-2 fw-light">GBP Dashboard</span>
                                         <span class="float-end" id="toggle-2-arrow">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="text-danger" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                    </svg>
+<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"-->
+<!--                                         class="text-danger" viewBox="0 0 16 16">-->
+<!--                                        <path fill-rule="evenodd"-->
+<!--                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>-->
+<!--                                    </svg>-->
                                 </span>
-
+                                        </a>
                                     </div>
-                                    <div class="slidenew" id="slide-2">
-                                        <div class="row">
-                                            <div class="col-md-6 mt-2">
-                                                <div class="p-3">
-                                                    <?php
-                                                    $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-                                                    $result1 = $mysqli->query($sql1);
-
-                                                    while ($row1 = mysqli_fetch_array($result1)) {
-
-                                                        $gbd_id = $row1['gbd_id'];
-                                                        $line_name = $row1['line_name'];
-                                                        $line_id = $row1['line_id'];
-                                                        if ($gbd_id == 1) { ?>
-                                                            <div class="mb-3">
-                                                                <a target="_blank"
-                                                                   href="<?php echo $siteURL; ?>config_module/gbp_dashboard.php?id=<?php echo $line_id ?>"
-                                                                   class="mega-link"><h3
-                                                                            class="text-muted fs-6"><?php echo $line_name ?></h3>
-                                                                </a>
-                                                            </div>
-                                                        <?php }
-                                                    } ?>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+<!--                                    <div class="slidenew" id="slide-2">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-md-6 mt-2">-->
+<!--                                                <div class="p-3">-->
+<!--                                                    --><?php
+//                                                    $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
+//                                                    $result1 = $mysqli->query($sql1);
+//
+//                                                    while ($row1 = mysqli_fetch_array($result1)) {
+//
+//                                                        $gbd_id = $row1['gbd_id'];
+//                                                        $line_name = $row1['line_name'];
+//                                                        $line_id = $row1['line_id'];
+//                                                        if ($gbd_id == 1) { ?>
+<!--                                                            <div class="mb-3">-->
+<!--                                                                <a target="_blank"-->
+<!--                                                                   href="--><?php //echo $siteURL; ?><!--config_module/gbp_dashboard.php?id=--><?php //echo $line_id ?><!--"-->
+<!--                                                                   class="mega-link"><h3-->
+<!--                                                                            class="text-muted fs-6">--><?php //echo $line_name ?><!--</h3>-->
+<!--                                                                </a>-->
+<!--                                                            </div>-->
+<!--                                                        --><?php //}
+//                                                    } ?>
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!---->
+<!--                                        </div>-->
+<!---->
+<!--                                    </div>-->
                                 </div>
                             <?php } ?>
                             <?php if (in_array('70', $msg)) { ?>

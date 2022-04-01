@@ -1181,7 +1181,8 @@ include("../heading_banner.php");
                         }
                         ?>
 
-                    <br/> </form>
+                    <br/>
+                    </form>
                 </div>
             </div>
             <?php } ?>

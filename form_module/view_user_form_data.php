@@ -15,7 +15,8 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-	//Unset the session variables
+	//Unset the session variablesc
+
 	session_unset();
 	//Destroy the session
 	session_destroy();
@@ -85,12 +86,38 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             pointer-events: none;
             color: #050505;
         }
+        .form_table_mobile {
+            display: none;
+        }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-2{
                 width: 35%!important;
             }
             .content:first-child {
                 padding-top: 90px!important;
+            }
+            .col-md-8.form_col_item {
+                float: left;
+                width: 100%;
+                padding-bottom: 10px;
+            }
+            .border-primary {
+                border-color: #ffffff;
+            }
+            .form_table_mobile {
+                display: block;
+            }
+            table.form_table {
+                display: none;
+            }
+            .form_table_mobile {
+                width: 100%;
+                background-color: #eee;
+                margin-top: 12px;
+            }
+            .col-md-2 {
+                width: 50%;
+                float: left;
             }
 
 
@@ -374,7 +401,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: red" disabled>
+                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
 														<?php } ?>
                                                     </div>
 												<?php } else { ?>
@@ -382,13 +409,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: red" disabled>
+                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
 															<?php
 														} else { ?>
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: red" disabled>
+                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
 														<?php } ?>
                                                     </div>
 												<?php } ?>
@@ -454,13 +481,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['binary_yes_alias']; ?>"
                                                                    class="form-check-input pn_none" disabled >
-                                                            <label for="yes" class="item_label" style="background-color: red;"
-                                                                   style="background-color: red;"><?php echo $rowc['binary_yes_alias']; ?></label>
+                                                            <label for="yes" class="item_label" style="background-color: #ffadad;"
+                                                                   style="background-color: #ffadad;"><?php echo $rowc['binary_yes_alias']; ?></label>
                                                             <input type="radio" id="no" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['binary_no_alias']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
-                                                            <label for="no" class="item_label" style="background-color: red;"
-                                                                   style="background-color: red;"><?php echo $rowc['binary_no_alias']; ?></label>
+                                                            <label for="no" class="item_label" style="background-color: #ffadad;"
+                                                                   style="background-color: #ffadad;"><?php echo $rowc['binary_no_alias']; ?></label>
 
 														<?php }
 														?>
@@ -610,7 +637,99 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
                                     </table>
 
+                                    <?php
+                                    $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$item_id'");
+                                    $qur1 = mysqli_query($db, $query1);
+                                    $i = 0;
+                                    while ($rowc1 = mysqli_fetch_array($qur1)) {
+                                        $approval_dept_array = $rowcmain['approval_dept'];
+                                        $approval_dept = explode(',', $approval_dept_array);
+                                        $approval_initials_array = $rowcmain['approval_initials'];
+                                        $approval_initials = explode(',', $approval_initials_array);
+                                        $passcode_array = $rowcmain['passcode'];
+                                        $passcode = explode(',', $passcode_array);
+                                        $approval_by_array = $rowc1['approval_by'];
+                                        $arrteam = explode(',', $approval_by_array);
 
+
+                                        foreach ($arrteam as $arr) {
+                                            if ($arr != "") {
+                                                ?>
+                                                <div class="form_table_mobile">
+                                                    <?php
+                                                    $qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
+                                                    $rowctemp = mysqli_fetch_array($qurtemp);
+                                                    $groupname = $rowctemp["group_name"];
+
+                                                    $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where approval_dept = '$arr' and form_user_data_id = '$id' ");
+                                                    $rowc05 = mysqli_fetch_array($qur05);
+                                                    $app_in = $rowc05["approval_initials"];
+                                                    $passcd = $rowc05["passcode"];
+                                                    $datetime = $rowc05["created_at"];
+                                                    $date_time = strtotime($datetime);
+
+                                                    $approval_status = $rowc05["approval_status"];
+                                                    $reject_status = $rowc05["reject_status"];
+
+                                                    if ($approval_status == '0' && $reject_status == '1') {
+                                                        $form_status = "Rejected";
+                                                    } else {
+                                                        $form_status = "Approved";
+                                                    }
+
+                                                    $qur04 = mysqli_query($db, "SELECT firstname,lastname FROM  cam_users where users_id = '$app_in' ");
+                                                    $rowc04 = mysqli_fetch_array($qur04);
+                                                    $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
+
+                                                    ?>
+                                                    <div class="row">
+                                                        <label class="col-lg-3 control-label mobile">Department</label>
+                                                        <div class="col-lg-8 mobile">   <?php echo $groupname; ?></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-lg-3 control-label mobile">Form Status</label>
+                                                        <div class="col-lg-8 mobile">     <?php echo $form_status; ?></div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-lg-3 control-label mobile">Approver</label>
+                                                        <div class="col-lg-8 mobile">
+                                                            <input type="text" name="approve_initial[]" id=""
+                                                                   value="<?php echo $rowc04["firstname"] . " " . $rowc04["lastname"];; ?>"
+                                                                   class="form-control pn_none"></div>
+                                                        <?php
+
+                                                        $qur_pin = mysqli_query($db, "SELECT pin FROM  cam_users where users_id = '$id' ");
+                                                        $row_pin = mysqli_fetch_assoc($qur_pin);
+                                                        //  $full_pin = $row_pin["pin"];
+
+
+                                                        ?>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-lg-3 control-label mobile">Time</label>
+                                                        <div class="col-lg-8 mobile">
+                                                            <input type="text" name="approval_time" id="approval_time"
+                                                                   value="<?php echo date('d-M-Y h:i:s', $date_time); ?>"
+                                                                   class="form-control pn_none">
+                                                        </div>
+                                                    </div>
+
+                                                    <?php if ($form_status == 'Rejected') { ?>
+                                                        <div id="rej_reason_div" style="border: 1px solid red;padding: 10px;">
+                                                            <td class="form_tab_td pn_none" colspan="4"> Reject Reason : <textarea
+                                                                        placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                                        style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea></td>
+                                                        </div>
+                                                    <?php }
+                                                    ?>
+                                                </div>
+                                                <?php     $fullnnm = "";
+                                                $passcd = "";
+                                            }
+                                        }
+                                    }
+                                    ?>
                                     <br/> </form>
                             </div>
                         </div>
@@ -664,7 +783,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 if (text_val >= lower_compare && text_val <= upper_compare)
                     $(this).css("background-color", "");
                 } else {
-                    $(this).css("background-color", "red");
+                    $(this).css("background-color", "#ffadad");
                 }
             }
         }
