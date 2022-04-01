@@ -323,7 +323,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                     <div class="form-group">
                                                         <label class="col-lg-3 control-label">Building * : </label>
                                                         <div class="col-lg-9">
-                                                            <select name="building" id="building" class="select form-control select_st" data-style="bg-slate" >
+                                                            <select name="building" id="building" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" selected disabled>--- Select Building ---</option>
                                                                 <?php
                                                                 $sql1 = "SELECT * FROM `tm_building` ORDER BY `tm_building_name` ASC ";
@@ -364,7 +364,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                     <div class="form-group">
                                                         <label class="col-lg-3 control-label">Equipment * : </label>
                                                         <div class="col-lg-9">
-                                                            <select name="equipment" id="equipment" class="select form-control select_st" data-style="bg-slate" >
+                                                            <select name="equipment" id="equipment" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" selected disabled>--- Select Equipment ---</option>
                                                                 <?php
                                                                 $sql1 = "SELECT * FROM `tm_equipment` ORDER BY `tm_equipment_name` ASC";
