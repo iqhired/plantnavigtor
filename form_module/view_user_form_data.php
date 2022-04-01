@@ -115,6 +115,25 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 background-color: #eee;
                 margin-top: 12px;
             }
+            .form_table_mobile {
+                width: 100%;
+                background-color: #eee;
+                margin-top: 12px;
+            }
+            .form_row_mobile {
+                width: 100%;
+                height: auto;
+            }
+            .col-lg-8.mobile {
+                width: 58%;
+                float: right;
+                padding: 10px 30px 10px 26px;
+            }
+            label.col-lg-3.control-label.mobile {
+                width: 42%;
+                float: left;
+                padding: 10px 30px 10px 26px;
+            }
             .col-md-2 {
                 width: 50%;
                 float: left;
