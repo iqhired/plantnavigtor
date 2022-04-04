@@ -109,6 +109,9 @@ if (count($_POST) > 0) {
             .col-md-3 {
                 width: 100%;
             }
+            .modal-dialog {
+                margin: 60px;
+            }
         }
     </style>
 

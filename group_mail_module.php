@@ -37,6 +37,7 @@ if ($i != "super" && $i != "admin") {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo $sitename; ?> | Plantnavigator Communicator</title>
         <!-- Global stylesheets -->
+
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link href="<?php echo $siteURL; ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
         <link href="<?php echo $siteURL; ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -90,12 +91,13 @@ if ($i != "super" && $i != "admin") {
                 }
                 .col-md-1 {
                     width: 5%;
+                    float: right;
 
                 }
                 .col-md-4 {
                     width: 65%;
                     float: right;
-                }x
+                }
 
 
             }
