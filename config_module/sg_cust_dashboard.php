@@ -313,6 +313,7 @@ include("../hp_header.php");
 
         </div>
     </div>
+</div>
     <script>
         var myCarousel = document.querySelector('#myCarousel')
         var carousel = new bootstrap.Carousel(myCarousel, {
