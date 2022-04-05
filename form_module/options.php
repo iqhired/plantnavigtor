@@ -210,7 +210,7 @@ include("../heading_banner.php");
                                                             data-style="bg-slate">
                                                         <option value="" selected disabled>--- Select Part Family ---
                                                         </option>
-														<?php
+                                                        <?php
 														$st_dashboard = $_POST['part_family'];
 														if(empty($st_dashboard) && !empty($_REQUEST['part_family'])){
 															$st_dashboard = $_REQUEST['part_family'];
@@ -232,12 +232,13 @@ include("../heading_banner.php");
 															if ($st_dashboard == $row1['pm_part_family_id']) {
 																$entry = 'selected';
 															} else {
-																$entry = '';
+																$entry = 'selected';
 
 															}
 															echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
 														}
 														?>
+
                                                     </select>
                                                     <!-- <div id="error2" class="red">Please Select Part Family</div> -->
 
