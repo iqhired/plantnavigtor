@@ -1,8 +1,24 @@
 <?php
 include("../config.php");
 if (!isset($_SESSION['user'])) {
-	header('location: logout.php');
+	header('location: ../logout.php');
 }
+//Set the session duration for 10800 seconds - 3 hours
+$duration = $auto_logout_duration;
+//Read the request time of the user
+$time = $_SERVER['REQUEST_TIME'];
+//Check the user's session exist or not
+if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	header($redirect_logout_path);
+//	header('location: ../logout.php');
+	exit;
+}
+//Set the time of the user's last activity
+$_SESSION['LAST_ACTIVITY'] = $time;
 $user = $_SESSION['user'];
 $chicagotime = date("Y-m-d H:i:s");
     $good_name = $_POST['good_name'];
@@ -39,14 +55,37 @@ if ($good_name != "") {
 				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
 				$station_event_id = $rowc['station_event_id'];
 			}
-			$query1 = sprintf("SELECT line_id FROM sg_station_event where  line_id = '$station_event_id'");
+			$query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  line_id = '$station_event_id'");
 			$qur1 = mysqli_query($db, $query1);
 			while ($rowc1 = mysqli_fetch_array($qur1)) {
 				$line_id = $rowc['line_id'];
+				$part_number = $rowc['part_number_id'];
 			}
 
 			if($good_bad_pieces_id){
-				sendFile('../assets/label_files/$line_id/f1');
+
+
+				$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+				$resultnumber = $mysqli->query($sqlnumber);
+				$rowcnumber = $resultnumber->fetch_assoc();
+				$pm_part_number = $rowcnumber['part_number'];
+				$pm_part_name = $rowcnumber['part_name'];
+				$dir_path = "../assets/label_files/" . $line_id;
+				$file =  file($dir_path . '/g_label');
+				$patterns = array();
+				$patterns[0] = '/CustomerNo/';
+				$patterns[1] = '/Description/';
+				$patterns[2] = '/Date/';
+				$patterns[3] = '/UserName/';
+				$replacements = array();
+				$replacements[0] = $pm_part_number;
+				$replacements[1] = $pm_part_name;
+				$replacements[2] = $chicagotime;
+				$replacements[3] = $user;
+				$output = preg_replace($patterns, $replacements, $file);
+				sendFile($dir_path . '/g_label');
+				$output = preg_replace($patterns, $replacements, $file);
+				sendFile($dir_path . '/g_label');
 			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
@@ -63,21 +102,42 @@ if ($good_name != "") {
 
 			$good_bad_piece_name = $_POST['good_bad_piece_name'];
 
-			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework  , gbp.station_event_id as station_event_id  FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
 			$qur = mysqli_query($db, $query);
 			while ($rowc = mysqli_fetch_array($qur)) {
 
 				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
-				$station_event_id = $rowc['station_event_id'];
+				//$station_event_id = $rowc['station_event_id'];
 			}
-			$query1 = sprintf("SELECT line_id FROM sg_station_event where  line_id = '$station_event_id'");
+			$query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
 			$qur1 = mysqli_query($db, $query1);
-			while ($rowc1 = mysqli_fetch_array($qur1)) {
+			while ($rowc = mysqli_fetch_array($qur1)) {
 				$line_id = $rowc['line_id'];
+				$part_number = $rowc['part_number_id'];
 			}
 
 			if($good_bad_pieces_id){
-				sendFile('../assets/label_files/$line_id/f1');
+				$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+				$resultnumber = $mysqli->query($sqlnumber);
+				$rowcnumber = $resultnumber->fetch_assoc();
+				$pm_part_number = $rowcnumber['part_number'];
+				$pm_part_name = $rowcnumber['part_name'];
+				$dir_path = "../assets/label_files/" . $line_id;
+				$file =  file($dir_path . '/g_label');
+				$file1 =  file($dir_path . '/g_label1');
+				$patterns = array();
+				$patterns[0] = '/CustomerNo/';
+				$patterns[1] = '/Description/';
+				$patterns[2] = '/Date/';
+				$patterns[3] = '/UserName/';
+				$replacements = array();
+				$replacements[0] = $pm_part_number;
+				$replacements[1] = $pm_part_name;
+				$replacements[2] = $chicagotime;
+				$replacements[3] = $user;
+				$output = preg_replace($patterns, $replacements, $file);
+				//sendFile($output);
+				echo '<script src=\"../assets/js/BrowserPrint.js\"></script><script src=\"../assets/js/DevDemo.js\"></script><script> sendFile(' . $output .'); </script>';
 			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';

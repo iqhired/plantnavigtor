@@ -95,9 +95,9 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 		if (!file_exists($dir_path)) {
 			mkdir($dir_path, 0777, true);
 		}
-        move_uploaded_file($good_tmp, $dir_path .'/'. 'g' ."_".time().'_'. $good_name);
-        move_uploaded_file($good_tmp, $dir_path .'/'. 'r' ."_".time().'_'. $good_name);
-        move_uploaded_file($bad_tmp, $dir_path .'/'. 'b' ."_".time().'_'. $bad_name);
+        move_uploaded_file($good_tmp, $dir_path .'/'. 'g' ."_". 'label');
+//        move_uploaded_file($good_tmp, $dir_path .'/'. 'r' ."_". 'label');
+        move_uploaded_file($bad_tmp, $dir_path .'/'. 'b' ."_". 'label');
         $zpl_id = $_POST['label_line_id'];
         $sql1 = "update cam_line set zpl_file_status = '1' where line_id ='$zpl_id'";
         $result1 = mysqli_query($db, $sql1);
@@ -106,12 +106,6 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         $import_status_message = 'Upload Files Successfully';
     }
 }
-//else
-//{
-//        $message_stauts_class = 'alert-danger';
-//        $import_status_message = 'Error: Try again';
-//
-//}
 
 ?>
 <!DOCTYPE html>
