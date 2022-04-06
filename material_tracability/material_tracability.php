@@ -153,6 +153,16 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 width: 100%!important;
                 box-sizing: border-box;
             }
+            .mb-3 {
+                margin-bottom: 1rem!important;
+                width: 80%;
+            }
+            #addRow {
+                float: right;
+            }
+            #removeRow {
+                float: right;
+            }
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
 
                 .col-md-0\.5 {
@@ -164,7 +174,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                     float: left;
                 }
                 .col-lg-2 {
-                    width: 35%!important;
+                    width: 38%!important;
                     float: left;
                 }
                 .col-md-3 {
@@ -173,6 +183,9 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 }
                 .form-check.form-check-inline {
                     width: 70%;
+                }
+                .input-group-append {
+                    width: 122%!important;
                 }
             }
 
@@ -191,6 +204,9 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
             }
             .select2-selection--multiple {
                 border: 1px solid transparent !important;
+            }
+            .input-group-append {
+                width: 112%;
             }
 
     </style>
@@ -260,13 +276,20 @@ while ($row1 = $result1->fetch_assoc()) {
                             </div>
                             <br/>
 
+
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="material_type" id="material_type" class="form-control"> </div>
-                                <div id="error6" class="red">Please Enter Material Type</div>
-
+                                    <div id="inputFormRow">
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="material_type[]" id="material_type" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div id="newRow"></div>
+                                    <button id="addRow" type="button" class="btn btn-info">Add</button>
+                                </div>
                             </div>
+                            <div id="error6" class="red">Please Enter Material Type</div>
                             <br/>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
@@ -280,75 +303,24 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="material_status" id="material_status" class="form-control"> </div>
+                                    <select name="material_status" id="material_status" class="select form-control" data-style="bg-slate">
+                                        <option value="" selected disabled>--- Select material status ---</option>
+                                        <?php
+                                        $sql1 = "SELECT material_status FROM `material_config`";
+                                        $result1 = mysqli_query($db, $sql1);
+                                        while ($row1 = $result1->fetch_assoc()) {
+
+                                            echo "<option value='" . $row1['material_id'] . "'>" . $row1['material_status'] . "</option>";
+
+                                        }
+                                        ?>
+                                    </select>
+                                 </div>
                                 <div id="error7" class="red">Please Enter material Status</div>
 
                             </div>
                             <br/>
 
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Out of tolerance Mail List  </label>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <select class="select form-control select-border-color" data-placeholder="Tolerance Mail List..."  name="out_of_tolerance_mail_list[]" id="out_of_tolerance_mail_list" multiple="multiple" data-style="bg-slate">
-                                            <?php
-                                            $arrteam = explode(',', $rowc["teams"]);
-                                            $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
-                                            $result1 = $mysqli->query($sql1);
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                if (in_array($row1['group_id'], $arrteam)) {
-                                                    $selected = "selected";
-                                                } else {
-                                                    $selected = "";
-                                                }
-                                                $station1 = $row1['group_id'];
-                                                $qurtemp = mysqli_query($db, "SELECT * FROM  sg_group where group_id = '$station1' ");
-                                                $rowctemp = mysqli_fetch_array($qurtemp);
-                                                $groupname = $rowctemp["group_name"];
-                                                echo "<option value='" . $row1['group_id'] . "' $selected>" . $groupname . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                        <div id="error9" class="red">Please Select Tolerance Mail List</div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-0.5">
-                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Out of Control List : </label>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <select class="select form-control select-border-color select-access-multiple-open" data-style="bg-slate" data-placeholder="Out of Control List ..." name="out_of_control_list[]" id="out_of_control_list" multiple="multiple">
-                                            <?php
-                                            $arrteam = explode(',', $rowc["teams"]);
-                                            $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
-                                            $result1 = $mysqli->query($sql1);
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                if (in_array($row1['group_id'], $arrteam)) {
-                                                    $selected = "selected";
-                                                } else {
-                                                    $selected = "";
-                                                }
-                                                $station1 = $row1['group_id'];
-                                                $qurtemp = mysqli_query($db, "SELECT * FROM  sg_group where group_id = '$station1' ");
-                                                $rowctemp = mysqli_fetch_array($qurtemp);
-                                                $groupname = $rowctemp["group_name"];
-                                                echo "<option value='" . $row1['group_id'] . "' $selected>" . $groupname . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                        <div id="error10" class="red">Please Select Out of Control List</div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-0.5">
-                                    <button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group2()"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
 
                             <div class="row">
                                 <!--<div class="col-md-4">-->
@@ -382,9 +354,32 @@ while ($row1 = $result1->fetch_assoc()) {
                 <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Create Form</button>
             </div>
             </form>
+
+
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    // add row
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+</script>
 <!-- /main charts -->
 
 <script>

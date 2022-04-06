@@ -6,32 +6,48 @@ $drag_drop_res = (array) json_decode($array);
 
 if(count($_POST)>0) {
     $line_number = $_POST['line_number'];
-    $material_type = $_POST['material_type'];
     $material_status = $_POST['material_status'];
-    $out_of_tolerance_mail_list1 = $_POST['out_of_tolerance_mail_list'];
-    $out_of_control_list1 = $_POST['out_of_control_list'];
     $notes = $_POST['material_notes'];
     $time_stamp = $_POST['time_stamp'];
     $created_by = date("Y-m-d H:i:s");
-    foreach ($out_of_tolerance_mail_list1 as $out_of_tolerance_mail_list) {
-        $array_out_of_tolerance_mail_list .= $out_of_tolerance_mail_list . ",";
-    }
-    foreach ($out_of_control_list1 as $out_of_control_list) {
-        $array_out_of_control_list .= $out_of_control_list . ",";
+    $m_type = $_POST['material_type'];
+    $material_type = count($_POST['material_type']);
+    if($material_type > 1){
+        for ($i=0; $i<$material_type; $i++){
+            if (trim($_POST['material_type'][$i]) != ''){
+                $sql0 = "INSERT INTO `material_tracability`(`line_number`,`material_type`,`material_status`,`notes`,`timestamp`,`created_at`) VALUES 
+	        	('$line_number' , '$m_type[$i]' ,'$material_status' , '$notes','$time_stamp','$created_by')";
+                $result0 = mysqli_query($db, $sql0);
+                if ($result0) {
+                    $_SESSION['message_stauts_class'] = 'alert-success';
+                    $_SESSION['import_status_message'] = 'Material tracability Created Sucessfully.';
+                } else {
+                    $_SESSION['message_stauts_class'] = 'alert-danger';
+                    $_SESSION['import_status_message'] = 'Please retry';
+                }
+            }
+        }
+    }else{
+        $sql0 = "INSERT INTO `material_tracability`(`line_number`,`material_type`,`material_status`,`notes`,`timestamp`,`created_at`) VALUES 
+		('$line_number' , '$m_type' ,'$material_status' , '$notes','$time_stamp','$created_by')";
+        $result0 = mysqli_query($db, $sql0);
+        if ($result0) {
+            $_SESSION['message_stauts_class'] = 'alert-success';
+            $_SESSION['import_status_message'] = 'Material tracability Created Sucessfully.';
+        } else {
+            $_SESSION['message_stauts_class'] = 'alert-danger';
+            $_SESSION['import_status_message'] = 'Please retry';
+        }
     }
 
-    $sql0 = "INSERT INTO `material_tracability`(`line_number`,`material_type`,`material_status`,`tolerance_mail_list`,`control_list`,`notes`,`timestamp`,`created_at`) VALUES 
-		('$line_number' , '$material_type' ,'$material_status' , '$array_out_of_tolerance_mail_list' , '$array_out_of_control_list' , '$notes','$time_stamp','$created_by')";
-    $result0 = mysqli_query($db, $sql0);
-    if ($result0) {
-        $_SESSION['message_stauts_class'] = 'alert-success';
-        $_SESSION['import_status_message'] = 'Material tracability Created Sucessfully.';
-    } else {
-        $_SESSION['message_stauts_class'] = 'alert-danger';
-        $_SESSION['import_status_message'] = 'Please retry';
-    }
+
+    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_number= '$line_number' ORDER BY `material_id` DESC ");
+    $rowc04 = mysqli_fetch_array($qur04);
+    $material_id = $rowc04["material_id"];
+
+
 //multiple image
-    if (isset($_FILES['image'])) {
+        if (isset($_FILES['image'])) {
 
         foreach($_FILES['image']['name'] as $key=>$val ){
             $errors = array();
@@ -52,9 +68,9 @@ if(count($_POST)>0) {
                 $import_status_message = 'Error: File size must be excately 2 MB';
             }
             if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "../form_images/" . $file_name);
+                move_uploaded_file($file_tmp, "../material_images/" . $file_name);
 
-                $sql = "INSERT INTO `form_images`(`image_name`,`form_create_id`,`created_at`) VALUES ('$file_name' , '$form_create_id' , '$created_by' )";
+                $sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_name' , '$material_id' , '$created_by' )";
 
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
