@@ -385,7 +385,7 @@ while ($row1 = $result1->fetch_assoc()) {
             </div>
 
             <div  class="panel-footer p_footer">
-                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Create Form</button>
+                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Submit</button>
             </div>
             </form>
 
