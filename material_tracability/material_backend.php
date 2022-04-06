@@ -1,22 +1,20 @@
 <?php
-
 include("../config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 
 if(count($_POST)>0) {
     $line_number = $_POST['line_number'];
+    $part_number = $_POST['part_number'];
+    $part_family = $_POST['part_family'];
+    $part_name = $_POST['part_name'];
     $material_status = $_POST['material_status'];
     $notes = $_POST['material_notes'];
-    $time_stamp = $_POST['time_stamp'];
     $created_by = date("Y-m-d H:i:s");
-    $m_type = $_POST['material_type'];
-    $material_type = count($_POST['material_type']);
-    if($material_type > 1){
-        for ($i=0; $i<$material_type; $i++){
-            if (trim($_POST['material_type'][$i]) != ''){
-                $sql0 = "INSERT INTO `material_tracability`(`line_number`,`material_type`,`material_status`,`notes`,`timestamp`,`created_at`) VALUES 
-	        	('$line_number' , '$m_type[$i]' ,'$material_status' , '$notes','$time_stamp','$created_by')";
+    $material_type = $_POST['material_type'];
+
+      $sql0 = "INSERT INTO `material_tracability`(`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`material_status`,`notes`,`created_at`) VALUES 
+	        	('$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$material_status' , '$notes','$created_by')";
                 $result0 = mysqli_query($db, $sql0);
                 if ($result0) {
                     $_SESSION['message_stauts_class'] = 'alert-success';
@@ -24,20 +22,8 @@ if(count($_POST)>0) {
                 } else {
                     $_SESSION['message_stauts_class'] = 'alert-danger';
                     $_SESSION['import_status_message'] = 'Please retry';
-                }
-            }
-        }
-    }else{
-        $sql0 = "INSERT INTO `material_tracability`(`line_number`,`material_type`,`material_status`,`notes`,`timestamp`,`created_at`) VALUES 
-		('$line_number' , '$m_type' ,'$material_status' , '$notes','$time_stamp','$created_by')";
-        $result0 = mysqli_query($db, $sql0);
-        if ($result0) {
-            $_SESSION['message_stauts_class'] = 'alert-success';
-            $_SESSION['import_status_message'] = 'Material tracability Created Sucessfully.';
-        } else {
-            $_SESSION['message_stauts_class'] = 'alert-danger';
-            $_SESSION['import_status_message'] = 'Please retry';
-        }
+
+         }
     }
 
 
@@ -86,4 +72,3 @@ if(count($_POST)>0) {
     }
 
 
-}

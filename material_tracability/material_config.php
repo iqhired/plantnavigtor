@@ -30,22 +30,82 @@ if ($i != "super" && $i != "admin") {
 if (count($_POST) > 0) {
     $teams1 = $_POST['teams'];
     $users1 = $_POST['users'];
-    $status = $_POST['status'];
+    $m_type = $_POST['material_type'];
+    $material_type = count($_POST['material_type']);
     foreach ($teams1 as $teams) {
         $array_team .= $teams . ",";
     }
     foreach ($users1 as $users) {
         $array_user .= $users . ",";
     }
-    $sql = "INSERT INTO `material_config`(`material_teams`,`material_users`,`material_status`,`created_at`) VALUES
-    ('$array_team','$array_user','$status','$chicagotime')";
-    $result1 = mysqli_query($db, $sql);
-    if ($result1) {
-        $message_stauts_class = 'alert-success';
-        $import_status_message = 'Data Saved successfully.';
+    if ($material_type > 1) {
+        for ($i = 0; $i < $material_type; $i++) {
+            if (trim($_POST['material_type'][$i]) != '') {
+                $sql = "INSERT INTO `material_config`(`material_teams`,`material_users`,`material_type`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[$i]','$chicagotime')";
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Data Saved successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Retry...';
+                }
+            }
+        }
     } else {
-        $message_stauts_class = 'alert-danger';
-        $import_status_message = 'Error: Please Retry...';
+        $sql = "INSERT INTO `material_config`(`material_teams`,`material_users`,`material_type`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type','$chicagotime')";
+        $result1 = mysqli_query($db, $sql);
+        if ($result1) {
+            $message_stauts_class = 'alert-success';
+            $import_status_message = 'Data Saved successfully.';
+        } else {
+            $message_stauts_class = 'alert-danger';
+            $import_status_message = 'Error: Please Retry...';
+        }
+    }
+}
+
+// edit material config
+if (count($_POST) > 0) {
+    $id = $_POST['edit_id'];
+    $edit_teams1 = $_POST['edit_teams'];
+    $edit_users1 = $_POST['edit_users'];
+    $edit_m_type = $_POST['edit_material_type'];
+    $edit_material_type = count($_POST['edit_material_type']);
+    foreach ($edit_teams1 as $edit_teams) {
+        $array_team .= $edit_teams . ",";
+    }
+    foreach ($edit_users1 as $edit_users) {
+        $array_user .= $edit_users . ",";
+    }
+    if ($edit_material_type > 1) {
+        for ($i = 0; $i < $edit_material_type; $i++) {
+            if (trim($_POST['material_type'][$i]) != '') {
+                $sql="update `material_config` set material_teams = ' $edit_teams1', material_users = '$edit_users1', material_type = '  $edit_m_type[$i]', created_at = '$chicagotime' where material_id='$id'";
+
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Data Updated successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Retry...';
+                }
+            }
+        }
+    } else {
+        $sql="update `material_config` set material_teams = ' $edit_teams1', material_users = '$edit_users1', material_type = '$edit_m_type', created_at = '$chicagotime' where material_id='$id'";
+
+        $result1 = mysqli_query($db, $sql);
+        if ($result1) {
+            $message_stauts_class = 'alert-success';
+            $import_status_message = 'Data Updated successfully.';
+        } else {
+            $message_stauts_class = 'alert-danger';
+            $import_status_message = 'Error: Please Retry...';
+        }
     }
 }
 ?>
@@ -55,7 +115,7 @@ if (count($_POST) > 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | Assignment Log Config</title>
+    <title><?php echo $siteURL; ?> | material Config</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -97,7 +157,21 @@ if (count($_POST) > 0) {
             border-radius: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
-        }  @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+        }
+        .input-group-append {
+            width: 112%;
+        }
+        .mb-3 {
+            margin-bottom: 1rem!important;
+            width: 80%;
+        }
+        #addRow {
+            float: right;
+        }
+        #removeRow {
+            float: right;
+        }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-2 {
                 width: 28%!important;
                 float: left;
@@ -109,6 +183,9 @@ if (count($_POST) > 0) {
             .col-lg-1 {
                 width: 12%;
                 float: right;
+            }
+            .input-group-append {
+                width: 122%!important;
             }
         }
     </style>
@@ -129,7 +206,6 @@ include("../heading_banner.php");
     <!-- Content area -->
     <div class="content">
         <!-- Main charts -->
-        <!-- Basic datatable -->
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <h5 class="panel-title">Material Tracability Config</h5>
@@ -199,7 +275,7 @@ include("../heading_banner.php");
                                             <select class="select-border-color" data-placeholder="Add Users ..." name="users[]" id="users"  multiple="multiple" >
                                                 <?php
                                                 $arrteam1 = explode(',', $rowc["users"]);
-                                                $sql1 = "SELECT * FROM `cam_users` WHERE `assigned2` = '0'  and `users_id` != '1' order BY `firstname` ";
+                                                $sql1 = "SELECT * FROM `cam_users` WHERE `users_id` != '1' order BY `firstname` ";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
                                                     if (in_array($row1['users_id'], $arrteam1)) {
@@ -218,9 +294,15 @@ include("../heading_banner.php");
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-lg-2 control-label" >Material Status : </label>
+                                    <label class="col-lg-2 control-label" >Material Type : </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="status" id="status" class="form-control" placeholder="Enter status"  required>
+                                        <div id="inputFormRow">
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="material_type[]" id="material_type" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div id="newRow"></div>
+                                        <button id="addRow" type="button" class="btn btn-info">Add</button>
                                     </div>
                                 </div><br/>
 
@@ -239,13 +321,233 @@ include("../heading_banner.php");
             </form>
         </div>
         <!-- /main charts -->
-        <!-- edit modal -->
-        <!-- Dashboard content -->
-        <!-- /dashboard content -->
+             <form action="delete_material.php" method="post" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
+                </div>
+            </div>
+            <br/>
+            <div class="panel panel-flat">
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkAll" ></th>
+                        <th>S.No</th>
+                        <th>Material Teams</th>
+                        <th>Material Users</th>
+                        <th>Material Type</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $query = sprintf("SELECT * FROM  material_config");
+                    $qur = mysqli_query($db, $query);
+                    while ($rowc = mysqli_fetch_array($qur)) {
+                        ?>
+                        <tr>
+                            <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["material_id"]; ?>"></td>
+                            <td><?php echo ++$counter; ?></td>
+                            <td>
+                                <?php
+                                $material = $rowc['material_teams'];
+                                $arr_material = explode(',', $material);
+
+                                // glue them together with ', '
+                                $materialStr = implode("', '", $arr_material);
+                                $sql = "SELECT group_name FROM `sg_group` WHERE group_id IN ('$materialStr')";
+                                $result1 = mysqli_query($db, $sql);
+                                $line = '';
+                                $i = 0;
+                                while ($row =  $result1->fetch_assoc()) {
+                                    if($i == 0){
+                                        $line = $row['group_name'];
+                                    }else{
+                                        $line .= " , " . $row['group_name'];
+                                    }
+                                    $i++;
+                                }
+                                echo $line;
+                                ?></td>
+                            <?php
+                            $nnm = $rowc["material_users"];
+                            $arr_nnm = explode(',', $nnm);
+                            $materialnnm = implode("', '", $arr_nnm);
+                            $query12 = sprintf("SELECT firstname,lastname FROM  cam_users where users_id IN ('$materialnnm')");
+
+                            $qur12 =  mysqli_query($db,$query12);
+                            $line1 = '';
+                            $j = 0;
+                            while($rowc12 =  $qur12->fetch_assoc()){
+                            if($j == 0){
+                                $firstnm = $rowc12["firstname"];
+                                $lastnm = $rowc12["lastname"];
+                                $fulllname = $firstnm." ".$lastnm;
+                            }else{
+                                $firstnm = $rowc12["firstname"];
+                                $lastnm = $rowc12["lastname"];
+                                $fulllname = $firstnm." ".$lastnm;
+                            }
+                                $j++;
+                            }
+                            ?>
+                            <td><?php echo $fulllname;?></td>
+                            <td><?php echo $rowc["material_type"]; ?></td>
+
+                            <td>
+                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-name="<?php echo $rowc['job_name']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
+
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+        </form>					</div>
+    <!-- /basic datatable -->
+    <!-- edit modal -->
+    <div id="edit_modal_theme_primary" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Update Material Config</h6>
+                </div>
+                <form action="" id="user_form" class="form-horizontal" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Material Teams:*</label>
+                                    <div class="col-lg-7 mob_modal">
+
+                                        <input type="hidden" name="edit_id" id="edit_id" >
+                                        <select class="select-border-color" data-placeholder="Add Teams..." name="edit_teams[]" id="edit_teams" multiple="multiple" >
+                                            <?php
+                                            $arrteam = explode(',', $rowc["teams"]);
+                                            $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if (in_array($row1['group_id'], $arrteam)) {
+                                                    $selected = "selected";
+                                                } else {
+                                                    $selected = "";
+                                                }
+                                                $station1 = $row1['group_id'];
+                                                $qurtemp = mysqli_query($db, "SELECT * FROM  sg_group where group_id = '$station1' ");
+                                                $rowctemp = mysqli_fetch_array($qurtemp);
+                                                $groupname = $rowctemp["group_name"];
+                                                echo "<option value='" . $row1['group_id'] . "' $selected>" . $groupname . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Material Users:*</label>
+                                    <div class="col-lg-7 mob_modal">
+                                        <select class="select-border-color" data-placeholder="Add Users ..." name="edit_users[]" id="edit_users"  multiple="multiple" >
+                                            <?php
+                                            $arrteam1 = explode(',', $rowc["users"]);
+                                            $sql1 = "SELECT * FROM `cam_users` WHERE `assigned2` = '0'  and `users_id` != '1' order BY `firstname` ";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if (in_array($row1['users_id'], $arrteam1)) {
+                                                    $selected = "selected";
+                                                } else {
+                                                    $selected = "";
+                                                }
+                                                echo "<option value='" . $row1['users_id'] . "' $selected>" . $row1['firstname'] . "&nbsp;" . $row1['lastname'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        $query = sprintf("SELECT * FROM  material_config");
+                        $qur = mysqli_query($db, $query);
+                        while ($rowc = mysqli_fetch_array($qur)) {
+                            $material_type = $rowc['material_type'];
+                        }
+                        ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Material Type:*</label>
+                                    <div class="col-lg-7 mob_modal">
+                                        <div id="inputFormRow">
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="edit_material_type[]" id="edit_material_type" value="<?php echo $material_type ?>" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div id="newRow"></div>
+                                        <button id="addRow" type="button" class="btn btn-info">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard content -->
+    <!-- /dashboard content -->
+    <script> $(document).on('click', '#delete', function () {
+            var element = $(this);
+            var del_id = element.attr("data-id");
+            var info = 'id=' + del_id;
+            $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
+            $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+        });</script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).on('click', '#edit', function () {
+                var element = $(this);
+                var edit_id = element.attr("data-id");
+                var name = $(this).data("name");
+                $("#edit_name").val(name);
+                $("#edit_id").val(edit_id);
+                //alert(role);
+            });
+        });
+    </script>
 
     </div>
 
 </div>
+<script type="text/javascript">
+    // add row
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+</script>
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>material_tracability/material_config.php");

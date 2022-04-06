@@ -34,6 +34,35 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
+$station_event_id = $_GET['station_event_id'];
+$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
+$resultmain = $mysqli->query($sqlmain);
+$rowcmain = $resultmain->fetch_assoc();
+$part_family = $rowcmain['part_family_id'];
+$part_number = $rowcmain['part_number_id'];
+
+$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+$resultnumber = $mysqli->query($sqlnumber);
+$rowcnumber = $resultnumber->fetch_assoc();
+$pm_part_number = $rowcnumber['part_number'];
+$pm_part_name = $rowcnumber['part_name'];
+
+$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
+$resultfamily = $mysqli->query($sqlfamily);
+$rowcfamily = $resultfamily->fetch_assoc();
+$pm_part_family_name = $rowcfamily['part_family_name'];
+
+$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
+$resultaccount = $mysqli->query($sqlaccount);
+$rowcaccount = $resultaccount->fetch_assoc();
+$account_id = $rowcaccount['account_id'];
+
+$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
+$resultcus = $mysqli->query($sqlcus);
+$rowccus = $resultcus->fetch_assoc();
+$cus_name = $rowccus['c_name'];
+$logo = $rowccus['logo'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -153,16 +182,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 width: 100%!important;
                 box-sizing: border-box;
             }
-            .mb-3 {
-                margin-bottom: 1rem!important;
-                width: 80%;
-            }
-            #addRow {
-                float: right;
-            }
-            #removeRow {
-                float: right;
-            }
+           }
+
             @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
 
                 .col-md-0\.5 {
@@ -184,9 +205,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 .form-check.form-check-inline {
                     width: 70%;
                 }
-                .input-group-append {
-                    width: 122%!important;
-                }
+
             }
 
             .form-check-inline .form-check-input {
@@ -275,18 +294,47 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <div id="error1" class="red">Line Number</div>
                             </div>
                             <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
+                                <div class="col-md-6">
+                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Line Number">
+                                </div>
+                                <div id="error1" class="red">Part Number</div>
+                            </div>
+                            <br/>   <div class="row">
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
+                                <div class="col-md-6">
+                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Line Number">
+                                </div>
+                                <div id="error1" class="red">Part family</div>
+                            </div>
+                            <br/>   <div class="row">
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
+                                <div class="col-md-6">
+                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Line Number">
+                                </div>
+                                <div id="error1" class="red">Part Name</div>
+                            </div>
+                            <br/>
+
+
 
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <div id="inputFormRow">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="material_type[]" id="material_type" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div id="newRow"></div>
-                                    <button id="addRow" type="button" class="btn btn-info">Add</button>
+                                    <select name="material_status" id="material_status" class="select form-control" data-style="bg-slate">
+                                        <option value="" selected disabled>--- Select material Type ---</option>
+                                        <?php
+                                        $sql1 = "SELECT material_type FROM `material_config`";
+                                        $result1 = mysqli_query($db, $sql1);
+                                        while ($row1 = $result1->fetch_assoc()) {
+
+                                            echo "<option value='" . $row1['material_id'] . "'>" . $row1['material_type'] . "</option>";
+
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                             <div id="error6" class="red">Please Enter Material Type</div>
@@ -303,18 +351,13 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
-                                    <select name="material_status" id="material_status" class="select form-control" data-style="bg-slate">
-                                        <option value="" selected disabled>--- Select material status ---</option>
-                                        <?php
-                                        $sql1 = "SELECT material_status FROM `material_config`";
-                                        $result1 = mysqli_query($db, $sql1);
-                                        while ($row1 = $result1->fetch_assoc()) {
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" checked>
+                                        <label for="pass" class="item_label">Pass</label>
+                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input" >
+                                        <label for="fail" class="item_label">Fail</label>
 
-                                            echo "<option value='" . $row1['material_id'] . "'>" . $row1['material_status'] . "</option>";
-
-                                        }
-                                        ?>
-                                    </select>
+                                    </div>
                                  </div>
                                 <div id="error7" class="red">Please Enter material Status</div>
 
@@ -330,16 +373,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                 </div>
                             </div>
                             <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Time stamp : </label>
-                                <div class="col-md-6">
-                                    <input type="date" name="time_stamp" id="time_stamp" class="form-control"> </div>
-                                <div id="error7" class="red">Please Enter material Time stamp</div>
 
-                            </div>
-
-                            <br/>
-                            <br/>
                             <hr/>
 
 
@@ -360,27 +394,7 @@ while ($row1 = $result1->fetch_assoc()) {
     </div>
 </div>
 
-<script type="text/javascript">
-    // add row
-    $("#addRow").click(function () {
-        var html = '';
-        html += '<div id="inputFormRow">';
-        html += '<div class="input-group mb-3">';
-        html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
-        html += '<div class="input-group-append">';
-        html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
-        html += '</div>';
-        html += '</div>';
 
-        $('#newRow').append(html);
-    });
-
-    // remove row
-    $(document).on('click', '#removeRow', function () {
-        $(this).closest('#inputFormRow').remove();
-    });
-</script>
-<!-- /main charts -->
 
 <script>
     $(document).ready(function() {

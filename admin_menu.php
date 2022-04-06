@@ -571,6 +571,12 @@ $msg = explode(',', $msg); ?>
                                                 </a>
                                             </div>
 										<?php } ?>
+                                        <div class="mt-3">
+                                            <a href="<?php echo $siteURL; ?>material_tracability/material_config.php"
+                                               class="text-muted mobile">
+                                                Material Config
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1331,6 +1337,11 @@ $msg = explode(',', $msg); ?>
                                                         </a>
                                                     </div>
 												<?php } ?>
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>material_tracability/material_config.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Material Config</h3>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
 
