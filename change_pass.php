@@ -95,8 +95,8 @@ if (count($_POST) > 0) {
 </head>
 
 <!-- Main navbar -->
-<?php //$cam_page_header = "Change Your Password"; ?>
-<?php //include("header_folder.php"); ?>
+<?php $cam_page_header = "Change Your Password"; ?>
+<?php include("header_folder.php"); ?>
 <!-- /main navbar -->
 
 <!-- Main navigation -->

@@ -159,10 +159,10 @@ if (count($_POST) > 0) {
     </head>
 
         <!-- Main navbar -->
-<!--        --><?php
-//        $cam_page_header = "Profile";
-//        include("header_folder.php");
-//        ?>
+        <?php
+        $cam_page_header = "Profile";
+        include("header_folder.php");
+        ?>
         <!-- /main navbar -->
         <!-- Main navigation -->
         <?php if(($is_tab_login || $is_cell_login)){include("tab_menu.php");}else{
