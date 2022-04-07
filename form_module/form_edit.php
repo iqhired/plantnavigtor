@@ -80,9 +80,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .sidebar-default .navigation li>a {
             color: #f5f5f5
         }
-        a:hover {
-            background-color: #20a9cc;
-        }
+
+
 
         .sidebar-default .navigation li>a:focus,
         .sidebar-default .navigation li>a:hover {
@@ -192,7 +191,9 @@ include("../heading_banner.php");
                 <!-- Basic datatable -->
 
 							<?php
-							$id = $_GET['id'];
+                            $form_id = $_GET['id'];
+
+                            $id = base64_decode( urldecode( $form_id));
 							
 							$querymain = sprintf("SELECT * FROM `form_create` where form_create_id = '$id' ");
 							$qurmain = mysqli_query($db, $querymain);

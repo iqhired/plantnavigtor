@@ -6,13 +6,41 @@ if (!isset($_SESSION['user'])) {
 }
 if (count($_POST) > 0) {
 	$mob = $_SESSION['user'];
-	$sql1 = "UPDATE `cam_users` SET password='" . md5($_POST['newpass']) . "' where user_name = '$mob'";
-	if (!mysqli_query($db, $sql1)) {
+    $password = $_POST['newpass'];
+
+    if( strlen($password ) > 20 ) {
+        $error .= "Password too long!";
+    }
+    if( strlen($password ) < 8 ) {
+        $error .= "Password too short!";
+    }
+    if( !preg_match("@[0-9]@", $password ) ) {
+        $error .= "Password must include at least one number!";
+    }
+    if( !preg_match("@[a-z]@", $password ) ) {
+        $error .= "Password must include at least one letter!";
+    }
+    if( !preg_match("#[A-Z]+#", $password ) ) {
+        $error .= "Password must include at least one CAPS!";
+    }
+    if( !preg_match("@[^\w]@", $password ) ) {
+        $error .= "Password must include at least one symbol!";
+    }
+    if($error){
+      //  echo "Password validation failure: $error";
+    } else {
+      //  echo "Your password is strong.";
+        $sql1 = "UPDATE `cam_users` SET password='" . md5($_POST['newpass']) . "' where user_name = '$mob'";
+        if (!mysqli_query($db, $sql1)) {
 // die('Unable to Connect');
-		echo "Invalid Data";
-	} else {
-		$temp = "one";
-	}
+            echo "Invalid Data";
+        } else {
+            $temp = "one";
+            $page = "profile.php";
+            header('Location: '.$page, true, 303);
+        }
+    }
+
 }
 ?>
 <!DOCTYPE html>
@@ -67,8 +95,8 @@ if (count($_POST) > 0) {
 </head>
 
 <!-- Main navbar -->
-<?php $cam_page_header = "Change Your Password"; ?>
-<?php include("header_folder.php"); ?>
+<?php //$cam_page_header = "Change Your Password"; ?>
+<?php //include("header_folder.php"); ?>
 <!-- /main navbar -->
 
 <!-- Main navigation -->
@@ -94,16 +122,23 @@ if (count($_POST) > 0) {
                                 <span class="text-semibold">Password!</span> has been changed successfully.
                             </div>
                         <?php } ?>
+                        <?php if ($error) { ?>
+                            <div class="alert alert-success no-border">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span>&times;</span><span class="sr-only">Close</span></button>
+                                <span class="text-semibold">Password</span> validation failure: <?php echo $error ?>
+                            </div>
+                        <?php } ?>
 
                         <form action="" method="post">
                             <div id="col-md-6 mobile" >
                                 <br/>
                                 <label><b>Enter New Password: </b></label>
-                                <input type="text" class="form-control" name="newpass" id="newpass"
+                                <input type="password" class="form-control" name="newpass" id="newpass"
                                        style="width: 25%;"required >
                             </div>
                             <br/><br/>
-                            <button type="submit" name="submit" class="btn btn-primary button-loading">
+                            <button type="submit" name="submit" id= "change_pass" class="btn btn-primary button-loading">
                                 Change Your Password
                             </button>
 
@@ -120,6 +155,9 @@ if (count($_POST) > 0) {
 <script>
     window.onload = function () {
         history.replaceState("", "", "<?php echo $scriptName; ?>change_pass.php");
+
+
+
     }
 </script>
 <?php include('footer.php') ?>

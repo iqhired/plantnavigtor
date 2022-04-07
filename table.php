@@ -50,18 +50,18 @@ if($_GET['line'])
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
-
     <!-- Theme JS files -->
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
-
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/datatables_basic.js"></script>
 
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/components_modals.js"></script>
 
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
+
 
 </head>
 <style>
@@ -153,7 +153,7 @@ if($p != "")
 						?>
 						
                         <form action="" class="form-validate" method="post">
-                            <select  name="radio" id="radio" class="select" style="float: left;width: initial;" >
+                            <select  name="radio" id="radio" class="select form-control" data-style="bg-slate"  style="float: left;width: initial;" >
                                 <option value="" selected disabled>--- Select Station ---</option>
                                 <?php
                                 $sql1 = "SELECT DISTINCT `line_id` FROM cam_user_rating ORDER BY `line_name`";

@@ -109,8 +109,15 @@ $datefrom = $yesdate;
             width:auto!important;
             float: left;
         }
-        .col-lg-2{
+        .col-lg-2 {
             max-width: 30%!important;
+            float: left;
+        }
+        .row_date {
+            padding-top: 22px;
+            margin-left: -9px;
+            padding-bottom: 20px;
+
         }
 
         @media
@@ -118,13 +125,21 @@ $datefrom = $yesdate;
         (min-device-width: 768px) and (max-device-width: 1024px) {
 
             .select2-container{
-                width: 50%!important;
+                width: 100%!important;
             }
             .col-md-8 {
                 width: 100%;
             }
             input[type=checkbox], input[type=radio]{
                 margin: 4px 19px 0px;
+            }
+            .col-lg-1 {
+                width: 5%;
+                float: left;
+            }
+            .col-lg-7 {
+                float: right;
+                width: 65%;
             }
         }
 
@@ -251,7 +266,7 @@ include("../heading_banner.php");
                                </div>
                                 <div class="col-md-6 mobile">
 
-                                    <label class="col-lg-2 control-label" >Event Catagory :</label>
+                                    <label class="col-lg-3 control-label" >Event Catagory :</label>
 
 									<?php
 									if ($button_event == "button4") {
@@ -294,7 +309,7 @@ include("../heading_banner.php");
                              <div class="col-md-6 mobile">
                                         <label class="col-lg-3 control-label">Station :</label>
 
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-7">
                                         <select name="station" id="station" class="select form-control"
                                                 style="float: left;width: initial;">
                                             <option value="" selected disabled>--- Select Station ---</option>
@@ -316,7 +331,9 @@ include("../heading_banner.php");
                                         </select>
                                         </div>
                              </div>
-                                <div class="col-md-6 mobile">
+                            </div>
+                            <div class="row_date">
+                                <div class="col-md-6 mobile_date">
 
 <!--                                    <label class="control-label" >Date Range</label>-->
 
@@ -336,6 +353,8 @@ include("../heading_banner.php");
                                     <input type="date" name="date_from" id="date_from" class="form-control"
                                            value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
                                            required>
+                                </div>
+                                <div class="col-md-6 mobile_date">
                                     <label class="col-lg-2 control-label" >Date To:</label>
                                     <input type="date" name="date_to" id="date_to" class="form-control"
                                            value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>

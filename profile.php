@@ -159,10 +159,10 @@ if (count($_POST) > 0) {
     </head>
 
         <!-- Main navbar -->
-        <?php
-        $cam_page_header = "Profile";
-        include("header_folder.php");
-        ?>
+<!--        --><?php
+//        $cam_page_header = "Profile";
+//        include("header_folder.php");
+//        ?>
         <!-- /main navbar -->
         <!-- Main navigation -->
         <?php if(($is_tab_login || $is_cell_login)){include("tab_menu.php");}else{
@@ -206,6 +206,9 @@ if (count($_POST) > 0) {
                                                 <div class="thumb">
                                                     <img src="user_images/<?php echo $rowc["profile_pic"]; ?>" alt="">
                                                 </div>
+                                            </div>
+                                            <div class="text-left">
+                                               <a href="<?php echo $siteURL; ?>change_pass.php"> <button type="submit" class="btn btn-primary" style="background-color: #191e3a;">Change Password</button></a>
                                             </div>
                                         </div>
 
@@ -281,7 +284,7 @@ if (count($_POST) > 0) {
                                                 <div class="row">
                                                     <div class="col-md-9">
                                                         <?php
-                                                        $qur1 = mysqli_query($db, "SELECT role_name FROM role where role_id = '$rowc[role]' ");
+                                                        $qur1 = mysqli_query($db, "SELECT role_name FROM cam_role where role_id = '$rowc[role]' ");
                                                         $rowc1 = mysqli_fetch_array($qur1);
                                                         $rl = $rowc1["role_name"];
                                                         ?>

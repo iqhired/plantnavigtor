@@ -83,7 +83,7 @@ if (count($_POST) > 0) {
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="log" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Send Password<i class="icon-arrow-right14 position-right"></i></button>	
-                                    <a href="security_questions.php" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Reset With Security Questions<i class="icon-arrow-right14 position-right"></i></a>	
+<!--                                    <a href="security_questions.php" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Reset With Security Questions<i class="icon-arrow-right14 position-right"></i></a>	-->
                                 </div>
                             </div>
                         </form>

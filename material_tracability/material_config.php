@@ -387,16 +387,17 @@ include("../heading_banner.php");
                             }else{
                                 $firstnm = $rowc12["firstname"];
                                 $lastnm = $rowc12["lastname"];
-                                $fulllname = $firstnm." ".$lastnm;
+                                $fulllname .= " , " . $firstnm." ".$lastnm;
                             }
                                 $j++;
                             }
                             ?>
                             <td><?php echo $fulllname;?></td>
+
                             <td><?php echo $rowc["material_type"]; ?></td>
 
                             <td>
-                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-name="<?php echo $rowc['job_name']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
+                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-material_teams="<?php echo $line; ?>" data-material_users="<?php echo $fulllname;?>" data-material_type="<?php echo $rowc['material_type']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
 
                             </td>
                         </tr>
@@ -517,8 +518,12 @@ include("../heading_banner.php");
             $(document).on('click', '#edit', function () {
                 var element = $(this);
                 var edit_id = element.attr("data-id");
-                var name = $(this).data("name");
-                $("#edit_name").val(name);
+                var teams = $(this).data("material_teams");
+                var users = $(this).data("material_users");
+                var type= $(this).data("material_type");
+                $("#edit_teams").val(teams);
+                $("#edit_users").val(users);
+                $("#edit_type").val(type);
                 $("#edit_id").val(edit_id);
                 //alert(role);
             });

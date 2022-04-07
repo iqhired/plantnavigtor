@@ -252,7 +252,7 @@ include("heading_banner.php");
                                         <i class="icon-eye"></i> View Assigned Crew</a>
                                     </li>
                                     <li>
-                                        <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>"
+                                        <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                         <i class="icon-eye"></i> Material Tracability</a>
                                     </li>
                                 </ul>
@@ -410,7 +410,7 @@ include("heading_banner.php");
                                                 class="icon-eye"></i> View Assigned Crew</a>
                                 </li>
                                 <li>
-                                    <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>"
+                                    <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                     <i class="icon-eye"></i> Material Tracability</a>
                                 </li>
                             </ul>
@@ -599,7 +599,7 @@ include("heading_banner.php");
                                                 ><i class="icon-eye"></i> View Assigned Crew</a>
                                             </li>
                                             <li>
-                                                <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>"
+                                                <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                 <i class="icon-eye"></i> Material Tracability</a>
                                             </li>
                                         </ul>
@@ -755,7 +755,13 @@ include("heading_banner.php");
                                                target="_BLANK"><i class="icon-eye"></i> View Assigned Crew</a>
                                         </li>
                                         <li>
-                                            <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>"
+                                            <?php
+                                            $id=$line;
+                                            $station=$station_event_id;
+                                            $finalid=urlencode( base64_encode($id));
+                                            $finalstation=urlencode( base64_encode($station));
+                                            ?>
+                                            <a href="material_tracability/material_tracability.php?station=<?php echo $finalid ; ?>&station_event_id=<?php echo $finalstation; ?>" target="_BLANK">
                                             <i class="icon-eye"></i> Material Tracability</a>
                                         </li>
                                     </ul>
