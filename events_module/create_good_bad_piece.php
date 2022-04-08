@@ -1,24 +1,5 @@
 <?php
 include("../config.php");
-if (!isset($_SESSION['user'])) {
-	header('location: ../logout.php');
-}
-//Set the session duration for 10800 seconds - 3 hours
-$duration = $auto_logout_duration;
-//Read the request time of the user
-$time = $_SERVER['REQUEST_TIME'];
-//Check the user's session exist or not
-if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-	//Unset the session variables
-	session_unset();
-	//Destroy the session
-	session_destroy();
-	header($redirect_logout_path);
-//	header('location: ../logout.php');
-	exit;
-}
-//Set the time of the user's last activity
-$_SESSION['LAST_ACTIVITY'] = $time;
 $user = $_SESSION['user'];
 $chicagotime = date("Y-m-d H:i:s");
     $good_name = $_POST['good_name'];
@@ -83,12 +64,17 @@ if ($good_name != "") {
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user;
 				$output = preg_replace($patterns, $replacements, $file);
-				sendFile($dir_path . '/g_label');
-				$output = preg_replace($patterns, $replacements, $file);
-				sendFile($dir_path . '/g_label');
+				$json[] = array(
+					'success' => $output
+				);
+
+				echo json_encode($json);
+//				sendFile($dir_path . '/g_label');
+//				$output = preg_replace($patterns, $replacements, $file);
+//				sendFile($dir_path . '/g_label');
 			}
-			$_SESSION['message_stauts_class'] = 'alert-success';
-			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+//			$_SESSION['message_stauts_class'] = 'alert-success';
+//			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		}
 	}else{
 		$good_pieces = $g + $good_name;
@@ -136,11 +122,14 @@ if ($good_name != "") {
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user;
 				$output = preg_replace($patterns, $replacements, $file);
-				//sendFile($output);
-				echo '<script src=\"../assets/js/BrowserPrint.js\"></script><script src=\"../assets/js/DevDemo.js\"></script><script> sendFile(' . $output .'); </script>';
+				$json[] = array(
+					'success' => 'ok'
+				);
+
+				echo json_encode($json);
 			}
-			$_SESSION['message_stauts_class'] = 'alert-success';
-			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+//			$_SESSION['message_stauts_class'] = 'alert-success';
+//			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		} else {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Error: Please Retry';

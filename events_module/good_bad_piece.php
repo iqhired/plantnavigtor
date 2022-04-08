@@ -103,8 +103,8 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
-    <script src="../assets/js/BrowserPrint.js"></script>
-    <script src="../assets/js/DevDemo.js"></script>
+    <script type="text/javascript" src="../assets/js/BrowserPrint.js"></script>
+    <script type="text/javascript" src="../assets/js/DevDemo.js"></script>
     <style> .sidebar-default .navigation li > a {
             color: #f5f5f5
         }
@@ -473,7 +473,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" onclick="submitForm_good('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                                    <button type="submit" class="btn btn-primary" id="submitForm_good"   style="background-color:#1e73be;">Save</button>
                                 </div>
                             </div>
                     </div>
@@ -557,6 +557,27 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         <!-- /content area -->
 
 <script>
+    $("#submitForm_good").click(function (e) {
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#good_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            dataType: "json",
+            // context: this,
+            // async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                $(':input[type="button"]').prop('disabled', false);
+                sendFile('../assets/label_files/3/g_label');
+                // location.reload();
+            }
+        });
+    });
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".view_gpbp").filter(function() {
@@ -632,22 +653,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
 </script>
 <script>
-    function submitForm_good(url) {
 
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#good_form").serialize();
-        var main_url = "<?php echo $url; ?>";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
-                location.reload();
-            }
-        });
-    }
     function submitForm_bad(url) {
 
         $(':input[type="button"]').prop('disabled', true);
@@ -660,7 +666,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 $(':input[type="button"]').prop('disabled', false);
-                location.reload();
+                // location.reload();
             }
         });
     }
@@ -676,12 +682,12 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 $(':input[type="button"]').prop('disabled', false);
-                location.reload();
+                // location.reload();
             }
         });
     }
 </script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js">
+<!--<script type="text/javascript" src="../assets/js/core/app.js">-->
 </body>
 </html>
