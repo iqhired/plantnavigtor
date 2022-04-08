@@ -431,7 +431,7 @@ include("../heading_banner.php");
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Material Teams:*</label>
-                                    <div class="col-lg-7 mob_modal">
+                                    <div class="col-lg-7 mob_modal" id="edit_teams_val">
 
                                         <input type="hidden" name="edit_id" id="edit_id" >
                                         <select class="select-border-color" data-placeholder="Add Teams..." name="edit_teams[]" id="edit_teams" multiple="multiple" >
@@ -453,7 +453,7 @@ include("../heading_banner.php");
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Material Users:*</label>
-                                    <div class="col-lg-7 mob_modal">
+                                    <div class="col-lg-7 mob_modal" id="edit_users_val">
                                         <select class="select-border-color" data-placeholder="Add Users ..." name="edit_users[]" id="edit_users"  multiple="multiple" >
                                             <?php
                                             $sql12= "SELECT users_id, firstname,lastname FROM cam_users order by firstname ASC";
@@ -580,7 +580,7 @@ include("../heading_banner.php");
         }
         var options1 = sb1.options;
         // $("#edit_part_number").val(options);
-        $('#edit_modal_theme_primary .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
+        $('#edit_modal_theme_primary #edit_teams_val .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
         // $('select2-search select2-search--inline').remove();
 
         for (var i = 0; i < options1.length; i++) {
@@ -593,7 +593,7 @@ include("../heading_banner.php");
 
                 $('#edit_teams #select2-results .select2-results__option').prop('selectedIndex',i);
                 var gg = '<li class="select2-selection__choice" title="' + opt[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt[1].replace('</option','') + '</li>';
-                $('#edit_modal_theme_primary .select2-selection__rendered').append(gg);
+                $('#edit_modal_theme_primary #edit_teams_val .select2-selection__rendered').append(gg);
                 // $('.select2-search__field').style.visibility='hidden';
             }
         }
@@ -612,7 +612,7 @@ include("../heading_banner.php");
         var options2 = sb2.options;
         //console.log(options2);
         // $("#edit_part_number").val(options);
-        $('#edit_modal_theme_primary .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
+        $('#edit_modal_theme_primary #edit_users_val .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
         // $('select2-search select2-search--inline').remove();
 
         for (var j = 0; j < options2.length; j++) {
@@ -625,7 +625,7 @@ include("../heading_banner.php");
 
                 $('#edit_users #select2-results .select2-results__option').prop('selectedIndex',j);
                 var gg1 = '<li class="select2-selection__choice" title="' + opt1[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt1[1].replace('</option','') + '</li>';
-                $('#edit_modal_theme_primary .select2-selection__rendered').append(gg1);
+                $('#edit_modal_theme_primary #edit_users_val .select2-selection__rendered').append(gg1);
                 // $('.select2-search__field').style.visibility='hidden';
             }
         }
