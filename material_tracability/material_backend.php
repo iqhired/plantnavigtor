@@ -11,10 +11,11 @@ if(count($_POST)>0) {
     $part_family = $_POST['part_family'];
     $part_name = $_POST['part_name'];
     $serial_number = $_POST['serial_number'];
+    $material_type = $_POST['material_type'];
     $material_status = $_POST['material_status'];
     $notes = $_POST['material_notes'];
     $created_by = date("Y-m-d H:i:s");
-    $material_type = $_POST['material_type'];
+
 
       $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`serial_number`,`material_status`,`notes`,`created_at`) VALUES 
 	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$notes','$created_by')";
@@ -74,4 +75,7 @@ if(count($_POST)>0) {
         }
     }
 
-
+$finalstation=urlencode( base64_encode($station_event_id));
+$page = "material_tracability.php?station=$line_number;&station_event_id=$finalstation;";
+header('Location: '.$page, true, 303);
+exit;
