@@ -77,13 +77,14 @@ if (count($_POST) > 0) {
     foreach ($edit_teams1 as $edit_teams) {
         $array_team .= $edit_teams . ",";
     }
+
     foreach ($edit_users1 as $edit_users) {
         $array_user .= $edit_users . ",";
     }
     if ($edit_material_type > 1) {
         for ($i = 0; $i < $edit_material_type; $i++) {
             if (trim($_POST['material_type'][$i]) != '') {
-                $sql="update `material_config` set teams = ' $edit_teams1', users = '$edit_users1', material_type = '  $edit_m_type[$i]', created_at = '$chicagotime' where material_id='$id'";
+                $sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]', `created_at` = '$chicagotime' where `material_id`='$id'";
 
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
@@ -96,7 +97,7 @@ if (count($_POST) > 0) {
             }
         }
     } else {
-        $sql="update `material_config` set teams = ' $edit_teams1', teams = '$edit_users1', material_type = '$edit_m_type[0]', created_at = '$chicagotime' where material_id='$id'";
+        $sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]', `created_at` = '$chicagotime' where `material_id`='$id'";
 
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
@@ -556,6 +557,7 @@ include("../heading_banner.php");
 
         var element = $(this);
         var edit_id = element.attr("data-id");
+        //console.log(edit_id);
         var teams = $(this).data("material_teams").toString();
         if((null != teams) && ( teams !='')){
             teams = teams.toString();
@@ -565,6 +567,7 @@ include("../heading_banner.php");
             users = users.toString();
         };
         var type= $(this).data("material_type");
+        $("#edit_id").val(edit_id);
         $("#edit_teams").val(teams);
         $("#edit_users").val(users);
 
