@@ -41,7 +41,7 @@ if (count($_POST) > 0) {
     if ($material_type > 1) {
         for ($i = 0; $i < $material_type; $i++) {
             if (trim($_POST['material_type'][$i]) != '') {
-                $sql = "INSERT INTO `material_config`(`material_teams`,`material_users`,`material_type`,`created_at`) VALUES
+                $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
     ('$array_team','$array_user','$m_type[$i]','$chicagotime')";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
@@ -54,8 +54,8 @@ if (count($_POST) > 0) {
             }
         }
     } else {
-        $sql = "INSERT INTO `material_config`(`material_teams`,`material_users`,`material_type`,`created_at`) VALUES
-    ('$array_team','$array_user','$m_type','$chicagotime')";
+        $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[0]','$chicagotime')";
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
             $message_stauts_class = 'alert-success';
@@ -83,7 +83,7 @@ if (count($_POST) > 0) {
     if ($edit_material_type > 1) {
         for ($i = 0; $i < $edit_material_type; $i++) {
             if (trim($_POST['material_type'][$i]) != '') {
-                $sql="update `material_config` set material_teams = ' $edit_teams1', material_users = '$edit_users1', material_type = '  $edit_m_type[$i]', created_at = '$chicagotime' where material_id='$id'";
+                $sql="update `material_config` set teams = ' $edit_teams1', users = '$edit_users1', material_type = '  $edit_m_type[$i]', created_at = '$chicagotime' where material_id='$id'";
 
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
@@ -96,7 +96,7 @@ if (count($_POST) > 0) {
             }
         }
     } else {
-        $sql="update `material_config` set material_teams = ' $edit_teams1', material_users = '$edit_users1', material_type = '$edit_m_type', created_at = '$chicagotime' where material_id='$id'";
+        $sql="update `material_config` set teams = ' $edit_teams1', teams = '$edit_users1', material_type = '$edit_m_type[0]', created_at = '$chicagotime' where material_id='$id'";
 
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
@@ -313,7 +313,7 @@ include("../heading_banner.php");
                                             </div>
                                         </div>
                                         <div id="newRow"></div>
-                                        <button id="addRow" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                        <button id="addRow" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
                                 </div><br/>
 
@@ -362,7 +362,7 @@ include("../heading_banner.php");
                             <td><?php echo ++$counter; ?></td>
                             <td>
                                 <?php
-                                $material = $rowc['material_teams'];
+                                $material = $rowc['teams'];
                                 $arr_material = explode(',', $material);
 
                                 // glue them together with ', '
@@ -382,7 +382,7 @@ include("../heading_banner.php");
                                 echo $line;
                                 ?></td>
                             <?php
-                            $nnm = $rowc["material_users"];
+                            $nnm = $rowc["users"];
                             $arr_nnm = explode(',', $nnm);
                             $materialnnm = implode("', '", $arr_nnm);
                             $query12 = sprintf("SELECT firstname,lastname FROM  cam_users where users_id IN ('$materialnnm')");
@@ -408,7 +408,7 @@ include("../heading_banner.php");
                             <td><?php echo $rowc["material_type"]; ?></td>
 
                             <td>
-                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-material_teams="<?php echo $line; ?>" data-material_users="<?php echo $fulllname;?>" data-material_type="<?php echo $rowc['material_type']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
+                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-material_teams="<?php echo  $material; ?>" data-material_users="<?php echo $nnm;?>" data-material_type="<?php echo $rowc['material_type']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
 
                             </td>
                         </tr>
@@ -436,21 +436,13 @@ include("../heading_banner.php");
                                         <input type="hidden" name="edit_id" id="edit_id" >
                                         <select class="select-border-color" data-placeholder="Add Teams..." name="edit_teams[]" id="edit_teams" multiple="multiple" >
                                             <?php
-                                            $arrteam = explode(',', $rowc["teams"]);
-                                            $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
+                                            $sql1 = "SELECT group_id, group_name FROM sg_group order by group_name ASC";
                                             $result1 = $mysqli->query($sql1);
+                                            $selected = "";
                                             while ($row1 = $result1->fetch_assoc()) {
-                                                if (in_array($row1['group_id'], $arrteam)) {
-                                                    $selected = "selected";
-                                                } else {
-                                                    $selected = "";
-                                                }
-                                                $station1 = $row1['group_id'];
-                                                $qurtemp = mysqli_query($db, "SELECT * FROM  sg_group where group_id = '$station1' ");
-                                                $rowctemp = mysqli_fetch_array($qurtemp);
-                                                $groupname = $rowctemp["group_name"];
-                                                echo "<option value='" . $row1['group_id'] . "' $selected>" . $groupname . "</option>";
+                                                echo "<option id='" . $row1['group_id'] . "' value='" . $row1['group_id'] . "' >" . $row1['group_name'] . "</option>";
                                             }
+
                                             ?>
                                         </select>
                                     </div>
@@ -464,30 +456,20 @@ include("../heading_banner.php");
                                     <div class="col-lg-7 mob_modal">
                                         <select class="select-border-color" data-placeholder="Add Users ..." name="edit_users[]" id="edit_users"  multiple="multiple" >
                                             <?php
-                                            $arrteam1 = explode(',', $rowc["users"]);
-                                            $sql1 = "SELECT * FROM `cam_users` WHERE `assigned2` = '0'  and `users_id` != '1' order BY `firstname` ";
-                                            $result1 = $mysqli->query($sql1);
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                if (in_array($row1['users_id'], $arrteam1)) {
-                                                    $selected = "selected";
-                                                } else {
-                                                    $selected = "";
-                                                }
-                                                echo "<option value='" . $row1['users_id'] . "' $selected>" . $row1['firstname'] . "&nbsp;" . $row1['lastname'] . "</option>";
+                                            $sql12= "SELECT users_id, firstname,lastname FROM cam_users order by firstname ASC";
+                                            $result2 = mysqli_query($db,$sql12);
+                                            $selected = "";
+                                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                echo "<option id='" . $row2['users_id'] . "' value='" . $row2['users_id'] . "' >" . $row2['firstname'] . "&nbsp" .$row2['lastname']. "</option>";
                                             }
+
                                             ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php
-                        $query = sprintf("SELECT * FROM  material_config");
-                        $qur = mysqli_query($db, $query);
-                        while ($rowc = mysqli_fetch_array($qur)) {
-                            $material_type = $rowc['material_type'];
-                        }
-                        ?>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -495,7 +477,7 @@ include("../heading_banner.php");
                                     <div class="col-lg-7 mob_modal">
                                         <div id="inputFormRow1">
                                             <div class="input-group mb-3">
-                                                <input type="text" name="edit_material_type[]" id="edit_material_type" value="<?php echo $material_type ?>" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
+                                                <input type="text" name="edit_material_type[]" id="edit_material_type"  class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
                                             </div>
                                         </div>
                                         <div id="newRow1"></div>
@@ -524,22 +506,7 @@ include("../heading_banner.php");
             $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
             $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
         });</script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $(document).on('click', '#edit', function () {
-                var element = $(this);
-                var edit_id = element.attr("data-id");
-                var teams = $(this).data("material_teams");
-                var users = $(this).data("material_users");
-                var type= $(this).data("material_type");
-                $("#edit_teams").val(teams);
-                $("#edit_users").val(users);
-                $("#edit_type").val(type);
-                $("#edit_id").val(edit_id);
-                //alert(role);
-            });
-        });
-    </script>
+
 
     </div>
 
@@ -584,6 +551,93 @@ include("../heading_banner.php");
         $(this).closest('#inputFormRow1').remove();
     });
 </script>
+<script>
+    $(document).on('click', '#edit', function () {
+
+        var element = $(this);
+        var edit_id = element.attr("data-id");
+        var teams = $(this).data("material_teams").toString();
+        if((null != teams) && ( teams !='')){
+            teams = teams.toString();
+        };
+        var users = $(this).data("material_users").toString();
+        if((null != users) && ( users !='')){
+            users = users.toString();
+        };
+        var type= $(this).data("material_type");
+        $("#edit_teams").val(teams);
+        $("#edit_users").val(users);
+
+        $("#edit_material_type").val(type);
+
+        const sb1 = document.querySelector('#edit_teams');
+        // create a new option
+        var pnums = null;
+        if (teams.indexOf(',') > -1){
+            pnums = teams.replaceAll(' ','').split(',');
+        }else{
+            pnums = teams.replaceAll(' ','')
+        }
+        var options1 = sb1.options;
+        // $("#edit_part_number").val(options);
+        $('#edit_modal_theme_primary .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
+        // $('select2-search select2-search--inline').remove();
+
+        for (var i = 0; i < options1.length; i++) {
+            if(pnums.includes(options1[i].value)){ // EDITED THIS LINE
+                options1[i].selected="selected";
+
+                // options1[i].className = ("select2-results__option--highlighted");
+                var opt = document.getElementById(options1[i].value).outerHTML.split(">");
+                // $('#edit_defects').prop('selectedIndex',i);
+
+                $('#edit_teams #select2-results .select2-results__option').prop('selectedIndex',i);
+                var gg = '<li class="select2-selection__choice" title="' + opt[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt[1].replace('</option','') + '</li>';
+                $('#edit_modal_theme_primary .select2-selection__rendered').append(gg);
+                // $('.select2-search__field').style.visibility='hidden';
+            }
+        }
+
+
+       // edit users
+
+        const sb2 = document.querySelector('#edit_users');
+        // create a new option
+        var pusers = null;
+        if (users.indexOf(',') > -1){
+            pusers = users.replaceAll(' ','').split(',');
+        }else{
+            pusers = users.replaceAll(' ','')
+        }
+        var options2 = sb2.options;
+        //console.log(options2);
+        // $("#edit_part_number").val(options);
+        $('#edit_modal_theme_primary .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
+        // $('select2-search select2-search--inline').remove();
+
+        for (var j = 0; j < options2.length; j++) {
+            if(pusers.includes(options2[j].value)){ // EDITED THIS LINE
+                options2[j].selected="selected";
+
+                // options1[i].className = ("select2-results__option--highlighted");
+                var opt1 = document.getElementById(options2[j].value).outerHTML.split(">");
+                // $('#edit_defects').prop('selectedIndex',i);
+
+                $('#edit_users #select2-results .select2-results__option').prop('selectedIndex',j);
+                var gg1 = '<li class="select2-selection__choice" title="' + opt1[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt1[1].replace('</option','') + '</li>';
+                $('#edit_modal_theme_primary .select2-selection__rendered').append(gg1);
+                // $('.select2-search__field').style.visibility='hidden';
+            }
+        }
+
+
+
+
+
+
+    });
+</script>
+
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>material_tracability/material_config.php");
