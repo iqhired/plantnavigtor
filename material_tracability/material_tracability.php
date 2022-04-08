@@ -341,7 +341,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select form-control" data-style="bg-slate">
+                                    <select name="material_type" id="material_type" class="select2 form-control" data-style="bg-slate">
                                         <option value="" selected disabled>--- Select material Type ---</option>
                                         <?php
                                         $sql1 = "SELECT material_type FROM `material_config`";
