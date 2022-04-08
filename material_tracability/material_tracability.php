@@ -341,10 +341,10 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select2 form-control" data-style="bg-slate">
+                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate">
                                         <option value="" selected disabled>--- Select material Type ---</option>
                                         <?php
-                                        $sql1 = "SELECT material_type FROM `material_config`";
+                                        $sql1 = "SELECT material_id, material_type FROM `material_config`";
                                         $result1 = mysqli_query($db, $sql1);
                                         while ($row1 = $result1->fetch_assoc()) {
 
@@ -428,24 +428,41 @@ while ($row1 = $result1->fetch_assoc()) {
         $('.select').select2();
     });
 </script>
-<script>
-    function submitFormSettings(url) {
-        //          $(':input[type="button"]').prop('disabled', true);
-        var data = $("#material_setting").serialize();
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function(data) {
-                // $("#textarea").val("")
-                // window.location.href = window.location.href + "?aa=Line 1";
-                //                   $(':input[type="button"]').prop('disabled', false);
-                //                   location.reload();
-                //$(".enter-message").val("");
-            }
-        });
-    }
-</script>
+<!--<script>-->
+<!--    function submitFormSettings(url) {-->
+<!--        //          $(':input[type="button"]').prop('disabled', true);-->
+<!--        var data = $("#material_setting").serialize();-->
+<!--        $.ajax({-->
+<!--            type: 'POST',-->
+<!--            url: url,-->
+<!--            data: data,-->
+<!--            success: function(data) {-->
+<!--                // $("#textarea").val("")-->
+<!--                // window.location.href = window.location.href + "?aa=Line 1";-->
+<!--                //                   $(':input[type="button"]').prop('disabled', false);-->
+<!--                //                   location.reload();-->
+<!--                //$(".enter-message").val("");-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script><script>-->
+<!--    function submitFormSettings(url) {-->
+<!--        //          $(':input[type="button"]').prop('disabled', true);-->
+<!--        var data = $("#material_setting").serialize();-->
+<!--        $.ajax({-->
+<!--            type: 'POST',-->
+<!--            url: url,-->
+<!--            data: data,-->
+<!--            success: function(data) {-->
+<!--                // $("#textarea").val("")-->
+<!--                // window.location.href = window.location.href + "?aa=Line 1";-->
+<!--                //                   $(':input[type="button"]').prop('disabled', false);-->
+<!--                //                   location.reload();-->
+<!--                //$(".enter-message").val("");-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 <script>
     function group1()
     {
