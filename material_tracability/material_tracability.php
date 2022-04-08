@@ -34,9 +34,8 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
-$form_id = $_GET['station_event_id'];
-$station_event_id = base64_decode(urldecode($station_event_id));
-$station_event_id = $_GET['station_event_id'];
+$s_event_id = $_GET['station_event_id'];
+$station_event_id = base64_decode(urldecode($s_event_id));
 $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
 $resultmain = mysqli_query($db,$sqlmain);
 $rowcmain = mysqli_fetch_array($resultmain);
@@ -257,7 +256,8 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Page content -->
 <?php
-$st_dashboard = $_REQUEST['station'];
+$st = $_REQUEST['station'];
+$st_dashboard = base64_decode(urldecode($st));
 $sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
 $result1 = $mysqli->query($sql1);
 //                                            $entry = 'selected';
@@ -300,10 +300,10 @@ while ($row1 = $result1->fetch_assoc()) {
                     <div class="col-md-12">
                         <form action="material_backend.php" id="material_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
                             <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Line Number : </label>
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                 <div class="col-md-6">
                                   <?php  $form_id = $_GET['id'];
-                                    $station_event_id = base64_decode(urldecode($station_event_id)); ?>
+                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
                                     <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
