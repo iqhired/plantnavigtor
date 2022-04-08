@@ -27,88 +27,91 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
 }
-if (count($_POST) > 0) {
-    $teams1 = $_POST['teams'];
-    $users1 = $_POST['users'];
-    $m_type = $_POST['material_type'];
-    $material_type = count($_POST['material_type']);
-    foreach ($teams1 as $teams) {
-        $array_team .= $teams . ",";
-    }
-    foreach ($users1 as $users) {
-        $array_user .= $users . ",";
-    }
-    if ($material_type > 1) {
-        for ($i = 0; $i < $material_type; $i++) {
-            if (trim($_POST['material_type'][$i]) != '') {
-                $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
+
+$edit_id = $_POST['edit_id'];
+if(empty($edit_id)){
+	if (count($_POST) > 0) {
+		$teams1 = $_POST['teams'];
+		$users1 = $_POST['users'];
+		$m_type = $_POST['material_type'];
+		$material_type = count($_POST['material_type']);
+		foreach ($teams1 as $teams) {
+			$array_team .= $teams . ",";
+		}
+		foreach ($users1 as $users) {
+			$array_user .= $users . ",";
+		}
+		if ($material_type > 1) {
+			for ($i = 0; $i < $material_type; $i++) {
+				if (trim($_POST['material_type'][$i]) != '') {
+					$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
     ('$array_team','$array_user','$m_type[$i]','$chicagotime')";
-                $result1 = mysqli_query($db, $sql);
-                if ($result1) {
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Data Saved successfully.';
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Retry...';
-                }
-            }
-        }
-    } else {
-        $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
+					$result1 = mysqli_query($db, $sql);
+					if ($result1) {
+						$message_stauts_class = 'alert-success';
+						$import_status_message = 'Data Saved successfully.';
+					} else {
+						$message_stauts_class = 'alert-danger';
+						$import_status_message = 'Error: Please Retry...';
+					}
+				}
+			}
+		} else {
+			$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
     ('$array_team','$array_user','$m_type[0]','$chicagotime')";
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'Data Saved successfully.';
-        } else {
-            $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Please Retry...';
-        }
-    }
+			$result1 = mysqli_query($db, $sql);
+			if ($result1) {
+				$message_stauts_class = 'alert-success';
+				$import_status_message = 'Data Saved successfully.';
+			} else {
+				$message_stauts_class = 'alert-danger';
+				$import_status_message = 'Error: Please Retry...';
+			}
+		}
+	}
+}else{
+	// edit material config
+	$id = $_POST['edit_id'];
+	$edit_teams1 = $_POST['edit_teams'];
+	$edit_users1 = $_POST['edit_users'];
+	$edit_m_type = $_POST['edit_material_type'];
+	$edit_material_type = count($_POST['edit_material_type']);
+	foreach ($edit_teams1 as $edit_teams) {
+		$array_team .= $edit_teams . ",";
+	}
+
+	foreach ($edit_users1 as $edit_users) {
+		$array_user .= $edit_users . ",";
+	}
+	if ($edit_material_type > 1) {
+		for ($i = 0; $i < $edit_material_type; $i++) {
+			if (trim($_POST['material_type'][$i]) != '') {
+				$sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]', `created_at` = '$chicagotime' where `material_id`='$id'";
+
+				$result1 = mysqli_query($db, $sql);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Data Updated successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Retry...';
+				}
+			}
+		}
+	} else {
+		$sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]', `created_at` = '$chicagotime' where `material_id`='$id'";
+
+		$result1 = mysqli_query($db, $sql);
+		if ($result1) {
+			$message_stauts_class = 'alert-success';
+			$import_status_message = 'Data Updated successfully.';
+		} else {
+			$message_stauts_class = 'alert-danger';
+			$import_status_message = 'Error: Please Retry...';
+		}
+	}
 }
 
-// edit material config
-if (count($_POST) > 0) {
-    $id = $_POST['edit_id'];
-    $edit_teams1 = $_POST['edit_teams'];
-    $edit_users1 = $_POST['edit_users'];
-    $edit_m_type = $_POST['edit_material_type'];
-    $edit_material_type = count($_POST['edit_material_type']);
-    foreach ($edit_teams1 as $edit_teams) {
-        $array_team .= $edit_teams . ",";
-    }
-
-    foreach ($edit_users1 as $edit_users) {
-        $array_user .= $edit_users . ",";
-    }
-    if ($edit_material_type > 1) {
-        for ($i = 0; $i < $edit_material_type; $i++) {
-            if (trim($_POST['material_type'][$i]) != '') {
-                $sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]', `created_at` = '$chicagotime' where `material_id`='$id'";
-
-                $result1 = mysqli_query($db, $sql);
-                if ($result1) {
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Data Updated successfully.';
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Retry...';
-                }
-            }
-        }
-    } else {
-        $sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]', `created_at` = '$chicagotime' where `material_id`='$id'";
-
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'Data Updated successfully.';
-        } else {
-            $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Please Retry...';
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -481,8 +484,8 @@ include("../heading_banner.php");
                                                 <input type="text" name="edit_material_type[]" id="edit_material_type"  class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div id="newRow1"></div>
-                                        <button id="addRow1" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
+<!--                                        <div id="newRow1"></div>-->
+<!--                                        <button id="addRow1" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
                                     </div>
                                 </div>
                             </div>
