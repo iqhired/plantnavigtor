@@ -163,13 +163,24 @@ if (count($_POST) > 0) {
         }
         .mb-3 {
             margin-bottom: 1rem!important;
-            width: 80%;
+            width: 90%;
         }
         #addRow {
             float: right;
+            margin-top: -45px;
+            margin-right: -66px;
         }
         #removeRow {
             float: right;
+        }
+        #addRow1 {
+            float: right;
+            margin-top: -45px;
+            margin-right: -66px;
+        }
+        #removeRow1 {
+            float: right;
+            margin-left: -25px;
         }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-lg-2 {
@@ -302,7 +313,7 @@ include("../heading_banner.php");
                                             </div>
                                         </div>
                                         <div id="newRow"></div>
-                                        <button id="addRow" type="button" class="btn btn-info">Add</button>
+                                        <button id="addRow" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
                                 </div><br/>
 
@@ -482,13 +493,13 @@ include("../heading_banner.php");
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Material Type:*</label>
                                     <div class="col-lg-7 mob_modal">
-                                        <div id="inputFormRow">
+                                        <div id="inputFormRow1">
                                             <div class="input-group mb-3">
                                                 <input type="text" name="edit_material_type[]" id="edit_material_type" value="<?php echo $material_type ?>" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div id="newRow"></div>
-                                        <button id="addRow" type="button" class="btn btn-info">Add</button>
+                                        <div id="newRow1"></div>
+                                        <button id="addRow1" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -541,7 +552,7 @@ include("../heading_banner.php");
         html += '<div class="input-group mb-3">';
         html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
         html += '<div class="input-group-append">';
-        html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
+        html += '<button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>';
         html += '</div>';
         html += '</div>';
 
@@ -551,6 +562,26 @@ include("../heading_banner.php");
     // remove row
     $(document).on('click', '#removeRow', function () {
         $(this).closest('#inputFormRow').remove();
+    });
+</script>
+<script type="text/javascript">
+    // add row
+    $("#addRow1").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow1">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow1" type="button" class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow1').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow1', function () {
+        $(this).closest('#inputFormRow1').remove();
     });
 </script>
 <script>

@@ -4,17 +4,20 @@ $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 
 if(count($_POST)>0) {
+    $station_event_id = $_POST['station_event_id'];
+    $customer_account_id = $_POST['customer_account_id'];
     $line_number = $_POST['line_number'];
     $part_number = $_POST['part_number'];
     $part_family = $_POST['part_family'];
     $part_name = $_POST['part_name'];
+    $serial_number = $_POST['serial_number'];
     $material_status = $_POST['material_status'];
     $notes = $_POST['material_notes'];
     $created_by = date("Y-m-d H:i:s");
     $material_type = $_POST['material_type'];
 
-      $sql0 = "INSERT INTO `material_tracability`(`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`material_status`,`notes`,`created_at`) VALUES 
-	        	('$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$material_status' , '$notes','$created_by')";
+      $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`serial_number`,`material_status`,`notes`,`created_at`) VALUES 
+	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$notes','$created_by')";
                 $result0 = mysqli_query($db, $sql0);
                 if ($result0) {
                     $_SESSION['message_stauts_class'] = 'alert-success';

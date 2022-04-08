@@ -36,30 +36,30 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 }
 $station_event_id = $_GET['station_event_id'];
 $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
-$resultmain = $mysqli->query($sqlmain);
-$rowcmain = $resultmain->fetch_assoc();
+$resultmain = mysqli_query($db,$sqlmain);
+$rowcmain = mysqli_fetch_array($resultmain);
 $part_family = $rowcmain['part_family_id'];
 $part_number = $rowcmain['part_number_id'];
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-$resultnumber = $mysqli->query($sqlnumber);
-$rowcnumber = $resultnumber->fetch_assoc();
+$resultnumber = mysqli_query($db,$sqlnumber);
+$rowcnumber = mysqli_fetch_array($resultnumber);
 $pm_part_number = $rowcnumber['part_number'];
 $pm_part_name = $rowcnumber['part_name'];
 
 $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-$resultfamily = $mysqli->query($sqlfamily);
-$rowcfamily = $resultfamily->fetch_assoc();
+$resultfamily = mysqli_query($db,$sqlfamily);
+$rowcfamily = mysqli_fetch_array($resultfamily);
 $pm_part_family_name = $rowcfamily['part_family_name'];
 
 $sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-$resultaccount = $mysqli->query($sqlaccount);
-$rowcaccount = $resultaccount->fetch_assoc();
+$resultaccount = mysqli_query($db,$sqlaccount);
+$rowcaccount = mysqli_fetch_array($resultaccount);
 $account_id = $rowcaccount['account_id'];
 
 $sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-$resultcus = $mysqli->query($sqlcus);
-$rowccus = $resultcus->fetch_assoc();
+$resultcus =mysqli_query($db,$sqlcus);
+$rowccus = mysqli_fetch_array($resultcus);
 $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
@@ -118,20 +118,29 @@ $logo = $rowccus['logo'];
             .d-none {
                 display: none!important;
             }
-            @media (min-width: 992px)
+            @media (min-width: 992px){
                 .navbar-expand-lg {
                     flex-wrap: nowrap;
                     justify-content: flex-start;
                 }
 
             }
+            #preview {
+                padding-top: 20px;
+            }
             .sidebar-default .navigation li>a {
-                color: #f5f5f5
+                color: #f5f5f5;
+            }
+            label.col-lg-2.control-label{
+                font-size: 16px;
             }
 
-        ;
-            a:hover {
-                background-color: #20a9cc;
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+
+                font-size: 16px;
+            }
+            .item_label {
+                font-size: 16px;
             }
 
             .sidebar-default .navigation li>a:focus,
@@ -197,7 +206,9 @@ $logo = $rowccus['logo'];
                 .col-lg-2 {
                     width: 38%!important;
                     float: left;
+
                 }
+
                 .col-md-3 {
                     width: 30%;
                     float: left;
@@ -234,7 +245,7 @@ $logo = $rowccus['logo'];
 <body>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Add / Create Form";
+$cust_cam_page_header = "Material Tracabilty";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -289,6 +300,12 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Line Number : </label>
                                 <div class="col-md-6">
+                                    <?php
+                            $form_id = $_GET['id'];
+
+                            $station_id = base64_decode( urldecode( $station_event_id));?>
+                                    <input type="hidden" name="station_event_id" value="<?php echo $station_id ?>">
+                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
                                     <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
                                 </div>
                                 <div id="error1" class="red">Line Number</div>
@@ -297,21 +314,22 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Line Number">
+                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
                                 </div>
                                 <div id="error1" class="red">Part Number</div>
                             </div>
                             <br/>   <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Line Number">
+                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
                                 </div>
                                 <div id="error1" class="red">Part family</div>
                             </div>
-                            <br/>   <div class="row">
+                            <br/>
+                            <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Line Number">
+                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
                                 </div>
                                 <div id="error1" class="red">Part Name</div>
                             </div>
@@ -348,6 +366,15 @@ while ($row1 = $result1->fetch_assoc()) {
 
                             </div>
                             <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
+                                <div class="col-md-6">
+                                    <input type="number" name="serial_number" id="serial_number"  class="form-control" placeholder="Enter Serial Number">
+                                </div>
+                                <div id="error1" class="red">Part Name</div>
+                            </div>
+                            <br/>
+
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
