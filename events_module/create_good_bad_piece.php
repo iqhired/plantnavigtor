@@ -313,5 +313,5 @@ else if($edit_id != "")
 
 
 
-header("Location:good_bad_piece.php");
+//header("Location:good_bad_piece.php");
 ?>
