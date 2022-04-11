@@ -546,6 +546,7 @@ while ($row1 = $result1->fetch_assoc()) {
          //    console.log(test);
             $("div.desc").hide();
             $("#Cars" + test).show();
+            document.getElementById("Cars").required = true;
         });
     });
 </script>
