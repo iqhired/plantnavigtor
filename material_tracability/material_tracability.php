@@ -379,14 +379,27 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" checked>
+                                        <input type="radio" id="pass" name="cars" value="pass" class="form-check-input" checked>
                                         <label for="pass" class="item_label">Pass</label>
-                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input" >
+
+                                        <input type="radio" id="fail" name="cars" value="fail" class="form-check-input reject" >
                                         <label for="fail" class="item_label">Fail</label>
 
+
                                     </div>
+
                                  </div>
                                 <div id="error7" class="red">Please Enter material Status</div>
+
+                            </div>
+                            <br/>
+
+
+                            <div class="row desc" id="Carsfail" style="display: none;">
+                                <label class="col-lg-2 control-label"> Reason : </label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="reason" rows="1" id="reason"></textarea>
+                                </div>
 
                             </div>
                             <br/>
@@ -410,6 +423,7 @@ while ($row1 = $result1->fetch_assoc()) {
                     </div>
                 </div>
             </div>
+
 
             <div  class="panel-footer p_footer">
                 <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Submit</button>
@@ -525,6 +539,17 @@ while ($row1 = $result1->fetch_assoc()) {
 
 
 </script>
+<script>
+    $(document).ready(function() {
+        $("input[name$='cars']").click(function() {
+            var test = $(this).val();
+         //    console.log(test);
+            $("div.desc").hide();
+            $("#Cars" + test).show();
+        });
+    });
+</script>
+
 
 <?php include('../footer.php') ?>
 
