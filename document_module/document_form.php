@@ -370,35 +370,35 @@ include("../heading_banner.php");
 
 
                             <div class="row desc" id="Carspart_number" style="display: none;">
-                                <div class="row">
-
-                                    <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Family *  :</label>
-
-                                    <div class="col-md-6">
-                                        <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
-                                            <option value="" selected disabled>--- Select Part Family ---</option>
-                                            <?php
-                                            $st_dashboard = $_POST['part_family'];
-                                            $station = $_POST['station'];
-                                            $ss = (isset($station)?' and station = ' . $station : '');
-                                            $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0" . $ss;
-                                            $result1 = $mysqli->query($sql1);
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                if($st_dashboard == $row1['pm_part_family_id'])
-                                                {
-                                                    $entry = 'selected';
-                                                }
-                                                else
-                                                {
-                                                    $entry = '';
-
-                                                }
-                                                echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
+<!--                                <div class="row">-->
+<!---->
+<!--                                    <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Family *  :</label>-->
+<!---->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <select name="part_family" id="part_family" class="select" data-style="bg-slate" >-->
+<!--                                            <option value="" selected disabled>--- Select Part Family ---</option>-->
+<!--                                            --><?php
+//                                            $st_dashboard = $_POST['part_family'];
+//                                            $station = $_POST['station'];
+//                                            $ss = (isset($station)?' and station = ' . $station : '');
+//                                            $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0" . $ss;
+//                                            $result1 = $mysqli->query($sql1);
+//                                            while ($row1 = $result1->fetch_assoc()) {
+//                                                if($st_dashboard == $row1['pm_part_family_id'])
+//                                                {
+//                                                    $entry = 'selected';
+//                                                }
+//                                                else
+//                                                {
+//                                                    $entry = '';
+//
+//                                                }
+//                                                echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+//                                            }
+//                                            ?>
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <br/>
                                 <div class="row">
 
@@ -409,21 +409,12 @@ include("../heading_banner.php");
                                         <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                             <option value="" selected disabled>--- Select Part Number ---</option>
                                             <?php
-                                            $st_dashboard = $_POST['part_number'];
-                                            $part_family = $_POST['part_family'];
-                                            $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+//
+                                            $sql1 = "SELECT * FROM `pm_part_number` ORDER BY `part_number` ASC  ";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
-                                                if($st_dashboard == $row1['pm_part_number_id'])
-                                                {
-                                                    $entry = 'selected';
-                                                }
-                                                else
-                                                {
-                                                    $entry = '';
 
-                                                }
-                                                echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                                echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
                                             }
                                             ?>
                                         </select>
@@ -492,10 +483,10 @@ include("../heading_banner.php");
 
 <script>
     $('#station').on('change', function (e) {
-        $("#document_setting").submit();
+     //   $("#document_setting").submit();
     });
     $('#part_family').on('change', function (e) {
-        $("#document_setting").submit();
+     //   $("#document_setting").submit();
     });
     function group1()
     {
@@ -535,7 +526,7 @@ include("../heading_banner.php");
 
             // Make sure `file.name` matches our extensions criteria
             if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
+              //  return alert(file.name + " is not an image");
             } // else...
 
             var reader = new FileReader();
