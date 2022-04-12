@@ -565,7 +565,7 @@ include("../heading_banner.php");
             //    console.log(test);
             $("div.desc").hide();
             $("#Cars" + test).show();
-            document.getElementById("Cars").required = true;
+
         });
     });
 </script>

@@ -360,7 +360,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="image[]" id="file-input" class="form-control" required>
+                                    <input type="file" name="image[]" id="file-input" class="form-control" multiple required>
                                     <div id="preview"></div>
                                 </div>
 
@@ -395,7 +395,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             <br/>
 
 
-                            <div class="row desc" id="Carsfail" style="display: none;">
+                            <div class="row desc" id="Reasonfail" style="display: none;">
                                 <label class="col-lg-2 control-label"> Reason : </label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="reason" rows="1" id="reason"></textarea>
@@ -409,7 +409,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." class="form-control" required></textarea>
+                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
                                 </div>
                             </div>
                             <br/>
@@ -545,8 +545,9 @@ while ($row1 = $result1->fetch_assoc()) {
             var test = $(this).val();
          //    console.log(test);
             $("div.desc").hide();
-            $("#Cars" + test).show();
-            document.getElementById("Cars").required = true;
+            $("#Reason" + test).show();
+            document.getElementById("#Reason" + test).required = true;
+
         });
     });
 </script>

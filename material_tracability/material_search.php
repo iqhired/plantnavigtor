@@ -55,7 +55,7 @@ if (count($_POST) > 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | User Form List</title>
+    <title><?php echo $sitename; ?> | Material Form List</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 
@@ -90,47 +90,15 @@ if (count($_POST) > 0) {
             color: red;
             display: none;
         }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            /*border-bottom: 1px dotted black;*/
-            opacity: 1!important;
-        }
 
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #26a69a;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
 
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
         .col-md-6.date {
             width: 25%;
+        }
+        .create {
+            float: right;
+            padding: 12px;
+
         }
 
 
@@ -187,241 +155,13 @@ include("../heading_banner.php");
 <body class="alt-menu sidebar-noneoverflow">
 <div class="page-container">
     <!-- Content area -->
-    <div class="content">
-        <!-- Main charts -->
-        <!-- Basic datatable -->
-<!--        <div class="panel panel-flat">-->
-<!--            <div class="panel-heading">-->
-<!--                						<h5 class="panel-title">Job-Title List</h5>-->
-<!--              						<hr/>-->
-<!---->
-<!--                <form action="" id="user_form" class="form-horizontal" method="post" autocomplete="off">-->
-<!---->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-6 mobile">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label class="col-lg-3 control-label">Station * : </label>-->
-<!--                                        <div class="col-lg-7">-->
-<!--                                            <select name="station" id="station" class="select form-control" data-style="bg-slate" >-->
-<!--                                                <option value="" selected disabled>--- Select Station ---</option>-->
-<!--                                                --><?php
-//                                                if($is_tab_login){
-//                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
-//                                                    $result1 = $mysqli->query($sql1);
-//                                                    //                                            $entry = 'selected';
-//                                                    while ($row1 = $result1->fetch_assoc()) {
-//                                                        $entry = 'selected';
-//                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-//                                                    }
-//                                                }else if($is_cell_login){
-//                                                    $c_stations = implode("', '", $c_login_stations_arr);
-//                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
-//                                                    $result1 = $mysqli->query($sql1);
-////													                $                        $entry = 'selected';
-//                                                    $i = 0;
-//
-////														$entry = 'selected';
-//                                                    if(empty($_REQUEST) && empty($_REQUEST['line_number'])){
-//                                                        while ($row1 = $result1->fetch_assoc()) {
-//                                                            if($i == 0 ){
-//                                                                $entry = 'selected';
-//                                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-//                                                                $c_station = $row1['line_id'];
-//                                                            }else{
-//                                                                echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
-//
-//                                                            }
-//                                                            $i++;
-//                                                        }
-//                                                    }else{
-//                                                        while ($row1 = $result1->fetch_assoc()) {
-//                                                            if($row1['line_id'] == $_REQUEST['line_number'] ){
-//                                                                $entry = 'selected';
-//                                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-//                                                                $c_station = $row1['line_id'];
-//                                                            }else{
-//                                                                echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
-//
-//                                                            }
-//                                                            $i++;
-//                                                        }
-//                                                    }
-//
-//
-//                                                }else{
-//                                                    $st_dashboard = $_POST['line_number'];
-//                                                    $station22 = $st_dashboard;
-//                                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-//                                                    $result1 = $mysqli->query($sql1);
-//                                                    //                                            $entry = 'selected';
-//                                                    while ($row1 = $result1->fetch_assoc()) {
-//                                                        if($st_dashboard == $row1['line_id'])
-//                                                        {
-//                                                            $entry = 'selected';
-//                                                        }
-//                                                        else
-//                                                        {
-//                                                            $entry = '';
-//
-//                                                        }
-//                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-//                                                    }
-//                                                }
-//
-//                                                ?>
-<!--                                            </select>-->
-<!--                                          <div id="error1" class="red">Please Select Station</div> -->
-<!---->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6 mobile">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label class="col-lg-3 control-label">Part Family : </label>-->
-<!--                                        <div class="col-lg-7">-->
-<!--                                            <select name="part_family" id="part_family" class="select form-control" data-style="bg-slate" >-->
-<!--                                                <option value="" selected disabled>--- Select Part Family ---</option>-->
-<!--                                                --><?php
-//                                                if(empty($_POST)){
-//                                                    if($_SESSION['is_tab_user'] == 1 ){
-//                                                        $station22 = $_SESSION['tab_station'];
-//                                                    }
-//                                                }
-//                                                $st_dashboard = $_POST['part_family'];
-//                                                if(empty($station22)){
-//                                                    $station22 = $_POST['station'];
-//                                                }
-//
-//                                                if(empty($station22) && ($is_cell_login == 1) && !empty($c_station)){
-//                                                    $station22 = $c_station;
-//                                                }
-//                                                $part_family_name = $_POST['part_family_name'];
-//                                                $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station22' ";
-//                                                $result1 = $mysqli->query($sql1);
-//                                                //                                            $entry = 'selected';
-//                                                while ($row1 = $result1->fetch_assoc()) {
-//                                                    if($st_dashboard == $row1['pm_part_family_id'])
-//                                                    {
-//                                                        $entry = 'selected';
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        $entry = '';
-//
-//                                                    }
-//                                                    echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
-//                                                }
-//                                                ?>
-<!--                                            </select>-->
-<!--                                            <div id="error2" class="red">Please Select Part Family</div> -->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!---->
-<!--                            </div><br/>-->
-<!--                            <div class="row">-->
-<!---->
-<!--                                <div class="col-md-6 mobile">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label class="col-lg-3 control-label">Part Number  : </label>-->
-<!--                                        <div class="col-lg-7">-->
-<!--                                            <select name="part_number" id="part_number" class="select form-control" data-style="bg-slate" >-->
-<!--                                                <option value="" selected disabled>--- Select Part Number ---</option>-->
-<!--                                                --><?php
-//                                                $st_dashboard = $_POST['part_number'];
-//                                                $part_family = $_POST['part_family'];
-//
-//                                                $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
-//                                                $result1 = $mysqli->query($sql1);
-//                                                //                                            $entry = 'selected';
-//                                                while ($row1 = $result1->fetch_assoc()) {
-//                                                    if($st_dashboard == $row1['pm_part_number_id'])
-//                                                    {
-//                                                        $entry = 'selected';
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        $entry = '';
-//
-//                                                    }
-//                                                    echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name']  . "</option>";
-//                                                }
-//                                                ?>
-<!--                                            </select>-->
-<!--                                             <div id="error3" class="red">Please Select Part Number</div> -->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6 mobile">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label class="col-lg-3 control-label">Form Type : </label>-->
-<!--                                        <div class="col-lg-7">-->
-<!--                                            <select name="form_type" id="form_type" class="select form-control" data-style="bg-slate" >-->
-<!--                                                <option value="" selected disabled>--- Select Form Type ---</option>-->
-<!--                                                --><?php
-//                                                $st_dashboard = $_POST['form_type'];
-//
-//                                                $sql1 = "SELECT * FROM `form_type` ";
-//                                                $result1 = $mysqli->query($sql1);
-//                                                //                                            $entry = 'selected';
-//                                                while ($row1 = $result1->fetch_assoc()) {
-//                                                    if($st_dashboard == $row1['form_type_id'])
-//                                                    {
-//                                                        $entry = 'selected';
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        $entry = '';
-//
-//                                                    }
-//                                                    echo "<option value='" . $row1['form_type_id'] . "'  $entry>" . $row1['form_type_name'] . "</option>";
-//                                                }
-//                                                ?>
-<!--                                            </select>-->
-<!--                                           <div id="error4" class="red">Please Select Form Type</div> -->-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!---->
-<!--                                <div class="col-md-6 date">-->
-<!--                                                              <label class="control-label" style="float: left;padding: 10px 110px 10px 2px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
-<!--                                    --><?php
-//                                    $myDate = date("m/d/y h:i:s");
-//
-//                                    ?>
-<!---->
-<!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial; display: none;" checked>-->
-<!---->
-<!--                                    <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>-->
-<!--                                    <input type="date" name="date_from" id="date_from" class="form-control" value="--><?php //echo $datefrom; ?><!--" style="float: left;width: initial;" required>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6 date">-->
-<!--                                    <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date To: &nbsp;&nbsp;</label>-->
-<!--                                    <input type="date" name="date_to" id="date_to" class="form-control" value="--><?php //echo $dateto; ?><!--" style="float: left;width: initial;" required>-->
-<!--                                </div>-->
-<!---->
-<!--                            </div><br/>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!---->
-<!--                </form>-->
-<!---->
-<!---->
-<!---->
-<!---->
-<!--            </div>-->
-<!--            <div class="panel-footer p_footer">-->
-<!--                <div>-->
-<!--                    <button type="submit" id="submit_btn" class="btn btn-primary submit_btn"  style="width:120px;margin-right: 20px;background-color:#1e73be;">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                    <button type="clear" id="btn" class="btn btn-primary"-->
-<!--                            style="background-color:#1e73be;margin-right: 20px;width:120px;">Reset-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+    <div class="col-md-2 create">
+        <a href="<?php echo $siteURL; ?>material_tracability/material_tracability.php">
+            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">Add/Create New Material Form</button>
+        </a>
+    </div>
+    <div class="content" style="padding: 70px 30px !important;">
+
         <?php
 
                     $result = "SELECT * FROM `material_tracability`";
@@ -435,7 +175,7 @@ include("../heading_banner.php");
                         <th>Station</th>
                         <th>Material Type</th>
                         <th>Serial Number</th>
-                        <th class="form_mob">Material status</th>
+
                         <th class="form_create">Created At</th>
                     </tr>
                     </thead>
@@ -447,20 +187,36 @@ include("../heading_banner.php");
                         $material_type = $rowc["material_type"];
                         $serial_number = $rowc["serial_number"];
                         $material_status = $rowc["material_status"];
-                        $created_at= $rowc["created_at"]; ?>
-                        <tr>
+                        $created_at= $rowc["created_at"];
+
+                        if($material_status == 'pass'){
+                            $style = "style='background-color:#a8d8a8;'";
+                        }else{
+
+                            $style = "style='background-color:#eca9a9;'";
+                        }?>
+                        <tr <?php echo $style; ?>>
                             <td> <?php echo ++$counter; ?></td>
-                            <td class="tooltip">
+                            <td >
                                 <a href="view_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <span class="tooltiptext">View</span>
-                                <a href="edit_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;">EDIT</i></a>
-                                <span class="tooltiptext">Edit</span>
+
+                                <a href="edit_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
+
                             </td>
 
                             <td> <?php echo $station ?></td>
+                            <?php
+
+                                $result1 = "SELECT * FROM `material_config`";
+                                $qur1 = mysqli_query($db,$result1);
+                                while ($rowc1 = mysqli_fetch_array($qur1)) {
+
+                                    $material_type = $rowc1['material_type'];
+
+                                } ?>
                             <td> <?php echo $material_type ?></td>
                             <td> <?php echo $serial_number ?></td>
-                            <td> <?php echo $material_status ?></td>
+
                             <td> <?php echo $created_at ?></td>
                         </tr>
 
@@ -559,13 +315,6 @@ include("../heading_banner.php");
 
 </script>
 
-<!-- <script>
-	function clearForm()
-{
-document.getElementById("user_form").reset();
-
-}
-	</script> -->
 <script type="text/javascript">
     $(function () {
         $("#btn").bind("click", function () {

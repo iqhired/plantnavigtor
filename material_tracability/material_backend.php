@@ -76,7 +76,7 @@ if(count($_POST)>0) {
         }
     }
 
-$finalstation=urlencode( base64_encode($station_event_id));
-$page = "material_tracability.php?station=$line_number;&station_event_id=$finalstation;";
+
+$page = "material_search.php";
 header('Location: '.$page, true, 303);
 exit;
