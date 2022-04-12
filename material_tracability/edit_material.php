@@ -377,7 +377,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="image[]" id="file-input" class="form-control" required>
+                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" required>
                                     <div id="preview"></div>
                                 </div>
 
