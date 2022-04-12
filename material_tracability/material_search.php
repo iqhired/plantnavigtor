@@ -453,6 +453,8 @@ include("../heading_banner.php");
                             <td class="tooltip">
                                 <a href="view_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                 <span class="tooltiptext">View</span>
+                                <a href="edit_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;">EDIT</i></a>
+                                <span class="tooltiptext">Edit</span>
                             </td>
 
                             <td> <?php echo $station ?></td>

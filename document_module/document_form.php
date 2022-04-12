@@ -72,7 +72,7 @@ $logo = $rowccus['logo'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $sitename; ?> |Material tracability</title>
+        <?php echo $sitename; ?> |document</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -192,53 +192,53 @@ $logo = $rowccus['logo'];
                 width: 100%!important;
                 box-sizing: border-box;
             }
-           }
+        }
 
-            @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
 
-                .col-md-0\.5 {
-                    float: right;
-                    width: 5%;
-                }
-                .col-md-6 {
-                    width: 60%;
-                    float: left;
-                }
-                .col-lg-2 {
-                    width: 38%!important;
-                    float: left;
-
-                }
-
-                .col-md-3 {
-                    width: 30%;
-                    float: left;
-                }
-                .form-check.form-check-inline {
-                    width: 70%;
-                }
+            .col-md-0\.5 {
+                float: right;
+                width: 5%;
+            }
+            .col-md-6 {
+                width: 60%;
+                float: left;
+            }
+            .col-lg-2 {
+                width: 38%!important;
+                float: left;
 
             }
 
-            .form-check-inline .form-check-input {
-                position: static;
-                margin-top: -4px!important;
-                margin-right: 0.3125rem;
-                margin-left: 10px!important;
+            .col-md-3 {
+                width: 30%;
+                float: left;
             }
-            .panel-heading>.dropdown .dropdown-toggle, .panel-title, .panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
-                color: inherit !important;
+            .form-check.form-check-inline {
+                width: 70%;
             }
-            .item_label{
-                margin-bottom: 0px !important;
-                margin-right: 10px !important;
-            }
-            .select2-selection--multiple {
-                border: 1px solid transparent !important;
-            }
-            .input-group-append {
-                width: 112%;
-            }
+
+        }
+
+        .form-check-inline .form-check-input {
+            position: static;
+            margin-top: -4px!important;
+            margin-right: 0.3125rem;
+            margin-left: 10px!important;
+        }
+        .panel-heading>.dropdown .dropdown-toggle, .panel-title, .panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+            color: inherit !important;
+        }
+        .item_label{
+            margin-bottom: 0px !important;
+            margin-right: 10px !important;
+        }
+        .select2-selection--multiple {
+            border: 1px solid transparent !important;
+        }
+        .input-group-append {
+            width: 112%;
+        }
 
     </style>
 </head>
@@ -246,7 +246,7 @@ $logo = $rowccus['logo'];
 <body>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Material Tracabilty";
+$cust_cam_page_header = "Plantnavigator Documents";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -255,16 +255,16 @@ include("../heading_banner.php");
 <!-- Page container -->
 <div class="page-container">
     <!-- Page content -->
-<?php
-$st = $_REQUEST['station'];
-$st_dashboard = base64_decode(urldecode($st));
-$sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
-$result1 = $mysqli->query($sql1);
-//                                            $entry = 'selected';
-while ($row1 = $result1->fetch_assoc()) {
-    $line_name = $row1['line_name'];
-}
-?>
+    <?php
+    $st = $_REQUEST['station'];
+    $st_dashboard = base64_decode(urldecode($st));
+    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
+    $result1 = $mysqli->query($sql1);
+    //                                            $entry = 'selected';
+    while ($row1 = $result1->fetch_assoc()) {
+        $line_name = $row1['line_name'];
+    }
+    ?>
     <!-- Content area -->
     <div class="content">
         <!-- Main charts -->
@@ -298,108 +298,155 @@ while ($row1 = $result1->fetch_assoc()) {
 
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="material_backend.php" id="material_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                <div class="col-md-6">
-                                  <?php  $form_id = $_GET['id'];
-                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                    <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
-                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
-                                </div>
-                                <div id="error1" class="red">Line Number</div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
-                                </div>
-                                <div id="error1" class="red">Part Number</div>
-                            </div>
-                            <br/>   <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
-                                </div>
-                                <div id="error1" class="red">Part family</div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
-                                </div>
-                                <div id="error1" class="red">Part Name</div>
-                            </div>
-                            <br/>
-
-
-
+                        <form action="document_backend.php" id="document_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
 
                             <div class="row">
-                                <label class="col-lg-2 control-label">Material type Added : </label>
+                                <label class="col-lg-2 control-label">Document file : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate">
-                                        <option value="" selected disabled>--- Select material Type ---</option>
-                                        <?php
-                                        $sql1 = "SELECT material_id, material_type FROM `material_config`";
-                                        $result1 = mysqli_query($db, $sql1);
-                                        while ($row1 = $result1->fetch_assoc()) {
-
-                                            echo "<option value='" . $row1['material_id'] . "'>" . $row1['material_type'] . "</option>";
-
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="error6" class="red">Please Enter Material Type</div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="image[]" id="file-input" class="form-control" required>
+                                    <input type="file" name="file[]" id="file-input" class="form-control" required>
                                     <div id="preview"></div>
                                 </div>
 
                             </div>
                             <br/>
                             <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Document Name : </label>
                                 <div class="col-md-6">
-                                    <input type="number" name="serial_number" id="serial_number"  class="form-control" placeholder="Enter Serial Number" required>
+                                    <input type="text" name="doc_name" id="doc_name" class="form-control" placeholder="Enter Doc name" required>
                                 </div>
-                                <div id="error1" class="red">Part Name</div>
+                                <div id="error1" class="red">Document Name</div>
                             </div>
                             <br/>
 
                             <div class="row">
-                                <label class="col-lg-2 control-label">Material Status : </label>
+                                <label class="col-lg-2 control-label">station : </label>
+                                <div class="col-md-6">
+                                    <select name="station" id="station" class="select" data-style="bg-slate">
+                                        <option value="" selected disabled>--- Select station ---</option>
+                                        <?php
+                                        $st_dashboard = $_POST['station'];
+                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+                                        $result1 = $mysqli->query($sql1);
+                                        //                                            $entry = 'selected';
+                                        while ($row1 = $result1->fetch_assoc()) {
+                                            if($st_dashboard == $row1['line_id'])
+                                            {
+                                                $entry = 'selected';
+                                            }
+                                            else
+                                            {
+                                                $entry = '';
+
+                                            }
+                                            echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="error6" class="red">Please Enter station</div>
+                            <br/>
+
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Document Type : </label>
                                 <div class="col-md-6">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="cars" value="pass" class="form-check-input" checked required>
-                                        <label for="pass" class="item_label">Pass</label>
+                                        <input type="radio" id="pass" name="doc_type" value ="station" class="form-check-input" checked required>
+                                        <label for="pass" class="item_label">Station</label>
 
-                                        <input type="radio" id="fail" name="cars" value="fail" class="form-check-input reject" required>
-                                        <label for="fail" class="item_label">Fail</label>
+                                        <input type="radio" id="fail" name="doc_type"  value ="part_number" class="form-check-input reject" required>
+                                        <label for="fail" class="item_label">Part Number</label>
 
 
                                     </div>
 
-                                 </div>
-                                <div id="error7" class="red">Please Enter material Status</div>
+                                </div>
+                                <div id="error7" class="red">Please select station or part number</div>
 
                             </div>
                             <br/>
 
 
-                            <div class="row desc" id="Carsfail" style="display: none;">
-                                <label class="col-lg-2 control-label"> Reason : </label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason"></textarea>
+
+
+                            <div class="row desc" id="Carspart_number" style="display: none;">
+                                <div class="row">
+
+                                    <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Family *  :</label>
+
+                                    <div class="col-md-6">
+                                        <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
+                                            <option value="" selected disabled>--- Select Part Family ---</option>
+                                            <?php
+                                            $st_dashboard = $_POST['part_family'];
+                                            $station = $_POST['station'];
+                                            $ss = (isset($station)?' and station = ' . $station : '');
+                                            $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0" . $ss;
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if($st_dashboard == $row1['pm_part_family_id'])
+                                                {
+                                                    $entry = 'selected';
+                                                }
+                                                else
+                                                {
+                                                    $entry = '';
+
+                                                }
+                                                echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
+                                <br/>
+                                <div class="row">
+
+
+                                    <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Number *  :</label>
+
+                                    <div class="col-md-6">
+                                        <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
+                                            <option value="" selected disabled>--- Select Part Number ---</option>
+                                            <?php
+                                            $st_dashboard = $_POST['part_number'];
+                                            $part_family = $_POST['part_family'];
+                                            $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if($st_dashboard == $row1['pm_part_number_id'])
+                                                {
+                                                    $entry = 'selected';
+                                                }
+                                                else
+                                                {
+                                                    $entry = '';
+
+                                                }
+                                                echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Status : </label>
+                                <div class="col-md-6">
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" id="active" name="status" value="active" class="form-check-input" checked required>
+                                        <label for="pass" class="item_label">Active</label>
+
+                                        <input type="radio" id="inactive" name="status" value="inactive" class="form-check-input reject" required>
+                                        <label for="fail" class="item_label">Inactive</label>
+
+
+                                    </div>
+
+                                </div>
+                                <div id="error7" class="red">Please select station or part number</div>
 
                             </div>
                             <br/>
@@ -407,9 +454,9 @@ while ($row1 = $result1->fetch_assoc()) {
 
                             <div class="row">
                                 <!--<div class="col-md-4">-->
-                                <label class="col-lg-2 control-label">Notes : </label>
+                                <label class="col-lg-2 control-label">Expiry Date : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." class="form-control" required></textarea>
+                                    <input type="date" name="exp_date" id="exp_date"  class="form-control"  required>
                                 </div>
                             </div>
                             <br/>
@@ -442,42 +489,14 @@ while ($row1 = $result1->fetch_assoc()) {
         $('.select').select2();
     });
 </script>
-<!--<script>-->
-<!--    function submitFormSettings(url) {-->
-<!--        //          $(':input[type="button"]').prop('disabled', true);-->
-<!--        var data = $("#material_setting").serialize();-->
-<!--        $.ajax({-->
-<!--            type: 'POST',-->
-<!--            url: url,-->
-<!--            data: data,-->
-<!--            success: function(data) {-->
-<!--                // $("#textarea").val("")-->
-<!--                // window.location.href = window.location.href + "?aa=Line 1";-->
-<!--                //                   $(':input[type="button"]').prop('disabled', false);-->
-<!--                //                   location.reload();-->
-<!--                //$(".enter-message").val("");-->
-<!--            }-->
-<!--        });-->
-<!--    }-->
-<!--</script><script>-->
-<!--    function submitFormSettings(url) {-->
-<!--        //          $(':input[type="button"]').prop('disabled', true);-->
-<!--        var data = $("#material_setting").serialize();-->
-<!--        $.ajax({-->
-<!--            type: 'POST',-->
-<!--            url: url,-->
-<!--            data: data,-->
-<!--            success: function(data) {-->
-<!--                // $("#textarea").val("")-->
-<!--                // window.location.href = window.location.href + "?aa=Line 1";-->
-<!--                //                   $(':input[type="button"]').prop('disabled', false);-->
-<!--                //                   location.reload();-->
-<!--                //$(".enter-message").val("");-->
-<!--            }-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
+
 <script>
+    $('#station').on('change', function (e) {
+        //$("#document_setting").submit();
+    });
+    $('#part_family').on('change', function (e) {
+       // $("#document_setting").submit();
+    });
     function group1()
     {
         $("#out_of_tolerance_mail_list").select2("open");
@@ -541,9 +560,9 @@ while ($row1 = $result1->fetch_assoc()) {
 </script>
 <script>
     $(document).ready(function() {
-        $("input[name$='cars']").click(function() {
+        $("input[name$='doc_type']").click(function() {
             var test = $(this).val();
-         //    console.log(test);
+            //    console.log(test);
             $("div.desc").hide();
             $("#Cars" + test).show();
             document.getElementById("Cars").required = true;
