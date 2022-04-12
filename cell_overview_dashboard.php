@@ -219,7 +219,12 @@ include("heading_banner.php");
                                         <li>
                                             <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
                                                target="_BLANK"></a> <i class="icon-eye"></i>Good & Bad Piece
-                                            </a></li>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                <i class="icon-eye"></i> Material Traceability</a>
+                                        </li>
 
 									<?php } ?>
 
@@ -250,10 +255,6 @@ include("heading_banner.php");
                                     <li>
                                         <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                         <i class="icon-eye"></i> View Assigned Crew</a>
-                                    </li>
-                                    <li>
-                                        <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                        <i class="icon-eye"></i> Material Tracability</a>
                                     </li>
                                 </ul>
 
@@ -374,7 +375,10 @@ include("heading_banner.php");
                                            target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
                                         </a>
                                     </li>
-
+                                    <li>
+                                        <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                            <i class="icon-eye"></i> Material Traceability</a>
+                                    </li>
 								<?php } ?>
 
                                 <li>
@@ -409,10 +413,7 @@ include("heading_banner.php");
                                     <a href="view_assigned_crew.php?station=<?php echo $rowc["line_id"]; ?>"><i
                                                 class="icon-eye"></i> View Assigned Crew</a>
                                 </li>
-                                <li>
-                                    <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                    <i class="icon-eye"></i> Material Tracability</a>
-                                </li>
+
                             </ul>
 
                         </li>
@@ -567,7 +568,10 @@ include("heading_banner.php");
                                                     <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
                                                        target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
                                                     </a></li>
-
+                                                <li>
+                                                    <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                        <i class="icon-eye"></i> Material Traceability</a>
+                                                </li>
 											<?php } ?>
                                             <li>
 
@@ -598,10 +602,7 @@ include("heading_banner.php");
                                                 <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                                 ><i class="icon-eye"></i> View Assigned Crew</a>
                                             </li>
-                                            <li>
-                                                <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="icon-eye"></i> Material Tracability</a>
-                                            </li>
+
                                         </ul>
                                     </li>
                                 </ul>
@@ -723,6 +724,16 @@ include("heading_banner.php");
                                                 <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
                                                    target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
                                                 </a></li>
+                                            <li>
+												<?php
+												$id=$line;
+												$station=$station_event_id;
+												$finalid=urlencode( base64_encode($id));
+												$finalstation=urlencode( base64_encode($station));
+												?>
+                                                <a href="material_tracability/material_tracability.php?station=<?php echo $finalid ; ?>&station_event_id=<?php echo $finalstation; ?>" target="_BLANK">
+                                                    <i class="icon-eye"></i> Material Traceability</a>
+                                            </li>
 										<?php } ?>
 
 
@@ -754,16 +765,7 @@ include("heading_banner.php");
                                             <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                                target="_BLANK"><i class="icon-eye"></i> View Assigned Crew</a>
                                         </li>
-                                        <li>
-                                            <?php
-                                            $id=$line;
-                                            $station=$station_event_id;
-                                            $finalid=urlencode( base64_encode($id));
-                                            $finalstation=urlencode( base64_encode($station));
-                                            ?>
-                                            <a href="material_tracability/material_tracability.php?station=<?php echo $finalid ; ?>&station_event_id=<?php echo $finalstation; ?>" target="_BLANK">
-                                            <i class="icon-eye"></i> Material Tracability</a>
-                                        </li>
+
                                     </ul>
 
                                 </li>

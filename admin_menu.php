@@ -570,13 +570,15 @@ $msg = explode(',', $msg); ?>
                                                     Position
                                                 </a>
                                             </div>
-										<?php } ?>
+										<?php }
+										if (in_array('72', $msg)) { ?>
                                         <div class="mt-3">
                                             <a href="<?php echo $siteURL; ?>material_tracability/material_config.php"
                                                class="text-muted mobile">
-                                                Material Config
+                                                Material Traceability
                                             </a>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
 
@@ -1336,12 +1338,14 @@ $msg = explode(',', $msg); ?>
                                                            class="mega-link"><h3 class="text-muted fs-6">Position</h3>
                                                         </a>
                                                     </div>
-												<?php } ?>
+												<?php }
+												if (in_array('72', $msg)) { ?>
                                                 <div class="mb-3">
                                                     <a href="<?php echo $siteURL; ?>material_tracability/material_config.php"
-                                                       class="mega-link"><h3 class="text-muted fs-6">Material Config</h3>
+                                                       class="mega-link"><h3 class="text-muted fs-6">Material Traceability</h3>
                                                     </a>
                                                 </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
 
