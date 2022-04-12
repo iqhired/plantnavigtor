@@ -492,10 +492,10 @@ include("../heading_banner.php");
 
 <script>
     $('#station').on('change', function (e) {
-        //$("#document_setting").submit();
+        $("#document_setting").submit();
     });
     $('#part_family').on('change', function (e) {
-       // $("#document_setting").submit();
+        $("#document_setting").submit();
     });
     function group1()
     {
