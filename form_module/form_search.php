@@ -518,7 +518,7 @@ include("../heading_banner.php");
 
                                 $form_id = $rowc["form_user_data_id"];
 
-                                $query1  = mysqli_query($db, "SELECT form_comp_status,form_status, created_at FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
+                                $query1  = mysqli_query($db, "SELECT form_comp_status,form_status, created_at , form_create_id FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
 
                                 $rowc1 = mysqli_fetch_array($query1);
 
@@ -528,6 +528,15 @@ include("../heading_banner.php");
                                 $comp_status = $rowc1["form_comp_status"];
                                 $check_status = $rowc1["form_status"];
 
+								$form_create_id = $rowc1["form_create_id"];
+
+								$qur0554 = mysqli_query($db, "SELECT form_classification FROM `form_create` where form_create_id =  '$form_create_id' ");
+								$rowc0554 = mysqli_fetch_array($qur0554);
+								$is_general = false;
+								if($rowc0554['form_classification'] == 'general' ){
+								    $is_general = true;
+                                }
+								if(!$is_general) {
                                 $qur05 = mysqli_query($db, "SELECT SUM(approval_status) as app_status, SUM(reject_status) as rej_status FROM  form_approval where form_user_data_id = '$form_id' ");
                                 $rowc05 = mysqli_fetch_array($qur05);
 
@@ -542,26 +551,27 @@ include("../heading_banner.php");
                                     $comp = "Yet to fill optional data.";
                                 }
 
-                                $approval_status = (int)$rowc05["app_status"];
-                                $reject_status = (int)$rowc05["rej_status"];
-                                $style = "";
-                                if ($reject_status >= 1) {
-                                    $form_status = "Rejected";
-                                    $style = "style='background-color:#eca9a9;'";
-                                } else if($approval_status >= 1){
-                                    $form_status = "Approved";
-                                    $style = "style='background-color:#a8d8a8;'";
-                                }else{
-                                    continue;
+									$approval_status = (int)$rowc05["app_status"];
+									$reject_status = (int)$rowc05["rej_status"];
+									$style = "";
+									if ($reject_status >= 1) {
+										$form_status = "Rejected";
+										$style = "style='background-color:#eca9a9;'";
+									} else if ($approval_status >= 1) {
+										$form_status = "Approved";
+										$style = "style='background-color:#a8d8a8;'";
+									} else {
+										continue;
 //                                    $form_status = "Incomplete";
 //                                    $style = "style='background-color:#b1cdff;'";
-                                }
-                                if($comp_status == '0'){
-                                    $style = "style='background-color:#b1cdff;'";
-                                }
-
+									}
+									if ($comp_status == '0') {
+										$style = "style='background-color:#b1cdff;'";
+									}
+								}
 
                                 ?>
+
                                 <tr <?php echo $style; ?>>
 
                                     <td><?php echo ++$counter; ?></td>
@@ -620,9 +630,6 @@ include("../heading_banner.php");
                                     }
                                     ?>
                                     <td><?php echo $station; ?></td>
-
-
-
 
                                     <td><?php echo $form_status; ?></td>
                                     <td class="form_mob"><?php echo $comp; ?></td>
