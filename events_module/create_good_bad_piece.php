@@ -2,7 +2,7 @@
 include("../config.php");
 $user = $_SESSION['user'];
 $chicagotime = date("Y-m-d H:i:s");
-    $good_name = $_POST['good_name'];
+$good_name = $_POST['good_name'];
 $good_bad_piece_name = $_POST['good_bad_piece_name'];
 $edit_id = $_POST['edit_id'];
 $edit_gbid = $_POST['edit_gbid'];
@@ -44,37 +44,10 @@ if ($good_name != "") {
 			}
 
 			if($good_bad_pieces_id){
-
-
-				$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-				$resultnumber = $mysqli->query($sqlnumber);
-				$rowcnumber = $resultnumber->fetch_assoc();
-				$pm_part_number = $rowcnumber['part_number'];
-				$pm_part_name = $rowcnumber['part_name'];
-				$dir_path = "../assets/label_files/" . $line_id;
-				$file =  file($dir_path . '/g_label');
-				$patterns = array();
-				$patterns[0] = '/CustomerNo/';
-				$patterns[1] = '/Description/';
-				$patterns[2] = '/Date/';
-				$patterns[3] = '/UserName/';
-				$replacements = array();
-				$replacements[0] = $pm_part_number;
-				$replacements[1] = $pm_part_name;
-				$replacements[2] = $chicagotime;
-				$replacements[3] = $user;
-				$output = preg_replace($patterns, $replacements, $file);
-				$json[] = array(
-					'success' => $output
-				);
-
-				echo json_encode($json);
-//				sendFile($dir_path . '/g_label');
-//				$output = preg_replace($patterns, $replacements, $file);
-//				sendFile($dir_path . '/g_label');
+				sendFile('../assets/label_files/$line_id/f1');
 			}
-//			$_SESSION['message_stauts_class'] = 'alert-success';
-//			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+			$_SESSION['message_stauts_class'] = 'alert-success';
+			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		}
 	}else{
 		$good_pieces = $g + $good_name;
@@ -88,12 +61,12 @@ if ($good_name != "") {
 
 			$good_bad_piece_name = $_POST['good_bad_piece_name'];
 
-			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework  , gbp.station_event_id as station_event_id  FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+			$query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
 			$qur = mysqli_query($db, $query);
 			while ($rowc = mysqli_fetch_array($qur)) {
 
 				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
-				//$station_event_id = $rowc['station_event_id'];
+				$station_event_id = $rowc['station_event_id'];
 			}
 			$query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
 			$qur1 = mysqli_query($db, $query1);
@@ -103,33 +76,10 @@ if ($good_name != "") {
 			}
 
 			if($good_bad_pieces_id){
-				$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-				$resultnumber = $mysqli->query($sqlnumber);
-				$rowcnumber = $resultnumber->fetch_assoc();
-				$pm_part_number = $rowcnumber['part_number'];
-				$pm_part_name = $rowcnumber['part_name'];
-				$dir_path = "../assets/label_files/" . $line_id;
-				$file =  file($dir_path . '/g_label');
-				$file1 =  file($dir_path . '/g_label1');
-				$patterns = array();
-				$patterns[0] = '/CustomerNo/';
-				$patterns[1] = '/Description/';
-				$patterns[2] = '/Date/';
-				$patterns[3] = '/UserName/';
-				$replacements = array();
-				$replacements[0] = $pm_part_number;
-				$replacements[1] = $pm_part_name;
-				$replacements[2] = $chicagotime;
-				$replacements[3] = $user;
-				$output = preg_replace($patterns, $replacements, $file);
-				$json[] = array(
-					'success' => 'ok'
-				);
-
-				echo json_encode($json);
+				sendFile('../assets/label_files/$line_id/f1');
 			}
-//			$_SESSION['message_stauts_class'] = 'alert-success';
-//			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+			$_SESSION['message_stauts_class'] = 'alert-success';
+			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 		} else {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Error: Please Retry';
@@ -175,10 +125,10 @@ else if($good_bad_piece_name != "")
 
 	$sql = "select * from good_bad_pieces where station_event_id ='$station_event_id' and event_status = '1'";
 //		$sql = "select * from good_bad_pieces where station_event_id ='$station_event_id' and event_status = '1' and defect_name = '$add_defect_name'";
-		$result1 = mysqli_query($db, $sql);
-		$rowc = mysqli_fetch_array($result1);
-		$bad =$rowc['bad_pieces'];
-		$good_bad_pieces_id =$rowc['good_bad_pieces_id'];
+	$result1 = mysqli_query($db, $sql);
+	$rowc = mysqli_fetch_array($result1);
+	$bad =$rowc['bad_pieces'];
+	$good_bad_pieces_id =$rowc['good_bad_pieces_id'];
 
 	if($bad_type == "bad_piece")
 	{
@@ -302,5 +252,5 @@ else if($edit_id != "")
 
 
 
-//header("Location:good_bad_piece.php");
+header("Location:good_bad_piece.php");
 ?>
