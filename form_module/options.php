@@ -232,7 +232,7 @@ include("../heading_banner.php");
 															if ($st_dashboard == $row1['pm_part_family_id']) {
 																$entry = 'selected';
 															} else {
-																$entry = 'selected';
+																$entry = '';
 
 															}
 															echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
