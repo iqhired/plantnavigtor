@@ -314,14 +314,14 @@ include("../hp_header.php");
         </div>
     </div>
 </div>
-    <script>
-        var myCarousel = document.querySelector('#myCarousel')
-        var carousel = new bootstrap.Carousel(myCarousel, {
-            interval: 8000,
-            wrap: true
-        })
-    </script>
-	<?php include("../footer.php"); ?>	<!-- /page container -->
+<script>
+    var myCarousel = document.querySelector('#myCarousel')
+    var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 8000,
+        wrap: true
+    })
+</script>
+<?php include("../footer.php"); ?>	<!-- /page container -->
 </body>
 
 </html>
