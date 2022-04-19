@@ -162,7 +162,7 @@ $msg = explode(',', $msg); ?>
                     <div class="collapse my-2" id="collapseInteractive">
                         <div class="ms-4">
                             <div class="mt-3">
-                                    <a href="<?php echo $siteURL; ?>config_module/gbp_dashboard_station.php" class="nav-link"> GBP Dashboard</a>
+                                    <a href="<?php echo $siteURL; ?>config_module/gbp_dashboard_station.php" class="nav-link"> Good & Bad Piece Dashboard</a>
                             </div>
 
                         </div>
@@ -909,7 +909,7 @@ $msg = explode(',', $msg); ?>
                                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                         </svg> </span>
-                                        <span class="ms-2 fw-light">GBP Dashboard</span>
+                                        <span class="ms-2 fw-light">Good & Bad Piece Dashboard</span>
                                         <span class="float-end" id="toggle-2-arrow">
 <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"-->
 <!--                                         class="text-danger" viewBox="0 0 16 16">-->
