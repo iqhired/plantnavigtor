@@ -662,7 +662,8 @@ include("../heading_banner.php");
                                     <hr/>
 									   <div class="query_rows">
 							<?php
-							$id = $_GET['id'];
+//							$id = $_GET['id'];
+							$id = base64_decode(urldecode($_GET['id']));
 							$rowcount = 1;
 							$queryitem = sprintf("SELECT * FROM `form_item` where form_create_id = '$id' ");
 							$quritem = mysqli_query($db, $queryitem);
