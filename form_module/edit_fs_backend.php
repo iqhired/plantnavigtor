@@ -237,7 +237,8 @@ for($i = 1; $i <= $click_id; )
 
 }
 //header("Location:form_edit.php?id=$hidden_id");
-$page = "form_edit.php?id=$hidden_id";
+$finalid=urlencode( base64_encode($hidden_id));
+$page = "form_edit.php?id=$finalid";
 header('Location: '.$page, true, 303);
 exit;
 
