@@ -403,6 +403,7 @@ $datefrom = $yesdate;
                                         $datefrom = $_POST['date_from'];
                                         $button = $_POST['button'];
                                         $timezone = $_POST['timezone'];
+										$button = "button1";
                                         if ($button == "button1") {
                                             if ($name != "" && $station != "" && $datefrom != "" && $dateto != "") {
                                                 $qur = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
