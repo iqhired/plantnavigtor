@@ -325,7 +325,7 @@ include("../heading_banner.php");
                                     <div class="col-md-6">
                                         <?php $create_date = $rowcmain['created_at'];?>
                                         <input type="text" name="createdby" class="form-control" id="createdby"
-                                               value="<?php echo date('d-M-Y h:i:s', $create_date); ?>" disabled>
+                                               value="<?php echo $create_date; ?>" disabled>
                                     </div>
                                 </div>
                                 <br/>

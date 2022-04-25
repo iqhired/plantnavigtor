@@ -7,14 +7,15 @@ if(count($_POST)>0) {
     $doc_name = $_POST['doc_name'];
     $doc_type = $_POST['doc_type'];
     $station = $_POST['station'];
+    $category = $_POST['category'];
     $part_number = $_POST['part_number'];
     $status = $_POST['status'];
     $exp_date = $_POST['exp_date'];
     $created_by = date("Y-m-d H:i:s");
 
 
-    $sql0 = "INSERT INTO `document_data`(`doc_name`,`station`,`doc_type`,`part_number`,`status`,`expiry_date`,`created_at`) VALUES 
-	        	('$doc_name','$station','$doc_type' , ' $part_number' ,'$status',' $exp_date','$created_by')";
+    $sql0 = "INSERT INTO `document_data`(`doc_name`,`station`,`doc_type`,`doc_category`,`part_number`,`status`,`expiry_date`,`created_at`) VALUES 
+	        	('$doc_name','$station','$doc_type' ,'$category',' $part_number' ,'$status',' $exp_date','$created_by')";
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';

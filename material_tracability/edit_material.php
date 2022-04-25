@@ -277,6 +277,8 @@ include("../heading_banner.php");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
         $formname = $rowcmain['line_number'];
+        $reason = $rowcmain['fail_reason'];
+        $notes = $rowcmain['notes'];
         ?>
         <!-- Basic datatable -->
         <div class="panel panel-flat">
@@ -399,7 +401,7 @@ include("../heading_banner.php");
                                         <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "pass"){ echo 'checked'; } ?> required>
                                         <label for="pass" class="item_label">Pass</label>
 
-                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "pass"){ echo 'checked'; } ?> required>
+                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "fail"){ echo 'checked'; } ?> required>
                                         <label for="fail" class="item_label">Fail</label>
 
 
@@ -411,15 +413,16 @@ include("../heading_banner.php");
                             </div>
                             <br/>
 
-
-                            <div class="row desc" id="Carsfail" style="display: none;">
+                                  <?php if($rowcmain['material_status'] == "fail"){?>
+                            <div class="row desc" id="Carsfail">
                                 <label class="col-lg-2 control-label"> Reason : </label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $rowcmain['fail_reason'];?>"></textarea>
+                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $reason;?>"></textarea>
                                 </div>
 
                             </div>
                             <br/>
+                                  <?php } ?>
 
 
                             <div class="row">

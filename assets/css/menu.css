@@ -101,6 +101,9 @@ svg.arrow.dropbtn {
     font-size: 15px!important;
     padding: 15px;
 }
+.toggle:hover {
+    background-color: #0096888a;
+}
 
 @media (max-width:768px) and (min-width:305px){
     .d-sm-none {

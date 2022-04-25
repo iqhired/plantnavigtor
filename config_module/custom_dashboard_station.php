@@ -38,8 +38,6 @@ $user_id = $_SESSION["id"];
 $chicagotime = date("Y-m-d H:i:s");
 //$line = "<b>-</b>";
 $line = "";
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +46,7 @@ $line = "";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $sitename; ?>
-        | Good & Bad Pieces</title>
+        | Custom Dashboard</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -155,22 +153,22 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </br>
 
             <div class="row">
-                <?php
-											$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-											$result1 = $mysqli->query($sql1);
+                <?php $query = sprintf("SELECT * FROM sg_cust_dashboard where enabled = 1");
+                $qur = mysqli_query($db, $query);
+                while ($rowc = mysqli_fetch_array($qur)) {
+                    $c_id = $rowc["sg_cust_group_id"];
+                    $c_name = $rowc["sg_cust_dash_name"];
+                    $enabled = $rowc["enabled"];
+                    if ($enabled == 1) { ?>
+                        <div class="col-md-3">
+                            <a target="_blank" href="<?php echo $siteURL; ?>config_module/sg_cust_dashboard.php?id=<?php echo $c_id ?>">
+                                <button type="button" class="btn btn-primary view_gpbp"  style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $c_name ?></button></a>
 
-											while ($row1 = mysqli_fetch_array($result1)) {
-                $gbd_id = $row1['gbd_id'];
-                $line_name = $row1['line_name'];
-                $line_id = $row1['line_id'];
-                if ($gbd_id == 1) { ?>
-                    <div class="col-md-3">
-                   <a target="_blank" href="<?php echo $siteURL; ?>config_module/gbp_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp"
-                                                                                                                       style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
+                        </div>
 
-                    </div>
-                <?php }
-                  } ?>
+                    <?php }
+                } ?>
+
             </div>
         </div>
 

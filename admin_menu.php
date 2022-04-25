@@ -919,40 +919,23 @@ $msg = explode(',', $msg); ?>
                                 </span>
                                         </a>
                                     </div>
-<!--                                    <div class="slidenew" id="slide-2">-->
-<!--                                        <div class="row">-->
-<!--                                            <div class="col-md-6 mt-2">-->
-<!--                                                <div class="p-3">-->
-<!--                                                    --><?php
-//                                                    $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1'";
-//                                                    $result1 = $mysqli->query($sql1);
-//
-//                                                    while ($row1 = mysqli_fetch_array($result1)) {
-//
-//                                                        $gbd_id = $row1['gbd_id'];
-//                                                        $line_name = $row1['line_name'];
-//                                                        $line_id = $row1['line_id'];
-//                                                        if ($gbd_id == 1) { ?>
-<!--                                                            <div class="mb-3">-->
-<!--                                                                <a target="_blank"-->
-<!--                                                                   href="--><?php //echo $siteURL; ?><!--config_module/gbp_dashboard.php?id=--><?php //echo $line_id ?><!--"-->
-<!--                                                                   class="mega-link"><h3-->
-<!--                                                                            class="text-muted fs-6">--><?php //echo $line_name ?><!--</h3>-->
-<!--                                                                </a>-->
-<!--                                                            </div>-->
-<!--                                                        --><?php //}
-//                                                    } ?>
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!---->
-<!--                                        </div>-->
-<!---->
-<!--                                    </div>-->
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                 </div>
                             <?php } ?>
                             <?php if (in_array('70', $msg)) { ?>
                                 <div class='tutorial_section'>
                                     <div class="toggle" id="toggle-2">
+                                        <a href="<?php echo $siteURL; ?>config_module/custom_dashboard_station.php">
 
                                            <span>
                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -973,28 +956,14 @@ $msg = explode(',', $msg); ?>
                                               d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                     </svg>
                                 </span>
+                                        </a>
 
                                     </div>
                                     <div class="slidenew" id="slide-2">
                                         <div class="row">
                                             <div class="col-md-6 mt-2">
                                                 <div class="p-3">
-                                                    <?php $query = sprintf("SELECT * FROM sg_cust_dashboard where enabled = 1");
-                                                    $qur = mysqli_query($db, $query);
-                                                    while ($rowc = mysqli_fetch_array($qur)) {
-                                                        $c_id = $rowc["sg_cust_group_id"];
-                                                        $c_name = $rowc["sg_cust_dash_name"];
-                                                        $enabled = $rowc["enabled"];
-                                                        if ($enabled == 1) { ?>
-                                                            <div class="mb-3">
-                                                                <a target="_blank"
-                                                                   href="<?php echo $siteURL; ?>config_module/sg_cust_dashboard.php?id=<?php echo $c_id ?>"
-                                                                   class="mega-link"><h3
-                                                                            class="text-muted fs-6"> <?php echo $c_name ?></h3>
-                                                                </a>
-                                                            </div>
-                                                        <?php }
-                                                    } ?>
+
                                                 </div>
                                             </div>
 

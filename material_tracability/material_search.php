@@ -164,7 +164,7 @@ include("../heading_banner.php");
 
         <?php
 
-                    $result = "SELECT * FROM `material_tracability`";
+                    $result = "SELECT * FROM `material_tracability` ORDER BY `material_id` DESC";
                     $qur = mysqli_query($db,$result); ?>
             <div class="panel panel-flat" >
                 <table class="table datatable-basic">

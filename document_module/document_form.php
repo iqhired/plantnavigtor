@@ -368,7 +368,6 @@ include("../heading_banner.php");
 
 
 
-
                             <div class="row desc" id="Carspart_number" style="display: none;">
 <!--                                <div class="row">-->
 <!---->
@@ -400,6 +399,7 @@ include("../heading_banner.php");
 <!--                                    </div>-->
 <!--                                </div>-->
                                 <br/>
+
                                 <div class="row">
 
 
@@ -423,6 +423,35 @@ include("../heading_banner.php");
 
                             </div>
                             <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Document Category : </label>
+                                <div class="col-md-6">
+                                    <select name="category" id="category" class="select" data-style="bg-slate">
+                                        <option value="" selected disabled>--- Select Category ---</option>
+                                        <?php
+                                        $category = $_POST['category'];
+                                        $sql1 = "SELECT * FROM `document_type` where enabled = '1' ORDER BY `document_type_name` ASC ";
+                                        $result1 = $mysqli->query($sql1);
+                                        //                                            $entry = 'selected';
+                                        while ($row1 = $result1->fetch_assoc()) {
+                                            if($category == $row1['document_type_name'])
+                                            {
+                                                $entry = 'selected';
+                                            }
+                                            else
+                                            {
+                                                $entry = '';
+
+                                            }
+                                            echo "<option value='" . $row1['document_type_id'] . "'  $entry>" . $row1['document_type_name'] . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="error6" class="red">Please Enter Document Category</div>
+                            <br/>
+
                             <div class="row">
                                 <label class="col-lg-2 control-label">Status : </label>
                                 <div class="col-md-6">

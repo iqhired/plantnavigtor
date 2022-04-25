@@ -341,7 +341,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate">
+                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" /required>
                                         <option value="" selected disabled>--- Select material Type ---</option>
                                         <?php
                                         $sql1 = "SELECT material_id, material_type FROM `material_config`";
@@ -379,10 +379,10 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="cars" value="pass" class="form-check-input" checked required>
+                                        <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" checked required>
                                         <label for="pass" class="item_label">Pass</label>
 
-                                        <input type="radio" id="fail" name="cars" value="fail" class="form-check-input reject" required>
+                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject" required>
                                         <label for="fail" class="item_label">Fail</label>
 
 
@@ -402,6 +402,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                 </div>
 
                             </div>
+
                             <br/>
 
 
@@ -541,12 +542,13 @@ while ($row1 = $result1->fetch_assoc()) {
 </script>
 <script>
     $(document).ready(function() {
-        $("input[name$='cars']").click(function() {
+        $("input[name$='material_status']").click(function() {
             var test = $(this).val();
          //    console.log(test);
             $("div.desc").hide();
             $("#Reason" + test).show();
-            document.getElementById("#Reason" + test).required = true;
+            $("#Reason" + test).prop('required',true);
+
 
         });
     });
