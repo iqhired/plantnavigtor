@@ -46,11 +46,6 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $timezone = $_POST['timezone'];
-}else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
 }
 if (count($_GET) > 0) {
     $station1 = $_GET['line'];
@@ -60,6 +55,15 @@ if (count($_GET) > 0) {
     }
 }
 
+if(empty($dateto)){
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
+}
+
+if(empty($datefrom)){
+	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$datefrom = $yesdate;
+}
 
 ?>
 <!DOCTYPE html>
@@ -222,9 +226,9 @@ if (count($_GET) > 0) {
                                             <label class="col-lg-3 control-label">User :</label>
                                              <div class="col-lg-8">
                                                     <select  name="user" id="user" class="select" style="float: left;width: initial;" >
-                                                        <option value="" selected disabled>--- Select User ---</option>
+                                                        <option value="" selected >--- Select User ---</option>
                                                         <?php
-                                                        $sql1 = "SELECT DISTINCT `assign_to` FROM `tm_task`";
+                                                        $sql1 = "SELECT DISTINCT tt.assign_to FROM tm_task as tt right join cam_users as cu on tt.assign_to = cu.users_id where tt.assign_to != ''";
                                                         $result1 = $mysqli->query($sql1);
                                                         //$entry = 'selected';
                                                         while ($row1 = $result1->fetch_assoc()) {
@@ -410,36 +414,6 @@ if (count($_GET) > 0) {
                                             } else if ($taskboard == "" && $user == "" && $datefrom != "" && $dateto != "") {
                                                 $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$dateto' ");
                                             }
-                                        } else {
-                                            $curdate = date('Y-m-d');
-                                            if ($timezone == "7") {
-                                                $countdate = date('Y-m-d', strtotime('-7 days'));
-                                            } else if ($timezone == "1") {
-                                                $countdate = date('Y-m-d', strtotime('-1 days'));
-                                            } else if ($timezone == "30") {
-                                                $countdate = date('Y-m-d', strtotime('-30 days'));
-                                            } else if ($timezone == "90") {
-                                                $countdate = date('Y-m-d', strtotime('-90 days'));
-                                            } else if ($timezone == "180") {
-                                                $countdate = date('Y-m-d', strtotime('-180 days'));
-                                            } else if ($timezone == "365") {
-                                                $countdate = date('Y-m-d', strtotime('-365 days'));
-                                            }
-                                            if ($taskboard != "" && $user != "" && $timezone != "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$curdate' and `taskboard` = '$taskboard' and `assign_to` = '$user'");
-                                            } else if ($taskboard != "" && $user != "" && $timezone == "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE  `taskboard` = '$taskboard' and `assign_to` = '$user'");
-                                            } else if ($taskboard == "" && $user != "" && $timezone != "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$curdate' and `assign_to` = '$user'");
-                                            } else if ($taskboard == "" && $user != "" && $timezone == "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE  `assign_to` = '$user'");
-                                            } else if ($taskboard != "" && $user == "" && $timezone != "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$curdate' and `taskboard` = '$taskboard' ");
-                                            } else if ($taskboard != "" && $user == "" && $timezone == "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE `taskboard` = '$taskboard' ");
-                                            } else if ($taskboard == "" && $user == "" && $timezone != "") {
-                                                $qur = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`duration`,`assigned_time`,`finished_time`,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$curdate' ");
-                                            }
                                         }
 //$message = "Date :- ".$name;
 //echo "<script type='text/javascript'>alert('$message');</script>";
@@ -518,6 +492,10 @@ if (count($_GET) > 0) {
                 </div>
                 <!-- /main content -->
         <script>
+
+            $('#taskboard').on('change', function (e) {
+                $("#user_form").submit();
+            });
             $(function () {
                 $('input:radio').change(function () {
                     var abc = $(this).val()
