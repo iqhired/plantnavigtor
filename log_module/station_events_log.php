@@ -62,10 +62,17 @@ if (count($_POST) > 0) {
 		$station1 = $rowctemp["line_name"];
 	}
 }
-$curdate = date('Y-m-d');
-$dateto = $curdate;
-$yesdate = date('Y-m-d',strtotime("-1 days"));
-$datefrom = $yesdate;
+if(empty($dateto)){
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
+}
+
+if(empty($datefrom)){
+	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$datefrom = $yesdate;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -463,7 +470,7 @@ include("../heading_banner.php");
                             </div>
                             </form>
                             <div class="col-md-2">
-                            <form action="export_station_events_log.php" method="post" name="export_excel">
+                            <form action="export_se_log.php" method="post" name="export_excel">
                                 <button type="submit" class="btn btn-primary"
                                         style="background-color:#1e73be;width:120px;"
                                         id="export" name="export" data-loading-text="Loading...">Export Data
@@ -487,6 +494,7 @@ include("../heading_banner.php");
                             <th>Part Name</th>
                             <th>Part Family</th>
                             <!--                            <th>Completion Time</th>-->
+                            <th>Created On</th>
                             <th>Total Duration</th>
                         </tr>
                         </thead>
@@ -495,7 +503,7 @@ include("../heading_banner.php");
 
                         /* Default Query */
 						$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
-e_log.total_time as total_time
+e_log.total_time as total_time , e_log.created_on as created_on
 from sg_station_event_log as e_log  
 left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
@@ -507,7 +515,7 @@ inner Join event_type as et on e_log.event_type_id = et.event_type_id order by e
 						if ($line != null) {
 							$line = $_POST['station'];
 							$q = "SELECT sg_events.line_id,et.event_type_name as e_type,( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
-e_log.total_time as total_time
+e_log.total_time as total_time  , e_log.created_on as created_on
 from sg_station_event_log as e_log  
 left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
@@ -519,6 +527,7 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 						/* Build the query to fetch the data*/
 						if (count($_POST) > 0) {
 							$line = $_POST['station'];
+							$line_id = $_POST['station'];
 							$dateto = $_POST['date_to'];
 							$datefrom = $_POST['date_from'];
 							$button = $_POST['button'];
@@ -530,51 +539,27 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 
                             $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
 pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
-sg_events.modified_on as end_time ,e_log.total_time as total_time
+sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
 from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
 where 1 ";
 
-							/* If Data Range is selected */
-							if ($button == "button1") {
-
-								if($datefrom != "" && $dateto != ""){
-									$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
-								}else if($datefrom != "" && $dateto == ""){
-									$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
-								}else if($datefrom == "" && $dateto != ""){
-									$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
-								}
-
-
-
-							} else {
-								/* If Date Period is Selected */
-								$curdate = date('Y-m-d');
-								if ($timezone == "7") {
-									$countdate = date('Y-m-d', strtotime('-7 days'));
-								} else if ($timezone == "1") {
-									$countdate = date('Y-m-d', strtotime('-1 days'));
-								} else if ($timezone == "30") {
-									$countdate = date('Y-m-d', strtotime('-30 days'));
-								} else if ($timezone == "90") {
-									$countdate = date('Y-m-d', strtotime('-90 days'));
-								} else if ($timezone == "180") {
-									$countdate = date('Y-m-d', strtotime('-180 days'));
-								} else if ($timezone == "365") {
-									$countdate = date('Y-m-d', strtotime('-365 days'));
-								}
-								if ($station != "" && $timezone != "") {
-									$q = $q . " AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate' 
-and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$station'";
-								} else if ($station != "" && $timezone == "") {
-									$q = $q . " AND sg_events.line_id = '$station'";
-								} else if ($station == "" && $timezone != "") {
-									$q = $q . " AND  DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' ";
-								}
+							/* If Line is selected. */
+							if ($line_id != null) {
+								$q = $q . " and sg_events.line_id = '$line_id' ";
 							}
+
+
+							if($datefrom != "" && $dateto != ""){
+								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+							}else if($datefrom != "" && $dateto == ""){
+								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
+							}else if($datefrom == "" && $dateto != ""){
+								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+							}
+
 
 							if ($event_type != "") {
 								if ($station != "" ) {
@@ -591,6 +576,8 @@ and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id
 									$q = $q . " AND  e_log.event_cat_id ='$event_category'";
 								}
                             }
+
+							$q = $q . " ORDER BY e_log.created_on  DESC";
 
 
 //							if ($event_type != "") {
@@ -816,6 +803,7 @@ and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id
 								<?php //echo $rowc['start_time']; ?><!--</td>-->
                                 <!--                                <td>-->
 								<?php //echo $rowc['end_time']; ?><!--</td>-->
+                                <td><?php echo $rowc['created_on']; ?></td>
                                 <td><?php echo $rowc['total_time']; ?></td>
 
                             </tr>
