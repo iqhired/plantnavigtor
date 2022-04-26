@@ -225,6 +225,10 @@ include("heading_banner.php");
                                             <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                 <i class="icon-eye"></i> Material Traceability</a>
                                         </li>
+                                        <li>
+                                            <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                <i class="icon-eye"></i> View Material Traceability</a>
+                                        </li>
 
 									<?php } ?>
 
@@ -378,6 +382,10 @@ include("heading_banner.php");
                                     <li>
                                         <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                             <i class="icon-eye"></i> Material Traceability</a>
+                                    </li>
+                                    <li>
+                                        <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                            <i class="icon-eye"></i> View Material Traceability</a>
                                     </li>
 								<?php } ?>
 
@@ -572,6 +580,10 @@ include("heading_banner.php");
                                                     <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                         <i class="icon-eye"></i> Material Traceability</a>
                                                 </li>
+                                                <li>
+                                                    <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                        <i class="icon-eye"></i> View Material Traceability</a>
+                                                </li>
 											<?php } ?>
                                             <li>
 
@@ -725,14 +737,13 @@ include("heading_banner.php");
                                                    target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
                                                 </a></li>
                                             <li>
-												<?php
-												$id=$line;
-												$station=$station_event_id;
-												$finalid=urlencode( base64_encode($id));
-												$finalstation=urlencode( base64_encode($station));
-												?>
-                                                <a href="material_tracability/material_tracability.php?station=<?php echo $finalid ; ?>&station_event_id=<?php echo $finalstation; ?>" target="_BLANK">
+
+                                                <a href="material_tracability/material_tracability.php?station=<?php echo $line ; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                     <i class="icon-eye"></i> Material Traceability</a>
+                                            </li>
+                                            <li>
+                                                <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                    <i class="icon-eye"></i> View Material Traceability</a>
                                             </li>
 										<?php } ?>
 

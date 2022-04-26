@@ -328,6 +328,38 @@ include("../heading_banner.php");
                                                value="<?php echo $create_date; ?>" disabled>
                                     </div>
                                 </div>
+                                <div class="form_row row">
+
+                                    <?php
+                                    $query1 = sprintf("SELECT material_id FROM  material_tracability where material_id = '$id'");
+                                    $qur1 = mysqli_query($db, $query1);
+                                    $rowc1 = mysqli_fetch_array($qur1);
+                                    $item_id = $rowc1['material_id'];
+
+                                    $query2 = sprintf("SELECT * FROM  material_images where material_id = '$item_id'");
+
+                                    $qurimage = mysqli_query($db, $query2);
+                                    while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                        ?>
+
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="thumbnail">
+                                                <div class="thumb">
+                                                    <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                         alt="">
+                                                    <div class="caption-overflow">
+														<span>
+															<a href="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                               data-popup="lightbox" rel="gallery"
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                        class="icon-plus3"></i></a>
+														</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                                 <br/>
 
 

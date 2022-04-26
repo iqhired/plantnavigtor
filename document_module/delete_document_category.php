@@ -17,5 +17,5 @@ if ($delete_check != "") {
     $_SESSION['message_stauts_class'] = 'alert-danger';
     $_SESSION['import_status_message'] = 'Please Select Document Type.';
 }
-header("Location:document_type.php");
+header("Location:document_category.php");
 ?>

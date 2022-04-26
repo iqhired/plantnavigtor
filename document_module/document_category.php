@@ -130,7 +130,7 @@ if (count($_POST) > 0) {
 </style>
 
 <!-- Main navbar -->
-<?php $cust_cam_page_header = "Document Type";
+<?php $cust_cam_page_header = "Document Category";
 //include("../header_folder.php");
 include("../header.php");
 include("../admin_menu.php");
@@ -212,7 +212,7 @@ include("../heading_banner.php");
 					}
 					?>
 
-                <form action="../document_module/delete_document_type.php" method="post" class="form-horizontal">
+                <form action="delete_document_category.php" method="post" class="form-horizontal">
                     <div class="row">
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Delete
@@ -253,7 +253,7 @@ include("../heading_banner.php");
                                         <button type="button" id="edit" class="btn btn-info btn-xs"
                                                 data-id="<?php echo $rowc['document_type_id']; ?>"
                                                 data-name="<?php echo $rowc['document_type_name']; ?>"
-                                                data-wol="<?php if($rowc["wol"] == 0){ echo 'no' ;}else{ echo 'yes' ;} ?>"
+                                                data-enabled="<?php if($rowc["enabled"] == 0){ echo 'no' ;}else{ echo 'yes' ;} ?>"
                                                 data-toggle="modal"
                                                 style="background-color:#1e73be;"
                                                 data-target="#edit_modal_theme_primary">
@@ -298,7 +298,7 @@ include("../heading_banner.php");
 
                                             <div class="col-lg-6">
 
-                                                    <input type="radio" id="edit_yes" name="edit_enabled" value="yes">
+                                                    <input type="radio" id="edit_yes" name="edit_enabled" value="yes" >
                                                     <label for="yes" class="item_label" id="">Yes</label>
                                                     <input type="radio" id="edit_no" name="edit_enabled" value="no">
                                                     <label for="no" class="item_label" id="">No</label>
@@ -336,9 +336,9 @@ include("../heading_banner.php");
                         var element = $(this);
                         var edit_id = element.attr("data-id");
                         var name = $(this).data("name");
-                        var wol = $(this).data("wol");
+                        var enabled = $(this).data("enabled");
                         $("#edit_name").val(name);
-                        if(wol == 'no'){
+                        if(enabled == 'no'){
                             document.getElementById("edit_no").checked = true;
                         }else{
                             document.getElementById("edit_yes").checked = true;
@@ -358,7 +358,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function () {
-        history.replaceState("", "", "<?php echo $scriptName; ?>document_module/document_type.php");
+        history.replaceState("", "", "<?php echo $scriptName; ?>document_module/document_category.php");
     }
 </script>
 <script>
