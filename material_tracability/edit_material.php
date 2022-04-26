@@ -35,8 +35,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 $s_event_id = $_GET['station_event_id'];
-$station_event_id = base64_decode(urldecode($s_event_id));
-$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
+$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$s_event_id'";
 $resultmain = mysqli_query($db,$sqlmain);
 $rowcmain = mysqli_fetch_array($resultmain);
 $part_family = $rowcmain['part_family_id'];
@@ -239,6 +238,10 @@ $logo = $rowccus['logo'];
         .input-group-append {
             width: 112%;
         }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+        }
 
     </style>
 </head>
@@ -257,8 +260,7 @@ include("../heading_banner.php");
     <!-- Page content -->
     <?php
     $st = $_REQUEST['station'];
-    $st_dashboard = base64_decode(urldecode($st));
-    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
+    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
     $result1 = $mysqli->query($sql1);
     //                                            $entry = 'selected';
     while ($row1 = $result1->fetch_assoc()) {
@@ -378,9 +380,10 @@ include("../heading_banner.php");
                             <br/>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" required>
-                                    <div id="preview"></div>
+                                <div class="col-md-6" id="pnum_images">
+                                    <input type="text" hidden name="edit_pm_image" id="edit_pm_image">
+                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" data-ex-files="" multiple="multiple">
+<!--                                    <div id="preview"></div>-->
                                 </div>
 
                             </div>
@@ -571,7 +574,49 @@ include("../heading_banner.php");
         });
     });
 </script>
+<script>
+    $("#edit_image").on("change", function(e) {
+        var files = e.target.files,
+            filesLength = files.length;
+        var tot = e.currentTarget.attributes.length;
+        var ij = tot - filesLength + 1 ;
+        var j =0 ;
+        for (var i = ij ; i <= tot; i++) {
+            var f = files[j];
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+                var file = e.target;
+                $("<span class=\"pip\" id=\"" +(ij++)+"\" >" +
+                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + f.name + "\"/>" +
+                    "<br/><span class=\"remove\">Remove image</span>" +
+                    "</span>").insertAfter("#edit_image");
+                $(".remove").click(function(){
+                    $(this).parent(".pip").remove();
+                });
 
+                // Old code here
+                /*$("<img></img>", {
+				  class: "imageThumb",
+				  src: e.target.result,
+				  title: file.name + " | Click to remove"
+				}).insertAfter("#files").click(function(){$(this).remove();});*/
+
+            });
+            fileReader.readAsDataURL(f);
+
+            // console.log(files);
+            j++;
+        }
+        console.log(files);
+    });
+    $(".remove").click(function(){
+        $(this).parent(".pip").remove();
+    });
+
+
+
+
+</script>
 
 <?php include('../footer.php') ?>
 
