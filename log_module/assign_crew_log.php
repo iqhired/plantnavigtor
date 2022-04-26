@@ -29,15 +29,15 @@ $_SESSION['LAST_ACTIVITY'] = $time;
 
 $_SESSION['usr'] = "";
 $_SESSION['station'] = "";
-$_SESSION['date_from'] = "";
-$_SESSION['date_to'] = "";
+//$_SESSION['date_from'] = "";
+//$_SESSION['date_to'] = "";
 $_SESSION['button'] = "";
 $_SESSION['timezone'] = "";
 if (count($_POST) > 0) {
     $_SESSION['usr'] = $_POST['usr'];
     $_SESSION['station'] = $_POST['station'];
-    $_SESSION['date_from'] = $_POST['date_from'];
-    $_SESSION['date_to'] = $_POST['date_to'];
+  //  $_SESSION['date_from'] = $_POST['date_from'];
+  //  $_SESSION['date_to'] = $_POST['date_to'];
     $_SESSION['button'] = $_POST['button'];
     $_SESSION['timezone'] = $_POST['timezone'];
     $name = $_POST['usr'];
@@ -46,6 +46,11 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $timezone = $_POST['timezone'];
+}else{
+    $curdate = date('Y-m-d');
+    $dateto = $curdate;
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
+    $datefrom = $yesdate;
 }
 if (count($_GET) > 0) {
     $station1 = $_GET['line'];
@@ -55,10 +60,6 @@ if (count($_GET) > 0) {
     }
 }
 
-$curdate = date('Y-m-d');
-$dateto = $curdate;
-$yesdate = date('Y-m-d',strtotime("-1 days"));
-$datefrom = $yesdate;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,29 +102,7 @@ $datefrom = $yesdate;
             }
         </script>
         
-        <?php
-        if ($button == "button2") {
-            ?>
-            <script>
-                $(function () {
-                    $('#date_from').prop('disabled', true);
-                    $('#date_to').prop('disabled', true);
-                    $('#timezone').prop('disabled', false);
-                });
-            </script>
-            <?php
-        } else {
-            ?>
-            <script>
-                $(function () {
-                    $('#date_from').prop('disabled', false);
-                    $('#date_to').prop('disabled', false);
-                    $('#timezone').prop('disabled', true);
-                });
-            </script>
-            <?php
-        }
-        ?>
+
     </head>
     <style>
         .p_footer {
@@ -143,6 +122,14 @@ $datefrom = $yesdate;
         }
         .col-md-2 {
             width: 8.666667%;
+        }
+        .col-lg-2 {
+            max-width: 30%!important;
+            float: left;
+        }
+        .col-md-6.date {
+            margin-top: 20px;
+            width: 25%;
         }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
 
@@ -318,26 +305,20 @@ $datefrom = $yesdate;
                                         <!--                                    </div>-->
                                     </div>
                                     <br>
-                                        <div class="row">
+
 <!--                                            <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
-                                            <?php
-                                            if ($button != "button2") {
-                                                $checked = "checked";
-                                            } else {
-                                                $checked == "";
-                                            }
-                                            ?>
-                                            <div class="col-md-6 date">
-<!--                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
+                                    <div class="row">
+                                        <div class="col-md-6 date">
+
+                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;display:none;" checked>
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>
                                             <input type="date" name="date_from" id="date_from" class="form-control" value="<?php echo $datefrom; ?>" style="float: left;width: initial;" required>
-                                            </div>
-                                            <div class="col-md-6 date">
+                                        </div>
+                                        <div class="col-md-6 date">
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date To: &nbsp;&nbsp;</label>
                                             <input type="date" name="date_to" id="date_to" class="form-control" value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-                                            </div>
                                         </div>
-
+                                    </div>
                                     <br>
 
                                
@@ -403,7 +384,7 @@ $datefrom = $yesdate;
                                         $datefrom = $_POST['date_from'];
                                         $button = $_POST['button'];
                                         $timezone = $_POST['timezone'];
-										$button = "button1";
+									//	$button = "button1";
                                         if ($button == "button1") {
                                             if ($name != "" && $station != "" && $datefrom != "" && $dateto != "") {
                                                 $qur = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
@@ -516,29 +497,65 @@ $datefrom = $yesdate;
                         <!-- edit modal -->
                         <!-- Dashboard content -->
                         <!-- /dashboard content -->
-                        <script>
-                            $(function () {
-                                $('input:radio').change(function () {
-                                    var abc = $(this).val()
-                                    //  alert(abc);
-                                    if (abc == "button1")
-                                    {
-                                        $('#date_from').prop('disabled', false);
-                                        $('#date_to').prop('disabled', false);
-                                        $('#timezone').prop('disabled', true);
-                                    } else if (abc == "button2")
-                                    {
-                                        $('#date_from').prop('disabled', true);
-                                        $('#date_to').prop('disabled', true);
-                                        $('#timezone').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script>
+
                     </div>
                     <!-- /content area -->
 
         </div>
+        <script>
+            $(function () {
+                $('input:radio').change(function () {
+                    var abc = $(this).val()
+                    //alert(abc)
+                    if (abc == "button1")
+                    {
+                        $('#date_from').prop('disabled', false);
+                        $('#date_to').prop('disabled', false);
+                        $('#timezone').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
+        <script>
+
+            // $('#usr').on('change', function (e) {
+            //     $("#user_form").submit();
+            // });
+            // $('#station').on('change', function (e) {
+            //     $("#user_form").submit();
+            // });
+        </script>
+        <script>
+            $(document).on("click","#submit_btn",function() {
+
+                var station = $("#station").val();
+                var usr = $("#usr").val();
+
+                $("#user_form").submit();
+
+
+            });
+
+        </script>
+        <script>
+            $(function(){
+                var dtToday = new Date();
+
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+
+                var maxDate = year + '-' + month + '-' + day;
+
+                $('#date_to').attr('max', maxDate);
+                $('#date_from').attr('max', maxDate);
+            });
+        </script>
+
         <!-- /page container -->
         <?php include('../footer.php') ?>
         <script type="text/javascript" src="../assets/js/core/app.js"></script>

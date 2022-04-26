@@ -46,6 +46,11 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $timezone = $_POST['timezone'];
+}else{
+    $curdate = date('Y-m-d');
+    $dateto = $curdate;
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
+    $datefrom = $yesdate;
 }
 if (count($_GET) > 0) {
     $station1 = $_GET['line'];
@@ -55,10 +60,7 @@ if (count($_GET) > 0) {
     }
 }
 
-$curdate = date('Y-m-d');
-$dateto = $curdate;
-$yesdate = date('Y-m-d',strtotime("-1 days"));
-$datefrom = $yesdate;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -309,14 +311,14 @@ $datefrom = $yesdate;
                                         <div class="row">
                                          <div class="col-md-6 date">
 <!--                                            <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
-                                            <?php
-                                            if ($button != "button2") {
-                                                $checked = "checked";
-                                            } else {
-                                                $checked == "";
-                                            }
-                                            ?>
-<!--                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
+<!--                                            --><?php
+//                                            if ($button != "button2") {
+//                                                $checked = "checked";
+//                                            } else {
+//                                                $checked == "";
+//                                            }
+//                                            ?>
+                                            <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial;display:none;" checked>
                                             <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>
                                             <input type="date" name="date_from" id="date_from" class="form-control" value="<?php echo $datefrom; ?>" style="float: left;width: initial;" required>
                                          </div>
@@ -346,7 +348,7 @@ $datefrom = $yesdate;
                             <div class="row">
                         
                                     <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
+                                        <button type="submit"  class="btn btn-primary" style="background-color:#1e73be;">Search</button>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="clear" class="btn btn-primary" style="background-color:#1e73be;" onclick='window.location.reload();'>Reset</button>
@@ -509,39 +511,41 @@ $datefrom = $yesdate;
                         <!-- edit modal -->
                         <!-- Dashboard content -->
                         <!-- /dashboard content -->
-                        <script>
-                            $(function () {
-                                $('input:radio').change(function () {
-                                    var abc = $(this).val()
-                                    //  alert(abc);
-                                    if (abc == "button1")
-                                    {
-                                        $('#date_from').prop('disabled', false);
-                                        $('#date_to').prop('disabled', false);
-                                        $('#timezone').prop('disabled', true);
-                                    } else if (abc == "button2")
-                                    {
-                                        $('#date_from').prop('disabled', true);
-                                        $('#date_to').prop('disabled', true);
-                                        $('#timezone').prop('disabled', false);
-                                    }
-                                });
-                            });
-                        </script>
-      <script type="text/javascript">
-    $(function () {
-        $("#btn").bind("click", function () {
-            $("#taskboard")[0].selectedIndex = 0;
-            $("#user")[0].selectedIndex = 0;
-          
-        });
-    });
-</script>
+
                     </div>
                     <!-- /content area -->
                     
                 </div>
                 <!-- /main content -->
+        <script>
+            $(function () {
+                $('input:radio').change(function () {
+                    var abc = $(this).val()
+                    //  alert(abc);
+                    if (abc == "button1")
+                    {
+                        $('#date_from').prop('disabled', false);
+                        $('#date_to').prop('disabled', false);
+                        $('#timezone').prop('disabled', true);
+                    } else if (abc == "button2")
+                    {
+                        $('#date_from').prop('disabled', true);
+                        $('#date_to').prop('disabled', true);
+                        $('#timezone').prop('disabled', false);
+                    }
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(function () {
+                $("#btn").bind("click", function () {
+                    $("#taskboard")[0].selectedIndex = 0;
+                    $("#user")[0].selectedIndex = 0;
+
+                });
+            });
+        </script>
 
         <!-- /page container -->
         <?php include('../footer.php') ?>

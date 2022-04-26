@@ -55,6 +55,12 @@ if (count($_POST) > 0) {
 	$button = $_POST['button'];
 	$timezone = $_POST['timezone'];
 }
+else{
+    $curdate = date('Y-m-d');
+    $dateto = $curdate;
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
+    $datefrom = $yesdate;
+}
 if (count($_POST) > 0) {
 	$station1 = $_POST['station'];
 	$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
@@ -62,10 +68,7 @@ if (count($_POST) > 0) {
 		$station1 = $rowctemp["line_name"];
 	}
 }
-$curdate = date('Y-m-d');
-$dateto = $curdate;
-$yesdate = date('Y-m-d',strtotime("-1 days"));
-$datefrom = $yesdate;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
