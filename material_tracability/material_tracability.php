@@ -35,8 +35,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 $s_event_id = $_GET['station_event_id'];
-$station_event_id = base64_decode(urldecode($s_event_id));
-$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
+//$station_event_id = base64_decode(urldecode($s_event_id));
+$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$s_event_id'";
 $resultmain = mysqli_query($db,$sqlmain);
 $rowcmain = mysqli_fetch_array($resultmain);
 $part_family = $rowcmain['part_family_id'];
@@ -257,12 +257,14 @@ include("../heading_banner.php");
     <!-- Page content -->
 <?php
 $st = $_REQUEST['station'];
-$st_dashboard = base64_decode(urldecode($st));
-$sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
+//$st_dashboard = base64_decode(urldecode($st));
+$sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
 $result1 = $mysqli->query($sql1);
 //                                            $entry = 'selected';
 while ($row1 = $result1->fetch_assoc()) {
     $line_name = $row1['line_name'];
+
+
 }
 ?>
     <!-- Content area -->
