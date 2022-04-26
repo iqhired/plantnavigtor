@@ -364,8 +364,6 @@ include("../heading_banner.php");
                                 <div id="error7" class="red">Please select station or part number</div>
 
                             </div>
-                            <br/>
-
 
 
                             <div class="row desc" id="Carspart_number" style="display: none;">
