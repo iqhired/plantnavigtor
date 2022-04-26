@@ -280,9 +280,17 @@ include("../heading_banner.php");
         $querymain = sprintf("SELECT * FROM `material_tracability` where material_id = '$id' ");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
-        $formname = $rowcmain['line_number'];
-        $reason = $rowcmain['fail_reason'];
-        $notes = $rowcmain['notes'];
+			$line_name = $rowcmain['line_number'];
+			$station_event_id = $rowcmain['$station_event_id'];
+			$material_id = $rowcmain['material_id'];
+			$pm_part_number = $rowcmain['part_number'];
+			$pm_part_family_name= $rowcmain['part_family'];
+			$pm_part_name= $rowcmain['part_name'];
+			$material_type= $rowcmain['material_type'];
+			$material_status= $rowcmain['material_status'];
+			$fail_reason= $rowcmain['fail_reason'];
+			$notes= $rowcmain['notes'];
+			$created_at= $rowcmain['created_at'];
         ?>
         <!-- Basic datatable -->
         <div class="panel panel-flat">
@@ -318,9 +326,8 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                 <div class="col-md-6">
-                                    <?php  $form_id = $_GET['id'];
-                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                    <input type="hidden" name="material_id" value="<?php echo $form_id ?>">
+
+                                    <input type="hidden" name="material_id" value="<?php echo $material_id ?>">
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
                                     <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
@@ -422,7 +429,7 @@ include("../heading_banner.php");
                             <div class="row desc" id="Carsfail">
                                 <label class="col-lg-2 control-label"> Reason : </label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $reason;?>"></textarea>
+                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"></textarea>
                                 </div>
 
                             </div>
@@ -434,7 +441,7 @@ include("../heading_banner.php");
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $rowcmain['notes'];?>" class="form-control" required></textarea>
+                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <br/>
