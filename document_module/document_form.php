@@ -64,6 +64,9 @@ $rowccus = mysqli_fetch_array($resultcus);
 $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
+
+$yesdate = date('Y-m-d',strtotime("365 days"));
+$datefrom = $yesdate;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -474,7 +477,7 @@ include("../heading_banner.php");
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Expiry Date : </label>
                                 <div class="col-md-6">
-                                    <input type="date" name="exp_date" id="exp_date"  class="form-control"  required>
+                                    <input type="date" name="exp_date" id="exp_date"  class="form-control" value="<?php echo $datefrom; ?>"  required>
                                 </div>
                             </div>
                             <br/>
