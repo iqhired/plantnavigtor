@@ -72,14 +72,18 @@ if (count($_POST) > 0) {
 	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
 		$station1 = $rowctemp["line_name"];
 	}
-}else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
-//	$datefrom = $curdate;
-//	$dateto = $curdate;
 }
+
+if(empty($dateto)){
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
+}
+
+if(empty($datefrom)){
+	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$datefrom = $yesdate;
+}
+
 $wc = '';
 
 if(isset($station)){

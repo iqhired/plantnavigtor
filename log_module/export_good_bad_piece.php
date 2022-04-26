@@ -103,10 +103,10 @@ if ($button == "button3") {
 	$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 }
 
-$sql = "SELECT good_bad_pieces_details.good_pieces AS good_pieces, good_bad_pieces_details.created_by , good_bad_pieces_details.created_at  FROM `good_bad_pieces_details`  INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id where 1 and good_pieces > 0 " . $wc;
+$sql = "SELECT good_bad_pieces_details.good_pieces AS good_pieces  , ( select pm_part_family.part_family_name from pm_part_family where pm_part_family.pm_part_family_id = sg_station_event.part_family_id) as p_fam_name ,( select pm_part_number.part_number from pm_part_number where pm_part_number.pm_part_number_id = sg_station_event.part_number_id) as pm_p_num , ( select pm_part_number.part_name from pm_part_number where pm_part_number.pm_part_number_id = sg_station_event.part_number_id) as pm_part_name , good_bad_pieces_details.created_by , good_bad_pieces_details.created_at  FROM `good_bad_pieces_details`  INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id where 1 and good_pieces > 0 " . $wc;
 $gp_result = mysqli_query($db,$sql);
 
-$header1 = "Sr. No" . "\t" . "Good Pieces" . "\t" . "Personnel" . "\t" . "Time";
+$header1 = "Sr. No" . "\t" . "Good Pieces" . "\t" .  "Part Family" ."\t" . "Part Number" ."\t" . "Part Name" ."\t". "Personnel" . "\t" . "Time";
 $result1 = '';
 $i=1;
 while ($row = mysqli_fetch_row($gp_result)) {
@@ -130,10 +130,10 @@ if ($result1 == "") {
 	$result1 = "\nNo Record(s) Found!\n";
 }
 
-$sql1 = "SELECT (good_bad_pieces_details.bad_pieces)   , (good_bad_pieces_details.rework) AS Rework , good_bad_pieces_details.defect_name , good_bad_pieces_details.created_by as Personnel , good_bad_pieces_details.created_at Created_At FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " Order By created_at DESC";
+$sql1 = "SELECT (good_bad_pieces_details.bad_pieces)   , (good_bad_pieces_details.rework) AS Rework , good_bad_pieces_details.defect_name  , ( select pm_part_family.part_family_name from pm_part_family where pm_part_family.pm_part_family_id = sg_station_event.part_family_id) as p_fam_name ,( select pm_part_number.part_number from pm_part_number where pm_part_number.pm_part_number_id = sg_station_event.part_number_id) as pm_p_num , ( select pm_part_number.part_name from pm_part_number where pm_part_number.pm_part_number_id = sg_station_event.part_number_id) as pm_part_name , good_bad_pieces_details.created_by as Personnel , good_bad_pieces_details.created_at Created_At FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " Order By created_at DESC";
 $exportData = mysqli_query($db, $sql1);
 
-$header = "Sr. No" . "\t" . "Bad Pieces" . "\t" . "Rework" . "\t" . "Defect Name" . "\t" . "Personnel" . "\t" . "Time";
+$header = "Sr. No" . "\t" . "Bad Pieces" . "\t" . "Rework" . "\t" . "Defect Name" . "\t" . "Part Family" ."\t" . "Part Number" ."\t" . "Part Name" ."\t" . "Personnel" . "\t" . "Time";
 $result = '';
 $i=1;
 while ($row = mysqli_fetch_row($exportData)) {
