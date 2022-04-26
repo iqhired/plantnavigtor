@@ -36,8 +36,8 @@ $_SESSION['timezone'] = "";
 if (count($_POST) > 0) {
     $_SESSION['usr'] = $_POST['usr'];
     $_SESSION['station'] = $_POST['station'];
-  //  $_SESSION['date_from'] = $_POST['date_from'];
-  //  $_SESSION['date_to'] = $_POST['date_to'];
+    $_SESSION['date_from'] = $_POST['date_from'];
+    $_SESSION['date_to'] = $_POST['date_to'];
     $_SESSION['button'] = $_POST['button'];
     $_SESSION['timezone'] = $_POST['timezone'];
     $name = $_POST['usr'];
@@ -46,11 +46,6 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $timezone = $_POST['timezone'];
-}else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
 }
 if (count($_GET) > 0) {
     $station1 = $_GET['line'];
@@ -59,6 +54,17 @@ if (count($_GET) > 0) {
         $station = $rowctemp["line_name"];
     }
 }
+
+if(empty($dateto)){
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
+}
+
+if(empty($datefrom)){
+	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$datefrom = $yesdate;
+}
+
 
 ?>
 <!DOCTYPE html>

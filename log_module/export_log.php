@@ -9,57 +9,28 @@ $dateto = $_SESSION['date_to'];
 $datefrom = $_SESSION['date_from'];
 $button = $_SESSION['button'];
 $timezone = $_SESSION['timezone'];
-if ($button == "button1") {
-    if ($name != "" && $station != "" && $datefrom != "" && $dateto != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
-    } else if ($name != "" && $station != "" && $datefrom == "" && $dateto == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE  `station_id` = '$station' and `user_id` = '$name'");
-    } else if ($name != "" && $station == "" && $datefrom != "" && $dateto != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' ");
-    } else if ($name != "" && $station == "" && $datefrom == "" && $dateto == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE `user_id` = '$name'");
-    } else if ($name == "" && $station != "" && $datefrom != "" && $dateto != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `station_id` = '$station'");
-    } else if ($name == "" && $station != "" && $datefrom == "" && $dateto == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE  `station_id` = '$station'");
-    } else if ($name == "" && $station == "" && $datefrom != "" && $dateto != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' ");
-    } else {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log`");
-    }
-} else {
-    $curdate = date('Y-m-d');
-    if ($timezone == "7") {
-        $countdate = date('Y-m-d', strtotime('-7 days'));
-    } else if ($timezone == "1") {
-        $countdate = date('Y-m-d', strtotime('-1 days'));
-    } else if ($timezone == "30") {
-        $countdate = date('Y-m-d', strtotime('-30 days'));
-    } else if ($timezone == "90") {
-        $countdate = date('Y-m-d', strtotime('-90 days'));
-    } else if ($timezone == "180") {
-        $countdate = date('Y-m-d', strtotime('-180 days'));
-    } else if ($timezone == "365") {
-        $countdate = date('Y-m-d', strtotime('-365 days'));
-    }
-    if ($name != "" && $station != "" && $timezone != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$curdate' and `user_id` = '$name' and `station_id` = '$station'");
-    } else if ($name != "" && $station != "" && $timezone == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE  `user_id` = '$name' and `station_id` = '$station'");
-    } else if ($name == "" && $station != "" && $timezone != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$curdate' and `station_id` = '$station'");
-    } else if ($name == "" && $station != "" && $timezone == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE  `station_id` = '$station'");
-    } else if ($name != "" && $station == "" && $timezone != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$curdate' and `user_id` = '$name' ");
-    } else if ($name != "" && $station == "" && $timezone == "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE `user_id` = '$name' ");
-    } else if ($name == "" && $station == "" && $timezone != "") {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$curdate' ");
-    } else {
-        $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log`");
-    }
+$q = "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as t_time FROM `cam_assign_crew_log` WHERE 1 ";
+
+if ($name != "" ) {
+	$q = $q . "and `user_id` = '$name' ";
+//	$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
 }
+if ($station != "" ) {
+	$q = $q . "and `station_id` = '$station'";
+//		$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
+}
+
+if($datefrom != "" && $dateto != ""){
+	$q = $q . " AND DATE_FORMAT(assign_time,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(assign_time,'%Y-%m-%d') <= '$dateto' ";
+}else if($datefrom != "" && $dateto == ""){
+	$q = $q . " AND DATE_FORMAT(assign_time,'%Y-%m-%d') >= '$datefrom' ";
+}else if($datefrom == "" && $dateto != ""){
+	$q = $q . " AND DATE_FORMAT(assign_time,'%Y-%m-%d') <= '$dateto' ";
+}
+
+
+$q = $q . " Order by t_time DESC";
+$exportData = mysqli_query($db, $q);
 //$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
 $header = "User Name" . "\t" . "Station" . "\t" . "Position" . "\t" . "Assign Time" . "\t" . "Unassign Time" . "\t" . "Total Assign Time" . "\t";
 $result = '';
