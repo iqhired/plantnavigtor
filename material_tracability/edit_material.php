@@ -458,7 +458,7 @@ include("../heading_banner.php");
                             <div class="row desc" id="Reasonfail">
                                 <label class="col-lg-2 control-label"> Reason : </label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"></textarea>
+                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"><?php echo $fail_reason;?></textarea>
                                 </div>
 
                             </div>
@@ -470,7 +470,7 @@ include("../heading_banner.php");
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control"></textarea>
+                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control"><?php echo $notes;?></textarea>
                                 </div>
                             </div>
                             <br/>
