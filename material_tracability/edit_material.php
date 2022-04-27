@@ -378,8 +378,9 @@ include("../heading_banner.php");
                                 </div>
 
                             </div>
-                            <div class="form_row row">
-
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Previous Image : </label>
+                                <div class="col-md-6">
                                 <?php
                                 $query1 = sprintf("SELECT material_id FROM  material_tracability where material_id = '$id'");
                                 $qur1 = mysqli_query($db, $query1);
@@ -415,6 +416,7 @@ include("../heading_banner.php");
                                         </div>
                                     </div>
                                 <?php } ?>
+                                </div>
                             </div>
                             <br/>
                             <div class="row">
