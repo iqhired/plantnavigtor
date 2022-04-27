@@ -519,7 +519,7 @@ include("../heading_banner.php");
             type: "POST", url: "../material_tracability/delete_material_image.php", data: info, success: function (data) {
             }
         });
-       // $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+        location.reload(true);
     });
 </script>
 
