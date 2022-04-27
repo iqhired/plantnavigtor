@@ -36,33 +36,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 }
 $s_event_id = $_GET['station_event_id'];
 
-$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$s_event_id'";
-$resultmain = mysqli_query($db,$sqlmain);
-$rowcmain = mysqli_fetch_array($resultmain);
-$part_family = $rowcmain['part_family_id'];
-$part_number = $rowcmain['part_number_id'];
 
-$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-$resultnumber = mysqli_query($db,$sqlnumber);
-$rowcnumber = mysqli_fetch_array($resultnumber);
-$pm_part_number = $rowcnumber['part_number'];
-$pm_part_name = $rowcnumber['part_name'];
-
-$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-$resultfamily = mysqli_query($db,$sqlfamily);
-$rowcfamily = mysqli_fetch_array($resultfamily);
-$pm_part_family_name = $rowcfamily['part_family_name'];
-
-$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-$resultaccount = mysqli_query($db,$sqlaccount);
-$rowcaccount = mysqli_fetch_array($resultaccount);
-$account_id = $rowcaccount['account_id'];
-
-$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-$resultcus =mysqli_query($db,$sqlcus);
-$rowccus = mysqli_fetch_array($resultcus);
-$cus_name = $rowccus['c_name'];
-$logo = $rowccus['logo'];
 
 ?>
 <!DOCTYPE html>
@@ -239,9 +213,18 @@ $logo = $rowccus['logo'];
         .input-group-append {
             width: 112%;
         }
-        .pip {
-            display: inline-block;
-            margin: 10px 10px 0 0;
+
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
         }
 
     </style>
@@ -327,7 +310,7 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                 <div class="col-md-6">
 
-                                    <input type="hidden" name="material_id" value="<?php echo $material_id ?>">
+                                    <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
                                     <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
@@ -389,12 +372,49 @@ include("../heading_banner.php");
                             <br/>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6" id="pnum_images">
-                                    <input type="text" hidden name="edit_pm_image" id="edit_pm_image">
+                                <div class="col-md-6">
                                     <input type="file" name="edit_image[]" id="file-input" class="form-control" data-ex-files="" multiple="multiple">
-<!--                                    <div id="preview"></div>-->
+                                    <div id="preview"></div>
                                 </div>
 
+                            </div>
+                            <div class="form_row row">
+
+                                <?php
+                                $query1 = sprintf("SELECT material_id FROM  material_tracability where material_id = '$id'");
+                                $qur1 = mysqli_query($db, $query1);
+                                $rowc1 = mysqli_fetch_array($qur1);
+                                $item_id = $rowc1['material_id'];
+
+                                $query2 = sprintf("SELECT * FROM  material_images where material_id = '$item_id'");
+
+                                $qurimage = mysqli_query($db, $query2);
+                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                    ?>
+
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="thumbnail">
+                                            <div class="thumb">
+                                                <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                     alt="">
+                                                <input type="hidden"  id="delete_image" name="delete_image" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                <span class="remove" id="remove_image">Remove Image </span>
+
+
+<!--                                                <div class="caption-overflow">-->
+<!--														<span>-->
+<!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+<!--                                                               data-popup="lightbox" rel="gallery"-->
+<!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+<!--                                                                        class="icon-plus3"></i></a>-->
+<!--														</span>-->
+<!---->
+<!--                                                </div>-->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <br/>
                             <div class="row">
@@ -441,7 +461,7 @@ include("../heading_banner.php");
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control" required></textarea>
+                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control"></textarea>
                                 </div>
                             </div>
                             <br/>
@@ -475,6 +495,25 @@ include("../heading_banner.php");
         $('.select').select2();
     });
 </script>
+
+<script>
+    $(document).on('click', '#remove_image', function () {
+        var m_id = $("#material_id").val();
+        var del_id = $("#delete_image").val();
+        var info =  del_id;
+        var material_id = m_id;
+        $.ajax({
+            type: "POST",
+            url: "../material_tracability/delete_material_image.php,
+            data: info,
+            success: function (data) {
+            }
+        });
+       // $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+    });
+</script>
+
+
 <!--<script>-->
 <!--    function submitFormSettings(url) {-->
 <!--        //          $(':input[type="button"]').prop('disabled', true);-->
@@ -582,49 +621,6 @@ include("../heading_banner.php");
             document.getElementById("Cars").required = true;
         });
     });
-</script>
-<script>
-    $("#edit_image").on("change", function(e) {
-        var files = e.target.files,
-            filesLength = files.length;
-        var tot = e.currentTarget.attributes.length;
-        var ij = tot - filesLength + 1 ;
-        var j =0 ;
-        for (var i = ij ; i <= tot; i++) {
-            var f = files[j];
-            var fileReader = new FileReader();
-            fileReader.onload = (function(e) {
-                var file = e.target;
-                $("<span class=\"pip\" id=\"" +(ij++)+"\" >" +
-                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + f.name + "\"/>" +
-                    "<br/><span class=\"remove\">Remove image</span>" +
-                    "</span>").insertAfter("#edit_image");
-                $(".remove").click(function(){
-                    $(this).parent(".pip").remove();
-                });
-
-                // Old code here
-                /*$("<img></img>", {
-				  class: "imageThumb",
-				  src: e.target.result,
-				  title: file.name + " | Click to remove"
-				}).insertAfter("#files").click(function(){$(this).remove();});*/
-
-            });
-            fileReader.readAsDataURL(f);
-
-            // console.log(files);
-            j++;
-        }
-        console.log(files);
-    });
-    $(".remove").click(function(){
-        $(this).parent(".pip").remove();
-    });
-
-
-
-
 </script>
 
 <?php include('../footer.php') ?>
