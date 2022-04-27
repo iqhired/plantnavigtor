@@ -446,9 +446,16 @@ include("../heading_banner.php");
 
                             </div>
                             <br/>
+                            <div class="row desc" id="Reasonfail"  style="display: none;">
+                                <label class="col-lg-2 control-label"> Reason : </label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"></textarea>
+                                </div>
 
+                            </div>
+                            <br/>
                                   <?php if($rowcmain['material_status'] == "fail"){?>
-                            <div class="row desc" id="Carsfail">
+                            <div class="row desc" id="Reasonfail">
                                 <label class="col-lg-2 control-label"> Reason : </label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"></textarea>
@@ -619,8 +626,10 @@ include("../heading_banner.php");
             var test = $(this).val();
             //    console.log(test);
             $("div.desc").hide();
-            $("#Cars" + test).show();
-            document.getElementById("Cars").required = true;
+            $("#Reason" + test).show();
+            $("#Reason" + test).prop('required',true);
+
+
         });
     });
 </script>
