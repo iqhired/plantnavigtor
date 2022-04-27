@@ -401,7 +401,7 @@ include("../heading_banner.php");
                                             <div class="thumb">
                                                 <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
                                                      alt="">
-                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
                                                 <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
@@ -511,15 +511,12 @@ include("../heading_banner.php");
 
 <script>
     $(document).on('click', '.remove_image', function () {
-        var m_id = $("#material_id").val();
-        var del_id = $("#delete_image").val();
-        var info =  del_id;
-        var material_id = m_id;
+        var del_id = this.id.split("_")[2];
+        var mat_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("delete_image"+del_id);
+        var info =  "id="+del_id+"&material_id="+mat_img_id;
         $.ajax({
-            type: "POST",
-            url: "../material_tracability/delete_material_image.php",
-            data: info,
-            success: function (data) {
+            type: "POST", url: "../material_tracability/delete_material_image.php", data: info, success: function (data) {
             }
         });
        // $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
