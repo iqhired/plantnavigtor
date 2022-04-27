@@ -397,7 +397,7 @@ include("../heading_banner.php");
                                             <div class="thumb">
                                                 <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
                                                      alt="">
-                                                <input type="hidden"  id="delete_image" name="delete_image" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                <input type="hidden"  id="delete_image[]" name="delete_image[]" value="<?php echo $rowcimage['material_images_id']; ?>">
                                                 <span class="remove" id="remove_image">Remove Image </span>
 
 
