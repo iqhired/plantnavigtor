@@ -390,7 +390,10 @@ include("../heading_banner.php");
                                 $query2 = sprintf("SELECT * FROM  material_images where material_id = '$item_id'");
 
                                 $qurimage = mysqli_query($db, $query2);
+                                $i =0 ;
                                 while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                    $d_tag = "delete_image_" . $i;
+                                    $r_tag = "remove_image_" . $i;
                                     ?>
 
                                     <div class="col-lg-3 col-sm-6">
@@ -398,8 +401,8 @@ include("../heading_banner.php");
                                             <div class="thumb">
                                                 <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
                                                      alt="">
-                                                <input type="hidden"  id="delete_image[]" name="delete_image[]" value="<?php echo $rowcimage['material_images_id']; ?>">
-                                                <span class="remove" id="remove_image">Remove Image </span>
+                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
 <!--                                                <div class="caption-overflow">-->
@@ -415,7 +418,8 @@ include("../heading_banner.php");
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>
+                                <?php
+                                $i++;} ?>
                                 </div>
                             </div>
                             <br/>
@@ -506,14 +510,14 @@ include("../heading_banner.php");
 </script>
 
 <script>
-    $(document).on('click', '#remove_image', function () {
+    $(document).on('click', '.remove_image', function () {
         var m_id = $("#material_id").val();
         var del_id = $("#delete_image").val();
         var info =  del_id;
         var material_id = m_id;
         $.ajax({
             type: "POST",
-            url: "../material_tracability/delete_material_image.php,
+            url: "../material_tracability/delete_material_image.php",
             data: info,
             success: function (data) {
             }
