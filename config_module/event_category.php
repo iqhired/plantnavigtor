@@ -31,10 +31,11 @@ if (count($_POST) > 0) {
 
 //create
 	if ($events_cat_name != "") {
+		$npr = ($events_npr == 'yes')?1:0;
 //		$name = $_POST['events_cat_name'];
 //		$priority_order = $_POST['priority_order'];
 //		$enabled = $_POST['enabled'];
-		$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '$events_npr','$user_id' ,  '$chicagotime')";
+		$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '$npr','$user_id' ,  '$chicagotime')";
 		$result0 = mysqli_query($db, $sql0);
 		if ($result0) {
 			$message_stauts_class = 'alert-success';
@@ -47,9 +48,10 @@ if (count($_POST) > 0) {
 //edit
 	$edit_events_cat_name = $_POST['edit_events_cat_name'];
     $edit_npr = $_POST['edit_npr'];
+    $npr = ($edit_npr == 'yes')?1:0;
 	if ($edit_events_cat_name != "") {
 		$id = $_POST['edit_id'];
-		$sql = "update events_category set events_cat_name='$_POST[edit_events_cat_name]',npr='$_POST[edit_npr]'  where events_cat_id ='$id'";
+		$sql = "update events_category set events_cat_name='$_POST[edit_events_cat_name]',npr='$npr'  where events_cat_id ='$id'";
 		$result1 = mysqli_query($db, $sql);
 		if ($result1) {
 			$message_stauts_class = 'alert-success';
@@ -233,7 +235,7 @@ include("../heading_banner.php");?>
                                     <td>
                                         <button type="button" id="edit" class="btn btn-info btn-xs"
                                                 data-id="<?php echo $rowc['events_cat_id']; ?>"
-                                                data-npr="<?php echo $rowc['npr']; ?>"
+                                                data-npr="<?php echo $npr; ?>"
                                                 data-events_cat_name="<?php echo $rowc['events_cat_name']; ?>"
                                                 style="background-color:#1e73be;"
                                                 data-toggle="modal" style="background-color:#1e73be;"
@@ -313,7 +315,7 @@ include("../heading_banner.php");?>
                         var edit_id = element.attr("data-id");
                         var events_cat_name = $(this).data("events_cat_name");
                         var edit_npr = $(this).data("npr");
-                        if(edit_npr == 'no'){
+                        if(edit_npr == 'No'){
                             document.getElementById("edit_no").checked = true;
                         }else{
                             document.getElementById("edit_yes").checked = true;
