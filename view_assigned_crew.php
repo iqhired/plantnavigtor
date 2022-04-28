@@ -97,13 +97,14 @@ $assign_line = htmlspecialchars($_GET["station"]);
                             $countervariable = 0;
                             $sql1 = "SELECT * FROM  cam_assign_crew WHERE `line_id` = '$assign_line'";
                             $result1 = $mysqli->query($sql1);
-                            $rowc1 = $result1->fetch_assoc();
-                            if ($rowc1 == null){ ?>
+//                            $rowc1 = $result1->fetch_assoc();
+							while ($rowc = $result1->fetch_assoc()) {
+                            if ($rowc == null){ ?>
 
                                     <h1 style="color: black; margin-left: 460px;">No Records Found!</h1>
 
                             <?php } else{
-                            while ($rowc = $result1->fetch_assoc()) {
+
 
                                 $countervariable++;
                                 $user = $rowc["user_id"];
