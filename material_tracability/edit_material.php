@@ -313,7 +313,7 @@ include("../heading_banner.php");
                                     <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
+                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number" disabled>
                                 </div>
                                 <div id="error1" class="red">Line Number</div>
                             </div>
@@ -321,14 +321,14 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
+                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number" disabled>
                                 </div>
                                 <div id="error1" class="red">Part Number</div>
                             </div>
                             <br/>   <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
+                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family" disabled>
                                 </div>
                                 <div id="error1" class="red">Part family</div>
                             </div>
@@ -336,7 +336,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
+                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name" disabled>
                                 </div>
                                 <div id="error1" class="red">Part Name</div>
                             </div>
@@ -373,7 +373,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" data-ex-files="" multiple="multiple">
+                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple">
                                     <div id="preview"></div>
                                 </div>
 
@@ -510,6 +510,8 @@ include("../heading_banner.php");
 </script>
 
 <script>
+
+
     $(document).on('click', '.remove_image', function () {
         var del_id = this.id.split("_")[2];
         var mat_img_id = this.parentElement.childNodes[3].value;
@@ -579,6 +581,15 @@ include("../heading_banner.php");
 
 
     });
+
+    // function preview_image()
+    // {
+    //     var total_file=document.getElementById("file-input").files.length;
+    //     for(var i=0;i<total_file;i++)
+    //     {
+    //         $('#preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
+    //     }
+    // }
 
 
     //image preview

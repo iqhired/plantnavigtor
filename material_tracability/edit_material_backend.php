@@ -53,6 +53,7 @@ if(count($_POST)>0) {
 
                     $errors = array();
                     $file_name = $_FILES['edit_image']['name'][$i];
+                    $file_rename = "material_id_".$material_id."_".$file_name;
                     $file_size = $_FILES['edit_image']['size'][$i];
                     $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
                     $file_type = $_FILES['edit_image']['type'][$i];
@@ -69,9 +70,10 @@ if(count($_POST)>0) {
                         $import_status_message = 'Error: File size must be less than 2 MB';
                     }
                     if (empty($errors) == true) {
-                        move_uploaded_file($file_tmp, "../material_images/" . $file_name);
 
-                        $sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_name' , '$material_id' , '$created_by' )";
+                        move_uploaded_file($file_tmp, "../material_images/" . "material_id_".$material_id."_".$file_name);
+
+                        $sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_rename' , '$material_id' , '$created_by' )";
                         $result1 = mysqli_query($db, $sql);
                         if ($result1) {
                             $message_stauts_class = 'alert-success';
