@@ -27,14 +27,14 @@ $user_id = $_SESSION["id"];
 $chicagotime = date("Y-m-d H:i:s");
 if (count($_POST) > 0) {
 	$events_cat_name = $_POST['events_cat_name'];
-    $events_reason = $_POST['reason'];
+    $events_npr = $_POST['npr'];
 
 //create
 	if ($events_cat_name != "") {
 //		$name = $_POST['events_cat_name'];
 //		$priority_order = $_POST['priority_order'];
 //		$enabled = $_POST['enabled'];
-		$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`reason`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '$events_reason','$user_id' ,  '$chicagotime')";
+		$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '$events_npr','$user_id' ,  '$chicagotime')";
 		$result0 = mysqli_query($db, $sql0);
 		if ($result0) {
 			$message_stauts_class = 'alert-success';
@@ -46,10 +46,10 @@ if (count($_POST) > 0) {
 	}
 //edit
 	$edit_events_cat_name = $_POST['edit_events_cat_name'];
-    $edit_reason = $_POST['edit_reason'];
+    $edit_npr = $_POST['edit_npr'];
 	if ($edit_events_cat_name != "") {
 		$id = $_POST['edit_id'];
-		$sql = "update events_category set events_cat_name='$_POST[edit_events_cat_name]',reason='$_POST[edit_reason]'  where events_cat_id ='$id'";
+		$sql = "update events_category set events_cat_name='$_POST[edit_events_cat_name]',npr='$_POST[edit_npr]'  where events_cat_id ='$id'";
 		$result1 = mysqli_query($db, $sql);
 		if ($result1) {
 			$message_stauts_class = 'alert-success';
@@ -157,12 +157,12 @@ include("../heading_banner.php");?>
                                         </div>
                                         <div class="col-md-8">
 
-                                            <label class="control-label" style=" padding: 15px 10px;"> Is Reason required : </label>
+                                            <label class="control-label" style=" padding: 15px 10px;"> Is NPR required : </label>
 
                                             <div class="form-check form-check-inline form_col_option">
-                                                <input type="radio" id="yes" name="reason" value="yes">
+                                                <input type="radio" id="yes" name="npr" value="1">
                                                 <label for="yes" class="item_label" id="">Yes</label>
-                                                <input type="radio" id="no" name="reason" value="no" checked="checked">
+                                                <input type="radio" id="no" name="npr" value="0" checked="checked">
                                                 <label for="no" class="item_label" id="">No</label>
                                             </div>
 
@@ -209,7 +209,7 @@ include("../heading_banner.php");?>
                                 <th><input type="checkbox" id="checkAll"></th>
                                 <th>S.No</th>
                                 <th>Event Category</th>
-                                <th>Reason</th>
+                                <th>NPR</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -224,11 +224,16 @@ include("../heading_banner.php");?>
                                                value="<?php echo $rowc["events_cat_id"]; ?>"></td>
                                     <td><?php echo ++$counter; ?></td>
                                     <td><?php echo $rowc["events_cat_name"]; ?></td>
-                                    <td><?php echo $rowc["reason"]; ?></td>
+                                    <td><?php if($rowc["npr"] == 0){
+                                          $npr = "No";
+                                        }else{
+                                            $npr = "Yes";
+                                        }
+                                        echo $npr; ?></td>
                                     <td>
                                         <button type="button" id="edit" class="btn btn-info btn-xs"
                                                 data-id="<?php echo $rowc['events_cat_id']; ?>"
-                                                data-reason="<?php echo $rowc['reason']; ?>"
+                                                data-npr="<?php echo $rowc['npr']; ?>"
                                                 data-events_cat_name="<?php echo $rowc['events_cat_name']; ?>"
                                                 style="background-color:#1e73be;"
                                                 data-toggle="modal" style="background-color:#1e73be;"
@@ -271,13 +276,13 @@ include("../heading_banner.php");?>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="form-group">
-                                            <label class="col-lg-7 control-label">Is reason required ? *</label>
+                                            <label class="col-lg-7 control-label">Is NPR required ? *</label>
                                             <div class="col-lg-5">
-                                            <div class="form-check form-check-inline form_col_option">
-                                                <input type="radio" id="edit_yes" name="edit_reason" value="yes">
-                                                <label for="yes" class="item_label" id="" style="color: #f1f2f3;">Yes</label>
-                                                <input type="radio" id="edit_no" name="edit_reason" value="no" checked="checked">
-                                                <label for="no" class="item_label" id="" style="color: #f1f2f3;">No</label>
+                                            <div class="form-check form-check-inline form_col_option" style="width: 80%;font-size: 14px;">
+                                                <input type="radio" id="edit_yes" name="edit_npr" value="yes">
+                                                <label for="yes" class="item_label" id="">Yes</label>
+                                                <input type="radio" id="edit_no" name="edit_npr" value="no" checked="checked">
+                                                <label for="no" class="item_label" id="">No</label>
                                             </div>
                                             </div>
                                         </div>
@@ -307,8 +312,8 @@ include("../heading_banner.php");?>
                         var element = $(this);
                         var edit_id = element.attr("data-id");
                         var events_cat_name = $(this).data("events_cat_name");
-                        var edit_reason = $(this).data("reason");
-                        if(edit_reason == 'no'){
+                        var edit_npr = $(this).data("npr");
+                        if(edit_npr == 'no'){
                             document.getElementById("edit_no").checked = true;
                         }else{
                             document.getElementById("edit_yes").checked = true;

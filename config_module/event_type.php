@@ -243,7 +243,7 @@ include("../heading_banner.php");?>
                                                 </div>
                                             </div>
                                         </div>
-                </form>
+
 						<?php if ($temp == "one") { ?>
                             <div class="alert alert-success no-border">
                                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
@@ -275,7 +275,7 @@ include("../heading_banner.php");?>
                       <button type="submit" class="btn btn-primary"style="background-color:#1e73be;">Create Event Type
                       </button>
                </div>
-                                                
+                </form>
 
                 </div>
                 </div>
