@@ -223,7 +223,7 @@ include("../heading_banner.php");
 ?>
 <!-- /main navbar -->
 <!-- Page container -->
-<div class="page-container">
+<div class="page-container">    
 
     <!-- Content area -->
     <div class="content">
@@ -320,6 +320,22 @@ include("../heading_banner.php");
                                                value="<?php echo $rowcmain['material_status']; ?>" disabled>
                                     </div>
                                 </div>
+                                <div class="form_row row">
+                                    <label class="col-lg-2 control-label"> Reason : </label>
+                                    <div class="col-md-6">
+
+                                        <input type="text" name="reason" class="form-control" id="material_status"
+                                               value="<?php echo $rowcmain['fail_reason']; ?>" disabled>
+                                    </div>
+                                </div> <div class="form_row row">
+                                    <label class="col-lg-2 control-label">Reason Description : </label>
+                                    <div class="col-md-6">
+
+                                        <input type="text" name="material_status" class="form-control" id="material_status"
+                                               value="<?php echo $rowcmain['reason_desc']; ?>" disabled>
+                                    </div>
+                                </div>
+
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Submitted Time : </label>
                                     <div class="col-md-6">

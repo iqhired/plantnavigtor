@@ -14,12 +14,13 @@ if(count($_POST)>0) {
     $material_type = $_POST['material_type'];
     $material_status = $_POST['material_status'];
     $fail_reason = $_POST['reason'];
+    $reason_desc = $_POST['reason_desc'];
     $notes = $_POST['material_notes'];
     $created_by = date("Y-m-d H:i:s");
 
 
-      $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`notes`,`created_at`) VALUES 
-	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$notes','$created_by')";
+      $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`notes`,`created_at`) VALUES 
+	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$reason_desc','$notes','$created_by')";
                 $result0 = mysqli_query($db, $sql0);
                 if ($result0) {
                     $_SESSION['message_stauts_class'] = 'alert-success';

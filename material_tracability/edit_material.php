@@ -226,6 +226,9 @@ $s_event_id = $_GET['station_event_id'];
             background: white;
             color: black;
         }
+        .form-control[disabled], fieldset[disabled] .form-control {
+            background-color: #eee;
+        }
 
     </style>
 </head>
@@ -248,9 +251,9 @@ include("../heading_banner.php");
     $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
     $result1 = $mysqli->query($sql1);
     //                                            $entry = 'selected';
-    while ($row1 = $result1->fetch_assoc()) {
-        $line_name = $row1['line_name'];
-    }
+//    while ($row1 = $result1->fetch_assoc()) {
+//        $line_name = $row1['line_name'];
+//    }
     ?>
     <!-- Content area -->
     <div class="content">
@@ -272,6 +275,7 @@ include("../heading_banner.php");
 			$material_type= $rowcmain['material_type'];
 			$material_status= $rowcmain['material_status'];
 			$fail_reason= $rowcmain['fail_reason'];
+            $reason_desc= $rowcmain['reason_desc'];
 			$notes= $rowcmain['notes'];
 			$created_at= $rowcmain['created_at'];
         ?>
@@ -348,7 +352,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate">
+                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" disabled>
                                         <option value="" selected disabled>--- Select material Type ---</option>
                                         <?php
                                         $m_type = $rowcmain['material_type'];
@@ -373,7 +377,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple">
+                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple" required>
                                     <div id="preview"></div>
                                 </div>
 
@@ -459,10 +463,24 @@ include("../heading_banner.php");
                             </div>
                             <br/>
                                   <?php if($rowcmain['material_status'] == "fail"){?>
+
+                                      <div class="row desc" id="material_statusfail">
+                                          <label class="col-lg-2 control-label">Reason : </label>
+                                          <div class="col-md-6">
+                                              <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                                  <option value="" selected disabled>--- Select Reason ---</option>
+                                                  <option value="onhold">On Hold</option>
+                                                  <option value="rejected" selected>Rejected</option>
+
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <br/>
+
                             <div class="row desc" id="Reasonfail">
-                                <label class="col-lg-2 control-label"> Reason : </label>
+                                <label class="col-lg-2 control-label"> Reason Description: </label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"><?php echo $fail_reason;?></textarea>
+                                    <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $reason_desc;?>"><?php echo $reason_desc;?></textarea>
                                 </div>
 
                             </div>
@@ -639,6 +657,7 @@ include("../heading_banner.php");
             //    console.log(test);
             $("div.desc").hide();
             $("#Reason" + test).show();
+            $("#material_status" + test).show();
             $("#Reason" + test).prop('required',true);
 
 

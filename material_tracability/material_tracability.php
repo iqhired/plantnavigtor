@@ -1,5 +1,6 @@
 <?php
 include("../config.php");
+include("../config/pn_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -395,12 +396,29 @@ while ($row1 = $result1->fetch_assoc()) {
 
                             </div>
                             <br/>
-
-
                             <div class="row desc" id="Reasonfail" style="display: none;">
-                                <label class="col-lg-2 control-label"> Reason : </label>
+                                <label class="col-lg-2 control-label">Reason : </label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason"></textarea>
+                                <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                    <option value="" selected disabled>--- Select Reason ---</option>
+                                <?php
+                                        $string = $reason;
+
+                                        $str_arr = explode (",", $string);
+                                        for ($i=0; $i < count($str_arr) ; $i++)
+                                        {  ?>
+
+                                         <option value="<?php echo $str_arr[$i]; ?>"><?php echo $str_arr[$i]; ?></option>
+                                   <?php     } ?>
+
+                                </select>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row desc" id="material_statusfail" style="display: none;">
+                                <label class="col-lg-2 control-label"> Reason Description : </label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc"></textarea>
                                 </div>
 
                             </div>
@@ -549,6 +567,7 @@ while ($row1 = $result1->fetch_assoc()) {
          //    console.log(test);
             $("div.desc").hide();
             $("#Reason" + test).show();
+            $("#material_status" + test).show();
             $("#Reason" + test).prop('required',true);
 
 

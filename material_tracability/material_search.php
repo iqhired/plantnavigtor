@@ -207,7 +207,7 @@ include("../heading_banner.php");
                             <td> <?php echo $station ?></td>
                             <?php
 
-                                $result1 = "SELECT * FROM `material_config`";
+                                $result1 = "SELECT * FROM `material_config` where material_id = '$material_type'";
                                 $qur1 = mysqli_query($db,$result1);
                                 while ($rowc1 = mysqli_fetch_array($qur1)) {
 
