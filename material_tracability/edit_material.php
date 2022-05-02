@@ -229,6 +229,10 @@ $s_event_id = $_GET['station_event_id'];
         .form-control[disabled], fieldset[disabled] .form-control {
             background-color: #eee;
         }
+        #line_number , #part_number , #part_family , #part_name , #material_type{
+            pointer-events: none;
+            background-color: #efefef;
+        }
 
     </style>
 </head>
@@ -317,7 +321,7 @@ include("../heading_banner.php");
                                     <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number" disabled>
+                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
                                 </div>
                                 <div id="error1" class="red">Line Number</div>
                             </div>
@@ -325,14 +329,14 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number" disabled>
+                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
                                 </div>
                                 <div id="error1" class="red">Part Number</div>
                             </div>
                             <br/>   <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family" disabled>
+                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
                                 </div>
                                 <div id="error1" class="red">Part family</div>
                             </div>
@@ -340,7 +344,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name" disabled>
+                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
                                 </div>
                                 <div id="error1" class="red">Part Name</div>
                             </div>
@@ -352,7 +356,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type Added : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" disabled>
+                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" >
                                         <option value="" selected disabled>--- Select material Type ---</option>
                                         <?php
                                         $m_type = $rowcmain['material_type'];
@@ -589,16 +593,16 @@ include("../heading_banner.php");
         $("#out_of_control_list").select2("open");
     }
 
-    $(document).on("click",".submit_btn",function() {
-        //$("#form_settings").submit(function() {
-
-        var line_number = $("#line_number").val();
-        var material_type = $("#material_type").val();
-        var material_status = $("#material_status").val();
-
-
-
-    });
+    // $(document).on("click",".submit_btn",function() {
+    //     //$("#form_settings").submit(function() {
+    //
+    //     var line_number = $("#line_number").val();
+    //     var material_type = $("#material_type").val();
+    //     var material_status = $("#material_status").val();
+    //
+    //
+    //
+    // });
 
     // function preview_image()
     // {
