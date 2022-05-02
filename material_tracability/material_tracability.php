@@ -105,6 +105,7 @@ $logo = $rowccus['logo'];
 
 
 
+
     <style>
 
         @media (min-width: 576px)
@@ -241,6 +242,31 @@ $logo = $rowccus['logo'];
             .input-group-append {
                 width: 112%;
             }
+        input[type="file"] {
+            display: block;
+        }
+        .imageThumb {
+            max-height: 75px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+        }
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
+        }
 
     </style>
 </head>
@@ -365,7 +391,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
                                     <input type="file" name="image[]" id="file-input" class="form-control" multiple required>
-                                    <div id="preview"></div>
+    <!--                                    <div id="preview"></div>-->
                                 </div>
 
                             </div>
@@ -464,6 +490,37 @@ while ($row1 = $result1->fetch_assoc()) {
         $('.select').select2();
     });
 </script>
+<script>
+
+            $("#file-input").on("change", function(e) {
+                var files = e.target.files,
+                    filesLength = files.length;
+                for (var i = 0; i < filesLength; i++) {
+                    var f = files[i]
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function(e) {
+                        var file = e.target;
+                        $("<span class=\"pip\">" +
+                            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><span class=\"remove\">Remove image</span>" +
+                            "</span>").insertAfter("#file-input");
+                        $(".remove").click(function(){
+                            $(this).parent(".pip").remove();
+                        });
+
+                        // Old code here
+                        /*$("<img></img>", {
+                          class: "imageThumb",
+                          src: e.target.result,
+                          title: file.name + " | Click to remove"
+                        }).insertAfter("#files").click(function(){$(this).remove();});*/
+
+                    });
+                    fileReader.readAsDataURL(f);
+                }
+            });
+
+</script>
 <!--<script>-->
 <!--    function submitFormSettings(url) {-->
 <!--        //          $(':input[type="button"]').prop('disabled', true);-->
@@ -523,41 +580,41 @@ while ($row1 = $result1->fetch_assoc()) {
 
     //image preview
 
-    function previewImages() {
-
-
-        $("#preview").html(" ");
-
-        var preview = document.querySelector('#preview');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-            // Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#file-input').addEventListener("change", previewImages);
+    // function previewImages() {
+    //
+    //
+    //     $("#preview").html(" ");
+    //
+    //     var preview = document.querySelector('#preview');
+    //
+    //     if (this.files) {
+    //         [].forEach.call(this.files, readAndPreview);
+    //     }
+    //
+    //     function readAndPreview(file) {
+    //
+    //         // Make sure `file.name` matches our extensions criteria
+    //         if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+    //             return alert(file.name + " is not an image");
+    //         } // else...
+    //
+    //         var reader = new FileReader();
+    //
+    //         reader.addEventListener("load", function() {
+    //             var image = new Image();
+    //             image.height = 100;
+    //             image.title  = file.name;
+    //             image.src    = this.result;
+    //             preview.appendChild(image);
+    //         });
+    //
+    //         reader.readAsDataURL(file);
+    //
+    //     }
+    //
+    // }
+    //
+    // document.querySelector('#file-input').addEventListener("change", previewImages);
 
 
 </script>
