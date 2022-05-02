@@ -267,7 +267,7 @@ include("../heading_banner.php");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
 			$line_name = $rowcmain['line_number'];
-			$station_event_id = $rowcmain['$station_event_id'];
+			$station_event_id = $rowcmain['station_event_id'];
 			$material_id = $rowcmain['material_id'];
 			$pm_part_number = $rowcmain['part_number'];
 			$pm_part_family_name= $rowcmain['part_family'];
