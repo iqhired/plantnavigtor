@@ -129,11 +129,18 @@ $logo = $rowccus['logo'];
         .bg-primary {
             background-color: #606060!important;
         }
-    </style>
-    <style>
+
         .red {
             color: red;
             display: none;
+        }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            .modal-dialog {
+                position: relative;
+                width: auto;
+                margin: 80px;
+                margin-top: 200px;
+            }
         }
     </style>
 </head>
