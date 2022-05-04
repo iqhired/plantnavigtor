@@ -1,6 +1,7 @@
 <?php
 include("../config.php");
 $user = $_SESSION['user'];
+$user_fullname = str_replace("&nbsp;" , " " , $_SESSION['fullname']);
 $chicagotime = date("Y-m-d H:i:s");
 $good_name = $_POST['good_name'];
 $good_bad_piece_name = $_POST['good_bad_piece_name'];
@@ -64,7 +65,7 @@ if ($good_name != "") {
 				$replacements[0] = $pm_part_number;
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
-				$replacements[3] = $user;
+				$replacements[3] = $user_fullname;
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
@@ -117,7 +118,7 @@ if ($good_name != "") {
 				$replacements[0] = $pm_part_number;
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
-				$replacements[3] = $user;
+				$replacements[3] = $user_fullname;
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
@@ -192,7 +193,7 @@ else if($good_bad_piece_name != "")
 		$replacements[0] = $pm_part_number;
 		$replacements[1] = $pm_part_name;
 		$replacements[2] = $chicagotime;
-		$replacements[3] = $user;
+		$replacements[3] = $user_fullname;
 		file_put_contents('../assets/label_files/'. $line_id .'/b_label', '');
 		$output = preg_replace($patterns, $replacements, $format_file);
 		file_put_contents('../assets/label_files/'. $line_id .'/b_label', $output);
