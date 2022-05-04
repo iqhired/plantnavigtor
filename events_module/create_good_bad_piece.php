@@ -64,6 +64,7 @@ if ($good_name != "") {
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user;
+				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
 			}
@@ -116,6 +117,7 @@ if ($good_name != "") {
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user;
+				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
 			}
