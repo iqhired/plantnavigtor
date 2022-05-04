@@ -54,7 +54,8 @@ if (count($_POST) > 0) {
                 $bad_name = $_FILES['edit_bad_file']['name'];
                 $good_size = $_FILES['edit_good_file']['size'];
                 $bad_size = $_FILES['edit_bad_file']['size'];
-                $good_tmp = $_FILES['edit_good_file']['tmp_name'];
+			   $good_tmp = $_FILES['edit_good_file']['tmp_name'];
+                $good_tmp1 = $good_tmp;
                 $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
                 $good_type = $_FILES['edit_good_file']['type'];
                 $bad_type = $_FILES['edit_bad_file']['type'];
@@ -72,7 +73,9 @@ if (count($_POST) > 0) {
                         mkdir($dir_path, 0777, true);
                     }
                     move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+					copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
                     move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+					copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
                     $zpl_id = $_POST['edit_id'];
                     $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
                     $result1 = mysqli_query($db, $sql1);
@@ -110,6 +113,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
     $bad_size = $_FILES['bad_file']['size'];
 //    $rework_size = $_FILES['rework_file']['size'];
     $good_tmp = $_FILES['good_file']['tmp_name'];
+    $good_tmp1 = $good_tmp;
     $bad_tmp = $_FILES['bad_file']['tmp_name'];
 //    $rework_tmp = $_FILES['rework_file']['tmp_name'];
     $good_type = $_FILES['good_file']['type'];
@@ -139,7 +143,10 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 			mkdir($dir_path, 0777, true);
 		}
         move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+		copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
+//		move_uploaded_file($good_tmp1, $dir_path . '/' . 'f1');
         move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+		copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
         $zpl_id = $_POST['label_line_id'];
         $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
         $result1 = mysqli_query($db, $sql1);
