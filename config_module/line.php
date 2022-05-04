@@ -313,9 +313,13 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                     $zpl_result = ($rowc['zpl_file_status'] == 0) ? "Off" : "On"; ?>
                                                    <?php if($zpl_result == "Off"){ ?>
                                                     <button type="button" id="edit_label" class="btn btn-info btn-xs" style="background-color: #d84315" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" data-target="#edit_modal_theme_primary1"><?php echo $zpl_result ?> </button>
-                                                  <?php  }else { ?>
-
-                                                    <button type="button" id="print_status" class="btn btn-info btn-xs"  style="background-color: #43a047" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal"><?php echo $zpl_result ?> </button>
+                                                  <?php  }else {
+                                                       $print = ($rowc['print_label'] == 0) ? "Off" : "On";
+                                                       if($print == "Off"){?>
+                                                    <button type="button" class="print_status btn btn-info btn-xs"  style="background-color: #d84315" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal"><?php echo $print ?> </button>
+                                                         <?php  }else{ ?>
+                                                               <button type="button" class="print_status btn btn-info btn-xs"  style="background-color: #43a047" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal"><?php echo $print ?> </button>
+                                                         <?php   } ?>
                                                  <?php   } ?>
                                                 </td>
                                                 <td>
@@ -526,7 +530,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 
                     </script>
             <script>
-                   $("#print_status").on('click', function () {
+                   $(".print_status").on('click', function () {
                     var element = $(this);
                     var print_id = element.attr("data-id");
                     var info = 'id=' + print_id;
@@ -535,6 +539,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         url: "print_action.php",
                         data: info,
                         success: function (data) {
+                            location.reload();
                         }
                     });
 
