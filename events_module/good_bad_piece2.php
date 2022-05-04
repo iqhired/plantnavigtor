@@ -46,6 +46,12 @@ $part_family = $rowcmain['part_family_id'];
 $part_number = $rowcmain['part_number_id'];
 $p_line_id = $rowcmain['line_id'];
 
+$sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
+$resultnumber = $mysqli->query($sqlprint);
+$rowcnumber = $resultnumber->fetch_assoc();
+$printenabled = $rowcnumber['print_label'];
+
+
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
 $resultnumber = $mysqli->query($sqlnumber);
 $rowcnumber = $resultnumber->fetch_assoc();
@@ -462,6 +468,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                       method="post">
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
 
                     <div class="modal-body">
                         <!--Part Number-->
@@ -582,8 +589,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
                 var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
                 var file = '../assets/label_files/' + line_id +'/g_label';
-                document.getElementById("resultFrame").contentWindow.ss(file);
+                if(pe == '1'){
+                    document.getElementById("resultFrame").contentWindow.ss(file);
+                }
                 // location.reload();
             }
         });
