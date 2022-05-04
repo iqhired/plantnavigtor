@@ -71,12 +71,14 @@ if (count($_POST) > 0) {
                     if (!file_exists($dir_path)) {
                         mkdir($dir_path, 0777, true);
                     }
+                    move_uploaded_file($good_tmp, $dir_path . '/' . 'f1');
                     move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'f2');
                     move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
                     $zpl_id = $_POST['edit_id'];
-                    $sql1 = "update cam_line set zpl_file_status = '1' where line_id ='$zpl_id'";
+                    $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
                     $result1 = mysqli_query($db, $sql1);
-                    //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+                    //$sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
                     $message_stauts_class = 'alert-success';
                     $import_status_message = 'Upload Files Successfully';
                 }
@@ -103,8 +105,8 @@ if (count($_POST) > 0) {
 
 if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
     $errors = array();
-    $good_name = $_FILES['good_file']['name'];;
-    $bad_name = $_FILES['bad_file']['name'];;
+    $good_name = $_FILES['good_file']['name'];
+    $bad_name = $_FILES['bad_file']['name'];
 //    $rework_name = $_FILES['rework_file'];
     $good_size = $_FILES['good_file']['size'];
     $bad_size = $_FILES['bad_file']['size'];
@@ -138,11 +140,10 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 		if (!file_exists($dir_path)) {
 			mkdir($dir_path, 0777, true);
 		}
-        move_uploaded_file($good_tmp, $dir_path .'/'. 'g' ."_". 'label');
-//        move_uploaded_file($good_tmp, $dir_path .'/'. 'r' ."_". 'label');
-        move_uploaded_file($bad_tmp, $dir_path .'/'. 'b' ."_". 'label');
+        move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+        move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
         $zpl_id = $_POST['label_line_id'];
-        $sql1 = "update cam_line set zpl_file_status = '1' where line_id ='$zpl_id'";
+        $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
         $result1 = mysqli_query($db, $sql1);
     //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
         $message_stauts_class = 'alert-success';
@@ -305,28 +306,21 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                     ?></td>
         <!--                                        <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
                                                 <td>
-
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
-
                                                 </td>
                                                 <td>
                                                     <?php
                                                     $zpl_result = ($rowc['zpl_file_status'] == 0) ? "Off" : "On"; ?>
-
                                                    <?php if($zpl_result == "Off"){ ?>
                                                     <button type="button" id="edit_label" class="btn btn-info btn-xs" style="background-color: #d84315" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" data-target="#edit_modal_theme_primary1"><?php echo $zpl_result ?> </button>
-
                                                   <?php  }else { ?>
-                                                    <button type="button" id="edit_label" class="btn btn-info btn-xs"  style="background-color: #43a047" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal" data-target="#edit_modal_theme_primary1"><?php echo $zpl_result ?> </button>
+
+                                                    <button type="button" id="print_status" class="btn btn-info btn-xs"  style="background-color: #43a047" data-id="<?php echo $rowc['line_id']; ?>"  data-toggle="modal"><?php echo $zpl_result ?> </button>
                                                  <?php   } ?>
-
                                                 </td>
-
                                                 <td>
-
                                                     <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>" data-name="<?php echo $rowc['line_name']; ?>" data-priority_order="<?php echo $rowc['priority_order']; ?>" data-enabled="<?php echo $rowc['enabled']; ?>" data-good_file="<?php echo $rowc['good_file']; ?>" data-bad_file="<?php echo $rowc['bad_file']; ?>"data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
-                                                    <!--									&nbsp; 
-                                                                                                                            <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
+                                                    <!--&nbsp;<button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
                                                     -->									
                                                 </td>
                                             </tr>
@@ -432,7 +426,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                     <label class="col-lg-2 control-label">Good Piece File : </label>
                                     <div class="col-md-6">
                                         <input type="hidden" name="label_line_id" id="label_line_id" >
-                                        <input type="file" name="good_file" id="good_file" required
+                                        <input type="file" name="good_file" id="good_file" value="" required
                                                class="form-control">
 <!--                                        <div id="preview"></div>-->
                                     </div>
@@ -456,6 +450,11 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- /content area -->
+
+        </div>
+        <!-- /page container -->
                     <!-- Dashboard content -->
                     <!-- /dashboard content -->
                     <script> $(document).on('click', '#delete', function () {
@@ -471,6 +470,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                             var edit_id = element.attr("data-id");
                             $("#label_line_id").val(edit_id);
                         });
+
                     </script>
                     <script>
                         jQuery(document).ready(function ($) {
@@ -487,8 +487,8 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                 $("#edit_id").val(edit_id);
                                 $("#edit_priority_order").val(priority_order);
                                 $("#edit_enabled").val(enabled);
-                                $("#edit_good_file").attr("src","../label_files/"+good_file);
-                                $("#edit_bad_file").attr("src","../label_files/"+bad_file);
+                                $("#edit_good_file").val(good_file);
+                                $("#edit_bad_file").val(bad_file);
                                 //alert(role);
                             });
                         });
@@ -525,12 +525,23 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         });
 
                     </script>
+            <script>
+                   $("#print_status").on('click', function () {
+                    var element = $(this);
+                    var print_id = element.attr("data-id");
+                    var info = 'id=' + print_id;
+                    $.ajax({
+                        type: "POST",
+                        url: "print_action.php",
+                        data: info,
+                        success: function (data) {
+                        }
+                    });
 
-                </div>
-                <!-- /content area -->
+                });
+            </script>
 
-    </div>
-    <!-- /page container -->
+
         <?php include('../footer.php') ?>
         <script type="text/javascript" src="../assets/js/core/app.js"></script>
 </body>
