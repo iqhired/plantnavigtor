@@ -1,6 +1,6 @@
 <?php
 include("../config.php");
-    $line_id = $_POST['print_status'];
+    $line_id = $_POST['id'];
 
     $sql0 = "UPDATE `cam_line` SET `print_label`='0' WHERE `line_id` = '$line_id'";
     $result0 = mysqli_query($db, $sql0);
