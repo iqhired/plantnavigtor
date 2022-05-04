@@ -71,9 +71,7 @@ if (count($_POST) > 0) {
                     if (!file_exists($dir_path)) {
                         mkdir($dir_path, 0777, true);
                     }
-                    move_uploaded_file($good_tmp, $dir_path . '/' . 'f1');
                     move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'f2');
                     move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
                     $zpl_id = $_POST['edit_id'];
                     $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
@@ -285,7 +283,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                             <th>Priority Order</th>
                                             <th>Enabled</th>
                                             <th>GBP Dashboard Required</th>
-                                            <th>Label Required</th>
+                                            <th>Print Required</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
