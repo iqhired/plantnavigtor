@@ -44,6 +44,13 @@ $resultmain = $mysqli->query($sqlmain);
 $rowcmain = $resultmain->fetch_assoc();
 $part_family = $rowcmain['part_family_id'];
 $part_number = $rowcmain['part_number_id'];
+$p_line_id = $rowcmain['line_id'];
+
+$sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
+$resultnumber = $mysqli->query($sqlprint);
+$rowcnumber = $resultnumber->fetch_assoc();
+$printenabled = $rowcnumber['print_label'];
+
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
 $resultnumber = $mysqli->query($sqlnumber);
@@ -103,8 +110,6 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
-    <script type="text/javascript" src="../assets/js/BrowserPrint.js"></script>
-    <script type="text/javascript" src="../assets/js/DevDemo.js"></script>
     <style> .sidebar-default .navigation li > a {
             color: #f5f5f5
         }
@@ -234,7 +239,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             <!--                            </br>-->
             </br>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12">.
+                    <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_good_modal_theme_primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 1vh; font-size: large; text-align: center;">IN-SPEC</button>
                 </div>
             </div>
@@ -374,7 +380,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <form action="" id="bad_form" enctype="multipart/form-data" class="form-horizontal"
                       method="post">
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
-
+                    <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <div class="modal-body">
                         <!--Part Number-->
                         <div class="row">
@@ -439,7 +446,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" onclick="submitForm_bad('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                            <button type="submit" class="btn btn-primary" id="submitForm_bad"  style="background-color:#1e73be;">Save</button>
 
                         </div>
                     </div>
@@ -463,6 +470,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <form action="" id="good_form" enctype="multipart/form-data" class="form-horizontal"
                       method="post">
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+                    <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
 
                     <div class="modal-body">
                         <!--Part Number-->
@@ -480,7 +489,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" onclick="submitForm_good('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                            <!--                            <button type="submit" class="btn btn-primary" onclick="submitForm_good('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>-->
+                            <button type="submit" class="btn btn-primary" id="submitForm_good"  style="background-color:#1e73be;">Save</button>
                         </div>
                     </div>
             </div>
@@ -564,6 +574,64 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 <!-- /content area -->
 
 <script>
+    $("#submitForm_good").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#good_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var file = '../assets/label_files/' + line_id +'/g_label';
+                if(pe == '1'){
+                    document.getElementById("resultFrame").contentWindow.ss(file);
+                }
+                // location.reload();
+            }
+        });
+
+    });
+
+    $("#submitForm_bad").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#bad_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var file = '../assets/label_files/' + line_id +'/b_label';
+                if(pe == '1'){
+                    document.getElementById("resultFrame").contentWindow.ss(file);
+                }
+                // location.reload();
+            }
+        });
+
+    });
+
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".view_gpbp").filter(function() {

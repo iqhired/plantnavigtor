@@ -7,9 +7,16 @@ $good_bad_piece_name = $_POST['good_bad_piece_name'];
 $edit_id = $_POST['edit_id'];
 $edit_gbid = $_POST['edit_gbid'];
 $edit_seid = $_POST['edit_seid'];
+$station_event_id = $_POST['station_event_id'];
+$query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
+$qur1 = mysqli_query($db, $query1);
+while ($rowc = mysqli_fetch_array($qur1)) {
+	$line_id = $rowc['line_id'];
+	$part_number = $rowc['part_number_id'];
+}
 
 if ($good_name != "") {
-	$station_event_id = $_POST['station_event_id'];
+
 //        $sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1' and defect_name is NULL";
 	$sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1'";
 	$result1 = mysqli_query($db, $sql);
@@ -35,12 +42,6 @@ if ($good_name != "") {
 
 				$good_bad_pieces_id = $rowc['good_bad_pieces_id'];
 				$station_event_id = $rowc['station_event_id'];
-			}
-			$query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  line_id = '$station_event_id'");
-			$qur1 = mysqli_query($db, $query1);
-			while ($rowc1 = mysqli_fetch_array($qur1)) {
-				$line_id = $rowc['line_id'];
-				$part_number = $rowc['part_number_id'];
 			}
 
 			if($good_bad_pieces_id){
@@ -160,7 +161,6 @@ if ($good_name != "") {
 }
 else if($good_bad_piece_name != "")
 {
-	$station_event_id = $_POST['station_event_id'];
 	$add_defect_name = $_POST['add_defect_name'];
 //        $cnt = count($defect_arr);
 	$bad_type = $_POST['bad_type'];
@@ -175,6 +175,28 @@ else if($good_bad_piece_name != "")
 
 	if($bad_type == "bad_piece")
 	{
+		$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+		$resultnumber = $mysqli->query($sqlnumber);
+		$rowcnumber = $resultnumber->fetch_assoc();
+		$pm_part_number = $rowcnumber['part_number'];
+		$pm_part_name = $rowcnumber['part_name'];
+		$dir_path = "../assets/label_files/" . $line_id;
+		$format_file =  file($dir_path . '/f2');
+		$file =  file($dir_path . '/b_label');
+		$patterns = array();
+		$patterns[0] = '/CustomerNo/';
+		$patterns[1] = '/Description/';
+		$patterns[2] = '/Date/';
+		$patterns[3] = '/UserName/';
+		$replacements = array();
+		$replacements[0] = $pm_part_number;
+		$replacements[1] = $pm_part_name;
+		$replacements[2] = $chicagotime;
+		$replacements[3] = $user;
+		file_put_contents('../assets/label_files/'. $line_id .'/b_label', '');
+		$output = preg_replace($patterns, $replacements, $format_file);
+		file_put_contents('../assets/label_files/'. $line_id .'/b_label', $output);
+
 		if($good_bad_pieces_id != "")
 		{
 			$bp = $rowc['bad_pieces'];

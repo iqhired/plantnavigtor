@@ -378,7 +378,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <form action="" id="bad_form" enctype="multipart/form-data" class="form-horizontal"
                       method="post">
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
-
+                    <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <div class="modal-body">
                         <!--Part Number-->
                         <div class="row">
@@ -443,7 +444,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" onclick="submitForm_bad('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                            <button type="submit" class="btn btn-primary" id="submitForm_bad"  style="background-color:#1e73be;">Save</button>
 
                         </div>
                     </div>
@@ -600,6 +601,35 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
     });
 
+    $("#submitForm_bad").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#bad_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var file = '../assets/label_files/' + line_id +'/b_label';
+                if(pe == '1'){
+                    document.getElementById("resultFrame").contentWindow.ss(file);
+                }
+                // location.reload();
+            }
+        });
+
+    });
+
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".view_gpbp").filter(function() {
@@ -701,9 +731,12 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             url: url,
             data: data,
             success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
-                location.reload();
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var file = '../assets/label_files/' + line_id +'/g_label';
+                if(pe == '1'){
+                    document.getElementById("resultFrame").contentWindow.ss(file);
+                }
             }
         });
     }
