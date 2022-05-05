@@ -5,6 +5,7 @@ $drag_drop_res = (array) json_decode($array);
 
 if(count($_POST)>0) {
     $station_event_id = $_POST['station_event_id'];
+    $station = $_POST['station'];
     $customer_account_id = $_POST['customer_account_id'];
     $line_number = $_POST['line_number'];
     $part_number = $_POST['part_number'];
@@ -82,6 +83,6 @@ if(count($_POST)>0) {
     }
 
 
-$page = "material_search.php";
+$page = "material_tracability.php?station=$station&station_event_id=$station_event_id";
 header('Location: '.$page, true, 303);
 exit;

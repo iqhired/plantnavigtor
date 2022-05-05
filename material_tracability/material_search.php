@@ -30,6 +30,8 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 }
 $is_tab_login = $_SESSION['is_tab_user'];
 $is_cell_login = $_SESSION['is_cell_login'];
+$station = $_GET['station'];
+$station_event_id =  $_GET['station_event_id'];
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
@@ -156,7 +158,7 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Content area -->
     <div class="col-md-2 create">
-        <a href="<?php echo $siteURL; ?>material_tracability/material_tracability.php">
+        <a href="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $station; ?>&station_event_id=<?php echo $station_event_id; ?>">
             <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">Add/Create New Material Form</button>
         </a>
     </div>
@@ -164,7 +166,7 @@ include("../heading_banner.php");
 
         <?php
 
-                    $result = "SELECT * FROM `material_tracability` ORDER BY `material_id` DESC";
+                    $result = "SELECT * FROM `material_tracability` where station_event_id = '$station_event_id' ORDER BY `material_id` DESC";
                     $qur = mysqli_query($db,$result); ?>
             <div class="panel panel-flat" >
                 <table class="table datatable-basic">

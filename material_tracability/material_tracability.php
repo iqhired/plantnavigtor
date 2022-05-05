@@ -36,6 +36,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 $s_event_id = $_GET['station_event_id'];
+$station = $_GET['station'];
+
 $station_event_id = $s_event_id;
 //$station_event_id = base64_decode(urldecode($s_event_id));
 $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$s_event_id'";
@@ -336,6 +338,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                     //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
+                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
                                     <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
                                 </div>
                                 <div id="error1" class="red">Line Number</div>
