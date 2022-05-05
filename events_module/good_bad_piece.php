@@ -596,8 +596,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 // $(':input[type="button"]').prop('disabled', false);
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
-                var ff = this.data.split('&')[3].split("=")[1];
-                var file1 = '../assets/label_files/' + line_id +'/g_'+ff;
+                var ff1 = this.data.split('&')[3].split("=")[1];
+                var file1 = '../assets/label_files/' + line_id +'/g_'+ff1;
                 if(pe == '1'){
                     document.getElementById("resultFrame").contentWindow.ss(file1);
                 }
@@ -626,8 +626,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 // $(':input[type="button"]').prop('disabled', false);
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
-                var ff = this.data.split('&')[3].split("=")[1];
-                var file2 = '../assets/label_files/' + line_id +'/b_'+ff;
+                var ff2 = this.data.split('&')[3].split("=")[1];
+                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
                 if(pe == '1'){
                     document.getElementById("resultFrame").contentWindow.ss(file2);
                 }

@@ -69,7 +69,7 @@ if ($good_name != "") {
 				$replacements[3] = $user_fullname;
 				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 				$output = preg_replace($patterns, $replacements, $format_file);
-				file_put_contents('../assets/label_files/'. $line_id .'/g_.'.$f_postfix, $output);
+				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, $output);
 			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
