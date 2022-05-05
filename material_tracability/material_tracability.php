@@ -246,7 +246,7 @@ $logo = $rowccus['logo'];
             display: block;
         }
         .imageThumb {
-            max-height: 75px;
+            max-height: 100px;
             border: 2px solid;
             padding: 1px;
             cursor: pointer;
@@ -451,8 +451,14 @@ while ($row1 = $result1->fetch_assoc()) {
                             </div>
 
                             <br/>
+                            <div class="row desc" id="quantityfail" style="display: none;">
+                                <label class="col-lg-2 control-label"> Quantity : </label>
+                                <div class="col-md-6">
+                                    <input class="form-control" name="quantity" rows="1" id="quantity">
+                                </div>
 
-
+                            </div>
+                            <br/>
                             <div class="row">
                                 <!--<div class="col-md-4">-->
                                 <label class="col-lg-2 control-label">Notes : </label>
@@ -626,6 +632,7 @@ while ($row1 = $result1->fetch_assoc()) {
             $("div.desc").hide();
             $("#Reason" + test).show();
             $("#material_status" + test).show();
+            $("#quantity" + test).show();
             $("#Reason" + test).prop('required',true);
 
 

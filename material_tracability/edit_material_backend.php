@@ -1,5 +1,4 @@
 <?php
-
 include("../config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
@@ -21,12 +20,14 @@ if(count($_POST)>0) {
     $material_type = $_POST['material_type'];
     $material_status = $_POST['material_status'];
     $fail_reason = $_POST['reason'];
+    $reason_desc = $_POST['reason_desc'];
+    $quantity = $_POST['quantity'];
     $notes = $_POST['material_notes'];
     $created_by = date("Y-m-d H:i:s");
     $edit_file = $_FILES['edit_image']['name'];
 
 
-    $sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
+    $sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
@@ -35,8 +36,6 @@ if(count($_POST)>0) {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
     }
-
-
     $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where material_id= '$form_id' ");
     $rowc04 = mysqli_fetch_array($qur04);
     $material_id = $rowc04["material_id"];
@@ -45,12 +44,10 @@ if(count($_POST)>0) {
 //multiple image
     if($edit_file != "") {
         if (isset($_FILES['edit_image'])) {
-
             $totalfiles = count($_FILES['edit_image']['name']);
 
             if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
                 for($i=0;$i<$totalfiles;$i++){
-
                     $errors = array();
                     $file_name = $_FILES['edit_image']['name'][$i];
                     $file_rename = "material_id_".$material_id."_".$file_name;

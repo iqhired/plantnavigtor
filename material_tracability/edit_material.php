@@ -1,5 +1,6 @@
 <?php
 include("../config.php");
+include("../config/pn_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -233,6 +234,31 @@ $s_event_id = $_GET['station_event_id'];
             pointer-events: none;
             background-color: #efefef;
         }
+        input[type="file"] {
+            display: block;
+        }
+        .imageThumb {
+            max-height: 100px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+        }
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
+        }
 
     </style>
 </head>
@@ -255,9 +281,9 @@ include("../heading_banner.php");
     $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
     $result1 = $mysqli->query($sql1);
     //                                            $entry = 'selected';
-//    while ($row1 = $result1->fetch_assoc()) {
-//        $line_name = $row1['line_name'];
-//    }
+    //    while ($row1 = $result1->fetch_assoc()) {
+    //        $line_name = $row1['line_name'];
+    //    }
     ?>
     <!-- Content area -->
     <div class="content">
@@ -270,255 +296,292 @@ include("../heading_banner.php");
         $querymain = sprintf("SELECT * FROM `material_tracability` where material_id = '$id' ");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
-			$line_name = $rowcmain['line_number'];
-			$station_event_id = $rowcmain['station_event_id'];
-			$material_id = $rowcmain['material_id'];
-			$pm_part_number = $rowcmain['part_number'];
-			$pm_part_family_name= $rowcmain['part_family'];
-			$pm_part_name= $rowcmain['part_name'];
-			$material_type= $rowcmain['material_type'];
-			$material_status= $rowcmain['material_status'];
-			$fail_reason= $rowcmain['fail_reason'];
+            $line_name = $rowcmain['line_number'];
+            $station_event_id = $rowcmain['station_event_id'];
+            $material_id = $rowcmain['material_id'];
+            $pm_part_number = $rowcmain['part_number'];
+            $pm_part_family_name= $rowcmain['part_family'];
+            $pm_part_name= $rowcmain['part_name'];
+            $material_type= $rowcmain['material_type'];
+            $material_status= $rowcmain['material_status'];
+            $fail_reason= $rowcmain['fail_reason'];
             $reason_desc= $rowcmain['reason_desc'];
-			$notes= $rowcmain['notes'];
-			$created_at= $rowcmain['created_at'];
-        ?>
-        <!-- Basic datatable -->
-        <div class="panel panel-flat">
-            <div class="panel-heading">
+            $quantity= $rowcmain['quantity'];
+            $notes= $rowcmain['notes'];
+            $created_at= $rowcmain['created_at'];
+            ?>
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
 
-                <?php if ($temp == "one") { ?>
-                    <br/>
-                    <div class="alert alert-success no-border">
-                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Created Successfully. </div>
-                <?php } ?>
-                <?php if ($temp == "two") { ?>
-                    <br/>
-                    <div class="alert alert-success no-border">
-                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
-                <?php } ?>
-                <?php
-                if (!empty($import_status_message)) {
-                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                }
-                ?>
-                <?php
-                if (!empty($_SESSION[import_status_message])) {
-                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    $_SESSION['message_stauts_class'] = '';
-                    $_SESSION['import_status_message'] = '';
-                }
-                ?>
+                    <?php if ($temp == "one") { ?>
+                        <br/>
+                        <div class="alert alert-success no-border">
+                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Created Successfully. </div>
+                    <?php } ?>
+                    <?php if ($temp == "two") { ?>
+                        <br/>
+                        <div class="alert alert-success no-border">
+                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
+                    <?php } ?>
+                    <?php
+                    if (!empty($import_status_message)) {
+                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                    }
+                    ?>
+                    <?php
+                    if (!empty($_SESSION[import_status_message])) {
+                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                        $_SESSION['message_stauts_class'] = '';
+                        $_SESSION['import_status_message'] = '';
+                    }
+                    ?>
 
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <form action="edit_material_backend.php" id="material_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="edit_material_backend.php" id="material_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
+                                <div class="row">
+                                    <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+                                    <div class="col-md-6">
 
-                                    <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
-                                    <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
-                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
+                                        <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
+                                        <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
+                                        <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
+                                        <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
+                                    </div>
+                                    <div id="error1" class="red">Line Number</div>
                                 </div>
-                                <div id="error1" class="red">Line Number</div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
+                                    </div>
+                                    <div id="error1" class="red">Part Number</div>
                                 </div>
-                                <div id="error1" class="red">Part Number</div>
-                            </div>
-                            <br/>   <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
+                                <br/>   <div class="row">
+                                    <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
+                                    </div>
+                                    <div id="error1" class="red">Part family</div>
                                 </div>
-                                <div id="error1" class="red">Part family</div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
+                                    </div>
+                                    <div id="error1" class="red">Part Name</div>
                                 </div>
-                                <div id="error1" class="red">Part Name</div>
-                            </div>
-                            <br/>
+                                <br/>
 
 
 
 
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Material type Added : </label>
-                                <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" >
-                                        <option value="" selected disabled>--- Select material Type ---</option>
-                                        <?php
-                                        $m_type = $rowcmain['material_type'];
-                                        $sql1 = "SELECT material_id, material_type FROM `material_config` where material_id = '$m_type'";
-                                        $result1 = mysqli_query($db, $sql1);
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if($m_type == $row1['material_id']){
-                                                $entry = 'selected';
-                                            }else{
-                                                $entry = '';
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Material type Added : </label>
+                                    <div class="col-md-6">
+                                        <select name="material_type" id="material_type" class="select" data-style="bg-slate" >
+                                            <option value="" selected disabled>--- Select material Type ---</option>
+                                            <?php
+                                            $m_type = $rowcmain['material_type'];
+                                            $sql1 = "SELECT material_id, material_type FROM `material_config` where material_id = '$m_type'";
+                                            $result1 = mysqli_query($db, $sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if($m_type == $row1['material_id']){
+                                                    $entry = 'selected';
+                                                }else{
+                                                    $entry = '';
+                                                }
+
+                                                echo "<option value='" . $row1['material_id'] . "' $entry>" . $row1['material_type'] . "</option>";
+
                                             }
-
-                                            echo "<option value='" . $row1['material_id'] . "' $entry>" . $row1['material_type'] . "</option>";
-
-                                        }
-                                        ?>
-                                    </select>
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="error6" class="red">Please Enter Material Type</div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple" required>
-                                    <div id="preview"></div>
+                                <div id="error6" class="red">Please Enter Material Type</div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Image : </label>
+                                    <div class="col-md-6">
+                                        <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple">
+                                        <!--                                    <div id="preview"></div>-->
+                                    </div>
+
                                 </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Previous Image : </label>
+                                    <div class="col-md-6">
+                                        <?php
+                                        $query1 = sprintf("SELECT material_id FROM  material_tracability where material_id = '$id'");
+                                        $qur1 = mysqli_query($db, $query1);
+                                        $rowc1 = mysqli_fetch_array($qur1);
+                                        $item_id = $rowc1['material_id'];
 
-                            </div>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Previous Image : </label>
-                                <div class="col-md-6">
-                                <?php
-                                $query1 = sprintf("SELECT material_id FROM  material_tracability where material_id = '$id'");
-                                $qur1 = mysqli_query($db, $query1);
-                                $rowc1 = mysqli_fetch_array($qur1);
-                                $item_id = $rowc1['material_id'];
+                                        $query2 = sprintf("SELECT * FROM  material_images where material_id = '$item_id'");
 
-                                $query2 = sprintf("SELECT * FROM  material_images where material_id = '$item_id'");
+                                        $qurimage = mysqli_query($db, $query2);
+                                        $i =0 ;
+                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                            $d_tag = "delete_image_" . $i;
+                                            $r_tag = "remove_image_" . $i;
+                                            ?>
 
-                                $qurimage = mysqli_query($db, $query2);
-                                $i =0 ;
-                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                    $d_tag = "delete_image_" . $i;
-                                    $r_tag = "remove_image_" . $i;
-                                    ?>
-
-                                    <div class="col-lg-3 col-sm-6">
-                                        <div class="thumbnail">
-                                            <div class="thumb">
-                                                <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
-                                                     alt="">
-                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
-                                                <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
+                                                    <div class="thumb">
+                                                        <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                             alt="">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
-<!--                                                <div class="caption-overflow">-->
-<!--														<span>-->
-<!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
-<!--                                                               data-popup="lightbox" rel="gallery"-->
-<!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
-<!--                                                                        class="icon-plus3"></i></a>-->
-<!--														</span>-->
-<!---->
-<!--                                                </div>-->
+                                                        <!--                                                <div class="caption-overflow">-->
+                                                        <!--														<span>-->
+                                                        <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+                                                        <!--                                                               data-popup="lightbox" rel="gallery"-->
+                                                        <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+                                                        <!--                                                                        class="icon-plus3"></i></a>-->
+                                                        <!--														</span>-->
+                                                        <!---->
+                                                        <!--                                                </div>-->
 
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <?php
+                                            $i++;} ?>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
+                                    <div class="col-md-6">
+                                        <input type="number" name="serial_number" id="serial_number"  value="<?php echo $rowcmain['serial_number'];?>" class="form-control" placeholder="Enter Serial Number" required>
+                                    </div>
+                                    <div id="error1" class="red">Part Name</div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Material Status : </label>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "pass"){ echo 'checked'; } ?> required>
+                                            <label for="pass" class="item_label">Pass</label>
+
+                                            <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "fail"){ echo 'checked'; } ?> required>
+                                            <label for="fail" class="item_label">Fail</label>
+
+
+                                        </div>
+
+                                    </div>
+                                    <div id="error7" class="red">Please Enter material Status</div>
+
+                                </div>
+                                <br/>
+                                <div class="row desc" id="Reasonfail"  style="display: none;">
+                                    <label class="col-lg-2 control-label"> Reason : </label>
+                                    <div class="col-md-6">
+                                        <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                            <option value="" selected disabled>--- Select Reason ---</option>
+                                            <?php
+                                            $string = $reason;
+
+                                            $str_arr = explode (",", $string);
+                                            for ($i=0; $i < count($str_arr) ; $i++)
+                                            {  ?>
+
+                                                <option value="<?php echo $str_arr[$i]; ?>"><?php echo $str_arr[$i]; ?></option>
+                                            <?php     } ?>
+
+                                        </select>                                </div>
+
+                                </div>
+                                <br/>
+                                <div class="row desc" id="material_statusfail"  style="display: none;">
+                                    <label class="col-lg-2 control-label"> Reason Description : </label>
+                                    <div class="col-md-6">
+                                        <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $fail_reason;?>"></textarea>
+                                    </div>
+
+                                </div>
+                                <br/>
+                                <div class="row desc" id="quantityfail" style="display: none;">
+                                    <label class="col-lg-2 control-label">Quantity: </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="quantity" rows="1" id="quantity" value="<?php echo $quantity;?>">
+                                    </div>
+
+                                </div>
+                                <br/>
+                                <?php if($rowcmain['material_status'] == "fail"){?>
+
+                                    <div class="row desc" id="material_statusfail">
+                                        <label class="col-lg-2 control-label">Reason : </label>
+                                        <div class="col-md-6">
+                                            <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                                <option value="" selected disabled>--- Select Reason ---</option>
+                                                <option value="onhold">On Hold</option>
+                                                <option value="rejected" selected>Rejected</option>
+
+                                            </select>
                                         </div>
                                     </div>
-                                <?php
-                                $i++;} ?>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
-                                <div class="col-md-6">
-                                    <input type="number" name="serial_number" id="serial_number"  value="<?php echo $rowcmain['serial_number'];?>" class="form-control" placeholder="Enter Serial Number" required>
-                                </div>
-                                <div id="error1" class="red">Part Name</div>
-                            </div>
-                            <br/>
+                                    <br/>
 
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Material Status : </label>
-                                <div class="col-md-6">
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "pass"){ echo 'checked'; } ?> required>
-                                        <label for="pass" class="item_label">Pass</label>
-
-                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "fail"){ echo 'checked'; } ?> required>
-                                        <label for="fail" class="item_label">Fail</label>
-
+                                    <div class="row desc" id="Reasonfail">
+                                        <label class="col-lg-2 control-label"> Reason Description: </label>
+                                        <div class="col-md-6">
+                                            <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $reason_desc;?>"><?php echo $reason_desc;?></textarea>
+                                        </div>
 
                                     </div>
+                                    <br/>
+                                    <div class="row desc" id="quantityfail">
+                                        <label class="col-lg-2 control-label">Quantity: </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="quantity" rows="1" id="quantity" value="<?php echo $quantity;?>">
+                                        </div>
 
+                                    </div>
+                                    <br/>
+                                <?php } ?>
+
+
+                                <div class="row">
+                                    <!--<div class="col-md-4">-->
+                                    <label class="col-lg-2 control-label">Notes : </label>
+                                    <div class="col-md-6">
+                                        <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control"><?php echo $notes;?></textarea>
+                                    </div>
                                 </div>
-                                <div id="error7" class="red">Please Enter material Status</div>
+                                <br/>
 
-                            </div>
-                            <br/>
-                            <div class="row desc" id="Reasonfail"  style="display: none;">
-                                <label class="col-lg-2 control-label"> Reason : </label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="reason" rows="1" id="reason" value="<?php echo $fail_reason;?>"></textarea>
-                                </div>
-
-                            </div>
-                            <br/>
-                                  <?php if($rowcmain['material_status'] == "fail"){?>
-
-                                      <div class="row desc" id="material_statusfail">
-                                          <label class="col-lg-2 control-label">Reason : </label>
-                                          <div class="col-md-6">
-                                              <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
-                                                  <option value="" selected disabled>--- Select Reason ---</option>
-                                                  <option value="onhold">On Hold</option>
-                                                  <option value="rejected" selected>Rejected</option>
-
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <br/>
-
-                            <div class="row desc" id="Reasonfail">
-                                <label class="col-lg-2 control-label"> Reason Description: </label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $reason_desc;?>"><?php echo $reason_desc;?></textarea>
-                                </div>
-
-                            </div>
-                            <br/>
-                                  <?php } ?>
-
-
-                            <div class="row">
-                                <!--<div class="col-md-4">-->
-                                <label class="col-lg-2 control-label">Notes : </label>
-                                <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..." value =" <?php echo $notes;?>" class="form-control"><?php echo $notes;?></textarea>
-                                </div>
-                            </div>
-                            <br/>
-
-                            <hr/>
+                                <hr/>
 
 
 
-                            <br/>
+                                <br/>
 
+                        </div>
                     </div>
                 </div>
+
+
+                <div  class="panel-footer p_footer">
+                    <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Submit</button>
+                </div>
+                </form>
+
+
             </div>
-
-
-            <div  class="panel-footer p_footer">
-                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Submit</button>
-            </div>
-            </form>
-
-
-        </div>
         <?php } ?>
     </div>
 </div>
@@ -532,8 +595,6 @@ include("../heading_banner.php");
 </script>
 
 <script>
-
-
     $(document).on('click', '.remove_image', function () {
         var del_id = this.id.split("_")[2];
         var mat_img_id = this.parentElement.childNodes[3].value;
@@ -546,7 +607,37 @@ include("../heading_banner.php");
         location.reload(true);
     });
 </script>
+<script>
 
+    $("#file-input").on("change", function(e) {
+        var files = e.target.files,
+            filesLength = files.length;
+        for (var i = 0; i < filesLength; i++) {
+            var f = files[i]
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+                var file = e.target;
+                $("<span class=\"pip\">" +
+                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<br/><span class=\"remove\">Remove image</span>" +
+                    "</span>").insertAfter("#file-input");
+                $(".remove").click(function(){
+                    $(this).parent(".pip").remove();
+                });
+
+                // Old code here
+                /*$("<img></img>", {
+                  class: "imageThumb",
+                  src: e.target.result,
+                  title: file.name + " | Click to remove"
+                }).insertAfter("#files").click(function(){$(this).remove();});*/
+
+            });
+            fileReader.readAsDataURL(f);
+        }
+    });
+
+</script>
 
 <!--<script>-->
 <!--    function submitFormSettings(url) {-->
@@ -662,6 +753,7 @@ include("../heading_banner.php");
             $("div.desc").hide();
             $("#Reason" + test).show();
             $("#material_status" + test).show();
+            $("#quantity" + test).show();
             $("#Reason" + test).prop('required',true);
 
 

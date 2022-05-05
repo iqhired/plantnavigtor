@@ -436,7 +436,6 @@ include("../heading_banner.php");
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Material Teams:*</label>
                                     <div class="col-lg-7 mob_modal" id="edit_teams_val">
-
                                         <input type="hidden" name="edit_id" id="edit_id" >
                                         <select class="select-border-color" data-placeholder="Add Teams..." name="edit_teams[]" id="edit_teams" multiple="multiple" >
                                             <?php

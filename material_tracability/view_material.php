@@ -327,12 +327,21 @@ include("../heading_banner.php");
                                         <input type="text" name="reason" class="form-control" id="material_status"
                                                value="<?php echo $rowcmain['fail_reason']; ?>" disabled>
                                     </div>
-                                </div> <div class="form_row row">
+                                </div>
+                                <div class="form_row row">
                                     <label class="col-lg-2 control-label">Reason Description : </label>
                                     <div class="col-md-6">
 
-                                        <input type="text" name="material_status" class="form-control" id="material_status"
+                                        <input type="text" name="reason_desc" class="form-control" id="reason_desc"
                                                value="<?php echo $rowcmain['reason_desc']; ?>" disabled>
+                                    </div>
+                                </div>
+                                <div class="form_row row">
+                                    <label class="col-lg-2 control-label">Quantity : </label>
+                                    <div class="col-md-6">
+
+                                        <input type="text" name="quantity" class="form-control" id="quantity"
+                                               value="<?php echo $rowcmain['quantity']; ?>" disabled>
                                     </div>
                                 </div>
 
