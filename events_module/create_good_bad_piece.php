@@ -9,6 +9,7 @@ $edit_id = $_POST['edit_id'];
 $edit_gbid = $_POST['edit_gbid'];
 $edit_seid = $_POST['edit_seid'];
 $station_event_id = $_POST['station_event_id'];
+$f_postfix = $_POST['time'];
 $query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
 $qur1 = mysqli_query($db, $query1);
 while ($rowc = mysqli_fetch_array($qur1)) {
@@ -55,7 +56,7 @@ if ($good_name != "") {
 				$pm_part_name = $rowcnumber['part_name'];
 				$dir_path = "../assets/label_files/" . $line_id;
 				$format_file =  file($dir_path . '/f1');
-				$file =  file($dir_path . '/g_label');
+				$file =  file($dir_path . '/g_' . $f_postfix);
 				$patterns = array();
 				$patterns[0] = '/CustomerNo/';
 				$patterns[1] = '/Description/';
@@ -66,9 +67,9 @@ if ($good_name != "") {
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user_fullname;
-				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
+				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 				$output = preg_replace($patterns, $replacements, $format_file);
-				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
+				file_put_contents('../assets/label_files/'. $line_id .'/g_.'.$f_postfix, $output);
 			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
@@ -108,7 +109,7 @@ if ($good_name != "") {
 				$pm_part_name = $rowcnumber['part_name'];
 				$dir_path = "../assets/label_files/" . $line_id;
 				$format_file =  file($dir_path . '/f1');
-				$file =  file($dir_path . '/g_label');
+				$file =  file($dir_path . '/g_'. $f_postfix);
 				$patterns = array();
 				$patterns[0] = '/CustomerNo/';
 				$patterns[1] = '/Description/';
@@ -119,9 +120,9 @@ if ($good_name != "") {
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user_fullname;
-				file_put_contents('../assets/label_files/'. $line_id .'/g_label', '');
+				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 				$output = preg_replace($patterns, $replacements, $format_file);
-				file_put_contents('../assets/label_files/'. $line_id .'/g_label', $output);
+				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, $output);
 			}
 			$_SESSION['message_stauts_class'] = 'alert-success';
 			$_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
@@ -183,7 +184,7 @@ else if($good_bad_piece_name != "")
 		$pm_part_name = $rowcnumber['part_name'];
 		$dir_path = "../assets/label_files/" . $line_id;
 		$format_file =  file($dir_path . '/f2');
-		$file =  file($dir_path . '/b_label');
+		$file =  file($dir_path . '/b_'.$f_postfix);
 		$patterns = array();
 		$patterns[0] = '/CustomerNo/';
 		$patterns[1] = '/Description/';
@@ -194,9 +195,9 @@ else if($good_bad_piece_name != "")
 		$replacements[1] = $pm_part_name;
 		$replacements[2] = $chicagotime;
 		$replacements[3] = $user_fullname;
-		file_put_contents('../assets/label_files/'. $line_id .'/b_label', '');
+		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, '');
 		$output = preg_replace($patterns, $replacements, $format_file);
-		file_put_contents('../assets/label_files/'. $line_id .'/b_label', $output);
+		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, $output);
 
 		if($good_bad_pieces_id != "")
 		{

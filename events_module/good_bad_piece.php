@@ -383,6 +383,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
+                    <input type="hidden" name="time" value="<?php echo time(); ?>">
                     <div class="modal-body">
                         <!--Part Number-->
                         <div class="row">
@@ -473,6 +474,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
+                    <input type="hidden" name="time" value="<?php echo time(); ?>">
 
                     <div class="modal-body">
                         <!--Part Number-->
@@ -592,18 +594,14 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
-
-                location.reload();
-            }, complete: function (data) {
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
-                setTimeout(function() {
-                    //your code to be executed after 1 second
-                }, 2000);
-                var file = '../assets/label_files/' + line_id +'/g_label';
+                var ff = this.data.split('&')[3].split("=")[1];
+                var file1 = '../assets/label_files/' + line_id +'/g_'+ff;
                 if(pe == '1'){
-                    document.getElementById("resultFrame").contentWindow.ss(file);
+                    document.getElementById("resultFrame").contentWindow.ss(file1);
                 }
+                // location.reload();
             }
         });
 
@@ -626,19 +624,14 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
-
-                location.reload();
-            }, complete: function (data) {
-
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
-                setTimeout(function() {
-                    //your code to be executed after 1 second
-                }, 2000);
-                var file = '../assets/label_files/' + line_id +'/b_label';
+                var ff = this.data.split('&')[3].split("=")[1];
+                var file2 = '../assets/label_files/' + line_id +'/b_'+ff;
                 if(pe == '1'){
-                    document.getElementById("resultFrame").contentWindow.ss(file);
+                    document.getElementById("resultFrame").contentWindow.ss(file2);
                 }
+                // location.reload();
             }
         });
 
