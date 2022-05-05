@@ -592,13 +592,15 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
+
+                location.reload();
+            }, complete: function (data) {
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var file = '../assets/label_files/' + line_id +'/g_label';
                 if(pe == '1'){
                     document.getElementById("resultFrame").contentWindow.ss(file);
                 }
-                // location.reload();
             }
         });
 
