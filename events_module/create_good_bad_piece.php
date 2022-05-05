@@ -232,6 +232,27 @@ else if($good_bad_piece_name != "")
 	}
 	else
 	{
+		$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+		$resultnumber = $mysqli->query($sqlnumber);
+		$rowcnumber = $resultnumber->fetch_assoc();
+		$pm_part_number = $rowcnumber['part_number'];
+		$pm_part_name = $rowcnumber['part_name'];
+		$dir_path = "../assets/label_files/" . $line_id;
+		$format_file =  file($dir_path . '/f1');
+		$file =  file($dir_path . '/b_'.$f_postfix);
+		$patterns = array();
+		$patterns[0] = '/CustomerNo/';
+		$patterns[1] = '/Description/';
+		$patterns[2] = '/Date/';
+		$patterns[3] = '/UserName/';
+		$replacements = array();
+		$replacements[0] = $pm_part_number;
+		$replacements[1] = $pm_part_name;
+		$replacements[2] = $chicagotime;
+		$replacements[3] = $user_fullname;
+		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, '');
+		$output = preg_replace($patterns, $replacements, $format_file);
+		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, $output);
 		if($good_bad_pieces_id != "")
 		{
 			$rw = $rowc['rework'];
