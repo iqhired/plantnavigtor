@@ -170,11 +170,10 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                         }
                     }
                 }
-
         }
     }
 
 
-$page = "material_tracability.php?station=$station&station_event_id=$station_event_id";
+$page = "edit_material.php?id=$material_id";
 header('Location: '.$page, true, 303);
 exit;
