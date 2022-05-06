@@ -412,10 +412,10 @@ while ($row1 = $result1->fetch_assoc()) {
                                 <label class="col-lg-2 control-label">Material Status : </label>
                                 <div class="col-md-6">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" checked required>
+                                        <input type="radio" id="pass" name="material_status" value="1" class="form-check-input" checked required>
                                         <label for="pass" class="item_label">Pass</label>
 
-                                        <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject" required>
+                                        <input type="radio" id="fail" name="material_status" value="0" class="form-check-input reject" required>
                                         <label for="fail" class="item_label">Fail</label>
 
 
@@ -426,7 +426,7 @@ while ($row1 = $result1->fetch_assoc()) {
 
                             </div>
                             <br/>
-                            <div class="row desc" id="Reasonfail" style="display: none;">
+                            <div class="row desc" id="Reason0" style="display: none;">
                                 <label class="col-lg-2 control-label">Reason : </label>
                                 <div class="col-md-6">
                                 <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
@@ -445,7 +445,7 @@ while ($row1 = $result1->fetch_assoc()) {
                                 </div>
                             </div>
                             <br/>
-                            <div class="row desc" id="material_statusfail" style="display: none;">
+                            <div class="row desc" id="material_status0" style="display: none;">
                                 <label class="col-lg-2 control-label"> Reason Description : </label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc"></textarea>
@@ -454,7 +454,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             </div>
 
                             <br/>
-                            <div class="row desc" id="quantityfail" style="display: none;">
+                            <div class="row desc" id="quantity0" style="display: none;">
                                 <label class="col-lg-2 control-label"> Quantity : </label>
                                 <div class="col-md-6">
                                     <input class="form-control" name="quantity" rows="1" id="quantity">
@@ -517,12 +517,6 @@ while ($row1 = $result1->fetch_assoc()) {
                             $(this).parent(".pip").remove();
                         });
 
-                        // Old code here
-                        /*$("<img></img>", {
-                          class: "imageThumb",
-                          src: e.target.result,
-                          title: file.name + " | Click to remove"
-                        }).insertAfter("#files").click(function(){$(this).remove();});*/
 
                     });
                     fileReader.readAsDataURL(f);

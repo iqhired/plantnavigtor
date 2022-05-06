@@ -35,10 +35,102 @@ if(count($_POST)>0) {
     }
 
 
-    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_number= '$line_number' ORDER BY `material_id` DESC ");
+    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_number= '$line_number' ORDER BY `material_id` DESC LIMIT 1");
     $rowc04 = mysqli_fetch_array($qur04);
     $material_id = $rowc04["material_id"];
+    $material_status = $rowc04["material_status"];
 
+    //mail code start
+
+      if ($material_status == '0') {
+
+//	$subject = "Users Mail Report";
+    require '../vendor/autoload.php';
+    $subject = "Material tracability Mail Report";
+    //mail code start
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPAuth = true;
+    $mail->Username = 'admin@plantnavigator.com';
+    $mail->Password = 'S@@rgummi@2021';
+    $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+// mail code over
+//	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
+    $del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name , name as form_name   FROM  form_create as fc inner join cam_line as cl on fc.station = cl.line_id inner join pm_part_family as pf on fc.part_family= pf.pm_part_family_id 
+inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where form_create_id='$formcreateid'");
+    $del_query_01 = mysqli_query($db, $del_query);
+    $del_query_row = mysqli_fetch_array($del_query_01);
+    $del_user_id = $rowc04['created_by'];
+    $del_query_2 = sprintf("SELECT user_name , firstname , lastname from cam_users where users_id='$del_user_id'");
+    $del_query_02 = mysqli_query($db, $del_query_2);
+    $del_query_row_1 = mysqli_fetch_array($del_query_02);
+    $line1 = "An out of tolerance value has been entered in the system for a First piece sheet. Please see the details below.";
+    $line2 = $del_query_row['line_name'];
+    $form_name = $del_query_row['form_name'];
+    $p_num = $del_query_row['part_number'];
+    $p_name = $del_query_row['part_name'];
+    $pf_name = $del_query_row['part_family_name'];
+    $form_submitted_by = $del_query_row_1['firstname'] . " " . $del_query_row_1['lastname'];
+
+    $message = '<br/><table rules=\"all\" style=\"border-color: #666;\" border=\"1\" cellpadding=\"10\">';
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_name . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Station : </strong> </td><td>" . $line2 . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $p_num . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $p_name . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $pf_name . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Operator/User : </strong> </td><td>" . $form_submitted_by . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Number of items that are out of specification: </strong> </td><td>" . $temp_j . "</td></tr>";
+    $message .= "</table>";
+    $message .= "<br/>";
+    $message1 = "Please click on the following link to review the values that were uploaded : ";
+    $message2 = $siteURL . "form_module/view_form_data.php?id=" . $form_user_data_id;
+    $signature = "- USPL Process Control Team";
+
+
+    $structure = '<html><body>';
+    $structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";
+    $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $line1 . "</span><br/> ";
+    $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message . "</span><br/> ";
+    $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message1 . "</span><br/> ";
+    $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > <a href=" . $message2 . ">View Form Data</a></span><br/> ";
+    $structure .= "<br/><br/>";
+    $structure .= $signature;
+    $structure .= "</body></html>";
+//	$mail->addAddress('ayesha@hematechservices.com', 'ayesha@hematechservices.com');
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $structure;
+    $arr_out_of_tolerance_mail_list = explode(',', $out_of_tolerance_mail_list1);
+    foreach ($arr_out_of_tolerance_mail_list as $out_of_tolerance_mail_list) {
+        if ($out_of_tolerance_mail_list != "") {
+            $query0004 = sprintf("SELECT * FROM  sg_user_group where group_id = '$out_of_tolerance_mail_list' ");
+            $qur0004 = mysqli_query($db, $query0004);
+            while ($rowc0004 = mysqli_fetch_array($qur0004)) {
+                $u_name = $rowc0004['user_id'];
+                $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                $qur0005 = mysqli_query($db, $query0005);
+                $rowc0005 = mysqli_fetch_array($qur0005);
+                $email = $rowc0005["email"];
+                $lasname = $rowc0005["lastname"];
+                $firstname = $rowc0005["firstname"];
+                $mail->addAddress($email, $firstname);
+            }
+            if (!$mail->send()) {
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+                $imapStream = imap_open($path, $mail->Username, $mail->Password);
+                $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+                imap_close($imapStream);
+            }
+        }
+    }
+
+}
 
 //multiple image
         if (isset($_FILES['image'])) {
