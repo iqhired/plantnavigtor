@@ -4,12 +4,14 @@ $user = $_SESSION['user'];
 $user_fullname = str_replace("&nbsp;" , " " , $_SESSION['fullname']);
 $chicagotime = date("Y-m-d H:i:s");
 $good_name = $_POST['good_name'];
+$p_line_name = $_POST['line_name'];
 $good_bad_piece_name = $_POST['good_bad_piece_name'];
 $edit_id = $_POST['edit_id'];
 $edit_gbid = $_POST['edit_gbid'];
 $edit_seid = $_POST['edit_seid'];
 $station_event_id = $_POST['station_event_id'];
 $f_postfix = $_POST['time'];
+$label_quantity = 0;
 $query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
 $qur1 = mysqli_query($db, $query1);
 while ($rowc = mysqli_fetch_array($qur1)) {
@@ -18,7 +20,7 @@ while ($rowc = mysqli_fetch_array($qur1)) {
 }
 
 if ($good_name != "") {
-
+	$label_quantity = $good_name;
 //        $sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1' and defect_name is NULL";
 	$sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1'";
 	$result1 = mysqli_query($db, $sql);
@@ -58,15 +60,19 @@ if ($good_name != "") {
 				$format_file =  file($dir_path . '/f1');
 				$file =  file($dir_path . '/g_' . $f_postfix);
 				$patterns = array();
-				$patterns[0] = '/CustomerNo/';
-				$patterns[1] = '/Description/';
+				$patterns[0] = '/PartNo/';
+				$patterns[1] = '/PartName/';
 				$patterns[2] = '/Date/';
 				$patterns[3] = '/UserName/';
+				$patterns[4] = '/StationName/';
+				$patterns[5] = '/Qty/';
 				$replacements = array();
 				$replacements[0] = $pm_part_number;
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user_fullname;
+				$replacements[4] = $p_line_name;
+				$replacements[5] = $label_quantity;
 				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, $output);
@@ -111,15 +117,19 @@ if ($good_name != "") {
 				$format_file =  file($dir_path . '/f1');
 				$file =  file($dir_path . '/g_'. $f_postfix);
 				$patterns = array();
-				$patterns[0] = '/CustomerNo/';
-				$patterns[1] = '/Description/';
+				$patterns[0] = '/PartNo/';
+				$patterns[1] = '/PartName/';
 				$patterns[2] = '/Date/';
 				$patterns[3] = '/UserName/';
+				$patterns[4] = '/StationName/';
+				$patterns[5] = '/Qty/';
 				$replacements = array();
 				$replacements[0] = $pm_part_number;
 				$replacements[1] = $pm_part_name;
 				$replacements[2] = $chicagotime;
 				$replacements[3] = $user_fullname;
+				$replacements[4] = $p_line_name;
+				$replacements[5] = $label_quantity;
 				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 				$output = preg_replace($patterns, $replacements, $format_file);
 				file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, $output);
@@ -163,11 +173,12 @@ if ($good_name != "") {
 }
 else if($good_bad_piece_name != "")
 {
+
 	$add_defect_name = $_POST['add_defect_name'];
 //        $cnt = count($defect_arr);
 	$bad_type = $_POST['bad_type'];
 	$good_bad_piece_name = $_POST['good_bad_piece_name'];
-
+	$label_quantity = $good_bad_piece_name;
 	$sql = "select * from good_bad_pieces where station_event_id ='$station_event_id' and event_status = '1'";
 //		$sql = "select * from good_bad_pieces where station_event_id ='$station_event_id' and event_status = '1' and defect_name = '$add_defect_name'";
 	$result1 = mysqli_query($db, $sql);
@@ -177,27 +188,31 @@ else if($good_bad_piece_name != "")
 
 	if($bad_type == "bad_piece")
 	{
-		$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-		$resultnumber = $mysqli->query($sqlnumber);
-		$rowcnumber = $resultnumber->fetch_assoc();
-		$pm_part_number = $rowcnumber['part_number'];
-		$pm_part_name = $rowcnumber['part_name'];
-		$dir_path = "../assets/label_files/" . $line_id;
-		$format_file =  file($dir_path . '/f2');
-		$file =  file($dir_path . '/b_'.$f_postfix);
-		$patterns = array();
-		$patterns[0] = '/CustomerNo/';
-		$patterns[1] = '/Description/';
-		$patterns[2] = '/Date/';
-		$patterns[3] = '/UserName/';
-		$replacements = array();
-		$replacements[0] = $pm_part_number;
-		$replacements[1] = $pm_part_name;
-		$replacements[2] = $chicagotime;
-		$replacements[3] = $user_fullname;
-		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, '');
-		$output = preg_replace($patterns, $replacements, $format_file);
-		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, $output);
+//		$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+//		$resultnumber = $mysqli->query($sqlnumber);
+//		$rowcnumber = $resultnumber->fetch_assoc();
+//		$pm_part_number = $rowcnumber['part_number'];
+//		$pm_part_name = $rowcnumber['part_name'];
+//		$dir_path = "../assets/label_files/" . $line_id;
+//		$format_file =  file($dir_path . '/f2');
+//		$file =  file($dir_path . '/b_'.$f_postfix);
+//		$patterns = array();
+//		$patterns[0] = '/PartNo/';
+//		$patterns[1] = '/PartName/';
+//		$patterns[2] = '/Date/';
+//		$patterns[3] = '/UserName/';
+//		$patterns[4] = '/StationName/';
+//		$patterns[5] = '/Qty/';
+//		$replacements = array();
+//		$replacements[0] = $pm_part_number;
+//		$replacements[1] = $pm_part_name;
+//		$replacements[2] = $chicagotime;
+//		$replacements[3] = $user_fullname;
+//		$replacements[4] = $p_line_name;
+//		$replacements[5] = $label_quantity;
+//		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, '');
+//		$output = preg_replace($patterns, $replacements, $format_file);
+//		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, $output);
 
 		if($good_bad_pieces_id != "")
 		{
@@ -241,15 +256,19 @@ else if($good_bad_piece_name != "")
 		$format_file =  file($dir_path . '/f1');
 		$file =  file($dir_path . '/b_'.$f_postfix);
 		$patterns = array();
-		$patterns[0] = '/CustomerNo/';
-		$patterns[1] = '/Description/';
+		$patterns[0] = '/PartNo/';
+		$patterns[1] = '/PartName/';
 		$patterns[2] = '/Date/';
 		$patterns[3] = '/UserName/';
+		$patterns[4] = '/StationName/';
+		$patterns[5] = '/Qty/';
 		$replacements = array();
 		$replacements[0] = $pm_part_number;
 		$replacements[1] = $pm_part_name;
 		$replacements[2] = $chicagotime;
 		$replacements[3] = $user_fullname;
+		$replacements[4] = $p_line_name;
+		$replacements[5] = $label_quantity;
 		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, '');
 		$output = preg_replace($patterns, $replacements, $format_file);
 		file_put_contents('../assets/label_files/'. $line_id .'/b_'.$f_postfix, $output);

@@ -50,6 +50,7 @@ $sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
 $resultnumber = $mysqli->query($sqlprint);
 $rowcnumber = $resultnumber->fetch_assoc();
 $printenabled = $rowcnumber['print_label'];
+$p_line_name = $rowcnumber['line_name'];
 
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
@@ -384,6 +385,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <input type="hidden" name="time" value="<?php echo time(); ?>">
+                    <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
                     <div class="modal-body">
                         <!--Part Number-->
                         <div class="row">
@@ -475,7 +477,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <input type="hidden" name="time" value="<?php echo time(); ?>">
-
+                    <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
                     <div class="modal-body">
                         <!--Part Number-->
 
