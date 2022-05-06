@@ -43,50 +43,55 @@ if (count($_POST) > 0) {
     }
 //edit
     $edit_name = $_POST['edit_name'];
+    $id = $_POST['edit_id'];
     $edit_good_file = $_POST['edit_good_file'];
     $edit_bad_file = $_POST['edit_bad_file'];
     if ($edit_name != "") {
-        $id = $_POST['edit_id'];
-        if ($edit_good_file != "" && $edit_bad_file != "") {
-           if (isset($_FILES['edit_good_file']) && isset($_FILES['edit_good_file'])) {
-                $errors = array();
-                $good_name = $_FILES['edit_good_file']['name'];
-                $bad_name = $_FILES['edit_bad_file']['name'];
-                $good_size = $_FILES['edit_good_file']['size'];
-                $bad_size = $_FILES['edit_bad_file']['size'];
-			   $good_tmp = $_FILES['edit_good_file']['tmp_name'];
-                $good_tmp1 = $good_tmp;
-                $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
-                $good_type = $_FILES['edit_good_file']['type'];
-                $bad_type = $_FILES['edit_bad_file']['type'];
+      //  $id = $_POST['edit_id'];
+        $dir_path = "../assets/label_files/" . $id;
 
-                $good_extensions = array("application/octet-stream", "doc", "docx");
-                $bad_extensions = array("application/octet-stream", "doc", "docx");
-                if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false) {
-                    $errors[] = "extension not allowed, please choose a doc file.";
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
-                }
-                if (empty($errors) == true) {
-                    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
-                    if (!file_exists($dir_path)) {
-                        mkdir($dir_path, 0777, true);
-                    }
-                    move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-					copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-					copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-                    $zpl_id = $_POST['edit_id'];
-                    $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
-                    $result1 = mysqli_query($db, $sql1);
-                    //$sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Upload Files Successfully';
-                }
-
-           }
-
-        }
+        copy($dir_path , $_POST['edit_good_file'] ,$dir_path . '/' . 'f1');
+        copy($dir_path , $_POST['edit_bad_file'] ,$dir_path . '/' . 'f2');
+//        if ($edit_good_file != "" && $edit_bad_file != "") {
+//           if (isset($_FILES['edit_good_file']) && isset($_FILES['edit_good_file'])) {
+//                $errors = array();
+//                $good_name = $_FILES['edit_good_file']['name'];
+//                $bad_name = $_FILES['edit_bad_file']['name'];
+//                $good_size = $_FILES['edit_good_file']['size'];
+//                $bad_size = $_FILES['edit_bad_file']['size'];
+//			   $good_tmp = $_FILES['edit_good_file']['tmp_name'];
+//                $good_tmp1 = $good_tmp;
+//                $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
+//                $good_type = $_FILES['edit_good_file']['type'];
+//                $bad_type = $_FILES['edit_bad_file']['type'];
+//
+//                $good_extensions = array("application/octet-stream", "doc", "docx");
+//                $bad_extensions = array("application/octet-stream", "doc", "docx");
+//                if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false) {
+//                    $errors[] = "extension not allowed, please choose a doc file.";
+//                    $message_stauts_class = 'alert-danger';
+//                    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
+//                }
+//                if (empty($errors) == true) {
+//                    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
+//                    if (!file_exists($dir_path)) {
+//                        mkdir($dir_path, 0777, true);
+//                    }
+//                    move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+//					copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
+//                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+//					copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
+//                    $zpl_id = $_POST['edit_id'];
+//                    $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
+//                    $result1 = mysqli_query($db, $sql1);
+//                    //$sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+//                    $message_stauts_class = 'alert-success';
+//                    $import_status_message = 'Upload Files Successfully';
+//                }
+//
+//           }
+//
+//        }
         $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
         $result1 = mysqli_query($db, $sql);

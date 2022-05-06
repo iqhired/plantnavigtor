@@ -472,10 +472,10 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label">Material Status : </label>
                                     <div class="col-md-6">
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "pass"){ echo 'checked'; } ?> required>
+                                            <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "1"){ echo 'checked'; } ?> required>
                                             <label for="pass" class="item_label">Pass</label>
 
-                                            <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "fail"){ echo 'checked'; } ?> required>
+                                            <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "0"){ echo 'checked'; } ?> required>
                                             <label for="fail" class="item_label">Fail</label>
 
 
