@@ -39,6 +39,8 @@ $_SESSION['part_family'] = "";
 $_SESSION['part_number'] = "";
 $_SESSION['material_type'] = "";
 
+
+//
 if (count($_POST) > 0) {
     $_SESSION['station'] = $_POST['station'];
     $_SESSION['date_from'] = $_POST['date_from'];
@@ -58,14 +60,23 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $timezone = $_POST['timezone'];
+
+	$line = $_POST['station'];
+	$line_id = $_POST['station'];
+	$button = $_POST['button'];
+	$button_event = $_POST['button_event'];
+	$event_type = $_POST['event_type'];
+	$event_category = $_POST['event_category'];
+	$timezone = $_POST['timezone'];
+
+	$station1 = $_POST['station'];
+	$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
+	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+		$station1 = $rowctemp["line_name"];
+	}
+
 }
-if (count($_POST) > 0) {
-    $station1 = $_POST['station'];
-    $qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
-    while ($rowctemp = mysqli_fetch_array($qurtemp)) {
-        $station1 = $rowctemp["line_name"];
-    }
-}
+
 if(empty($dateto)){
     $curdate = date('Y-m-d');
     $dateto = $curdate;
@@ -446,15 +457,7 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 
                 /* Build the query to fetch the data*/
                 if (count($_POST) > 0) {
-                    $line = $_POST['station'];
-                    $line_id = $_POST['station'];
-                    $dateto = $_POST['date_to'];
-                    $datefrom = $_POST['date_from'];
-                    $button = $_POST['button'];
-                    $button_event = $_POST['button_event'];
-                    $event_type = $_POST['event_type'];
-                    $event_category = $_POST['event_category'];
-                    $timezone = $_POST['timezone'];
+
                     //event type
 
                     $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,

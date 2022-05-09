@@ -18,25 +18,25 @@ if(!empty($resultmain)){
 		$station_id = $rowcmain['station_event_id'];
 	}
 
-	if(!empty($part_family)){
-		$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-		$resultfamily = mysqli_query($db,$sqlfamily);
-		$rowcfamily = $resultfamily->fetch_assoc();
-		$pm_part_family_name = $rowcfamily['part_family_name'];
+	if(!empty($part_number)){
+		$sqlpnum= "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+		$resultpnum = mysqli_query($db,$sqlpnum);
+		$rowcpnum = $resultpnum->fetch_assoc();
+		$pm_bsr= $rowcpnum['budget_scrape_rate'];
+		///$pm_npr= $rowcpnum['npr'];
+		$pm_avg_bsr = $pm_bsr - 2;
 
-		$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-		$resultaccount = mysqli_query($db,$sqlaccount);
-		$rowcaccount = $resultaccount->fetch_assoc();
-		$account_id = $rowcaccount['account_id'];
+		$sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$station1' and sg_station_event.event_status = 1" ;
+		$result = mysqli_query($db,$sql);
+		$total = 0;
+		$row=$result->fetch_assoc();
+		$total =  $row['good_pieces'] + $row['bad_pieces'] + $row['rework'];
+		$actual_bsr = number_format(100 * ($row['bad_pieces']/$total));
+		$posts[] = array( 'bsr'=> $pm_bsr, 'avg_bsr'=> $pm_avg_bsr, 'actual_bsr'=> $actual_bsr,);
 
-		if(!empty($account_id)){
-			$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-			$resultcus = mysqli_query($db,$sqlcus);
-			$rowccus = $resultcus->fetch_assoc();
-			$cus_name = $rowccus['c_name'];
-			$logo = $rowccus['logo'];
-		}
 	}
+	$response['posts'] = $posts;
+	echo json_encode($response);
 
 }
 if(!empty($def_ch) && $def_ch == 1){
@@ -68,19 +68,19 @@ if(!empty($def_ch) && $def_ch == 1){
 	$response1['posts1'] = $posts1;
 	echo json_encode($response1);
 }else{
-	$sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$station1' and sg_station_event.event_status = 1" ;
-	$response = array();
-	$posts = array();
-	$result = mysqli_query($db,$sql);
-//$result = $mysqli->query($sql);
-	$data =array();
-
-	while ($row=$result->fetch_assoc()){
-		$posts[] = array('good_pieces'=> $row['good_pieces'], 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework']);
-
-	}
-	$response['posts'] = $posts;
-	echo json_encode($response);
+//	$sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$station1' and sg_station_event.event_status = 1" ;
+//	$response = array();
+//	$posts = array();
+//	$result = mysqli_query($db,$sql);
+////$result = $mysqli->query($sql);
+//	$data =array();
+//
+//	while ($row=$result->fetch_assoc()){
+//		$posts[] = array('good_pieces'=> $row['good_pieces'], 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework']);
+//
+//	}
+//	$response['posts'] = $posts;
+//	echo json_encode($response);
 }
 
 

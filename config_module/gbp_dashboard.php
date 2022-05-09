@@ -102,6 +102,7 @@ fclose($fp);
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
     <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
     <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css"
           rel="stylesheet">
@@ -165,6 +166,9 @@ fclose($fp);
             }
 
         }
+        table, th, td {
+            border:1px solid black;
+        }
     </style>
 </head>
 
@@ -180,7 +184,7 @@ include("../hp_header.php");
     <div class="col-md-4">
         <!--							<div class="panel panel-body">-->
         <div class="media">
-            <div class="media-body" style="padding: 30px;background-color: #fff;height: 400px;">
+            <div class="media-body" style="padding: 0px 30px 20px 30px;background-color: #fff;height: 350px;">
                 <img src="../supplier_logo/<?php if ($logo != "") {
 					echo $logo;
 				} else {
@@ -201,26 +205,34 @@ include("../hp_header.php");
                         :-</b> <?php echo $pm_part_name; ?></small>
 
             </div>
-            <div id="sgf_container" style="height: 400px; margin-top: 10px"></div>
+            <div id="sgf_container" style="height: 350px; margin-top: 15px ;"></div>
         </div>
         <!--							</div>-->
     </div>
     <!--   -->
-    <div class="col-md-5" style="">
+    <div class="col-md-4" style="">
         <!--        <div id="sgf_container2" style="padding: 30px;height: 400px;background-color: #fff; "></div>-->
-        <div id="sgf_container1" style="height: 810px; "></div>
+        <div id="" style="padding: 10px 20px;height: 810px;background-color: #f7f7f7;">
+        <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
+            class="text-semibold no-margin">Top 5 Defect Details</h5>
+        <div id="sgf_container1" style="height: 700px;border:1px solid #efefef; margin-top: 10px"></div>
+        </div>
     </div>
 
-    <div class="col-md-3">
-        <div id="sgf_container22" style="padding: 30px;height: 810px;background-color: #008000; color:#fff ">
-            <h5 style="font-size: xx-large;color: #ffffff;padding : 5px; text-align: center;"
+    <div class="col-md-4">
+        <div id="" style="padding: 10px;height: 810px;background-color: #f7f7f7;">
+            <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
                 class="text-semibold no-margin">Status</h5>
+            <div id="scrap_rate_container" style="height: 350px; margin-top: 10px;border:1px solid #efefef;"></div>
+            <div id="npr_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px"></div>
+
         </div>
     </div>
 </div>
 
 <!-- /main content -->
 <script>
+    // GBP Chart
     anychart.onDocumentReady(function () {
         var data = this.window.location.href.split('?')[1];
         $.ajax({
@@ -259,24 +271,34 @@ include("../hp_header.php");
                 palette.items([{color: '#B31B1B'}, {color: '#F4C2C2'}]);
 
                 var chart = anychart.pie(rec);
-                chart.legend().position('right').itemsLayout('vertical');
-                chart.labels().format("{%value}");
+                chart.legend().position('bottom').itemsLayout('horizontal');
+                // chart.connectorStroke({color: "#595959", thickness: 2, dash:"2 2"});
+                // chart.labels().format("{%value}");
 
                 
 
                 // set chart title text settings
                 chart
-                    .title('Bad Piece Details')
+                    .title('Scrap Details')
                     // create empty area in pie chart
                     .innerRadius('40%')
                     .palette(palette);
 
                 // set chart labels position to outside
-                chart.labels().position('outside');
+                var labels = chart.labels();
+                labels.enabled(true);
+                labels.fontColor("black");
+                labels.fontWeight(400);
+                labels.width(140);
+                labels.hAlign("center");
+                labels.position("outside");
+                labels.useHtml(true);
+                labels.format("<div style='font-weight: 900;'>{%x} - ({%value})</div><br/><div>{%info}</div>");
+
                 // chart.legend().positionMode("inside");
 
                 // set container id for the chart
-                chart.container('sgf_container1');
+                chart.container('sgf_container11');
                 // initiate chart drawing
                 chart.draw();
 
@@ -288,25 +310,41 @@ include("../hp_header.php");
                 // set chart title text settings
                 // chart.title('Top 10 Cosmetic Products by Sales per Day');
                 chart
-                    .title('Defect Details')
+                    // .title('Top 5 Defect Details')
                     .palette(palette);
-                chart.labels().format("{%value}");
-                chart.labels().enabled(true).format('{%Value}');
-                chart.tooltip().format('Value: {%Value}');
+
+                var title = chart.title();
+//enables HTML tags
+                title.useHtml(true);
+                title.text("<div style='font-weight: 900;font-size:24px;margin-bottom:50px'>Top 5 Defect Details</div>");
+                // chart.labels().format("{%value}");
+                // chart.labels().enabled(true).format('{%Value}');
+                chart.tooltip().format(': {%Value}');
                 // data for the chart
                 var data = anychart.data
                     .set(rec)
                     .mapAs({
                         x: 0,
-                        value: 1
+                        value: 1 ,
+                        info : 2
                     });
 
                 var labels = chart.labels();
-                labels.fontFamily("Courier");
-                labels.fontSize(28);
-                labels.fontColor("#125393");
-                labels.fontWeight("bold");
-                labels.useHtml(false);
+                labels.enabled(true);
+                labels.fontColor("black");
+                labels.fontWeight(400);
+                // labels.width(140);
+                labels.hAlign("center");
+                // labels.position("outside");
+                labels.useHtml(true);
+                labels.format("<div style='font-size:16px;margin:10px 0px;text-align:left;'>No of pieces - {%value} </div><br/><div style='font-size:16px;margin:10px 0px;text-align:left;'>Percent - {%info}%</div>");
+
+                // var labels = chart.labels();
+                // labels.fontFamily("Courier");
+                // labels.fontSize(28);
+                // labels.fontColor("#125393");
+                // labels.fontWeight("bold");
+                // labels.useHtml(false);
                 // // background border color
                 // column.labels().background().stroke("#663399");
                 // column.labels().background().enabled(true).stroke("Green");
@@ -352,13 +390,14 @@ include("../hp_header.php");
                 chart.yScale().minimum(0);
 
                 // set container id for the chart
-                chart.container('sgf_container12');
+                chart.container('sgf_container1');
 
                 // initiate chart drawing
                 chart.draw();
             }
         });
     });
+    //Top 5 Defect Details
     anychart.onDocumentReady(function () {
         var data = this.window.location.href.split('?')[1];
         $.ajax({
@@ -459,6 +498,294 @@ include("../hp_header.php");
                 chart.container('sgf_container');
                 // initiate chart drawing
                 chart.draw();
+            }
+        });
+    });
+
+//    Guage Scrap rate
+    anychart.onDocumentReady(function () {
+        var data = this.window.location.href.split('?')[1];
+        $.ajax({
+            type: 'POST',
+            url: 'gbp_scrap_rate.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var bsr = data.posts.map(function (elem) {
+                    return elem.bsr;
+                });
+                // console.log(goodpiece);
+                var avg_bsr = data.posts.map(function (elem) {
+                    return elem.avg_bsr;
+                });
+                var actual_bsr = data.posts.map(function (elem) {
+                    return elem.actual_bsr;
+                });
+
+                var gauge = anychart.gauges.circular();
+                gauge
+                    .fill('#fff')
+                    .stroke(null)
+                    .padding(50)
+                    .margin(0)
+                    .startAngle(270)
+                    .sweepAngle(180);
+
+                gauge
+                    .axis()
+                    .labels()
+                    .padding(5)
+                    .fontSize(14)
+                    .position('outside')
+                    .format('{%Value}%');
+
+                gauge.data([actual_bsr]);
+                gauge
+                    .axis()
+                    .scale()
+                    .minimum(0)
+                    .maximum(20)
+                    .ticks({ interval: 1 })
+                    .minorTicks({ interval: 1 });
+
+                gauge
+                    .axis()
+                    .fill('#545f69')
+                    .width(1)
+                    .ticks({ type: 'line', fill: 'white', length: 2 });
+
+                gauge.title(
+                    '<div style=\'font-weight: 900;font-size:18px;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: 14px;">( Max Allowed <strong> ' +bsr+' </strong>%)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 15px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 14px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
+                );
+
+                gauge
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
+
+                gauge
+                    .needle()
+                    .stroke('2 #545f69')
+                    .startRadius('5%')
+                    .endRadius('90%')
+                    .startWidth('0.1%')
+                    .endWidth('0.1%')
+                    .middleWidth('0.1%');
+
+                gauge.cap().radius('3%').enabled(true).fill('#545f69');
+
+                gauge.range(0, {
+                    from: 0,
+                    to: avg_bsr,
+                    position: 'inside',
+                    fill: '#009900 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(1, {
+                    from: avg_bsr,
+                    to: bsr,
+                    position: 'inside',
+                    fill: '#ffa000 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(2, {
+                    from: bsr,
+                    to: 20,
+                    position: 'inside',
+                    fill: '#B31B1B 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+
+                });
+
+                gauge
+                    .label(1)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(25)
+                    .anchor('center');
+                gauge
+                    .label(2)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(90)
+                    .anchor('center');
+
+                gauge
+                    .label(3)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(155)
+                    .anchor('center');
+
+
+                // set container id for the chart
+                gauge.container('scrap_rate_container');
+                // initiate chart drawing
+                gauge.draw();
+            }
+        });
+    });
+
+    // NPR
+    anychart.onDocumentReady(function () {
+        var data = this.window.location.href.split('?')[1];
+        $.ajax({
+            type: 'POST',
+            url: 'gbp_scrap_rate.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var bsr = data.posts.map(function (elem) {
+                    return elem.bsr;
+                });
+                // console.log(goodpiece);
+                var avg_bsr = data.posts.map(function (elem) {
+                    return elem.avg_bsr;
+                });
+                var actual_bsr = data.posts.map(function (elem) {
+                    return elem.actual_bsr;
+                });
+
+                var gauge = anychart.gauges.circular();
+                gauge
+                    .fill('#fff')
+                    .stroke(null)
+                    .padding(50)
+                    .margin(0)
+                    .startAngle(270)
+                    .sweepAngle(180);
+
+                gauge
+                    .axis()
+                    .labels()
+                    .padding(5)
+                    .fontSize(14)
+                    .position('outside')
+                    .format('{%Value}%');
+
+                gauge.data([actual_bsr]);
+                gauge
+                    .axis()
+                    .scale()
+                    .minimum(0)
+                    .maximum(20)
+                    .ticks({ interval: 1 })
+                    .minorTicks({ interval: 1 });
+
+                gauge
+                    .axis()
+                    .fill('#545f69')
+                    .width(1)
+                    .ticks({ type: 'line', fill: 'white', length: 2 });
+
+                gauge.title(
+                    '<div style=\'font-weight: 900;font-size:18px;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 14px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 15px;\'>Actual Net Piece Rate <span style="color:#009900; font-size: 14px;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
+                );
+
+                gauge
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
+
+                gauge
+                    .needle()
+                    .stroke('2 #545f69')
+                    .startRadius('5%')
+                    .endRadius('90%')
+                    .startWidth('0.1%')
+                    .endWidth('0.1%')
+                    .middleWidth('0.1%');
+
+                gauge.cap().radius('3%').enabled(true).fill('#545f69');
+
+                gauge.range(0, {
+                    from: 0,
+                    to: avg_bsr,
+                    position: 'inside',
+                    fill: '#009900 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(1, {
+                    from: avg_bsr,
+                    to: bsr,
+                    position: 'inside',
+                    fill: '#ffa000 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(2, {
+                    from: bsr,
+                    to: 20,
+                    position: 'inside',
+                    fill: '#B31B1B 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+
+                });
+
+                gauge
+                    .label(1)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(25)
+                    .anchor('center');
+                gauge
+                    .label(2)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(90)
+                    .anchor('center');
+
+                gauge
+                    .label(3)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(14)
+                    .offsetY('68%')
+                    .offsetX(155)
+                    .anchor('center');
+
+
+                // set container id for the chart
+                gauge.container('npr_container');
+                // initiate chart drawing
+                gauge.draw();
             }
         });
     });
