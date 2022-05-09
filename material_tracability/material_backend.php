@@ -7,7 +7,7 @@ if(count($_POST)>0) {
     $station_event_id = $_POST['station_event_id'];
     $station = $_POST['station'];
     $customer_account_id = $_POST['customer_account_id'];
-    $line_number = $_POST['line_number'];
+    $line_number = $_POST['station'];
     $part_number = $_POST['part_number'];
     $part_family = $_POST['part_family'];
     $part_name = $_POST['part_name'];
@@ -21,7 +21,7 @@ if(count($_POST)>0) {
     $created_by = date("Y-m-d H:i:s");
 
 
-      $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_number`,`part_number`,`part_family`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`quantity`,`notes`,`created_at`) VALUES 
+      $sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_no`,`part_no`,`part_family_id`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`quantity`,`notes`,`created_at`) VALUES 
 	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$reason_desc','$quantity','$notes','$created_by')";
                 $result0 = mysqli_query($db, $sql0);
                 if ($result0) {
@@ -35,7 +35,7 @@ if(count($_POST)>0) {
     }
 
 
-    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_number= '$line_number' ORDER BY `material_id` DESC LIMIT 1");
+    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_no= '$line_number' ORDER BY `material_id` DESC LIMIT 1");
     $rowc04 = mysqli_fetch_array($qur04);
     $material_id = $rowc04["material_id"];
     $material_status = $rowc04["material_status"];
