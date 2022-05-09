@@ -213,9 +213,9 @@ include("../hp_header.php");
     <div class="col-md-5" style="">
         <!--        <div id="sgf_container2" style="padding: 30px;height: 400px;background-color: #fff; "></div>-->
         <div id="" style="padding: 10px 20px;height: 810px;background-color: #f7f7f7;">
-        <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
-            class="text-semibold no-margin">Top 5 Defect Details</h5>
-        <div id="sgf_container1" style="height: 700px;border:1px solid #efefef; margin-top: 10px"></div>
+            <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
+                class="text-semibold no-margin">Top 5 Defect Details</h5>
+            <div id="sgf_container1" style="height: 700px;border:1px solid #efefef; margin-top: 10px"></div>
         </div>
     </div>
 
@@ -275,7 +275,7 @@ include("../hp_header.php");
                 // chart.connectorStroke({color: "#595959", thickness: 2, dash:"2 2"});
                 // chart.labels().format("{%value}");
 
-                
+
 
                 // set chart title text settings
                 chart
@@ -502,7 +502,7 @@ include("../hp_header.php");
         });
     });
 
-//    Guage Scrap rate
+    //    Guage Scrap rate
     anychart.onDocumentReady(function () {
         var data = this.window.location.href.split('?')[1];
         $.ajax({
@@ -537,7 +537,7 @@ include("../hp_header.php");
                     .axis()
                     .labels()
                     .padding(5)
-                    .fontSize(14)
+                    .fontSize(20)
                     .position('outside')
                     .format('{%Value}%');
 
@@ -557,8 +557,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:large;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: large;">( Max Allowed <strong> ' +bsr+' </strong>%)</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: medium;\'>Actual Scrap Rate <span style="color:#009900; font-size: medium;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: 22px;">( Max <strong> ' +bsr+' </strong>%)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
                 );
 
                 gauge
@@ -615,7 +615,7 @@ include("../hp_header.php");
                     .label(1)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(25)
                     .anchor('center');
@@ -623,7 +623,7 @@ include("../hp_header.php");
                     .label(2)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(90)
                     .anchor('center');
@@ -632,7 +632,7 @@ include("../hp_header.php");
                     .label(3)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(155)
                     .anchor('center');
@@ -681,7 +681,7 @@ include("../hp_header.php");
                     .axis()
                     .labels()
                     .padding(5)
-                    .fontSize(14)
+                    .fontSize(20)
                     .position('outside')
                     .format('{%Value}%');
 
@@ -701,8 +701,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:large;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 14px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: medium;\'>Actual Net Piece Rate <span style="color:#009900; font-size: medium;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 22px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
                 );
 
                 gauge
@@ -759,7 +759,7 @@ include("../hp_header.php");
                     .label(1)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(25)
                     .anchor('center');
@@ -767,7 +767,7 @@ include("../hp_header.php");
                     .label(2)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(90)
                     .anchor('center');
@@ -776,7 +776,7 @@ include("../hp_header.php");
                     .label(3)
                     .text('')
                     .fontColor('#212121')
-                    .fontSize(14)
+                    .fontSize(20)
                     .offsetY('68%')
                     .offsetX(155)
                     .anchor('center');
