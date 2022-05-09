@@ -671,15 +671,25 @@ include("../hp_header.php");
                 var range2 = actual_npr;
                 var range3 = npr;
 
+                var fill1 = '#009900 0.8';
+                var fill2 = '#ffa000 0.8';
+                var fill3 = '#B31B1B 0.8';
+
 
                 if((actual_npr > npr) && (avg_npr > npr)){
                      range1 = npr;
                      range2 = avg_npr;
                      range3 = actual_npr;
+                     fill3 = '#009900 0.8';
+                     fill2 = '#ffa000 0.8';
+                     fill1 = '#B31B1B 0.8';
                 }else if((actual_npr > npr) && (avg_npr < npr)){
                     range1 = avg_npr;
                     range2 = npr;
                     range3 = actual_npr;
+                    fill2 = '#009900 0.8';
+                    fill3 = '#ffa000 0.8';
+                    fill1 = '#B31B1B 0.8';
                 }
 
                 var gauge = anychart.gauges.circular();
@@ -742,7 +752,7 @@ include("../hp_header.php");
                     from: 0,
                     to: range1,
                     position: 'inside',
-                    fill: '#009900 0.8',
+                    fill: fill1,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
@@ -752,7 +762,7 @@ include("../hp_header.php");
                     from: range1,
                     to: range2,
                     position: 'inside',
-                    fill: '#ffa000 0.8',
+                    fill: fill2,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
@@ -762,7 +772,7 @@ include("../hp_header.php");
                     from: range2,
                     to: (range3 + 20),
                     position: 'inside',
-                    fill: '#B31B1B 0.8',
+                    fill: fill3,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
