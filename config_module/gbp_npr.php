@@ -1,1 +1,50 @@
-<?php
+<?php include("../config.php");
+$station = $_POST['id'];
+$def_ch = $_POST['def_ch'];
+$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1' and line_id = '$station'";
+$result1 = mysqli_query($db,$sql1);
+while ($cam1 = mysqli_fetch_array($result1)){
+	$station1 = $cam1['line_id'];
+	$station2 = $cam1['line_name'];
+}
+
+$sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$station1' and event_status = 1";
+$resultmain = mysqli_query($db,$sqlmain);
+if(!empty($resultmain)){
+	$rowcmain = $resultmain->fetch_assoc();
+	if(!empty($rowcmain)){
+		$part_family = $rowcmain['part_family_id'];
+		$part_number = $rowcmain['part_number_id'];
+		$station_event_id = $rowcmain['station_event_id'];
+	}
+
+	if(!empty($part_number)){
+		$sqlpnum= "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+		$resultpnum = mysqli_query($db,$sqlpnum);
+		$rowcpnum = $resultpnum->fetch_assoc();
+		$pm_npr= $rowcpnum['npr'];
+		///$pm_npr= $rowcpnum['npr'];
+
+
+		$sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$station1' and sg_station_event.event_status = 1" ;
+		$result2 = mysqli_query($db,$sql2);
+		$total_time = 0;
+		$row2=$result2->fetch_assoc();
+		$total_gp =  $row2['good_pieces'] + $row2['rework'];
+
+		$sql3 = "SELECT SUM(total_time) as tt FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
+		$result3 = mysqli_query($db,$sql3);
+		$total = 0;
+		$row3=$result3->fetch_assoc();
+		$total_time = $row3['tt'];
+
+		$target_npr = number_format($pm_npr * 100);
+		$actual_npr = number_format($total_gp/$total_time);
+		$pm_avg_npr = (($actual_npr - 2) > 0)? ($actual_npr - 2) : $actual_npr;
+		$posts[] = array( 'npr'=> $target_npr, 'avg_npr'=> $pm_avg_npr, 'actual_npr'=> $actual_npr,);
+
+	}
+	$response['posts'] = $posts;
+	echo json_encode($response);
+
+}
