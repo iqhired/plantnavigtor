@@ -1,4 +1,5 @@
 <?php include("../config.php");
+$chicagotime = date("Y-m-d H:i:s");
 $station = $_POST['id'];
 $def_ch = $_POST['def_ch'];
 $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1' and line_id = '$station'";
@@ -32,15 +33,41 @@ if(!empty($resultmain)){
 		$row2=$result2->fetch_assoc();
 		$total_gp =  $row2['good_pieces'] + $row2['rework'];
 
-		$sql3 = "SELECT SUM(total_time) as tt FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
+		$sql3 = "SELECT * FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
 		$result3 = mysqli_query($db,$sql3);
-		$total = 0;
-		$row3=$result3->fetch_assoc();
-		$total_time = $row3['tt'];
-		$tt = ($total_time>0)? $total_time : 1;
+		$ttot = null;
+		$tt = null;
+		while ($row3 = $result3->fetch_assoc()) {
+			$ct = $row3['created_on'];
+			$tot = $row3['total_time'];
+			if(!empty($row3['total_time'])){
+				$ttot = explode(':' , $row3['total_time']);
+				$i = 0;
+				foreach($ttot as $t_time) {
+					if($i == 0){
+						$total_time += ( $t_time * 60 * 60 );
+					}else if( $i == 1){
+						$total_time += ( $t_time * 60 );
+					}else{
+						$total_time += $t_time;
+					}
+					$i++;
+				}
+			}else{
+				$total_time +=  strtotime($chicagotime) - strtotime($ct);
+			}
+		}
+		$total_time = (($total_time/60)/60);
+//		$sql3 = "SELECT SUM(total_time) as tt FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
+//
+//		$result3 = mysqli_query($db,$sql3);
+//		$total = 0;
+//		$row3=$result3->fetch_assoc();
+//		$total_time = $row3['tt'];
+//		$tt = ($total_time>0)? $total_time : 1;
 
 		$target_npr = $pm_npr;
-		$actual_npr = number_format($total_gp/$total_time);
+		$actual_npr = round($total_gp/$total_time , 2);
 		$pm_avg_npr = (($actual_npr - 2) > 0)? ($actual_npr - 2) : $actual_npr;
 		$posts[] = array( 'npr'=> $target_npr, 'avg_npr'=> $pm_avg_npr, 'actual_npr'=> $actual_npr,);
 

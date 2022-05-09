@@ -557,7 +557,7 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: 22px;">( Max <strong> ' +bsr+' </strong>%)</span></div>' +
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +bsr+' </strong>%</span></div>' +
                     '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
                 );
 
@@ -715,7 +715,7 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 22px;">( Target <strong> ' +npr+' </strong> per hour)</span></div>' +
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Target Net Pack Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +npr+' </strong> per hour </span></div>' +
                     '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_npr +' </strong> per hour </span></div><br/><br/>'
                 );
 
