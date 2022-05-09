@@ -180,8 +180,8 @@ include("../hp_header.php");
 ?>
 
 <body class="alt-menu sidebar-noneoverflow">
-<div class="row " style="margin: 50px;">
-    <div class="col-md-4">
+<div class="row " style="margin: 20px;">
+    <div class="col-md-3">
         <!--							<div class="panel panel-body">-->
         <div class="media">
             <div class="media-body" style="padding: 0px 30px 20px 30px;background-color: #fff;height: 350px;">
@@ -210,7 +210,7 @@ include("../hp_header.php");
         <!--							</div>-->
     </div>
     <!--   -->
-    <div class="col-md-4" style="">
+    <div class="col-md-5" style="">
         <!--        <div id="sgf_container2" style="padding: 30px;height: 400px;background-color: #fff; "></div>-->
         <div id="" style="padding: 10px 20px;height: 810px;background-color: #f7f7f7;">
         <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
@@ -557,8 +557,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:18px;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: 14px;">( Max Allowed <strong> ' +bsr+' </strong>%)</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 15px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 14px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:large;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: large;">( Max Allowed <strong> ' +bsr+' </strong>%)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: medium;\'>Actual Scrap Rate <span style="color:#009900; font-size: medium;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
                 );
 
                 gauge
@@ -701,8 +701,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:18px;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 14px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 15px;\'>Actual Net Piece Rate <span style="color:#009900; font-size: 14px;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:large;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 14px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: medium;\'>Actual Net Piece Rate <span style="color:#009900; font-size: medium;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
                 );
 
                 gauge
