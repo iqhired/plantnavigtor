@@ -296,11 +296,11 @@ include("../heading_banner.php");
         $querymain = sprintf("SELECT * FROM `material_tracability` where material_id = '$id' ");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
-            $line_name = $rowcmain['line_number'];
+            $line_name = $rowcmain['line_no'];
             $station_event_id = $rowcmain['station_event_id'];
             $material_id = $rowcmain['material_id'];
-            $pm_part_number = $rowcmain['part_number'];
-            $pm_part_family_name= $rowcmain['part_family'];
+            $pm_part_number = $rowcmain['part_no'];
+            $pm_part_family_name= $rowcmain['part_family_id'];
             $pm_part_name= $rowcmain['part_name'];
             $material_type= $rowcmain['material_type'];
             $material_status= $rowcmain['material_status'];
@@ -309,6 +309,22 @@ include("../heading_banner.php");
             $quantity= $rowcmain['quantity'];
             $notes= $rowcmain['notes'];
             $created_at= $rowcmain['created_at'];
+
+            $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$pm_part_family_name'";
+            $resultfamily = mysqli_query($db,$sqlfamily);
+            $rowcfamily = mysqli_fetch_array($resultfamily);
+            $pm_part_family_name = $rowcfamily['part_family_name'];
+
+            $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$pm_part_number'";
+            $resultnumber = mysqli_query($db,$sqlnumber);
+            $rowcnumber = mysqli_fetch_array($resultnumber);
+            $pm_part_number = $rowcnumber['part_number'];
+            $pm_part_name = $rowcnumber['part_name'];
+
+            $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
+            $resultnumber = mysqli_query($db,$sqlnumber);
+            $rowcnumber = mysqli_fetch_array($resultnumber);
+            $line_name = $rowcnumber['line_name'];
             ?>
             <!-- Basic datatable -->
             <div class="panel panel-flat">

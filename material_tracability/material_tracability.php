@@ -293,6 +293,7 @@ $result1 = $mysqli->query($sql1);
 //                                            $entry = 'selected';
 while ($row1 = $result1->fetch_assoc()) {
     $line_name = $row1['line_name'];
+    $line_no = $row1['line_id'];
 
 
 }
@@ -339,7 +340,8 @@ while ($row1 = $result1->fetch_assoc()) {
                                     <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
                                     <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                    <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
+                                    <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
+                                    <input type="text" name="line_number1" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
                                 </div>
                                 <div id="error1" class="red">Line Number</div>
                             </div>
@@ -347,14 +349,16 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
+                                    <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
+                                    <input type="text" name="part_number1" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
                                 </div>
                                 <div id="error1" class="red">Part Number</div>
                             </div>
                             <br/>   <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
                                 <div class="col-md-6">
-                                    <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
+                                    <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
+                                    <input type="text" name="part_family1" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
                                 </div>
                                 <div id="error1" class="red">Part family</div>
                             </div>
@@ -362,6 +366,7 @@ while ($row1 = $result1->fetch_assoc()) {
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
                                 <div class="col-md-6">
+<!--                                    <input type="hidden" name="part_name" value="--><?php //echo $part_family; ?><!--">-->
                                     <input type="text" name="part_name" id="part_name"  value="<?php echo $pm_part_name; ?>" class="form-control" placeholder="Enter Part Name">
                                 </div>
                                 <div id="error1" class="red">Part Name</div>
