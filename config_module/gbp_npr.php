@@ -37,8 +37,9 @@ if(!empty($resultmain)){
 		$total = 0;
 		$row3=$result3->fetch_assoc();
 		$total_time = $row3['tt'];
+		$tt = ($total_time>0)? $total_time : 1;
 
-		$target_npr = number_format($pm_npr * 100);
+		$target_npr = $pm_npr;
 		$actual_npr = number_format($total_gp/$total_time);
 		$pm_avg_npr = (($actual_npr - 2) > 0)? ($actual_npr - 2) : $actual_npr;
 		$posts[] = array( 'npr'=> $target_npr, 'avg_npr'=> $pm_avg_npr, 'actual_npr'=> $actual_npr,);
