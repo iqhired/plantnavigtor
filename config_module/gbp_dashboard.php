@@ -677,12 +677,12 @@ include("../hp_header.php");
 
 
                 if((actual_npr > npr) && (avg_npr > npr)){
-                     range1 = npr;
-                     range2 = avg_npr;
-                     range3 = actual_npr;
-                     fill3 = '#009900 0.8';
-                     fill2 = '#ffa000 0.8';
-                     fill1 = '#B31B1B 0.8';
+                    range1 = npr;
+                    range2 = avg_npr;
+                    range3 = actual_npr;
+                    fill3 = '#009900 0.8';
+                    fill2 = '#ffa000 0.8';
+                    fill1 = '#B31B1B 0.8';
                 }else if((actual_npr > npr) && (avg_npr < npr)){
                     range1 = avg_npr;
                     range2 = npr;
@@ -752,7 +752,7 @@ include("../hp_header.php");
                     from: 0,
                     to: range1,
                     position: 'inside',
-                    fill: fill1,
+                    fill: fill3,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
@@ -772,7 +772,7 @@ include("../hp_header.php");
                     from: range2,
                     to: (range3 + 20),
                     position: 'inside',
-                    fill: fill3,
+                    fill: fill1,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
