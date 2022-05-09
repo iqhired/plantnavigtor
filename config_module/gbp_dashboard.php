@@ -714,7 +714,7 @@ include("../hp_header.php");
                     .axis()
                     .scale()
                     .minimum(0)
-                    .maximum(range3)
+                    .maximum((range3 + number_format(range3 * .2)))
                     .ticks({ interval: 1 })
                     .minorTicks({ interval: 1 });
 
