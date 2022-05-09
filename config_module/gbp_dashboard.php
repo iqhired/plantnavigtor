@@ -675,21 +675,25 @@ include("../hp_header.php");
                 var fill2 = '#ffa000 0.8';
                 var fill3 = '#B31B1B 0.8';
 
+                var maxr3 =  parseFloat(range3) + parseFloat(range3 * .2)
+
 
                 if((actual_npr > npr) && (avg_npr > npr)){
                     range1 = npr;
                     range2 = avg_npr;
                     range3 = actual_npr;
                     fill3 = '#009900 0.8';
-                    fill2 = '#ffa000 0.8';
+                    fill2 = '#009900 0.8';
                     fill1 = '#B31B1B 0.8';
+                    maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
                 }else if((actual_npr > npr) && (avg_npr < npr)){
                     range1 = avg_npr;
                     range2 = npr;
                     range3 = actual_npr;
                     fill2 = '#009900 0.8';
-                    fill3 = '#ffa000 0.8';
+                    fill3 = '#009900 0.8';
                     fill1 = '#B31B1B 0.8';
+                    maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
                 }
 
                 var gauge = anychart.gauges.circular();
@@ -714,7 +718,7 @@ include("../hp_header.php");
                     .axis()
                     .scale()
                     .minimum(0)
-                    .maximum((range3 + Math.round(range3 * .2)))
+                    .maximum(maxr3)
                     .ticks({ interval: 1 })
                     .minorTicks({ interval: 1 });
 
@@ -752,7 +756,7 @@ include("../hp_header.php");
                     from: 0,
                     to: range1,
                     position: 'inside',
-                    fill: fill3,
+                    fill: fill1,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
@@ -770,9 +774,9 @@ include("../hp_header.php");
 
                 gauge.range(2, {
                     from: range2,
-                    to: (range3 + 20),
+                    to: (maxr3),
                     position: 'inside',
-                    fill: fill1,
+                    fill: fill3,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
