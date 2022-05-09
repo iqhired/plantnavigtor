@@ -58,13 +58,6 @@ if(!empty($resultmain)){
 			}
 		}
 		$total_time = (($total_time/60)/60);
-//		$sql3 = "SELECT SUM(total_time) as tt FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
-//
-//		$result3 = mysqli_query($db,$sql3);
-//		$total = 0;
-//		$row3=$result3->fetch_assoc();
-//		$total_time = $row3['tt'];
-//		$tt = ($total_time>0)? $total_time : 1;
 
 		$target_npr = $pm_npr;
 		$actual_npr = round($total_gp/$total_time , 2);
