@@ -61,8 +61,8 @@ if(!empty($resultmain)){
 
 		$target_npr = $pm_npr;
 		$actual_npr = round($total_gp/$total_time , 2);
-		$pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
-		$posts[] = array( 'npr'=> $target_npr, 'avg_npr'=> $pm_avg_npr, 'actual_npr'=> $actual_npr,);
+		// $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
+		$posts[] = array( 'npr'=> $target_npr,  'actual_npr'=> $actual_npr,);
 
 	}
 	$response['posts'] = $posts;

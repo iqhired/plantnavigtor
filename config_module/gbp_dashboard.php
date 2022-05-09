@@ -661,38 +661,30 @@ include("../hp_header.php");
                     return elem.npr;
                 });
                 // console.log(goodpiece);
-                var avg_npr = data.posts.map(function (elem) {
-                    return elem.avg_npr;
-                });
+                // var avg_npr = data.posts.map(function (elem) {
+                //     return elem.avg_npr;
+                // });
                 var actual_npr = data.posts.map(function (elem) {
                     return elem.actual_npr;
                 });
-                var range1 = avg_npr;
-                var range2 = actual_npr;
-                var range3 = npr;
+                // var range1 = avg_npr;
+                var range1 = actual_npr;
+                var range2 = npr;
 
-                var fill1 = '#009900 0.8';
-                var fill2 = '#ffa000 0.8';
-                var fill3 = '#B31B1B 0.8';
+                var fill3 = '#009900 0.8';
+                var fill2 = '#B31B1B 0.8';
+                var fill1 = '#B31B1B 0.8';
 
-                var maxr3 =  parseFloat(range3) + parseFloat(range3 * .2)
+                var maxr3 =  parseFloat(range2) + parseFloat(range2 * .2)
 
 
-                if((actual_npr > npr) && (avg_npr > npr)){
+                if((actual_npr >= npr)){
                     range1 = npr;
-                    range2 = avg_npr;
-                    range3 = actual_npr;
-                    fill3 = '#009900 0.8';
+                    // range2 = avg_npr;
+                    range2 = actual_npr;
+                    fill1 = '#009900 0.8';
                     fill2 = '#009900 0.8';
-                    fill1 = '#B31B1B 0.8';
-                    maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
-                }else if((actual_npr > npr) && (avg_npr < npr)){
-                    range1 = avg_npr;
-                    range2 = npr;
-                    range3 = actual_npr;
-                    fill2 = '#009900 0.8';
-                    fill3 = '#009900 0.8';
-                    fill1 = '#B31B1B 0.8';
+                    fill3 = '#B31B1B 0.8';
                     maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
                 }
 
@@ -776,7 +768,7 @@ include("../hp_header.php");
                     from: range2,
                     to: (maxr3),
                     position: 'inside',
-                    fill: fill3,
+                    fill: '#009900 0.8',
                     startSize: 50,
                     endSize: 50,
                     radius: 98
