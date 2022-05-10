@@ -419,8 +419,8 @@ include("../hp_header.php");
                     return elem.rework;
                 });
                 var data = [
-                    {x: 'Good Pieces', value: good_pieces, fill: '#177b09'},
-                    {x: 'Bad Pieces', value: bad_pieces, fill: '#BE0E31'},
+                    {x: 'Good', value: good_pieces, fill: '#177b09'},
+                    {x: 'Bad', value: bad_pieces, fill: '#BE0E31'},
                     {x: 'Rework', value: rework, fill: '#2643B9'},
 
                 ];
@@ -433,7 +433,7 @@ include("../hp_header.php");
 //enables HTML tags
                 title.useHtml(true);
                 title.text(
-                    "<br><br><br>"
+                    "<br><br>"
                 );
 
                 // set measure y axis title
@@ -451,7 +451,7 @@ include("../hp_header.php");
 
                 var labels = column.labels();
                 labels.fontFamily("Courier");
-                labels.fontSize(50);
+                labels.fontSize(24);
                 labels.fontColor("#125393");
                 labels.fontWeight("bold");
                 labels.useHtml(false);
@@ -468,7 +468,7 @@ include("../hp_header.php");
 
                 var labels = chart.xAxis().labels();
                 labels.fontFamily("Courier");
-                labels.fontSize(24);
+                labels.fontSize(18);
                 labels.fontColor("#125393");
                 labels.fontWeight("bold");
                 labels.useHtml(false);
@@ -557,7 +557,7 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate <span style="color:#009900; font-size: 22px;">( Max <strong> ' +bsr+' </strong>%)</span></div>' +
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +bsr+' </strong>%</span></div>' +
                     '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
                 );
 
@@ -651,22 +651,42 @@ include("../hp_header.php");
         var data = this.window.location.href.split('?')[1];
         $.ajax({
             type: 'POST',
-            url: 'gbp_scrap_rate.php',
+            url: 'gbp_npr.php',
             // dataType: 'good_bad_piece_fa.php',
             data: data,
             success: function (data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
-                var bsr = data.posts.map(function (elem) {
-                    return elem.bsr;
+                var npr = data.posts.map(function (elem) {
+                    return elem.npr;
                 });
                 // console.log(goodpiece);
-                var avg_bsr = data.posts.map(function (elem) {
-                    return elem.avg_bsr;
+                // var avg_npr = data.posts.map(function (elem) {
+                //     return elem.avg_npr;
+                // });
+                var actual_npr = data.posts.map(function (elem) {
+                    return elem.actual_npr;
                 });
-                var actual_bsr = data.posts.map(function (elem) {
-                    return elem.actual_bsr;
-                });
+                // var range1 = avg_npr;
+                var range1 = actual_npr;
+                var range2 = npr;
+
+                var fill3 = '#009900 0.8';
+                var fill2 = '#B31B1B 0.8';
+                var fill1 = '#B31B1B 0.8';
+
+                var maxr3 =  parseFloat(range2) + parseFloat(range2 * .2)
+
+
+                if((actual_npr >= npr)){
+                    range1 = npr;
+                    // range2 = avg_npr;
+                    range2 = actual_npr;
+                    fill1 = '#009900 0.8';
+                    fill2 = '#009900 0.8';
+                    fill3 = '#B31B1B 0.8';
+                    maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
+                }
 
                 var gauge = anychart.gauges.circular();
                 gauge
@@ -683,14 +703,14 @@ include("../hp_header.php");
                     .padding(5)
                     .fontSize(20)
                     .position('outside')
-                    .format('{%Value}%');
+                    .format('{%Value}');
 
-                gauge.data([actual_bsr]);
+                gauge.data([actual_npr]);
                 gauge
                     .axis()
                     .scale()
                     .minimum(0)
-                    .maximum(20)
+                    .maximum(maxr3)
                     .ticks({ interval: 1 })
                     .minorTicks({ interval: 1 });
 
@@ -701,8 +721,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Net Piece Rate <span style="color:#009900; font-size: 22px;">( Target <strong> ' +bsr+' </strong> per hour)</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong> per hour </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Target Net Pack Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +npr+' </strong> per hour </span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_npr +' </strong> per hour </span></div><br/><br/>'
                 );
 
                 gauge
@@ -726,29 +746,29 @@ include("../hp_header.php");
 
                 gauge.range(0, {
                     from: 0,
-                    to: avg_bsr,
+                    to: range1,
                     position: 'inside',
-                    fill: '#009900 0.8',
+                    fill: fill1,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
                 });
 
                 gauge.range(1, {
-                    from: avg_bsr,
-                    to: bsr,
+                    from: range1,
+                    to: range2,
                     position: 'inside',
-                    fill: '#ffa000 0.8',
+                    fill: fill2,
                     startSize: 50,
                     endSize: 50,
                     radius: 98
                 });
 
                 gauge.range(2, {
-                    from: bsr,
-                    to: 20,
+                    from: range2,
+                    to: (maxr3),
                     position: 'inside',
-                    fill: '#B31B1B 0.8',
+                    fill: '#009900 0.8',
                     startSize: 50,
                     endSize: 50,
                     radius: 98

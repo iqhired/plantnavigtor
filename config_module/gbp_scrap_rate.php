@@ -31,7 +31,7 @@ if(!empty($resultmain)){
 		$total = 0;
 		$row=$result->fetch_assoc();
 		$total =  $row['good_pieces'] + $row['bad_pieces'] + $row['rework'];
-		$actual_bsr = number_format(100 * ($row['bad_pieces']/$total));
+		$actual_bsr = round(100 * ($row['bad_pieces']/$total) , 2);
 		$posts[] = array( 'bsr'=> $pm_bsr, 'avg_bsr'=> $pm_avg_bsr, 'actual_bsr'=> $actual_bsr,);
 
 	}
@@ -61,7 +61,7 @@ if(!empty($def_ch) && $def_ch == 1){
 	if( null != $result1){
 		while ($row=$result1->fetch_assoc()){
 //	$posts1[] = array( 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework'],'defect_name'=> $row['defect_name']);
-			$posts1[] = array(  $row['defect_name'] , $row['bad_pieces'] , number_format(100 * ($row['bad_pieces']/$total) , 2));
+			$posts1[] = array(  $row['defect_name'] , $row['bad_pieces'] , round(100 * ($row['bad_pieces']/$total) , 2));
 //			array_push($data,$posts1);
 		}
 	}
