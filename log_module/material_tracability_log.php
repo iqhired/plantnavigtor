@@ -204,10 +204,11 @@ include("../heading_banner.php");
         <!-- Main charts -->
         <!-- Basic datatable -->
         <div class="panel panel-flat">
+            <form action="" id="material_form" class="form-horizontal" method="post">
             <div class="panel-heading">
                 <!--							<h5 class="panel-title">Stations</h5>-->
                 <!--							<hr/>-->
-                <form action="" id="material_form" class="form-horizontal" method="post">
+
                     <div class="row">
                         <div class="col-md-6 mobile">
 
@@ -388,7 +389,8 @@ include("../heading_banner.php");
                                 style="background-color:#1e73be;">Reset
                         </button>
                     </div>
-                    </form>
+
+            </form>
 
 
                     <div class="col-md-2">
@@ -418,7 +420,7 @@ include("../heading_banner.php");
                 <?php
 
                 /* Default Query */
-                $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station' DESC";
+                $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
 
                 /* Execute the Query Built*/
                 $qur = mysqli_query($db, $q);
