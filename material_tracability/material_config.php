@@ -98,7 +98,7 @@ if ($i != "super" && $i != "admin") {
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="../assets/js/core/app.js"></script>
     <script type="text/javascript" src="../assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
+<!--    <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>-->
     <script type="text/javascript" src="../assets/js/pages/form_select2.js"></script>
     <style>
         .sidebar-default .navigation li>a{color:#f5f5f5};
@@ -476,6 +476,7 @@ include("../heading_banner.php");
         $("#users").select2("open");
     }
 </script>
+
 
 
 <!-- /page container -->

@@ -5,7 +5,7 @@ $message = "";
 include("config.php");
 if (count($_POST) > 0) {
     $email = $_POST['email'];
-    $result = mysqli_query($db, "SELECT * FROM users WHERE email='" . $_POST["email"] . "'");
+    $result = mysqli_query($db, "SELECT * FROM cam_users WHERE email='" . $_POST["email"] . "'");
     $row = mysqli_fetch_array($result);
     if (is_array($row)) {
         $id = $row['users_id'];

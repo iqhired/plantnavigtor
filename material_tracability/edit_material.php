@@ -488,10 +488,10 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label">Material Status : </label>
                                     <div class="col-md-6">
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" id="pass" name="material_status" value="pass" class="form-check-input" <?php if($rowcmain['material_status'] == "1"){ echo 'checked'; } ?> required>
+                                            <input type="radio" id="pass" name="material_status" value="1" class="form-check-input" <?php if($rowcmain['material_status'] == "1"){ echo 'checked'; } ?> required>
                                             <label for="pass" class="item_label">Pass</label>
 
-                                            <input type="radio" id="fail" name="material_status" value="fail" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "0"){ echo 'checked'; } ?> required>
+                                            <input type="radio" id="fail" name="material_status" value="0" class="form-check-input reject"  <?php if($rowcmain['material_status'] == "0"){ echo 'checked'; } ?> required>
                                             <label for="fail" class="item_label">Fail</label>
 
 
@@ -502,7 +502,7 @@ include("../heading_banner.php");
 
                                 </div>
                                 <br/>
-                                <div class="row desc" id="Reasonfail"  style="display: none;">
+                                <div class="row desc" id="Reason0"  style="display: none;">
                                     <label class="col-lg-2 control-label"> Reason : </label>
                                     <div class="col-md-6">
                                         <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
@@ -521,7 +521,7 @@ include("../heading_banner.php");
 
                                 </div>
                                 <br/>
-                                <div class="row desc" id="material_statusfail"  style="display: none;">
+                                <div class="row desc" id="material_status0"  style="display: none;">
                                     <label class="col-lg-2 control-label"> Reason Description : </label>
                                     <div class="col-md-6">
                                         <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $fail_reason;?>"></textarea>
@@ -529,7 +529,7 @@ include("../heading_banner.php");
 
                                 </div>
                                 <br/>
-                                <div class="row desc" id="quantityfail" style="display: none;">
+                                <div class="row desc" id="quantity0" style="display: none;">
                                     <label class="col-lg-2 control-label">Quantity: </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="quantity" rows="1" id="quantity" value="<?php echo $quantity;?>">
@@ -537,7 +537,7 @@ include("../heading_banner.php");
 
                                 </div>
                                 <br/>
-                                <?php if($rowcmain['material_status'] == "fail"){?>
+                                <?php if($rowcmain['material_status'] == "0"){?>
 
                                     <div class="row desc" id="material_statusfail">
                                         <label class="col-lg-2 control-label">Reason : </label>
