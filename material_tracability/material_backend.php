@@ -37,16 +37,20 @@ if(count($_POST)>0) {
 
     $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_no= '$line_number' ORDER BY `material_id` DESC LIMIT 1");
     $rowc04 = mysqli_fetch_array($qur04);
-    $material_id = $rowc04["material_id"];
+    $material_trace_id = $rowc04["material_id"];
     $material_status = $rowc04["material_status"];
 
     //mail code start
 
       if ($material_status == '0') {
 
+		  $qur05 = mysqli_query($db, "SELECT * FROM `material_config` where material_id = '$material_type' " );
+		  $rowc05 = mysqli_fetch_array($qur05);
+		  $out_of_tolerance_mail_list1 = $rowc05['teams'];
+		  $out_of_tolerance_mail_list_users = $rowc05['users'];
 //	$subject = "Users Mail Report";
     require '../vendor/autoload.php';
-    $subject = "Material tracability Mail Report";
+
     //mail code start
     $mail = new PHPMailer();
     $mail->isSMTP();
@@ -60,34 +64,36 @@ if(count($_POST)>0) {
     $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
-    $del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name , name as form_name   FROM  form_create as fc inner join cam_line as cl on fc.station = cl.line_id inner join pm_part_family as pf on fc.part_family= pf.pm_part_family_id 
-inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where form_create_id='$formcreateid'");
+    $del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name   FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
+inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.material_id='$material_trace_id'");
     $del_query_01 = mysqli_query($db, $del_query);
     $del_query_row = mysqli_fetch_array($del_query_01);
-    $del_user_id = $rowc04['created_by'];
+    $del_user_id = '1';
+//    $del_user_id = $rowc04['created_by'];
     $del_query_2 = sprintf("SELECT user_name , firstname , lastname from cam_users where users_id='$del_user_id'");
     $del_query_02 = mysqli_query($db, $del_query_2);
     $del_query_row_1 = mysqli_fetch_array($del_query_02);
-    $line1 = "An out of tolerance value has been entered in the system for a First piece sheet. Please see the details below.";
+    $line1 = "There have been issue(s) found with the following material(s):";
     $line2 = $del_query_row['line_name'];
-    $form_name = $del_query_row['form_name'];
+    $subject = $line2 . " - Material Rejected";
+//    $form_name = $del_query_row['form_name'];
     $p_num = $del_query_row['part_number'];
     $p_name = $del_query_row['part_name'];
     $pf_name = $del_query_row['part_family_name'];
     $form_submitted_by = $del_query_row_1['firstname'] . " " . $del_query_row_1['lastname'];
 
     $message = '<br/><table rules=\"all\" style=\"border-color: #666;\" border=\"1\" cellpadding=\"10\">';
-    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_name . "</td></tr>";
-    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Station : </strong> </td><td>" . $line2 . "</td></tr>";
+//    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_name . "</td></tr>";
+    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Area / Station : </strong> </td><td>" . $line2 . "</td></tr>";
     $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $p_num . "</td></tr>";
     $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $p_name . "</td></tr>";
     $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $pf_name . "</td></tr>";
     $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Operator/User : </strong> </td><td>" . $form_submitted_by . "</td></tr>";
-    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Number of items that are out of specification: </strong> </td><td>" . $temp_j . "</td></tr>";
+//    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Number of items that are out of specification: </strong> </td><td>" . $temp_j . "</td></tr>";
     $message .= "</table>";
     $message .= "<br/>";
     $message1 = "Please click on the following link to review the values that were uploaded : ";
-    $message2 = $siteURL . "form_module/view_form_data.php?id=" . $form_user_data_id;
+    $message2 = $siteURL . "material_tracability/view_material.php?id=" . $material_trace_id;
     $signature = "- USPL Process Control Team";
 
 
@@ -130,6 +136,27 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
         }
     }
 
+		  $arr_out_of_tolerance_mail_list_users = explode(',', $out_of_tolerance_mail_list_users);
+		  foreach ($arr_out_of_tolerance_mail_list_users as $out_of_tolerance_mail_list_user) {
+			  if ($out_of_tolerance_mail_list_user != "") {
+				  $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$out_of_tolerance_mail_list_user' ");
+				  $qur0005 = mysqli_query($db, $query0005);
+				  $rowc0005 = mysqli_fetch_array($qur0005);
+				  $email = $rowc0005["email"];
+				  $lasname = $rowc0005["lastname"];
+				  $firstname = $rowc0005["firstname"];
+				  $mail->addAddress($email, $firstname);
+				  if (!$mail->send()) {
+					  echo 'Mailer Error: ' . $mail->ErrorInfo;
+				  } else {
+					  $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+					  $imapStream = imap_open($path, $mail->Username, $mail->Password);
+					  $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+					  imap_close($imapStream);
+				  }
+			  }
+		  }
+
 }
 
 //multiple image
@@ -139,7 +166,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                 for($i=0;$i<$totalfiles;$i++) {
                     $errors = array();
                     $file_name = $_FILES['image']['name'][$i];
-                    $file_rename = "material_id_".$material_id."_".$file_name;
+                    $file_rename = "material_id_".$material_trace_id."_".$file_name;
                     $file_size = $_FILES['image']['size'][$i];
                     $file_tmp = $_FILES['image']['tmp_name'][$i];
                     $file_type = $_FILES['image']['type'][$i];
@@ -156,9 +183,9 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                         $import_status_message = 'Error: File size must be excately 2 MB';
                     }
                     if (empty($errors) == true) {
-                        move_uploaded_file($file_tmp, "../material_images/" . "material_id_".$material_id."_".$file_name);
+                        move_uploaded_file($file_tmp, "../material_images/" . "material_id_".$material_trace_id."_".$file_name);
 
-                        $sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_rename' , '$material_id' , '$created_by' )";
+                        $sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_rename' , '$material_trace_id' , '$created_by' )";
 
                         $result1 = mysqli_query($db, $sql);
                         if ($result1) {
@@ -174,6 +201,6 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
     }
 
 
-$page = "edit_material.php?id=$material_id";
+$page = "edit_material.php?id=$material_trace_id";
 header('Location: '.$page, true, 303);
 exit;

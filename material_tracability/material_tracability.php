@@ -509,20 +509,27 @@ while ($row1 = $result1->fetch_assoc()) {
             $("#file-input").on("change", function(e) {
                 var files = e.target.files,
                     filesLength = files.length;
+
+                const boxes = document.querySelectorAll('.pip');
+
+                boxes.forEach(box => {
+                    box.remove();
+                });
+                var tot = e.currentTarget.attributes.length;
+                var ij = tot - filesLength + 1 ;
                 for (var i = 0; i < filesLength; i++) {
                     var f = files[i]
                     var fileReader = new FileReader();
                     fileReader.onload = (function(e) {
+
+                        var id_text = 'pip_' + (ij++);
                         var file = e.target;
                         $("<span class=\"pip\">" +
-                            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                            "<br/><span class=\"remove\">Remove image</span>" +
-                            "</span>").insertAfter("#file-input");
+                            "<img id='" + id_text + "' class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/></span>").insertAfter("#file-input");
                         $(".remove").click(function(){
                             $(this).parent(".pip").remove();
                         });
-
-
                     });
                     fileReader.readAsDataURL(f);
                 }
