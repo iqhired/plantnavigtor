@@ -297,8 +297,8 @@ include("../heading_banner.php");
                                             <input type="text" name="edit_material_type[]" id="edit_material_type" value="<?php echo  $material_type; ?>" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
                                         </div>
                                     </div>
-                                    <div id="newRow1"></div>
-                                    <button id="addRow1" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+<!--                                    <div id="newRow1"></div>-->
+<!--                                    <button id="addRow1" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
                                 </div>
                             </div><br/>
 
