@@ -16,8 +16,9 @@ if (count($_POST) > 0) {
         $id = $row['users_id'];
         $name = $row['user_name'];
         $password = "PW" . rand(10000, 500000);
+        $pp = md5($password);
         $msg = "Your new password is :-" . $password;
-        $sql = "update `cam_users` set `password` = '$password' where `users_id`='$id'";
+        $sql = "update `cam_users` set `password` = '$pp' where `users_id`='$id'";
         mysqli_query($db, $sql);
         $mail = new PHPMailer();
         $mail->isSMTP();
