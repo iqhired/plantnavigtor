@@ -28,8 +28,7 @@ if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
 }
 
-$edit_id = $_POST['edit_id'];
-if(empty($edit_id)){
+
 	if (count($_POST) > 0) {
 		$teams1 = $_POST['teams'];
 		$users1 = $_POST['users'];
@@ -69,48 +68,6 @@ if(empty($edit_id)){
 			}
 		}
 	}
-}else{
-	// edit material config
-	$id = $_POST['edit_id'];
-	$edit_teams1 = $_POST['edit_teams'];
-	$edit_users1 = $_POST['edit_users'];
-	$edit_m_type = $_POST['edit_material_type'];
-	$edit_material_type = count($_POST['edit_material_type']);
-	foreach ($edit_teams1 as $edit_teams) {
-		$array_team .= $edit_teams . ",";
-	}
-
-	foreach ($edit_users1 as $edit_users) {
-		$array_user .= $edit_users . ",";
-	}
-	if ($edit_material_type > 1) {
-		for ($i = 0; $i < $edit_material_type; $i++) {
-			if (trim($_POST['material_type'][$i]) != '') {
-				$sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]', `created_at` = '$chicagotime' where `material_id`='$id'";
-
-				$result1 = mysqli_query($db, $sql);
-				if ($result1) {
-					$message_stauts_class = 'alert-success';
-					$import_status_message = 'Data Updated successfully.';
-				} else {
-					$message_stauts_class = 'alert-danger';
-					$import_status_message = 'Error: Please Retry...';
-				}
-			}
-		}
-	} else {
-		$sql="update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]', `created_at` = '$chicagotime' where `material_id`='$id'";
-
-		$result1 = mysqli_query($db, $sql);
-		if ($result1) {
-			$message_stauts_class = 'alert-success';
-			$import_status_message = 'Data Updated successfully.';
-		} else {
-			$message_stauts_class = 'alert-danger';
-			$import_status_message = 'Error: Please Retry...';
-		}
-	}
-}
 
 ?>
 <!DOCTYPE html>
@@ -203,6 +160,10 @@ if(empty($edit_id)){
                 width: 122%!important;
             }
         }
+        .c_footer{
+            margin-left: 110px;
+            margin-top: -50px;
+        }
     </style>
 </head>
 <body>
@@ -260,7 +221,7 @@ include("../heading_banner.php");
                                         <div class="form-group">
                                             <select class="select-border-color" data-placeholder="Add Teams..." name="teams[]" id="teams" multiple="multiple"  >
                                                 <?php
-                                                $arrteam = explode(',', $rowc["teams"]);
+
                                                 $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -289,7 +250,6 @@ include("../heading_banner.php");
                                         <div class="form-group">
                                             <select class="select-border-color" data-placeholder="Add Users ..." name="users[]" id="users"  multiple="multiple" >
                                                 <?php
-                                                $arrteam1 = explode(',', $rowc["users"]);
                                                 $sql1 = "SELECT * FROM `cam_users` WHERE `users_id` != '1' order BY `firstname` ";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -335,6 +295,9 @@ include("../heading_banner.php");
 
             </form>
         </div>
+
+
+
         <!-- /main charts -->
              <form action="delete_material.php" method="post" class="form-horizontal">
             <div class="row">
@@ -412,7 +375,7 @@ include("../heading_banner.php");
                             <td><?php echo $rowc["material_type"]; ?></td>
 
                             <td>
-                                <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['material_id']; ?>" data-material_teams="<?php echo  $material; ?>" data-material_users="<?php echo $nnm;?>" data-material_type="<?php echo $rowc['material_type']; ?>"  data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
+                                <a href="edit_material_config.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" data-material_teams="<?php echo  $material; ?>"  style="background-color:#1e73be;">Edit</a>
 
                             </td>
                         </tr>
@@ -422,84 +385,7 @@ include("../heading_banner.php");
         </form>					</div>
     <!-- /basic datatable -->
     <!-- edit modal -->
-    <div id="edit_modal_theme_primary" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">Update Material Config</h6>
-                </div>
-                <form action="" id="user_form" class="form-horizontal" method="post">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Material Teams:*</label>
-                                    <div class="col-lg-7 mob_modal" id="edit_teams_val">
-                                        <input type="hidden" name="edit_id" id="edit_id" >
-                                        <select class="select-border-color" data-placeholder="Add Teams..." name="edit_teams[]" id="edit_teams" multiple="multiple" >
-                                            <?php
-                                            $sql1 = "SELECT group_id, group_name FROM sg_group order by group_name ASC";
-                                            $result1 = $mysqli->query($sql1);
-                                            $selected = "";
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                echo "<option id='" . $row1['group_id'] . "' value='" . $row1['group_id'] . "' >" . $row1['group_name'] . "</option>";
-                                            }
 
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Material Users:*</label>
-                                    <div class="col-lg-7 mob_modal" id="edit_users_val">
-                                        <select class="select-border-color" data-placeholder="Add Users ..." name="edit_users[]" id="edit_users"  multiple="multiple" >
-                                            <?php
-                                            $sql12= "SELECT users_id, firstname,lastname FROM cam_users order by firstname ASC";
-                                            $result2 = mysqli_query($db,$sql12);
-                                            $selected = "";
-                                            while ($row2 = mysqli_fetch_assoc($result2)) {
-                                                echo "<option id='" . $row2['users_id'] . "' value='" . $row2['users_id'] . "' >" . $row2['firstname'] . "&nbsp" .$row2['lastname']. "</option>";
-                                            }
-
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Material Type:*</label>
-                                    <div class="col-lg-7 mob_modal">
-                                        <div id="inputFormRow1">
-                                            <div class="input-group mb-3">
-                                                <input type="text" name="edit_material_type[]" id="edit_material_type"  class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">
-                                            </div>
-                                        </div>
-<!--                                        <div id="newRow1"></div>-->
-<!--                                        <button id="addRow1" type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- Dashboard content -->
     <!-- /dashboard content -->
     <script> $(document).on('click', '#delete', function () {
@@ -554,100 +440,29 @@ include("../heading_banner.php");
         $(this).closest('#inputFormRow1').remove();
     });
 </script>
-<script>
-    $(document).on('click', '#edit', function () {
+<script type="text/javascript">
+    // add row
+    $("#addRow2").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow2">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="material_type[]" class="form-control m-input" placeholder="Enter Material Type" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow2" type="button" class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>';
+        html += '</div>';
+        html += '</div>';
 
-        var element = $(this);
-        var edit_id = element.attr("data-id");
-        //console.log(edit_id);
-        var teams = $(this).data("material_teams").toString();
-        if((null != teams) && ( teams !='')){
-            teams = teams.toString();
-        };
-        var users = $(this).data("material_users").toString();
-        if((null != users) && ( users !='')){
-            users = users.toString();
-        };
-        var type= $(this).data("material_type");
-        $("#edit_id").val(edit_id);
-        $("#edit_teams").val(teams);
-        $("#edit_users").val(users);
+        $('#newRow1').append(html);
+    });
 
-        $("#edit_material_type").val(type);
-
-        const sb1 = document.querySelector('#edit_teams');
-        // create a new option
-        var pnums = null;
-        if (teams.indexOf(',') > -1){
-            pnums = teams.replaceAll(' ','').split(',');
-        }else{
-            pnums = teams.replaceAll(' ','')
-        }
-        var options1 = sb1.options;
-        // $("#edit_part_number").val(options);
-        $('#edit_modal_theme_primary #edit_teams_val .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
-        // $('select2-search select2-search--inline').remove();
-
-        for (var i = 0; i < options1.length; i++) {
-            if(pnums.includes(options1[i].value)){ // EDITED THIS LINE
-                options1[i].selected="selected";
-
-                // options1[i].className = ("select2-results__option--highlighted");
-                var opt = document.getElementById(options1[i].value).outerHTML.split(">");
-                // $('#edit_defects').prop('selectedIndex',i);
-
-                $('#edit_teams #select2-results .select2-results__option').prop('selectedIndex',i);
-                var gg = '<li class="select2-selection__choice" title="' + opt[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt[1].replace('</option','') + '</li>';
-                $('#edit_modal_theme_primary #edit_teams_val .select2-selection__rendered').append(gg);
-                // $('.select2-search__field').style.visibility='hidden';
-            }
-        }
-
-
-       // edit users
-
-        const sb2 = document.querySelector('#edit_users');
-        // create a new option
-        var pusers = null;
-        if (users.indexOf(',') > -1){
-            pusers = users.replaceAll(' ','').split(',');
-        }else{
-            pusers = users.replaceAll(' ','')
-        }
-        var options2 = sb2.options;
-        //console.log(options2);
-        // $("#edit_part_number").val(options);
-        $('#edit_modal_theme_primary #edit_users_val .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
-        // $('select2-search select2-search--inline').remove();
-
-        for (var j = 0; j < options2.length; j++) {
-            if(pusers.includes(options2[j].value)){ // EDITED THIS LINE
-                options2[j].selected="selected";
-
-                // options1[i].className = ("select2-results__option--highlighted");
-                var opt1 = document.getElementById(options2[j].value).outerHTML.split(">");
-                // $('#edit_defects').prop('selectedIndex',i);
-
-                $('#edit_users #select2-results .select2-results__option').prop('selectedIndex',j);
-                var gg1 = '<li class="select2-selection__choice" title="' + opt1[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt1[1].replace('</option','') + '</li>';
-                $('#edit_modal_theme_primary #edit_users_val .select2-selection__rendered').append(gg1);
-                // $('.select2-search__field').style.visibility='hidden';
-            }
-        }
-
-
-
-
-
-
+    // remove row
+    $(document).on('click', '#removeRow2', function () {
+        $(this).closest('#inputFormRow2').remove();
     });
 </script>
 
-<script>
-    window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>material_tracability/material_config.php");
-    }
-</script>
+
+
 <script>
     $("#checkAll").click(function () {
         $('input:checkbox').not(this).prop('checked', this.checked);
@@ -661,6 +476,8 @@ include("../heading_banner.php");
         $("#users").select2("open");
     }
 </script>
+
+
 <!-- /page container -->
 
 <?php include ('../footer.php') ?>
