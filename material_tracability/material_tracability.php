@@ -642,7 +642,7 @@ while ($row1 = $result1->fetch_assoc()) {
             $("#Reason" + test).show();
             $("#material_status" + test).show();
             $("#quantity" + test).show();
-            $("#Reason" + test).prop('required',true);
+
 
 
         });

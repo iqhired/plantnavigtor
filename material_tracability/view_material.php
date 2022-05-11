@@ -233,15 +233,22 @@ include("../heading_banner.php");
         $qurmain = mysqli_query($db, $querymain);
 
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
-            $formname = $rowcmain['line_number'];
+            $formname = $rowcmain['line_no'];
 
             ?>
+	<?php
+
+	$line_no = "SELECT line_id,line_name from cam_line where line_id = '$formname'";
+	$rowline = mysqli_query($db,$line_no);
+	$sqlline = mysqli_fetch_assoc($rowline);
+	$line_number = $sqlline['line_name'];
+	?>
 
             <div class="panel panel-flat">
                 <!--  <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
                 <div class="panel-heading">
 
-                    <h5 class="panel-title form_panel_title"><?php echo $formname; ?>  </h5>
+                    <h5 class="panel-title form_panel_title"><?php echo $line_number; ?>  </h5>
                     <div class="row ">
                         <div class="col-md-12">
                             <form action="" id="form_settings" enctype="multipart/form-data"
@@ -268,17 +275,31 @@ include("../heading_banner.php");
                                     <div class="form_row row">
                                         <label class="col-lg-2 control-label">Part Family : </label>
                                         <div class="col-md-6">
+
+                                            <?php
+                                            $part_family_id = $rowcmain['part_family_id'];
+                                            $part_family = "SELECT * from pm_part_family where pm_part_family_id = '$part_family_id'";
+                                            $rowpart = mysqli_query($db,$part_family);
+                                            $sqlpart = mysqli_fetch_assoc($rowpart);
+                                            $part_family = $sqlpart['part_family_name'];
+                                            ?>
                                                 <input type="text" name="part_family" class="form-control" id="part_family"
-                                                       value="<?php echo $rowcmain['part_family']; ?>" disabled>
+                                                       value="<?php echo $part_family ?>" disabled>
 
                                         </div>
                                     </div>
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Part Number : </label>
                                     <div class="col-md-6">
-
+										<?php
+										$part_no = $rowcmain['part_no'];
+										$part_num = "SELECT * from pm_part_number where pm_part_number_id = '$part_no'";
+										$rowpartno = mysqli_query($db,$part_num);
+										$sqlpartno = mysqli_fetch_assoc($rowpartno);
+										$part_num_pm = $sqlpartno['part_number'];
+										?>
                                         <input type="text" name="part_number" class="form-control" id="part_number"
-                                               value="<?php echo $rowcmain['part_number']; ?>" disabled>
+                                               value="<?php echo $part_num_pm; ?>" disabled>
                                     </div>
                                 </div>
                                 <div class="form_row row">
@@ -317,7 +338,7 @@ include("../heading_banner.php");
                                     <div class="col-md-6">
 
                                         <input type="text" name="material_status" class="form-control" id="material_status"
-                                               value="<?php echo $rowcmain['material_status']; ?>" disabled>
+                                               value="<?php echo ($rowcmain['material_status'] == 0)?'fail':'pass'; ?>" disabled>
                                     </div>
                                 </div>
                                 <div class="form_row row">

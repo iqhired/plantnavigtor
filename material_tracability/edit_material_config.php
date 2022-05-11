@@ -315,7 +315,7 @@ include("../heading_banner.php");
             </div>
             </form>
             <div class="c_footer">
-                <button type="submit" id="cancel" class="btn btn-primary" style="background-color:#1e73be;" onclick="hideDiv()">Cancel </button>
+                <button type="submit"  class="btn btn-primary" style="background-color:#1e73be;" onclick="history.go(-1)">Cancel </button>
             </div>
         </div>
 
