@@ -2,17 +2,55 @@
 @ob_start();
 ini_set('display_errors', FALSE);
 $message = "";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require './vendor/autoload.php';
 include("config.php");
 if (count($_POST) > 0) {
     $email = $_POST['email'];
     $result = mysqli_query($db, "SELECT * FROM cam_users WHERE email='" . $_POST["email"] . "'");
     $row = mysqli_fetch_array($result);
     if (is_array($row)) {
+
         $id = $row['users_id'];
         $name = $row['user_name'];
         $password = "PW" . rand(10000, 500000);
-        $msg = "Hi " . $name . ", Your new password is :-" . $password;
-        mail($email, "Password Recovery", $msg);
+        $msg = "Your new password is :-" . $password;
+        $sql = "update `cam_users` set `password` = '$password' where `users_id`='$id'";
+        mysqli_query($db, $sql);
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPAuth = true;
+        $mail->Username = 'admin@plantnavigator.com';
+        $mail->Password = 'S@@rgummi@2021';
+        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+        $email = $row["email"];
+        $lasname = $row["lastname"];
+        $firstname = $row["firstname"];
+        $mail->addAddress($email, $firstname);
+        $signature = '- Plantnavigator Admin';
+
+        $structure = '<html><body>';
+        $structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello " . $firstname ." " . $lasname.",</span><br/><br/>";
+        $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $msg . "</span><br/> ";
+//        $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message . "</span><br/> ";
+        $structure .= "<br/><br/>";
+        $structure .= $signature;
+        $structure .= "</body></html>";
+
+
+        $subject = "Password Recovery";
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $structure;
+        if (!$mail->send()) {
+        }
+
         $_SESSION['temp'] = "forgotpass_success";
         header("Location:index.php");
     } else {
@@ -47,7 +85,7 @@ if (count($_POST) > 0) {
         <!-- Theme JS files -->
         <!--<script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>-->
-        <script type="text/javascript" src="assets/js/core/app.js"></script>
+<!--        <script type="text/javascript" src="assets/js/core/app.js"></script>-->
         <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
         <!-- /theme JS files -->
         <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
