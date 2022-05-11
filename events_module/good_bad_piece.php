@@ -52,6 +52,9 @@ $rowcnumber = $resultnumber->fetch_assoc();
 $printenabled = $rowcnumber['print_label'];
 $p_line_name = $rowcnumber['line_name'];
 
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+, $_SERVER["HTTP_USER_AGENT"]);
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
 $resultnumber = $mysqli->query($sqlnumber);
@@ -241,8 +244,10 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             <!--                            </br>-->
             </br>
             <div class="row">
-                <div class="col-md-12">.
+                <div class="col-md-12">
+                    <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
+					<?php }?>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_good_modal_theme_primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 1vh; font-size: large; text-align: center;">IN-SPEC</button>
                 </div>
             </div>
