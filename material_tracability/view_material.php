@@ -349,14 +349,14 @@ include("../heading_banner.php");
                                                value="<?php echo $rowcmain['fail_reason']; ?>" disabled>
                                     </div>
                                 </div>
-                                <div class="form_row row">
-                                    <label class="col-lg-2 control-label">Reason Description : </label>
-                                    <div class="col-md-6">
-
-                                        <input type="text" name="reason_desc" class="form-control" id="reason_desc"
-                                               value="<?php echo $rowcmain['reason_desc']; ?>" disabled>
-                                    </div>
-                                </div>
+<!--                                <div class="form_row row">-->
+<!--                                    <label class="col-lg-2 control-label">Reason Description : </label>-->
+<!--                                    <div class="col-md-6">-->
+<!---->
+<!--                                        <input type="text" name="reason_desc" class="form-control" id="reason_desc"-->
+<!--                                               value="--><?php //echo $rowcmain['reason_desc']; ?><!--" disabled>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Quantity : </label>
                                     <div class="col-md-6">

@@ -450,15 +450,15 @@ while ($row1 = $result1->fetch_assoc()) {
                                 </div>
                             </div>
                             <br/>
-                            <div class="row desc" id="material_status0" style="display: none;">
-                                <label class="col-lg-2 control-label"> Reason Description : </label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc"></textarea>
-                                </div>
-
-                            </div>
-
-                            <br/>
+<!--                            <div class="row desc" id="material_status0" style="display: none;">-->
+<!--                                <label class="col-lg-2 control-label"> Reason Description : </label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc"></textarea>-->
+<!--                                </div>-->
+<!---->
+<!--                            </div>-->
+<!---->
+<!--                            <br/>-->
                             <div class="row desc" id="quantity0" style="display: none;">
                                 <label class="col-lg-2 control-label"> Quantity : </label>
                                 <div class="col-md-6">
