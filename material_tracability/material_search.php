@@ -185,7 +185,12 @@ include("../heading_banner.php");
 
                        <?php
                     while ($rowc = mysqli_fetch_array($qur)) {
-                        $station = $rowc["line_number"];
+                        $line_name = $rowc["line_no"];
+                        $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
+                        $resultnumber = mysqli_query($db,$sqlnumber);
+                        $rowcnumber = mysqli_fetch_array($resultnumber);
+                        $station = $rowcnumber['line_name'];
+
                         $material_type = $rowc["material_type"];
                         $serial_number = $rowc["serial_number"];
                         $material_status = $rowc["material_status"];

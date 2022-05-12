@@ -230,7 +230,7 @@ $s_event_id = $_GET['station_event_id'];
         .form-control[disabled], fieldset[disabled] .form-control {
             background-color: #eee;
         }
-        #line_number , #part_number , #part_family , #part_name , #material_type{
+        #line_number1 , #part_number1 , #part_family1 , #part_name , #material_type{
             pointer-events: none;
             background-color: #efefef;
         }
@@ -296,11 +296,11 @@ include("../heading_banner.php");
         $querymain = sprintf("SELECT * FROM `material_tracability` where material_id = '$id' ");
         $qurmain = mysqli_query($db, $querymain);
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
-            $line_name = $rowcmain['line_no'];
+            $line_no = $rowcmain['line_no'];
             $station_event_id = $rowcmain['station_event_id'];
             $material_id = $rowcmain['material_id'];
-            $pm_part_number = $rowcmain['part_no'];
-            $pm_part_family_name= $rowcmain['part_family_id'];
+            $part_number = $rowcmain['part_no'];
+                $part_family= $rowcmain['part_family_id'];
             $pm_part_name= $rowcmain['part_name'];
             $material_type= $rowcmain['material_type'];
             $material_status= $rowcmain['material_status'];
@@ -310,18 +310,18 @@ include("../heading_banner.php");
             $notes= $rowcmain['notes'];
             $created_at= $rowcmain['created_at'];
 
-            $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$pm_part_family_name'";
+            $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
             $resultfamily = mysqli_query($db,$sqlfamily);
             $rowcfamily = mysqli_fetch_array($resultfamily);
             $pm_part_family_name = $rowcfamily['part_family_name'];
 
-            $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$pm_part_number'";
+            $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
             $resultnumber = mysqli_query($db,$sqlnumber);
             $rowcnumber = mysqli_fetch_array($resultnumber);
             $pm_part_number = $rowcnumber['part_number'];
             $pm_part_name = $rowcnumber['part_name'];
 
-            $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
+            $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_no'";
             $resultnumber = mysqli_query($db,$sqlnumber);
             $rowcnumber = mysqli_fetch_array($resultnumber);
             $line_name = $rowcnumber['line_name'];
@@ -364,7 +364,8 @@ include("../heading_banner.php");
                                         <input type="hidden" name="material_id" id="material_id" value="<?php echo $material_id ?>">
                                         <input type="hidden" name="station_event_id" value="<?php echo $station_event_id ?>">
                                         <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                        <input type="text" name="line_number" id="line_number"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
+                                        <input type="hidden" name="line_number" id="line_number" value="<?php echo $line_no; ?>">
+                                        <input type="text" name="line_number1" id="line_number1"  value="<?php echo $line_name ?>" class="form-control" placeholder="Enter Line Number">
                                     </div>
                                     <div id="error1" class="red">Line Number</div>
                                 </div>
@@ -372,14 +373,16 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="part_number" id="part_number"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
+                                        <input type="hidden" name="part_number" id="part_number"  value="<?php echo $part_number; ?>">
+                                        <input type="text" name="part_number1" id="part_number1"  value="<?php echo $pm_part_number; ?>" class="form-control" placeholder="Enter Part Number">
                                     </div>
                                     <div id="error1" class="red">Part Number</div>
                                 </div>
                                 <br/>   <div class="row">
                                     <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="part_family" id="part_family"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
+                                        <input type="hidden" name="part_family" id="part_family"  value="<?php echo $part_family; ?>">
+                                        <input type="text" name="part_family1" id="part_family1"  value="<?php echo $pm_part_family_name; ?>" class="form-control" placeholder="Enter Part Family">
                                     </div>
                                     <div id="error1" class="red">Part family</div>
                                 </div>
@@ -444,6 +447,7 @@ include("../heading_banner.php");
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;
                                         while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                            $image = $rowcimage['image_name'];
                                             $d_tag = "delete_image_" . $i;
                                             $r_tag = "remove_image_" . $i;
                                             ?>
@@ -451,7 +455,7 @@ include("../heading_banner.php");
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-                                                        <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                        <img src="../material_images/<?php echo $image; ?>"
                                                              alt="">
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>

@@ -4,6 +4,7 @@ $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
     header('location: ../logout.php');
+
 }
 
 //Set the session duration for 10800 seconds - 3 hours
