@@ -377,7 +377,7 @@ while ($row1 = $result1->fetch_assoc()) {
 
 
                             <div class="row">
-                                <label class="col-lg-2 control-label">Material type Added : </label>
+                                <label class="col-lg-2 control-label">Material type : </label>
                                 <div class="col-md-6">
                                     <select name="material_type" id="material_type" class="select" data-style="bg-slate" /required>
                                         <option value="" selected disabled>--- Select material Type ---</option>

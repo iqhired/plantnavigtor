@@ -400,7 +400,7 @@ include("../heading_banner.php");
 
 
                                 <div class="row">
-                                    <label class="col-lg-2 control-label">Material type Added : </label>
+                                    <label class="col-lg-2 control-label">Material type : </label>
                                     <div class="col-md-6">
                                         <select name="material_type" id="material_type" class="select" data-style="bg-slate" >
                                             <option value="" selected disabled>--- Select material Type ---</option>
@@ -506,25 +506,6 @@ include("../heading_banner.php");
 
                                 </div>
                                 <br/>
-                                <div class="row desc" id="Reason0"  style="display: none;">
-                                    <label class="col-lg-2 control-label"> Reason : </label>
-                                    <div class="col-md-6">
-                                        <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
-                                            <option value="" selected disabled>--- Select Reason ---</option>
-                                            <?php
-                                            $string = $reason;
-
-                                            $str_arr = explode (",", $string);
-                                            for ($i=0; $i < count($str_arr) ; $i++)
-                                            {  ?>
-
-                                                <option value="<?php echo $str_arr[$i]; ?>"><?php echo $str_arr[$i]; ?></option>
-                                            <?php     } ?>
-
-                                        </select>                                </div>
-
-                                </div>
-                                <br/>
 
                                 <?php if($rowcmain['material_status'] == "0"){?>
 
@@ -558,15 +539,27 @@ include("../heading_banner.php");
                                     </div>
                                     <br/>
                                 <?php }else{ ?>
-                                    <div class="row desc" id="material_status0"  style="display: none;">
-                                    <label class="col-lg-2 control-label"> Reason Description : </label>
-                                    <div class="col-md-6">
-                                        <textarea class="form-control" name="reason_desc" rows="1" id="reason_desc" value="<?php echo $fail_reason;?>"></textarea>
-                                    </div>
+                                    <div class="row desc" id="Reason0"  style="display: none;">
+                                        <label class="col-lg-2 control-label"> Reason : </label>
+                                        <div class="col-md-6">
+                                            <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                                <option value="" selected disabled>--- Select Reason ---</option>
+                                                <?php
+                                                $string = $reason;
 
-                                </div>
-                                <br/>
-                                <div class="row desc" id="quantity0" style="display: none;">
+                                                $str_arr = explode (",", $string);
+                                                for ($i=0; $i < count($str_arr) ; $i++)
+                                                {  ?>
+
+                                                    <option value="<?php echo $str_arr[$i]; ?>"><?php echo $str_arr[$i]; ?></option>
+                                                <?php     } ?>
+
+                                            </select>                                </div>
+
+                                    </div>
+                                    <br/>
+
+                                    <div class="row desc" id="quantity0" style="display: none;">
                                     <label class="col-lg-2 control-label">Quantity: </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="quantity" rows="1" id="quantity" value="<?php echo $quantity;?>">
