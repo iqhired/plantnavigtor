@@ -25,8 +25,9 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 $_SESSION['LAST_ACTIVITY'] = $time;
 $button_event = "button3";
 $curdate = date('Y-m-d');
+$dfrom =   date('Y-m-d',strtotime("-1 days"));
 $dateto = $curdate;
-$datefrom = $curdate;
+$datefrom = $dfrom;
 $temp = "";
 
 $_SESSION['station'] = "";
@@ -297,7 +298,7 @@ include("../heading_banner.php");
                                             $entry = '';
 
                                         }
-                                        echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                        echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number']."</option>";
                                     }
                                     ?>
                                 </select>
@@ -391,8 +392,6 @@ include("../heading_banner.php");
                     </div>
 
             </form>
-
-
                     <div class="col-md-2">
                         <form action="export_material.php" method="post" name="export_excel">
                             <button type="submit" class="btn btn-primary"
@@ -420,27 +419,34 @@ include("../heading_banner.php");
                 <?php
 
                 /* Default Query */
-                $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
-
+            //    $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
+                $q = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name,material_type  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
+inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where cl.line_id='$station'");
+//
                 /* Execute the Query Built*/
                 $qur = mysqli_query($db, $q);
                 while ($rowc = mysqli_fetch_array($qur)) {
-                    $dateTime = $rowc["created_at"];
+
 
                     ?>
                     <tr>
                         <?php
                         $un = $rowc['line_no'];
-                        $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
+                        $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$station' ");
                         while ($rowc04 = mysqli_fetch_array($qur04)) {
                             $lnn = $rowc04["line_name"];
                         }
                         ?>
                         <td><?php echo $lnn; ?></td>
-                        <td><?php echo $rowc['part_no']; ?></td>
-                        <td><?php echo $rowc['part_family_id']; ?></td>
-                        <td><?php echo $rowc['part_name']; ?></td>
-                        <td><?php echo $rowc['material_type']; ?></td>
+                        <td><?php echo $rowc['part_number']; ?></td>
+                        <td><?php echo $rowc['part_family_name']; ?></td>
+                        <td><?php
+                            $m_id = $rowc['material_type'];
+                            $mtype = mysqli_query($db,"select material_type from material_config where material_id = '$m_id'");
+                            while ($rowc04 = mysqli_fetch_array($mtype)) {
+                                $mty = $rowc04["material_type"];
+                            }
+                            echo $mty; ?></td>
                         <td><?php echo $rowc['created_at']; ?></td>
 
                     </tr>

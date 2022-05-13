@@ -259,9 +259,8 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Page content -->
     <?php
-    $st = $_REQUEST['station'];
-    $st_dashboard = base64_decode(urldecode($st));
-    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st_dashboard'";
+    $st = $_GET['station'];
+    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
     $result1 = $mysqli->query($sql1);
     //                                            $entry = 'selected';
     while ($row1 = $result1->fetch_assoc()) {
@@ -273,6 +272,7 @@ include("../heading_banner.php");
         <!-- Main charts -->
         <!-- Basic datatable -->
         <div class="panel panel-flat">
+            <form action="document_backend.php" id="document_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
             <div class="panel-heading">
 
                 <?php if ($temp == "one") { ?>
@@ -301,8 +301,17 @@ include("../heading_banner.php");
 
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="document_backend.php" id="document_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
 
+                            <div class="row">
+
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+                                <div class="col-md-6">
+                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
+                                    <input type="text" name="station1" id="station1" class="form-control" value="<?php echo $line_name; ?>" placeholder="Enter Doc name" required>
+                                </div>
+                                <div id="error1" class="red">Document Name</div>
+                            </div>
+                        </br>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Document file : </label>
                                 <div class="col-md-6">
@@ -321,33 +330,34 @@ include("../heading_banner.php");
                             </div>
                             <br/>
 
-                            <div class="row">
-                                <label class="col-lg-2 control-label">station : </label>
-                                <div class="col-md-6">
-                                    <select name="station" id="station" class="select" data-style="bg-slate">
-                                        <option value="" selected disabled>--- Select station ---</option>
-                                        <?php
-                                        $st_dashboard = $_POST['station'];
-                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if($st_dashboard == $row1['line_id'])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
 
-                                            }
-                                            echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="error6" class="red">Please Enter station</div>
+<!--                            <div class="row">-->
+<!--                                <label class="col-lg-2 control-label">station : </label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    <select name="station" id="station" class="select" data-style="bg-slate">-->
+<!--                                        <option value="" selected disabled>--- Select station ---</option>-->
+<!--                                        --><?php
+//                                        $st_dashboard = $_POST['station'];
+//                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+//                                        $result1 = $mysqli->query($sql1);
+//                                        //                                            $entry = 'selected';
+//                                        while ($row1 = $result1->fetch_assoc()) {
+//                                            if($st_dashboard == $row1['line_id'])
+//                                            {
+//                                                $entry = 'selected';
+//                                            }
+//                                            else
+//                                            {
+//                                                $entry = '';
+//
+//                                            }
+//                                            echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+//                                        }
+//                                        ?>
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div id="error6" class="red">Please Enter station</div>-->
                             <br/>
 
                             <div class="row">
@@ -411,7 +421,7 @@ include("../heading_banner.php");
                                             <option value="" selected disabled>--- Select Part Number ---</option>
                                             <?php
 //
-                                            $sql1 = "SELECT * FROM `pm_part_number` ORDER BY `part_number` ASC  ";
+                                            $sql1 = "SELECT * FROM `pm_part_number` where station = '$st' ORDER BY `part_number` ASC  ";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
 

@@ -30,7 +30,9 @@ if(count($_POST)>0) {
 
 $qur04 = mysqli_query($db, "SELECT * FROM  document_data where doc_name = '$doc_name' ORDER BY `doc_id` DESC ");
 $rowc04 = mysqli_fetch_array($qur04);
-$material_id = $rowc04["doc_id"];
+$doc_id = $rowc04["doc_id"];
+$station = $rowc04["station"];
+$part_number = $rowc04["part_number"];
 
 
 //multiple image
@@ -57,7 +59,7 @@ if (isset($_FILES['file'])) {
         if (empty($errors) == true) {
             move_uploaded_file($file_tmp, "../document_files/" . $file_name);
 
-            $sql = "INSERT INTO `document_images`(`file_name`,`doc_id`,`created_at`) VALUES ('$file_name' , '$material_id' , '$created_by' )";
+            $sql = "INSERT INTO `document_files`(`file_name`,`doc_id`,`part_number`,`station`,`created_at`) VALUES ('$file_name','$doc_id' ,'$part_number','$station','$created_by' )";
 
             $result1 = mysqli_query($db, $sql);
             if ($result1) {
@@ -72,6 +74,6 @@ if (isset($_FILES['file'])) {
     }
 }
 
-$page = "document_form.php";
+$page = "document_form.php?station=$station";
 header('Location: '.$page, true, 303);
 exit;
