@@ -6,10 +6,10 @@ include("../config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 
- if(count($_POST)>0) {
+if(count($_POST)>0) {
 	$created_by = $_SESSION['id'];
 	$is_update = $_POST['update_fud'];
-    $reject_reason = $_POST['reject_reason'];
+	$reject_reason = $_POST['reject_reason'];
 	if(!empty($is_update) && ($is_update == 1)){
 		$fid = $_POST['form_user_data_id'];
 		$updated_at = date("Y-m-d H:i:s");
@@ -19,8 +19,8 @@ $drag_drop_res = (array) json_decode($array);
 		$r_count = $rowc04['r_count'];
 		$sql0 = "";
 
-        $qur08 = mysqli_query($db, "SELECT form_approval_id as app_id FROM `form_approval` where form_user_data_id = '$fid' order by form_approval_id ASC");
-        $r = 0;
+		$qur08 = mysqli_query($db, "SELECT form_approval_id as app_id FROM `form_approval` where form_user_data_id = '$fid' order by form_approval_id ASC");
+		$r = 0;
 		while ($rowc08 = mysqli_fetch_array($qur08)) {
 			$app_id = $rowc08['app_id'];
 			$rr = "rej_reason_" . $r;
@@ -222,7 +222,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 		$rejected_dept_cnt = $_POST['tot_rejected_dept'];
 
 		foreach ($form_item_array1 as $form_item_array) {
-			$form_user_data_item .= $_POST[$form_item_array] . ",";
+			$form_user_data_item .= $form_item_array."~".$_POST[$form_item_array] . ",";
 		}
 
 		$created_at = date("Y-m-d H:i:s");

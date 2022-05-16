@@ -435,6 +435,13 @@ include("../heading_banner.php");
                                 $aray_item_cnt = 0;
                                 $arrteam = explode(',', $rowcmain["form_user_data_item"]);
                                 while ($rowc = mysqli_fetch_array($qur)) {
+								$expVal = $arrteam[$aray_item_cnt];
+								$ccnt = substr_count ($expVal, '~');
+								if($ccnt > 0){
+									$itemVal = explode('~',  $expVal)[1];
+								}else{
+									$itemVal = explode('~',  $expVal)[0];
+								}
                                 $item_val = $rowc['item_val'];
                                 $number_binary = $rowc['binary_normal'];
 
@@ -448,7 +455,7 @@ include("../heading_banner.php");
                                     </div>
                                 <?php }
                                 if ($item_val == "numeric") {
-                                    $checked = $arrteam[$aray_item_cnt];
+                                    $checked = $itemVal;
 
                                     $numeric_normal = $rowc['numeric_normal'];
                                     $numeric_lower_tol1 = $rowc['numeric_lower_tol'];
@@ -485,18 +492,18 @@ include("../heading_banner.php");
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" style="background-color: green" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                     <?php
                                                 } else if ($is_form_editable) { ?>
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text" style="background-color: green" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                 <?php } else { ?>
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" style="background-color: green" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                 <?php } ?>
                                             </div>
                                         <?php } else { ?>
@@ -504,18 +511,18 @@ include("../heading_banner.php");
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" style="background-color: red" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                     <?php
                                                 } else if ($is_form_editable) { ?>
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text" style="background-color: red" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                 <?php } else { ?>
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" style="background-color: red" required step="any"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>">
+                                                           value="<?php echo $itemVal; ?>">
                                                 <?php } ?>
                                             </div>
                                         <?php } ?>
@@ -542,7 +549,7 @@ include("../heading_banner.php");
                                 if ($item_val == "binary") {
                                     $bin_def = $rowc['binary_normal'];
                                     $bnf = $rowc['binary_default'];
-                                    $checked = $arrteam[$aray_item_cnt];
+                                    $checked = $itemVal;
                                     ?>
                                     <div class="form_row_item row">
                                         <div class="col-md-8 form_col_item">
@@ -572,7 +579,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="yes"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_yes_alias']; ?>"
-                                                               class="form-check-input pn_none" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'yes')) ? "checked" : "" ?> >
+                                                               class="form-check-input pn_none" <?php echo (($itemVal != null) && ($itemVal == 'yes')) ? "checked" : "" ?> >
                                                         <label for="yes" style="background-color: green;"
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['binary_yes_alias'];
@@ -581,7 +588,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="no"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_no_alias']; ?>"
-                                                               class="form-check-input pn_none" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'no')) ? "checked" : "" ?> >
+                                                               class="form-check-input pn_none" <?php echo (($itemVal != null) && ($itemVal == 'no')) ? "checked" : "" ?> >
                                                         <label for="no" style="background-color: green;"
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['binary_no_alias'];
@@ -594,7 +601,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="yes"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_yes_alias']; ?>"
-                                                               class="form-check-input" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'yes')) ? "checked" : "" ?> >
+                                                               class="form-check-input" <?php echo (($itemVal != null) && ($itemVal == 'yes')) ? "checked" : "" ?> >
                                                         <label for="yes" style="background-color: green;"
                                                                class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['binary_yes_alias'];
@@ -603,7 +610,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="no"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_no_alias']; ?>"
-                                                               class="form-check-input" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'no')) ? "checked" : "" ?>>
+                                                               class="form-check-input" <?php echo (($itemVal != null) && ($itemVal == 'no')) ? "checked" : "" ?>>
                                                         <label for="no" style="background-color: red;"
                                                                class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['binary_no_alias'];
@@ -616,7 +623,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="yes"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_yes_alias']; ?>"
-                                                               class="form-check-input pn_none" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'yes')) ? "checked" : "" ?> >
+                                                               class="form-check-input pn_none" <?php echo (($itemVal != null) && ($itemVal == 'yes')) ? "checked" : "" ?> >
                                                         <label for="yes" style="background-color: red;"
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['binary_yes_alias'];
@@ -625,7 +632,7 @@ include("../heading_banner.php");
                                                         <input type="radio" id="no"
                                                                name="<?php echo $rowc['form_item_id']; ?>"
                                                                value="<?php echo $rowc['binary_no_alias']; ?>"
-                                                               class="form-check-input pn_none" <?php echo (($arrteam[$aray_item_cnt] != null) && ($arrteam[$aray_item_cnt] == 'no')) ? "checked" : "" ?> >
+                                                               class="form-check-input pn_none" <?php echo (($itemVal != null) && ($itemVal == 'no')) ? "checked" : "" ?> >
                                                         <label for="no" style="background-color: red;"
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['binary_no_alias'];
@@ -676,18 +683,18 @@ include("../heading_banner.php");
                                         <?php if ($rowc['optional'] != '1') { ?>
                                         <input type="text" name="<?php echo $rowc['form_item_id']; ?>"
                                                id="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
-                                               value="<?php echo $arrteam[$aray_item_cnt]; ?>"
+                                               value="<?php echo $itemVal; ?>"
                                                class="form-control pn_none"></div>
                                     <?php } else {
                                     if ($is_form_editable){
                                     ?>
                                     <input type="text" name="<?php echo $rowc['form_item_id']; ?>"
                                            id="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
-                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>" class="form-control"></div>
+                                           value="<?php echo $itemVal; ?>" class="form-control"></div>
                                 <?php }else{ ?>
                                 <input type="text" name="<?php echo $rowc['form_item_id']; ?>"
                                        id="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
-                                       value="<?php echo $arrteam[$aray_item_cnt]; ?>" class="form-control pn_none">
+                                       value="<?php echo $itemVal; ?>" class="form-control pn_none">
                         </div>
                         <?php }
                         } ?>
@@ -716,6 +723,13 @@ include("../heading_banner.php");
                         $aray_item_cnt = 0;
                         $arrteam = explode(',', $op_data);
                         while ($rowc = mysqli_fetch_array($qur)) {
+							$expVal = $arrteam[$aray_item_cnt];
+							$ccnt = substr_count ($expVal, '~');
+							if($ccnt > 0){
+								$itemVal = explode('~',  $expVal)[1];
+							}else{
+								$itemVal = explode('~',  $expVal)[0];
+							}
                             $item_val = $rowc['item_val'];
 
                             if ($item_val == "header") {
@@ -727,7 +741,7 @@ include("../heading_banner.php");
                                 </div>
                             <?php }
                             if ($item_val == "numeric") {
-                                $checked = $arrteam[$aray_item_cnt];
+                                $checked = $itemVal;
 
 
                                 $numeric_normal = $rowc['numeric_normal'];
@@ -777,7 +791,7 @@ include("../heading_banner.php");
                                 $aray_item_cnt++;
                             }
                             if ($item_val == "binary") {
-                                $checked = $arrteam[$aray_item_cnt];
+                                $checked = $itemVal;
                                 ?>
                                 <div class="form_row_item row">
                                     <div class="col-md-8 form_col_item">
@@ -860,7 +874,7 @@ include("../heading_banner.php");
                                                value="<?php echo $rowc['form_item_id']; ?>">
                                         <input type="text" name="<?php echo $rowc['form_item_id']; ?>"
                                                id="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
-                                               value="<?php echo $arrteam[$aray_item_cnt]; ?>"
+                                               value="<?php echo $itemVal; ?>"
                                                class="form-control pn_none"></div>
                                     <div class="col-md-3 form_col_item">
                                         <u><b><?php echo $rowc['discription']; ?> </b></u></div>

@@ -364,6 +364,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 									$aray_item_cnt = 0;
 									$arrteam = explode(',', $rowcmain["form_user_data_item"]);
 									while ($rowc = mysqli_fetch_array($qur)) {
+										$expVal = $arrteam[$aray_item_cnt];
+										$ccnt = substr_count ($expVal, '~');
+										if($ccnt > 0){
+											$itemVal = explode('~',  $expVal)[1];
+										}else{
+											$itemVal = explode('~',  $expVal)[0];
+										}
 										$item_val = $rowc['item_val'];
 
 										if($item_val == "header"){
@@ -375,7 +382,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 										<?php }
 										if($item_val == "numeric")
 										{
-											$checked = $arrteam[$aray_item_cnt];
+											$checked = $itemVal;
 
 
 											$numeric_normal = $rowc['numeric_normal'];
@@ -414,13 +421,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  disabled>
+                                                                   value="<?php echo $itemVal; ?>"  disabled>
 															<?php
 														} else { ?>
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
+                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
 														<?php } ?>
                                                     </div>
 												<?php } else { ?>
@@ -428,13 +435,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
+                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
 															<?php
 														} else { ?>
                                                             <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"
                                                                    class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $arrteam[$aray_item_cnt]; ?>"  style="background-color: #ffadad" disabled>
+                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
 														<?php } ?>
                                                     </div>
 												<?php } ?>
@@ -456,7 +463,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 											$aray_item_cnt++;
 										}
 										if($item_val == "binary"){
-											$checked = $arrteam[$aray_item_cnt];
+											$checked = $itemVal;
 											?>
                                             <div class="form_row_item row">
                                                 <div class="col-md-8 form_col_item">
@@ -541,7 +548,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                            value="<?php echo $rowc['form_item_id']; ?>">
                                                     <input type="text" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
-                                                           value="<?php echo $arrteam[$aray_item_cnt]; ?>"
+                                                           value="<?php echo $itemVal; ?>"
                                                            class="form-control pn_none" disabled></div>
                                                 <div class="col-md-3 form_col_item">
                                                     <u><b><?php echo $rowc['discription']; ?> </b></u></div>
