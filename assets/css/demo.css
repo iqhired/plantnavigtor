@@ -144,3 +144,7 @@ only screen and (max-width: 760px),
         width: 550px;
     }
 }
+.alert-success, .alert-success .close {
+    color: #333!important;
+    font-size: 14px!important;
+}

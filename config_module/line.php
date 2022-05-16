@@ -131,12 +131,12 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
     $good_extensions = array("application/octet-stream","doc","docx");
     $bad_extensions = array("application/octet-stream","doc","docx");
 //    $rework_extensions = array("doc","docx");
-    if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false ) {
-    $errors[] = "extension not allowed, please choose a doc file.";
-    $message_stauts_class = 'alert-danger';
-    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
-
-}
+//    if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false ) {
+//    $errors[] = "extension not allowed, please choose a doc file.";
+//    $message_stauts_class = 'alert-danger';
+//    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
+//
+//}
 //    if ($good_size > 2097152 && $bad_size > 2097152 && $rework_size > 2097152) {
 //        $errors[] = 'File size must be excately 2 MB';
 //        $message_stauts_class = 'alert-danger';
