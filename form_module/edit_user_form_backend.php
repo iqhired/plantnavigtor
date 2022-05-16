@@ -16,7 +16,7 @@ if (count($_POST) > 0) {
 	$form_user_data_id = $_POST['form_user_data_id'];
 
 	foreach ($form_item_array1 as $form_item_array) {
-		$form_user_data_item .= $_POST[$form_item_array] . ",";
+		$form_user_data_item .= $form_item_array."-".$_POST[$form_item_array] . ",";
 	}
 
 	$created_at = date("Y-m-d H:i:s");
