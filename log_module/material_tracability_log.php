@@ -61,46 +61,6 @@ while ($rowctemp = mysqli_fetch_array($qurtemp)) {
     $station1 = $rowctemp["line_name"];
 }
 
-
-if(empty($dateto)){
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-}
-
-if(empty($datefrom)){
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
-}
-
-$wc = '';
-
-if(isset($station)){
-    $wc = $wc . " and sg_station_event.line_id = '$station'";
-}
-if(isset($pf)){
-    $_SESSION['pf'] = $pf;
-    $wc = $wc . " and sg_station_event.part_family_id = '$pf'";
-}
-if(isset($pn)){
-    $_SESSION['pn'] = $pn;
-    $wc = $wc . " and sg_station_event.part_number_id = '$pn'";
-}
-if(isset($mt)){
-    $_SESSION['pn'] = $pn;
-    $wc = $wc . " and sg_station_event.part_number_id = '$pn'";
-}
-
-/* If Data Range is selected */
-if(isset($datefrom)){
-    $wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' ";
-}
-if(isset($dateto)){
-    $wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
-}
-
-$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -276,10 +236,7 @@ include("../heading_banner.php");
                     <br>
                     <div class="row">
                         <div class="col-md-6 mobile">
-
-
                             <label class="col-lg-3 control-label">Part Number *  :</label>
-
                             <div class="col-lg-8">
                                 <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                     <option value="" selected disabled>--- Select Part Number ---</option>
@@ -313,29 +270,20 @@ include("../heading_banner.php");
                                 <select name="material_type" id="material_type" class="select" data-style="bg-slate" >
                                     <option value="" selected disabled>--- Select Material Type ---</option>
                                     <?php
-                                    $material = $_POST['material_type'];
+
                                     $p_number = $_POST['part_number'];
-                                    $sql1 = "SELECT * FROM `material_tracability` where part_no = '$p_number' ";
-                                    $result1 = $mysqli->query($sql1);
-                                    while ($row1 = $result1->fetch_assoc()) {
-                                        if($material == $row1['material_type'])
-                                        {
-                                            $entry = 'selected';
-                                        }
-                                        else
-                                        {
-                                            $entry = '';
+                                    $sql1 = "SELECT material_id,material_type FROM `material_tracability` where part_no = '$p_number'";
+                                    $result1 = mysqli_query($db,$sql1);
+                                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                                        $material_id = $row1['material_id'];
+                                        $material = $row1['material_type'];
 
-                                        }
 
-                                        $sqlnumber = "SELECT * FROM `material_config` where `material_id` = '$material'";
-                                        $resultnumber = mysqli_query($db,$sqlnumber);
-                                        $rowcnumber = mysqli_fetch_array($resultnumber);
-                                        $material_type = $rowcnumber['material_type'];
-                                        echo "<option value='" . $row1['material_type'] . "' $entry >" . $row1['material_type'] . "</option>";
+                                        echo "<option value='" . $material_id . "'>" . $material . "</option>";
 
 
                                     }
+
                                     ?>
                                 </select>
                             </div>
@@ -409,10 +357,10 @@ include("../heading_banner.php");
                 <tr>
                     <th>Station</th>
                     <th>Part Number</th>
-                    <th>Part Family</th>
                     <th>Material Type</th>
-                    <th>Created On</th>
-                    <th>Total Duration</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Created At</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -420,8 +368,8 @@ include("../heading_banner.php");
 
                 /* Default Query */
             //    $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
-                $q = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name,material_type  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
-inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where cl.line_id='$station'");
+                $q = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_id,material_type  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
+inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
 //
                 /* Execute the Query Built*/
                 $qur = mysqli_query($db, $q);
@@ -439,7 +387,6 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where cl.line
                         ?>
                         <td><?php echo $lnn; ?></td>
                         <td><?php echo $rowc['part_number']; ?></td>
-                        <td><?php echo $rowc['part_family_name']; ?></td>
                         <td><?php
                             $m_id = $rowc['material_type'];
                             $mtype = mysqli_query($db,"select material_type from material_config where material_id = '$m_id'");
@@ -447,6 +394,9 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where cl.line
                                 $mty = $rowc04["material_type"];
                             }
                             echo $mty; ?></td>
+                        <td><?php if($rowc['material_status'] = 1){echo "Pass";}else{echo "Fail";} ?></td>
+
+                        <td><?php echo $rowc['fail_reason']; ?></td>
                         <td><?php echo $rowc['created_at']; ?></td>
 
                     </tr>
