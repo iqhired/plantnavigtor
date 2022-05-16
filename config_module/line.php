@@ -41,72 +41,12 @@ if (count($_POST) > 0) {
             $import_status_message = 'Error: Please Insert valid data';
         }
     }
-//edit
-    $edit_name = $_POST['edit_name'];
-    $id = $_POST['edit_id'];
-    $edit_good_file = $_POST['edit_good_file'];
-    $edit_bad_file = $_POST['edit_bad_file'];
-    if ($edit_name != "") {
-      //  $id = $_POST['edit_id'];
-        $dir_path = "../assets/label_files/" . $id;
 
-        copy($dir_path , $_POST['edit_good_file'] ,$dir_path . '/' . 'f1');
-        copy($dir_path , $_POST['edit_bad_file'] ,$dir_path . '/' . 'f2');
-//        if ($edit_good_file != "" && $edit_bad_file != "") {
-//           if (isset($_FILES['edit_good_file']) && isset($_FILES['edit_good_file'])) {
-//                $errors = array();
-//                $good_name = $_FILES['edit_good_file']['name'];
-//                $bad_name = $_FILES['edit_bad_file']['name'];
-//                $good_size = $_FILES['edit_good_file']['size'];
-//                $bad_size = $_FILES['edit_bad_file']['size'];
-//			   $good_tmp = $_FILES['edit_good_file']['tmp_name'];
-//                $good_tmp1 = $good_tmp;
-//                $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
-//                $good_type = $_FILES['edit_good_file']['type'];
-//                $bad_type = $_FILES['edit_bad_file']['type'];
-//
-//                $good_extensions = array("application/octet-stream", "doc", "docx");
-//                $bad_extensions = array("application/octet-stream", "doc", "docx");
-//                if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false) {
-//                    $errors[] = "extension not allowed, please choose a doc file.";
-//                    $message_stauts_class = 'alert-danger';
-//                    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
-//                }
-//                if (empty($errors) == true) {
-//                    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
-//                    if (!file_exists($dir_path)) {
-//                        mkdir($dir_path, 0777, true);
-//                    }
-//                    move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-//					copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-//                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-//					copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-//                    $zpl_id = $_POST['edit_id'];
-//                    $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
-//                    $result1 = mysqli_query($db, $sql1);
-//                    //$sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
-//                    $message_stauts_class = 'alert-success';
-//                    $import_status_message = 'Upload Files Successfully';
-//                }
-//
-//           }
-//
-//        }
-        $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
-
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'Station Updated successfully.';
-        } else {
-            $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Please Insert valid data';
-        }
 
 
 
     }
-}
+
 //upload file
 
 if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
@@ -333,9 +273,8 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                  <?php   } ?>
                                                 </td>
                                                 <td>
-                                                    <button type="button" id="edit" class="btn btn-info btn-xs" data-id="<?php echo $rowc['line_id']; ?>" data-name="<?php echo $rowc['line_name']; ?>" data-priority_order="<?php echo $rowc['priority_order']; ?>" data-enabled="<?php echo $rowc['enabled']; ?>" data-good_file="<?php echo $rowc['good_file']; ?>" data-bad_file="<?php echo $rowc['bad_file']; ?>"data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
-                                                    <!--&nbsp;<button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
-                                                    -->									
+                                                    <a href="edit_line.php?id=<?php echo $rowc['line_id']; ?>" class="btn btn-primary" data-name="<?php echo $rowc['line_name']; ?>"  style="background-color:#1e73be;">Edit</a>
+
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -344,88 +283,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         </form>
                     </div>
                     <!-- /basic datatable -->
-                    <!-- /main charts -->
-                    <!-- edit modal -->
-                    <div id="edit_modal_theme_primary" class="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h6 class="modal-title">Edit Station</h6>
-                                </div>
-                                <form action="" id="user_form" class="form-horizontal" method="post">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label class="col-lg-5 control-label">Station:*</label>
-                                                    <div class="col-lg-7">
-                                                        <input type="text" name="edit_name" id="edit_name" class="form-control" required>
-                                                        <input type="hidden" name="edit_id" id="edit_id" >
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label class="col-lg-5 control-label">Priority Order:*</label>
-                                                    <div class="col-lg-7">
-                                                        <input type="number" name="edit_priority_order" id="edit_priority_order" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label class="col-lg-5 control-label">Enabled:*</label>
-                                                    <div class="col-lg-7">
-                                                        <input type="hidden" name="edit_e" id="edit_e" >
-                                                        <select  name="edit_enabled" id="edit_enabled" class="select form-control" data-style="bg-slate" style="float: left;
-                                                                 width: initial;" >
-                                                            <!--        <option value="" selected disabled>--- Select Ratings ---</option>-->
-                                                            <option value="0">No</option>
-                                                            <option value="1">Yes</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                            <label class="col-lg-5 control-label">Good Piece File : </label>
-                                            <div class="col-lg-7">
-                                                <input type="file" name="edit_good_file" id="edit_good_file" required
-                                                       class="form-control">
-                                                <!--                                        <div id="preview"></div>-->
-                                            </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                            <label class="col-lg-5 control-label">Bad Piece File : </label>
-                                            <div class="col-lg-7">
-                                                <input type="file" name="edit_bad_file" id="edit_bad_file" required
-                                                       class="form-control">
-                                                <!--                                        <div id="preview"></div>-->
-                                            </div>
 
-                                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
             <!-- enabled modal -->
             <div id="edit_modal_theme_primary1" class="modal">
                 <div class="modal-dialog">
@@ -486,30 +344,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         });
 
                     </script>
-                    <script>
-                        jQuery(document).ready(function ($) {
-                            $(document).on('click', '#edit', function () {
-                                var element = $(this);
-                                var edit_id = element.attr("data-id");
-                                var name = $(this).data("name");
-                                var priority_order = $(this).data("priority_order");
-                                var enabled = $(this).data("enabled");
-                                var good_file = $(this).data("good_file");
-                                var bad_file = $(this).data("bad_file");
 
-                                $("#edit_name").val(name);
-                                $("#edit_id").val(edit_id);
-                                $("#edit_priority_order").val(priority_order);
-                                $("#edit_enabled").val(enabled);
-                                $("#edit_good_file").val(good_file);
-                                $("#edit_bad_file").val(bad_file);
-                                //alert(role);
-                            });
-                        });
-                    </script>
-
-
-                    
                     <script>
                         window.onload = function() {
                             history.replaceState("", "", "<?php echo $scriptName; ?>config_module/line.php");
