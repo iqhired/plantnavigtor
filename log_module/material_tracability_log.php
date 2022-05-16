@@ -272,14 +272,16 @@ include("../heading_banner.php");
                                     <?php
 
                                     $p_number = $_POST['part_number'];
-                                    $sql1 = "SELECT material_id,material_type FROM `material_tracability` where part_no = '$p_number'";
+                                    $sql1 = "SELECT Distinct (material_type) FROM `material_tracability` where part_no = " . $p_number ;
                                     $result1 = mysqli_query($db,$sql1);
                                     while ($row1 = mysqli_fetch_assoc($result1)) {
-                                        $material_id = $row1['material_id'];
+//                                        $material_id = $row1['material_id'];
                                         $material = $row1['material_type'];
+										$sql2 = "SELECT  (material_type) FROM `material_config` where material_id = " . $material ;
+										$result2 = mysqli_query($db,$sql2);
+										$row2 = mysqli_fetch_assoc($result2);
 
-
-                                        echo "<option value='" . $material_id . "'>" . $material . "</option>";
+                                        echo "<option value='" . $row2['material_id'] . "'>" . $row2['material_type'] . "</option>";
 
 
                                     }
@@ -368,8 +370,7 @@ include("../heading_banner.php");
 
                 /* Default Query */
             //    $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
-                $q = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_id,material_type  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
-inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
+                $q = ("SELECT pn.part_name ,pn.part_number, cl.line_name ,mt.part_family_id,mt.material_type,mt.created_at  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(mt.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(mt.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
 //
                 /* Execute the Query Built*/
                 $qur = mysqli_query($db, $q);
