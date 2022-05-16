@@ -222,7 +222,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 		$rejected_dept_cnt = $_POST['tot_rejected_dept'];
 
 		foreach ($form_item_array1 as $form_item_array) {
-			$form_user_data_item .= $form_item_array."-".$_POST[$form_item_array] . ",";
+			$form_user_data_item .= $_POST[$form_item_array] . ",";
 		}
 
 		$created_at = date("Y-m-d H:i:s");

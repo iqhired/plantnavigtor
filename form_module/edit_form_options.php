@@ -363,9 +363,9 @@ if(count($_POST) > 0)
                                     <td><?php echo ++$counter; ?></td>
                                     <td>
                                        <?php
-                                       $finalid = $rowc['form_create_id'];
+                                       $id = $rowc['form_create_id'];
 
-                                   //     $finalid=urlencode( base64_encode($id));
+                                        $finalid=urlencode( base64_encode($id));
                                         ?>
                                         <a href="form_edit.php?id=<?php echo $finalid ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
                                     </td>
