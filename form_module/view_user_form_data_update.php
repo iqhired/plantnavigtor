@@ -19,20 +19,20 @@ while ($rowcmain = mysqli_fetch_array($qurmain)) {
     $query1 = sprintf("SELECT form_create_id FROM  form_create where form_type = '$get_form_type' and station = '$get_station' and part_family = '$get_part_family' and part_number = '$get_part_number' and name = '$formname'");
     $qur1 = mysqli_query($db, $query1);
     $rowc1 = mysqli_fetch_array($qur1);
-    $item_id = $rowc1['form_create_id'];
+    $form_create_id = $rowc1['form_create_id'];
 
-    $query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id'");
+    $query = sprintf("SELECT * FROM  form_item where form_create_id = '$form_create_id'");
     $qur = mysqli_query($db, $query);
-	$i = 0;
+	$i = 0;$j=1;
     while ($rowc = mysqli_fetch_array($qur)) {
 
         $item_id = $rowc['form_item_id'];
         $form_user_data_item .= $item_id . "~" . $form_item_array2[$i] . ",";
 		$i++;
-
+		$sql2 = "UPDATE `form_item` SET `form_item_seq`='$j' WHERE `form_item_id` = '$item_id'";
+		$result2 = mysqli_query($db, $sql2);
+		$j++;
     }
-
-
 }
 
     $sql0 = "UPDATE `form_user_data` SET `form_user_data_item`='$form_user_data_item' WHERE `form_user_data_id` = '$form_id'";
