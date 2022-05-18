@@ -113,16 +113,17 @@ if(count($_POST)>0) {
 
 	// $sqlremove = "DELETE FROM `form_item` WHERE form_create_id = '$form_create_id'";
 
-	$resultremove = mysqli_query($db, "DELETE FROM `form_item` WHERE `form_create_id` = '$form_create_id'");
-
-	if ($resultremove) {
-	} else {
-	}
+//	$resultremove = mysqli_query($db, "DELETE FROM `form_item` WHERE `form_create_id` = '$form_create_id'");
+//
+//	if ($resultremove) {
+//	} else {
+//	}
 
 //remove records over
 
 
 //multi image over
+	$total_count =  $_POST['collapse_id'];
 	$click_id = $_POST['click_id'];
 	$notclick = $_POST['not_click_id'];
 
@@ -131,108 +132,122 @@ if(count($_POST)>0) {
 		$click_id = $_POST['not_click_id'];
 	}
 
-	echo "click id".$click_id;
+	//echo "click id".$click_id;
 
 
 	$bansi_row_click = $_POST['bansi_row_click'];
 
 	$item_desc_array = $_POST['query_text'];
-	$j = 0;
-	for($i = 1; $i <= $click_id; )
-	{
-		$bansi_row = $bansi_row_click[$j];
-		$itemarray = $_POST['item_'.$bansi_row];
-		$item = $itemarray[0];
-		$item_desc = $item_desc_array[$j];
-		$notes_array = $_POST['form_item_notes'];
-		$disc_array = $_POST['form_item_disc'];
-		$notes = $notes_array[$j];
-		$disc = $disc_array[$j];
-		$opt = $_POST['optional_'.$bansi_row];
-		$checked = 0;
-		if($opt != null && isset($opt) && isset($opt[0])){
-			$checked = 1;
-		}
 
-		if($item == "numeric")
-		{
-			$normal_array = $_POST['normal'];
-			$normal = $normal_array[$j];
+	 $fetch_form_item_q = "select * FROM `form_item` WHERE form_create_id = '$form_create_id' order by form_item_seq+0 ASC";
+	 $result_ft = mysqli_query($db,$fetch_form_item_q);
+	 $j = 0;
+	 while ($rowc_ft_item = mysqli_fetch_array($result_ft)) {
+	 	 $fit = $rowc_ft_item['form_item_id'];
+		 $sql0 = "UPDATE `form_item` SET `form_item_seq`='$bansi_row_click[$j]' where form_item_id = '$fit'";
+		 $result0 = mysqli_query($db, $sql0);
+		 $j++;
+	 }
 
-			echo "normal :- ".$normal;
-
-			$lower_tolerance_array = $_POST['lower_tolerance'];
-			$lower_tolerance = $lower_tolerance_array[$j];
-
-			echo "lower_tolerance :- ".$lower_tolerance;
+//	$resultremove = mysqli_query($db, "DELETE FROM `form_item` WHERE `form_create_id` = '$form_create_id'");
 
 
-			$upper_tolerance_array = $_POST['upper_tolerance'];
-			$upper_tolerance = $upper_tolerance_array[$j];
-
-			echo "upper_tolerance :- ".$upper_tolerance;
-			$unit = $unit_of_measurement[$j];
-
-			$sql1 = "INSERT INTO `form_item`(`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES 
-		('$unit'  , '$checked' , '$form_create_id', '$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
-			$result1 = mysqli_query($db, $sql1);
-			if ($result1) {
-				$message_stauts_class = 'alert-success';
-				$import_status_message = 'Form Item created successfully.';
-			} else {
-				$message_stauts_class = 'alert-danger';
-				$import_status_message = 'Error: Please Insert valid data';
-			}
-
-		}
-		else if($item == "binary")
-		{
-			$default_binary_array = $_POST['default_binary_'.$bansi_row];
-			$default_binary = $default_binary_array[0];
-
-			$normal_binary_array = $_POST['normal_binary_'.$bansi_row];
-			$normal_binary = $normal_binary_array[0];
-
-			$yes_alias_array = $_POST['yes_alias'];
-			$yes_alias = $yes_alias_array[$j];
-
-			$no_alias_array = $_POST['no_alias'];
-			$no_alias = $no_alias_array[$j];
-
-			$sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
-			$result1 = mysqli_query($db, $sql1);
-			if ($result1) {
-				$message_stauts_class = 'alert-success';
-				$import_status_message = 'Form Item created successfully.';
-			} else {
-				$message_stauts_class = 'alert-danger';
-				$import_status_message = 'Error: Please Insert valid data';
-			}
-
-		}
-
-		else if($item != "")
-		{
-
-			$sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' , '$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
-			$result1 = mysqli_query($db, $sql1);
-			if ($result1) {
-				$message_stauts_class = 'alert-success';
-				$import_status_message = 'Form Item created successfully.';
-			} else {
-				$message_stauts_class = 'alert-danger';
-				$import_status_message = 'Error: Please Insert valid data';
-			}
-
-		}
-
-
-
-		$i++;
-		$j++;
-	}
+//	$j = 0;
+//	for($i = 1; $i < $total_count; )
+//	{
+//		$bansi_row = $bansi_row_click[$j];
+//		$itemarray = $_POST['item_'.$bansi_row];
+//		$item = $itemarray[0];
+//		$item_desc = $item_desc_array[$j];
+//		$notes_array = $_POST['form_item_notes'];
+//		$disc_array = $_POST['form_item_disc'];
+//		$notes = $notes_array[$j];
+//		$disc = $disc_array[$j];
+//		$opt = $_POST['optional_'.$bansi_row];
+//		$checked = 0;
+//		if($opt != null && isset($opt) && isset($opt[0])){
+//			$checked = 1;
+//		}
+//
+//		if($item == "numeric")
+//		{
+//			$normal_array = $_POST['normal'];
+//			$normal = $normal_array[$j];
+//
+//			echo "normal :- ".$normal;
+//
+//			$lower_tolerance_array = $_POST['lower_tolerance'];
+//			$lower_tolerance = $lower_tolerance_array[$j];
+//
+//			echo "lower_tolerance :- ".$lower_tolerance;
+//
+//
+//			$upper_tolerance_array = $_POST['upper_tolerance'];
+//			$upper_tolerance = $upper_tolerance_array[$j];
+//
+//			echo "upper_tolerance :- ".$upper_tolerance;
+//			$unit = $unit_of_measurement[$j];
+//
+//			$sql1 = "INSERT INTO `form_item`(`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+//		('$unit'  , '$checked' , '$form_create_id', '$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+//			$result1 = mysqli_query($db, $sql1);
+//			if ($result1) {
+//				$message_stauts_class = 'alert-success';
+//				$import_status_message = 'Form Item created successfully.';
+//			} else {
+//				$message_stauts_class = 'alert-danger';
+//				$import_status_message = 'Error: Please Insert valid data';
+//			}
+//
+//		}
+//		else if($item == "binary")
+//		{
+//			$default_binary_array = $_POST['default_binary_'.$bansi_row];
+//			$default_binary = $default_binary_array[0];
+//
+//			$normal_binary_array = $_POST['normal_binary_'.$bansi_row];
+//			$normal_binary = $normal_binary_array[0];
+//
+//			$yes_alias_array = $_POST['yes_alias'];
+//			$yes_alias = $yes_alias_array[$j];
+//
+//			$no_alias_array = $_POST['no_alias'];
+//			$no_alias = $no_alias_array[$j];
+//
+//			$sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+//		('$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+//			$result1 = mysqli_query($db, $sql1);
+//			if ($result1) {
+//				$message_stauts_class = 'alert-success';
+//				$import_status_message = 'Form Item created successfully.';
+//			} else {
+//				$message_stauts_class = 'alert-danger';
+//				$import_status_message = 'Error: Please Insert valid data';
+//			}
+//
+//		}
+//
+//		else if($item != "")
+//		{
+//
+//			$sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+//		('$form_create_id' , '$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+//			$result1 = mysqli_query($db, $sql1);
+//			if ($result1) {
+//				$message_stauts_class = 'alert-success';
+//				$import_status_message = 'Form Item created successfully.';
+//			} else {
+//				$message_stauts_class = 'alert-danger';
+//				$import_status_message = 'Error: Please Insert valid data';
+//			}
+//
+//		}
+//
+//
+//
+//		$i++;
+//		$j++;
+//	}
 
 
 }
