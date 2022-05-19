@@ -5,8 +5,6 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
     header('location: ../logout.php');
 }
-
-
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -30,54 +28,37 @@ if (count($_POST) > 0) {
 //edit
     $edit_name = $_POST['edit_name'];
     $id = $_POST['edit_id'];
-    $edit_good_file = $_POST['edit_good_file'];
-    $edit_bad_file = $_POST['edit_bad_file'];
-    if ($edit_name != "") {
-        //  $id = $_POST['edit_id'];
-        $dir_path = "../assets/label_files/" . $id;
+    $good_file = $_POST['edit_good_file'];
+    $bad_file = $_POST['edit_bad_file'];
+    $good_size = $_POST['edit_good_file']['size'];
+    $bad_size = $_POST['edit_bad_file']['size'];
+    $good_tmp = $_POST['edit_good_file']['tmp_name'];
+    $bad_tmp = $_POST['edit_bad_file']['tmp_name'];
+    $good_type = $_POST['edit_good_file']['type'];
+    $bad_type = $_POST['edit_bad_file']['type'];
 
-        copy($dir_path , $_POST['edit_good_file'] ,$dir_path . '/' . 'f1');
-        copy($dir_path , $_POST['edit_bad_file'] ,$dir_path . '/' . 'f2');
-//        if ($edit_good_file != "" && $edit_bad_file != "") {
-//           if (isset($_FILES['edit_good_file']) && isset($_FILES['edit_good_file'])) {
-//                $errors = array();
-//                $good_name = $_FILES['edit_good_file']['name'];
-//                $bad_name = $_FILES['edit_bad_file']['name'];
-//                $good_size = $_FILES['edit_good_file']['size'];
-//                $bad_size = $_FILES['edit_bad_file']['size'];
-//		     	  $good_tmp = $_FILES['edit_good_file']['tmp_name'];
-//                $good_tmp1 = $good_tmp;
-//                $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
-//                $good_type = $_FILES['edit_good_file']['type'];
-//                $bad_type = $_FILES['edit_bad_file']['type'];
-//
-//                $good_extensions = array("application/octet-stream", "doc", "docx");
-//                $bad_extensions = array("application/octet-stream", "doc", "docx");
-//                if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false) {
-//                    $errors[] = "extension not allowed, please choose a doc file.";
-//                    $message_stauts_class = 'alert-danger';
-//                    $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
-//                }
-//                if (empty($errors) == true) {
-//                    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
-//                    if (!file_exists($dir_path)) {
-//                        mkdir($dir_path, 0777, true);
-//                    }
-//                    move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-//					copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-//                    move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-//					copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-//                    $zpl_id = $_POST['edit_id'];
-//                    $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
-//                    $result1 = mysqli_query($db, $sql1);
-//                    //$sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
-//                    $message_stauts_class = 'alert-success';
-//                    $import_status_message = 'Upload Files Successfully';
-//                }
-//
-//           }
-//
-//        }
+
+    $dir_path = "../assets/label_files/" . $id;
+
+    $files = glob("$dir_path/*"); // get all file names
+    foreach($files as $file){ // iterate files
+        if(is_file($file)) {
+            unlink($file); // delete file
+        }
+    }
+         if(!file_exists($dir_path)) {
+           //    rmdir("../assets/label_files/" . $id);
+//               unlink("../assets/label_files/" . $id .'/'. 'f1'); //delete file
+//               unlink("../assets/label_files/" . $id .'/'. 'f2');
+             move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+             copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
+             move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+             copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
+         }
+
+    //     mkdir($dir_path, 0777, true);
+
+
         $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
         $result1 = mysqli_query($db, $sql);
@@ -90,64 +71,7 @@ if (count($_POST) > 0) {
         }
         header('location: line.php');
 
-
-
-    }
 }
-//upload file
-
-if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
-    $errors = array();
-    $good_name = $_FILES['good_file']['name'];
-    $bad_name = $_FILES['bad_file']['name'];
-//    $rework_name = $_FILES['rework_file'];
-    $good_size = $_FILES['good_file']['size'];
-    $bad_size = $_FILES['bad_file']['size'];
-//    $rework_size = $_FILES['rework_file']['size'];
-    $good_tmp = $_FILES['good_file']['tmp_name'];
-    $good_tmp1 = $good_tmp;
-    $bad_tmp = $_FILES['bad_file']['tmp_name'];
-//    $rework_tmp = $_FILES['rework_file']['tmp_name'];
-    $good_type = $_FILES['good_file']['type'];
-    $bad_type = $_FILES['bad_file']['type'];
-//    $rework_type = $_FILES['rework_file']['type'];
-
-
-//    $good_ext = strtolower(end(explode('.', $good_name)));
-//    $bad_ext = strtolower(end(explode('.', $bad_name)));
-    $good_extensions = array("application/octet-stream","doc","docx");
-    $bad_extensions = array("application/octet-stream","doc","docx");
-//    $rework_extensions = array("doc","docx");
-    if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false ) {
-        $errors[] = "extension not allowed, please choose a doc file.";
-        $message_stauts_class = 'alert-danger';
-        $import_status_message = 'Error: Extension not allowed, please choose a doc file.';
-
-    }
-//    if ($good_size > 2097152 && $bad_size > 2097152 && $rework_size > 2097152) {
-//        $errors[] = 'File size must be excately 2 MB';
-//        $message_stauts_class = 'alert-danger';
-//        $import_status_message = 'Error: File size must be less than 2 MB';
-//    }
-    if (empty($errors) == true) {
-        $dir_path = "../assets/label_files/" . $_POST['label_line_id'];
-        if (!file_exists($dir_path)) {
-            mkdir($dir_path, 0777, true);
-        }
-        move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-        copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-//		move_uploaded_file($good_tmp1, $dir_path . '/' . 'f1');
-        move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-        copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-        $zpl_id = $_POST['label_line_id'];
-        $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
-        $result1 = mysqli_query($db, $sql1);
-        //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
-        $message_stauts_class = 'alert-success';
-        $import_status_message = 'Upload Files Successfully';
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -273,10 +197,6 @@ include("../heading_banner.php");
                                                       <option value= '0 '$selected>No</option>";
                                             }
                                               ?>
-
-
-
-
                                          </select>
                                     </div>
                                 </div>
@@ -288,7 +208,7 @@ include("../heading_banner.php");
                                     <label class="col-lg-5 control-label">Good Piece File : </label>
                                     <div class="col-lg-7">
                                         <input type="file" name="edit_good_file" id="edit_good_file"
-                                               class="form-control" value="<?php echo $dir_path . '/' . 'g' . "_" . 'label'; ?>">
+                                               class="form-control">
 
                                     </div>
                                 </div>
@@ -301,7 +221,7 @@ include("../heading_banner.php");
                                     <div class="col-lg-7">
                                         <input type="file" name="edit_bad_file" id="edit_bad_file"
                                                class="form-control">
-                                        <!--                                        <div id="preview"></div>-->
+                                        <!-- <div id="preview"></div>-->
                                     </div>
 
                                 </div>
@@ -309,7 +229,7 @@ include("../heading_banner.php");
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+<!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -324,7 +244,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line.php");
+        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line.php?id=<?php echo $edit_id;?>");
     }
 </script>
 
