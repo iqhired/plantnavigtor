@@ -28,37 +28,38 @@ if (count($_POST) > 0) {
 //edit
     $edit_name = $_POST['edit_name'];
     $id = $_POST['edit_id'];
-    $good_file = $_POST['edit_good_file'];
-    $bad_file = $_POST['edit_bad_file'];
-    $good_size = $_POST['edit_good_file']['size'];
-    $bad_size = $_POST['edit_bad_file']['size'];
-    $good_tmp = $_POST['edit_good_file']['tmp_name'];
-    $bad_tmp = $_POST['edit_bad_file']['tmp_name'];
-    $good_type = $_POST['edit_good_file']['type'];
-    $bad_type = $_POST['edit_bad_file']['type'];
+    if($_POST['edit_good_file'] != "" && $_POST['edit_bad_file'] != "") {
+        $good_file = $_POST['edit_good_file'];
+        $bad_file = $_POST['edit_bad_file'];
+        $good_size = $_POST['edit_good_file']['size'];
+        $bad_size = $_POST['edit_bad_file']['size'];
+        $good_tmp = $_POST['edit_good_file']['tmp_name'];
+        $bad_tmp = $_POST['edit_bad_file']['tmp_name'];
+        $good_type = $_POST['edit_good_file']['type'];
+        $bad_type = $_POST['edit_bad_file']['type'];
 
 
-    $dir_path = "../assets/label_files/" . $id;
+        $dir_path = "../assets/label_files/" . $id;
 
-    $files = glob("$dir_path/*"); // get all file names
-    foreach($files as $file){ // iterate files
-        if(is_file($file)) {
-            unlink($file); // delete file
+        $files = glob("$dir_path/*"); // get all file names
+        foreach ($files as $file) { // iterate files
+            if (is_file($file)) {
+                unlink($file); // delete file
+            }
         }
-    }
-         if(!file_exists($dir_path)) {
-           //    rmdir("../assets/label_files/" . $id);
+        if (!file_exists($dir_path)) {
+            //    rmdir("../assets/label_files/" . $id);
 //               unlink("../assets/label_files/" . $id .'/'. 'f1'); //delete file
 //               unlink("../assets/label_files/" . $id .'/'. 'f2');
-             move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-             copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-             move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-             copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-         }
+            move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+            copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
+            move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+            copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
+        }
 
-    //     mkdir($dir_path, 0777, true);
+        //     mkdir($dir_path, 0777, true);
 
-
+    }
         $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
         $result1 = mysqli_query($db, $sql);
@@ -107,20 +108,9 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="../assets/js/pn.js"></script>
 </head>
 <style>
-    @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-        .col-md-3 {
-            float: left;
-        }
-        .col-md-4 {
-            float: left;
-        }
-        .col-md-2 {
-            float: right;
-        }
-        .col-md-2.mob_user {
-            float: left;
-            margin-top: 10px;
-        }
+
+    .form-horizontal .form-group {
+        font-size: 14px;
     }
 </style>
 
