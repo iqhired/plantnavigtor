@@ -367,7 +367,7 @@ include("../heading_banner.php");
 
 									//     $finalid=urlencode( base64_encode($id));
 									?>
-                                    <a href="form_edit.php?id=<?php echo $finalid ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
+                                    <a href="edit_user_form_data_update.php?id=<?php echo $finalid ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
                                 </td>
                                 <td><?php echo $rowc["name"]; ?></td>
 								<?php

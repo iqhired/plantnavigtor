@@ -599,7 +599,7 @@ include("../heading_banner.php");
                                     if($option == 0){?>
 
                                         <td class="tooltip">
-                                            <a href="view_user_form_data.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="view_user_form_data_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                             <span class="tooltiptext">View User Form</span>
                                         </td>
 
@@ -608,7 +608,7 @@ include("../heading_banner.php");
 
                                         if ($check_status != null){  ?>
                                             <td class="tooltip">
-                                                <a href="submit_user_form.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a href="submit_user_form_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                 <span class="tooltiptext">View User Form</span>
                                             </td>
 
