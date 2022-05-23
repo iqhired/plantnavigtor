@@ -5,7 +5,7 @@ include("../config.php");
 $seq_id = $_POST['seq_id'];
 $i_id = $_POST['i_id'];
 $c_id = $_POST['c_id'];
-$sql1 = "DELETE FROM `form_item` WHERE `form_item_seq` = '$seq_id' and  form_item_id = '$i_id'";
+$sql1 = "DELETE FROM `form_item` WHERE form_item_id = '$i_id'";
 mysqli_query($db, $sql1);
 
 
