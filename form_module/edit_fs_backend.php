@@ -136,18 +136,24 @@ if(count($_POST)>0) {
 
 
 	$bansi_row_click = $_POST['bansi_row_click'];
-
-	$item_desc_array = $_POST['query_text'];
-
-	 $fetch_form_item_q = "select * FROM `form_item` WHERE form_create_id = '$form_create_id' order by form_item_seq+0 ASC";
-	 $result_ft = mysqli_query($db,$fetch_form_item_q);
-	 $j = 0;
-	 while ($rowc_ft_item = mysqli_fetch_array($result_ft)) {
-	 	 $fit = $rowc_ft_item['form_item_id'];
-		 $sql0 = "UPDATE `form_item` SET `form_item_seq`='$bansi_row_click[$j]' where form_item_id = '$fit'";
-		 $result0 = mysqli_query($db, $sql0);
-		 $j++;
-	 }
+	$j = 1;
+	foreach ($bansi_row_click as $rd) {
+		$exp = explode("-",$rd);
+		$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
+		$result0 = mysqli_query($db, $sql0);
+		$j++;
+	}
+//	$item_desc_array = $_POST['query_text'];
+//
+//	 $fetch_form_item_q = "select * FROM `form_item` WHERE form_create_id = '$form_create_id' order by form_item_seq+0 ASC";
+//	 $result_ft = mysqli_query($db,$fetch_form_item_q);
+//	 $j = 0;
+//	 while ($rowc_ft_item = mysqli_fetch_array($result_ft)) {
+//	 	 $fit = $rowc_ft_item['form_item_id'];
+//		 $sql0 = "UPDATE `form_item` SET `form_item_seq`='$bansi_row_click[$j]' where form_item_id = '$fit'";
+//		 $result0 = mysqli_query($db, $sql0);
+//		 $j++;
+//	 }
 
 //	$resultremove = mysqli_query($db, "DELETE FROM `form_item` WHERE `form_create_id` = '$form_create_id'");
 

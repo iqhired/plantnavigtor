@@ -979,6 +979,7 @@ include("../heading_banner.php");
 									while ($rowcitem = mysqli_fetch_array($quritem)) {
 										//$formname = $rowcitem['form_name'];
 										$item_val = $rowcitem['item_val'];
+										$item_Id = $rowcitem['form_item_id'];
 										?>
 
                                         <div class="rowitem_<?php echo $rowcount; ?>">
@@ -998,7 +999,9 @@ include("../heading_banner.php");
                                                         <button type="button" name="remove_btn"
                                                                 class="btn btn-danger btn-xs remove_btn"
                                                                 id="btn_id<?php echo $rowcount; ?>"
-                                                                data-id="<?php echo $rowcount; ?>">-
+                                                                data-id="<?php echo $rowcount; ?>"
+                                                                data-i_id="<?php echo $item_Id; ?>"
+                                                                data-c_id="<?php echo $id; ?>">-
                                                         </button>
                                                     </h4>
                                                 </div>
@@ -1159,7 +1162,7 @@ include("../heading_banner.php");
 																			<?php $defaultbina = $rowcitem['binary_default']; ?>
                                                                             <input type="hidden"
                                                                                    name="bansi_row_click[]"
-                                                                                   value="<?php echo $rowcount; ?>">
+                                                                                   value="<?php echo $rowcitem['form_item_id'] . '-' .$rowcount; ?>">
                                                                             <input type="radio" id="none"
                                                                                    name="default_binary_<?php echo $rowcount; ?>[]"
                                                                                    value="none"
@@ -1364,8 +1367,15 @@ include("../heading_banner.php");
     $(document).on("click", ".remove_btn", function () {
 
         var row_id = $(this).attr("data-id");
-        $(".rowitem_" + row_id).remove();
-
+        var row_i_id = $(this).attr("data-i_id");
+        var row_c_id = $(this).attr("data-c_id");
+        // $(".rowitem_" + row_id).remove();
+        var info = 'seq_id=' + row_id + '&i_id=' + row_i_id+ '&c_id=' + row_c_id;
+        $.ajax({
+            type: "POST", url: "del_form_item.php", data: info, success: function (data) {
+            }
+        });
+        window.location.reload();
     });
     $(document).on("click", ".submit_btn", function () {
         //$("#form_settings").submit(function() {
