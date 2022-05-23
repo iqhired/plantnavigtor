@@ -137,7 +137,7 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 	$message .= "</table>";
 	$message .= "<br/>";
 	$message1 = "Please click on the following link to review the values that were uploaded : ";
-	$message2 = $siteURL . "material_tracability/view_material.php?id=" . $material_trace_id;
+	$message2 = $siteURL . "material_tracability/view_material_mail.php?id=" . $material_trace_id;
 	$signature = "- USPL Process Control Team";
 
 
