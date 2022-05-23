@@ -134,13 +134,179 @@ if(count($_POST)>0) {
 
 	//echo "click id".$click_id;
 
-
+	$item_desc_array = $_POST['query_text'];
 	$bansi_row_click = $_POST['bansi_row_click'];
 	$j = 1;
 	foreach ($bansi_row_click as $rd) {
 		$exp = explode("-",$rd);
-		$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
-		$result0 = mysqli_query($db, $sql0);
+		$cc = sizeof($exp);
+		$bansi_row = $j;
+		$itemarray = $_POST['item_' . $bansi_row];
+		$item = $itemarray[0];
+		$notes_array = $_POST['form_item_notes'];
+		$disc_array = $_POST['form_item_disc'];
+
+		$opt = $_POST['optional_' . $bansi_row];
+		if($cc == 2){
+			$index = $exp[1];
+			$item_desc = $item_desc_array[($index-1)];
+			$notes = $notes_array[($index-1)];
+			$disc = $disc_array[($index-1)];
+			$checked = 0;
+			if ($opt != null && isset($opt) && isset($opt[0])) {
+				$checked = 1;
+			}
+
+			if ($item == "numeric") {
+				$normal_array = $_POST['normal'];
+				$normal = $normal_array[($index-1)];
+
+				echo "normal :- " . $normal;
+
+				$lower_tolerance_array = $_POST['lower_tolerance'];
+				$lower_tolerance = $lower_tolerance_array[($j-1)];
+
+				echo "lower_tolerance :- " . $lower_tolerance;
+
+
+				$upper_tolerance_array = $_POST['upper_tolerance'];
+				$upper_tolerance = $upper_tolerance_array[($index-1)];
+
+				echo "upper_tolerance :- " . $upper_tolerance;
+				$unit = $unit_of_measurement[($index-1)];
+//update `form_item` SET `form_item_seq` = '$j',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
+//`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
+//`notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by'
+				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
+`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
+`notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item updated successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+
+			} else if ($item == "binary") {
+				$default_binary_array = $_POST['default_binary_' . $bansi_row];
+				$default_binary = $default_binary_array[0];
+
+				$normal_binary_array = $_POST['normal_binary_' . $bansi_row];
+				$normal_binary = $normal_binary_array[0];
+
+				$yes_alias_array = $_POST['yes_alias'];
+				$yes_alias = $yes_alias_array[($index-1)];
+
+				$no_alias_array = $_POST['no_alias'];
+				$no_alias = $no_alias_array[($index-1)];
+
+				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
+`binary_default` = '$default_binary',`binary_normal` = '$normal_binary',`binary_yes_alias` = '$yes_alias',`binary_no_alias` = '$no_alias',`notes` = '$notes' ,
+`discription` = '$disc',`created_at`='$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item updated successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+
+			} else if ($item != "") {
+
+				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
+`notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by', `updated_at` = '$updated_by'  where form_item_id = '$exp[0]'";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item updated successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+			}
+
+//			$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
+//			$result0 = mysqli_query($db, $sql0);
+		}else {
+			$item_desc = $item_desc_array[($j-1)];
+			$notes = $notes_array[($j-1)];
+			$disc = $disc_array[($j-1)];
+			$checked = 0;
+			if ($opt != null && isset($opt) && isset($opt[0])) {
+				$checked = 1;
+			}
+
+			if ($item == "numeric") {
+				$normal_array = $_POST['normal'];
+				$normal = $normal_array[($j-1)];
+
+				echo "normal :- " . $normal;
+
+				$lower_tolerance_array = $_POST['lower_tolerance'];
+				$lower_tolerance = $lower_tolerance_array[($j-1)];
+
+				echo "lower_tolerance :- " . $lower_tolerance;
+
+
+				$upper_tolerance_array = $_POST['upper_tolerance'];
+				$upper_tolerance = $upper_tolerance_array[($j-1)];
+
+				echo "upper_tolerance :- " . $upper_tolerance;
+				$unit = $unit_of_measurement[($j-1)];
+
+				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+		('$j','$unit'  , '$checked' , '$form_create_id', '$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item created successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+
+			} else if ($item == "binary") {
+				$default_binary_array = $_POST['default_binary_' . $bansi_row];
+				$default_binary = $default_binary_array[0];
+
+				$normal_binary_array = $_POST['normal_binary_' . $bansi_row];
+				$normal_binary = $normal_binary_array[0];
+
+				$yes_alias_array = $_POST['yes_alias'];
+				$yes_alias = $yes_alias_array[($j-1)];
+
+				$no_alias_array = $_POST['no_alias'];
+				$no_alias = $no_alias_array[($j-1)];
+
+				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item created successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+
+			} else if ($item != "") {
+
+				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+				$result1 = mysqli_query($db, $sql1);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Form Item created successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+			}
+		}
+
 		$j++;
 	}
 //	$item_desc_array = $_POST['query_text'];
