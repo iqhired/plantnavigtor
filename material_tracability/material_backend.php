@@ -132,6 +132,8 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $p_num . "</td></tr>";
 	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $p_name . "</td></tr>";
 	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $pf_name . "</td></tr>";
+	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Reject Reason : </strong> </td><td>" . $fail_reason . "</td></tr>";
+	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Quantity : </strong> </td><td>" . $quantity . "</td></tr>";
 	$message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Operator/User : </strong> </td><td>" . $form_submitted_by . "</td></tr>";
 //    $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Number of items that are out of specification: </strong> </td><td>" . $temp_j . "</td></tr>";
 	$message .= "</table>";
