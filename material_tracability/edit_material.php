@@ -519,7 +519,7 @@ include("../heading_banner.php");
                                                 <option value="rejected" >Rejected</option>
 
                                             </select>
-											<?php }else if($rowcmain['fail_reason'] == 'rejected'){?>
+											<?php }else if(($rowcmain['fail_reason'] == 'rejected') || ($rowcmain['fail_reason'] == 'Reject')){?>
                                             <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
                                                 <!--                                                <option value="" selected disabled>--- Select Reason ---</option>-->
                                                 <option value="onhold" >On Hold</option>
