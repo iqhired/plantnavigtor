@@ -512,7 +512,7 @@ include("../heading_banner.php");
                                     <div class="row desc" id="material_statusfail">
                                         <label class="col-lg-2 control-label">Reason : </label>
                                         <div class="col-md-6">
-                                            <?php if($rowcmain['fail_reason'] == 'onhold'){ ?>
+                                            <?php if(($rowcmain['fail_reason'] == 'onhold') || ($rowcmain['fail_reason'] == 'Hold')){ ?>
                                             <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
 <!--                                                <option value="" selected disabled>--- Select Reason ---</option>-->
                                                 <option value="onhold" selected>On Hold</option>
