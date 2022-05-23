@@ -23,10 +23,11 @@ if (count($_POST) > 0) {
 	$reason_desc = $_POST['reason_desc'];
 	$notes = $_POST['material_notes'];
 	$created_by = date("Y-m-d H:i:s");
+	$created_by_user = $_SESSION['id'];
 
 
-	$sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_no`,`part_no`,`part_family_id`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`quantity`,`notes`,`created_at`) VALUES 
-	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$reason_desc','$quantity','$notes','$created_by')";
+	$sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_no`,`part_no`,`part_family_id`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`quantity`,`notes`,`created_at`,`created_by`) VALUES 
+	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$reason_desc','$quantity','$notes','$created_by' , '$created_by_user')";
 	$result0 = mysqli_query($db, $sql0);
 	if ($result0) {
 		$_SESSION['message_stauts_class'] = 'alert-success';
@@ -108,12 +109,12 @@ if ($material_status == '0') {
 	$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
-	$del_query = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name   FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
+	$del_query = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name , mt.created_by as created_by FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
 inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.material_id='$material_trace_id'");
 	$del_query_01 = mysqli_query($db, $del_query);
 	$del_query_row = mysqli_fetch_array($del_query_01);
-	$del_user_id = '1';
-//    $del_user_id = $rowc04['created_by'];
+//	$del_user_id = '1';
+    $del_user_id = $del_query_row['created_by'];
 	$del_query_2 = sprintf("SELECT user_name , firstname , lastname from cam_users where users_id='$del_user_id'");
 	$del_query_02 = mysqli_query($db, $del_query_2);
 	$del_query_row_1 = mysqli_fetch_array($del_query_02);
@@ -157,29 +158,36 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 	$mail->Subject = $subject;
 	$mail->Body = $structure;
 	$arr_out_of_tolerance_mail_list = explode(',', $out_of_tolerance_mail_list1);
+	$users = explode(',', $out_of_tolerance_mail_list_users);
 	foreach ($arr_out_of_tolerance_mail_list as $out_of_tolerance_mail_list) {
 		if ($out_of_tolerance_mail_list != "") {
 			$query0004 = sprintf("SELECT * FROM  sg_user_group where group_id = '$out_of_tolerance_mail_list' ");
 			$qur0004 = mysqli_query($db, $query0004);
 			while ($rowc0004 = mysqli_fetch_array($qur0004)) {
 				$u_name = $rowc0004['user_id'];
-				$query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-				$qur0005 = mysqli_query($db, $query0005);
-				$rowc0005 = mysqli_fetch_array($qur0005);
-				$email = $rowc0005["email"];
-				$lasname = $rowc0005["lastname"];
-				$firstname = $rowc0005["firstname"];
-				$mail->addAddress($email, $firstname);
-			}
-			if (!$mail->send()) {
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-			} else {
-				$path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
-				$imapStream = imap_open($path, $mail->Username, $mail->Password);
-				$result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-				imap_close($imapStream);
+				array_push($users ,$u_name );
 			}
 		}
+	}
+	$u_users = array_unique($users);
+	foreach ($u_users as $u) {
+		if ($u != "") {
+			$query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u' ");
+			$qur0005 = mysqli_query($db, $query0005);
+			$rowc0005 = mysqli_fetch_array($qur0005);
+			$email = $rowc0005["email"];
+			$lasname = $rowc0005["lastname"];
+			$firstname = $rowc0005["firstname"];
+			$mail->addAddress($email, $firstname);
+		}
+	}
+	if (!$mail->send()) {
+		echo 'Mailer Error: ' . $mail->ErrorInfo;
+	} else {
+		$path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+		$imapStream = imap_open($path, $mail->Username, $mail->Password);
+		$result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+		imap_close($imapStream);
 	}
 }
 

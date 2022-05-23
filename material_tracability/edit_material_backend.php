@@ -12,7 +12,7 @@ $drag_drop_res = (array) json_decode($array);
 //echo "</pre>";
 
 if(count($_POST)>0) {
-    $form_id = $_POST['material_id'];
+    $material_id = $_POST['material_id'];
     $station_event_id = $_POST['station_event_id'];
     $customer_account_id = $_POST['customer_account_id'];
     $line_number = $_POST['line_number'];
@@ -28,10 +28,10 @@ if(count($_POST)>0) {
     $notes = $_POST['material_notes'];
     $created_by = date("Y-m-d H:i:s");
     $edit_file = $_FILES['edit_image']['name'];
-
+	$updated_by_user = $_SESSION['id'];
 
     //$sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
-	$sql0 = "UPDATE `material_tracability` SET `line_no`='$line_number',`part_no`='$part_number',`part_family_id`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
+	$sql0 = "UPDATE `material_tracability` SET `created_by`='$updated_by_user',`line_no`='$line_number',`part_no`='$part_number',`part_family_id`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$material_id'";
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
@@ -40,9 +40,9 @@ if(count($_POST)>0) {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
     }
-    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where material_id= '$form_id' ");
-    $rowc04 = mysqli_fetch_array($qur04);
-    $material_id = $rowc04["material_id"];
+//    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where material_id= '$material_id' ");
+//    $rowc04 = mysqli_fetch_array($qur04);
+//    $material_id = $rowc04["material_id"];
 
 
 //multiple image
@@ -115,12 +115,12 @@ if(count($_POST)>0) {
 		$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
-		$del_query = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name   FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
-inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.material_id='$material_trace_id'");
+		$del_query = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name , mt.created_by as created_by   FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
+inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.material_id='$material_id'");
 		$del_query_01 = mysqli_query($db, $del_query);
 		$del_query_row = mysqli_fetch_array($del_query_01);
-		$del_user_id = '1';
-//    $del_user_id = $rowc04['created_by'];
+//		$del_user_id = '1';
+        $del_user_id = $del_query_row['created_by'];
 		$del_query_2 = sprintf("SELECT user_name , firstname , lastname from cam_users where users_id='$del_user_id'");
 		$del_query_02 = mysqli_query($db, $del_query_2);
 		$del_query_row_1 = mysqli_fetch_array($del_query_02);
@@ -146,7 +146,7 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 		$message .= "</table>";
 		$message .= "<br/>";
 		$message1 = "Please click on the following link to review the values that were uploaded : ";
-		$message2 = $siteURL . "material_tracability/view_material_mail.php?id=" . $material_trace_id;
+		$message2 = $siteURL . "material_tracability/view_material_mail.php?id=" . $material_id;
 		$signature = "- USPL Process Control Team";
 
 
@@ -164,34 +164,41 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 		$mail->Subject = $subject;
 		$mail->Body = $structure;
 		$arr_out_of_tolerance_mail_list = explode(',', $out_of_tolerance_mail_list1);
+		$users = explode(',', $out_of_tolerance_mail_list_users);
 		foreach ($arr_out_of_tolerance_mail_list as $out_of_tolerance_mail_list) {
 			if ($out_of_tolerance_mail_list != "") {
 				$query0004 = sprintf("SELECT * FROM  sg_user_group where group_id = '$out_of_tolerance_mail_list' ");
 				$qur0004 = mysqli_query($db, $query0004);
 				while ($rowc0004 = mysqli_fetch_array($qur0004)) {
 					$u_name = $rowc0004['user_id'];
-					$query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-					$qur0005 = mysqli_query($db, $query0005);
-					$rowc0005 = mysqli_fetch_array($qur0005);
-					$email = $rowc0005["email"];
-					$lasname = $rowc0005["lastname"];
-					$firstname = $rowc0005["firstname"];
-					$mail->addAddress($email, $firstname);
-				}
-				if (!$mail->send()) {
-					echo 'Mailer Error: ' . $mail->ErrorInfo;
-				} else {
-					$path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
-					$imapStream = imap_open($path, $mail->Username, $mail->Password);
-					$result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-					imap_close($imapStream);
+					array_push($users ,$u_name );
 				}
 			}
+		}
+		$u_users = array_unique($users);
+		foreach ($u_users as $u) {
+			if ($u != "") {
+				$query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u' ");
+				$qur0005 = mysqli_query($db, $query0005);
+				$rowc0005 = mysqli_fetch_array($qur0005);
+				$email = $rowc0005["email"];
+				$lasname = $rowc0005["lastname"];
+				$firstname = $rowc0005["firstname"];
+				$mail->addAddress($email, $firstname);
+			}
+		}
+		if (!$mail->send()) {
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			$path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+			$imapStream = imap_open($path, $mail->Username, $mail->Password);
+			$result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+			imap_close($imapStream);
 		}
 	}
 }
 //header("Location:form_edit.php?id=$hidden_id");
-$page = "edit_material.php?id=$form_id";
+$page = "edit_material.php?id=$material_id";
 header('Location: '.$page, true, 303);
 exit;
 
