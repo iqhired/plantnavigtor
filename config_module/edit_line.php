@@ -106,11 +106,29 @@ if (count($_POST) > 0) {
 //    }
         if (empty($errors) == true) {
             $dir_path = "../assets/label_files/" . $_POST['edit_id'];
+
             if (file_exists($dir_path)) {
-                $files = glob("$dir_path/*"); // get all file names
+                if ($good_name == "") {
+
+                $files = glob("$dir_path/f2" & "$dir_path/b_label"); // get all file names
                 foreach ($files as $file) { // iterate files
                     if (is_file($file)) {
                         unlink($file); // delete file
+                    }
+                }
+            }else if($bad_name == ""){
+                    $files = glob("$dir_path/f1" & "$dir_path/g_label"); // get all file names
+                    foreach ($files as $file) { // iterate files
+                        if (is_file($file)) {
+                            unlink($file); // delete file
+                        }
+                    }
+                }else{
+                    $files = glob("$dir_path/*"); // get all file names
+                    foreach ($files as $file) { // iterate files
+                        if (is_file($file)) {
+                            unlink($file); // delete file
+                        }
                     }
                 }
             }else if (!file_exists($dir_path)) {
