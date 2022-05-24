@@ -512,12 +512,21 @@ include("../heading_banner.php");
                                     <div class="row desc" id="material_statusfail">
                                         <label class="col-lg-2 control-label">Reason : </label>
                                         <div class="col-md-6">
+                                            <?php if(($rowcmain['fail_reason'] == 'onhold') || ($rowcmain['fail_reason'] == 'Hold')){ ?>
                                             <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
-                                                <option value="" selected disabled>--- Select Reason ---</option>
-                                                <option value="onhold">On Hold</option>
-                                                <option value="rejected" selected>Rejected</option>
+<!--                                                <option value="" selected disabled>--- Select Reason ---</option>-->
+                                                <option value="onhold" selected>On Hold</option>
+                                                <option value="rejected" >Rejected</option>
 
                                             </select>
+											<?php }else if(($rowcmain['fail_reason'] == 'rejected') || ($rowcmain['fail_reason'] == 'Reject')){?>
+                                            <select name="reason" id="reason" class="select form-control" data-style="bg-slate">
+                                                <!--                                                <option value="" selected disabled>--- Select Reason ---</option>-->
+                                                <option value="onhold" >On Hold</option>
+                                                <option value="rejected" selected >Rejected</option>
+
+                                            </select>
+											<?php }?>
                                         </div>
                                     </div>
                                     <br/>

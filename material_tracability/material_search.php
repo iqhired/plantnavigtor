@@ -196,7 +196,7 @@ include("../heading_banner.php");
                         $material_status = $rowc["material_status"];
                         $created_at= $rowc["created_at"];
 
-                        if($material_status == 'pass'){
+                        if($material_status == '1'){
                             $style = "style='background-color:#a8d8a8;'";
                         }else{
 
