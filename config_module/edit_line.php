@@ -146,6 +146,7 @@ if (count($_POST) > 0) {
             $message_stauts_class = 'alert-success';
             $import_status_message = 'Upload Files Successfully';
         }
+
     }
 
         header('location: line.php');
@@ -223,6 +224,7 @@ include("../heading_banner.php");
                                 $line_name = $row1['line_name'];
                                 $p_order = $row1['priority_order'];
                                 $enabled = $row1['enabled'];
+                                $zpl_status = $row1['zpl_file_status'];
                             }
                             ?>
                             <div class="col-md-9">
@@ -270,7 +272,8 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <?php if ($zpl_status == '1'){ ?>
+                            <div class="row">
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">Good Piece File : </label>
@@ -295,6 +298,8 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                         </div>
+                     <?php   }  ?>
+
                     </div>
                     <div class="modal-footer">
 <!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->

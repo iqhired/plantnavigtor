@@ -23,44 +23,36 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 $_SESSION['LAST_ACTIVITY'] = $time;
 
 if (count($_POST) > 0) {
-    $name = $_POST['name'];
 
 //edit
     $edit_name = $_POST['edit_name'];
     $id = $_POST['edit_id'];
-//    if($_FILES['edit_good_file'] != "" && $_FILES['edit_bad_file'] != "") {
-//        $good_file = $_FILES['edit_good_file'];
-//        $bad_file = $_FILES['edit_bad_file'];
-//        $good_size = $_FILES['edit_good_file']['size'];
-//        $bad_size = $_FILES['edit_bad_file']['size'];
-//        $good_tmp = $_FILES['edit_good_file']['tmp_name'];
-//        $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
-//        $good_type = $_FILES['edit_good_file']['type'];
-//        $bad_type = $_FILES['edit_bad_file']['type'];
-//
-//
-//        $dir_path = "../assets/label_files/" . $id;
-//
-//        $files = glob("$dir_path/*"); // get all file names
-//        foreach ($files as $file) { // iterate files
-//            if (is_file($file)) {
-//                unlink($file); // delete file
-//            }
-//        }
-//        if (!file_exists($dir_path)) {
-//            //    rmdir("../assets/label_files/" . $id);
-////               unlink("../assets/label_files/" . $id .'/'. 'f1'); //delete file
-////               unlink("../assets/label_files/" . $id .'/'. 'f2');
-//            move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-//            copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-//            move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-//            copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-//        }
-//
-//        //     mkdir($dir_path, 0777, true);
-//
-//    }
-        $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
+   // $good_file = $_POST['good_file'];
+  //  $bad_files = $_POST['bad_file'];
+    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
+    $content = $_POST['good_file'];
+    $file = $dir_path.'/'.'f1' ; // cannot be an online resource
+    $Saved_File = fopen($file, 'w');
+    fwrite($Saved_File, $content);
+    fclose($Saved_File);
+    $file1 = $dir_path.'/'.'g_label';
+    $g_label_file = fopen($file1,'w');
+    fwrite($g_label_file, $content);
+    fclose($g_label_file);
+    $content_bad = $_POST['bad_file'];
+    $file_bad = $dir_path.'/'.'f2' ; // cannot be an online resource
+    $Saved_File_bad = fopen($file_bad, 'w');
+    fwrite($Saved_File_bad, $content_bad);
+    fclose($Saved_File_bad);
+    $file_bad1 = $dir_path.'/'.'b_label' ; // cannot be an online resource
+    $Saved_File_bad1 = fopen($file_bad1, 'w');
+    fwrite($Saved_File_bad1, $content_bad);
+    fclose($Saved_File_bad1);
+
+
+
+
+    $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
@@ -173,6 +165,10 @@ if (count($_POST) > 0) {
     .form-horizontal .form-group {
         font-size: 14px;
     }
+    textarea.form-control {
+        height: auto;
+        border: 1px solid #dcd2d2;
+    }
 </style>
 
 <!-- Main navbar -->
@@ -206,6 +202,7 @@ include("../heading_banner.php");
                                 $line_name = $row1['line_name'];
                                 $p_order = $row1['priority_order'];
                                 $enabled = $row1['enabled'];
+                                $zpl_status = $row1['zpl_file_status'];
                             }
                             ?>
                             <div class="col-md-9">
@@ -253,6 +250,7 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                         </div>
+                        <?php if ($zpl_status == '1'){ ?>
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="form-group">
@@ -262,11 +260,13 @@ include("../heading_banner.php");
 <!--                                               class="form-control">-->
                                         <textarea rows="5" name="good_file" id="good_file" class="form-control"></textarea>
 
+
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                        <div class="row">
                                                                     <div class="col-md-9">
                                                                         <div class="form-group">
                                                                             <label class="col-lg-5 control-label">Bad Piece File : </label>
@@ -280,6 +280,7 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="modal-footer">
 <!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->
