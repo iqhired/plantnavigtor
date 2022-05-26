@@ -301,7 +301,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line_print.php?id=<?php echo $edit_id;?>");
+        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line.php?id=<?php echo $edit_id;?>");
     }
 </script>
 
