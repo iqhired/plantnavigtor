@@ -3,7 +3,7 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    header('location: ../logout.php');
+	header('location: ../logout.php');
 }
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
@@ -11,87 +11,85 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    header($redirect_logout_path);
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	header($redirect_logout_path);
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 
+$l_id = $_GET['id'];
+if(!empty($l_id) && ($l_id > 0)){
+	$dir_path = "../assets/label_files/" . $l_id;
+	$output = file_get_contents($dir_path.'/'.'f1');
+	$output_bad = file_get_contents($dir_path.'/'.'f2');
+}
+
 if (count($_POST) > 0) {
-    $name = $_POST['name'];
 
 //edit
-    $edit_name = $_POST['edit_name'];
-    $id = $_POST['edit_id'];
-//    if($_FILES['edit_good_file'] != "" && $_FILES['edit_bad_file'] != "") {
-//        $good_file = $_FILES['edit_good_file'];
-//        $bad_file = $_FILES['edit_bad_file'];
-//        $good_size = $_FILES['edit_good_file']['size'];
-//        $bad_size = $_FILES['edit_bad_file']['size'];
-//        $good_tmp = $_FILES['edit_good_file']['tmp_name'];
-//        $bad_tmp = $_FILES['edit_bad_file']['tmp_name'];
-//        $good_type = $_FILES['edit_good_file']['type'];
-//        $bad_type = $_FILES['edit_bad_file']['type'];
-//
-//
-//        $dir_path = "../assets/label_files/" . $id;
-//
-//        $files = glob("$dir_path/*"); // get all file names
-//        foreach ($files as $file) { // iterate files
-//            if (is_file($file)) {
-//                unlink($file); // delete file
-//            }
-//        }
-//        if (!file_exists($dir_path)) {
-//            //    rmdir("../assets/label_files/" . $id);
-////               unlink("../assets/label_files/" . $id .'/'. 'f1'); //delete file
-////               unlink("../assets/label_files/" . $id .'/'. 'f2');
-//            move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-//            copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
-//            move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-//            copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-//        }
-//
-//        //     mkdir($dir_path, 0777, true);
-//
-//    }
-        $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'Station Updated successfully.';
-        } else {
-            $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Please Insert valid data';
-        }
+	$edit_name = $_POST['edit_name'];
+	$id = $_POST['edit_id'];
+	$dir_path = "../assets/label_files/" . $id;
+	$content = $_POST['good_file'];
+	$file = $dir_path.'/'.'f1' ; // cannot be an online resource
+	$Saved_File = fopen($file, 'w');
+	fwrite($Saved_File, $content);
+	fclose($Saved_File);
+	$file1 = $dir_path.'/'.'g_label';
+	$g_label_file = fopen($file1,'w');
+	fwrite($g_label_file, $content);
+	fclose($g_label_file);
+	$content_bad = $_POST['bad_file'];
+	$file_bad = $dir_path.'/'.'f2' ; // cannot be an online resource
+	$Saved_File_bad = fopen($file_bad, 'w');
+	fwrite($Saved_File_bad, $content_bad);
+	fclose($Saved_File_bad);
+	$file_bad1 = $dir_path.'/'.'b_label' ; // cannot be an online resource
+	$Saved_File_bad1 = fopen($file_bad1, 'w');
+	fwrite($Saved_File_bad1, $content_bad);
+	fclose($Saved_File_bad1);
 
-    if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
-        $errors = array();
-        $good_name = $_FILES['good_file']['name'];
-        $bad_name = $_FILES['bad_file']['name'];
+	$output = file_get_contents($dir_path.'/'.'f1');
+	$output_bad = file_get_contents($dir_path.'/'.'f2');
+
+	$sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
+
+	$result1 = mysqli_query($db, $sql);
+	if ($result1) {
+		$message_stauts_class = 'alert-success';
+		$import_status_message = 'Station Updated successfully.';
+	} else {
+		$message_stauts_class = 'alert-danger';
+		$import_status_message = 'Error: Please Insert valid data';
+	}
+
+	if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
+		$errors = array();
+		$good_name = $_FILES['good_file']['name'];
+		$bad_name = $_FILES['bad_file']['name'];
 //    $rework_name = $_FILES['rework_file'];
-        $good_size = $_FILES['good_file']['size'];
-        $bad_size = $_FILES['bad_file']['size'];
+		$good_size = $_FILES['good_file']['size'];
+		$bad_size = $_FILES['bad_file']['size'];
 //    $rework_size = $_FILES['rework_file']['size'];
-        $good_tmp = $_FILES['good_file']['tmp_name'];
-        $good_tmp1 = $good_tmp;
-        $bad_tmp = $_FILES['bad_file']['tmp_name'];
+		$good_tmp = $_FILES['good_file']['tmp_name'];
+		$good_tmp1 = $good_tmp;
+		$bad_tmp = $_FILES['bad_file']['tmp_name'];
 //    $rework_tmp = $_FILES['rework_file']['tmp_name'];
-        $good_type = $_FILES['good_file']['type'];
-        $bad_type = $_FILES['bad_file']['type'];
+		$good_type = $_FILES['good_file']['type'];
+		$bad_type = $_FILES['bad_file']['type'];
 //    $rework_type = $_FILES['rework_file']['type'];
 
 
 //    $good_ext = strtolower(end(explode('.', $good_name)));
 //    $bad_ext = strtolower(end(explode('.', $bad_name)));
-        $good_extensions = array("application/octet-stream","doc","docx");
-        $bad_extensions = array("application/octet-stream","doc","docx");
+		$good_extensions = array("application/octet-stream","doc","docx");
+		$bad_extensions = array("application/octet-stream","doc","docx");
 //    $rework_extensions = array("doc","docx");
 //    if (in_array($good_type, $good_extensions) == false && in_array($bad_type, $bad_extensions) == false ) {
 //    $errors[] = "extension not allowed, please choose a doc file.";
@@ -104,54 +102,37 @@ if (count($_POST) > 0) {
 //        $message_stauts_class = 'alert-danger';
 //        $import_status_message = 'Error: File size must be less than 2 MB';
 //    }
-        if (empty($errors) == true) {
-            $dir_path = "../assets/label_files/" . $_POST['edit_id'];
-
-            if (file_exists($dir_path)) {
-                if ($good_name == "") {
-
-                $files = glob("$dir_path/f2" & "$dir_path/b_label"); // get all file names
-                foreach ($files as $file) { // iterate files
-                    if (is_file($file)) {
-                        unlink($file); // delete file
-                    }
-                }
-            }else if($bad_name == ""){
-                    $files = glob("$dir_path/f1" & "$dir_path/g_label"); // get all file names
-                    foreach ($files as $file) { // iterate files
-                        if (is_file($file)) {
-                            unlink($file); // delete file
-                        }
-                    }
-                }else{
-                    $files = glob("$dir_path/*"); // get all file names
-                    foreach ($files as $file) { // iterate files
-                        if (is_file($file)) {
-                            unlink($file); // delete file
-                        }
-                    }
-                }
-            }else if (!file_exists($dir_path)) {
-                mkdir($dir_path, 0777, true);
-            }
-            move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
-            copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
+		if (empty($errors) == true) {
+			$dir_path = "../assets/label_files/" . $_POST['edit_id'];
+			if (file_exists($dir_path)) {
+				$files = glob("$dir_path/*"); // get all file names
+				foreach ($files as $file) { // iterate files
+					if (is_file($file)) {
+						unlink($file); // delete file
+					}
+				}
+			}else if (!file_exists($dir_path)) {
+				mkdir($dir_path, 0777, true);
+			}
+			move_uploaded_file($good_tmp, $dir_path . '/' . 'g' . "_" . 'label');
+			copy($dir_path . '/' . 'g' . "_" . 'label', $dir_path . '/' . 'f1');
 //		move_uploaded_file($good_tmp1, $dir_path . '/' . 'f1');
-            move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
-            copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
-            $zpl_id = $_POST['label_line_id'];
-            $sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
-            $result1 = mysqli_query($db, $sql1);
-            //    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'Upload Files Successfully';
-        }
+			move_uploaded_file($bad_tmp, $dir_path . '/' . 'b' . "_" . 'label');
+			copy($dir_path . '/' . 'b' . "_" . 'label', $dir_path . '/' . 'f2');
 
-    }
+			$zpl_id = $_POST['label_line_id'];
+			$sql1 = "update cam_line set zpl_file_status = '1',print_label = '1' where line_id ='$zpl_id'";
+			$result1 = mysqli_query($db, $sql1);
+			//    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
+			$message_stauts_class = 'alert-success';
+			$import_status_message = 'Upload Files Successfully';
+		}
+	}
 
-        header('location: line.php');
+	header('location: line.php');
 
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -191,6 +172,10 @@ if (count($_POST) > 0) {
     .form-horizontal .form-group {
         font-size: 14px;
     }
+    textarea.form-control {
+        height: auto;
+        border: 1px solid #dcd2d2;
+    }
 </style>
 
 <!-- Main navbar -->
@@ -214,19 +199,19 @@ include("../heading_banner.php");
                 <form action="" id="" class="form-horizontal" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
-                            <?php
-                            $edit_id = $_GET['id'];
-                            ?>
-                            <?php
-                            $sql1 = "SELECT * FROM `cam_line` where line_id = '$edit_id' ";
-                            $result1 = $mysqli->query($sql1);
-                            while ($row1 = $result1->fetch_assoc()) {
-                                $line_name = $row1['line_name'];
-                                $p_order = $row1['priority_order'];
-                                $enabled = $row1['enabled'];
-                                $zpl_status = $row1['zpl_file_status'];
-                            }
-                            ?>
+							<?php
+							$edit_id = $_GET['id'];
+							?>
+							<?php
+							$sql1 = "SELECT * FROM `cam_line` where line_id = '$edit_id' ";
+							$result1 = $mysqli->query($sql1);
+							while ($row1 = $result1->fetch_assoc()) {
+								$line_name = $row1['line_name'];
+								$p_order = $row1['priority_order'];
+								$enabled = $row1['enabled'];
+								$zpl_status = $row1['zpl_file_status'];
+							}
+							?>
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">Station:*</label>
@@ -256,53 +241,52 @@ include("../heading_banner.php");
                                         <input type="hidden" name="edit_e" id="edit_e" >
                                         <select  name="edit_enabled" id="edit_enabled" class="select form-control" data-style="bg-slate" style="float: left;
                                                                  width: initial;">
-                                            <?php if($enabled == 1){
-                                                $selected = "selected";
-                                             echo "<option value =' 1'  $selected>Yes</option>
-                                                   <option value=' 0'>No</option>";
-                                                }
+											<?php if($enabled == 1){
+												$selected = "selected";
+												echo "<option value ='1'  $selected>Yes</option>
+                                                   <option value='0'>No</option>";
+											}
                                             elseif($enabled == 0){
-                                                $selected = "selected";
-                                                echo "<option value =' 1 '>Yes</option>
-                                                      <option value= '0 '$selected>No</option>";
-                                            }
-                                              ?>
-                                         </select>
+												$selected = "selected";
+												echo "<option value ='1'>Yes</option>
+                                                      <option value ='0'$selected>No</option>";
+											}
+											?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php if ($zpl_status == '1'){ ?>
+						<?php if ($zpl_status == '1'){ ?>
                             <div class="row">
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label class="col-lg-5 control-label">Good Piece File : </label>
-                                    <div class="col-lg-7">
-                                        <input type="file" name="good_file" id="good_file"
-                                               class="form-control">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="col-lg-5 control-label">Good Piece File : </label>
+                                        <div class="col-lg-7">
+
+                                            <textarea rows="5" name="good_file" id="good_file" class="form-control"><?php echo $output; ?></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="col-lg-5 control-label">Bad Piece File : </label>
+                                        <div class="col-lg-7">
+
+                                            <textarea rows="5" name="bad_file" id="bad_file" class="form-control"><?php echo $output_bad; ?></textarea>
+
+                                        </div>
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label class="col-lg-5 control-label">Bad Piece File : </label>
-                                    <div class="col-lg-7">
-                                        <input type="file" name="bad_file" id="bad_file"
-                                               class="form-control">
-                                        <!-- <div id="preview"></div>-->
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                     <?php   }  ?>
-
+						<?php } ?>
                     </div>
                     <div class="modal-footer">
-<!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->
+                        <!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -317,7 +301,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line.php?id=<?php echo $edit_id;?>");
+        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_line_print.php?id=<?php echo $edit_id;?>");
     }
 </script>
 

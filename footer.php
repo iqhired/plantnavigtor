@@ -176,7 +176,8 @@
 	else
 	{
 	if ($notification_mail_flag == '1') {
-		require '<?php echo $siteURL; ?>vendor/autoload.php';
+	    $url = $siteURL . 'vendor/autoload.php';
+		require $url;
 		$mail = new PHPMailer();
 		$mail->isSMTP();
 		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;

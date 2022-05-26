@@ -22,18 +22,20 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 
+$l_id = $_GET['id'];
+if(!empty($l_id) && ($l_id > 0)){
+	$dir_path = "../assets/label_files/" . $l_id;
+	$output = file_get_contents($dir_path.'/'.'f1');
+	$output_bad = file_get_contents($dir_path.'/'.'f2');
+}
+
 if (count($_POST) > 0) {
 
 //edit
+
     $edit_name = $_POST['edit_name'];
     $id = $_POST['edit_id'];
-   // $good_file = $_POST['good_file'];
-  //  $bad_files = $_POST['bad_file'];
-    $dir_path = "../assets/label_files/" . $_POST['edit_id'];
-
-    $output = file_get_contents($dir_path.'/'.'f1');
-    $output_bad = file_get_contents($dir_path.'/'.'f2');
-
+	$dir_path = "../assets/label_files/" . $id;
     $content = $_POST['good_file'];
     $file = $dir_path.'/'.'f1' ; // cannot be an online resource
     $Saved_File = fopen($file, 'w');
@@ -53,8 +55,8 @@ if (count($_POST) > 0) {
     fwrite($Saved_File_bad1, $content_bad);
     fclose($Saved_File_bad1);
 
-
-
+	$output = file_get_contents($dir_path.'/'.'f1');
+	$output_bad = file_get_contents($dir_path.'/'.'f2');
 
     $sql = "update cam_line set line_name='$_POST[edit_name]', priority_order='$_POST[edit_priority_order]' , enabled='$_POST[edit_enabled]'  where line_id='$id'";
 
