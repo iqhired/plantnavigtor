@@ -30,6 +30,10 @@ if (count($_POST) > 0) {
    // $good_file = $_POST['good_file'];
   //  $bad_files = $_POST['bad_file'];
     $dir_path = "../assets/label_files/" . $_POST['edit_id'];
+
+    $output = file_get_contents($dir_path.'/'.'f1');
+    $output_bad = file_get_contents($dir_path.'/'.'f2');
+
     $content = $_POST['good_file'];
     $file = $dir_path.'/'.'f1' ; // cannot be an online resource
     $Saved_File = fopen($file, 'w');
@@ -126,6 +130,7 @@ if (count($_POST) > 0) {
         header('location: line.php');
 
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -256,25 +261,21 @@ include("../heading_banner.php");
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">Good Piece File : </label>
                                     <div class="col-lg-7">
-<!--                                        <input type="file" name="good_file" id="good_file"-->
-<!--                                               class="form-control">-->
-                                        <textarea rows="5" name="good_file" id="good_file" class="form-control"></textarea>
 
-
+                                        <textarea rows="5" name="good_file" id="good_file" class="form-control"><?php echo $output; ?></textarea>
 
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                         <div class="row">
-                                                                    <div class="col-md-9">
-                                                                        <div class="form-group">
-                                                                            <label class="col-lg-5 control-label">Bad Piece File : </label>
-                                                                            <div class="col-lg-7">
-<!--                                                                                <input type="file" name="bad_file" id="bad_file"-->
-<!--                                                                                       class="form-control">-->
-                                                                                <textarea rows="5" name="bad_file" id="bad_file" class="form-control"></textarea>
-                                                                                <!-- <div id="preview"></div>-->
+                         <div class="col-md-9">
+                          <div class="form-group">
+                            <label class="col-lg-5 control-label">Bad Piece File : </label>
+                               <div class="col-lg-7">
+
+                                   <textarea rows="5" name="bad_file" id="bad_file" class="form-control"><?php echo $output_bad; ?></textarea>
+
                                     </div>
 
                                 </div>
