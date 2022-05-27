@@ -107,6 +107,7 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
 
 
+
     <style>
 
         @media (min-width: 576px)
@@ -272,36 +273,32 @@ $logo = $rowccus['logo'];
         input[type="file"] {
             display: block;
         }
-
-        .imageThumb {
-            max-height: 100px;
-            border: 2px solid;
-            padding: 1px;
-            cursor: pointer;
+        .container{
+            margin: 0 auto;
+        }
+        .content_img{
+            width: 113px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
         }
 
-        .pip {
+        /* Delete */
+        .content_img span{
+            border: 2px solid red;
             display: inline-block;
-            margin: 10px 10px 0 0;
-        }
-
-        .remove {
-            display: block;
-            background: #444;
-            border: 1px solid black;
-            color: white;
+            width: 99%;
             text-align: center;
+            color: red;
+        }
+        .content_img span:hover{
             cursor: pointer;
         }
+    </style>
 
-        .remove:hover {
-            background: white;
-            color: black;
-        }
-
-        /*#rej_fail {*/
-        /*    display: none;*/
-        /*}*/
 
     </style>
 </head>
@@ -360,11 +357,11 @@ include("../heading_banner.php");
 				}
 				?>
 				<?php
-				if (!empty($_SESSION[import_status_message])) {
-					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-					$_SESSION['message_stauts_class'] = '';
-					$_SESSION['import_status_message'] = '';
-				}
+//				if (!empty($_SESSION[import_status_message])) {
+//					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//					$_SESSION['message_stauts_class'] = '';
+//					$_SESSION['import_status_message'] = '';
+//				}
 				?>
 
 
@@ -447,17 +444,17 @@ include("../heading_banner.php");
                             <br/>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
+
                                 <div class="col-md-6">
-                                    <input type="file" name="image[]" id="file-input" class="form-control" multiple
-                                           required>
-                                    <!--                                    <div id="preview"></div>-->
+                                    <input type="file" id="file" name="file" class="form-control"/>
+                                    <div class="container"></div>
                                 </div>
+
 
                             </div>
                             <br/>
                             <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number
-                                    : </label>
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
                                 <div class="col-md-6">
                                     <input type="number" name="serial_number" id="serial_number" class="form-control"
                                            placeholder="Enter Serial Number" required>
@@ -505,9 +502,11 @@ include("../heading_banner.php");
 
 
             <div class="panel-footer p_footer">
+
                 <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
                         style="background-color:#1e73be;">Submit
                 </button>
+
             </div>
             </form>
 
@@ -522,35 +521,71 @@ include("../heading_banner.php");
         $('.select').select2();
     });
 </script>
-<script>
-    $("#file-input").on("change", function (e) {
-        var files = e.target.files,
-            filesLength = files.length;
 
-        const boxes = document.querySelectorAll('.pip');
+<script type='text/javascript'>
+    $(document).ready(function(){
 
-        boxes.forEach(box => {
-            box.remove();
-        });
-        var tot = e.currentTarget.attributes.length;
-        var ij = tot - filesLength + 1;
-        for (var i = 0; i < filesLength; i++) {
-            var f = files[i]
-            var fileReader = new FileReader();
-            fileReader.onload = (function (e) {
+        // Upload
 
-                var id_text = 'pip_' + (ij++);
-                var file = e.target;
-                $("<span class=\"pip\">" +
-                    "<img id='" + id_text + "' class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                    "<br/></span>").insertAfter("#file-input");
-                $(".remove").click(function () {
-                    $(this).parent(".pip").remove();
-                });
+         $("#file").on("change", function() {
+            var fd = new FormData();
+            var files = $('#file')[0].files[0];
+            fd.append('file',files);
+            fd.append('request',1);
+
+            // AJAX request
+            $.ajax({
+                url: 'add_delete_mat_image.php',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response){
+
+                    if(response != 0){
+                        var count = $('.container .content_img').length;
+                        count = Number(count) + 1;
+
+                        // Show image preview with Delete button
+                        $('.container').append("<div class='content_img' id='content_img_"+count+"' ><img src='"+response+"' width='100' height='100'><span class='delete' id='delete_"+count+"'>Delete</span></div>");
+                    }else{
+                        alert('file not uploaded');
+                    }
+                }
             });
-            fileReader.readAsDataURL(f);
-        }
+        });
+
+        // Remove file
+        $('.container').on('click','.content_img .delete',function(){
+
+            var id = this.id;
+            var split_id = id.split('_');
+            var num = split_id[1];
+
+            // Get image source
+            var imgElement_src = $( '#content_img_'+num+' img' ).attr("src");
+
+            var deleteFile = confirm("Do you really want to Delete?");
+            if (deleteFile == true) {
+                // AJAX request
+                $.ajax({
+                    url: 'add_delete_mat_image.php',
+                    type: 'post',
+                    data: {path: imgElement_src,request: 2},
+                    success: function(response){
+
+                        // Remove <div >
+                        if(response == 1){
+                            $('#content_img_'+num).remove();
+                        }
+
+                    }
+                });
+            }
+        });
+
     });
+</script>
 </script>
 
 <script>

@@ -206,10 +206,12 @@ include("../heading_banner.php");
 							$sql1 = "SELECT * FROM `cam_line` where line_id = '$edit_id' ";
 							$result1 = $mysqli->query($sql1);
 							while ($row1 = $result1->fetch_assoc()) {
+                                $line_id = $row1['line_id'];
 								$line_name = $row1['line_name'];
 								$p_order = $row1['priority_order'];
 								$enabled = $row1['enabled'];
 								$zpl_status = $row1['zpl_file_status'];
+                                $print_label = $row1['print_label'];
 							}
 							?>
                             <div class="col-md-9">
@@ -257,14 +259,25 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                         </div>
-						<?php if ($zpl_status == '1'){ ?>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Print label Enabled:*</label>
+                                    <div class="col-lg-7">
+                                        <input type="checkbox" class="print_status" name="print_status" id="print_status" value="<?php echo $line_id; ?>" <?php echo ($print_label == 1 ? 'checked' : '');?>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<?php if ($zpl_status == '1'){
+                            if ($print_label == '1'){ ?>
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label class="col-lg-5 control-label">Good Piece File : </label>
                                         <div class="col-lg-7">
 
-                                            <textarea rows="5" name="good_file" id="good_file" class="form-control"><?php echo $output; ?></textarea>
+                                            <textarea rows="5" name="good_file" id="good_file" class="form-control" required><?php echo $output; ?></textarea>
 
                                         </div>
                                     </div>
@@ -276,14 +289,40 @@ include("../heading_banner.php");
                                         <label class="col-lg-5 control-label">Bad Piece File : </label>
                                         <div class="col-lg-7">
 
-                                            <textarea rows="5" name="bad_file" id="bad_file" class="form-control"><?php echo $output_bad; ?></textarea>
+                                            <textarea rows="5" name="bad_file" id="bad_file" class="form-control" required><?php echo $output_bad; ?></textarea>
 
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-						<?php } ?>
+                              <?php } else if ($print_label == '0') {  ?>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-lg-5 control-label">Good Piece File : </label>
+                                            <div class="col-lg-7">
+
+                                                <textarea rows="5" name="good_file" id="good_file" class="form-control"><?php echo $output; ?></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-lg-5 control-label">Bad Piece File : </label>
+                                            <div class="col-lg-7">
+
+                                                <textarea rows="5" name="bad_file" id="bad_file" class="form-control"><?php echo $output_bad; ?></textarea>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+						<?php } }?>
                     </div>
                     <div class="modal-footer">
                         <!--                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>-->
@@ -325,16 +364,16 @@ include("../heading_banner.php");
 
 </script>
 <script>
-    $(".print_status").on('click', function () {
-        var element = $(this);
-        var print_id = element.attr("data-id");
-        var info = 'id=' + print_id;
+    $("input#print_status").click(function () {
+        var element = $(this)[0].checked;
+        var print_id = $(this).val();
+        var info = '&print=' + print_id+"&isChecked=" + element;;
         $.ajax({
             type: "POST",
             url: "print_action.php",
             data: info,
             success: function (data) {
-                location.reload();
+
             }
         });
 

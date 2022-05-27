@@ -1,7 +1,8 @@
 <?php
 include("../config.php");
-    $line_id = $_POST['id'];
+$line_id = $_POST['print'];
 
+$gbd_is_checked = $_POST['isChecked'];
 
      $print_label = "select * from cam_line where line_id = '$line_id'";
          $qur = mysqli_query($db, $print_label);

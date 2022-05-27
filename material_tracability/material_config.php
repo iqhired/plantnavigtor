@@ -33,6 +33,7 @@ if ($i != "super" && $i != "admin") {
 		$teams1 = $_POST['teams'];
 		$users1 = $_POST['users'];
 		$m_type = $_POST['material_type'];
+        $serial = $_POST['serial_status'];
 		$material_type = count($_POST['material_type']);
 		foreach ($teams1 as $teams) {
 			$array_team .= $teams . ",";
@@ -43,8 +44,8 @@ if ($i != "super" && $i != "admin") {
 		if ($material_type > 1) {
 			for ($i = 0; $i < $material_type; $i++) {
 				if (trim($_POST['material_type'][$i]) != '') {
-					$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
-    ('$array_team','$array_user','$m_type[$i]','$chicagotime')";
+					$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[$i]','$serial','$chicagotime')";
 					$result1 = mysqli_query($db, $sql);
 					if ($result1) {
 						$message_stauts_class = 'alert-success';
@@ -56,8 +57,8 @@ if ($i != "super" && $i != "admin") {
 				}
 			}
 		} else {
-			$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`created_at`) VALUES
-    ('$array_team','$array_user','$m_type[0]','$chicagotime')";
+			$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[0]','$serial','$chicagotime')";
 			$result1 = mysqli_query($db, $sql);
 			if ($result1) {
 				$message_stauts_class = 'alert-success';
@@ -279,7 +280,18 @@ include("../heading_banner.php");
                                         <div id="newRow"></div>
                                         <button id="addRow" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
-                                </div><br/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="col-lg-5 control-label">Serial Number is Required:*</label>
+                                            <div class="col-lg-7">
+                                                <input type="checkbox" class="form-control" name="serial_status" id="serial_status">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
 
                                 <br/>
 
@@ -375,7 +387,7 @@ include("../heading_banner.php");
                             <td><?php echo $rowc["material_type"]; ?></td>
 
                             <td>
-                                <a href="edit_material_config.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" data-material_teams="<?php echo  $material; ?>"  style="background-color:#1e73be;">Edit</a>
+                                <a href="edit_material_config.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" data-material_teams="<?php echo  $material; ?>" style="background-color:#1e73be;">Edit</a>
 
                             </td>
                         </tr>
@@ -400,6 +412,7 @@ include("../heading_banner.php");
     </div>
 
 </div>
+
 <script type="text/javascript">
     // add row
     $("#addRow").click(function () {
@@ -481,6 +494,6 @@ include("../heading_banner.php");
 
 <!-- /page container -->
 
-<?php include ('../footer.php') ?>
+<?php include('../footer.php') ?>
 </body>
 </html>
