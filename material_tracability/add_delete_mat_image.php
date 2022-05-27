@@ -37,14 +37,16 @@ if($request == 1){
 
 // Remove file
 if($request == 2){
-    $filename = $_FILES['file']['name'];
+
     $path = $_POST['path'];
+
+    $file1 = basename($path);
 
     $return_text = 0;
 
     // Check file exist or not
     if( file_exists($path) ){
-        $sql = "DELETE FROM `material_images` where image_name ='$path'";
+        $sql = "DELETE FROM `material_images` where image_name ='$file1'";
         $result1 = mysqli_query($db, $sql);
         // Remove file
         unlink($path);
