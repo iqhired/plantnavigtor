@@ -26,7 +26,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 		header($redirect_logout_path);
 	}
 
-//	header('location: ../logout.php');
+	//	header('location: ../logout.php');
 	exit;
 }
 //Set the time of the user's last activity
@@ -105,7 +105,6 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-
 
 
     <style>
@@ -273,10 +272,12 @@ $logo = $rowccus['logo'];
         input[type="file"] {
             display: block;
         }
-        .container{
+
+        .container {
             margin: 0 auto;
         }
-        .content_img{
+
+        .content_img {
             width: 113px;
             float: left;
             margin-right: 5px;
@@ -287,20 +288,20 @@ $logo = $rowccus['logo'];
         }
 
         /* Delete */
-        .content_img span{
+        .content_img span {
             border: 2px solid red;
             display: inline-block;
             width: 99%;
             text-align: center;
             color: red;
         }
-        .content_img span:hover{
+
+        .content_img span:hover {
             cursor: pointer;
         }
     </style>
 
 
-    </style>
 </head>
 
 <body>
@@ -357,11 +358,11 @@ include("../heading_banner.php");
 				}
 				?>
 				<?php
-//				if (!empty($_SESSION[import_status_message])) {
-//					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-//					$_SESSION['message_stauts_class'] = '';
-//					$_SESSION['import_status_message'] = '';
-//				}
+				//				if (!empty($_SESSION[import_status_message])) {
+				//					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+				//					$_SESSION['message_stauts_class'] = '';
+				//					$_SESSION['import_status_message'] = '';
+				//				}
 				?>
 
 
@@ -425,15 +426,14 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Material type : </label>
                                 <div class="col-md-6">
-                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate"
-                                    /required>
+                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" required >
                                     <option value="" selected disabled>--- Select material Type ---</option>
 									<?php
-									$sql1 = "SELECT material_id, material_type FROM `material_config`";
+									$sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
 									$result1 = mysqli_query($db, $sql1);
 									while ($row1 = $result1->fetch_assoc()) {
 
-										echo "<option value='" . $row1['material_id'] . "'>" . $row1['material_type'] . "</option>";
+										echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
 
 									}
 									?>
@@ -453,11 +453,27 @@ include("../heading_banner.php");
 
                             </div>
                             <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number : </label>
+							<?php
+
+
+							$m_type = $_POST['material_type'];
+
+							$sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
+							$row = mysqli_query($db, $sql);
+							$se_row = mysqli_fetch_assoc($row);
+
+							$serial = $se_row['serial_num_required'];
+
+							?>
+                            <div class="row" id = "serial_num">
+                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number
+                                    : </label>
                                 <div class="col-md-6">
-                                    <input type="number" name="serial_number" id="serial_number" class="form-control"
-                                           placeholder="Enter Serial Number" required>
+                                    <input type="text" size="30" name="serial_number" id="serial_number"
+                                           class="form-control"/>
+                                    <!--                                    <input type="number" name="serial_number" value="-->
+									<?php //echo $color; ?><!--" id="serial_number" class="form-control"-->
+                                    <!--                                           placeholder="Enter Serial Number" required>-->
                                 </div>
                                 <div id="error1" class="red">Part Name</div>
                             </div>
@@ -489,8 +505,12 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" name="material_notes" rows="4" placeholder="Enter Notes..."
-                                              class="form-control"></textarea>
+                                                                                                                                                                                                                                                                                    <textarea
+                                                                                                                                                                                                                                                                                            id="notes"
+                                                                                                                                                                                                                                                                                            name="material_notes"
+                                                                                                                                                                                                                                                                                            rows="4"
+                                                                                                                                                                                                                                                                                            placeholder="Enter Notes..."
+                                                                                                                                                                                                                                                                                            class="form-control"></textarea>
                                 </div>
                             </div>
                             <br/>
@@ -520,18 +540,30 @@ include("../heading_banner.php");
     $(document).ready(function () {
         $('.select').select2();
     });
+
+
 </script>
 
-<script type='text/javascript'>
-    $(document).ready(function(){
 
+<script>
+    document.getElementById('material_type').onchange = function () {
+        var sel_val = this.value.split('_');
+        var isDis = sel_val[1];
+        if(isDis == 0){
+            document.getElementById("serial_num").style.display = 'none';
+        }
+
+    }
+</script>
+<script type='text/javascript'>
+    $(document).ready(function () {
         // Upload
 
-         $("#file").on("change", function() {
+        $("#file").on("change", function () {
             var fd = new FormData();
             var files = $('#file')[0].files[0];
-            fd.append('file',files);
-            fd.append('request',1);
+            fd.append('file', files);
+            fd.append('request', 1);
 
             // AJAX request
             $.ajax({
@@ -540,52 +572,63 @@ include("../heading_banner.php");
                 data: fd,
                 contentType: false,
                 processData: false,
-                success: function(response){
+                success: function (response) {
 
-                    if(response != 0){
+                    if (response != 0) {
                         var count = $('.container .content_img').length;
                         count = Number(count) + 1;
 
                         // Show image preview with Delete button
-                        $('.container').append("<div class='content_img' id='content_img_"+count+"' ><img src='"+response+"' width='100' height='100'><span class='delete' id='delete_"+count+"'>Delete</span></div>");
-                    }else{
-                        alert('file not uploaded');
+                        $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
                     }
                 }
             });
         });
 
+
         // Remove file
-        $('.container').on('click','.content_img .delete',function(){
+        $('.container').on('click', '.content_img .delete', function () {
 
             var id = this.id;
             var split_id = id.split('_');
             var num = split_id[1];
-
             // Get image source
-            var imgElement_src = $( '#content_img_'+num+' img' ).attr("src");
-
+            var imgElement_src = $('#content_image_' + num + ' img').attr("src");
             var deleteFile = confirm("Do you really want to Delete?");
+            var succ = false;
             if (deleteFile == true) {
                 // AJAX request
                 $.ajax({
                     url: 'add_delete_mat_image.php',
                     type: 'post',
-                    data: {path: imgElement_src,request: 2},
-                    success: function(response){
-
+                    data: {path: imgElement_src, request: 2},
+                    async: false,
+                    success: function (response) {
                         // Remove <div >
-                        if(response == 1){
-                            $('#content_img_'+num).remove();
+                        if (response == 1) {
+                            succ = true;
                         }
-
+                    }, complete: function (data) {
+                        if (succ) {
+                            var id = 'content_image_' + num;
+                            // $('#content_img_'+num)[0].remove();
+                            var elem = document.getElementById(id);
+                            document.getElementById(id).style.display = 'none';
+                            var nodes = $(".container")[2].childNodes;
+                            for (var i = 0; i < nodes.length; i++) {
+                                var node = nodes[i];
+                                if (node.id == id) {
+                                    node.style.display = 'none';
+                                }
+                            }
+                        }
                     }
                 });
             }
         });
 
+
     });
-</script>
 </script>
 
 <script>
