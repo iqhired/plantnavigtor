@@ -1,9 +1,9 @@
 <?php
 include("../config.php");
 
-use PHPMailer\PHPMailer\PHPMailer;
-
-require '../vendor/autoload.php';
+//use PHPMailer\PHPMailer\PHPMailer;
+//
+//require '../vendor/autoload.php';
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array)json_decode($array);
 
@@ -17,6 +17,8 @@ if (count($_POST) > 0) {
 	$part_name = $_POST['part_name'];
 	$serial_number = $_POST['serial_number'];
 	$material_type = $_POST['material_type'];
+    $material_type1 = explode("_", $material_type);
+    $material_type = $material_type1[0];
 	$material_status = $_POST['material_status'];
 	$fail_reason = $_POST['reason'];
 	$quantity = $_POST['quantity'];
@@ -69,7 +71,7 @@ if (isset($_FILES['image'])) {
 				$import_status_message = 'Error: File size must be excately 2 MB';
 			}
 			if (empty($errors) == true) {
-				move_uploaded_file($file_tmp, "../material_images/" . "material_id_" . $material_trace_id . "_" . $file_name);
+				move_uploaded_file($file_tmp, "..assets/material_images/" . "material_id_" . $material_trace_id . "_" . $file_name);
 
 				$sql = "INSERT INTO `material_images`(`image_name`,`material_id`,`created_at`) VALUES ('$file_rename' , '$material_trace_id' , '$created_by' )";
 
