@@ -44,8 +44,13 @@ if ($i != "super" && $i != "admin") {
 		if ($material_type > 1) {
 			for ($i = 0; $i < $material_type; $i++) {
 				if (trim($_POST['material_type'][$i]) != '') {
+                     if($serial == ""){
 					$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
-    ('$array_team','$array_user','$m_type[$i]','$serial','$chicagotime')";
+    ('$array_team','$array_user','$m_type[$i]','0','$chicagotime')";
+                         }else{
+                         $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[$i]','1','$chicagotime')";
+                     }
 					$result1 = mysqli_query($db, $sql);
 					if ($result1) {
 						$message_stauts_class = 'alert-success';
@@ -57,8 +62,13 @@ if ($i != "super" && $i != "admin") {
 				}
 			}
 		} else {
+            if($serial == ""){
 			$sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
-    ('$array_team','$array_user','$m_type[0]','$serial','$chicagotime')";
+    ('$array_team','$array_user','$m_type[0]','0','$chicagotime')";
+            }else{
+                $sql = "INSERT INTO `material_config`(`teams`,`users`,`material_type`,`serial_num_required`,`created_at`) VALUES
+    ('$array_team','$array_user','$m_type[0]','1','$chicagotime')";
+            }
 			$result1 = mysqli_query($db, $sql);
 			if ($result1) {
 				$message_stauts_class = 'alert-success';
@@ -165,6 +175,11 @@ if ($i != "super" && $i != "admin") {
             margin-left: 110px;
             margin-top: -50px;
         }
+        .serial_check {
+            width: 40px;
+            height: 22px;
+
+        }
     </style>
 </head>
 <body>
@@ -212,10 +227,10 @@ include("../heading_banner.php");
                 ?>
                 <hr/>
 
-
+                <form action="" id="user_form" enctype="multipart/form-data"  class="form-horizontal" method="post">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="" id="user_form" enctype="multipart/form-data"  class="form-horizontal" method="post">
+
                                 <div class="row">
                                     <label class="col-lg-2 control-label">To Teams : </label>
                                     <div class="col-md-6">
@@ -300,7 +315,7 @@ include("../heading_banner.php");
                         </div>
                     </div>
 
-            </div>
+
             <div class="panel-footer p_footer">
                 <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Save</button>
             </div>
@@ -308,7 +323,7 @@ include("../heading_banner.php");
             </form>
         </div>
 
-
+        </div>
 
         <!-- /main charts -->
              <form action="delete_material.php" method="post" class="form-horizontal">
@@ -394,25 +409,21 @@ include("../heading_banner.php");
                     <?php } ?>
                     </tbody>
                 </table>
-        </form>					</div>
-    <!-- /basic datatable -->
-    <!-- edit modal -->
+            </div>
 
-    <!-- Dashboard content -->
-    <!-- /dashboard content -->
-    <script> $(document).on('click', '#delete', function () {
-            var element = $(this);
-            var del_id = element.attr("data-id");
-            var info = 'id=' + del_id;
-            $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
-            $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-        });</script>
-
-
+             </form>
     </div>
 
 </div>
 
+
+<script> $(document).on('click', '#delete', function () {
+        var element = $(this);
+        var del_id = element.attr("data-id");
+        var info = 'id=' + del_id;
+        $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
+        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+    });</script>
 <script type="text/javascript">
     // add row
     $("#addRow").click(function () {
@@ -473,9 +484,6 @@ include("../heading_banner.php");
         $(this).closest('#inputFormRow2').remove();
     });
 </script>
-
-
-
 <script>
     $("#checkAll").click(function () {
         $('input:checkbox').not(this).prop('checked', this.checked);
@@ -489,9 +497,6 @@ include("../heading_banner.php");
         $("#users").select2("open");
     }
 </script>
-
-
-
 <!-- /page container -->
 
 <?php include('../footer.php') ?>
