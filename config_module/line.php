@@ -119,7 +119,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         <link href="../assets/css/style_main.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
         <!-- Core JS files -->
-        <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
+        <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
         <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
@@ -254,7 +254,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                     $yn_result = ($rowc['enabled'] == 0) ? "No" : "Yes";
                                                     echo $yn_result;
                                                     ?></td>
-        <!--                                        <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
+        <!-- <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
                                                 <td>
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
                                                 </td>
@@ -300,7 +300,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                         <input type="hidden" name="label_line_id" id="label_line_id" >
                                         <input type="file" name="good_file" id="good_file" value="" required
                                                class="form-control">
-<!--                                        <div id="preview"></div>-->
+<!-- <div id="preview"></div>-->
                                     </div>
 
                                 </div>
@@ -309,7 +309,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                     <div class="col-md-6">
                                         <input type="file" name="bad_file" id="bad_file" required
                                                class="form-control">
-<!--                                        <div id="preview"></div>-->
+<!-- <div id="preview"></div>-->
                                     </div>
 
                                 </div>
@@ -374,24 +374,23 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         });
 
                     </script>
-            <script>
+                   <script>
                    $(".print_status").on('click', function () {
                     var element = $(this);
                     var print_id = element.attr("data-id");
-                    var info = 'id=' + print_id;
+                    var info = 'print=' + print_id;
                     $.ajax({
                         type: "POST",
                         url: "print_action.php",
                         data: info,
                         success: function (data) {
+
                             location.reload();
                         }
                     });
 
                 });
             </script>
-
-
         <?php include('../footer.php') ?>
         <script type="text/javascript" src="../assets/js/core/app.js"></script>
 </body>
