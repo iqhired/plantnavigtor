@@ -217,36 +217,40 @@ include("../heading_banner.php");?>
                             </thead>
                             <tbody>
 							<?php
+                            $i = 1;
 							$query = sprintf("SELECT * FROM  events_category");
 							$qur = mysqli_query($db, $query);
 							while ($rowc = mysqli_fetch_array($qur)) {
 								?>
-                                <tr>
+                                <tr id="row<?php echo $i ?>">
                                     <td><input type="checkbox" id="delete_check[]" name="delete_check[]"
                                                value="<?php echo $rowc["events_cat_id"]; ?>"></td>
-                                    <td><?php echo ++$counter; ?></td>
-                                    <td><?php echo $rowc["events_cat_name"]; ?></td>
-                                    <td><?php if($rowc["npr"] == 0){
+                                    <td id = "id_row<?php echo $i;?>"><?php echo ++$counter; ?></td>
+                                    <td id = "name_row<?php echo $i;?>"><?php echo $rowc["events_cat_name"]; ?></td>
+                                    <td id = "npr_row<?php echo $i;?>"><?php if($rowc["npr"] == 0){
                                           $npr = "No";
                                         }else{
                                             $npr = "Yes";
                                         }
                                         echo $npr; ?></td>
                                     <td>
-                                        <button type="button" id="edit" class="btn btn-info btn-xs"
-                                                data-id="<?php echo $rowc['events_cat_id']; ?>"
-                                                data-npr="<?php echo $npr; ?>"
-                                                data-events_cat_name="<?php echo $rowc['events_cat_name']; ?>"
-                                                style="background-color:#1e73be;"
-                                                data-toggle="modal" style="background-color:#1e73be;"
-                                                data-target="#edit_modal_theme_primary">Edit
-                                        </button>
+                                        <button type="button" id="edit_button<?php echo $i ?>" class="edit btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="edit_row('<?php echo $i ?>')"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                        <button type="button" id="save_button<?php echo $i ?>"  class="save btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="save_row('<?php echo $i ?>')"><i class="fa fa-save"></i></button>
+                                        <a href="view_material.php?id=75"</a>
+<!--                                        <button type="button" id="edit" class="btn btn-info btn-xs"-->
+<!--                                                data-id="--><?php //echo $rowc['events_cat_id']; ?><!--"-->
+<!--                                                data-npr="--><?php //echo $npr; ?><!--"-->
+<!--                                                data-events_cat_name="--><?php //echo $rowc['events_cat_name']; ?><!--"-->
+<!--                                                style="background-color:#1e73be;"-->
+<!--                                                data-toggle="modal" style="background-color:#1e73be;"-->
+<!--                                                data-target="#edit_modal_theme_primary">Edit-->
+<!--                                        </button>-->
                                         <!--									&nbsp;
                                                                                                                             <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
                                                     -->
                                     </td>
                                 </tr>
-							<?php } ?>
+							<?php $i++;} ?>
                             </tbody>
                         </table>
                 </form>
@@ -299,6 +303,49 @@ include("../heading_banner.php");?>
                     </div>
                 </div>
             </div>
+    <script>
+        function edit_row(no)
+        {
+            document.getElementById("edit_button"+no).style.display="none";
+            document.getElementById("save_button"+no).style.display="block";
+
+            var id=document.getElementById("id_row"+no);
+            var name=document.getElementById("name_row"+no);
+            var npr=document.getElementById("npr_row"+no);
+
+            var id_data=id.innerHTML;
+            var name_data=name.innerHTML;
+            var npr_data=npr.innerHTML;
+
+            id.innerHTML="<input type='text' id='id_text"+no+"' value='"+id_data+"' class='form-control'>";
+            name.innerHTML="<input type='text' id='name_text"+no+"' value='"+name_data+"' class='form-control'>";
+            npr.innerHTML="<input type='text' id='npr_text"+no+"' value='"+npr_data+"' class='form-control'>";
+
+        }
+
+        function save_row(no)
+        {
+            $(document).on('click', '.save', function () {
+                var id = document.getElementById("id_text"+no).value;
+                var name_val=document.getElementById("name_text"+no).value;
+                var npr_val=document.getElementById("npr_text"+no).value;
+
+                var info = "&id="+id+"&name="+name_val+"npr="+npr_val;
+                $.ajax({
+                    type: "POST",
+                    url: "../config_module/edit_event_category.php",
+                    data: info,
+                    success: function (data) {
+                        document.getElementById("edit_button"+no).style.display="block";
+                        document.getElementById("save_button"+no).style.display="none";
+                    }
+                });
+
+
+            });
+        }
+
+    </script>
             <!-- Dashboard content -->
             <!-- /dashboard content -->
             			<script> $(document).on('click', '#delete', function () {

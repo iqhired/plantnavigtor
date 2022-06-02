@@ -42,6 +42,7 @@ if (count($_POST) > 0) {
 	$part_length = $_POST['part_length'];
 	$length_range = $_POST['length_range'];
 	$notes = $_POST['notes'];
+    $color = $_POST['color_code'];
 	$created_by = $_POST['created_by'];
 
 	//create
@@ -71,18 +72,18 @@ if (count($_POST) > 0) {
                 }
                 if (empty($errors) == true) {
                     move_uploaded_file($file_tmp, "../assets/images/part_images/" . $name ."_".time().'_'. $file_name);
-		$sql0 = "INSERT INTO `pm_part_number`(`part_images` ,`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`created_by`) VALUES ('$file_name','$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$assign_by')";
+		$sql0 = "INSERT INTO `pm_part_number`(`part_images` ,`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`color_code`,`created_by`) VALUES ('$file_name','$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$color','$assign_by')";
                 }
             }
 			else
 			{
-		$sql0 = "INSERT INTO `pm_part_number`(`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`created_by`) VALUES ('$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$assign_by')";				
+		$sql0 = "INSERT INTO `pm_part_number`(`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`color_code`,`created_by`) VALUES ('$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$color','$assign_by')";
 			}
 
 //logo code over
 
         if(!isset($sql0)){
-			$sql0 = "INSERT INTO `pm_part_number`(`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`created_by`) VALUES ('$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$assign_by')";
+			$sql0 = "INSERT INTO `pm_part_number`(`part_number` ,`part_name` , `customer_part_number`, `station` , `part_family` , `npr` , `through_put` , `budget_scrape_rate` , `net_weight` ,  `part_length`,`length_range`, `notes` ,`color_code`,`created_by`) VALUES ('$name','$part_name','$customer_part_number','$station','$part_family','$npr','$through_put','$budget_scrape_rate','$net_weight','$part_length','$length_range','$notes','$color','$assign_by')";
 		}
 		$result0 = mysqli_query($db, $sql0);
 		if ($result0) {
@@ -109,7 +110,8 @@ if (count($_POST) > 0) {
         $e_part_length = $_POST['edit_part_length'];
         $e_length_range = $_POST['edit_length_range'];
         $e_notes = $_POST['edit_notes'];
-		$sql = "update pm_part_number set part_number='$e_part_number',part_name='$e_part_name', customer_part_number='$e_cpn', station='$e_station', part_family='$e_pf', npr='$e_npr', through_put='$e_throughput',budget_scrape_rate='$e_bsr', net_weight='$e_netweight', part_length='$e_part_length',length_range='$e_length_range', notes='$e_notes', created_by='$assign_by' where pm_part_number_id = '$id'";
+        $e_color = $_POST['edit_color_code'];
+		$sql = "update pm_part_number set part_number='$e_part_number',part_name='$e_part_name', customer_part_number='$e_cpn', station='$e_station', part_family='$e_pf', npr='$e_npr', through_put='$e_throughput',budget_scrape_rate='$e_bsr', net_weight='$e_netweight', part_length='$e_part_length',length_range='$e_length_range', notes='$e_notes',color_code='$e_color',created_by='$assign_by' where pm_part_number_id = '$id'";
 		$result1 = mysqli_query($db, $sql);
 
 		$query = sprintf("SELECT part_images FROM `pm_part_number` where pm_part_number_id = '$id'");
@@ -294,8 +296,8 @@ if (count($_POST) > 0) {
 <?php
 $cust_cam_page_header = "Add Part Number";
 include("../header.php");
-include("../heading_banner.php");
 include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
 
 <body class="alt-menu sidebar-noneoverflow">
@@ -498,20 +500,29 @@ include("../admin_menu.php");
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6 mobile">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Select Color Code * : </label>
+                                        <div class="col-lg-6">
+                                            <input type="color" id="color_code" name="color_code" value="#0000"  required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-							<?php
-							if (!empty($import_status_message)) {
-								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-							}
-							?>
-							<?php
-							if (!empty($_SESSION[import_status_message])) {
-								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-								$_SESSION['message_stauts_class'] = '';
-								$_SESSION['import_status_message'] = '';
-							}
-							?>
+
+<!--							--><?php
+//							if (!empty($import_status_message)) {
+//								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//							}
+//							?>
+<!--							--><?php
+//							if (!empty($_SESSION[import_status_message])) {
+//								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//								$_SESSION['message_stauts_class'] = '';
+//								$_SESSION['import_status_message'] = '';
+//							}
+//							?>
                         </div>
                         <div class="panel-footer p_footer">
                             <div class="col-md-4">
@@ -573,12 +584,9 @@ include("../admin_menu.php");
                                 <th>S.No</th>
                                 <th>Part Number</th>
                                 <th>Part Name</th>
-                                <!--                                <th>Customer Part Number</th>-->
                                 <th>Station</th>
                                 <th>Part Family</th>
-                                <!--                                <th>NPR</th>-->
-                                <!--                                <th>Throught Put</th>-->
-                                <!--                                <th>Budget Scrape Rate</th>-->
+                                <th>Color</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -615,17 +623,12 @@ include("../admin_menu.php");
 										$part_family1 = $rowctemp["part_family_name"];
 									}
 									?>
-                                    <td><?php echo $part_family1; ?>
-                                    </td>
-                                    <!--                                    <td>--><?php //echo $rowc["npr"]; ?>
-                                    <!--                                    </td>-->
-                                    <!--                                    <td>--><?php //echo $rowc["throught_put"]; ?>
-                                    <!--                                    </td>-->
-                                    <!--                                    <td>--><?php //echo $rowc["budget_scrape_rate"]; ?>
-                                    <!--                                    </td>data-id="&lt;?php echo $rowc['pm_part_number_id']; ?&gt;"-->
-                                    <td>
-                                        <button type="button" id="edit" class="btn btn-info btn-xs"
+                                    <td><?php echo $part_family1; ?></td>
+                                    <td><input type="color" id="color_code" name="color_code" value="<?php echo $rowc["color_code"]; ?>"  disabled></td>
 
+                                    <td>
+<!--                                        <a href="edit_part_number.php.php?id=--><?php //echo $rowc['pm_part_number_id'];" class="btn btn-primary" data-id="<?php echo $rowc['defect_list_id']; ?><!--"  style="background-color:#1e73be;">Edit</a>-->
+                                        <button type="button" id="edit" class="btn btn-info btn-xs"
                                                 data-id="<?php echo $rowc['pm_part_number_id']; ?>"
                                                 data-name="<?php echo $rowc['part_number']; ?>"
                                                 data-part_name="<?php echo $rowc['part_name']; ?>"
@@ -638,6 +641,7 @@ include("../admin_menu.php");
                                                 data-net_weight="<?php echo $rowc['net_weight']; ?>"
                                                 data-part_length="<?php echo $rowc['part_length']; ?>"
                                                 data-length_range="<?php echo $rowc['length_range']; ?>"
+                                                data-color_code="<?php echo $rowc['color_code']; ?>"
                                                 data-part_images="<?php
 												if(substr($rowc['part_images'] , 0 , 1)=== ","){
 													$str = ltrim($rowc['part_images'], ',');
@@ -848,6 +852,18 @@ include("../admin_menu.php");
                                         </div>
                                     </div>
                                 </div>
+                                <!--color-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-6 control-label">Color : </label>
+                                            <div class="col-lg-6">
+                                                <input type="color" id="edit_color_code" name="edit_color_code" value="<?php echo $color_code ?>">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!--File-->
                                 <div class="row">
                                     <div class="col-md-12">
@@ -913,6 +929,7 @@ include("../admin_menu.php");
                         var part_length = $(this).data("part_length");
                         var length_range = $(this).data("length_range");
                         var notes = $(this).data("notes");
+                        var color = $(this).data("color_code");
                         var part_images = $(this).data("part_images");
                         var image_path =  "./assets/images/part_images/"
                         $("#edit_name").val(name);
@@ -927,6 +944,7 @@ include("../admin_menu.php");
                         $("#edit_part_length").val(part_length);
                         $("#edit_length_range").val(length_range);
                         $("#edit_notes").val(notes);
+                        $("#edit_color_code").val(color);
                         if(part_images !== null && part_images !== '') {
                             $("#edit_p_image").attr("src","../assets/images/part_images/"+part_images);
 

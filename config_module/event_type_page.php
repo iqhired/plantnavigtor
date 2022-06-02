@@ -240,9 +240,7 @@ include("../heading_banner.php");?>
                     $query = sprintf("SELECT * FROM  event_type as et inner join events_category as ec on et.event_cat_id = ec.events_cat_id order by so ASC");
                     $qur = mysqli_query($db, $query);
                     $total_rows = $qur->num_rows;
-                    while ($rowc = mysqli_fetch_array($qur)) {
-                        $so = $rowc['so'];
-                    }
+
                     ?>
 
                     <div class="row">
@@ -252,12 +250,20 @@ include("../heading_banner.php");?>
                                 <div class="col-lg-6">
                                     <select name="edit_so" id="edit_so" class="select-border-color select-access-multiple-open">
                                         <?php
+                                        $so = $rowc['so'];
                                         $r_count = 0;
                                         while ($r_count < $total_rows) {
                                             $r_count = $r_count + 1;
-                                            echo "<option value='" . $r_count . "'>" . $r_count . "</option>";
+                                            if($so == $r_count){
+                                                $selected = 'selected';
+                                            }else{
+                                                $selected = '';
+                                            }
+                                            echo "<option value='" . $r_count . "'$selected>" . $r_count . "</option>";
                                         }
+
                                         ?>
+
                                     </select>
                                     <input type="hidden" name="act_so" id="act_so">
                                 </div>

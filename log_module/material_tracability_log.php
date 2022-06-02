@@ -181,6 +181,8 @@ include("../heading_banner.php");
                                         style="float: left;width: initial;">
                                     <option value="" selected disabled>--- Select Station ---</option>
                                     <?php
+
+
                                     $st_dashboard = $_POST['station'];
                                     $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
                                     $result1 = $mysqli->query($sql1);
@@ -357,6 +359,7 @@ include("../heading_banner.php");
             <table class="table datatable-basic">
                 <thead>
                 <tr>
+                    <th>Action</th>
                     <th>Station</th>
                     <th>Part Number</th>
                     <th>Material Type</th>
@@ -370,7 +373,7 @@ include("../heading_banner.php");
 
                 /* Default Query */
             //    $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
-                $q = ("SELECT pn.part_name ,pn.part_number, cl.line_name ,mt.part_family_id,mt.material_type,mt.created_at  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(mt.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(mt.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
+                $q = ("SELECT pn.part_name ,pn.part_number, cl.line_name ,mt.part_family_id,mt.material_type,mt.created_at,mt.material_id  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(mt.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(mt.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
 //
                 /* Execute the Query Built*/
                 $qur = mysqli_query($db, $q);
@@ -386,6 +389,10 @@ include("../heading_banner.php");
                             $lnn = $rowc04["line_name"];
                         }
                         ?>
+                        <td>
+
+                            <a href="../log_module/view_material_log.php?id=<?php echo $rowc['material_id'];?>&station=<?php echo $station;?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </td>
                         <td><?php echo $lnn; ?></td>
                         <td><?php echo $rowc['part_number']; ?></td>
                         <td><?php
