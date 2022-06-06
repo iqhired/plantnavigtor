@@ -125,10 +125,11 @@ if (count($_POST) > 0) {
 			$result1 = mysqli_query($db, $sql1);
 			//    $sql0 = "INSERT INTO `cam_line`('logo',`line_name`,`priority_order` , `enabled` , `created_at`) VALUES (''$file_name','$name' , '$priority_order' , '$enabled', '$chicagotime')";
 			$message_stauts_class = 'alert-success';
-			$import_status_message = 'Upload Files Successfully';
+			$import_status_message = 'Station Updated successfully.';
+//            $message_stauts_class = 'alert-success';
+//			$import_status_message = 'Upload Files Successfully';
 		}
 	}
-
 	header('location: line.php');
 
 }
@@ -382,6 +383,6 @@ include("../heading_banner.php");
 
 
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js"></script>
+<!--<script type="text/javascript" src="../assets/js/core/app.js"></script>-->
 </body>
 </html>

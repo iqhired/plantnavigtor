@@ -27,15 +27,17 @@ $user_id = $_SESSION["id"];
 $chicagotime = date("Y-m-d H:i:s");
 if (count($_POST) > 0) {
 	$events_cat_name = $_POST['events_cat_name'];
-    $events_npr = $_POST['npr'];
+	$events_npr = $_POST['npr'];
 
 //create
 	if ($events_cat_name != "") {
-		$npr = ($events_npr == 'yes')?1:0;
-//		$name = $_POST['events_cat_name'];
-//		$priority_order = $_POST['priority_order'];
-//		$enabled = $_POST['enabled'];
-		$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '$npr','$user_id' ,  '$chicagotime')";
+
+		//	$npr = ($events_npr == 'yes')?1:0;
+		if($events_npr =='1') {
+			$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '1','$user_id' ,  '$chicagotime')";
+		}else{
+			$sql0 = "INSERT INTO `events_category`(`events_cat_name`,`npr`,`created_by` , `created_on`) VALUES ('$events_cat_name' , '0','$user_id' ,  '$chicagotime')";
+		}
 		$result0 = mysqli_query($db, $sql0);
 		if ($result0) {
 			$message_stauts_class = 'alert-success';
@@ -47,8 +49,8 @@ if (count($_POST) > 0) {
 	}
 //edit
 	$edit_events_cat_name = $_POST['edit_events_cat_name'];
-    $edit_npr = $_POST['edit_npr'];
-    $npr = ($edit_npr == 'yes')?1:0;
+	$edit_npr = $_POST['edit_npr'];
+	$npr = ($edit_npr == 'yes')?1:0;
 	if ($edit_events_cat_name != "") {
 		$id = $_POST['edit_id'];
 		$sql = "update events_category set events_cat_name='$_POST[edit_events_cat_name]',npr='$npr'  where events_cat_id ='$id'";
@@ -142,168 +144,176 @@ include("../heading_banner.php");?>
 <!-- Page container -->
 <div class="page-container">
 
-            <!-- Content area -->
-            <div class="content">
-                <!-- Main charts -->
-                <!-- Basic datatable -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <!--							<h5 class="panel-title">Stations</h5>-->
-                        <!--							<hr/>-->
+    <!-- Content area -->
+    <div class="content">
+        <!-- Main charts -->
+        <!-- Basic datatable -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <!--							<h5 class="panel-title">Stations</h5>-->
+                <!--							<hr/>-->
+                <div class="row">
+                    <form action="" id="user_form" class="form-horizontal" method="post">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <input type="text" name="events_cat_name" id="events_cat_name"
+                                       class="form-control" placeholder="Enter Event Category" required>
+                            </div>
+                            <div class="col-md-8">
+
+                                <label class="control-label" style=" padding: 15px 10px;"> Is NPR required : </label>
+
+                                <div class="form-check form-check-inline form_col_option">
+                                    <input type="checkbox" id="yes" name="npr" value="1">
+                                    <!--                                                <input type="radio" id="yes" name="npr" value="1">-->
+                                    <!--                                                <label for="yes" class="item_label" id="">Yes</label>-->
+                                    <!--                                                <input type="radio" id="no" name="npr" value="0" checked="checked">-->
+                                    <!--                                                <label for="no" class="item_label" id="">No</label>-->
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="row">
-                          <form action="" id="user_form" class="form-horizontal" method="post">
-                                        <div class="col-md-12">
-                                        <div class="col-md-4">
-                                            <input type="text" name="events_cat_name" id="events_cat_name"
-                                                   class="form-control" placeholder="Enter Event Category" required>
-                                        </div>
-                                        <div class="col-md-8">
-
-                                            <label class="control-label" style=" padding: 15px 10px;"> Is NPR required : </label>
-
-                                            <div class="form-check form-check-inline form_col_option">
-                                                <input type="radio" id="yes" name="npr" value="1">
-                                                <label for="yes" class="item_label" id="">Yes</label>
-                                                <input type="radio" id="no" name="npr" value="0" checked="checked">
-                                                <label for="no" class="item_label" id="">No</label>
-                                            </div>
-
-                                        </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2" style="width: 100%;padding-top: 20px;">
-                                                <button type="submit" class="btn btn-primary"
-                                                        style="background-color:#1e73be;">Create Event Category
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </form>
-
+                            <div class="col-md-2" style="width: 100%;padding-top: 20px;">
+                                <button type="submit" class="btn btn-primary"
+                                        style="background-color:#1e73be;">Create Event Category
+                                </button>
+                            </div>
                         </div>
-                        <br/>
-						<?php
-						if (!empty($import_status_message)) {
-							echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-						}
-						?>
-						<?php
-						if (!empty($_SESSION[$import_status_message])) {
-							echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-							$_SESSION['message_stauts_class'] = '';
-							$_SESSION['import_status_message'] = '';
-						}
-						?>
-                    </div>
+
+                    </form>
+
                 </div>
-                <form action="delete_event_category.php" method="post" class="form-horizontal">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Delete
-                            </button>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="panel panel-flat">
-                        <table class="table datatable-basic">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="checkAll"></th>
-                                <th>S.No</th>
-                                <th>Event Category</th>
-                                <th>NPR</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							<?php
-                            $i = 1;
-							$query = sprintf("SELECT * FROM  events_category");
-							$qur = mysqli_query($db, $query);
-							while ($rowc = mysqli_fetch_array($qur)) {
-								?>
-                                <tr id="row<?php echo $i ?>">
-                                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]"
-                                               value="<?php echo $rowc["events_cat_id"]; ?>"></td>
-                                    <td id = "id_row<?php echo $i;?>"><?php echo ++$counter; ?></td>
-                                    <td id = "name_row<?php echo $i;?>"><?php echo $rowc["events_cat_name"]; ?></td>
-                                    <td id = "npr_row<?php echo $i;?>"><?php if($rowc["npr"] == 0){
-                                          $npr = "No";
-                                        }else{
-                                            $npr = "Yes";
-                                        }
-                                        echo $npr; ?></td>
-                                    <td>
-                                        <button type="button" id="edit_button<?php echo $i ?>" class="edit btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="edit_row('<?php echo $i ?>')"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                        <button type="button" id="save_button<?php echo $i ?>"  class="save btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="save_row('<?php echo $i ?>')"><i class="fa fa-save"></i></button>
-                                        <a href="view_material.php?id=75"</a>
-<!--                                        <button type="button" id="edit" class="btn btn-info btn-xs"-->
-<!--                                                data-id="--><?php //echo $rowc['events_cat_id']; ?><!--"-->
-<!--                                                data-npr="--><?php //echo $npr; ?><!--"-->
-<!--                                                data-events_cat_name="--><?php //echo $rowc['events_cat_name']; ?><!--"-->
-<!--                                                style="background-color:#1e73be;"-->
-<!--                                                data-toggle="modal" style="background-color:#1e73be;"-->
-<!--                                                data-target="#edit_modal_theme_primary">Edit-->
-<!--                                        </button>-->
-                                        <!--									&nbsp;
+                <br/>
+				<?php
+				if (!empty($import_status_message)) {
+					echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+				}
+				?>
+				<?php
+				if (!empty($_SESSION[$import_status_message])) {
+					echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+					$_SESSION['message_stauts_class'] = '';
+					$_SESSION['import_status_message'] = '';
+				}
+				?>
+            </div>
+        </div>
+        <form action="delete_event_category.php" method="post" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Delete
+                    </button>
+                </div>
+            </div>
+            <br/>
+            <div class="panel panel-flat">
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkAll"></th>
+                        <th>S.No</th>
+                        <th>Event Category</th>
+                        <th>NPR</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+					<?php
+					$i = 1;
+					$query = sprintf("SELECT * FROM  events_category");
+					$qur = mysqli_query($db, $query);
+					while ($rowc = mysqli_fetch_array($qur)) {
+						?>
+                        <tr id="row<?php echo $i ?>">
+                            <td><input type="checkbox" id="delete_check[]" name="delete_check[]"
+                                       value="<?php echo $rowc["events_cat_id"]; ?>"></td>
+                            <td id = "id_row<?php echo $i;?>" value = "<?php echo $i;?>"><?php echo ++$counter; ?></td>
+                            <td id = "name_row<?php echo $i;?>" value="<?php echo $rowc["events_cat_name"]; ?>" ><?php echo $rowc["events_cat_name"]; ?></td>
+<!--                            <td id = "npr_row--><?php //echo $i;?><!--" value = "--><?php //echo $rowc["npr"] ?><!--">--><?php //if($rowc["npr"] == 0){
+//									$npr = "No";
+//								}else{
+//									$npr = "Yes";
+//								}
+//								echo $npr; ?><!--</td>-->
+
+                            <td  id = "npr_row<?php echo $i;?>" value = "<?php echo $rowc["npr"] ?>">
+                                <input type='checkbox' id="npr_row<?php echo $i;?>" value="<?php echo $rowc["npr"] ?>" <?php if( $rowc["npr"] == 1) {echo "checked";}?> style="pointer-events: none !important;">
+                                <input type='hidden' id="npr_rown<?php echo $i;?>" value="<?php echo $rowc["npr"] ?>">
+
+                            </td>
+                            <td>
+                                <button type="button" id="edit_button<?php echo $i ?>" class="edit btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="edit_row('<?php echo $i ?>')"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                <button type="button" id="save_button<?php echo $i ?>"  class="save btn btn-primary legitRipple" style="background-color:#1e73be;" onclick="save_row('<?php echo $i ?>')"><i class="fa fa-save"></i></button>
+                                <a href="view_material.php?id=75"</a>
+                                <!--                                        <button type="button" id="edit" class="btn btn-info btn-xs"-->
+                                <!--                                                data-id="--><?php //echo $rowc['events_cat_id']; ?><!--"-->
+                                <!--                                                data-npr="--><?php //echo $npr; ?><!--"-->
+                                <!--                                                data-events_cat_name="--><?php //echo $rowc['events_cat_name']; ?><!--"-->
+                                <!--                                                style="background-color:#1e73be;"-->
+                                <!--                                                data-toggle="modal" style="background-color:#1e73be;"-->
+                                <!--                                                data-target="#edit_modal_theme_primary">Edit-->
+                                <!--                                        </button>-->
+                                <!--									&nbsp;
                                                                                                                             <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['line_id']; ?>">Delete </button>
                                                     -->
-                                    </td>
-                                </tr>
-							<?php $i++;} ?>
-                            </tbody>
-                        </table>
+                            </td>
+                        </tr>
+						<?php $i++;} ?>
+                    </tbody>
+                </table>
+        </form>
+    </div>
+    <!-- /basic datatable -->
+    <!-- /main charts -->
+    <!-- edit modal -->
+    <div id="edit_modal_theme_primary" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">Edit Event Category</h6>
+                </div>
+                <form action="" id="user_form" class="form-horizontal" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="col-lg-7 control-label" >Event Category:*</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" name="edit_events_cat_name" id="edit_events_cat_name"
+                                               class="form-control" required>
+                                        <input type="hidden" name="edit_id" id="edit_id">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="col-lg-7 control-label">Is NPR required ? *</label>
+                                    <div class="col-lg-5">
+                                        <div class="form-check form-check-inline form_col_option" style="width: 80%;font-size: 14px;">
+                                            <input type="radio" id="edit_yes" name="edit_npr" value="yes">
+                                            <label for="yes" class="item_label" id="">Yes</label>
+                                            <input type="radio" id="edit_no" name="edit_npr" value="no" checked="checked">
+                                            <label for="no" class="item_label" id="">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </form>
             </div>
-            <!-- /basic datatable -->
-            <!-- /main charts -->
-            <!-- edit modal -->
-            <div id="edit_modal_theme_primary" class="modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h6 class="modal-title">Edit Event Category</h6>
-                        </div>
-                        <form action="" id="user_form" class="form-horizontal" method="post">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <label class="col-lg-7 control-label" >Event Category:*</label>
-                                            <div class="col-lg-5">
-                                                <input type="text" name="edit_events_cat_name" id="edit_events_cat_name"
-                                                       class="form-control" required>
-                                                <input type="hidden" name="edit_id" id="edit_id">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <label class="col-lg-7 control-label">Is NPR required ? *</label>
-                                            <div class="col-lg-5">
-                                            <div class="form-check form-check-inline form_col_option" style="width: 80%;font-size: 14px;">
-                                                <input type="radio" id="edit_yes" name="edit_npr" value="yes">
-                                                <label for="yes" class="item_label" id="">Yes</label>
-                                                <input type="radio" id="edit_no" name="edit_npr" value="no" checked="checked">
-                                                <label for="no" class="item_label" id="">No</label>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
     <script>
+
         function edit_row(no)
         {
             document.getElementById("edit_button"+no).style.display="none";
@@ -312,82 +322,83 @@ include("../heading_banner.php");?>
             var id=document.getElementById("id_row"+no);
             var name=document.getElementById("name_row"+no);
             var npr=document.getElementById("npr_row"+no);
+            var nprn=document.getElementById("npr_rown"+no);
 
-            var id_data=id.innerHTML;
-            var name_data=name.innerHTML;
-            var npr_data=npr.innerHTML;
+            var id_data=id.innerText;
+            var name_data=name.innerText;
+            var npr_data=nprn.value;
 
             id.innerHTML="<input type='text' id='id_text"+no+"' value='"+id_data+"' class='form-control'>";
             name.innerHTML="<input type='text' id='name_text"+no+"' value='"+name_data+"' class='form-control'>";
-            npr.innerHTML="<input type='text' id='npr_text"+no+"' value='"+npr_data+"' class='form-control'>";
+            if(npr_data == "1"){
+                npr.innerHTML="<input type='checkbox' id='npr_text"+no+"' value='"+npr_data+"' checked>";
+            }else{
+                npr.innerHTML="<input type='checkbox' id='npr_text"+no+"' value='"+npr_data+"'>";
+            }
 
         }
-
         function save_row(no)
         {
-            $(document).on('click', '.save', function () {
-                var id = document.getElementById("id_text"+no).value;
-                var name_val=document.getElementById("name_text"+no).value;
-                var npr_val=document.getElementById("npr_text"+no).value;
-
-                var info = "&id="+id+"&name="+name_val+"npr="+npr_val;
-                $.ajax({
-                    type: "POST",
-                    url: "../config_module/edit_event_category.php",
-                    data: info,
-                    success: function (data) {
-                        document.getElementById("edit_button"+no).style.display="block";
-                        document.getElementById("save_button"+no).style.display="none";
-                    }
-                });
-
-
+            var info = {
+                id: $("#id_text" +no).val(),
+                name_val: $("#name_text"+no).val(),
+                npr_val: (($("#npr_text"+no)[0].checked) == true)?1:0,
+            };
+            $.ajax({
+                type: "POST",
+                url: "edit_event_category.php",
+                data: info,
+                success: function (data) {
+                    document.getElementById("edit_button"+no).style.display="block";
+                    document.getElementById("save_button"+no).style.display="none";
+                    location.reload();
+                }
             });
         }
 
     </script>
-            <!-- Dashboard content -->
-            <!-- /dashboard content -->
-            			<script> $(document).on('click', '#delete', function () {
-                                var element = $(this);
-                                var del_id = element.attr("data-id");
-                                var info = 'id=' + del_id;
-                                $.ajax({type: "POST", url: "ajax__delete.php", data: info, success: function (data) { }});
-                                $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-                            });</script>
-            <script>
-                jQuery(document).ready(function ($) {
-                    $(document).on('click', '#edit', function () {
-                        var element = $(this);
-                        var edit_id = element.attr("data-id");
-                        var events_cat_name = $(this).data("events_cat_name");
-                        var edit_npr = $(this).data("npr");
-                        if(edit_npr == 'No'){
-                            document.getElementById("edit_no").checked = true;
-                        }else{
-                            document.getElementById("edit_yes").checked = true;
-                        }
-                        $("#edit_events_cat_name").val(events_cat_name);
-                        $("#edit_id").val(edit_id);
-                    });
-                });
-            </script>
-
-            <script>
-                window.onload = function () {
-                    history.replaceState("", "", "<?php echo $scriptName; ?>config_module/event_category.php");
+    <!-- Dashboard content -->
+    <!-- /dashboard content -->
+    <script> $(document).on('click', '#delete', function () {
+            var element = $(this);
+            var del_id = element.attr("data-id");
+            var info = 'id=' + del_id;
+            $.ajax({type: "POST", url: "ajax__delete.php", data: info, success: function (data) { }});
+            $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+        });</script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).on('click', '#edit', function () {
+                var element = $(this);
+                var edit_id = element.attr("data-id");
+                var events_cat_name = $(this).data("events_cat_name");
+                var edit_npr = $(this).data("npr");
+                if(edit_npr == 'No'){
+                    document.getElementById("edit_no").checked = true;
+                }else{
+                    document.getElementById("edit_yes").checked = true;
                 }
-            </script>
+                $("#edit_events_cat_name").val(events_cat_name);
+                $("#edit_id").val(edit_id);
+            });
+        });
+    </script>
 
-            <script>
-                $("#checkAll").click(function () {
-                    $('input:checkbox').not(this).prop('checked', this.checked);
-                });
-            </script>
-        </div>
-        <!-- /content area -->
+    <script>
+        window.onload = function () {
+            history.replaceState("", "", "<?php echo $scriptName; ?>config_module/event_category.php");
+        }
+    </script>
 
-    <!-- /main content -->
+    <script>
+        $("#checkAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+    </script>
+</div>
+<!-- /content area -->
+
+<!-- /main content -->
 
 <!-- /page container -->
 <?php include('../footer.php') ?>
