@@ -3,11 +3,11 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
 }
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
@@ -15,18 +15,18 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
 
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 $is_tab_login = $_SESSION['is_tab_user'];
 $is_cell_login = $_SESSION['is_cell_login'];
@@ -34,33 +34,26 @@ $is_cell_login = $_SESSION['is_cell_login'];
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
-    header('location: ../dashboard.php');
+	header('location: ../dashboard.php');
 }
-$_SESSION['station'] = "";
-$_SESSION['date_from'] = "";
-$_SESSION['date_to'] = "";
-$_SESSION['timezone'] = "";
-$_SESSION['part_family'] = "";
-$_SESSION['part_number'] = "";
-$_SESSION['form_type'] = "";
-
 if (count($_POST) > 0) {
-    $_SESSION['station'] = $_POST['station'];
-    $_SESSION['part_family'] = $_POST['part_family'];
-    $_SESSION['part_number'] = $_POST['part_number'];
-    $_SESSION['form_type'] = $_POST['form_type'];
-    $_SESSION['date_from'] = $_POST['date_from'];
-    $_SESSION['date_to'] = $_POST['date_to'];
-    $_SESSION['timezone'] = $_POST['timezone'];
-    $dateto = $_POST['date_to'];
-    $datefrom = $_POST['date_from'];
-    $button = $_POST['button'];
-}
-else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
+
+	$dateto = $_POST['date_to'];
+	$datefrom = $_POST['date_from'];
+	$button = $_POST['button'];
+
+	$_SESSION['station_1'] = $_POST['station'];
+	$_SESSION['part_family_1'] = $_POST['part_family'];
+	$_SESSION['part_number_1'] = $_POST['part_number'];
+	$_SESSION['form_type_1'] = $_POST['form_type'];
+	$_SESSION['date_from_1'] = $_POST['date_from'];
+	$_SESSION['date_to_1'] = $_POST['date_to'];
+	$_SESSION['timezone_1'] = $_POST['timezone'];
+}else{
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
+	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$datefrom = $yesdate;
 }
 
 ?>
@@ -147,10 +140,6 @@ else{
         .col-md-6.date {
             width: 25%;
         }
-        .col-md-2 {
-            width: 10%;
-        }
-
 
 
         @media
@@ -197,9 +186,9 @@ else{
 include("../header.php");
 
 if (($is_tab_login || $is_cell_login)) {
-    include("../tab_menu.php");
+	include("../tab_menu.php");
 } else {
-    include("../admin_menu.php");
+	include("../admin_menu.php");
 }
 include("../heading_banner.php");
 ?>
@@ -225,71 +214,71 @@ include("../heading_banner.php");
                                         <div class="col-lg-7">
                                             <select name="station" id="station" class="select form-control" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Station ---</option>
-                                                <?php
-                                                if($is_tab_login){
-                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    //                                            $entry = 'selected';
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        $entry = 'selected';
-                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                                    }
-                                                }else if($is_cell_login){
-                                                    $c_stations = implode("', '", $c_login_stations_arr);
-                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
-                                                    $result1 = $mysqli->query($sql1);
+												<?php
+												if($is_tab_login){
+													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
+													$result1 = $mysqli->query($sql1);
+													//                                            $entry = 'selected';
+													while ($row1 = $result1->fetch_assoc()) {
+														$entry = 'selected';
+														echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+													}
+												}else if($is_cell_login){
+													$c_stations = implode("', '", $c_login_stations_arr);
+													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
+													$result1 = $mysqli->query($sql1);
 //													                $                        $entry = 'selected';
-                                                    $i = 0;
+													$i = 0;
 
 //														$entry = 'selected';
-                                                    if(empty($_REQUEST) && empty($_REQUEST['station'])){
-                                                        while ($row1 = $result1->fetch_assoc()) {
-                                                            if($i == 0 ){
-                                                                $entry = 'selected';
-                                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                                                $c_station = $row1['line_id'];
-                                                            }else{
-                                                                echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
+													if(empty($_REQUEST) && empty($_REQUEST['station'])){
+														while ($row1 = $result1->fetch_assoc()) {
+															if($i == 0 ){
+																$entry = 'selected';
+																echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+																$c_station = $row1['line_id'];
+															}else{
+																echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
 
-                                                            }
-                                                            $i++;
-                                                        }
-                                                    }else{
-                                                        while ($row1 = $result1->fetch_assoc()) {
-                                                            if($row1['line_id'] == $_REQUEST['station'] ){
-                                                                $entry = 'selected';
-                                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                                                $c_station = $row1['line_id'];
-                                                            }else{
-                                                                echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
+															}
+															$i++;
+														}
+													}else{
+														while ($row1 = $result1->fetch_assoc()) {
+															if($row1['line_id'] == $_REQUEST['station'] ){
+																$entry = 'selected';
+																echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+																$c_station = $row1['line_id'];
+															}else{
+																echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
 
-                                                            }
-                                                            $i++;
-                                                        }
-                                                    }
+															}
+															$i++;
+														}
+													}
 
 
-                                                }else{
-                                                    $st_dashboard = $_POST['station'];
-                                                    $station22 = $st_dashboard;
-                                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    //                                            $entry = 'selected';
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        if($st_dashboard == $row1['line_id'])
-                                                        {
-                                                            $entry = 'selected';
-                                                        }
-                                                        else
-                                                        {
-                                                            $entry = '';
+												}else{
+													$st_dashboard = $_POST['station'];
+													$station22 = $st_dashboard;
+													$sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+													$result1 = $mysqli->query($sql1);
+													//                                            $entry = 'selected';
+													while ($row1 = $result1->fetch_assoc()) {
+														if($st_dashboard == $row1['line_id'])
+														{
+															$entry = 'selected';
+														}
+														else
+														{
+															$entry = '';
 
-                                                        }
-                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                                    }
-                                                }
+														}
+														echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+													}
+												}
 
-                                                ?>
+												?>
                                             </select>
                                             <!-- <div id="error1" class="red">Please Select Station</div> -->
 
@@ -302,37 +291,37 @@ include("../heading_banner.php");
                                         <div class="col-lg-7">
                                             <select name="part_family" id="part_family" class="select form-control" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Part Family ---</option>
-                                                <?php
-                                                if(empty($_POST)){
-                                                    if($_SESSION['is_tab_user'] == 1 ){
-                                                        $station22 = $_SESSION['tab_station'];
-                                                    }
-                                                }
-                                                $st_dashboard = $_POST['part_family'];
-                                                if(empty($station22)){
-                                                    $station22 = $_POST['station'];
-                                                }
+												<?php
+												if(empty($_POST)){
+													if($_SESSION['is_tab_user'] == 1 ){
+														$station22 = $_SESSION['tab_station'];
+													}
+												}
+												$st_dashboard = $_POST['part_family'];
+												if(empty($station22)){
+													$station22 = $_POST['station'];
+												}
 
-                                                if(empty($station22) && ($is_cell_login == 1) && !empty($c_station)){
-                                                    $station22 = $c_station;
-                                                }
-                                                $part_family_name = $_POST['part_family_name'];
-                                                $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station22' ";
-                                                $result1 = $mysqli->query($sql1);
-                                                //                                            $entry = 'selected';
-                                                while ($row1 = $result1->fetch_assoc()) {
-                                                    if($st_dashboard == $row1['pm_part_family_id'])
-                                                    {
-                                                        $entry = 'selected';
-                                                    }
-                                                    else
-                                                    {
-                                                        $entry = '';
+												if(empty($station22) && ($is_cell_login == 1) && !empty($c_station)){
+													$station22 = $c_station;
+												}
+												$part_family_name = $_POST['part_family_name'];
+												$sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station22' ";
+												$result1 = $mysqli->query($sql1);
+												//                                            $entry = 'selected';
+												while ($row1 = $result1->fetch_assoc()) {
+													if($st_dashboard == $row1['pm_part_family_id'])
+													{
+														$entry = 'selected';
+													}
+													else
+													{
+														$entry = '';
 
-                                                    }
-                                                    echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
-                                                }
-                                                ?>
+													}
+													echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+												}
+												?>
                                             </select>
                                             <!-- <div id="error2" class="red">Please Select Part Family</div> -->
                                         </div>
@@ -348,26 +337,26 @@ include("../heading_banner.php");
                                         <div class="col-lg-7">
                                             <select name="part_number" id="part_number" class="select form-control" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Part Number ---</option>
-                                                <?php
-                                                $st_dashboard = $_POST['part_number'];
-                                                $part_family = $_POST['part_family'];
+												<?php
+												$st_dashboard = $_POST['part_number'];
+												$part_family = $_POST['part_family'];
 
-                                                $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
-                                                $result1 = $mysqli->query($sql1);
-                                                //                                            $entry = 'selected';
-                                                while ($row1 = $result1->fetch_assoc()) {
-                                                    if($st_dashboard == $row1['pm_part_number_id'])
-                                                    {
-                                                        $entry = 'selected';
-                                                    }
-                                                    else
-                                                    {
-                                                        $entry = '';
+												$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+												$result1 = $mysqli->query($sql1);
+												//                                            $entry = 'selected';
+												while ($row1 = $result1->fetch_assoc()) {
+													if($st_dashboard == $row1['pm_part_number_id'])
+													{
+														$entry = 'selected';
+													}
+													else
+													{
+														$entry = '';
 
-                                                    }
-                                                    echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name']  . "</option>";
-                                                }
-                                                ?>
+													}
+													echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name']  . "</option>";
+												}
+												?>
                                             </select>
                                             <!-- <div id="error3" class="red">Please Select Part Number</div> -->
                                         </div>
@@ -379,25 +368,25 @@ include("../heading_banner.php");
                                         <div class="col-lg-7">
                                             <select name="form_type" id="form_type" class="select form-control" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Form Type ---</option>
-                                                <?php
-                                                $st_dashboard = $_POST['form_type'];
+												<?php
+												$st_dashboard = $_POST['form_type'];
 
-                                                $sql1 = "SELECT * FROM `form_type` ";
-                                                $result1 = $mysqli->query($sql1);
-                                                //                                            $entry = 'selected';
-                                                while ($row1 = $result1->fetch_assoc()) {
-                                                    if($st_dashboard == $row1['form_type_id'])
-                                                    {
-                                                        $entry = 'selected';
-                                                    }
-                                                    else
-                                                    {
-                                                        $entry = '';
+												$sql1 = "SELECT * FROM `form_type` ";
+												$result1 = $mysqli->query($sql1);
+												//                                            $entry = 'selected';
+												while ($row1 = $result1->fetch_assoc()) {
+													if($st_dashboard == $row1['form_type_id'])
+													{
+														$entry = 'selected';
+													}
+													else
+													{
+														$entry = '';
 
-                                                    }
-                                                    echo "<option value='" . $row1['form_type_id'] . "'  $entry>" . $row1['form_type_name'] . "</option>";
-                                                }
-                                                ?>
+													}
+													echo "<option value='" . $row1['form_type_id'] . "'  $entry>" . $row1['form_type_name'] . "</option>";
+												}
+												?>
                                             </select>
                                             <!-- <div id="error4" class="red">Please Select Form Type</div> -->
                                         </div>
@@ -406,10 +395,10 @@ include("../heading_banner.php");
 
                                 <div class="col-md-6 date">
                                     <!--                                            <label class="control-label" style="float: left;padding: 10px 110px 10px 2px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
-                                    <?php
-                                    $myDate = date("m/d/y h:i:s");
+									<?php
+									$myDate = date("m/d/y h:i:s");
 
-                                    ?>
+									?>
 
                                     <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial; display: none;" checked>
 
@@ -439,25 +428,25 @@ include("../heading_banner.php");
                     </div>
                     <div class="col-md-2">
                         <button type="clear" id="btn" class="btn btn-primary"
-                                style="background-color:#1e73be;width:120px;">Reset
+                                style="background-color:#1e73be;width:120px;" onclick="location.reload();">Reset
                         </button>
                     </div>
                     <div class="col-md-2">
                         <form action="export_view_form.php" method="post" name="export_excel">
+                            <input type="hidden" name="export">
                             <button type="submit" class="btn btn-primary"
                                     style="background-color:#1e73be;width:120px;"
-                                    id="export" name="export" data-loading-text="Loading...">Export Data
+                                    id="export_btn" name="export_btn" data-loading-text="Loading...">Export Data
                             </button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
-        <?php
-        if(count($_POST) > 0)
-        {
-            ?>
+		<?php
+		if(count($_POST) > 0)
+		{
+			?>
 
             <div class="panel panel-flat" >
                 <table class="table datatable-basic">
@@ -468,169 +457,167 @@ include("../heading_banner.php");
                         <th>Form Name</th>
                         <th>Form Type</th>
                         <th>Form Action</th>
-                        <!-- <th class="form_mob">Form status</th> -->
+                        <th class="form_mob">Form status</th>
                         <th class="form_create">Created At</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    $station = $_POST['station'];
-                    $part_number = $_POST['part_number'];
-                    $part_family = $_POST['part_family'];
-                    $form_type = $_POST['form_type'];
-                    $dateto = $_POST['date_to'];
-                    $datefrom = $_POST['date_from'];
-                    $button = $_POST['button'];
-                    if(!empty($part_number)){
-                        $q_str = "and part_number = '$part_number' ";
-                    }
-                    if(!empty($part_family)){
-                        $q_str .= "and part_family = '$part_family' ";
-                    }
-                    if(!empty($form_type)){
-                        $q_str .= "and form_type = '$form_type' ";
-                    }
+					<?php
+					$station = $_POST['station'];
+					$part_number = $_POST['part_number'];
+					$part_family = $_POST['part_family'];
+					$form_type = $_POST['form_type'];
+					$dateto = $_POST['date_to'];
+					$datefrom = $_POST['date_from'];
+					$button = $_POST['button'];
+					if(!empty($part_number)){
+						$q_str = "and part_number = '$part_number' ";
+					}
+					if(!empty($part_family)){
+						$q_str .= "and part_family = '$part_family' ";
+					}
+					if(!empty($form_type)){
+						$q_str .= "and form_type = '$form_type' ";
+					}
 
-                    if ($button == "button1") {
-                        if ($station != "" && $datefrom != "" && $dateto != "") {
-                            $result = "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC";
-                            $qur = mysqli_query($db,$result);
-                        } else if ($station != "" && $user != "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station' ");
-                        } else if ($station != "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC ");
-                        } else if ($station != "" && $user == "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE station = '$station'");
-                        } else if ($station == "" && $user != "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC");
-                        } else if ($station == "" && $user != "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station'");
-                        } else if ($station == "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ");
-                        }
+					if ($button == "button1") {
+						if ($station != "" && $datefrom != "" && $dateto != "") {
+							$result = "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC";
+							$qur = mysqli_query($db,$result);
+						} else if ($station != "" && $user != "" && $datefrom == "" && $dateto == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station' ");
+						} else if ($station != "" && $user == "" && $datefrom != "" && $dateto != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC ");
+						} else if ($station != "" && $user == "" && $datefrom == "" && $dateto == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE station = '$station'");
+						} else if ($station == "" && $user != "" && $datefrom != "" && $dateto != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC");
+						} else if ($station == "" && $user != "" && $datefrom == "" && $dateto == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station'");
+						} else if ($station == "" && $user == "" && $datefrom != "" && $dateto != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ");
+						}
 
-                    }else {
-                        $curdate = date('Y-m-d');
-                        if ($timezone == "7") {
-                            $countdate = date('Y-m-d', strtotime('-7 days'));
-                        } else if ($timezone == "1") {
-                            $countdate = date('Y-m-d', strtotime('-1 days'));
-                        } else if ($timezone == "30") {
-                            $countdate = date('Y-m-d', strtotime('-30 days'));
-                        } else if ($timezone == "90") {
-                            $countdate = date('Y-m-d', strtotime('-90 days'));
-                        } else if ($timezone == "180") {
-                            $countdate = date('Y-m-d', strtotime('-180 days'));
-                        } else if ($timezone == "365") {
-                            $countdate = date('Y-m-d', strtotime('-365 days'));
-                        }
-                        if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
-                        } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station' and `assign_to` = '$user'");
-                        } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
-                        } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station'");
-                        } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
-                        } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE station = '$station' ");
-                        } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' ");
-                        }
-                    }
-                    //
-                    //							$query = "SELECT * FROM `form_user_data` where station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC";
-                    //							$qur = mysqli_query($db, $query);
-                    //
+					}else {
+						$curdate = date('Y-m-d');
+						if ($timezone == "7") {
+							$countdate = date('Y-m-d', strtotime('-7 days'));
+						} else if ($timezone == "1") {
+							$countdate = date('Y-m-d', strtotime('-1 days'));
+						} else if ($timezone == "30") {
+							$countdate = date('Y-m-d', strtotime('-30 days'));
+						} else if ($timezone == "90") {
+							$countdate = date('Y-m-d', strtotime('-90 days'));
+						} else if ($timezone == "180") {
+							$countdate = date('Y-m-d', strtotime('-180 days'));
+						} else if ($timezone == "365") {
+							$countdate = date('Y-m-d', strtotime('-365 days'));
+						}
+						if ($station != "" && $timezone != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+						} else if ($station != "" && $timezone == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station' and `assign_to` = '$user'");
+						} else if ($station != "" && $timezone != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+						} else if ($station != "" && $timezone == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE  station = '$station'");
+						} else if ($station != "" && $timezone != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+						} else if ($station != "" && $timezone == "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE station = '$station' ");
+						} else if ($station != "" && $timezone != "") {
+							$qur = mysqli_query($db, "SELECT `form_user_data_id`,`form_name`,`form_type`,`form_status`,`form_create_id`,`form_type`,`form_comp_status`,`created_at`,`updated_at` FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' ");
+						}
+					}
+					//
+					//							$query = "SELECT * FROM `form_user_data` where station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC";
+					//							$qur = mysqli_query($db, $query);
+					//
 
-                    while ($rowc = mysqli_fetch_array($qur)) {
-
-
-                        $form_id = $rowc["form_user_data_id"];
-
-                        $query1  = mysqli_query($db, "SELECT form_comp_status,form_status, created_at , form_create_id FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
-
-                        $rowc1 = mysqli_fetch_array($query1);
-
-                        $datetime = $rowc1["created_at"];
-                        $date_time = strtotime($datetime);
-
-                        $comp_status = $rowc1["form_comp_status"];
-                        $check_status = $rowc1["form_status"];
-
-                        $form_create_id = $rowc1["form_create_id"];
-
-                        $qur0554 = mysqli_query($db, "SELECT form_classification FROM `form_create` where form_create_id =  '$form_create_id' ");
-                        $rowc0554 = mysqli_fetch_array($qur0554);
-                        $is_general = false;
-                        if($rowc0554['form_classification'] == 'general' ){
-                            $is_general = true;
-                        }
-                        if(!$is_general) {
-                            $qur05 = mysqli_query($db, "SELECT SUM(approval_status) as app_status, SUM(reject_status) as rej_status FROM  form_approval where form_user_data_id = '$form_id' ");
-                            $rowc05 = mysqli_fetch_array($qur05);
+					while ($rowc = mysqli_fetch_array($qur)) {
 
 
+						$form_id = $rowc["form_user_data_id"];
+
+						$query1  = mysqli_query($db, "SELECT form_comp_status,form_status, created_at , form_create_id FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
+
+						$rowc1 = mysqli_fetch_array($query1);
+
+						$datetime = $rowc1["created_at"];
+						$date_time = strtotime($datetime);
+
+						$comp_status = $rowc1["form_comp_status"];
+						$check_status = $rowc1["form_status"];
+
+						$form_create_id = $rowc1["form_create_id"];
+
+						$qur0554 = mysqli_query($db, "SELECT form_classification FROM `form_create` where form_create_id =  '$form_create_id' ");
+						$rowc0554 = mysqli_fetch_array($qur0554);
+						$is_general = false;
+						if($rowc0554['form_classification'] == 'general' ){
+							$is_general = true;
+						}
+						if(!$is_general) {
+							$qur05 = mysqli_query($db, "SELECT SUM(approval_status) as app_status, SUM(reject_status) as rej_status FROM  form_approval where form_user_data_id = '$form_id' ");
+							$rowc05 = mysqli_fetch_array($qur05);
 
 
 
-                            if($comp_status == '1'){
 
-                                $comp = "Complete";
-                            }else{
-                                $comp = "Yet to fill optional data.";
-                            }
 
-                            $approval_status = (int)$rowc05["app_status"];
-                            $reject_status = (int)$rowc05["rej_status"];
-                            $style = "";
-                            if ($reject_status >= 1) {
-                                $form_status = "Rejected";
-                                $style = "style='background-color:#eca9a9;'";
-                            }
-                            else if ($approval_status >= 1) {
-                                $form_status = "Approved";
-                                $style = "style='background-color:#a8d8a8;'";
-                            }
-                            else {
-                                // continue;
-                                $form_status = "Incomplete";
-                                //    $style = "style='background-color:#b1cdff;'";
-                            }
-                            // if ($comp_status == '0') {
-                            // 	$style = "style='background-color:#b1cdff;'";
-                            // }
-                        }
+							if($comp_status == '1'){
 
-                        ?>
+								$comp = "Complete";
+							}else{
+								$comp = "Yet to fill optional data.";
+							}
+
+							$approval_status = (int)$rowc05["app_status"];
+							$reject_status = (int)$rowc05["rej_status"];
+							$style = "";
+							if ($reject_status >= 1) {
+								$form_status = "Rejected";
+								$style = "style='background-color:#eca9a9;'";
+							} else if ($approval_status >= 1) {
+								$form_status = "Approved";
+								$style = "style='background-color:#a8d8a8;'";
+							} else {
+								continue;
+//                                    $form_status = "Incomplete";
+//                                    $style = "style='background-color:#b1cdff;'";
+							}
+							if ($comp_status == '0') {
+								$style = "style='background-color:#b1cdff;'";
+							}
+						}
+
+						?>
 
                         <tr <?php echo $style; ?>>
 
                             <td><?php echo ++$counter; ?></td>
 
-                            <?php
+							<?php
 
-                            $opt_sub = mysqli_query($db, "SELECT form_create_id FROM  form_user_data");
+							$opt_sub = mysqli_query($db, "SELECT form_create_id FROM  form_user_data");
 
-                            while ($rowcopt = mysqli_fetch_array($opt_sub)) {
-                                $opt_id = $rowcopt["form_create_id"];
-                            }
+							while ($rowcopt = mysqli_fetch_array($opt_sub)) {
+								$opt_id = $rowcopt["form_create_id"];
+							}
 
-                            $option_submit = mysqli_query($db, "SELECT count(optional) as optional FROM  form_item where form_create_id  = '$opt_id' and optional = 1");
-                            while ($rowcoptional = mysqli_fetch_array($option_submit)) {
+							$option_submit = mysqli_query($db, "SELECT count(optional) as optional FROM  form_item where form_create_id  = '$opt_id' and optional = 1");
+							while ($rowcoptional = mysqli_fetch_array($option_submit)) {
 
-                                $option = $rowcoptional["optional"];
-                                if($rowcoptional["optional"] > 0){
-                                    $option = 1;
-                                }
-                            }
-                            // echo $opt_id;
+								$option = $rowcoptional["optional"];
+								if($rowcoptional["optional"] > 0){
+									$option = 1;
+								}
+							}
+							// echo $opt_id;
 
-                            ?>
-                            <?php
-                            if($option == 0){?>
+							?>
+							<?php
+							if($option == 0){?>
 
                                 <td class="tooltip">
                                     <a href="view_user_form_data_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
@@ -638,51 +625,51 @@ include("../heading_banner.php");
                                 </td>
 
 
-                            <?php } else if($option == 1){
+							<?php } else if($option == 1){
 
-                                if ($check_status != null){  ?>
+								if ($check_status != null){  ?>
                                     <td class="tooltip">
                                         <a href="submit_user_form_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         <span class="tooltiptext">View User Form</span>
                                     </td>
 
-                                <?php } else if($check_status == null) { ?>
+								<?php } else if($check_status == null) { ?>
                                     <td class="tooltip">
                                         <a href="view_submit_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         <span class="tooltiptext">View User Form</span>
                                     </td>
 
-                                <?php }
-                            } ?>
+								<?php }
+							} ?>
 
                             <td><?php echo $rowc["form_name"]; ?></td>
-                            <?php
-                            $station1 = $rowc['form_type'];
-                            $qurtemp = mysqli_query($db, "SELECT * FROM  form_type where form_type_id  = '$station1' ");
-                            while ($rowctemp = mysqli_fetch_array($qurtemp)) {
-                                $station = $rowctemp["form_type_name"];
-                            }
-                            ?>
+							<?php
+							$station1 = $rowc['form_type'];
+							$qurtemp = mysqli_query($db, "SELECT * FROM  form_type where form_type_id  = '$station1' ");
+							while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+								$station = $rowctemp["form_type_name"];
+							}
+							?>
                             <td><?php echo $station; ?></td>
 
                             <td><?php echo $form_status; ?></td>
-                            <!--<td class="form_mob"><?php echo $comp; ?></td> -->
-                            <?php   $datetime = $rowc["created_at"];
-                            // $date_time = strtotime($datetime);
-                            ?>
+                            <td class="form_mob"><?php echo $comp; ?></td>
+							<?php   $datetime = $rowc["created_at"];
+							// $date_time = strtotime($datetime);
+							?>
                             <td class="form_create"><?php echo $datetime; ?></td>
 
 
                         </tr>
-                    <?php } ?>
+					<?php } ?>
                     </tbody>
                 </table>
                 </form>
             </div>
 
-            <?php
-        }
-        ?>
+			<?php
+		}
+		?>
 
     </div>
 </div>
@@ -810,3 +797,4 @@ document.getElementById("user_form").reset();
 <?php include ('../footer.php') ?>
 </body>
 </html>
+
