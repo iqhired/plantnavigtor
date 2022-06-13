@@ -457,7 +457,6 @@ include("../heading_banner.php");
                         <th>Form Name</th>
                         <th>Form Type</th>
                         <th>Form Action</th>
-                        <th class="form_mob">Form status</th>
                         <th class="form_create">Created At</th>
                     </tr>
                     </thead>
@@ -565,12 +564,12 @@ include("../heading_banner.php");
 
 
 
-							if($comp_status == '1'){
-
-								$comp = "Complete";
-							}else{
-								$comp = "Yet to fill optional data.";
-							}
+//							if($comp_status == '1'){
+//
+//								$comp = "Complete";
+//							}else{
+//								$comp = "Yet to fill optional data.";
+//							}
 
 							$approval_status = (int)$rowc05["app_status"];
 							$reject_status = (int)$rowc05["rej_status"];
@@ -581,14 +580,15 @@ include("../heading_banner.php");
 							} else if ($approval_status >= 1) {
 								$form_status = "Approved";
 								$style = "style='background-color:#a8d8a8;'";
-							} else {
-								continue;
-//                                    $form_status = "Incomplete";
-//                                    $style = "style='background-color:#b1cdff;'";
 							}
-							if ($comp_status == '0') {
-								$style = "style='background-color:#b1cdff;'";
-							}
+// else {
+//								continue;
+////                                    $form_status = "Incomplete";
+////                                    $style = "style='background-color:#b1cdff;'";
+//							}
+//							if ($comp_status == '0') {
+//								$style = "style='background-color:#b1cdff;'";
+//							}
 						}
 
 						?>
@@ -620,7 +620,7 @@ include("../heading_banner.php");
 							if($option == 0){?>
 
                                 <td class="tooltip">
-                                    <a href="view_user_form_data_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="view_user_form_data.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                     <span class="tooltiptext">View User Form</span>
                                 </td>
 
@@ -629,13 +629,13 @@ include("../heading_banner.php");
 
 								if ($check_status != null){  ?>
                                     <td class="tooltip">
-                                        <a href="submit_user_form_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="submit_user_form.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         <span class="tooltiptext">View User Form</span>
                                     </td>
 
 								<?php } else if($check_status == null) { ?>
                                     <td class="tooltip">
-                                        <a href="view_submit_update.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="view_submit.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         <span class="tooltiptext">View User Form</span>
                                     </td>
 
@@ -653,7 +653,7 @@ include("../heading_banner.php");
                             <td><?php echo $station; ?></td>
 
                             <td><?php echo $form_status; ?></td>
-                            <td class="form_mob"><?php echo $comp; ?></td>
+<!--                            <td class="form_mob">--><?php //echo $comp; ?><!--</td>-->
 							<?php   $datetime = $rowc["created_at"];
 							// $date_time = strtotime($datetime);
 							?>

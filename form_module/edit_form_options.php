@@ -101,8 +101,6 @@ include("../heading_banner.php");
         <!-- Basic datatable -->
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <!--							<h5 class="panel-title">Job-Title List</h5>-->
-                <!--							<hr/>-->
 
                 <form action="" id="user_form" class="form-horizontal" method="post">
                     <div class="row">
@@ -277,7 +275,8 @@ include("../heading_banner.php");
                                 </div>
 
 
-                            </div><br/>
+                            </div>
+                            <br/>
 
 
                         </div>
@@ -367,7 +366,7 @@ include("../heading_banner.php");
 
 									//     $finalid=urlencode( base64_encode($id));
 									?>
-                                    <a href="edit_user_form_data_update.php?id=<?php echo $finalid ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
+                                    <a href="edit_user_form_data.php?id=<?php echo $finalid ?>" class="btn btn-primary" style="background-color:#1e73be;">Edit Form</a>
                                 </td>
                                 <td><?php echo $rowc["name"]; ?></td>
 								<?php
@@ -440,10 +439,6 @@ include("../heading_banner.php");
         $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
         $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
     });</script>
-
-
-
-
 
 <script>
     //add this js script into the web page,
@@ -534,7 +529,6 @@ include("../heading_banner.php");
     });
 </script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js"></script>
 
 </body>
 </html>
