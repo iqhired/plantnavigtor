@@ -455,6 +455,7 @@ include("../heading_banner.php");
                         <th>Sl. No</th>
                         <th>Action</th>
                         <th>Form Name</th>
+                        <th>Part Number</th>
                         <th>Form Type</th>
                         <th>Form Action</th>
                         <th class="form_create">Created At</th>
@@ -538,9 +539,13 @@ include("../heading_banner.php");
 
 						$form_id = $rowc["form_user_data_id"];
 
-						$query1  = mysqli_query($db, "SELECT form_comp_status,form_status, created_at , form_create_id FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
+						$query1  = mysqli_query($db, "SELECT part_number,form_comp_status,form_status, created_at , form_create_id FROM `form_user_data` where form_user_data_id = ' $form_id' LIMIT 1");
 
 						$rowc1 = mysqli_fetch_array($query1);
+                        $pno = $rowc1['part_number'];
+						$query2  = mysqli_query($db, "SELECT part_number,part_name FROM `pm_part_number` where pm_part_number_id = ' $pno' LIMIT 1");
+
+						$rowc2 = mysqli_fetch_array($query2);
 
 						$datetime = $rowc1["created_at"];
 						$date_time = strtotime($datetime);
@@ -643,6 +648,7 @@ include("../heading_banner.php");
 							} ?>
 
                             <td><?php echo $rowc["form_name"]; ?></td>
+                            <td><?php echo $rowc2["part_number"] . '-' . $rowc2["part_name"] ; ?></td>
 							<?php
 							$station1 = $rowc['form_type'];
 							$qurtemp = mysqli_query($db, "SELECT * FROM  form_type where form_type_id  = '$station1' ");
