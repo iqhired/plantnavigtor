@@ -391,11 +391,11 @@ include("../heading_banner.php");
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <img src="../material_images/<?php echo $rowcimage['image_name']; ?>"
+                                                    <img src="../assets/images/mt/<?php echo $rowcimage['image_name']; ?>"
                                                          alt="">
                                                     <div class="caption-overflow">
 														<span>
-															<a href="../material_images/<?php echo $rowcimage['image_name']; ?>"
+															<a href="../assets/images/mt/<?php echo $rowcimage['image_name']; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
                                                                         class="icon-plus3"></i></a>
@@ -482,7 +482,7 @@ include("../heading_banner.php");
 
 </script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
+<!--<script type="text/javascript" src="--><?php //echo $siteURL; ?><!--assets/js/core/app.js"></script>-->
 
 </body>
 

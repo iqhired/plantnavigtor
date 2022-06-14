@@ -1151,6 +1151,9 @@ $msg = explode(',', $msg); ?>
                                     <li><a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php">Good Bad
                                             Pieces Log</a></li>
 								<?php }
+								if (in_array('73', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php">Material Traceability Log</a></li>
+								<?php }
 								if (in_array('21', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
 								<?php } ?>

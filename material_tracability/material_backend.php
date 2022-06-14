@@ -45,6 +45,26 @@ $rowc04 = mysqli_fetch_array($qur04);
 $material_trace_id = $rowc04["material_id"];
 $material_status = $rowc04["material_status"];
 
+if($material_trace_id > 0){
+	$temp_mid = $_SESSION['temp_mt_id'];
+	$mid_arr = explode ( ',' , $temp_mid);
+	$m_str = '';
+	$i = 0 ;
+	foreach ($mid_arr as $mid){
+		if(($i == 0) && ($mid != "")){
+			$m_str = '\'' . $mid . '\'';
+			$i++;
+		}else if($mid != ""){
+			$m_str .= ',' . '\'' . $mid . '\'';
+		}
+	}
+	$sql = "update `material_images` SET material_id = '$material_trace_id' where material_id in ($m_str)";
+	$result1 = mysqli_query($db, $sql);
+	if($result1){
+		$_SESSION['temp_mt_id'] = '';
+	}
+}
+
 //multiple image
 if (isset($_FILES['image'])) {
 	$totalfiles = count($_FILES['image']['name']);

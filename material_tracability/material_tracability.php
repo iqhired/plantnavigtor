@@ -564,82 +564,76 @@ include("../heading_banner.php");
 
     }
 </script>
-<script type='text/javascript'>
-    $(document).ready(function () {
-        // Upload
+<script>
+    // Upload
 
-        $("#file").on("change", function () {
-            var fd = new FormData();
-            var files = $('#file')[0].files[0];
-            fd.append('file', files);
-            fd.append('request', 1);
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
 
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_mat_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
+    });
+
+
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        if (deleteFile == true) {
             // AJAX request
             $.ajax({
                 url: 'add_delete_mat_image.php',
                 type: 'post',
-                data: fd,
-                contentType: false,
-                processData: false,
+                data: {path: imgElement_src, request: 2},
+                async: false,
                 success: function (response) {
-
-                    if (response != 0) {
-                        var count = $('.container .content_img').length;
-                        count = Number(count) + 1;
-
-                        // Show image preview with Delete button
-                        $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                    // Remove <div >
+                    if (response == 1) {
+                        succ = true;
                     }
-                }
-            });
-        });
-
-
-        // Remove file
-        $('.container').on('click', '.content_img .delete', function () {
-
-            var id = this.id;
-            var split_id = id.split('_');
-            var num = split_id[1];
-            // Get image source
-            var imgElement_src = $('#content_image_' + num + ' img').attr("src");
-            var deleteFile = confirm("Do you really want to Delete?");
-            var succ = false;
-            if (deleteFile == true) {
-                // AJAX request
-                $.ajax({
-                    url: 'add_delete_mat_image.php',
-                    type: 'post',
-                    data: {path: imgElement_src, request: 2},
-                    async: false,
-                    success: function (response) {
-                        // Remove <div >
-                        if (response == 1) {
-                            succ = true;
-                        }
-                    }, complete: function (data) {
-                        if (succ) {
-                            var id = 'content_image_' + num;
-                            // $('#content_img_'+num)[0].remove();
-                            var elem = document.getElementById(id);
-                            document.getElementById(id).style.display = 'none';
-                            var nodes = $(".container")[2].childNodes;
-                            for (var i = 0; i < nodes.length; i++) {
-                                var node = nodes[i];
-                                if (node.id == id) {
-                                    node.style.display = 'none';
-                                }
+                }, complete: function (data) {
+                    if (succ) {
+                        var id = 'content_img_' + num;
+                        // $('#content_img_'+num)[0].remove();
+                        var elem = document.getElementById(id);
+                        document.getElementById(id).style.display = 'none';
+                        var nodes = $(".container")[2].childNodes;
+                        for (var i = 0; i < nodes.length; i++) {
+                            var node = nodes[i];
+                            if (node.id == id) {
+                                node.style.display = 'none';
                             }
                         }
                     }
-                });
-            }
-        });
+                }
+            });
+        }
     });
-</script>
-
-<script>
-
     $(document).on("click", ".submit_btn", function () {
         var line_number = $("#line_number").val();
         var material_type = $("#material_type").val();

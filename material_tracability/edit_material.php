@@ -455,7 +455,7 @@ include("../heading_banner.php");
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-                                                        <img src="../material_images/<?php echo $image; ?>"
+                                                        <img src="../assets/images/mt/<?php echo $image; ?>"
                                                              alt="">
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
