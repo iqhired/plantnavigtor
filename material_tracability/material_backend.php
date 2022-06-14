@@ -40,8 +40,6 @@ if (count($_POST) > 0) {
 
 	}
 }
-
-
 $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where line_no= '$line_number' ORDER BY `material_id` DESC LIMIT 1");
 $rowc04 = mysqli_fetch_array($qur04);
 $material_trace_id = $rowc04["material_id"];
