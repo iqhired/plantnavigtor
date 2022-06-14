@@ -604,35 +604,33 @@ include("../heading_banner.php");
         var imgElement_src = $('#content_img_' + num)[0].children[0].src;
         //var deleteFile = confirm("Do you really want to Delete?");
         var succ = false;
-        if (deleteFile == true) {
-            // AJAX request
-            $.ajax({
-                url: 'add_delete_mat_image.php',
-                type: 'post',
-                data: {path: imgElement_src, request: 2},
-                async: false,
-                success: function (response) {
-                    // Remove <div >
-                    if (response == 1) {
-                        succ = true;
-                    }
-                }, complete: function (data) {
-                    if (succ) {
-                        var id = 'content_img_' + num;
-                        // $('#content_img_'+num)[0].remove();
-                        var elem = document.getElementById(id);
-                        document.getElementById(id).style.display = 'none';
-                        var nodes = $(".container")[2].childNodes;
-                        for (var i = 0; i < nodes.length; i++) {
-                            var node = nodes[i];
-                            if (node.id == id) {
-                                node.style.display = 'none';
-                            }
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_mat_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
                         }
                     }
                 }
-            });
-        }
+            }
+        });
     });
     $(document).on("click", ".submit_btn", function () {
         var line_number = $("#line_number").val();
