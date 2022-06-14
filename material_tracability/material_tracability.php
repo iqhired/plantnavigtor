@@ -242,6 +242,12 @@ $logo = $rowccus['logo'];
             .form-check.form-check-inline {
                 width: 70%;
             }
+            .form-control {
+                font-size: 14px!important;
+            }
+            label.col-lg-2.control-label {
+                font-size: 14px!important;
+            }
 
         }
 
@@ -299,6 +305,7 @@ $logo = $rowccus['logo'];
         .content_img span:hover {
             cursor: pointer;
         }
+
     </style>
 
 
@@ -551,6 +558,8 @@ include("../heading_banner.php");
         var isDis = sel_val[1];
         if(isDis == 0){
             document.getElementById("serial_num").style.display = 'none';
+        }else{
+            document.getElementById("serial_num").style.display = 'block';
         }
 
     }
@@ -626,8 +635,6 @@ include("../heading_banner.php");
                 });
             }
         });
-
-
     });
 </script>
 
