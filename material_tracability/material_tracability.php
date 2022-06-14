@@ -602,7 +602,7 @@ include("../heading_banner.php");
         var num = split_id[1];
         // Get image source
         var imgElement_src = $('#content_img_' + num)[0].children[0].src;
-        var deleteFile = confirm("Do you really want to Delete?");
+        //var deleteFile = confirm("Do you really want to Delete?");
         var succ = false;
         if (deleteFile == true) {
             // AJAX request
