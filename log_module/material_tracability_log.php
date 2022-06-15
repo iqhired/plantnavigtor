@@ -401,7 +401,7 @@ include("../heading_banner.php");
                             <a href="../log_module/view_material_log.php?id=<?php echo $rowc['material_id'];?>&station=<?php echo $station;?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
                         </td>
                         <td><?php echo $lnn; ?></td>
-                        <td><?php echo $rowc['part_number']."-".$rowc['part_name']; ?></td>
+                        <td><?php echo $rowc['part_number']." - ".$rowc['part_name']; ?></td>
                         <td><?php
                             $m_id = $rowc['material_type'];
                             $mtype = mysqli_query($db,"select material_type from material_config where material_id = '$m_id'");

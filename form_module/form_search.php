@@ -215,6 +215,7 @@ include("../heading_banner.php");
                                             <select name="station" id="station" class="select form-control" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Station ---</option>
 												<?php
+												$st_dashboard = $_GET['station'];
 												if($is_tab_login){
 													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
 													$result1 = $mysqli->query($sql1);

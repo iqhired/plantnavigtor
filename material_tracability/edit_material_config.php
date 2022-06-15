@@ -351,7 +351,7 @@ include("../heading_banner.php");
 </div>
 
 
-<script type="text/javascript">
+<script>
     // add row
     $("#addRow2").click(function () {
         var html = '';
@@ -372,12 +372,7 @@ include("../heading_banner.php");
     });
 </script>
 
-<!---->
-<!--<script>-->
-<!--    window.onload = function() {-->
-<!--        history.replaceState("", "", "--><?php //echo $scriptName; ?>//material_tracability/material_config.php");
-//    }
-//</script>
+
 <script>
     $("#checkAll").click(function () {
         $('input:checkbox').not(this).prop('checked', this.checked);
