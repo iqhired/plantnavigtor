@@ -74,7 +74,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 
 
     <style>
-
+        .checkbox-control {
+            height: 15px;
+            width: 15px;
+        }
         @media (min-width: 576px)
             .d-sm-block {
                 display: block!important;
@@ -121,7 +124,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
             border-radius: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         span.select2-selection.select2-selection--multiple {
@@ -192,6 +195,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
         .select2-selection--multiple {
             border: 1px solid transparent !important;
         }
+            .checkbox-control {
+                height: 15px;
+                width: 15px;
+            }
 
     </style>
 </head>
@@ -287,11 +294,11 @@ include("../heading_banner.php");
                                             <select name="station" id="station" class="select form-control" data-style="bg-slate">
                                                 <option value="" selected disabled>--- Select Station ---</option>
                                                 <?php
-                                                $st_dashboard = $_GET['station'];
+
                                                 if($is_tab_login){
                                                     $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
                                                     $result1 = $mysqli->query($sql1);
-                                                    //                                            $entry = 'selected';
+
                                                     while ($row1 = $result1->fetch_assoc()) {
                                                         $entry = 'selected';
                                                         echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
@@ -343,7 +350,8 @@ include("../heading_banner.php");
                                             <select name="part_family" id="part_family" class="select form-control"  data-style="bg-slate">
                                                 <option value="" selected disabled>--- Select Part Family ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `pm_part_family`  where is_deleted = 0";
+                                                $st_dashboard = $_GET['station'];
+                                                $sql1 = "SELECT * FROM `pm_part_family`  where  is_deleted = 0";
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -471,11 +479,7 @@ include("../heading_banner.php");
                                                     $sql1 = "SELECT * FROM `cam_users` WHERE `assigned2` = '0'  and `users_id` != '1' order BY `firstname` ";
                                                     $result1 = $mysqli->query($sql1);
                                                     while ($row1 = $result1->fetch_assoc()) {
-                                                        if (in_array($row1['users_id'], $arrteam1)) {
-                                                            $selected = "selected";
-                                                        } else {
-                                                            $selected = "";
-                                                        }
+
                                                         echo "<option value='" . $row1['users_id'] . "' $selected>" . $row1['firstname'] . "&nbsp;" . $row1['lastname'] . "</option>";
                                                     }
                                                     ?>
@@ -500,11 +504,7 @@ include("../heading_banner.php");
                                     <div class="row">
                                         <label class="col-lg-2 control-label">Needs Approval : </label>
                                         <div class="col-md-6">
-                                            <select name="need_approval" id="need_approval" class="select" data-style="bg-slate">
-                                                <!--  <option value="" selected disabled>--- Select Options ---</option> -->
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
+                                          <input type="checkbox" class="checkbox-control" name="need_approval" id="need_approval">
                                         </div>
                                     </div>
                                     <br/>
@@ -687,7 +687,14 @@ include("../heading_banner.php");
     $(document).ready(function() {
         $('.select').select2();
     });
+
+    $('#station').on('change', function (e) {
+    });
+    $('#part_family').on('change', function (e) {
+
+    });
 </script>
+
 <script>
     function submitFormSettings(url) {
         //          $(':input[type="button"]').prop('disabled', true);

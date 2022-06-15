@@ -30,31 +30,31 @@ $dateto = $curdate;
 $datefrom = $dfrom;
 $temp = "";
 
-$_SESSION['station'] = "";
-$_SESSION['date_from'] = "";
-$_SESSION['date_to'] = "";
-$_SESSION['timezone'] = "";
-$_SESSION['part_family'] = "";
-$_SESSION['part_number'] = "";
-$_SESSION['material_type'] = "";
+    $_SESSION['station'] = "";
+    $_SESSION['date_from'] = "";
+    $_SESSION['date_to'] = "";
+    $_SESSION['timezone'] = "";
+    $_SESSION['part_family'] = "";
+    $_SESSION['part_number'] = "";
+    $_SESSION['material_type'] = "";
 
-if (count($_POST) > 0) {
-    $_SESSION['station'] = $_POST['station'];
-    $_SESSION['material_type'] = $_POST['part_family'];
-    $_SESSION['material_type'] = $_POST['part_number'];
-    $_SESSION['material_type'] = $_POST['material_type'];
-    $_SESSION['date_from'] = $_POST['date_from'];
-    $_SESSION['date_to'] = $_POST['date_to'];
-    $_SESSION['timezone'] = $_POST['timezone'];
+    if (count($_POST) > 0) {
+        $_SESSION['station'] = $_POST['station'];
+        $_SESSION['material_type'] = $_POST['part_family'];
+        $_SESSION['material_type'] = $_POST['part_number'];
+        $_SESSION['material_type'] = $_POST['material_type'];
+        $_SESSION['date_from'] = $_POST['date_from'];
+        $_SESSION['date_to'] = $_POST['date_to'];
+        $_SESSION['timezone'] = $_POST['timezone'];
 
-    $station = $_POST['station'];
-    $pf = $_POST['part_family'];
-    $pn = $_POST['part_number'];
-    $mt = $_POST['material_type'];
-    $dateto = $_POST['date_to'];
-    $datefrom = $_POST['date_from'];
-    $timezone = $_POST['timezone'];
-}
+        $station = $_POST['station'];
+        $pf = $_POST['part_family'];
+        $pn = $_POST['part_number'];
+        $mt = $_POST['material_type'];
+        $dateto = $_POST['date_to'];
+        $datefrom = $_POST['date_from'];
+        $timezone = $_POST['timezone'];
+    }
 
 $qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station' ");
 while ($rowctemp = mysqli_fetch_array($qurtemp)) {
@@ -361,27 +361,34 @@ include("../heading_banner.php");
                 <tr>
                     <th>Action</th>
                     <th>Station</th>
-                    <th>Part Number</th>
+                    <th>Part</th>
                     <th>Material Type</th>
                     <th>Status</th>
                     <th>Reason</th>
-                    <th>Created At</th>
+                    <th>Time</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
 
-                /* Default Query */
-            //    $q = "SELECT line_no,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,mat.created_at as total_time from material_tracability as mat INNER JOIN pm_part_family as pf on mat.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on mat.part_no = pn.pm_part_number_id DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_no` = '$station'";
-                $q = ("SELECT pn.part_name ,pn.part_number, cl.line_name ,mt.part_family_id,mt.material_type,mt.created_at,mt.material_id  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(mt.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(mt.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
-//
-                /* Execute the Query Built*/
-                $qur = mysqli_query($db, $q);
-                while ($rowc = mysqli_fetch_array($qur)) {
 
+                $q = ("SELECT pn.part_name ,pn.part_number,pn.part_name, cl.line_name ,mt.part_family_id,mt.material_type,mt.created_at,mt.material_id,mt.material_status,mt.fail_reason  FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where DATE_FORMAT(mt.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(mt.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station'");
+                $qur = mysqli_query($db, $q);
+
+
+                while ($rowc = mysqli_fetch_array($qur)) {
+                    $style = "";
+                    $m_status = (int)$rowc["material_status"];
+                    if ($m_status == 0) {
+                        $form_status = "Fail";
+                        $style = "style='background-color:#eca9a9;'";
+                    } else if ($m_status == 1) {
+                        $form_status = "Pass";
+                        $style = "style='background-color:#a8d8a8;'";
+                    }
 
                     ?>
-                    <tr>
+                    <tr <?php echo $style; ?>>
                         <?php
                         $un = $rowc['line_no'];
                         $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$station' ");
@@ -394,7 +401,7 @@ include("../heading_banner.php");
                             <a href="../log_module/view_material_log.php?id=<?php echo $rowc['material_id'];?>&station=<?php echo $station;?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
                         </td>
                         <td><?php echo $lnn; ?></td>
-                        <td><?php echo $rowc['part_number']; ?></td>
+                        <td><?php echo $rowc['part_number']."-".$rowc['part_name']; ?></td>
                         <td><?php
                             $m_id = $rowc['material_type'];
                             $mtype = mysqli_query($db,"select material_type from material_config where material_id = '$m_id'");
@@ -402,7 +409,7 @@ include("../heading_banner.php");
                                 $mty = $rowc04["material_type"];
                             }
                             echo $mty; ?></td>
-                        <td><?php if($rowc['material_status'] = 1){echo "Pass";}else{echo "Fail";} ?></td>
+                        <td><?php echo $form_status; ?></td>
 
                         <td><?php echo $rowc['fail_reason']; ?></td>
                         <td><?php echo $rowc['created_at']; ?></td>

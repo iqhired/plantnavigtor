@@ -23,7 +23,14 @@ if(count($_POST)>0) {
     $out_of_control_list1 = $_POST['out_of_control_list'];
     $notification_list1 = $_POST['notification_list'];
     $form_create_notes = $_POST['form_create_notes'];
-    $need_approval = $_POST['need_approval'];
+
+    $need_approval1 = $_POST['need_approval'];
+
+    if($need_approval1 == ""){
+        $need_approval = 'no';
+    }else{
+        $need_approval = 'yes';
+    }
     $approval_by1 = $_POST['approval_by'];
     $valid_from = $_POST['valid_from'];
     $valid_till = $_POST['valid_till'];

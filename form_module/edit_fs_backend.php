@@ -134,7 +134,7 @@ if(count($_POST)>0) {
 
 	//echo "click id".$click_id;
 
-	$item_desc_array = $_POST['query_text'];
+	$item_desc_array = htmlspecialchars($_POST['query_text']);
 	$bansi_row_click = $_POST['bansi_row_click'];
 	$j = 1;
 	foreach ($bansi_row_click as $rd) {

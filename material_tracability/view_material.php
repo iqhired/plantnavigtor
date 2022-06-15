@@ -319,6 +319,7 @@ include("../heading_banner.php");
                                         $sql = mysqli_query($db,$m_type);
                                         $sql1 = mysqli_fetch_array($sql);
                                         $material_type = $sql1['material_type'];
+
                                         ?>
 
                                         <input type="text" name="material_type" class="form-control" id="material_type"
@@ -341,6 +342,12 @@ include("../heading_banner.php");
                                                value="<?php echo ($rowcmain['material_status'] == 0)?'fail':'pass'; ?>" disabled>
                                     </div>
                                 </div>
+                                <?php
+                                $m_status = "SELECT material_status FROM `material_tracability` where `material_id` = '$id'";
+                                $sql_status = mysqli_query($db,$m_status);
+                                $sql1_sta = mysqli_fetch_array($sql_status);
+                                $material_status = $sql1_sta['material_status'];
+                                if($material_status == 0){ ?>
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label"> Reason : </label>
                                     <div class="col-md-6">
@@ -349,14 +356,6 @@ include("../heading_banner.php");
                                                value="<?php echo $rowcmain['fail_reason']; ?>" disabled>
                                     </div>
                                 </div>
-<!--                                <div class="form_row row">-->
-<!--                                    <label class="col-lg-2 control-label">Reason Description : </label>-->
-<!--                                    <div class="col-md-6">-->
-<!---->
-<!--                                        <input type="text" name="reason_desc" class="form-control" id="reason_desc"-->
-<!--                                               value="--><?php //echo $rowcmain['reason_desc']; ?><!--" disabled>-->
-<!--                                    </div>-->
-<!--                                </div>-->
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Quantity : </label>
                                     <div class="col-md-6">
@@ -365,7 +364,24 @@ include("../heading_banner.php");
                                                value="<?php echo $rowcmain['quantity']; ?>" disabled>
                                     </div>
                                 </div>
+                                <?php } elseif($material_status == 1){ ?>
+                                    <div class="form_row row" style="display: none;">
+                                    <label class="col-lg-2 control-label"> Reason : </label>
+                                    <div class="col-md-6">
 
+                                        <input type="text" name="reason" class="form-control" id="material_status"
+                                               value="<?php echo $rowcmain['fail_reason']; ?>" disabled>
+                                    </div>
+                                </div>
+                                    <div class="form_row row" style="display: none;">
+                                    <label class="col-lg-2 control-label">Quantity : </label>
+                                    <div class="col-md-6">
+
+                                        <input type="text" name="quantity" class="form-control" id="quantity"
+                                               value="<?php echo $rowcmain['quantity']; ?>" disabled>
+                                    </div>
+                                </div>
+                                  <?php  } ?>
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Submitted Time : </label>
                                     <div class="col-md-6">
@@ -407,9 +423,6 @@ include("../heading_banner.php");
                                     <?php } ?>
                                 </div>
                                 <br/>
-
-
-
                     </form>
                 </div>
             </div>

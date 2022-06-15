@@ -177,7 +177,6 @@ include("../heading_banner.php");
                         <th>Station</th>
                         <th>Material Type</th>
                         <th>Serial Number</th>
-
                         <th class="form_create">Created At</th>
                     </tr>
                     </thead>
@@ -193,6 +192,11 @@ include("../heading_banner.php");
 
                         $material_type = $rowc["material_type"];
                         $serial_number = $rowc["serial_number"];
+                        if($serial_number == 0){
+                            $serial =  'none';
+                        }else{
+                            $serial =  $serial_number;
+                        }
                         $material_status = $rowc["material_status"];
                         $created_at= $rowc["created_at"];
 
@@ -222,7 +226,7 @@ include("../heading_banner.php");
 
                                 } ?>
                             <td> <?php echo $material_type ?></td>
-                            <td> <?php echo $serial_number ?></td>
+                            <td> <?php echo $serial ?></td>
 
                             <td> <?php echo $created_at ?></td>
                         </tr>
@@ -350,7 +354,7 @@ include("../heading_banner.php");
         $('#date_from').attr('max', maxDate);
     });
 </script>
-<?php include ('../footer.php') ?>
+<?php include('../footer.php') ?>
 </body>
 </html>
 

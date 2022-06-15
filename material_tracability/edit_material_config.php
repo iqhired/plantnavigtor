@@ -37,6 +37,7 @@ if ($edit_id != "") {
     $edit_users1 = $_POST['edit_users'];
     $edit_m_type = $_POST['edit_material_type'];
     $edit_material_type = count($_POST['edit_material_type']);
+    $edit_serial_check = $_POST['serial_status'];
     foreach ($edit_teams1 as $edit_teams) {
         $array_team .= $edit_teams . ",";
     }
@@ -47,8 +48,12 @@ if ($edit_id != "") {
     if ($edit_material_type > 1) {
         for ($i = 0; $i < $edit_material_type; $i++) {
             if (trim($_POST['edit_material_type'][$i]) != '') {
-                $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]', `created_at` = '$chicagotime' where `material_id`='$id'";
+                if($edit_serial_check == ""){
+                $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]',`serial_num_required` = '0', `created_at` = '$chicagotime' where `material_id`='$id'";
+                }else{
+                    $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '  $edit_m_type[$i]',`serial_num_required` = '1', `created_at` = '$chicagotime' where `material_id`='$id'";
 
+                }
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $message_stauts_class = 'alert-success';
@@ -60,8 +65,12 @@ if ($edit_id != "") {
             }
         }
     } else {
-        $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]', `created_at` = '$chicagotime' where `material_id`='$id'";
+        if($edit_serial_check == ""){
+        $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]',`serial_num_required` = '0', `created_at` = '$chicagotime' where `material_id`='$id'";
+        }else{
+            $sql = "update `material_config` set `teams` = '$array_team', `users` = '$array_user', `material_type` = '$edit_m_type[0]',`serial_num_required` = '1', `created_at` = '$chicagotime' where `material_id`='$id'";
 
+        }
         $result1 = mysqli_query($db, $sql);
 
         if ($result1) {
@@ -172,6 +181,10 @@ if ($edit_id != "") {
             margin-left: 110px;
             margin-top: -50px;
         }
+        .checkbox-control {
+            height: 15px;
+            width: 15px;
+        }
     </style>
 </head>
 <body>
@@ -232,6 +245,7 @@ include("../heading_banner.php");
                                 $teams = $row1['teams'];
                                 $users = $row1['users'];
                                 $material_type = $row1['material_type'];
+                                $serial_check = $row1['serial_num_required'];
                             }
                             ?>
                             <div class="row">
@@ -302,6 +316,12 @@ include("../heading_banner.php");
 <!--                                    <button id="addRow1" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
                                 </div>
                             </div><br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Serial Number is Required:*</label>
+                                <div class="col-md-6">
+                                    <input type="checkbox" class="checkbox-control" name="serial_status" id="serial_status" <?php if($serial_check == 1){echo 'checked';} ?> >
+                                </div>
+                            </div>
 
                             <br/>
 

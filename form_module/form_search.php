@@ -455,10 +455,10 @@ include("../heading_banner.php");
                         <th>Sl. No</th>
                         <th>Action</th>
                         <th>Form Name</th>
-                        <th>Part Number</th>
+                        <th>Part</th>
                         <th>Form Type</th>
-                        <th>Form Action</th>
-                        <th class="form_create">Created At</th>
+                        <th>Form Status</th>
+                        <th class="form_create">Time</th>
                     </tr>
                     </thead>
                     <tbody>

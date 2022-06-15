@@ -171,15 +171,11 @@ if ($i != "super" && $i != "admin") {
                 width: 122%!important;
             }
         }
-        .c_footer{
-            margin-left: 110px;
-            margin-top: -50px;
+        .checkbox-control {
+            height: 15px;
+            width: 15px;
         }
-        .serial_check {
-            width: 40px;
-            height: 22px;
 
-        }
     </style>
 </head>
 <body>
@@ -213,18 +209,18 @@ include("../heading_banner.php");
                         <span class="text-semibold">Group</span> Updated Successfully.
                     </div>
                 <?php } ?>
-                <?php
-                if (!empty($import_status_message)) {
-                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                }
-                ?>
-                <?php
-                if (!empty($_SESSION[import_status_message])) {
-                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    $_SESSION['message_stauts_class'] = '';
-                    $_SESSION['import_status_message'] = '';
-                }
-                ?>
+<!--                --><?php
+//                if (!empty($import_status_message)) {
+//                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                }
+//                ?>
+<!--                --><?php
+//                if (!empty($_SESSION[import_status_message])) {
+//                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                    $_SESSION['message_stauts_class'] = '';
+//                    $_SESSION['import_status_message'] = '';
+//                }
+//                ?>
                 <hr/>
 
                 <form action="" id="user_form" enctype="multipart/form-data"  class="form-horizontal" method="post">
@@ -237,18 +233,13 @@ include("../heading_banner.php");
                                         <div class="form-group">
                                             <select class="select-border-color" data-placeholder="Add Teams..." name="teams[]" id="teams" multiple="multiple"  >
                                                 <?php
-
                                                 $sql1 = "SELECT DISTINCT(`group_id`) FROM `sg_user_group`";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
-                                                    if (in_array($row1['group_id'], $arrteam)) {
-                                                        $selected = "selected";
-                                                    } else {
-                                                        $selected = "";
-                                                    }
+
                                                     $station1 = $row1['group_id'];
                                                     $qurtemp = mysqli_query($db, "SELECT * FROM  sg_group where group_id = '$station1' ");
-                                                    $rowctemp = mysqli_fetch_array($qurtemp);
+                                                   $rowctemp = mysqli_fetch_array($qurtemp);
                                                     $groupname = $rowctemp["group_name"];
                                                     echo "<option value='" . $row1['group_id'] . "' $selected>" . $groupname . "</option>";
                                                 }
@@ -269,11 +260,7 @@ include("../heading_banner.php");
                                                 $sql1 = "SELECT * FROM `cam_users` WHERE `users_id` != '1' order BY `firstname` ";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
-                                                    if (in_array($row1['users_id'], $arrteam1)) {
-                                                        $selected = "selected";
-                                                    } else {
-                                                        $selected = "";
-                                                    }
+
                                                     echo "<option value='" . $row1['users_id'] . "' $selected>" . $row1['firstname'] . "&nbsp;" . $row1['lastname'] . "</option>";
                                                 }
                                                 ?>
@@ -296,19 +283,16 @@ include("../heading_banner.php");
                                         <button id="addRow" type="button" class="btn btn-primary" style="background-color: #1e73be;"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
+                            <br/>
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <label class="col-lg-5 control-label">Serial Number is Required:*</label>
-                                            <div class="col-lg-7">
-                                                <input type="checkbox" class="form-control" name="serial_status" id="serial_status">
+                                    <label class="col-lg-2 control-label">Serial Number is Required:*</label>
+                                            <div class="col-md-6">
+                                                <input type="checkbox" class="checkbox-control" name="serial_status" id="serial_status">
                                             </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <br/>
 
-                                <br/>
+
 
                                 <br/>
 

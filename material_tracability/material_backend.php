@@ -32,6 +32,7 @@ if (count($_POST) > 0) {
 	        	('$station_event_id','$customer_account_id','$line_number' , ' $part_number' ,'$part_family',' $part_name','$material_type','$serial_number','$material_status' , '$fail_reason','$reason_desc','$quantity','$notes','$created_by' , '$created_by_user')";
 	$result0 = mysqli_query($db, $sql0);
 	if ($result0) {
+
 		$_SESSION['message_stauts_class'] = 'alert-success';
 		$_SESSION['import_status_message'] = 'Material tracability Created Sucessfully.';
 	} else {
@@ -214,4 +215,4 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 
 $page = "material_tracability.php?station=$station&station_event_id=$station_event_id";
 header('Location: ' . $page, true, 303);
-exit;
+
