@@ -193,7 +193,7 @@ include("../heading_banner.php");
                         $material_type = $rowc["material_type"];
                         $serial_number = $rowc["serial_number"];
                         if($serial_number == 0){
-                            $serial =  'none';
+                            $serial =  '';
                         }else{
                             $serial =  $serial_number;
                         }
