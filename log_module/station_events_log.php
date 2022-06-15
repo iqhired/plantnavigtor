@@ -804,7 +804,18 @@ where 1 ";
                                 <!--                                <td>-->
 								<?php //echo $rowc['end_time']; ?><!--</td>-->
                                 <td><?php echo $rowc['created_on']; ?></td>
-                                <td><?php echo $rowc['total_time']; ?></td>
+                                <td><?php
+                                    $total_time = '0 hrs';
+                                    $tt = $rowc['total_time'];
+                                    if(!empty($tt)){
+                                        $t_arr = explode(':',$tt);
+                                        $tot_time = $t_arr[0] + ($t_arr[1] / 60) + ($t_arr[2] /3600);
+									    echo round($tot_time, 3) .'  hrs';
+                                    }else{
+										echo $total_time;
+                                    }
+
+                                     ?></td>
 
                             </tr>
 						<?php } ?>
