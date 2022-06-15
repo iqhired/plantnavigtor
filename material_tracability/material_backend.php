@@ -15,7 +15,7 @@ if (count($_POST) > 0) {
 	$part_number = $_POST['part_number'];
 	$part_family = $_POST['part_family'];
 	$part_name = $_POST['part_name'];
-	$serial_number = $_POST['serial_number'];
+	$serial_number = empty($_POST['serial_number'])?0:$_POST['serial_number'];
 	$material_type = $_POST['material_type'];
     $material_type1 = explode("_", $material_type);
     $material_type = $material_type1[0];
