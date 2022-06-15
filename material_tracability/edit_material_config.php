@@ -317,7 +317,7 @@ include("../heading_banner.php");
                                 </div>
                             </div><br/>
                             <div class="row">
-                                <label class="col-lg-2 control-label">Serial Number is Required:*</label>
+                                <label class="col-lg-2 control-label">Is Serial Number Required:*</label>
                                 <div class="col-md-6">
                                     <input type="checkbox" class="checkbox-control" name="serial_status" id="serial_status" <?php if($serial_check == 1){echo 'checked';} ?> >
                                 </div>

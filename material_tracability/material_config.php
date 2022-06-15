@@ -285,7 +285,7 @@ include("../heading_banner.php");
                                 </div>
                             <br/>
                                 <div class="row">
-                                    <label class="col-lg-2 control-label">Serial Number is Required:*</label>
+                                    <label class="col-lg-2 control-label">Is Serial Number Required:*</label>
                                             <div class="col-md-6">
                                                 <input type="checkbox" class="checkbox-control" name="serial_status" id="serial_status">
                                             </div>
@@ -326,6 +326,7 @@ include("../heading_banner.php");
                         <th>Material Teams</th>
                         <th>Material Users</th>
                         <th>Material Type</th>
+                        <th>Serial No Required</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -384,7 +385,7 @@ include("../heading_banner.php");
                             <td><?php echo $fulllname;?></td>
 
                             <td><?php echo $rowc["material_type"]; ?></td>
-
+                           <td>  <input type='checkbox' id="serial_number" value="<?php echo $rowc["serial_num_required"] ?>" <?php if( $rowc["serial_num_required"] == 1) {echo "checked";}?> style="pointer-events: none !important;"></td>
                             <td>
                                 <a href="edit_material_config.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" data-material_teams="<?php echo  $material; ?>" style="background-color:#1e73be;">Edit</a>
 
