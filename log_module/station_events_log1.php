@@ -53,11 +53,8 @@ if (count($_POST) > 0) {
     $dateto = $_POST['date_to'];
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
-    $timezone = $_POST['timezone'];
-    $time_diff = $_POST['time_diff'];
-    $time = explode("-",$time_diff);
-    $time_from = $time[0];
-    $time_to = $time[1];
+    $time_from = $_POST['time_from'];
+    $time_to = $_POST['time_to'];
 
 }
 if (count($_POST) > 0) {
@@ -374,38 +371,51 @@ include("../heading_banner.php");
                         </div>
                     </div>
                     <br/>
+                    <br/>
                     <div class="row">
                         <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Station :</label>
+                            <label class="col-lg-3 control-label">Time From :</label>
 
                             <div class="col-lg-7">
-                                <select name="time_diff" id="time_diff" class="select form-control"
+                                <select name="time_from" id="time_from" class="select form-control"
                                         style="float: left;width: initial;">
                                     <option value="" selected disabled>--- Select Time ---</option>
-                                    <option value="00 - 01">12AM To 1AM</option>
-                                    <option value="01 - 02">1AM To 2AM</option>
-                                    <option value="02 - 03">2AM To 3AM</option>
-                                    <option value="03 - 04">3AM To 4AM</option>
-                                    <option value="04 - 05">4AM To 5AM</option>
-                                    <option value="05 - 06">5AM To 6AM</option>
-                                    <option value="06 - 07">6AM To 7AM</option>
-                                    <option value="07 - 08">7AM To 8AM</option>
-                                    <option value="08 - 09">8AM To 9AM</option>
-                                    <option value="09 - 10">9AM To 10AM</option>
-                                    <option value="10 - 11">10AM To 11AM</option>
-                                    <option value="11 - 12">11AM To 12PM</option>
-                                    <option value="12 - 13">12PM To 1PM</option>
-                                    <option value="13 - 14">1PM To 2PM</option>
-                                    <option value="14 - 15">2PM To 3PM</option>
-                                    <option value="15 - 16">3PM To 4PM</option>
-                                    <option value="16 - 17">4PM To 5PM</option>
-                                    <option value="17 - 18">5PM To 6PM</option>
-                                    <option value="18 - 19">6PM To 7PM</option>
-                                    <option value="19 - 20">7PM To 8PM</option>
-                                    <option value="20 - 21">8PM To 9PM</option>
-                                    <option value="21 - 22">9PM To 10PM</option>
-                                    <option value="22 - 23">10PM To 11PM</option>
-                                    <option value="23 - 0">11PM To 12PM</option>
+                                    <option value="00">12AM </option>
+                                    <option value="01">1AM</option>
+                                    <option value="02">2AM</option>
+                                    <option value="03">3AM</option>
+                                    <option value="04">4AM</option>
+                                    <option value="05">5AM</option>
+                                    <option value="06">6AM</option>
+                                    <option value="07">7AM</option>
+                                    <option value="08">8AM</option>
+                                    <option value="09">9AM</option>
+                                    <option value="10">10AM</option>
+                                    <option value="11">11AM</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mobile">
+                            <label class="col-lg-3 control-label">Time To :</label>
+
+                            <div class="col-lg-7">
+                                <select name="time_from" id="time_to" class="select form-control"
+                                        style="float: left;width: initial;">
+                                    <option value="" selected disabled>--- Select Time ---</option>
+
+                                    <option value="12">12PM</option>
+                                    <option value="13">1PM</option>
+                                    <option value="14">2PM</option>
+                                    <option value="15">3PM</option>
+                                    <option value="16">4PM</option>
+                                    <option value="17">5PM</option>
+                                    <option value="18">6PM</option>
+                                    <option value="19">7PM</option>
+                                    <option value="20">8PM</option>
+                                    <option value="21">9PM</option>
+                                    <option value="22">10PM</option>
+                                    <option value="23">11PM</option>
                                 </select>
                             </div>
                         </div>
@@ -492,7 +502,7 @@ left join sg_station_event as sg_events on e_log.station_event_id = sg_events.st
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
 inner Join event_type as et on e_log.event_type_id = et.event_type_id where
-DATE_FORMAT(sg_events.created_on,'%h') >= '$time_from' and DATE_FORMAT(sg_events.created_on,'%h') <= '$time_to' and sg_events.line_id = '$line' order by e_log.station_event_log_id DESC";
+DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' order by e_log.station_event_log_id DESC";
                 }
 
                 /* Build the query to fetch the data*/
@@ -529,6 +539,15 @@ where 1 ";
                         $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
                     }else if($datefrom == "" && $dateto != ""){
                         $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+                    }
+
+                    if($time_from != "" && $time_to != ""){
+                        $q = $q . "AND DATE_FORMAT(sg_events.created_on,'%h') >= '$time_from' and DATE_FORMAT(sg_events.created_on,'%h') <= '$time_to'";
+                    }else if($time_from != "" && $time_to == ""){
+                        $q = $q . " AND DATE_FORMAT(sg_events.created_on,'%h') >= '$time_from' ";
+                    }else if($time_from == "" && $time_to != ""){
+                        $q = $q . " DATE_FORMAT(sg_events.created_on,'%h') <= '$time_to' ";
+
                     }
 
 
