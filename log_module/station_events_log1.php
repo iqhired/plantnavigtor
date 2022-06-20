@@ -54,7 +54,7 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $time_from = $_POST['time_from'];
-    $time_to = $_POST['time_to'];
+    $time_to = (int)$_POST['time_to'] - 1;
 
 }
 if (count($_POST) > 0) {
@@ -374,48 +374,70 @@ include("../heading_banner.php");
                     <br/>
                     <div class="row">
                         <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time From :</label>
+                            <label class="col-lg-3 control-label">Time From (hrs):</label>
 
                             <div class="col-lg-7">
                                 <select name="time_from" id="time_from" class="select form-control"
                                         style="float: left;width: initial;">
                                     <option value="" selected disabled>--- Select Time ---</option>
-                                    <option value="00">12AM </option>
-                                    <option value="01">1AM</option>
-                                    <option value="02">2AM</option>
-                                    <option value="03">3AM</option>
-                                    <option value="04">4AM</option>
-                                    <option value="05">5AM</option>
-                                    <option value="06">6AM</option>
-                                    <option value="07">7AM</option>
-                                    <option value="08">8AM</option>
-                                    <option value="09">9AM</option>
-                                    <option value="10">10AM</option>
-                                    <option value="11">11AM</option>
-
+                                    <option value="00">00</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12 </option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time To :</label>
+                            <label class="col-lg-3 control-label">Time To (hrs):</label>
 
                             <div class="col-lg-7">
                                 <select name="time_from" id="time_to" class="select form-control"
                                         style="float: left;width: initial;">
                                     <option value="" selected disabled>--- Select Time ---</option>
-
-                                    <option value="12">12PM</option>
-                                    <option value="13">1PM</option>
-                                    <option value="14">2PM</option>
-                                    <option value="15">3PM</option>
-                                    <option value="16">4PM</option>
-                                    <option value="17">5PM</option>
-                                    <option value="18">6PM</option>
-                                    <option value="19">7PM</option>
-                                    <option value="20">8PM</option>
-                                    <option value="21">9PM</option>
-                                    <option value="22">10PM</option>
-                                    <option value="23">11PM</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12 </option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="00">00</option>
                                 </select>
                             </div>
                         </div>
@@ -542,12 +564,11 @@ where 1 ";
                     }
 
                     if($time_from != "" && $time_to != ""){
-                        $q = $q . "AND DATE_FORMAT(sg_events.created_on,'%h') >= '$time_from' and DATE_FORMAT(sg_events.created_on,'%h') <= '$time_to'";
+                        $q = $q . "AND DATE_FORMAT(e_log.created_on,'%H') BETWEEN '$time_from' and  '$time_to' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }else if($time_from != "" && $time_to == ""){
-                        $q = $q . " AND DATE_FORMAT(sg_events.created_on,'%h') >= '$time_from' ";
+                        $q = $q . " AND DATE_FORMAT(e_log.created_on,'%H') >= '$time_from' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }else if($time_from == "" && $time_to != ""){
-                        $q = $q . " DATE_FORMAT(sg_events.created_on,'%h') <= '$time_to' ";
-
+                        $q = $q . " DATE_FORMAT(e_log.created_on,'%H') < '$time_to'  AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }
 
 
