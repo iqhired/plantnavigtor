@@ -54,7 +54,7 @@ if (count($_POST) > 0) {
     $datefrom = $_POST['date_from'];
     $button = $_POST['button'];
     $time_from = $_POST['time_from'];
-    $time_to = (int)$_POST['time_to'] - 1;
+    $time_to = $_POST['time_to'];
 
 }
 if (count($_POST) > 0) {
@@ -445,18 +445,18 @@ include("../heading_banner.php");
 
 
                     <br/>
-                    <!--							--><?php
-                    //							if (!empty($import_status_message)) {
-                    //								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                    //							}
-                    //							?>
-                    <!--							--><?php
-                    //							if (!empty($_SESSION[import_status_message])) {
-                    //								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    //								$_SESSION['message_stauts_class'] = '';
-                    //								$_SESSION['import_status_message'] = '';
-                    //							}
-                    //							?>
+                    							<?php
+                    							if (!empty($import_status_message)) {
+                    								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                    							}
+                    							?>
+                    							<?php
+                    							if (!empty($_SESSION[import_status_message])) {
+                    								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    								$_SESSION['message_stauts_class'] = '';
+                    								$_SESSION['import_status_message'] = '';
+                    							}
+                    							?>
             </div>
             <div class="panel-footer p_footer">
                 <div class="row">
