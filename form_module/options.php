@@ -259,8 +259,9 @@ include("../heading_banner.php");
                                                         <option value="" selected disabled>--- Select Part Number ---
                                                         </option>
 														<?php
-														$st_dashboard = $_POST['part_number'];
-														$part_family = $_POST['part_family'];
+													//	$st_dashboard = $_POST['part_number'];
+														$part_family = $_REQUEST['part_family'];
+                                                        $st_dashboard = $_REQUEST['part_number'];
 														$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0  ORDER BY `part_name` ASC";
 														$result1 = $mysqli->query($sql1);
 														while ($row1 = $result1->fetch_assoc()) {

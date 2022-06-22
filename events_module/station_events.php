@@ -1,4 +1,5 @@
-<?php include("../config.php");
+<?php
+include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -32,9 +33,6 @@ $_SESSION['LAST_ACTIVITY'] = $time;
 $is_tab_login = $_SESSION['is_tab_user'];
 $is_cell_login = $_SESSION['is_cell_login'];
 $i = $_SESSION["role_id"];
-//if ($i != "super" && $i != "admin") {
-//	header('location: ../line_status_overview_dashboard.php');
-//}
 $station_id = null;
 $event_line = $_GET['line'];
 $user_id = $_SESSION["id"];
@@ -53,7 +51,7 @@ if (count($_POST) > 0) {
 	$station_event_id = $_POST['station_event_id'];
 	$event_seq = $_POST['event_seq'];
 	$event_total_time = $_POST['total_time'];
-
+    $create_time = date("H:i");
 	// Edit Event
 	if ($edit_event_id != "") {
 	    $reason =  $_POST['edit_reason'];
@@ -78,6 +76,11 @@ if (count($_POST) > 0) {
 		$firstrow = mysqli_fetch_array($res);
 		$total_time = $firstrow['completed_time'];
 
+        $qur2_time ="Select (TIMEDIFF('$chicagotime', created_on)) as completed_time from `sg_station_event_log_time` WHERE station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $res_time = mysqli_query($db, $qur2_time);
+        $firstrow_time = mysqli_fetch_array($res_time);
+        $total_time1 = $firstrow_time['completed_time'];
+
 		$qur22="Select event_cat_id as cat_id from `event_type` WHERE event_type_id = '$edit_event_id'";
 		$res = mysqli_query($db, $qur22);
 		$firstrow = mysqli_fetch_array($res);
@@ -85,6 +88,10 @@ if (count($_POST) > 0) {
 
 		$qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
 		$result0 = mysqli_query($db, $qur3);
+
+        $qur3_time = "update `sg_station_event_log_time` set total_time = '$total_time1',end_event_status_time = '$chicagotime',event_time_status = '1' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $result0_time = mysqli_query($db, $qur3_time);
+
 
 		if ($edit_event_id == $fr_event_type_id) {
 			$sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
@@ -98,7 +105,6 @@ if (count($_POST) > 0) {
 			$sql = "update sg_station_event set event_type_id='$edit_event_id', reason='$reason' ,modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
 			$result1 = mysqli_query($db, $sql);
 			if ($result1) {
-
 				$message_stauts_class = 'alert-success';
 				$import_status_message = 'Event status Updated successfully.';
 			} else {
@@ -125,12 +131,10 @@ if (count($_POST) > 0) {
 			$res_production = mysqli_query($db, $sql_production);
 			$firstrow_production = mysqli_fetch_array($res_production);
 //		$condition = $firstrow_production['station_event_id'];
-
 			if ($firstrow_production) {
 				$message_stauts_class = 'alert-danger';
 				$import_status_message = 'Error: This Station already has an active event.';
 			} else {
-
 				$sql0 = "INSERT INTO `sg_station_event`(`line_id` , `part_family_id`, `part_number_id` , `event_type_id` ,`created_on`,`created_by`,`modified_on`,`modified_by`) VALUES ('$station_id','$part_family_id','$part_number','$event_type_id','$chicagotime','$user_id','$chicagotime','$user_id')";
 				$result0 = mysqli_query($db, $sql0);
 				$station_event_id = ($db->insert_id);
@@ -142,12 +146,17 @@ if (count($_POST) > 0) {
 					$curr_seq = $firstrow['seq_num'];
 					$next_seq = $curr_seq + 1;
 
-//					$qq = "SELECT max(station_event_log_id)  as prev_log_id FROM `sg_station_event_log` as sl inner join sg_station_event as se on sl.station_event_id = se.station_event_id where se.line_id = '$station_id' and sl.event_status = 0 order by sl.created_on";
 					$qq = "SELECT max(station_event_log_id) as prev_log_id , sl.created_on as prev_st_time FROM `sg_station_event_log` as sl inner join sg_station_event as se on sl.station_event_id = se.station_event_id where se.line_id = '$station_id' and sl.event_status = 0 group by sl.created_on order by sl.created_on desc LIMIT 1";
 					$res = mysqli_query($db, $qq);
 					$firstrow = mysqli_fetch_array($res);
 					$prev_seq = $firstrow['prev_log_id'];
 					$prev_time = $firstrow['prev_st_time'];
+
+                    $qq_time = "SELECT max(station_time_log_id) as prev_id , sl.created_on as st_time FROM `sg_station_event_log_time` as sl inner join sg_station_event as se on sl.station_event_id = se.station_event_id where se.line_id = '$station_id' and sl.event_status = 0 group by sl.created_on order by sl.created_on desc LIMIT 1";
+                    $res_time = mysqli_query($db, $qq_time);
+                    $firstrow_time = mysqli_fetch_array($res_time);
+                    $prev_seq_time = $firstrow_time['prev_id'];
+                    $prev_time1 = $firstrow_time['st_time'];
 
 					$qur22="Select event_cat_id as cat_id from `event_type` WHERE event_type_id = '$event_type_id'";
 					$res = mysqli_query($db, $qur22);
@@ -159,25 +168,45 @@ if (count($_POST) > 0) {
 					$firstrow = mysqli_fetch_array($res);
 					$total_time = $firstrow['completed_time'];
 
+                    $qur2_time="Select SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF('$chicagotime', '$prev_time1'))) as completed_time";
+                    $res_time = mysqli_query($db, $qur2_time);
+                    $firstrow_time = mysqli_fetch_array($res_time);
+                    $total_time1 = $firstrow_time['completed_time'];
+
 					$qur4 = "update`sg_station_event_log` set total_time = '$total_time' where station_event_log_id = '$prev_seq'";
 					$result0 = mysqli_query($db, $qur4);
+
+                    $qur4_time = "update`sg_station_event_log_time` set total_time = '$total_time1' where station_event_log_id = '$prev_seq_time'";
+                    $result0_time = mysqli_query($db, $qur4_time);
 
 					$sql0 = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'$chicagotime','$user_id')";
 					$result0 = mysqli_query($db, $sql0);
 
+                    $sql0_time = "INSERT INTO `sg_station_event_log_time`(`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`time(hrs)` ,`created_by`) VALUES ('$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'$chicagotime','$create_time','$user_id')";
+                    $result0_time = mysqli_query($db, $sql0_time);
+
+                    $station_event = "select * from sg_station_event_log_time where event_time_status = '1'";
+                    $sta_event = mysqli_query($db,$station_event);
+                    $event_time = mysqli_fetch_array($sta_event);
+                    $event_status_time = $event_time['event_time_status'];
+                    $station_event_id = $event_time['station_event_id'];
+
+                    $sql_event_time = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`end_time` ,`created_by`) VALUES ('$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'00:00:00','11:59:59','$user_id') where station_event_id = '$station_event_id' ";
+                    $result_event_time = mysqli_query($db, $sql_event_time);
+
 					$message_stauts_class = 'alert-success';
 					$import_status_message = 'Station Event Created successfully.';
-				} else {
+				    } else {
 					$message_stauts_class = 'alert-danger';
 					$import_status_message = 'Error: Please Insert valid data';
 				}
-
 			}
 		}
 	}
 }else{
 	$station_id = $event_line;
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -222,16 +251,14 @@ if (count($_POST) > 0) {
             color: #f5f5f5;
         }
 
-
-
         .sidebar-default .navigation li > a:focus, .sidebar-default .navigation li > a:hover {
             background-color: #20a9cc;
         }
 
-		.red {
+	.red {
     color: red;
     display: none;
-}
+    }
         label.col-lg-4.control-label {
             color: #333;
         }
@@ -733,8 +760,7 @@ include("../heading_banner.php");
                     });
                 });
             </script>
-
-<script>
+            <script>
 $('#edit_event_type').on('change', function () {
     
         var selected_val = this.value.split("_")[1];
@@ -758,13 +784,12 @@ $('#edit_event_type').on('change', function () {
         }
     });
 </script>
-
-<script>
+            <script>
     window.onload = function () {
         history.replaceState("", "", "<?php echo $scriptName; ?>events_module/station_events.php");
     }
 </script>
-<script>
+            <script>
     $("#checkAll").click(function () {
         $('input:checkbox').not(this).prop('checked', this.checked);
     });

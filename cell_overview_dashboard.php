@@ -186,7 +186,7 @@ include("heading_banner.php");
 		$line = $rowc["line_id"];
 
 		//$qur01 = mysqli_query($db, "SELECT created_on as start_time , modified_on as updated_time FROM  sg_station_event where line_id = '$line' and event_status = 1 order BY created_on DESC LIMIT 1");
-		$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
+		$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
 		$rowc01 = mysqli_fetch_array($qur01);
 		if ($rowc01 != null) {
 			$time = $rowc01['updated_time'];
@@ -194,8 +194,10 @@ include("heading_banner.php");
 			$line_status_text = $rowc01['e_name'];
 			$event_status = $rowc01['event_status'];
 			$p_num = $rowc01["p_num"];
+            $p_no = $rowc01["p_no"];;
 			$p_name = $rowc01["p_name"];
-			$pf_name = $rowc01["pf_name"];
+            $pf_name = $rowc01["pf_name"];
+            $pf_no = $rowc01["pf_no"];
 //			$buttonclass = "94241c";
 			$buttonclass = $rowc01["color_code"];
 		} else {
@@ -237,7 +239,7 @@ include("heading_banner.php");
                                         <i class="icon-eye"></i>View Station
                                         Status</a></li>
                                     <li>
-                                        <a href="events_module/station_events.php?line=<?php echo $line; ?>"
+                                        <a href="events_module/station_events.php?line=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
                                         <i class="icon-sync"></i>Add / Update
                                         Events</a></li>
 									<?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
@@ -247,7 +249,7 @@ include("heading_banner.php");
                                         </li>
 									<?php } ?>
                                     <li>
-                                        <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_name; ?>">
+                                        <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>">
                                         <i class="icon-pie5"></i> Submit Form</a>
                                     </li>
                                     <!--															--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
@@ -394,7 +396,7 @@ include("heading_banner.php");
                                                 class="icon-eye"></i>View Station Status</a>
                                 </li>
                                 <li>
-                                    <a href="events_module/station_events.php?line=<?php echo $rowc["line_id"]; ?>"><i
+                                    <a href="events_module/station_events.php?line=<?php echo $rowc["line_id"]; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"><i
                                                 class="icon-sync"></i>Add / Update
                                         Events</a></li>
 								<?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
@@ -404,7 +406,7 @@ include("heading_banner.php");
                                     </li>
 								<?php } ?>
                                 <li>
-                                    <a href="form_module/options.php?station=<?php echo $rowc["line_id"]; ?>&part_family=<?php echo $pf_name; ?>"><i
+                                    <a href="form_module/options.php?station=<?php echo $rowc["line_id"]; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"><i
                                                 class="icon-pie5"></i> Submit Form</a>
                                 </li>
                                 <li>
@@ -541,7 +543,7 @@ include("heading_banner.php");
 			$pf_name = '';
 			$time = '';
 			$countervariable++;
-			$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
+			$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.pm_part_number_id as p_no, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
 			$rowc01 = mysqli_fetch_array($qur01);
 			if ($rowc01 != null) {
 				$time = $rowc01['updated_time'];
@@ -549,8 +551,10 @@ include("heading_banner.php");
 				$line_status_text = $rowc01['e_name'];
 				$event_status = $rowc01['event_status'];
 				$p_num = $rowc01["p_num"];;
+                $p_no = $rowc01["p_no"];;
 				$p_name = $rowc01["p_name"];;
-				$pf_name = $rowc01["pf_name"];;
+				$pf_name = $rowc01["pf_name"];
+                $pf_no = $rowc01["pf_no"];
 				$buttonclass = $rowc01["color_code"];
 			} else {
 
@@ -591,7 +595,7 @@ include("heading_banner.php");
                                                 ><i class="icon-eye"></i>View Station
                                                     Status</a></li>
                                             <li>
-                                                <a href="events_module/station_events.php?line=<?php echo $line; ?>"
+                                                <a href="events_module/station_events.php?line=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
                                                 ><i class="icon-sync"></i>Add / Update
                                                     Events</a></li>
 											<?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
@@ -601,7 +605,7 @@ include("heading_banner.php");
                                                 </li>
 											<?php } ?>
                                             <li>
-                                                <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_name; ?>"
+                                                <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
                                                 ><i class="icon-pie5"></i> Submit Form</a>
                                             </li>
                                             <!--															--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
@@ -753,7 +757,7 @@ include("heading_banner.php");
                                                target="_BLANK"><i class="icon-eye"></i>View Station Status</a>
                                         </li>
                                         <li>
-                                            <a href="events_module/station_events.php?line=<?php echo $line; ?>"
+                                            <a href="events_module/station_events.php?line=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
                                             ><i class="icon-sync"></i>Add / Update
                                                 Events</a></li>
 										<?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
@@ -763,7 +767,7 @@ include("heading_banner.php");
                                             </li>
 										<?php } ?>
                                         <li>
-                                            <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_name; ?>"
+                                            <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
                                             ><i class="icon-pie5"></i> Submit Form</a>
                                         </li>
                                         <!--														--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
