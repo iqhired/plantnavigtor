@@ -163,7 +163,7 @@ if(count($_POST)>0) {
 			if ($opt != null && isset($opt) && isset($opt[0])) {
 				$checked = 1;
 			}
-
+			$item_desc = $mysqli->real_escape_string($item_desc);
 			if ($item == "numeric") {
 				$normal_array = $_POST['normal'];
 				$normal = $normal_array[($index-1)];
@@ -181,13 +181,14 @@ if(count($_POST)>0) {
 
 				echo "upper_tolerance :- " . $upper_tolerance;
 				$unit = $unit_of_measurement[($index-1)];
+
 //update `form_item` SET `form_item_seq` = '$j',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
 //`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
 //`notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by'
 				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
 `item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
 `notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
-				$result1 = mysqli_query($db, $sql1);
+				$result1 = mysqli_query($mysqli, $sql1);
 				if ($result1) {
 					$message_stauts_class = 'alert-success';
 					$import_status_message = 'Form Item updated successfully.';
@@ -242,6 +243,7 @@ if(count($_POST)>0) {
 			$notes = $notes_array[($j-1)];
 			$disc = $disc_array[($j-1)];
 			$checked = 0;
+			$item_desc = $mysqli->real_escape_string($item_desc);
 			if ($opt != null && isset($opt) && isset($opt[0])) {
 				$checked = 1;
 			}
