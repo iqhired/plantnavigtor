@@ -727,8 +727,9 @@ include("../heading_banner.php");
                                                         </span>
                                                         </div>
                                                     </div>
-                                                    <div id="rej_reason_div_<?php echo $j ?>" style="display: none">
-                                                        <span class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" >
+                                                    <div id="rej_reason_div_<?php echo $j ?>">
+<!--                                                        <span class="form_tab_td" id="rej_reason_td_--><?php //echo $j ?><!--" >-->
+                                                            <textarea class="form-control reason" id="rej_reason_td_<?php echo $j ?>" >  </textarea>
                                                     </div>
                                                     <hr/>
 													<?php
@@ -1055,9 +1056,11 @@ $('#reject').on('change', function () {
                 if (text_val >= lower_compare && text_val <= upper_compare) {
                     $(this).attr('style','background-color:#abf3ab !important');
                     document.getElementById("notes").required = false;
+                    document.getElementsByClassName("reason").style.display = "none";
                 } else {
                     $(this).attr('style','background-color:#ffadad !important');
                     document.getElementById("notes").required = true;
+                    document.getElementsByClassName("reason").style.display = "block";
                 }
             }
         }
@@ -1072,9 +1075,11 @@ $('#reject').on('change', function () {
         if (exact_val == binary_compare) {
             $("." + radio_id).css("background-color", "#abf3ab");
             document.getElementById("notes").required = false;
+            document.getElementsByClassName("reason").style.display = "none";
         } else {
             $("." + radio_id).css("background-color", "#ffadad");
              document.getElementById("notes").required = true;
+            document.getElementsByClassName("reason").style.display = "block";
         }
     });
 </script>
