@@ -144,10 +144,12 @@ if(count($_POST)>0) {
 	$item_desc_array = $_POST['query_text'];
 	$bansi_row_click = $_POST['bansi_row_click'];
 	$j = 1;
+	$z=0;
 	foreach ($bansi_row_click as $rd) {
 		$exp = explode("-",$rd);
 		$cc = sizeof($exp);
-		$bansi_row = $j;
+		$actual_row = $j;
+		$bansi_row = $exp[1];
 		$itemarray = $_POST['item_' . $bansi_row];
 		$item = $itemarray[0];
 		$notes_array = $_POST['form_item_notes'];
@@ -155,10 +157,10 @@ if(count($_POST)>0) {
 
 		$opt = $_POST['optional_' . $bansi_row];
 		if($cc == 2){
-			$index = $exp[1];
-			$item_desc = $item_desc_array[($index-1)];
-			$notes = $notes_array[($index-1)];
-			$disc = $disc_array[($index-1)];
+			$index = $actual_row;
+			$item_desc = $item_desc_array[($z)];
+			$notes = $notes_array[($z)];
+			$disc = $disc_array[($z)];
 			$checked = 0;
 			if ($opt != null && isset($opt) && isset($opt[0])) {
 				$checked = 1;
@@ -166,7 +168,7 @@ if(count($_POST)>0) {
 			$item_desc = $mysqli->real_escape_string($item_desc);
 			if ($item == "numeric") {
 				$normal_array = $_POST['normal'];
-				$normal = $normal_array[($index-1)];
+				$normal = $normal_array[($z)];
 
 				echo "normal :- " . $normal;
 
@@ -177,10 +179,10 @@ if(count($_POST)>0) {
 
 
 				$upper_tolerance_array = $_POST['upper_tolerance'];
-				$upper_tolerance = $upper_tolerance_array[($index-1)];
+				$upper_tolerance = $upper_tolerance_array[($z)];
 
 				echo "upper_tolerance :- " . $upper_tolerance;
-				$unit = $unit_of_measurement[($index-1)];
+				$unit = $unit_of_measurement[($z)];
 
 //update `form_item` SET `form_item_seq` = '$j',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
 //`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
@@ -205,10 +207,10 @@ if(count($_POST)>0) {
 				$normal_binary = $normal_binary_array[0];
 
 				$yes_alias_array = $_POST['yes_alias'];
-				$yes_alias = $yes_alias_array[($index-1)];
+				$yes_alias = $yes_alias_array[($z)];
 
 				$no_alias_array = $_POST['no_alias'];
-				$no_alias = $no_alias_array[($index-1)];
+				$no_alias = $no_alias_array[($z)];
 
 				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
 `binary_default` = '$default_binary',`binary_normal` = '$normal_binary',`binary_yes_alias` = '$yes_alias',`binary_no_alias` = '$no_alias',`notes` = '$notes' ,
@@ -238,6 +240,7 @@ if(count($_POST)>0) {
 
 //			$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
 //			$result0 = mysqli_query($db, $sql0);
+			$z++;
 		}else {
 			$item_desc = $item_desc_array[($j-1)];
 			$notes = $notes_array[($j-1)];
