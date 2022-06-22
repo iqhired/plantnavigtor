@@ -240,12 +240,16 @@ if(count($_POST)>0) {
 
 //			$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
 //			$result0 = mysqli_query($db, $sql0);
-			$z++;
+
 		}else {
 			$item_desc = $item_desc_array[($j-1)];
 			$notes = $notes_array[($j-1)];
 			$disc = $disc_array[($j-1)];
 			$checked = 0;
+			$bansi_row = $exp[0];
+			$itemarray = $_POST['item_' . $bansi_row];
+			$item = $itemarray[0];
+			$opt = $_POST['optional_' . $bansi_row];
 			$item_desc = $mysqli->real_escape_string($item_desc);
 			if ($opt != null && isset($opt) && isset($opt[0])) {
 				$checked = 1;
@@ -318,7 +322,7 @@ if(count($_POST)>0) {
 				}
 			}
 		}
-
+		$z++;
 		$j++;
 	}
 //	$item_desc_array = $_POST['query_text'];
