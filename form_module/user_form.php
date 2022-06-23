@@ -727,9 +727,9 @@ include("../heading_banner.php");
                                                         </span>
                                                         </div>
                                                     </div>
-                                                    <div id="rej_reason_div_<?php echo $j ?>">
-<!--                                                        <span class="form_tab_td" id="rej_reason_td_--><?php //echo $j ?><!--" >-->
-                                                            <textarea class="form-control reason" id="rej_reason_td_<?php echo $j ?>" >  </textarea>
+                                                    <div class="reason" id="rej_reason_div_<?php echo $j ?>" style="display: none">
+                                                        <span class="form_tab_td" id="rej_reason_td_<?php echo $j ?>" >
+<!--                                                            <textarea class="form-control reason" id="rej_reason_td_--><?php //echo $j ?><!--" >  </textarea>-->
                                                     </div>
                                                     <hr/>
 													<?php
@@ -827,12 +827,33 @@ $('#reject').on('change', function () {
                     document.getElementById("form_user_data_id").value = data["form_user_data_id"];
                     document.getElementById("approval_dept_cnt").value = data["approval_dept_cnt"];
                     document.getElementById("rejected_dept_cnt").value = data["rejected_dept_cnt"];
-                 
+                    var err_cnt = data["out_of_tol_val_cnt"];
+                    var dept_cnt =data["approval_dept_cnt"];
+
                     var x = document.getElementById("approve_sec");
                     if (x.style.display === "none") {
                         x.style.display = "block";
                         var y = document.getElementById("btnSubmit");
                         y.style.display = "none";
+                    }
+                    if(err_cnt > 0){
+                        for(var i =0 ; i<dept_cnt ; i++){
+                            var z = document.getElementById("rej_reason_div_"+i);
+                            if (z.style.display === "none") {
+                                z.style.display = "block";
+                                //<td class="form_tab_td" colspan="4">
+                                //        <textarea class="form-control" placeholder="Enter Reject Reason..." oninvalid="this.setCustomValidity('Enter Reject reason')"
+                                //    onvalid="this.setCustomValidity('')" id="rej_reason_<?php //echo $j ?>//" name = "rej_reason_<?php //echo $j ?>//" rows="1"></textarea>
+                                //        </td>
+                                var y = document.getElementById("rej_reason_td_"+i);
+                                var rr_id = 'rej_reason_'+i;
+                                y.innerHTML += "<textarea class= \"form-control\" placeholder=\"Enter Reason\" id= \"" +  rr_id + "\" name = \"" +  rr_id + "\" rows=\"1\" required></textarea>";
+                            }
+                        }
+
+                        document.getElementsByClassName("reason").style.display = "block";
+                    }else{
+                        document.getElementsByClassName("reason").style.display = "none";
                     }
                    
                 }

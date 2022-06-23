@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 include("../config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
-
+$temp_j = 0;
 if(count($_POST)>0) {
 	$created_by = $_SESSION['id'];
 	$is_update = $_POST['update_fud'];
@@ -63,7 +63,7 @@ if(count($_POST)>0) {
 			$qur04 = mysqli_query($db, "SELECT * FROM  form_user_data where form_user_data_id= '$form_user_data_id' ORDER BY `form_user_data_id` DESC ");
 			$rowc04 = mysqli_fetch_array($qur04);
 			$temp_i = 0;
-			$temp_j = 0;
+
 			$query0003 = sprintf("SELECT * FROM  form_create where form_create_id = '$formcreateid' ");
 			$qur0003 = mysqli_query($db, $query0003);
 			$rowc0003 = mysqli_fetch_array($qur0003);
@@ -256,57 +256,48 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 			$qur04 = mysqli_query($db, "SELECT * FROM  form_user_data where form_name= '$name' ORDER BY `form_user_data_id` DESC ");
 			$rowc04 = mysqli_fetch_array($qur04);
 			$form_user_data_id = $rowc04["form_user_data_id"];
-//
-//			// mail code
-//			$temp_i = 0;
-//			$temp_j = 0;
-//			$query0003 = sprintf("SELECT * FROM  form_create where form_create_id = '$formcreateid' ");
-//			$qur0003 = mysqli_query($db, $query0003);
-//			$rowc0003 = mysqli_fetch_array($qur0003);
-//			$out_of_tolerance_mail_list1 = $rowc0003["out_of_tolerance_mail_list"];
-//			if(!empty($out_of_tolerance_mail_list1)) {
-//				$query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
-//				$qur0006 = mysqli_query($db, $query0006);
-//				//$rowc0006 = mysqli_fetch_array($qur0006);
-//				while ($rowc0006 = mysqli_fetch_array($qur0006)) {
-//
-//					$item_val = $rowc0006['item_val'];
-//					$val = $form_item_array1[$temp_i];
-//					$main_val = $_POST[$val];
-//					if($item_val != "header") {
-//						if ($item_val == "numeric") {
-//							$numeric_normal = $rowc0006['numeric_normal'];
-//							$numeric_lower = $rowc0006['numeric_lower_tol'];
-//							$numeric_upper = $rowc0006['numeric_upper_tol'];
-//
-//							$numeric_lower = str_replace(' ', '', $numeric_lower); // Replaces all spaces with hyphens.
-//							$numeric_lower = preg_replace('/[^A-Za-z0-9]/', '', $numeric_lower); // Removes special chars.
-//							$low = $numeric_normal - $numeric_lower; // final lower value
-//
-//							$numeric_upper = str_replace(' ', '', $numeric_upper); // Replaces all spaces with hyphens.
-//							$numeric_upper = preg_replace('/[^A-Za-z0-9]/', '', $numeric_upper); // Removes special chars.
-//							$high = $numeric_normal + $numeric_upper; // final upper value
-//
-//							if ($main_val >= $low && $main_val <= $high) {
-//
-//							} else {
-//								$temp_j++;
-//							}
-////							$temp_i++;
-//						} else if ($item_val == "binary") {
-//							$binary_normal = $rowc0006['binary_normal'];
-//
-//							if ($main_val == $binary_normal) {
-//
-//							} else {
-//								$temp_j++;
-//							}
-//
-//						}
-//						$temp_i++;
-//					}
-////			$out_of_tolerance_mail_list1 = $rowc0006["out_of_tolerance_mail_list"];
-//				}
+			$temp_i = 0;
+				$query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
+				$qur0006 = mysqli_query($db, $query0006);
+				//$rowc0006 = mysqli_fetch_array($qur0006);
+				while ($rowc0006 = mysqli_fetch_array($qur0006)) {
+
+					$item_val = $rowc0006['item_val'];
+					$val = $form_item_array1[$temp_i];
+					$main_val = $_POST[$val];
+					if($item_val != "header") {
+						if ($item_val == "numeric") {
+							$numeric_normal = $rowc0006['numeric_normal'];
+							$numeric_lower = $rowc0006['numeric_lower_tol'];
+							$numeric_upper = $rowc0006['numeric_upper_tol'];
+
+							$numeric_lower = str_replace(' ', '', $numeric_lower); // Replaces all spaces with hyphens.
+							$numeric_lower = preg_replace('/[^A-Za-z0-9]/', '', $numeric_lower); // Removes special chars.
+							$low = $numeric_normal - $numeric_lower; // final lower value
+
+							$numeric_upper = str_replace(' ', '', $numeric_upper); // Replaces all spaces with hyphens.
+							$numeric_upper = preg_replace('/[^A-Za-z0-9]/', '', $numeric_upper); // Removes special chars.
+							$high = $numeric_normal + $numeric_upper; // final upper value
+
+							if ($main_val >= $low && $main_val <= $high) {
+
+							} else {
+								$temp_j++;
+							}
+//							$temp_i++;
+						} else if ($item_val == "binary") {
+							$binary_normal = $rowc0006['binary_normal'];
+
+							if ($main_val == $binary_normal) {
+
+							} else {
+								$temp_j++;
+							}
+
+						}
+						$temp_i++;
+					}
+//			$out_of_tolerance_mail_list1 = $rowc0006["out_of_tolerance_mail_list"];
 //				if ($temp_j > 0) {
 //
 ////	$subject = "Out of Tolerence Mail Report";
@@ -396,12 +387,11 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 //					}
 //
 //				}
-//			}
-
-// mail code over
+			}
 
 			$j_arr = array("form_user_data_id" => $form_user_data_id,
 				"approval_dept_cnt" => $approval_dept_cnt,
+				"out_of_tol_val_cnt" => $temp_j,
 				"rejected_dept_cnt" => $rejected_dept_cnt);
 //		    return  json_encode($j_arr);
 			echo json_encode($j_arr);
