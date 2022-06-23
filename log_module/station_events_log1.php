@@ -46,6 +46,8 @@ if (count($_POST) > 0) {
     $_SESSION['button_event'] = $_POST['button_event'];
     $_SESSION['event_type'] = $_POST['event_type'];
     $_SESSION['event_category'] = $_POST['event_category'];
+    $_SESSION['time_from'] = $_POST['time_from'];
+    $_SESSION['time_to'] = $_POST['time_to'];
     $button_event = $_POST['button_event'];
     $event_type = $_POST['event_type'];
     $event_category = $_POST['event_category'];
@@ -444,19 +446,19 @@ include("../heading_banner.php");
                     </div>
 
 
-                    <br/>
-                    							<?php
-                    							if (!empty($import_status_message)) {
-                    								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                    							}
-                    							?>
-                    							<?php
-                    							if (!empty($_SESSION[import_status_message])) {
-                    								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    								$_SESSION['message_stauts_class'] = '';
-                    								$_SESSION['import_status_message'] = '';
-                    							}
-                    							?>
+<!--                    <br/>-->
+<!--                    							--><?php
+//                    							if (!empty($import_status_message)) {
+//                    								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                    							}
+//                    							?>
+<!--                    							--><?php
+//                    							if (!empty($_SESSION[import_status_message])) {
+//                    								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                    								$_SESSION['message_stauts_class'] = '';
+//                    								$_SESSION['import_status_message'] = '';
+//                    							}
+//                    							?>
             </div>
             <div class="panel-footer p_footer">
                 <div class="row">
@@ -477,6 +479,14 @@ include("../heading_banner.php");
                             <button type="submit" class="btn btn-primary"
                                     style="background-color:#1e73be;width:120px;"
                                     id="export" name="export" data-loading-text="Loading...">Export Data
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <form action="export_time_log.php" method="post" name="export_excel">
+                            <button type="submit" class="btn btn-primary"
+                                    style="background-color:#1e73be;width:145px;"
+                                    id="export" name="export" data-loading-text="Loading...">Export Data Time
                             </button>
                         </form>
                     </div>
