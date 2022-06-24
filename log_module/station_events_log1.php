@@ -346,8 +346,6 @@ include("../heading_banner.php");
                     <div class="row_date">
                         <div class="col-md-6 mobile_date">
 
-                            <!--                                    <label class="control-label" >Date Range</label>-->
-
                             <?php
                             if ($button != "button2") {
                                 $checked = "checked";
@@ -355,10 +353,6 @@ include("../heading_banner.php");
                                 $checked == "";
                             }
                             ?>
-
-                            <!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"-->
-                            <!--                                           style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
-
 
                             <label class="col-lg-2 control-label">Date From :</label>
                             <input type="date" name="date_from" id="date_from" class="form-control"
@@ -377,7 +371,6 @@ include("../heading_banner.php");
                     <div class="row">
                         <div class="col-md-6 mobile">
                             <label class="col-lg-3 control-label">Time From (hrs):</label>
-
                             <div class="col-lg-7">
                                 <select name="time_from" id="time_from" class="select form-control"
                                         style="float: left;width: initial;">
