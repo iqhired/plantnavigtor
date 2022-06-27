@@ -99,7 +99,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             width: auto !important;
             float: left !important;
         }
-       
+
         .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
              color: #060818!important;
              border-block-start: none;
@@ -383,8 +383,8 @@ include("../heading_banner.php");
 										?>
 
 
-                               
-									<?php 
+
+									<?php
                                      $sql_wol = "SELECT wol FROM `form_type` where form_type_id = '$get_form_type' ";
                                      $res_wol = $mysqli->query($sql_wol);
 									 $r=$res_wol->fetch_assoc();
@@ -397,7 +397,7 @@ include("../heading_banner.php");
                                     <div class="col-md-7">
                                     <textarea class="form-control" name = "wol" rows="1" required></textarea>
                                     </div>
-                                   
+
                                 </div>
                             <?php } ?>
                                 <div class="form_row row">
@@ -787,7 +787,7 @@ include("../heading_banner.php");
         </div>
 <!-- <script>
 $('#reject').on('change', function () {
-    
+
         var selected_val = this.value.split("_")[1];
         if (selected_val == 3) {
             document.getElementById("reject_div").innerHTML +="<div class=\"col-md-12\">\n" +
@@ -823,7 +823,7 @@ $('#reject').on('change', function () {
                 data: data,
                 success: function (data) {
                     $('#btnSubmit').attr('disabled', 'disabled');
-                
+
                     document.getElementById("form_user_data_id").value = data["form_user_data_id"];
                     document.getElementById("approval_dept_cnt").value = data["approval_dept_cnt"];
                     document.getElementById("rejected_dept_cnt").value = data["rejected_dept_cnt"];
@@ -855,7 +855,7 @@ $('#reject').on('change', function () {
                     }else{
                         document.getElementsByClassName("reason").style.display = "none";
                     }
-                   
+
                 }
             });
         }
@@ -920,7 +920,7 @@ $('#reject').on('change', function () {
                 if(null != document.getElementById("rej_reason_" + rid )){
                     var rej_r = document.getElementById("rej_reason_" + rid ).value;
                     if(null == rej_r || '' == rej_r) {
-                        rr.innerHTML = "<textarea class= \"form-control\" placeholder=\"Enter Reject Reason\" id= \"" + rr_id + "\" name = \"" + rr_id + "\" rows=\"1\" required></textarea><span style=\"font-size: x-small;color: darkred;\" id=\"" + rr_e_id + "\">Enter Reject Reason.</span>";
+                        rr.innerHTML = "<textarea class= \"form-control\" placeholder=\"Enter Reason\" id= \"" + rr_id + "\" name = \"" + rr_id + "\" rows=\"1\" required></textarea><span style=\"font-size: x-small;color: darkred;\" id=\"" + rr_e_id + "\">Enter Reason.</span>";
                     }else if((null != rej_r || '' != rej_r) && (null != document.getElementById(rr_e_id))){
                         document.getElementById(rr_e_id).innerHTML = '';
                     }else{
@@ -967,7 +967,7 @@ $('#reject').on('change', function () {
                     }
                 }else if (arr_data["all_dept_approved"] == 1) {
                     $('#' + this.id).attr('disabled', 'disabled').addClass('<i class="fa fa-times" aria-hidden="true"></i>').css({'background-color': '#43a047'});
-                    $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');  
+                    $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#reject_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#reject_'+this.id.split("_")[1]).css('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
@@ -979,7 +979,7 @@ $('#reject').on('change', function () {
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
-       
+
         });
     });
 
@@ -999,7 +999,7 @@ $('#reject').on('change', function () {
         //        </td>
             var y = document.getElementById("rej_reason_td_"+index);
             var rr_id = 'rej_reason_'+index;
-            y.innerHTML += "<textarea class= \"form-control\" placeholder=\"Enter Reject Reason\" id= \"" +  rr_id + "\" name = \"" +  rr_id + "\" rows=\"1\" required></textarea>";
+            y.innerHTML += "<textarea class= \"form-control\" placeholder=\"Enter Reason\" id= \"" +  rr_id + "\" name = \"" +  rr_id + "\" rows=\"1\" required></textarea>";
         }
 
         // if(document.getElementById("rej_reason_"+index).value){
