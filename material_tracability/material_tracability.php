@@ -348,7 +348,7 @@ include("../heading_banner.php");
                     <div class="alert alert-success no-border">
                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
                                     class="sr-only">Close</span></button>
-                        <span class="text-semibold">Group</span> Created Successfully.
+                        <span class="text-semibold">Material Tracability.</span> Created Successfully.
                     </div>
 				<?php } ?>
 				<?php if ($temp == "two") { ?>
@@ -356,7 +356,7 @@ include("../heading_banner.php");
                     <div class="alert alert-success no-border">
                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
                                     class="sr-only">Close</span></button>
-                        <span class="text-semibold">Group</span> Updated Successfully.
+                        <span class="text-semibold">Material Tracability.</span> Updated Successfully.
                     </div>
 				<?php } ?>
 				<?php
@@ -365,11 +365,11 @@ include("../heading_banner.php");
 				}
 				?>
 				<?php
-				//				if (!empty($_SESSION[import_status_message])) {
-				//					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-				//					$_SESSION['message_stauts_class'] = '';
-				//					$_SESSION['import_status_message'] = '';
-				//				}
+								if (!empty($_SESSION[import_status_message])) {
+									echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+									$_SESSION['message_stauts_class'] = '';
+									$_SESSION['import_status_message'] = '';
+								}
 				?>
 
 
@@ -473,16 +473,7 @@ include("../heading_banner.php");
 
 							?>
                             <div class="row" id = "serial_num">
-                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Serial Number
-                                    : </label>
-                                <div class="col-md-6">
-                                    <input type="text" size="30" name="serial_number" id="serial_number"
-                                           class="form-control"/>
-                                    <!--                                    <input type="number" name="serial_number" value="-->
-									<?php //echo $color; ?><!--" id="serial_number" class="form-control"-->
-                                    <!--                                           placeholder="Enter Serial Number" required>-->
-                                </div>
-                                <div id="error1" class="red">Part Name</div>
+
                             </div>
                             <br/>
 
@@ -556,9 +547,18 @@ include("../heading_banner.php");
     document.getElementById('material_type').onchange = function () {
         var sel_val = this.value.split('_');
         var isDis = sel_val[1];
+        var rr = document.getElementById("serial_num");
         if(isDis == 0){
+            rr.innerHTML = "";
             document.getElementById("serial_num").style.display = 'none';
         }else{
+            rr.innerHTML = "<label class=\"col-lg-2 control-label\" style=\"padding-top: 10px;\">Serial Number\n" +
+                "                                    : </label>\n" +
+                "                                <div class=\"col-md-6\">\n" +
+                "                                    <input type=\"text\" size=\"30\" name=\"serial_number\" id=\"serial_number\"\n" +
+                "                                           class=\"form-control\" required/>\n" +
+                "                                </div>\n" +
+                "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
             document.getElementById("serial_num").style.display = 'block';
         }
 

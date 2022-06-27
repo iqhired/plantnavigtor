@@ -1,9 +1,9 @@
 <?php
 include("../config.php");
 
-//use PHPMailer\PHPMailer\PHPMailer;
-//
-//require '../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+
+require '../vendor/autoload.php';
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array)json_decode($array);
 
