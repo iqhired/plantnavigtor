@@ -551,6 +551,7 @@ include("../heading_banner.php");
         if(isDis == 0){
             rr.innerHTML = "";
             document.getElementById("serial_num").style.display = 'none';
+            document.getElementById("file").required = false;
         }else{
             rr.innerHTML = "<label class=\"col-lg-2 control-label\" style=\"padding-top: 10px;\">Serial Number\n" +
                 "                                    : </label>\n" +
@@ -560,6 +561,7 @@ include("../heading_banner.php");
                 "                                </div>\n" +
                 "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
             document.getElementById("serial_num").style.display = 'block';
+            document.getElementById("file").required = true;
         }
 
     }

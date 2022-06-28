@@ -71,10 +71,22 @@ if(empty($dateto)){
     $dateto = $curdate;
 }
 
+
 if(empty($datefrom)){
     $yesdate = date('Y-m-d',strtotime("-1 days"));
     $datefrom = $yesdate;
 }
+
+//if(empty($time_to)){
+//   // $curtime = date('H');
+//    $time_to = '23';
+//}
+//
+//
+//if(empty($time_from)){
+//  //  $yestime =  date('H', strtotime('-1 hour'));
+//    $time_from = '00';
+//}
 
 
 ?>
@@ -129,6 +141,9 @@ if(empty($datefrom)){
             margin-left: -9px;
             padding-bottom: 20px;
 
+        }
+        .event_radio {
+            width: 18%;
         }
 
         @media
@@ -237,7 +252,7 @@ include("../heading_banner.php");
 
                     <div class="row">
                         <div class="col-md-6 mobile">
-                            <label class=" col-lg-3 control-label">Event Type :</label>
+                            <label class=" col-lg-3 control-label event_radio">Event Type :</label>
                             <?php
                             if ($button_event == "button3") {
                                 $checked = "checked";
@@ -277,7 +292,7 @@ include("../heading_banner.php");
                         </div>
                         <div class="col-md-6 mobile">
 
-                            <label class="col-lg-3 control-label" >Event Catagory :</label>
+                            <label class="col-lg-3 control-label event_radio" >Event Catagory :</label>
 
                             <?php
                             if ($button_event == "button4") {
@@ -354,16 +369,19 @@ include("../heading_banner.php");
                             }
                             ?>
 
-                            <label class="col-lg-2 control-label">Date From :</label>
-                            <input type="date" name="date_from" id="date_from" class="form-control"
-                                   value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
-                                   required>
+                            <label class="col-lg-3 control-label">Date From :</label>
+                            <div class="col-lg-7">
+                                <input type="date" name="date_from" id="date_from" class="form-control"
+                                                           value="<?php echo $datefrom; ?>"
+                                                           required></div>
+
                         </div>
                         <div class="col-md-6 mobile_date">
-                            <label class="col-lg-2 control-label" >Date To:</label>
+                            <label class="col-lg-3 control-label" >Date To:</label>
+                            <div class="col-lg-7">
                             <input type="date" name="date_to" id="date_to" class="form-control"
-                                   value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-
+                                   value="<?php echo $dateto; ?>" required>
+                            </div>
                         </div>
                     </div>
                     <br/>
@@ -374,7 +392,7 @@ include("../heading_banner.php");
                             <div class="col-lg-7">
                                 <select name="time_from" id="time_from" class="select form-control"
                                         style="float: left;width: initial;">
-                                    <option value="" selected disabled>--- Select Time ---</option>
+                                    <option value="" selected ><?php echo $time_from; ?></option>
                                     <option value="00">00</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
@@ -406,9 +424,9 @@ include("../heading_banner.php");
                             <label class="col-lg-3 control-label">Time To (hrs):</label>
 
                             <div class="col-lg-7">
-                                <select name="time_from" id="time_to" class="select form-control"
+                                <select name="time_to" id="time_to" class="select form-control"
                                         style="float: left;width: initial;">
-                                    <option value="" selected disabled>--- Select Time ---</option>
+                                    <option value="" selected ><?php echo $time_to; ?></option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
                                     <option value="03">03</option>
@@ -541,9 +559,11 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
                     $event_type = $_POST['event_type'];
                     $event_category = $_POST['event_category'];
                     $timezone = $_POST['timezone'];
+
+                    $stamp = $time->format('Y-m-d H:i');
                     //event type
 
-                    $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
+                    $q = "SELECT sg_events.line_id,et.event_type_name as e_type, (select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
 pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
 sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
 from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id

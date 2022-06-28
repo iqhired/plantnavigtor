@@ -373,7 +373,12 @@ include("../heading_banner.php");
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
-                                                    echo "<option value='" . $row1['pm_part_number_id'] . "'  >" . $row1['part_number']." - ".$row1['part_name']  . "</option>";
+                                                    $station = $row1['station'];
+                                                    $row_station ="select line_id,line_name from cam_line where line_id = '$station'";
+                                                    $sta_row = mysqli_query($db,$row_station);
+                                                    $row = mysqli_fetch_assoc($sta_row);
+                                                    $line_name = $row['line_name'];
+                                                    echo "<option value='" . $row1['pm_part_number_id'] . "'  >" . $row1['part_number']." - ".$row1['part_name']." - ".$line_name. "</option>";
                                                 }
                                                 ?>
                                             </select>
