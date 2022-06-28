@@ -57,6 +57,8 @@ if (count($_POST) > 0) {
     $button = $_POST['button'];
     $time_from = $_POST['time_from'];
     $time_to = $_POST['time_to'];
+    $time_from_min = $_POST['time_from_min'];
+    $time_to_min = $_POST['time_to_min'];
 
 }
 if (count($_POST) > 0) {
@@ -78,14 +80,14 @@ if(empty($datefrom)){
 }
 
 //if(empty($time_to)){
-//   // $curtime = date('H');
-//    $time_to = '23';
+//    $curtime = date('H');
+//    $time_to = $curtime;
 //}
 //
 //
 //if(empty($time_from)){
-//  //  $yestime =  date('H', strtotime('-1 hour'));
-//    $time_from = '00';
+//    $yestime =  date('H', strtotime('-1 hour'));
+//    $time_from = $yestime;
 //}
 
 
@@ -142,7 +144,7 @@ if(empty($datefrom)){
             padding-bottom: 20px;
 
         }
-        .event_radio {
+        .event_radio{
             width: 18%;
         }
 
@@ -371,15 +373,14 @@ include("../heading_banner.php");
 
                             <label class="col-lg-3 control-label">Date From :</label>
                             <div class="col-lg-7">
-                                <input type="date" name="date_from" id="date_from" class="form-control"
-                                                           value="<?php echo $datefrom; ?>"
-                                                           required></div>
-
+                            <input type="date" name="date_from" id="date_from" class="form-control"
+                                   value="<?php echo $datefrom; ?>" required>
+                            </div>
                         </div>
                         <div class="col-md-6 mobile_date">
                             <label class="col-lg-3 control-label" >Date To:</label>
                             <div class="col-lg-7">
-                            <input type="date" name="date_to" id="date_to" class="form-control"
+                                <input type="date" name="date_to" id="date_to" class="form-control"
                                    value="<?php echo $dateto; ?>" required>
                             </div>
                         </div>
@@ -388,11 +389,11 @@ include("../heading_banner.php");
                     <br/>
                     <div class="row">
                         <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time From (hrs):</label>
-                            <div class="col-lg-7">
+                            <label class="col-lg-3 control-label">Time From:</label>
+                            <div class="col-lg-4">
                                 <select name="time_from" id="time_from" class="select form-control"
-                                        style="float: left;width: initial;">
-                                    <option value="" selected ><?php echo $time_from; ?></option>
+                                        style="float: left;width: initial;" value="<?php echo $time_from; ?>">
+                                    <option value="" selected ><?php if(empty($time_from)){echo '--- Select Time(Hrs) ---';}else{echo $time_from;} ?></option>
                                     <option value="00">00</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
@@ -417,16 +418,26 @@ include("../heading_banner.php");
                                     <option value="21">21</option>
                                     <option value="22">22</option>
                                     <option value="23">23</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select name="time_from" id="time_from" class="select form-control"
+                                        style="float: left;width: initial;" value="<?php echo $time_from_min; ?>">
+                                    <option value="" selected ><?php if(empty($time_from_min)){echo '--- Select Time(Mins) ---';}else{echo $time_from_min;} ?></option>
+                                    <option value="15">15 Mins</option>
+                                    <option value="30">30 Mins</option>
+                                    <option value="45">45 Mins</option>
+                                    <option value="00">00 Mins</option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time To (hrs):</label>
-
-                            <div class="col-lg-7">
+                            <label class="col-lg-3 control-label">Time To:</label>
+                            <div class="col-lg-4">
                                 <select name="time_to" id="time_to" class="select form-control"
-                                        style="float: left;width: initial;">
-                                    <option value="" selected ><?php echo $time_to; ?></option>
+                                        style="float: left;width: initial;" value="<?php echo $time_to; ?>">
+                                    <option value="" selected ><?php if(empty($time_to)){echo '--- Select Time(Hrs) ---';}else{echo $time_to;} ?></option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
                                     <option value="03">03</option>
@@ -453,8 +464,20 @@ include("../heading_banner.php");
                                     <option value="00">00</option>
                                 </select>
                             </div>
+                            <div class="col-lg-4">
+                                <select name="time_to" id="time_to" class="select form-control"
+                                        style="float: left;width: initial;" value="<?php echo $time_to_min; ?>">
+                                    <option value="" selected ><?php if(empty($time_to_min)){echo '--- Select Time(Mins) ---';}else{echo $time_to_min;} ?></option>
+                                    <option value="15">15 Mins</option>
+                                    <option value="30">30 Mins</option>
+                                    <option value="45">45 Mins</option>
+                                    <option value="00">00 Mins</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <br>
+
 
 
 <!--                    <br/>-->
@@ -559,11 +582,9 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
                     $event_type = $_POST['event_type'];
                     $event_category = $_POST['event_category'];
                     $timezone = $_POST['timezone'];
-
-                    $stamp = $time->format('Y-m-d H:i');
                     //event type
 
-                    $q = "SELECT sg_events.line_id,et.event_type_name as e_type, (select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
+                    $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
 pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
 sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
 from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
@@ -587,11 +608,11 @@ where 1 ";
                     }
 
                     if($time_from != "" && $time_to != ""){
-                        $q = $q . "AND DATE_FORMAT(e_log.created_on,'%H') BETWEEN '$time_from' and  '$time_to' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+                        $q = $q . "AND DATE_FORMAT(e_log.created_on,'%H') BETWEEN '$time_from' and  '$time_to' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '$time_from_min' and  '$time_to_min'  AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }else if($time_from != "" && $time_to == ""){
-                        $q = $q . " AND DATE_FORMAT(e_log.created_on,'%H') >= '$time_from' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+                        $q = $q . " AND DATE_FORMAT(e_log.created_on,'%H') >= '$time_from' AND DATE_FORMAT(e_log.created_on,'%i') > '$time_from_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }else if($time_from == "" && $time_to != ""){
-                        $q = $q . " DATE_FORMAT(e_log.created_on,'%H') < '$time_to'  AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+                        $q = $q . " DATE_FORMAT(e_log.created_on,'%H') < '$time_to'  AND DATE_FORMAT(e_log.created_on,'%i') < '$time_to_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
                     }
 
 
