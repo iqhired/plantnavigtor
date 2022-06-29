@@ -27,9 +27,10 @@ while($row = mysqli_fetch_array($result0)){
     $total_time = $row['total_time'];
     $created_by = $row['created_by'];
 
-    $time = cast($created_on);
+    $time = ($created_on);
     if(!empty($time)){
-        $s_arr = explode(':',$time);
+        $s_arr_1 = explode(' ',$time);
+        $s_arr = explode(':',$s_arr_1[1]);
         $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] /3600);
         $start_time = round($st_time, 3);
     }
@@ -38,8 +39,14 @@ while($row = mysqli_fetch_array($result0)){
         $tot_time = $t_arr[0] + ($t_arr[1] / 60) + ($t_arr[2] /3600);
         $total_time = round($tot_time, 3);
     }
-    $diff = $total_time - $start_time;
-    if($diff > '24'){
+
+    $end_hrs = $start_time + $total_time;
+    if($end_hrs > 24){
+        $endtime_1 = $s_arr_1[0] . '' . '23:59:59';
+        $page = "INSERT INTO `sg_station_log_update`(`sg_station_event_old_id`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
+                
+values ('$station_event_log_id','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$total_time','$created_by');" ;
+
         $page = "INSERT INTO `sg_station_log_update`(`sg_station_event_old_id`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
                 
 values ('$station_event_log_id','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$diff','$total_time','$created_by');" ;
