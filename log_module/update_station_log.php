@@ -24,9 +24,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
     }else{
         header($redirect_logout_path);
     }
-
-//	header('location: ../logout.php');
-    exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
@@ -35,7 +32,6 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 ?>
-
 <form action="update_station_log_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
 
                                 <div class="row">
