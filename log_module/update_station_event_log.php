@@ -32,7 +32,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 ?>
-<form action="update_station_log_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
+<form action="update_station_event_log_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
 
                                 <div class="row">
 
