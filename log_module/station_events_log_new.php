@@ -174,7 +174,7 @@ if(empty($datefrom)){
     </style>
     <script>
         window.onload = function () {
-            history.replaceState("", "", "<?php echo $scriptName; ?>log_module/station_events_log1.php");
+            history.replaceState("", "", "<?php echo $scriptName; ?>log_module/station_events_log_new.php");
         }
     </script>
 

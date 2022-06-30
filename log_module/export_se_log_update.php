@@ -12,7 +12,7 @@ $timezone = $_SESSION['timezone'];
 $event_type = $_SESSION['event_type'];
 $event_category = $_SESSION['event_category'];
 $line_id = $_SESSION['station'];
-
+$print_data='';
 
 	$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
 pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
@@ -26,24 +26,44 @@ where 1 ";
 /* If Line is selected. */
 if ($line_id != null) {
 	$q = $q . " and sg_events.line_id = '$line_id' ";
-}
-
-	if($datefrom != "" && $dateto != ""){
-		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
-	}else if($datefrom != "" && $dateto == ""){
-		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
-	}else if($datefrom == "" && $dateto != ""){
-		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+	$qurtemp = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$line_id' ");
+	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+		$line_name = $rowctemp["line_name"];
+		$print_data .= "Station : " . $line_name . "\n";
 	}
-
+}
 
 	if ($event_type != "") {
 		$q = $q . " and e_log.event_type_id = '$event_type'";
+		$qurtemp = mysqli_query($db, "SELECT event_type_name FROM  event_type where event_type_id = '$event_type' ");
+		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+			$event_type_name = $rowctemp["event_type_name"];
+			$print_data .= "Event Type : " . $event_type_name . "\n";
+		}
 	}
 
 	if ($event_category != "") {
 		$q = $q . " AND  e_log.event_cat_id ='$event_category'";
+		$qurtemp = mysqli_query($db, "SELECT events_cat_name FROM  events_category where events_cat_id = '$event_category' ");
+		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+			$events_cat_name = $rowctemp["events_cat_name"];
+			$print_data .= "Event Category : " . $events_cat_name . "\n";
+		}
 	}
+	if($datefrom != "" && $dateto != ""){
+		$print_data .= "From Date : " . $datefrom . "\n";
+		$print_data .= "To Date : " . $dateto . "\n\n\n";
+		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+	}else if($datefrom != "" && $dateto == ""){
+		$print_data .= "From Date : " . $datefrom . "\n\n\n";
+		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
+	}else if($datefrom == "" && $dateto != ""){
+		$print_data .= "To Date : " . $dateto . "\n\n\n";
+		$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+	}
+
+
+
 
 $q = $q . " ORDER BY e_log.sg_station_event_update_id  DESC";
 
@@ -89,6 +109,6 @@ header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=Station Events Log.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
-print "$header\n$result";
+print "\n\n$print_data\n\n\n$header\n$result";
 
 ?>
