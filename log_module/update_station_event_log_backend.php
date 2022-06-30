@@ -73,6 +73,11 @@ while ($row = mysqli_fetch_array($result0)) {
 				$tt_time_2 = ($tt_time_2 - 24);
 			}
 		}
+	}else{
+
+		$page_tot = "INSERT INTO `sg_station_log_update`(`sg_station_event_old_id`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`check_total_time`,`created_by`) 
+                values ('$station_event_log_id','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','1','$created_by')";
+		$result_tot = mysqli_query($db, $page_tot);
 	}
 }
 
