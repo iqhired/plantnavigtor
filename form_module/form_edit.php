@@ -184,6 +184,31 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             }
 
         }
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
+        }
+        input[type="file"] {
+            display: block;
+        }
+        .imageThumb {
+            max-height: 100px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+        }
     </style>
 </head>
 
@@ -243,16 +268,16 @@ include("../heading_banner.php");
                         </div>
 					<?php } ?>
 					<?php
-					if (!empty($import_status_message)) {
-						echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-					}
-					?>
-					<?php
-					if (!empty($_SESSION[import_status_message])) {
-						echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-						$_SESSION['message_stauts_class'] = '';
-						$_SESSION['import_status_message'] = '';
-					}
+//					if (!empty($import_status_message)) {
+//						echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//					}
+//					?>
+<!--					--><?php
+//					if (!empty($_SESSION[import_status_message])) {
+//						echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//						$_SESSION['message_stauts_class'] = '';
+//						$_SESSION['import_status_message'] = '';
+//					}
 					?>
 
                     <div class="row">
@@ -396,9 +421,42 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
                                 <div class="row">
-                                    <label class="col-lg-2 control-label">Image : </label>
+                                    <label class="col-lg-2 control-label"> Image : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="image[]" id="image" class="form-control" multiple>
+                                        <input type="file" name="image[]" id="image" class="form-control"  multiple="multiple">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Previous Image : </label>
+                                    <div class="col-md-6">
+                                        <?php
+                                        $query1 = sprintf("SELECT form_create_id FROM  form_create where form_create_id = '$id'");
+                                        $qur1 = mysqli_query($db, $query1);
+                                        $rowc1 = mysqli_fetch_array($qur1);
+                                        $item_id = $rowc1['form_create_id'];
+
+                                        $query2 = sprintf("SELECT * FROM  form_images where form_create_id = '$item_id'");
+
+                                        $qurimage = mysqli_query($db, $query2);
+                                        $i =0 ;
+                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                        $image = $rowcimage['image_name'];
+                                        $d_tag = "delete_image_" . $i;
+                                        $r_tag = "remove_image_" . $i;
+                                        ?>
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
+                                                    <div class="thumb">
+                                                        <img src="../form_images/<?php echo $image; ?>"
+                                                             alt="">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['form_images_id']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $i++;} ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -1315,7 +1373,50 @@ include("../heading_banner.php");
     <!-- /content area -->
 </div>
 
+<script>
+    $(document).on('click', '.remove_image', function () {
+        var del_id = this.id.split("_")[2];
+        var form_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("delete_image"+del_id);
+        var info =  "id="+del_id+"&form_create_id="+form_img_id;
+        $.ajax({
+            type: "POST", url: "../form_module/delete_form_image.php", data: info, success: function (data) {
+            }
+        });
+        location.reload(true);
+    });
+</script>
+<script>
 
+    $("#image").on("change", function(e) {
+        var files = e.target.files,
+            filesLength = files.length;
+        for (var i = 0; i < filesLength; i++) {
+            var f = files[i]
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+                var file = e.target;
+                $("<span class=\"pip\">" +
+                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<br/><span class=\"remove\">Remove image</span>" +
+                    "</span>").insertAfter("#image");
+                $(".remove").click(function(){
+                    $(this).parent(".pip").remove();
+                });
+
+                // Old code here
+                /*$("<img></img>", {
+                  class: "imageThumb",
+                  src: e.target.result,
+                  title: file.name + " | Click to remove"
+                }).insertAfter("#files").click(function(){$(this).remove();});*/
+
+            });
+            fileReader.readAsDataURL(f);
+        }
+    });
+
+</script>
 <script>
     //add this js script into the web page,
     //you want reload once after first load

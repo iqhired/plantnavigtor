@@ -69,48 +69,68 @@ if(count($_POST)>0) {
         }
 
 	
-	$qur04 = mysqli_query($db, "SELECT * FROM  form_create where name= '$name' ORDER BY `form_create_id` DESC ");
+	$qur04 = mysqli_query($db, "SELECT * FROM  form_create where name= '$name' ORDER BY `form_create_id` DESC LIMIT 1");
 $rowc04 = mysqli_fetch_array($qur04);
 $form_create_id = $rowc04["form_create_id"];
 
-//multiple image
-       if (isset($_FILES['image'])) {
-		  
-			foreach($_FILES['image']['name'] as $key=>$val ){
-                $errors = array();
-                $file_name = $_FILES['image']['name'][$key];
-                $file_size = $_FILES['image']['size'][$key];
-                $file_tmp = $_FILES['image']['tmp_name'][$key];
-                $file_type = $_FILES['image']['type'][$key];
-                $file_ext = strtolower(end(explode('.', $file_name)));
-                $extensions = array("jpeg", "jpg", "png", "pdf");
-                if (in_array($file_ext, $extensions) === false) {
-                    $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Extension not allowed, please choose a JPEG or PNG file.';
-                }
-                if ($file_size > 2097152) {
-                    $errors[] = 'File size must be excately 2 MB';
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: File size must be excately 2 MB';
-                }
-                if (empty($errors) == true) {
-                    move_uploaded_file($file_tmp, "../form_images/" . $file_name);
-                    
-					$sql = "INSERT INTO `form_images`(`image_name`,`form_create_id`,`created_at`) VALUES ('$file_name' , '$form_create_id' , '$created_by' )";
-                    
-					$result1 = mysqli_query($db, $sql);
-                    if ($result1) {
-                        $message_stauts_class = 'alert-success';
-                        $import_status_message = 'Image Added Successfully.';
-                    } else {
-                        $message_stauts_class = 'alert-danger';
-                        $import_status_message = 'Error: Please Try Again.';
-                    }
-                }
-				
+    if($form_create_id > 0){
+
+        $temp_fid = $_SESSION['temp_form_id'];
+        $fid_arr = explode ( ',' , $temp_fid);
+        $f_str = '';
+        $i = 0 ;
+        foreach ($fid_arr as $fid){
+            if(($i == 0) && ($fid != "")){
+                $f_str = '\'' . $fid . '\'';
+                $i++;
+            }else if($fid != ""){
+                $f_str .= ',' . '\'' . $fid . '\'';
             }
-		}
+        }
+        $sql = "update `form_images` SET form_create_id = '$form_create_id' where form_create_id in ($f_str)";
+        $result1 = mysqli_query($db, $sql);
+        if($result1){
+            $_SESSION['temp_form_id'] = '';
+        }
+    }
+//multiple image
+//       if (isset($_FILES['image'])) {
+//
+//			foreach($_FILES['image']['name'] as $key=>$val ){
+//                $errors = array();
+//                $file_name = $_FILES['image']['name'][$key];
+//                $file_size = $_FILES['image']['size'][$key];
+//                $file_tmp = $_FILES['image']['tmp_name'][$key];
+//                $file_type = $_FILES['image']['type'][$key];
+//                $file_ext = strtolower(end(explode('.', $file_name)));
+//                $extensions = array("jpeg", "jpg", "png", "pdf");
+//                if (in_array($file_ext, $extensions) === false) {
+//                    $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
+//                    $message_stauts_class = 'alert-danger';
+//                    $import_status_message = 'Error: Extension not allowed, please choose a JPEG or PNG file.';
+//                }
+//                if ($file_size > 2097152) {
+//                    $errors[] = 'File size must be excately 2 MB';
+//                    $message_stauts_class = 'alert-danger';
+//                    $import_status_message = 'Error: File size must be excately 2 MB';
+//                }
+//                if (empty($errors) == true) {
+//                    move_uploaded_file($file_tmp, "../form_images/" . $file_name);
+//
+//					$sql = "INSERT INTO `form_images`(`image_name`,`form_create_id`,`created_at`) VALUES ('$file_name' , '$form_create_id' , '$created_by' )";
+//
+//					$result1 = mysqli_query($db, $sql);
+//                    if ($result1) {
+//                        $message_stauts_class = 'alert-success';
+//                        $import_status_message = 'Image Added Successfully.';
+//                    } else {
+//                        $message_stauts_class = 'alert-danger';
+//                        $import_status_message = 'Error: Please Try Again.';
+//                    }
+//                }
+//
+//            }
+//		}
 
 //multi image over
 $click_id = $_POST['click_id'];

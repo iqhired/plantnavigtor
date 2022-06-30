@@ -199,7 +199,36 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                 height: 15px;
                 width: 15px;
             }
+            input[type="file"] {
+                display: block;
+            }
 
+            .container {
+                margin: 0 auto;
+            }
+
+            .content_img {
+                width: 113px;
+                float: left;
+                margin-right: 5px;
+                border: 1px solid gray;
+                border-radius: 3px;
+                padding: 5px;
+                margin-top: 10px;
+            }
+
+            /* Delete */
+            .content_img span {
+                border: 2px solid red;
+                display: inline-block;
+                width: 99%;
+                text-align: center;
+                color: red;
+            }
+
+            .content_img span:hover {
+                cursor: pointer;
+            }
     </style>
 </head>
 
@@ -233,18 +262,18 @@ include("../heading_banner.php");
                             <div class="alert alert-success no-border">
                                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                         <?php } ?>
-                        <?php
-                        if (!empty($import_status_message)) {
-                            echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                        }
-                        ?>
-                        <?php
-                        if (!empty($_SESSION[import_status_message])) {
-                            echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                            $_SESSION['message_stauts_class'] = '';
-                            $_SESSION['import_status_message'] = '';
-                        }
-                        ?>
+<!--                        --><?php
+//                        if (!empty($import_status_message)) {
+//                            echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                        }
+//                        ?>
+<!--                        --><?php
+//                        if (!empty($_SESSION[import_status_message])) {
+//                            echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                            $_SESSION['message_stauts_class'] = '';
+//                            $_SESSION['import_status_message'] = '';
+//                        }
+//                        ?>
 
                         <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $rowc['sg_communicator_config_id']; ?>">
                         <div class="row">
@@ -390,7 +419,7 @@ include("../heading_banner.php");
                                         <label class="col-lg-2 control-label">Image : </label>
                                         <div class="col-md-6">
                                             <input type="file" name="image[]" id="file-input" class="form-control" multiple>
-                                            <div id="preview"></div>
+                                            <div class="container"></div>
                                         </div>
 
                                     </div>
@@ -886,52 +915,76 @@ include("../heading_banner.php");
             $("#numericsection_"+radio_id).hide();
             $("#binarysection_"+radio_id).hide();
         }
-
-
-
-
-
-
-
     })
-    //image preview
 
-    function previewImages() {
+</script>
+<script>
+    $("#file-input").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file-input')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_form_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
+    });
 
 
-        $("#preview").html(" ");
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
 
-        var preview = document.querySelector('#preview');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-            // Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#file-input').addEventListener("change", previewImages);
-
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        console.log(imgElement_src);
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_form_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
 
 </script>
 
