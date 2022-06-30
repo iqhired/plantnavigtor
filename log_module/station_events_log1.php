@@ -387,95 +387,95 @@ include("../heading_banner.php");
                     </div>
                     <br/>
                     <br/>
-                    <div class="row">
-                        <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time From:</label>
-                            <div class="col-lg-4">
-                                <select name="time_from" id="time_from" class="select form-control"
-                                        style="float: left;width: initial;" value="<?php echo $time_from; ?>">
-                                    <option value="" selected ><?php if(empty($time_from)){echo '--- Select Time(Hrs) ---';}else{echo $time_from;} ?></option>
-                                    <option value="00">00</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12 </option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select name="time_from" id="time_from" class="select form-control"
-                                        style="float: left;width: initial;" value="<?php echo $time_from_min; ?>">
-                                    <option value="" selected ><?php if(empty($time_from_min)){echo '--- Select Time(Mins) ---';}else{echo $time_from_min;} ?></option>
-                                    <option value="15">15 Mins</option>
-                                    <option value="30">30 Mins</option>
-                                    <option value="45">45 Mins</option>
-                                    <option value="00">00 Mins</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mobile">
-                            <label class="col-lg-3 control-label">Time To:</label>
-                            <div class="col-lg-4">
-                                <select name="time_to" id="time_to" class="select form-control"
-                                        style="float: left;width: initial;" value="<?php echo $time_to; ?>">
-                                    <option value="" selected ><?php if(empty($time_to)){echo '--- Select Time(Hrs) ---';}else{echo $time_to;} ?></option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12 </option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="00">00</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select name="time_to" id="time_to" class="select form-control"
-                                        style="float: left;width: initial;" value="<?php echo $time_to_min; ?>">
-                                    <option value="" selected ><?php if(empty($time_to_min)){echo '--- Select Time(Mins) ---';}else{echo $time_to_min;} ?></option>
-                                    <option value="15">15 Mins</option>
-                                    <option value="30">30 Mins</option>
-                                    <option value="45">45 Mins</option>
-                                    <option value="00">00 Mins</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-6 mobile">-->
+<!--                            <label class="col-lg-3 control-label">Time From:</label>-->
+<!--                            <div class="col-lg-4">-->
+<!--                                <select name="time_from" id="time_from" class="select form-control"-->
+<!--                                        style="float: left;width: initial;" value="--><?php //echo $time_from; ?><!--">-->
+<!--                                    <option value="" selected >--><?php //if(empty($time_from)){echo '--- Select Time(Hrs) ---';}else{echo $time_from;} ?><!--</option>-->
+<!--                                    <option value="00">00</option>-->
+<!--                                    <option value="01">01</option>-->
+<!--                                    <option value="02">02</option>-->
+<!--                                    <option value="03">03</option>-->
+<!--                                    <option value="04">04</option>-->
+<!--                                    <option value="05">05</option>-->
+<!--                                    <option value="06">06</option>-->
+<!--                                    <option value="07">07</option>-->
+<!--                                    <option value="08">08</option>-->
+<!--                                    <option value="09">09</option>-->
+<!--                                    <option value="10">10</option>-->
+<!--                                    <option value="11">11</option>-->
+<!--                                    <option value="12">12 </option>-->
+<!--                                    <option value="13">13</option>-->
+<!--                                    <option value="14">14</option>-->
+<!--                                    <option value="15">15</option>-->
+<!--                                    <option value="16">16</option>-->
+<!--                                    <option value="17">17</option>-->
+<!--                                    <option value="18">18</option>-->
+<!--                                    <option value="19">19</option>-->
+<!--                                    <option value="20">20</option>-->
+<!--                                    <option value="21">21</option>-->
+<!--                                    <option value="22">22</option>-->
+<!--                                    <option value="23">23</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4">-->
+<!--                                <select name="time_from" id="time_from" class="select form-control"-->
+<!--                                        style="float: left;width: initial;" value="--><?php //echo $time_from_min; ?><!--">-->
+<!--                                    <option value="" selected >--><?php //if(empty($time_from_min)){echo '--- Select Time(Mins) ---';}else{echo $time_from_min;} ?><!--</option>-->
+<!--                                    <option value="15">15 Mins</option>-->
+<!--                                    <option value="30">30 Mins</option>-->
+<!--                                    <option value="45">45 Mins</option>-->
+<!--                                    <option value="00">00 Mins</option>-->
+<!---->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6 mobile">-->
+<!--                            <label class="col-lg-3 control-label">Time To:</label>-->
+<!--                            <div class="col-lg-4">-->
+<!--                                <select name="time_to" id="time_to" class="select form-control"-->
+<!--                                        style="float: left;width: initial;" value="--><?php //echo $time_to; ?><!--">-->
+<!--                                    <option value="" selected >--><?php //if(empty($time_to)){echo '--- Select Time(Hrs) ---';}else{echo $time_to;} ?><!--</option>-->
+<!--                                    <option value="01">01</option>-->
+<!--                                    <option value="02">02</option>-->
+<!--                                    <option value="03">03</option>-->
+<!--                                    <option value="04">04</option>-->
+<!--                                    <option value="05">05</option>-->
+<!--                                    <option value="06">06</option>-->
+<!--                                    <option value="07">07</option>-->
+<!--                                    <option value="08">08</option>-->
+<!--                                    <option value="09">09</option>-->
+<!--                                    <option value="10">10</option>-->
+<!--                                    <option value="11">11</option>-->
+<!--                                    <option value="12">12 </option>-->
+<!--                                    <option value="13">13</option>-->
+<!--                                    <option value="14">14</option>-->
+<!--                                    <option value="15">15</option>-->
+<!--                                    <option value="16">16</option>-->
+<!--                                    <option value="17">17</option>-->
+<!--                                    <option value="18">18</option>-->
+<!--                                    <option value="19">19</option>-->
+<!--                                    <option value="20">20</option>-->
+<!--                                    <option value="21">21</option>-->
+<!--                                    <option value="22">22</option>-->
+<!--                                    <option value="23">23</option>-->
+<!--                                    <option value="00">00</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4">-->
+<!--                                <select name="time_to" id="time_to" class="select form-control"-->
+<!--                                        style="float: left;width: initial;" value="--><?php //echo $time_to_min; ?><!--">-->
+<!--                                    <option value="" selected >--><?php //if(empty($time_to_min)){echo '--- Select Time(Mins) ---';}else{echo $time_to_min;} ?><!--</option>-->
+<!--                                    <option value="15">15 Mins</option>-->
+<!--                                    <option value="30">30 Mins</option>-->
+<!--                                    <option value="45">45 Mins</option>-->
+<!--                                    <option value="00">00 Mins</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <br>
 
 
@@ -509,21 +509,21 @@ include("../heading_banner.php");
                     </div>
                     </form>
                     <div class="col-md-2">
-                        <form action="export_se_log.php" method="post" name="export_excel">
+                        <form action="export_se_log_update.php" method="post" name="export_excel">
                             <button type="submit" class="btn btn-primary"
                                     style="background-color:#1e73be;width:120px;"
                                     id="export" name="export" data-loading-text="Loading...">Export Data
                             </button>
                         </form>
                     </div>
-                    <div class="col-md-2">
-                        <form action="export_time_log.php" method="post" name="export_excel">
-                            <button type="submit" class="btn btn-primary"
-                                    style="background-color:#1e73be;width:145px;"
-                                    id="export" name="export" data-loading-text="Loading...">Export Data Time
-                            </button>
-                        </form>
-                    </div>
+<!--                    <div class="col-md-2">-->
+<!--                        <form action="export_time_log.php" method="post" name="export_excel">-->
+<!--                            <button type="submit" class="btn btn-primary"-->
+<!--                                    style="background-color:#1e73be;width:145px;"-->
+<!--                                    id="export" name="export" data-loading-text="Loading...">Export Data Time-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -541,7 +541,8 @@ include("../heading_banner.php");
                     <th>Part Name</th>
                     <th>Part Family</th>
                     <!--                            <th>Completion Time</th>-->
-                    <th>Created On</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
                     <th>Total Duration</th>
                 </tr>
                 </thead>
@@ -551,11 +552,11 @@ include("../heading_banner.php");
                 /* Default Query */
                 $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
 e_log.total_time as total_time , e_log.created_on as created_on
-from sg_station_event_log as e_log  
+from sg_station_event_log_update as e_log  
 left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'order by e_log.station_event_log_id  DESC";
+inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'order by e_log.sg_station_event_update_id  DESC";
                 $line = $_POST['station'];
 
                 /* If Line is selected. */
@@ -563,12 +564,12 @@ inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE
                     $line = $_POST['station'];
                     $q = "SELECT sg_events.line_id,et.event_type_name as e_type,( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
 e_log.total_time as total_time  , e_log.created_on as created_on
-from sg_station_event_log as e_log  
+from sg_station_event_log_update as e_log  
 left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
 inner Join event_type as et on e_log.event_type_id = et.event_type_id where
-DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' order by e_log.station_event_log_id DESC";
+DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' order by e_log.sg_station_event_update_id DESC";
                 }
 
                 /* Build the query to fetch the data*/
@@ -587,7 +588,7 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
                     $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
 pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
 sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
-from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
@@ -607,13 +608,13 @@ where 1 ";
                         $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
                     }
 
-                    if($time_from != "" && $time_to != ""){
-                        $q = $q . "AND DATE_FORMAT(e_log.created_on,'%H') BETWEEN '$time_from' and  '$time_to' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '$time_from_min' and  '$time_to_min'  AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
-                    }else if($time_from != "" && $time_to == ""){
-                        $q = $q . " AND DATE_FORMAT(e_log.created_on,'%H') >= '$time_from' AND DATE_FORMAT(e_log.created_on,'%i') > '$time_from_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
-                    }else if($time_from == "" && $time_to != ""){
-                        $q = $q . " DATE_FORMAT(e_log.created_on,'%H') < '$time_to'  AND DATE_FORMAT(e_log.created_on,'%i') < '$time_to_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
-                    }
+//                    if($time_from != "" && $time_to != ""){
+//                        $q = $q . "AND DATE_FORMAT(e_log.created_on,'%H') BETWEEN '$time_from' and  '$time_to' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '$time_from_min' and  '$time_to_min'  AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+//                    }else if($time_from != "" && $time_to == ""){
+//                        $q = $q . " AND DATE_FORMAT(e_log.created_on,'%H') >= '$time_from' AND DATE_FORMAT(e_log.created_on,'%i') > '$time_from_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+//                    }else if($time_from == "" && $time_to != ""){
+//                        $q = $q . " DATE_FORMAT(e_log.created_on,'%H') < '$time_to'  AND DATE_FORMAT(e_log.created_on,'%i') < '$time_to_min' AND DATE_FORMAT(e_log.created_on,'%i') BETWEEN '00' and  '59'";
+//                    }
 
 
                     if ($event_type != "") {
@@ -830,6 +831,7 @@ where 1 ";
                         <td><?php echo $rowc['pf_name']; ?></td>
 
                         <td><?php echo $rowc['created_on']; ?></td>
+                        <td><?php echo $rowc['end_time']; ?></td>
                         <td><?php
                             $total_time = '0 hrs';
                             $tt = $rowc['total_time'];
