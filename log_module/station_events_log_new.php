@@ -586,9 +586,8 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
                     //event type
 
                     $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
-pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
-sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
-from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
+e_log.end_time as end_time ,e_log.total_time as total_time  from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
@@ -633,7 +632,7 @@ where 1 ";
                         }
                     }
 
-                    $q = $q . " ORDER BY e_log.created_on  DESC";
+                    $q = $q . " ORDER BY e_log.sg_station_event_update_id  DESC";
 
 
 //							if ($event_type != "") {
@@ -830,7 +829,7 @@ where 1 ";
                         <td><?php echo $rowc['p_name']; ?></td>
                         <td><?php echo $rowc['pf_name']; ?></td>
 
-                        <td><?php echo $rowc['created_on']; ?></td>
+                        <td><?php echo $rowc['start_time']; ?></td>
                         <td><?php echo $rowc['end_time']; ?></td>
                         <td><?php
                             $total_time = '0 hrs';

@@ -15,7 +15,8 @@ $line_id = $_SESSION['station'];
 
 
 	$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
-pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, e_log.created_on as created_on ,e_log.total_time as total_time 
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
+e_log.end_time as end_time ,e_log.total_time as total_time  
 from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
@@ -44,15 +45,16 @@ if ($line_id != null) {
 		$q = $q . " AND  e_log.event_cat_id ='$event_category'";
 	}
 
-$q = $q . " ORDER BY e_log.created_on  DESC";
+$q = $q . " ORDER BY e_log.sg_station_event_update_id  DESC";
 
 $exportData = mysqli_query($db, $q);
-$header = "Line" . "\t" . "Event Type" . "\t" . "Event Category" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t" . "Created On" . "\t".  "Total Time" . "\t";
+$header = "Sr. No" . "\t" . "Line" . "\t" . "Event Type" . "\t" . "Event Category" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t" . "Start Time" .  "\t" . "End Time" . "\t".  "Total Time" . "\t";
 $result = '';
 $fields = mysqli_num_fields($db, $exportData);
 for ($i = 0; $i < $fields; $i++) {
 	$header .= mysqli_field_name($db, $exportData, $i) . "\t";
 }
+$i=1;
 while ($row = mysqli_fetch_row($exportData)) {
 	$line = '';
 	$j = 1;
@@ -75,7 +77,9 @@ while ($row = mysqli_fetch_row($exportData)) {
 		$line .= $value;
 		$j++;
 	}
-	$result .= trim($line) . "\n";
+	//$result .= trim($line) . "\n";
+	$result .= $i."\t".trim($line) . "\n";
+	$i++;
 }
 $result = str_replace("\r", "", $result);
 if ($result == "") {
