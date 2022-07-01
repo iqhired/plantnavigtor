@@ -50,7 +50,7 @@ if($x_trace_id > 0){
             $x_str .= ',' . '\'' . $xid . '\'';
 		}
 	}
-	$sql = "update `10x_images` SET 10x_id = '$x_trace_id' where material_id in ($x_str)";
+	$sql = "update `10x_images` SET 10x_id = '$x_trace_id' where 10x_id in ($x_str)";
 	$result1 = mysqli_query($db, $sql);
 	if($result1){
 		$_SESSION['temp_10x_id'] = '';
