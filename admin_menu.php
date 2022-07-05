@@ -1113,7 +1113,7 @@ $msg = explode(',', $msg); ?>
                                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
                             </svg>
                         </a>
-                        <div class="menu ">
+                        <div class="menu">
                             <ul>
 								<?php if (in_array('5', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>group_mail_module.php">Mail</a></li>
@@ -1196,13 +1196,13 @@ $msg = explode(',', $msg); ?>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                     </svg> </span>
                                     <span class="ms-2 fw-light">Config</span></a>
-                                    <span class="float-end" id="toggle-1-arrow">
+                                <span class="float-end" id="toggle-1-arrow">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                      class="text-danger" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                           d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                 </svg>
-                            </span>
+                               </span>
                                 </div>
                                 <div class="slidenew active" id="slide-1">
                                     <div class="row">
@@ -1325,6 +1325,13 @@ $msg = explode(',', $msg); ?>
                                                        class="mega-link"><h3 class="text-muted fs-6">Material Traceability</h3>
                                                     </a>
                                                 </div>
+                                                <?php }
+                                                if (in_array('74', $msg)) { ?>
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>document_module/document_category.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Document Config </h3>
+                                                    </a>
+                                                </div>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -1336,8 +1343,7 @@ $msg = explode(',', $msg); ?>
 							<?php if (in_array('20', $msg)) { ?>
                                 <div class='tutorial_section'>
                                     <div class="toggle" id="toggle-2">
-
-                                           <span>
+                                    <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
@@ -1364,7 +1370,6 @@ $msg = explode(',', $msg); ?>
                                               d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                     </svg>
                                 </span>
-
                                     </div>
                                     <div class="slidenew" id="slide-2">
                                         <div class="row">
@@ -1395,8 +1400,7 @@ $msg = explode(',', $msg); ?>
 							<?php if (in_array('19', $msg)) { ?>
                                 <div class='tutorial_section'>
                                     <div class="toggle" id="toggle-3">
-
-  <span>
+                                    <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
@@ -1435,22 +1439,19 @@ $msg = explode(',', $msg); ?>
                                                                class="mega-link"><h3 class="text-muted fs-6">Assignment
                                                                     Mail Config</h3></a>
                                                         </div>
-													<?php }
-													if (in_array('31', $msg)) { ?>
+													<?php } if (in_array('31', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>report_config_module/communicator_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">
                                                                     Communicator Config</h3></a>
                                                         </div>
-													<?php }
-													if (in_array('33', $msg)) { ?>
+													<?php } if (in_array('33', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>report_config_module/task_log_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">Task Log
                                                                     Config</h3></a>
                                                         </div>
-													<?php }
-													if (in_array('64', $msg)) { ?>
+													<?php } if (in_array('64', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>cronjobs/training_mail_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">Training
@@ -1538,7 +1539,7 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
 							<?php } ?>
-							<?php if (in_array('16', $msg)) { ?>
+                            <?php if (in_array('16', $msg)) { ?>
                                 <div class='tutorial_section'>
                                     <div class="toggle" id="toggle-2">
                                         <span>
@@ -1576,10 +1577,60 @@ $msg = explode(',', $msg); ?>
                                         <div class="row">
                                             <div class="col-md-6 mt-2">
                                                 <div class="p-3">
-
                                                     <div class="mb-3">
                                                         <a href="<?php echo $siteURL; ?>group.php" class="mega-link"><h3
                                                                     class="text-muted fs-6">User Group</h3></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } ?>
+							<?php if (in_array('75', $msg)) { ?>
+                                <div class='tutorial_section'>
+                                    <div class="toggle" id="toggle-2">
+                                        <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                            <rect x="9" y="9" width="6" height="6"></rect>
+                                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                                        </svg>
+                                    </span>
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg> </span>
+                                        <span class="ms-2 fw-light">Document</span>
+                                        <span class="float-end" id="toggle-2-arrow">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                         class="text-danger" viewBox="0 0 16 16" style="margin-left: 54px;">
+                                        <path fill-rule="evenodd"
+                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                    </svg>
+                                </span>
+
+                                    </div>
+
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>document_module/document_form.php" class="mega-link"><h3
+                                                                    class="text-muted fs-6">Upload Document</h3></a>
                                                     </div>
 
                                                 </div>
@@ -1590,6 +1641,7 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
 							<?php } ?>
+
                         </div>
 
                     </div>
