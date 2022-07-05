@@ -203,15 +203,16 @@ include("../heading_banner.php");
                         $part_family = $rowcpartfamily['part_family_name'];
 
                         $created_at= $rowc["created_at"];
+                        $station_event_id = $_GET['station_event_id'];
 
 
                         ?>
-                        <tr     >
+                        <tr>
                             <td> <?php echo ++$counter; ?></td>
                             <td >
-                                <a href="view_10x.php?id=<?php echo $rowc['10x_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <a href="view_10x.php?id=<?php echo $rowc['10x_id']; ?>&station_event_id=<?php echo $station_event_id;?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
 
-                                <a href="edit_10x.php?id=<?php echo $rowc['10x_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
+                                <a href="edit_10x.php?id=<?php echo $rowc['10x_id']; ?>&station_event_id=<?php echo $station_event_id;?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
 
                             </td>
 

@@ -209,7 +209,11 @@ $logo = $rowccus['logo'];
 
 
         }
+        .create {
+            float: right;
+            padding: 12px;
 
+        }
 
     </style>
 </head>
@@ -223,26 +227,33 @@ include("../heading_banner.php");
 ?>
 <!-- /main navbar -->
 <!-- Page container -->
-<div class="page-container">    
+<div class="page-container">
+    <?php
+    $id = $_GET['id'];
+    $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
+    $qurmain = mysqli_query($db, $querymain);
 
+    while ($rowcmain = mysqli_fetch_array($qurmain)) {
+    $formname = $rowcmain['line_no'];
+
+    ?>
+    <?php
+
+    $line_no = "SELECT line_id,line_name from cam_line where line_id = '$formname'";
+    $rowline = mysqli_query($db,$line_no);
+    $sqlline = mysqli_fetch_assoc($rowline);
+    $line_number = $sqlline['line_name'];
+
+    $station_event_id = $_GET['station_event_id'];
+    ?>
+    <div class="col-md-2 create">
+        <a href="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $formname; ?>&station_event_id=<?php echo $station_event_id;?>">
+            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x</button>
+        </a>
+    </div>
     <!-- Content area -->
-    <div class="content">
-        <?php
-        $id = $_GET['id'];
-        $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
-        $qurmain = mysqli_query($db, $querymain);
+    <div class="content" style="padding: 70px 30px !important;">
 
-        while ($rowcmain = mysqli_fetch_array($qurmain)) {
-            $formname = $rowcmain['line_no'];
-
-            ?>
-	<?php
-
-	$line_no = "SELECT line_id,line_name from cam_line where line_id = '$formname'";
-	$rowline = mysqli_query($db,$line_no);
-	$sqlline = mysqli_fetch_assoc($rowline);
-	$line_number = $sqlline['line_name'];
-	?>
 
             <div class="panel panel-flat">
                 <!--  <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
@@ -356,13 +367,14 @@ include("../heading_banner.php");
                     </form>
                 </div>
             </div>
-        <?php } ?>
+
     </div>
+
 </div>
 
+        <?php } ?>
 
-
-
+    </div>
 
 <?php include('../footer.php') ?>
 <!--<script type="text/javascript" src="--><?php //echo $siteURL; ?><!--assets/js/core/app.js"></script>-->
