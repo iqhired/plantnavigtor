@@ -304,11 +304,11 @@ include("../heading_banner.php");
 
         $station_event_id = $_GET['station_event_id'];
     ?>
-    <div class="col-md-2 create">
-        <a href="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $line_no; ?>&station_event_id=<?php echo $station_event_id;?>">
-            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x </button>
-        </a>
-    </div>
+<!--    <div class="col-md-2 create">-->
+<!--        <a href="--><?php //echo $siteURL; ?><!--10x/10x_search.php?station=--><?php //echo $line_no; ?><!--&station_event_id=--><?php //echo $station_event_id;?><!--">-->
+<!--            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x </button>-->
+<!--        </a>-->
+<!--    </div>-->
     <!-- Content area -->
     <div class="content" style="padding: 70px 30px !important;">
         <!-- Main charts -->
