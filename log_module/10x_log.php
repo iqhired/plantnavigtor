@@ -320,7 +320,7 @@ include("../heading_banner.php");
     <table class="table datatable-basic">
         <thead>
         <tr>
-
+<th>Action</th>
             <th>Station</th>
             <th>Part</th>
 
@@ -347,7 +347,10 @@ include("../heading_banner.php");
                     $lnn = $rowc04["line_name"];
                 }
                 ?>
+                <td>
 
+                    <a href="../10x/view_10x.php?id=<?php echo $rowc['10x_id'];?>&station=<?php echo $station;?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
                 <td><?php echo $lnn; ?></td>
                 <td><?php echo $rowc['part_number']." - ".$rowc['part_name']; ?></td>
                 <td><?php echo $rowc['created_at']; ?></td>

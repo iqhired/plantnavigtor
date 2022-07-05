@@ -269,60 +269,50 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Page content -->
     <?php
-    $st = $_REQUEST['station'];
 
-    $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
-    $result1 = $mysqli->query($sql1);
-    //                                            $entry = 'selected';
-    //    while ($row1 = $result1->fetch_assoc()) {
-    //        $line_name = $row1['line_name'];
-    //    }
 
     $id = $_GET['id'];
 
+    $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
+    $qurmain = mysqli_query($db, $querymain);
+    while ($rowcmain = mysqli_fetch_array($qurmain)) {
+    $line_no = $rowcmain['line_no'];
+    $station_event_id = $rowcmain['station_event_id'];
+    $x_id = $rowcmain['10x_id'];
+    $part_number = $rowcmain['part_no'];
+    $part_family = $rowcmain['part_family_id'];
+    $pm_part_name = $rowcmain['part_name'];
+
+    $notes = $rowcmain['notes'];
+    $created_at = $rowcmain['created_at'];
+
+    $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
+    $resultfamily = mysqli_query($db, $sqlfamily);
+    $rowcfamily = mysqli_fetch_array($resultfamily);
+    $pm_part_family_name = $rowcfamily['part_family_name'];
+
+    $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+    $resultnumber = mysqli_query($db, $sqlnumber);
+    $rowcnumber = mysqli_fetch_array($resultnumber);
+    $pm_part_number = $rowcnumber['part_number'];
+    $pm_part_name = $rowcnumber['part_name'];
+
+    $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_no'";
+    $resultnumber = mysqli_query($db, $sqlnumber);
+    $rowcnumber = mysqli_fetch_array($resultnumber);
+    $line_name = $rowcnumber['line_name'];
+
+        $station_event_id = $_GET['station_event_id'];
     ?>
-    <div class="col-md-2 create">
-        <a href="<?php echo $siteURL; ?>10x/view_10x.php?id=<?php echo $id; ?>">
-            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x Form</button>
-        </a>
-    </div>
+<!--    <div class="col-md-2 create">-->
+<!--        <a href="--><?php //echo $siteURL; ?><!--10x/10x_search.php?station=--><?php //echo $line_no; ?><!--&station_event_id=--><?php //echo $station_event_id;?><!--">-->
+<!--            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x </button>-->
+<!--        </a>-->
+<!--    </div>-->
     <!-- Content area -->
     <div class="content" style="padding: 70px 30px !important;">
         <!-- Main charts -->
-        <?php
 
-
-
-
-        $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
-        $qurmain = mysqli_query($db, $querymain);
-        while ($rowcmain = mysqli_fetch_array($qurmain)) {
-            $line_no = $rowcmain['line_no'];
-            $station_event_id = $rowcmain['station_event_id'];
-            $x_id = $rowcmain['10x_id'];
-            $part_number = $rowcmain['part_no'];
-            $part_family= $rowcmain['part_family_id'];
-            $pm_part_name= $rowcmain['part_name'];
-
-            $notes= $rowcmain['notes'];
-            $created_at= $rowcmain['created_at'];
-
-            $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-            $resultfamily = mysqli_query($db,$sqlfamily);
-            $rowcfamily = mysqli_fetch_array($resultfamily);
-            $pm_part_family_name = $rowcfamily['part_family_name'];
-
-            $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-            $resultnumber = mysqli_query($db,$sqlnumber);
-            $rowcnumber = mysqli_fetch_array($resultnumber);
-            $pm_part_number = $rowcnumber['part_number'];
-            $pm_part_name = $rowcnumber['part_name'];
-
-            $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_no'";
-            $resultnumber = mysqli_query($db,$sqlnumber);
-            $rowcnumber = mysqli_fetch_array($resultnumber);
-            $line_name = $rowcnumber['line_name'];
-            ?>
             <!-- Basic datatable -->
             <div class="panel panel-flat">
                 <div class="panel-heading">
@@ -475,8 +465,9 @@ include("../heading_banner.php");
 
 
             </div>
-        <?php } ?>
+
     </div>
+    <?php } ?>
 </div>
 
 

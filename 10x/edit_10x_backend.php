@@ -30,7 +30,7 @@ if(count($_POST)>0) {
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
-        $_SESSION['import_status_message'] = 'Form Updated Sucessfully.';
+        $_SESSION['import_status_message'] = '10x Updated Sucessfully.';
     } else {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
