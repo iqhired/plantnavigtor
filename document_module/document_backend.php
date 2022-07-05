@@ -45,11 +45,11 @@ if (isset($_FILES['file'])) {
         $file_tmp = $_FILES['file']['tmp_name'][$key];
         $file_type = $_FILES['file']['type'][$key];
         $file_ext = strtolower(end(explode('.', $file_name)));
-        $extensions = array("doc", "docx", "xls","xlsx","pdf");
+        $extensions = array("png", "jpg", "jpeg","pdf");
         if (in_array($file_ext, $extensions) === false) {
-            $errors[] = "extension not allowed, please choose a doc,excel or pdf file.";
+            $errors[] = "extension not allowed, please choose a .png,.jpg,.jpeg or pdf file.";
             $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Extension not allowed, please choose a doc,excel or pdf file.';
+            $import_status_message = 'Error: Extension not allowed, please choose a jpg,png or pdf file.';
         }
         if ($file_size > 2097152) {
             $errors[] = 'File size must be excately 2 MB';

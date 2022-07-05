@@ -162,17 +162,24 @@ include("../heading_banner.php");
     <!-- Content area -->
     <div class="content">
        <?php $station = $_GET['station'];
-       $sql_file_station = sprintf("SELECT * FROM `document_data` where station = '$station'");
+             $part = $_GET['part'];
+       $sql_file_station = sprintf("SELECT * FROM `document_data` where part_number = '$part'");
        $qurmain = mysqli_query($db, $sql_file_station);
        while($rowcmain = mysqli_fetch_array($qurmain)){
            $doc_type = $rowcmain['doc_type'];
 
        }
+       $sql_station = "SELECT * FROM `cam_line` where line_id = '$station'";
+       $qurst = mysqli_query($db, $sql_station);
+        while($rowcst = mysqli_fetch_array($qurst)){
+            $station_name = $rowcst['line_name'];
+        }
 
             ?>
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <h5 class="panel-title form_panel_title">Cell Documents</h5>
+                <h5 class="panel-title form_panel_title"><?php echo $station_name; ?>
+                </h5>
                 <div class="row ">
                     <form action="" id="form_settings" enctype="multipart/form-data"
                           class="form-horizontal" method="post" autocomplete="off">
@@ -200,14 +207,21 @@ include("../heading_banner.php");
                             </div>
                         </form>
                     </div>
+                <?php
+                $sql_part = "SELECT * FROM `pm_part_number` where pm_part_number_id = '$part'";
+                $qur_part = mysqli_query($db, $sql_part);
+                while($row_part = mysqli_fetch_array($qur_part)){
+                    $part_name = $row_part['part_name'];
+                }
+                ?>
 
-                <h5 class="panel-title form_panel_title">Part Documents</h5>
+                <h5 class="panel-title form_panel_title"><?php echo $part_name; ?></h5>
                 <div class="row ">
                     <form action="" id="form_settings" enctype="multipart/form-data"
                           class="form-horizontal" method="post" autocomplete="off">
                         <div class="col-md-12">
                             <?php
-                            $sql_file = sprintf("SELECT * FROM `document_files` where station = '$station' AND part_number != '0' ");
+                            $sql_file = sprintf("SELECT * FROM `document_files` where station = '$station' AND part_number = '$part' AND  part_number != '0' ");
                             $qurmain1 = mysqli_query($db, $sql_file);
                             while($rowcmain1 = mysqli_fetch_array($qurmain1)){
                                 $file_name = $rowcmain1['file_name']; ?>
