@@ -818,6 +818,14 @@ $msg = explode(',', $msg); ?>
                                 </a>
                             </div>
 						<?php }
+						if (in_array('74', $msg)) { ?>
+                            <div class="mt-3">
+                                <a href="<?php echo $siteURL; ?>log_module/10x_log.php"
+                                   class="text-muted mobile">
+                                    <span class="ms-2 ">10x Log</span>
+                                </a>
+                            </div>
+						<?php }
 						if (in_array('21', $msg)) { ?>
                             <div class="mt-3">
                                 <a href="<?php echo $siteURL; ?>table.php" class="text-muted mobile">
