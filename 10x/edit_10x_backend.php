@@ -23,6 +23,7 @@ if(count($_POST)>0) {
     $created_by = date("Y-m-d H:i:s");
     $edit_file = $_FILES['edit_image']['name'];
 	$updated_by_user = $_SESSION['id'];
+    $x_timestamp = time();
 
     //$sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
 	$sql0 = "UPDATE `10x` SET `created_by`='$updated_by_user',`line_no`='$line_number',`part_no`='$part_number',`part_family_id`='$part_family',`part_name`='$part_name',`notes`='$notes',`created_at`='$created_by' WHERE `10x_id` = '$x_id'";
@@ -47,7 +48,7 @@ if(count($_POST)>0) {
                 for($i=0;$i<$totalfiles;$i++){
                     $errors = array();
                     $file_name = $_FILES['edit_image']['name'][$i];
-                    $file_rename = $file_name;
+                    $file_rename = $x_timestamp.'_'.$file_name;
                     $file_size = $_FILES['edit_image']['size'][$i];
                     $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
                     $file_type = $_FILES['edit_image']['type'][$i];
@@ -65,7 +66,7 @@ if(count($_POST)>0) {
                     }
                     if (empty($errors) == true) {
 
-                        move_uploaded_file($file_tmp, "../assets/images/10x/" . $file_name);
+                        move_uploaded_file($file_tmp, "../assets/images/10x/" .  $x_timestamp.'_'. $file_name);
 
                         $sql = "INSERT INTO `10x_images`(`image_name`,`10x_id`,`created_at`) VALUES ('$file_rename' , '$x_id' , '$created_by' )";
                         $result1 = mysqli_query($db, $sql);

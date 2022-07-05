@@ -247,6 +247,11 @@ $s_event_id = $_GET['station_event_id'];
             display: inline-block;
             margin: 10px 10px 0 0;
         }
+        .create {
+            float: right;
+            padding: 12px;
+
+        }
 
     </style>
 </head>
@@ -272,14 +277,22 @@ include("../heading_banner.php");
     //    while ($row1 = $result1->fetch_assoc()) {
     //        $line_name = $row1['line_name'];
     //    }
+
+    $id = $_GET['id'];
+
     ?>
+    <div class="col-md-2 create">
+        <a href="<?php echo $siteURL; ?>10x/view_10x.php?id=<?php echo $id; ?>">
+            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x Form</button>
+        </a>
+    </div>
     <!-- Content area -->
-    <div class="content">
+    <div class="content" style="padding: 70px 30px !important;">
         <!-- Main charts -->
         <?php
 
 
-        $id = $_GET['id'];
+
 
         $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
         $qurmain = mysqli_query($db, $querymain);

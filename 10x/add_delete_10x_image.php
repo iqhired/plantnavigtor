@@ -28,8 +28,8 @@ if($request == 1){
         echo 0;
     }else{
         /* Upload file */
-		$destination = $location . $fname;
-		$f_name =  $fname;
+		$destination = $location.$x_timestamp.'_' . $fname;
+		$f_name =  $x_timestamp.'_'.$fname;
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
         if( move_uploaded_file($file_tmp, $destination)){
             $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$x_timestamp','$f_name' , '$created_by' )";
