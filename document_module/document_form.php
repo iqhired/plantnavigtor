@@ -286,16 +286,16 @@ include("../heading_banner.php");
                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                 <?php } ?>
                 <?php
-                if (!empty($import_status_message)) {
-                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                }
-                ?>
-                <?php
-                if (!empty($_SESSION[import_status_message])) {
-                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    $_SESSION['message_stauts_class'] = '';
-                    $_SESSION['import_status_message'] = '';
-                }
+//                if (!empty($import_status_message)) {
+//                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                }
+//                ?>
+<!--                --><?php
+//                if (!empty($_SESSION[import_status_message])) {
+//                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                    $_SESSION['message_stauts_class'] = '';
+//                    $_SESSION['import_status_message'] = '';
+//                }
                 ?>
 
 
@@ -307,7 +307,7 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                 <div class="col-md-6">
                                     <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                    <input type="text" name="station1" id="station1" class="form-control" value="<?php echo $line_name; ?>" placeholder="Enter Doc name" required>
+                                    <input type="text" name="station1" id="station1" class="form-control" value="<?php echo $line_name; ?>" placeholder="Enter Station" required>
                                 </div>
                                 <div id="error1" class="red">Document Name</div>
                             </div>
@@ -440,21 +440,13 @@ include("../heading_banner.php");
                                     <select name="category" id="category" class="select" data-style="bg-slate">
                                         <option value="" selected disabled>--- Select Category ---</option>
                                         <?php
-                                        $category = $_POST['category'];
-                                        $sql1 = "SELECT * FROM `document_type` where enabled = '1' ORDER BY `document_type_name` ASC ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if($category == $row1['document_type_name'])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
 
-                                            }
-                                            echo "<option value='" . $row1['document_type_id'] . "'  $entry>" . $row1['document_type_name'] . "</option>";
+                                        $sql2 = "SELECT * FROM `document_type` where enabled = '1' ORDER BY `document_type_name` ASC ";
+                                        $result2 = mysqli_query($db,$sql2);
+                                        //                                            $entry = 'selected';
+                                        while ($row1 = mysqli_fetch_assoc($result2)) {
+
+                                            echo "<option value='" . $row1['document_type_id'] . "' >" . $row1['document_type_name'] . "</option>";
                                         }
                                         ?>
                                     </select>

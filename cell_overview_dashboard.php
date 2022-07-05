@@ -220,16 +220,16 @@ include("heading_banner.php");
 									<?php if ($event_status != '0' && $event_status != '') { ?>
                                         <li>
                                             <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                               target="_BLANK"></a> <i class="icon-eye"></i>Good & Bad Piece
+                                               target="_BLANK"></a><i class="fa fa-line-chart"></i> Good & Bad Piece
                                             </a>
                                         </li>
                                         <li>
                                             <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="icon-eye"></i> Material Traceability</a>
+                                                <i class="fa fa-pencil-square"></i> Material Traceability</a>
                                         </li>
                                         <li>
                                             <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="icon-eye"></i> View Material Traceability</a>
+                                                <i class="fa fa-pencil-square"></i> View Material Traceability</a>
                                         </li>
 
                                         <li>
@@ -239,6 +239,14 @@ include("heading_banner.php");
                                         <li>
                                             <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                 <i class="icon-eye"></i> View 10x </a>
+                                        </li>
+                                        <li>
+                                            <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                <i class="fa fa-file"></i> Document Form </a>
+                                        </li>
+                                        <li>
+                                            <a href="document_module/view_document.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                <i class="fa fa-file"></i> View Document </a>
                                         </li>
 									<?php } ?>
 
@@ -386,16 +394,16 @@ include("heading_banner.php");
 								<?php if ($event_status != '0' && $event_status != '') { ?>
                                     <li>
                                         <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                           target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
+                                           target="_BLANK"><i class="fa fa-line-chart"></i>Good & Bad Piece
                                         </a>
                                     </li>
                                     <li>
                                         <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="icon-eye"></i> Material Traceability</a>
+                                            <i class="fa fa-pencil-square"></i> Material Traceability</a>
                                     </li>
                                     <li>
                                         <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="icon-eye"></i> View Material Traceability</a>
+                                            <i class="fa fa-pencil-square"></i> View Material Traceability</a>
                                     </li>
                                     <li>
                                         <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -404,6 +412,14 @@ include("heading_banner.php");
                                     <li>
                                         <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                             <i class="icon-eye"></i> View 10x </a>
+                                    </li>
+                                    <li>
+                                        <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                            <i class="fa fa-file"></i> Document Form </a>
+                                    </li>
+                                    <li>
+                                        <a href="document_module/view_document.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                            <i class="fa fa-file"></i> View Document </a>
                                     </li>
 								<?php } ?>
 
@@ -439,6 +455,8 @@ include("heading_banner.php");
                                     <a href="view_assigned_crew.php?station=<?php echo $rowc["line_id"]; ?>"><i
                                                 class="icon-eye"></i> View Assigned Crew</a>
                                 </li>
+
+
 
                             </ul>
 
@@ -594,15 +612,15 @@ include("heading_banner.php");
 											<?php if ($event_status != '0' && $event_status != '') { ?>
                                                 <li>
                                                     <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                                       target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
+                                                       target="_BLANK"><i class="fa fa-line-chart"></i>Good & Bad Piece
                                                     </a></li>
                                                 <li>
                                                     <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="icon-eye"></i> Material Traceability</a>
+                                                        <i class="fa fa-pencil-square"></i> Material Traceability</a>
                                                 </li>
                                                 <li>
                                                     <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="icon-eye"></i> View Material Traceability</a>
+                                                        <i class="fa fa-pencil-square"></i> View Material Traceability</a>
                                                 </li>
                                                 <li>
                                                     <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -611,6 +629,14 @@ include("heading_banner.php");
                                                 <li>
                                                     <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                         <i class="icon-eye"></i> View 10x </a>
+                                                </li>
+                                                <li>
+                                                    <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                        <i class="fa fa-file"></i> Document Form </a>
+                                                </li>
+                                                <li>
+                                                    <a href="document_module/view_document.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                        <i class="fa fa-file"></i> View Document </a>
                                                 </li>
 											<?php } ?>
                                             <li>
@@ -762,16 +788,16 @@ include("heading_banner.php");
 										<?php if ($event_status != '0' && $event_status != '') { ?>
                                             <li>
                                                 <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                                   target="_BLANK"><i class="icon-eye"></i>Good & Bad Piece
+                                                   target="_BLANK"><i class="fa fa-line-chart"></i>Good & Bad Piece
                                                 </a></li>
                                             <li>
 
                                                 <a href="material_tracability/material_tracability.php?station=<?php echo $line ; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                    <i class="icon-eye"></i> Material Traceability</a>
+                                                    <i class="fa fa-pencil-square"></i> Material Traceability</a>
                                             </li>
                                             <li>
                                                 <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                    <i class="icon-eye"></i> View Material Traceability</a>
+                                                    <i class="fa fa-pencil-square"></i> View Material Traceability</a>
                                             </li>
                                             <li>
                                                 <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -780,6 +806,14 @@ include("heading_banner.php");
                                             <li>
                                                 <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
                                                     <i class="icon-eye"></i> View 10x </a>
+                                            </li>
+                                            <li>
+                                                <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                    <i class="fa fa-file"></i> Document Form </a>
+                                            </li>
+                                            <li>
+                                                <a href="document_module/view_document.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                    <i class="fa fa-file"></i> View Document </a>
                                             </li>
 										<?php } ?>
 
