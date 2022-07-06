@@ -214,6 +214,9 @@ $logo = $rowccus['logo'];
             padding: 12px;
 
         }
+        .col-lg-3 {
+            width: 18%;
+        }
 
     </style>
 </head>
@@ -354,8 +357,7 @@ include("../heading_banner.php");
 														<span>
 															<a href="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
                                                                data-popup="lightbox" rel="gallery"
-                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3"></i></a>
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>
                                                     </div>
                                                 </div>

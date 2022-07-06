@@ -234,7 +234,7 @@ include("heading_banner.php");
 
                                         <li>
                                             <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="icon-eye"></i> 10x</a>
+                                                <i class="icon-eye"></i> Submit 10x</a>
                                         </li>
                                         <li>
                                             <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -408,7 +408,7 @@ include("heading_banner.php");
                                     </li>
                                     <li>
                                         <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="icon-eye"></i> 10x</a>
+                                            <i class="icon-eye"></i> Submit 10x</a>
                                     </li>
                                     <li>
                                         <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -626,7 +626,7 @@ include("heading_banner.php");
                                                 </li>
                                                 <li>
                                                     <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="icon-eye"></i> 10x</a>
+                                                        <i class="icon-eye"></i> Submit 10x</a>
                                                 </li>
                                                 <li>
                                                     <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
@@ -804,7 +804,7 @@ include("heading_banner.php");
                                             </li>
                                             <li>
                                                 <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                    <i class="icon-eye"></i> 10x</a>
+                                                    <i class="icon-eye"></i> Submit 10x</a>
                                             </li>
                                             <li>
                                                 <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
