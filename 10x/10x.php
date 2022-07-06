@@ -68,6 +68,7 @@ $rowccus = mysqli_fetch_array($resultcus);
 $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
+$x_timestamp = time();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +106,7 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 
     <style>
@@ -430,28 +431,32 @@ include("../heading_banner.php");
                             </div>
                             <br/>
                             <div class="row">
+                                <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
                                     <div id="my_camera"></div>
                                     <br/>
                                     <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                    <input type="hidden" name="image" class="image-tag">
+                                    <input type="hidden" name="image" id="image" class="image-tag">
                                 </div>
-                                <div class="col-md-6">
-                                    <div id="results">Your captured image will appear here...</div>
-                                </div>
-
                             </div>
                             <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-
+                                <label class="col-lg-2 control-label">Captured Image : </label>
                                 <div class="col-md-6">
-                                    <input type="file" id="file" name="file" class="form-control" accept="image/*" capture/>
-                                    <div class="container"></div>
+                                    <div id="results"></div>
                                 </div>
-
-
                             </div>
+<!--                            <div class="row">-->
+<!--                                <label class="col-lg-2 control-label">Image : </label>-->
+<!---->
+<!--                                <div class="col-md-6">-->
+<!--                                    <input type="file" id="file" name="file" class="form-control" accept="image/*" capture/>-->
+<!--                                    <div class="container"></div>-->
+<!--                                </div>-->
+<!---->
+<!---->
+<!--                            </div>-->
                             <br/>
+
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Notes : </label>
@@ -483,8 +488,8 @@ include("../heading_banner.php");
 <!-- Configure a few settings and attach camera -->
 <script language="JavaScript">
     Webcam.set({
-        width: 490,
-        height: 390,
+        width: 290,
+        height: 190,
         image_format: 'jpeg',
         jpeg_quality: 90
     });
@@ -493,8 +498,17 @@ include("../heading_banner.php");
 
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
-            $(".image-tag").val(data_uri);
+            var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "webcam_backend.php",
+                type: "POST",
+                data: formData,
+                success: function (msg) {
+                    alert(msg)
+                },
+
+            });
         } );
     }
 </script>
@@ -506,7 +520,9 @@ include("../heading_banner.php");
 
 
 </script>
+<script>
 
+</script>
 <script>
     // Upload
 
