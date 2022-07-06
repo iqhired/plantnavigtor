@@ -1,4 +1,5 @@
 <?php include("../config.php");
+$time_stamp = $_SESSION['timestamp_id'];
 $x_id = $_POST['10x_id'];
 
 //$delete_check = $_POST['id'];
@@ -7,7 +8,8 @@ $sql1 = mysqli_query($db,$sql);
 $row = mysqli_fetch_array($sql1);
 $id = $row['10x_images_id'];
 $file_name = $row['image_name'];
-unlink("../assets/images/10x".$file_name);
+
+unlink("../assets/images/10x/".$time_stamp.'/'.$file_name);
 
     $sql = "DELETE FROM `10x_images` where 10x_images_id ='$x_id'";
 

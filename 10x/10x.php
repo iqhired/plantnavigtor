@@ -2,6 +2,7 @@
 include("../config.php");
 include("../config/pn_config.php");
 $chicagotime = date("Y-m-d H:i:s");
+
 $temp = "";
 if (!isset($_SESSION['user'])) {
 	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
@@ -439,24 +440,56 @@ include("../heading_banner.php");
                                     <input type="hidden" name="image" id="image" class="image-tag">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" style="display: none">
                                 <label class="col-lg-2 control-label">Captured Image : </label>
                                 <div class="col-md-6">
                                     <div id="results"></div>
                                 </div>
                             </div>
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">Image : </label>-->
-<!---->
-<!--                                <div class="col-md-6">-->
-<!--                                    <input type="file" id="file" name="file" class="form-control" accept="image/*" capture/>-->
-<!--                                    <div class="container"></div>-->
-<!--                                </div>-->
-<!---->
-<!---->
-<!--                            </div>-->
-                            <br/>
 
+                            <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Previous Image : </label>
+                                <div class="col-md-6">
+                                    <?php
+                                  $time_stamp = $_SESSION['timestamp_id'];
+
+                                    $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
+
+                                    $qurimage = mysqli_query($db, $query2);
+                                    $i =0 ;
+                                    while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                        $image = $rowcimage['image_name'];
+                                        $d_tag = "delete_image_" . $i;
+                                        $r_tag = "remove_image_" . $i;
+                                        ?>
+
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="thumbnail">
+                                                <div class="thumb">
+                                                    <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
+                                                         alt="">
+                                                    <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
+                                                    <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+
+
+                                                    <!--                                                <div class="caption-overflow">-->
+                                                    <!--														<span>-->
+                                                    <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+                                                    <!--                                                               data-popup="lightbox" rel="gallery"-->
+                                                    <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+                                                    <!--                                                                        class="icon-plus3"></i></a>-->
+                                                    <!--														</span>-->
+                                                    <!---->
+                                                    <!--                                                </div>-->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;} ?>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Notes : </label>
@@ -505,7 +538,7 @@ include("../heading_banner.php");
                 type: "POST",
                 data: formData,
                 success: function (msg) {
-                    alert(msg)
+                    window.location.reload()
                 },
 
             });
@@ -593,7 +626,22 @@ include("../heading_banner.php");
     });
 
 </script>
-
+<script>
+    $(document).on('click', '.remove_image', function () {
+        var del_id = this.id.split("_")[2];
+        var x_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("delete_image"+del_id);
+        var info =  "id="+del_id+"&10x_id="+ x_img_id;
+        $.ajax({
+            type: "POST",
+            url: "delete_10x_image.php",
+            data: info,
+            success: function (data) {
+            }
+        });
+        location.reload(true);
+    });
+</script>
 
 
 <?php include('../footer.php') ?>

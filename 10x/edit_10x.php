@@ -328,16 +328,16 @@ include("../heading_banner.php");
                             <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                     <?php } ?>
                     <?php
-                    if (!empty($import_status_message)) {
-                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                    }
-                    ?>
-                    <?php
-                    if (!empty($_SESSION[import_status_message])) {
-                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                        $_SESSION['message_stauts_class'] = '';
-                        $_SESSION['import_status_message'] = '';
-                    }
+//                    if (!empty($import_status_message)) {
+//                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                    }
+//                    ?>
+<!--                    --><?php
+//                    if (!empty($_SESSION[import_status_message])) {
+//                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                        $_SESSION['message_stauts_class'] = '';
+//                        $_SESSION['import_status_message'] = '';
+//                    }
                     ?>
 
 
@@ -413,7 +413,8 @@ include("../heading_banner.php");
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-                                                        <img src="../assets/images/10x/<?php echo $image; ?>"
+
+                                                        <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $image; ?>"
                                                              alt="">
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>

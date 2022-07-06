@@ -276,7 +276,6 @@ include("../heading_banner.php");
                                 <div class="form_row row">
                                     <label class="col-lg-2 control-label">Notes : </label>
                                     <div class="col-md-6">
-
                                         <?php
                                         $notes = $rowcmain["notes"];
                                         ?>
@@ -351,11 +350,11 @@ include("../heading_banner.php");
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <img src="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
+                                                    <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
                                                          alt="">
                                                     <div class="caption-overflow">
 														<span>
-															<a href="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
+															<a href="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>

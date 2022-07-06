@@ -14,13 +14,18 @@ $fileName = uniqid() . '.png';
 $x_timestamp = time();
 $temp_xid = $_SESSION['temp_10x_id'];
 $_SESSION['temp_10x_id'] = $temp_xid . ',' .$x_timestamp;
+if(empty($_SESSION['timestamp_id'])){
+    $_SESSION['timestamp_id'] = $x_timestamp;
+}
 
-
-$file = $folderPath .$x_timestamp.'_'. $fileName;
-$file_name = $x_timestamp.'_'. $fileName;
+$timestamp = $_SESSION['timestamp_id'];
+$file = $folderPath.'/'.$timestamp.'/'.$timestamp.'_'. $fileName;
+$file_name = $timestamp.'_'. $fileName;
+mkdir($folderPath.'/'.$timestamp, 0777, true);
 file_put_contents($file, $image_base64);
 if(file_put_contents($file, $image_base64)){
-    $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$x_timestamp','$file_name' , '$created_by' )";
+
+    $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$timestamp','$file_name' , '$created_by' )";
     $result1 = mysqli_query($db, $sql);
    if ($result1) {
     echo $file;
