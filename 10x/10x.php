@@ -105,6 +105,7 @@ $logo = $rowccus['logo'];
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 
     <style>
@@ -360,16 +361,16 @@ include("../heading_banner.php");
                     </div>
 				<?php } ?>
 				<?php
-				if (!empty($import_status_message)) {
-					echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-				}
+//				if (!empty($import_status_message)) {
+//					echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//				}
 				?>
 				<?php
-								if (!empty($_SESSION[import_status_message])) {
-									echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-									$_SESSION['message_stauts_class'] = '';
-									$_SESSION['import_status_message'] = '';
-								}
+//								if (!empty($_SESSION[import_status_message])) {
+//									echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//									$_SESSION['message_stauts_class'] = '';
+//									$_SESSION['import_status_message'] = '';
+//								}
 				?>
 
 
@@ -429,10 +430,22 @@ include("../heading_banner.php");
                             </div>
                             <br/>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div id="my_camera"></div>
+                                    <br/>
+                                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                    <input type="hidden" name="image" class="image-tag">
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="results">Your captured image will appear here...</div>
+                                </div>
+
+                            </div>
+                            <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
 
                                 <div class="col-md-6">
-                                    <input type="file" id="file" name="file" class="form-control"/>
+                                    <input type="file" id="file" name="file" class="form-control" accept="image/*" capture/>
                                     <div class="container"></div>
                                 </div>
 
@@ -467,7 +480,24 @@ include("../heading_banner.php");
         </div>
     </div>
 </div>
+<!-- Configure a few settings and attach camera -->
+<script language="JavaScript">
+    Webcam.set({
+        width: 490,
+        height: 390,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
 
+    Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script>
 
 <script>
     $(document).ready(function () {
