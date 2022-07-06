@@ -818,6 +818,14 @@ $msg = explode(',', $msg); ?>
                                 </a>
                             </div>
 						<?php }
+						if (in_array('74', $msg)) { ?>
+                            <div class="mt-3">
+                                <a href="<?php echo $siteURL; ?>log_module/10x_log.php"
+                                   class="text-muted mobile">
+                                    <span class="ms-2 ">10x Log</span>
+                                </a>
+                            </div>
+						<?php }
 						if (in_array('21', $msg)) { ?>
                             <div class="mt-3">
                                 <a href="<?php echo $siteURL; ?>table.php" class="text-muted mobile">
@@ -1153,6 +1161,9 @@ $msg = explode(',', $msg); ?>
 								<?php }
 								if (in_array('73', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php">Material Traceability Log</a></li>
+								<?php }
+								if (in_array('74', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/10x_log.php">10x Log</a></li>
 								<?php }
 								if (in_array('21', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
