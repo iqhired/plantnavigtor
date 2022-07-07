@@ -75,7 +75,7 @@ $s_event_id = $_GET['station_event_id'];
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 
     <style>
@@ -301,6 +301,7 @@ include("../heading_banner.php");
     $resultnumber = mysqli_query($db, $sqlnumber);
     $rowcnumber = mysqli_fetch_array($resultnumber);
     $line_name = $rowcnumber['line_name'];
+    $_SESSION['edit_10x_id'] = $id;
 
         $station_event_id = $_GET['station_event_id'];
     ?>
@@ -385,10 +386,17 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Image : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="edit_image[]" id="file-input" class="form-control" onchange="preview_image();" multiple="multiple">
-                                        <!--                                    <div id="preview"></div>-->
+                                        <div id="my_camera"></div>
+                                        <br/>
+                                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*" capture="camera" />
                                     </div>
-
+                                </div>
+                                <div class="row" style="display: none">
+                                    <label class="col-lg-2 control-label">Captured Image : </label>
+                                    <div class="col-md-6">
+                                        <div id="results"></div>
+                                    </div>
                                 </div>
                                 <br/>
                                 <div class="row">
@@ -420,15 +428,6 @@ include("../heading_banner.php");
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
-                                                        <!--                                                <div class="caption-overflow">-->
-                                                        <!--														<span>-->
-                                                        <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
-                                                        <!--                                                               data-popup="lightbox" rel="gallery"-->
-                                                        <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
-                                                        <!--                                                                        class="icon-plus3"></i></a>-->
-                                                        <!--														</span>-->
-                                                        <!---->
-                                                        <!--                                                </div>-->
 
                                                     </div>
                                                 </div>
@@ -471,7 +470,34 @@ include("../heading_banner.php");
     <?php } ?>
 </div>
 
+<!-- Configure a few settings and attach camera -->
+<script language="JavaScript">
+    Webcam.set({
+        width: 290,
+        height: 190,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
 
+    Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            var formData =  $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "edit_10x_backend.php",
+                type: "POST",
+                data: formData,
+                success: function () {
+
+                },
+
+            });
+            window.location.reload()
+        } );
+    }
+</script>
 
 <script>
     $(document).ready(function() {
@@ -492,7 +518,7 @@ include("../heading_banner.php");
             success: function (data) {
             }
         });
-        location.reload(true);
+        window.location.reload()
     });
 </script>
 <script>

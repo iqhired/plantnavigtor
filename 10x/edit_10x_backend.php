@@ -23,6 +23,7 @@ if(count($_POST)>0) {
     $created_by = date("Y-m-d H:i:s");
     $edit_file = $_FILES['edit_image']['name'];
 	$updated_by_user = $_SESSION['id'];
+    $edit_10x_id =  $_SESSION['edit_10x_id'];
     $x_timestamp = time();
 
     //$sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
@@ -35,56 +36,42 @@ if(count($_POST)>0) {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
     }
-//    $qur04 = mysqli_query($db, "SELECT * FROM  material_tracability where material_id= '$material_id' ");
+//    $qur04 = mysqli_query($db, "SELECT * FROM  10x where 10x_id= '$x_id' ");
 //    $rowc04 = mysqli_fetch_array($qur04);
-//    $material_id = $rowc04["material_id"];
+//    $x1_id = $rowc04["10x_id"];
 
 //multiple image
-    if($edit_file != "") {
-        if (isset($_FILES['edit_image'])) {
-            $totalfiles = count($_FILES['edit_image']['name']);
+    $img = $_POST['image'];
+    $folderPath =  "../assets/images/10x/";
 
-            if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
-                for($i=0;$i<$totalfiles;$i++){
-                    $errors = array();
-                    $file_name = $_FILES['edit_image']['name'][$i];
-                    $file_rename = $x_timestamp.'_'.$file_name;
-                    $file_size = $_FILES['edit_image']['size'][$i];
-                    $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
-                    $file_type = $_FILES['edit_image']['type'][$i];
-                    $file_ext = strtolower(end(explode('.', $file_name)));
-                    $extensions = array("jpeg", "jpg", "png", "pdf");
-                    if (in_array($file_ext, $extensions) === false) {
-                        $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-                        $message_stauts_class = 'alert-danger';
-                        $import_status_message = 'Error: Extension not allowed, please choose a JPEG or PNG file.';
-                    }
-                    if ($file_size > 2097152) {
-                        $errors[] = 'File size must be excately 2 MB';
-                        $message_stauts_class = 'alert-danger';
-                        $import_status_message = 'Error: File size must be less than 2 MB';
-                    }
-                    if (empty($errors) == true) {
+    $image_parts = explode(";base64,", $img);
+    $image_type_aux = explode("image/", $image_parts[0]);
+    $image_type = $image_type_aux[1];
 
-                        move_uploaded_file($file_tmp, "../assets/images/10x/" .  $x_timestamp.'_'. $file_name);
+    $image_base64 = base64_decode($image_parts[1]);
+    $fileName = uniqid() . '.png';
 
-                        $sql = "INSERT INTO `10x_images`(`image_name`,`10x_id`,`created_at`) VALUES ('$file_rename' , '$x_id' , '$created_by' )";
-                        $result1 = mysqli_query($db, $sql);
-                        if ($result1) {
-                            $message_stauts_class = 'alert-success';
-                            $import_status_message = 'Image Added Successfully.';
-                        } else {
-                            $message_stauts_class = 'alert-danger';
-                            $import_status_message = 'Error: Please Try Again.';
-                        }
+    $x_timestamp = time();
+    $temp_xid = $_SESSION['temp_10x_id'];
+    $_SESSION['temp_10x_id'] = $temp_xid . ',' .$x_timestamp;
+    if(empty($_SESSION['timestamp_id'])){
+        $_SESSION['timestamp_id'] = $x_timestamp;
+    }
 
+    $timestamp = $_SESSION['timestamp_id'];
+    $file = $folderPath.'/'.$edit_10x_id.'/'.$timestamp.'_'. $fileName;
+    $file_name = $timestamp.'_'. $fileName;
+  //  mkdir($folderPath.'/'.$timestamp, 0777, true);
+    file_put_contents($file, $image_base64);
+    if(file_put_contents($file, $image_base64)){
 
-                    }
-
-                }
-            }
+        $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$edit_10x_id','$file_name' , '$created_by' )";
+        $result1 = mysqli_query($db, $sql);
+        if ($result1) {
+            echo $file;
 
         }
+
     }
 
 }
