@@ -529,21 +529,25 @@ include("../heading_banner.php");
 
     Webcam.attach( '#my_camera' );
 
-    function take_snapshot() {
-        Webcam.snap( function(data_uri) {
-            var formData =  $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            $.ajax({
-                url: "webcam_backend.php",
-                type: "POST",
-                data: formData,
-                success: function (msg) {
-                    window.location.reload()
-                },
+    if('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices){
+        console.log("Let's get this party started")
+        function take_snapshot() {
+            Webcam.snap( function(data_uri) {
+                var formData =  $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+                $.ajax({
+                    url: "webcam_backend.php",
+                    type: "POST",
+                    data: formData,
+                    success: function (msg) {
+                        window.location.reload()
+                    },
 
-            });
-        } );
+                });
+            } );
+        }
     }
+
 </script>
 
 <script>
