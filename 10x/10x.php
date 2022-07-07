@@ -437,7 +437,7 @@ include("../heading_banner.php");
                                     <div id="my_camera"></div>
                                     <br/>
                                     <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                    <input type="hidden" name="image" id="image" class="image-tag">
+                                    <input type="hidden" name="image" id="image" class="image-tag" accept="image/*" capture="camera" />
                                 </div>
                             </div>
                             <div class="row" style="display: none">
