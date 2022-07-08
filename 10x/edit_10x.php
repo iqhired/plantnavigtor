@@ -389,7 +389,10 @@ include("../heading_banner.php");
                                         <div id="my_camera"></div>
                                         <br/>
                                         <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*" capture="camera" />
+                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                        <input type="file" name="edit_image[]" id="file-input" class="image-tag" accept="*/*" capture="environment" value="Take Snapshot" onchange="preview_image();" multiple="multiple">
+
+                                        <div class="container"></div>
                                     </div>
                                 </div>
                                 <div class="row" style="display: none">
@@ -422,7 +425,7 @@ include("../heading_banner.php");
                                                 <div class="thumbnail">
                                                     <div class="thumb">
 
-                                                        <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $image; ?>"
+                                                        <img src="../assets/images/10x/<?php echo $image; ?>"
                                                              alt="">
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
