@@ -436,8 +436,10 @@ include("../heading_banner.php");
                                 <div class="col-md-6">
                                     <div id="my_camera"></div>
                                     <br/>
-                                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                    <input type="hidden" name="image" id="image" class="image-tag" accept="*/*,capture=camera"/>
+                                  <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                    <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                    <input type="file" name="image" id="file" class="image-tag" multiple accept="*/*" capture="environment" value="Take Snapshot"/>
+                                    <div class="container"></div>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -529,7 +531,7 @@ include("../heading_banner.php");
 
     Webcam.attach( '#my_camera' );
 
-    if('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices){
+
         console.log("Let's get this party started")
         function take_snapshot() {
             Webcam.snap( function(data_uri) {
@@ -546,7 +548,7 @@ include("../heading_banner.php");
                 });
             } );
         }
-    }
+
 
 </script>
 
