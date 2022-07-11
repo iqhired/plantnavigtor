@@ -438,10 +438,12 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
+                                    <?php if(($idddd == 0)){?>
                                     <div id="my_camera"></div>
                                     <br/>
-                                  <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                   <input type=button value="Take Snapshot" onClick="take_snapshot()">
                                     <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                    <?php } ?>
                                     <?php if(($idddd != 0)){?>
                                     <input type="file" name="image" id="file" class="image-tag" multiple accept="*/*" capture="environment" value="Take Snapshot"/>
                                     <div class="container"></div>
