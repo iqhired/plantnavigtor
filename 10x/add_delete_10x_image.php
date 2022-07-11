@@ -22,6 +22,19 @@ if($request == 1){
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
         $uploadOk = 0;
+        compressImage($file_tmp,$location,60);
+    }
+
+    // Compress image
+    function compressImage($source, $destination, $quality) {
+        $info = getimagesize($source);
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source);
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source);
+        imagejpeg($image, $destination, $quality);
     }
 
     if($uploadOk == 0){
@@ -31,6 +44,7 @@ if($request == 1){
 		$destination = $location.$x_timestamp.'_' . $fname;
 		$f_name =  $x_timestamp.'_'.$fname;
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
+
         if( move_uploaded_file($file_tmp, $destination)){
             $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$x_timestamp','$f_name' , '$created_by' )";
             $result1 = mysqli_query($db, $sql);
