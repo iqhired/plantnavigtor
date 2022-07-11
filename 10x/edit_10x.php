@@ -331,16 +331,16 @@ include("../heading_banner.php");
                             <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                     <?php } ?>
                     <?php
-//                    if (!empty($import_status_message)) {
-//                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-//                    }
-//                    ?>
-<!--                    --><?php
-//                    if (!empty($_SESSION[import_status_message])) {
-//                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-//                        $_SESSION['message_stauts_class'] = '';
-//                        $_SESSION['import_status_message'] = '';
-//                    }
+                   if (!empty($import_status_message)) {
+                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                    }
+                    ?>
+                   <?php
+                    if (!empty($_SESSION[import_status_message])) {
+                       echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                        $_SESSION['message_stauts_class'] = '';
+                        $_SESSION['import_status_message'] = '';
+                    }
                     ?>
 
 
@@ -395,10 +395,10 @@ include("../heading_banner.php");
                                         <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
                                         <?php } ?>
                                         <?php if(($idddd != 0)){?>
-                                        <input type="file" name="edit_image[]" id="file-input" class="image-tag" accept="*/*" capture="environment" value="Take Snapshot" onchange="preview_image();" multiple="multiple">
+                                        <input type="file" name="edit_image[]" id="file-input" class="image-tag" accept="*/*" capture="environment" value="Take Snapshot" multiple="multiple">
 
                                         <div class="container"></div>
-                                        <?php } ?>
+                                         <?php } ?>
                                     </div>
                                 </div>
                                 <div class="row" style="display: none">
@@ -569,43 +569,6 @@ include("../heading_banner.php");
     }
 
 
-    //image preview
-
-    function previewImages() {
-
-
-        $("#preview").html(" ");
-
-        var preview = document.querySelector('#preview');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-            // Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#file-input').addEventListener("change", previewImages);
 
 
 </script>

@@ -43,7 +43,6 @@ if(count($_POST)>0) {
     if($edit_file != "") {
         if (isset($_FILES['edit_image'])) {
             $totalfiles = count($_FILES['edit_image']['name']);
-
             if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
                 for($i=0;$i<$totalfiles;$i++){
                     $errors = array();
