@@ -433,7 +433,7 @@ include("../heading_banner.php");
                                                         <?php if($idddd == 0){?>
                                                         <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $image; ?>"
                                                              alt="">
-                                                        <?php } else { ?>
+                                                        <?php } elseif(($idddd != 0)) { ?>
                                                         <img src="../assets/images/10x/<?php echo $image; ?>"
                                                              alt="">
                                                         <?php } ?>
