@@ -38,7 +38,9 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
 $s_event_id = $_GET['station_event_id'];
 
 
-
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+    , $_SERVER["HTTP_USER_AGENT"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -390,9 +392,11 @@ include("../heading_banner.php");
                                         <br/>
                                         <input type=button value="Take Snapshot" onClick="take_snapshot()">
                                         <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                        <?php if(($idddd != 0)){?>
                                         <input type="file" name="edit_image[]" id="file-input" class="image-tag" accept="*/*" capture="environment" value="Take Snapshot" onchange="preview_image();" multiple="multiple">
 
                                         <div class="container"></div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="row" style="display: none">
@@ -424,14 +428,15 @@ include("../heading_banner.php");
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-
+                                                        <?php if($idddd == 0){?>
+                                                        <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $image; ?>"
+                                                             alt="">
+                                                        <?php } else { ?>
                                                         <img src="../assets/images/10x/<?php echo $image; ?>"
                                                              alt="">
+                                                        <?php } ?>
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
-
-
-
                                                     </div>
                                                 </div>
                                             </div>

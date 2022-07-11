@@ -70,6 +70,10 @@ $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
 $x_timestamp = time();
+
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+    , $_SERVER["HTTP_USER_AGENT"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -438,8 +442,10 @@ include("../heading_banner.php");
                                     <br/>
                                   <input type=button value="Take Snapshot" onClick="take_snapshot()">
                                     <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                    <?php if(($idddd != 0)){?>
                                     <input type="file" name="image" id="file" class="image-tag" multiple accept="*/*" capture="environment" value="Take Snapshot"/>
                                     <div class="container"></div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">

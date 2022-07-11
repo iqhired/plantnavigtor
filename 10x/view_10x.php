@@ -65,6 +65,11 @@ $rowccus = mysqli_fetch_array($resultcus);
 $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+    , $_SERVER["HTTP_USER_AGENT"]);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -350,8 +355,13 @@ include("../heading_banner.php");
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <img src="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
+                                                    <?php if($idddd == 0){?>
+                                                    <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
                                                          alt="">
+                                                    <?php } else { ?>
+                                                        <img src="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
+                                                             alt="">
+                                                    <?php } ?>
                                                     <div class="caption-overflow">
 														<span>
 															<a href="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
