@@ -13,9 +13,9 @@ $x_timestamp = time();
 //echo "</pre>";
 
 if(count($_POST)>0 || count($_GET)>0) {
-    $x_id = $_POST['10x_id'];
+    $x_id = $_GET['10x_id'];
     if(empty($x_id)){
-		$x_id = $_GET['10x_id'];
+		$x_id = $_POST['10x_id'];
 	}
     $station_event_id = $_POST['station_event_id'];
     $customer_account_id = $_POST['customer_account_id'];
