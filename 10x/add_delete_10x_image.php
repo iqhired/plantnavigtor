@@ -17,8 +17,12 @@ if($request == 1){
     $x_timestamp = time();
     $temp_xid = $_SESSION['temp_10x_id'];
     $_SESSION['temp_10x_id'] = $temp_xid . ',' .$x_timestamp;
+	if(empty($_SESSION['timestamp_id'])){
+		$_SESSION['timestamp_id'] = $x_timestamp;
+	}
+	$x_timestamp = $_SESSION['timestamp_id'] ;
 
-    // Check image format
+	// Check image format
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
         $uploadOk = 0;
