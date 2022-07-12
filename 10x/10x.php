@@ -41,7 +41,7 @@ $station = $_GET['station'];
 $f_type = $_GET['f_type'];
 $_SESSION['10x_station'] = $station;
 
-if($f_type == 'n'){
+if($f_type == 'n' && empty($_SESSION['timestamp_id'])){
 	$_SESSION['timestamp_id'] = '';
 }
 
@@ -470,41 +470,43 @@ include("../heading_banner.php");
                                 <div class="col-md-6">
 									<?php
 									$time_stamp = $_SESSION['timestamp_id'];
+									if(!empty($time_stamp)){
+										$query2 = sprintf("SELECT * FROM `10x_images` inner join 10x on 10x_images.10x_id = 10x.10x_id where line_no ='$station'");
 
-									$query2 = sprintf("SELECT * FROM `10x_images` inner join 10x on 10x_images.10x_id = 10x.10x_id where line_no ='$station'");
+										$qurimage = mysqli_query($db, $query2);
+										$i =0 ;
+										while ($rowcimage = mysqli_fetch_array($qurimage)) {
+											$image = $rowcimage['image_name'];
+											$d_tag = "delete_image_" . $i;
+											$r_tag = "remove_image_" . $i;
+											?>
 
-									$qurimage = mysqli_query($db, $query2);
-									$i =0 ;
-									while ($rowcimage = mysqli_fetch_array($qurimage)) {
-										$image = $rowcimage['image_name'];
-										$d_tag = "delete_image_" . $i;
-										$r_tag = "remove_image_" . $i;
-										?>
-
-                                        <div class="col-lg-3 col-sm-6">
-                                            <div class="thumbnail">
-                                                <div class="thumb">
-                                                    <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
-                                                         alt="">
-                                                    <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
-                                                    <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
+                                                    <div class="thumb">
+                                                        <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
+                                                             alt="">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
-                                                    <!--                                                <div class="caption-overflow">-->
-                                                    <!--														<span>-->
-                                                    <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
-                                                    <!--                                                               data-popup="lightbox" rel="gallery"-->
-                                                    <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
-                                                    <!--                                                                        class="icon-plus3"></i></a>-->
-                                                    <!--														</span>-->
-                                                    <!---->
-                                                    <!--                                                </div>-->
+                                                        <!--                                                <div class="caption-overflow">-->
+                                                        <!--														<span>-->
+                                                        <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+                                                        <!--                                                               data-popup="lightbox" rel="gallery"-->
+                                                        <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+                                                        <!--                                                                        class="icon-plus3"></i></a>-->
+                                                        <!--														</span>-->
+                                                        <!---->
+                                                        <!--                                                </div>-->
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-										<?php
-										$i++;} ?>
+											<?php
+											$i++;}
+									}
+									?>
                                 </div>
                             </div>
 

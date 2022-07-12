@@ -18,7 +18,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
-
+$_SESSION['timestamp_id'] = '';
 $timestamp = date('H:i:s');
 $message = date("Y-m-d H:i:s");
 $is_cust_dash = $_SESSION['is_cust_dash'];
