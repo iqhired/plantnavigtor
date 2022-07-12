@@ -69,7 +69,7 @@ if(count($_POST)>0) {
                     }
                     if (empty($errors) == true) {
 
-                        move_uploaded_file($file_tmp, "../assets/images/10x/" . $x_timestamp.'_'.$file_name);
+                        move_uploaded_file($file_tmp, "../assets/images/10x/" .$x_id. '/'.$x_timestamp.'_'.$file_name);
 
                         $sql = "INSERT INTO `10x_images`(`image_name`,`10x_id`,`created_at`) VALUES ('$file_rename' , '$x_id' , '$created_by' )";
                         $result1 = mysqli_query($db, $sql);
