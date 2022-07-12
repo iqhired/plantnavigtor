@@ -41,8 +41,10 @@ if($request == 1){
         echo 0;
     }else{
         /* Upload file */
-		$destination = $location.$x_timestamp.'_' . $fname;
+		mkdir($location.'/'.$x_timestamp, 0777, true);
 		$f_name =  $x_timestamp.'_'.$fname;
+		$destination = $location.$x_timestamp.'/'.$f_name;
+
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
 
         if( move_uploaded_file($file_tmp, $destination)){
