@@ -388,14 +388,14 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Image : </label>
                                     <div class="col-md-6">
-                                        <?php if(($idddd == 0)){?>
+                                        <?php if($idddd == 0){?>
                                         <div id="my_camera"></div>
                                         <br/>
                                         <input type=button value="Take Snapshot" onClick="take_snapshot()">
                                         <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
                                         <?php } ?>
-                                        <?php if(($idddd != 0)){?>
-                                        <input type="file" name="edit_image[]" id="file-input" class="image-tag" accept="*/*" capture="environment" value="Take Snapshot" multiple="multiple">
+                                        <?php if($idddd != 0){?>
+                                        <input type="file" name="edit_image[]" id="file-input" accept="*/*" capture="environment"  multiple="multiple">
 
                                         <div class="container"></div>
                                          <?php } ?>
@@ -479,7 +479,7 @@ include("../heading_banner.php");
     </div>
     <?php } ?>
 </div>
-
+<?php if($idddd == 0){ ?>
 <!-- Configure a few settings and attach camera -->
 <script language="JavaScript">
     Webcam.set({
@@ -496,7 +496,7 @@ include("../heading_banner.php");
             var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "edit_10x_backend.php",
+                url: "webcam_backend.php",
                 type: "POST",
                 data: formData,
                 success: function () {
@@ -508,7 +508,7 @@ include("../heading_banner.php");
         } );
     }
 </script>
-
+<?php } ?>
 <script>
     $(document).ready(function() {
         $('.select').select2();

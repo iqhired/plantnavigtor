@@ -192,7 +192,7 @@ include("../heading_banner.php");
                     $status = $rowc["status"];
                     $created_at= $rowc["created_at"];
 
-                    if($material_status == 'pass'){
+                    if($status == 'active'){
                         $style = "style='background-color:#a8d8a8;'";
                     }else{
 
@@ -224,120 +224,13 @@ include("../heading_banner.php");
 
     </div>
 </div>
-<!-- Dashboard content -->
-<!-- /dashboard content -->
-<script> $(document).on('click', '#delete', function () {
-        var element = $(this);
-        var del_id = element.attr("data-id");
-        var info = 'id=' + del_id;
-        $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
-        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-    });</script>
-<script>
-    jQuery(document).ready(function ($) {
-        $(document).on('click', '#edit', function () {
-            var element = $(this);
-            var edit_id = element.attr("data-id");
-            var name = $(this).data("name");
-            $("#edit_name").val(name);
-            $("#edit_id").val(edit_id);
-            //alert(role);
-        });
-    });
-</script>
-<script>
-    $(function () {
-        $('input:radio').change(function () {
-            var abc = $(this).val()
-            //alert(abc)
-            if (abc == "button1")
-            {
-                $('#date_from').prop('disabled', false);
-                $('#date_to').prop('disabled', false);
-                $('#timezone').prop('disabled', true);
-            }
-        });
-    });
-</script>
+
 </div>
 <!-- /content area -->
 
 
 
-<script>
 
-    $('#station').on('change', function (e) {
-        $("#user_form").submit();
-    });
-    $('#part_family').on('change', function (e) {
-        $("#user_form").submit();
-    });
-</script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-
-    $(document).on("click","#submit_btn",function() {
-
-        var station = $("#station").val();
-        var part_family = $("#part_family").val();
-        var part_number = $("#part_number").val();
-        var form_type = $("#form_type").val();
-        $("#user_form").submit();
-        // var flag= 0;
-        // if(station == null){
-        //     $("#error1").show();
-        //     var flag= 1;
-        // }
-        // if(part_family == null){
-        //     $("#error2").show();
-        //     var flag= 1;
-        // }
-        // if(part_number == null){
-        //     $("#error3").show();
-        //     var flag= 1;
-        // }
-        // if(form_type == null){
-        //     $("#error4").show();
-        //     var flag= 1;
-        // }
-        // if (flag == 1) {
-        //     return false;
-        // }
-
-    });
-
-</script>
-
-<script type="text/javascript">
-    $(function () {
-        $("#btn").bind("click", function () {
-            $("#station")[0].selectedIndex = 0;
-            $("#part_family")[0].selectedIndex = 0;
-            $("#part_number")[0].selectedIndex = 0;
-            $("#form_type")[0].selectedIndex = 0;
-        });
-    });
-</script>
-<script>
-    $(function(){
-        var dtToday = new Date();
-
-        var month = dtToday.getMonth() + 1;
-        var day = dtToday.getDate();
-        var year = dtToday.getFullYear();
-        if(month < 10)
-            month = '0' + month.toString();
-        if(day < 10)
-            day = '0' + day.toString();
-
-        var maxDate = year + '-' + month + '-' + day;
-
-        $('#date_to').attr('max', maxDate);
-        $('#date_from').attr('max', maxDate);
-    });
-</script>
 <?php include ('../footer.php') ?>
 </body>
 </html>

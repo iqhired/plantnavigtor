@@ -210,6 +210,9 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
             .border-primary {
                 border-color: #ffffff;
             }
+            .col-lg-3 {
+                width: 50%!important;
+            }
 
 
 
@@ -363,11 +366,19 @@ include("../heading_banner.php");
                                                              alt="">
                                                     <?php } ?>
                                                     <div class="caption-overflow">
+                                                        <?php if($idddd == 0){?>
 														<span>
+															<a href="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
+                                                               data-popup="lightbox" rel="gallery"
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
+														</span>
+                                                        <?php } elseif($idddd != 0) { ?>
+                                                        <span>
 															<a href="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>

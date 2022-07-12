@@ -36,6 +36,7 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
 	header('location: ../dashboard.php');
 }
+$station = $_GET['station'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -208,8 +209,7 @@ include("../heading_banner.php");
                                                 <div class="col-lg-7">
                                                     <select name="part_family" id="part_family" class="select form-control"
                                                             data-style="bg-slate">
-                                                        <option value="" selected disabled>--- Select Part Family ---
-                                                        </option>
+                                                        <option value="0">--- Select Part Family ---  </option>
                                                         <?php
 														$st_dashboard = $_POST['part_family'];
 														if(empty($st_dashboard) && !empty($_REQUEST['part_family'])){
@@ -321,9 +321,9 @@ include("../heading_banner.php");
                                 <button type="submit" class="btn btn-primary submit_btn"
                                         style="width:120px;margin-right: 20px;background-color:#1e73be;">Submit
                                 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="clear" id="btn" class="btn btn-primary"
-                                        style="background-color:#1e73be;margin-right: 20px;width:120px;">Reset
-                                </button>
+                                <input type=button class="btn btn-primary" onClick="location.href='<?php echo $siteURL; ?>form_module/options.php?station=<?php echo $station; ?>'"
+                                       value='Reset' style="background-color:#1e73be;margin-right: 20px;width:120px;">
+
                             </div>
 
                 </div>
@@ -449,53 +449,13 @@ include("../heading_banner.php");
         $('input:checkbox').not(this).prop('checked', this.checked);
     });
 
-
     $('#station').on('change', function (e) {
         $("#user_form").submit();
     });
-    $('#part_family').on('change', function (e) {
-        $("#user_form").submit();
-    });
-    $(document).on("click", ".submit_btn", function () {
-
-        var station = $("#station").val();
-        var part_family = $("#part_family").val();
-        var part_number = $("#part_number").val();
-        var form_type = $("#form_type").val();
-// var flag= 0;
-// if(station == null){
-// 	$("#error1").show();
-// 	var flag= 1;
-// }
-// if(part_family == null){
-// 	$("#error2").show();
-// 	var flag= 1;
-// }
-// if(part_number == null){
-// 	$("#error3").show();
-// 	var flag= 1;
-// }
-// if(form_type == null){
-// 	$("#error4").show();
-// 	var flag= 1;
-// }
-// if (flag == 1) {
-//        return false;
-//        }
-
-    });
 
 </script>
-<script type="text/javascript">
-    $(function () {
-        $("#btn").bind("click", function () {
-            $("#station")[0].selectedIndex = 0;
-            $("#part_family")[0].selectedIndex = 0;
-            $("#part_number")[0].selectedIndex = 0;
-            $("#form_type")[0].selectedIndex = 0;
-        });
-    });
-</script>
+
+
  <?php include('../footer.php') ?>
 <script type="text/javascript" src="../assets/js/core/app.js"></script>
 </body>
