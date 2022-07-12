@@ -73,7 +73,7 @@ $x_timestamp = time();
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
+	, $_SERVER["HTTP_USER_AGENT"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +111,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 
     <style>
@@ -372,11 +372,11 @@ include("../heading_banner.php");
 				}
 				?>
 				<?php
-								if (!empty($_SESSION[import_status_message])) {
-									echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-									$_SESSION['message_stauts_class'] = '';
-									$_SESSION['import_status_message'] = '';
-								}
+				if (!empty($_SESSION[import_status_message])) {
+					echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+					$_SESSION['message_stauts_class'] = '';
+					$_SESSION['import_status_message'] = '';
+				}
 				?>
 
 
@@ -438,16 +438,17 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <?php if(($idddd == 0)){?>
-                                    <div id="my_camera"></div>
-                                    <br/>
-                                   <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                    <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                    <?php } ?>
-                                    <?php if(($idddd != 0)){?>
-                                    <input type="file" name="image" id="file" class="image-tag" multiple accept="*/*" capture="environment" value="Take Snapshot"/>
-                                    <div class="container"></div>
-                                    <?php } ?>
+									<?php if(($idddd == 0)){?>
+                                        <div id="my_camera"></div>
+                                        <br/>
+                                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+									<?php } ?>
+									<?php if(($idddd != 0)){?>
+                                        <div style="display:none;" id="my_camera"></div>
+                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="*/*" capture="environment" value="Take Snapshot"/>
+                                        <div class="container"></div>
+									<?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -461,18 +462,18 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Previous Image : </label>
                                 <div class="col-md-6">
-                                    <?php
-                                  $time_stamp = $_SESSION['timestamp_id'];
+									<?php
+									$time_stamp = $_SESSION['timestamp_id'];
 
-                                    $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
+									$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
 
-                                    $qurimage = mysqli_query($db, $query2);
-                                    $i =0 ;
-                                    while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                        $image = $rowcimage['image_name'];
-                                        $d_tag = "delete_image_" . $i;
-                                        $r_tag = "remove_image_" . $i;
-                                        ?>
+									$qurimage = mysqli_query($db, $query2);
+									$i =0 ;
+									while ($rowcimage = mysqli_fetch_array($qurimage)) {
+										$image = $rowcimage['image_name'];
+										$d_tag = "delete_image_" . $i;
+										$r_tag = "remove_image_" . $i;
+										?>
 
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
@@ -496,15 +497,15 @@ include("../heading_banner.php");
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php
-                                        $i++;} ?>
+										<?php
+										$i++;} ?>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                            <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
+                                    <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
                                 </div>
                             </div>
                             <br/>
@@ -529,6 +530,8 @@ include("../heading_banner.php");
     </div>
 </div>
 <!-- Configure a few settings and attach camera -->
+<!-- Configure a few settings and attach camera -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script language="JavaScript">
     Webcam.set({
         width: 290,
@@ -536,26 +539,25 @@ include("../heading_banner.php");
         image_format: 'jpeg',
         jpeg_quality: 90
     });
+    var camera = document.getElementById("my_camera");
+    Webcam.attach( camera );
+</script>
+<script language="JavaScript">
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            var formData =  $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "webcam_backend.php",
+                type: "POST",
+                data: formData,
+                success: function (msg) {
+                    window.location.reload()
+                },
 
-    Webcam.attach( '#my_camera' );
-
-
-        console.log("Let's get this party started")
-        function take_snapshot() {
-            Webcam.snap( function(data_uri) {
-                var formData =  $(".image-tag").val(data_uri);
-                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-                $.ajax({
-                    url: "webcam_backend.php",
-                    type: "POST",
-                    data: formData,
-                    success: function (msg) {
-                        window.location.reload()
-                    },
-
-                });
-            } );
-        }
+            });
+        } );
+    }
 
 
 </script>
