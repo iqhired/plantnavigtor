@@ -391,7 +391,7 @@ include("../heading_banner.php");
 										<?php if($idddd == 0){?>
                                             <div id="my_camera"></div>
                                             <br/>
-                                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                            <input type=button value="Take Snapshot" onClick="take_snapshot(<?php $x_id?>)">
                                             <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
 										<?php } ?>
 										<?php if($idddd != 0){?>
@@ -413,12 +413,11 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label">Previous Image : </label>
                                     <div class="col-md-6">
 										<?php
-										$query1 = sprintf("SELECT 10x_id FROM  10x where 10x_id = '$id'");
-										$qur1 = mysqli_query($db, $query1);
-										$rowc1 = mysqli_fetch_array($qur1);
-										$item_id = $rowc1['10x_id'];
+//										$query1 = sprintf("SELECT 10x_id FROM  10x where 10x_id = '$id'");
+										$item_id = $x_id;
 
-										$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$item_id'");
+//										$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$item_id'");
+										$query2 = sprintf("SELECT * FROM `10x_images` where 10x_id = '$item_id'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
@@ -489,12 +488,12 @@ include("../heading_banner.php");
     Webcam.attach( camera );
 </script>
 <script language="JavaScript">
-    function take_snapshot() {
+    function take_snapshot(id) {
         Webcam.snap( function(data_uri) {
             var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "edit_10x_backend.php",
+                url: "edit_10x_backend.php?10x_id="+id,
                 type: "POST",
                 data: formData,
                 success: function () {

@@ -407,7 +407,7 @@ include("heading_banner.php");
                                             <i class="fa fa-pencil-square"></i> View Material Traceability</a>
                                     </li>
                                     <li>
-                                        <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                        <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>&f_type=n" target="_BLANK">
                                             <i class="icon-eye"></i> Submit 10x</a>
                                     </li>
                                     <li>

@@ -38,6 +38,12 @@ if ($i != "super" && $i != "admin" && $i != "pn_user") {
 }
 $s_event_id = $_GET['station_event_id'];
 $station = $_GET['station'];
+$f_type = $_GET['f_type'];
+$_SESSION['10x_station'] = $station;
+
+if($f_type == 'n'){
+	$_SESSION['timestamp_id'] = '';
+}
 
 $station_event_id = $s_event_id;
 //$station_event_id = base64_decode(urldecode($s_event_id));
@@ -465,7 +471,7 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['timestamp_id'];
 
-									$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
+									$query2 = sprintf("SELECT * FROM `10x_images` inner join 10x on 10x_images.10x_id = 10x.10x_id where line_no ='$station'");
 
 									$qurimage = mysqli_query($db, $query2);
 									$i =0 ;

@@ -12,8 +12,11 @@ $x_timestamp = time();
 //print_r($_POST);
 //echo "</pre>";
 
-if(count($_POST)>0) {
+if(count($_POST)>0 || count($_GET)>0) {
     $x_id = $_POST['10x_id'];
+    if(empty($x_id)){
+		$x_id = $_GET['10x_id'];
+	}
     $station_event_id = $_POST['station_event_id'];
     $customer_account_id = $_POST['customer_account_id'];
     $line_number = $_POST['line_number'];
@@ -34,7 +37,7 @@ if(count($_POST)>0) {
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
-        $_SESSION['import_status_message'] = 'Form Updated Sucessfully.';
+        $_SESSION['import_status_message'] = '10x Form Updated Sucessfully.';
     } else {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
@@ -76,6 +79,7 @@ if(count($_POST)>0) {
                         if ($result1) {
                             $message_stauts_class = 'alert-success';
                             $import_status_message = 'Image Added Successfully.';
+							$_SESSION['timestamp_id'] = '';
                         } else {
                             $message_stauts_class = 'alert-danger';
                             $import_status_message = 'Error: Please Try Again.';
@@ -107,8 +111,8 @@ if(count($_POST)>0) {
 	}
 
 	$timestamp = $_SESSION['timestamp_id'];
-	$file = $folderPath.'/'.$x_id.'/'.$timestamp.'_'. $fileName;
-	$file_name = $timestamp.'_'. $fileName;
+	$file = $folderPath.'/'.$x_id.'/'.$x_timestamp.'_'. $fileName;
+	$file_name = $x_timestamp.'_'. $fileName;
 	//mkdir($folderPath.'/'.$timestamp, 0777, true);
 	file_put_contents($file, $image_base64);
 	if(file_put_contents($file, $image_base64)){
