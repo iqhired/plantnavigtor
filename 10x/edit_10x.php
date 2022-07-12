@@ -496,7 +496,7 @@ include("../heading_banner.php");
             var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "edit_10x_backend.php",
+                url: "webcam_backend.php",
                 type: "POST",
                 data: formData,
                 success: function () {

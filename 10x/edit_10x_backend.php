@@ -90,38 +90,6 @@ if(count($_POST)>0) {
         }
     }
 
-    $img = $_POST['image'];
-    $folderPath =  "../assets/images/10x/";
-
-    $image_parts = explode(";base64,", $img);
-    $image_type_aux = explode("image/", $image_parts[0]);
-
-    $image_type = $image_type_aux[1];
-    $image_base64 = base64_decode($image_parts[1]);
-    $fileName = uniqid() . '.png';
-
-    $x_timestamp = time();
-    $temp_xid = $_SESSION['temp_10x_id'];
-    $_SESSION['temp_10x_id'] = $temp_xid . ',' .$x_timestamp;
-    if(empty($_SESSION['timestamp_id'])){
-        $_SESSION['timestamp_id'] = $x_timestamp;
-    }
-
-    $timestamp = $_SESSION['timestamp_id'];
-    $file = $folderPath.'/'.$edit_10x_id.'/'.$timestamp.'_'. $fileName;
-    $file_name = $timestamp.'_'. $fileName;
-    //  mkdir($folderPath.'/'.$timestamp, 0777, true);
-    file_put_contents($file, $image_base64);
-    if(file_put_contents($file, $image_base64)){
-
-        $sql = "INSERT INTO `10x_images`(`10x_id`,`image_name`,`created_at`) VALUES ('$edit_10x_id','$file_name' , '$created_by' )";
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            echo $file;
-
-        }
-
-    }
 
 }
 //header("Location:form_edit.php?id=$hidden_id");
