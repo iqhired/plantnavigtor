@@ -489,10 +489,10 @@ include("../heading_banner.php");
 <script type="text/javascript">
     $(function () {
         $("#btn").bind("click", function () {
-            $("#station")[0].selectedIndex = 0;
-            $("#part_family")[0].selectedIndex = 0;
-            $("#part_number")[0].selectedIndex = 0;
-            $("#form_type")[0].selectedIndex = 0;
+            var url = window.location.origin + "/form_module/options.php?station=" + $("#station")[0].value;
+            window.close();
+            window.open(url,"_blank");
+
         });
     });
 </script>
