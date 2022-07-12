@@ -493,7 +493,7 @@ include("../heading_banner.php");
             var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "edit_10x_backend.php?10x_id="+id,
+                url: "webcam_backend.php?10x_id="+id,
                 type: "POST",
                 data: formData,
                 success: function () {
