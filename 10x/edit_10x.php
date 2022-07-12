@@ -394,7 +394,7 @@ include("../heading_banner.php");
                                             <input type=button value="Take Snapshot" onClick="take_snapshot()">
                                             <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
 										<?php } ?>
-										<?php if($idddd == 0){?>
+										<?php if($idddd != 0){?>
                                             <div style ="display:none" id="my_camera"></div>
                                             <input type="file" name="edit_image[]" id="file-input" accept="*/*" capture="environment"  multiple="multiple">
 
