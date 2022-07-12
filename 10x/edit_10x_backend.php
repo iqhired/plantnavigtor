@@ -54,7 +54,7 @@ if(count($_POST)>0 || count($_GET)>0) {
                 for($i=0;$i<$totalfiles;$i++){
                     $errors = array();
                     $file_name = $_FILES['edit_image']['name'][$i];
-                    $file_rename = $x_timestamp.'_'.$file_name. '.png';
+                    $file_rename = $x_timestamp.'_'.$file_name;
                     $file_size = $_FILES['edit_image']['size'][$i];
                     $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
                     $file_type = $_FILES['edit_image']['type'][$i];
@@ -71,7 +71,6 @@ if(count($_POST)>0 || count($_GET)>0) {
                         $import_status_message = 'Error: File size must be less than 2 MB';
                     }
                     if (empty($errors) == true) {
-
                         move_uploaded_file($file_tmp, "../assets/images/10x/" .$x_id. '/'.$file_rename);
 
                         $sql = "INSERT INTO `10x_images`(`image_name`,`10x_id`,`created_at`) VALUES ('$file_rename' , '$x_id' , '$created_by' )";
@@ -111,8 +110,9 @@ if(count($_POST)>0 || count($_GET)>0) {
 		}
 
 		$timestamp = $_SESSION['timestamp_id'];
-		$file = $folderPath.'/'.$x_id.'/'.$x_timestamp.'_'. $fileName;
 		$file_name = $x_timestamp.'_'. $fileName;
+		$file = $folderPath.'/'.$x_id.'/'.$file_name;
+
 		//mkdir($folderPath.'/'.$timestamp, 0777, true);
 		file_put_contents($file, $image_base64);
 		if(file_put_contents($file, $image_base64)){
