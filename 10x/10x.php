@@ -43,6 +43,7 @@ $_SESSION['10x_station'] = $station;
 
 if($f_type == 'n' && empty($_SESSION['f_type'])){
 	$_SESSION['timestamp_id'] = time();
+	$_SESSION['f_type'] = 'n';
 }
 
 $station_event_id = $s_event_id;
