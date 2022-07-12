@@ -4,11 +4,11 @@ include("../config/pn_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
 }
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
@@ -16,31 +16,31 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+		header($redirect_tab_logout_path);
+	}else{
+		header($redirect_logout_path);
+	}
 
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
-    header('location: ../dashboard.php');
+	header('location: ../dashboard.php');
 }
 $s_event_id = $_GET['station_event_id'];
 
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
+	, $_SERVER["HTTP_USER_AGENT"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $sitename; ?> |10x</title>
+		<?php echo $sitename; ?> |10x</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -270,78 +270,78 @@ include("../heading_banner.php");
 <!-- Page container -->
 <div class="page-container">
     <!-- Page content -->
-    <?php
+	<?php
 
 
-    $id = $_GET['id'];
+	$id = $_GET['id'];
 
-    $querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
-    $qurmain = mysqli_query($db, $querymain);
-    while ($rowcmain = mysqli_fetch_array($qurmain)) {
-    $line_no = $rowcmain['line_no'];
-    $station_event_id = $rowcmain['station_event_id'];
-    $x_id = $rowcmain['10x_id'];
-    $part_number = $rowcmain['part_no'];
-    $part_family = $rowcmain['part_family_id'];
-    $pm_part_name = $rowcmain['part_name'];
+	$querymain = sprintf("SELECT * FROM `10x` where 10x_id = '$id' ");
+	$qurmain = mysqli_query($db, $querymain);
+	while ($rowcmain = mysqli_fetch_array($qurmain)) {
+		$line_no = $rowcmain['line_no'];
+		$station_event_id = $rowcmain['station_event_id'];
+		$x_id = $rowcmain['10x_id'];
+		$part_number = $rowcmain['part_no'];
+		$part_family = $rowcmain['part_family_id'];
+		$pm_part_name = $rowcmain['part_name'];
 
-    $notes = $rowcmain['notes'];
-    $created_at = $rowcmain['created_at'];
+		$notes = $rowcmain['notes'];
+		$created_at = $rowcmain['created_at'];
 
-    $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-    $resultfamily = mysqli_query($db, $sqlfamily);
-    $rowcfamily = mysqli_fetch_array($resultfamily);
-    $pm_part_family_name = $rowcfamily['part_family_name'];
+		$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
+		$resultfamily = mysqli_query($db, $sqlfamily);
+		$rowcfamily = mysqli_fetch_array($resultfamily);
+		$pm_part_family_name = $rowcfamily['part_family_name'];
 
-    $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-    $resultnumber = mysqli_query($db, $sqlnumber);
-    $rowcnumber = mysqli_fetch_array($resultnumber);
-    $pm_part_number = $rowcnumber['part_number'];
-    $pm_part_name = $rowcnumber['part_name'];
+		$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+		$resultnumber = mysqli_query($db, $sqlnumber);
+		$rowcnumber = mysqli_fetch_array($resultnumber);
+		$pm_part_number = $rowcnumber['part_number'];
+		$pm_part_name = $rowcnumber['part_name'];
 
-    $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_no'";
-    $resultnumber = mysqli_query($db, $sqlnumber);
-    $rowcnumber = mysqli_fetch_array($resultnumber);
-    $line_name = $rowcnumber['line_name'];
-    $_SESSION['edit_10x_id'] = $id;
+		$sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_no'";
+		$resultnumber = mysqli_query($db, $sqlnumber);
+		$rowcnumber = mysqli_fetch_array($resultnumber);
+		$line_name = $rowcnumber['line_name'];
+		$_SESSION['edit_10x_id'] = $id;
 
-        $station_event_id = $_GET['station_event_id'];
-    ?>
-<!--    <div class="col-md-2 create">-->
-<!--        <a href="--><?php //echo $siteURL; ?><!--10x/10x_search.php?station=--><?php //echo $line_no; ?><!--&station_event_id=--><?php //echo $station_event_id;?><!--">-->
-<!--            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x </button>-->
-<!--        </a>-->
-<!--    </div>-->
-    <!-- Content area -->
-    <div class="content" style="padding: 70px 30px !important;">
-        <!-- Main charts -->
+		$station_event_id = $_GET['station_event_id'];
+		?>
+        <!--    <div class="col-md-2 create">-->
+        <!--        <a href="--><?php //echo $siteURL; ?><!--10x/10x_search.php?station=--><?php //echo $line_no; ?><!--&station_event_id=--><?php //echo $station_event_id;?><!--">-->
+        <!--            <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">View 10x </button>-->
+        <!--        </a>-->
+        <!--    </div>-->
+        <!-- Content area -->
+        <div class="content" style="padding: 70px 30px !important;">
+            <!-- Main charts -->
 
             <!-- Basic datatable -->
             <div class="panel panel-flat">
                 <div class="panel-heading">
 
-                    <?php if ($temp == "one") { ?>
+					<?php if ($temp == "one") { ?>
                         <br/>
                         <div class="alert alert-success no-border">
                             <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Created Successfully. </div>
-                    <?php } ?>
-                    <?php if ($temp == "two") { ?>
+					<?php } ?>
+					<?php if ($temp == "two") { ?>
                         <br/>
                         <div class="alert alert-success no-border">
                             <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
-                    <?php } ?>
-                    <?php
-                   if (!empty($import_status_message)) {
-                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                    }
-                    ?>
-                   <?php
-                    if (!empty($_SESSION[import_status_message])) {
-                       echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                        $_SESSION['message_stauts_class'] = '';
-                        $_SESSION['import_status_message'] = '';
-                    }
-                    ?>
+					<?php } ?>
+					<?php
+					if (!empty($import_status_message)) {
+						echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+					}
+					?>
+					<?php
+					if (!empty($_SESSION[import_status_message])) {
+						echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+						$_SESSION['message_stauts_class'] = '';
+						$_SESSION['import_status_message'] = '';
+					}
+					?>
 
 
                     <div class="row">
@@ -388,17 +388,18 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Image : </label>
                                     <div class="col-md-6">
-                                        <?php if($idddd == 0){?>
-                                        <div id="my_camera"></div>
-                                        <br/>
-                                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                        <?php } ?>
-                                        <?php if($idddd != 0){?>
-                                        <input type="file" name="edit_image[]" id="file-input" accept="*/*" capture="environment"  multiple="multiple">
+										<?php if($idddd == 0){?>
+                                            <div id="my_camera"></div>
+                                            <br/>
+                                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                            <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+										<?php } ?>
+										<?php if($idddd == 0){?>
+                                            <div style ="display:none" id="my_camera"></div>
+                                            <input type="file" name="edit_image[]" id="file-input" accept="*/*" capture="environment"  multiple="multiple">
 
-                                        <div class="container"></div>
-                                         <?php } ?>
+                                            <div class="container"></div>
+										<?php } ?>
                                     </div>
                                 </div>
                                 <div class="row" style="display: none">
@@ -411,39 +412,34 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Previous Image : </label>
                                     <div class="col-md-6">
-                                        <?php
-                                        $query1 = sprintf("SELECT 10x_id FROM  10x where 10x_id = '$id'");
-                                        $qur1 = mysqli_query($db, $query1);
-                                        $rowc1 = mysqli_fetch_array($qur1);
-                                        $item_id = $rowc1['10x_id'];
+										<?php
+										$query1 = sprintf("SELECT 10x_id FROM  10x where 10x_id = '$id'");
+										$qur1 = mysqli_query($db, $query1);
+										$rowc1 = mysqli_fetch_array($qur1);
+										$item_id = $rowc1['10x_id'];
 
-                                        $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$item_id'");
+										$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$item_id'");
 
-                                        $qurimage = mysqli_query($db, $query2);
-                                        $i =0 ;
-                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                            $image = $rowcimage['image_name'];
-                                            $d_tag = "delete_image_" . $i;
-                                            $r_tag = "remove_image_" . $i;
-                                            ?>
+										$qurimage = mysqli_query($db, $query2);
+										$i =0 ;
+										while ($rowcimage = mysqli_fetch_array($qurimage)) {
+											$image = $rowcimage['image_name'];
+											$d_tag = "delete_image_" . $i;
+											$r_tag = "remove_image_" . $i;
+											?>
 
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-                                                        <?php if($idddd == 0){?>
                                                         <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $image; ?>"
                                                              alt="">
-                                                        <?php } elseif(($idddd != 0)) { ?>
-                                                        <img src="../assets/images/10x/<?php echo $image; ?>"
-                                                             alt="">
-                                                        <?php } ?>
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php
-                                            $i++;} ?>
+											<?php
+											$i++;} ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -476,39 +472,41 @@ include("../heading_banner.php");
 
             </div>
 
-    </div>
-    <?php } ?>
+        </div>
+	<?php } ?>
 </div>
-<?php if($idddd == 0){ ?>
+
 <!-- Configure a few settings and attach camera -->
-<script language="JavaScript">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script>
     Webcam.set({
         width: 290,
         height: 190,
         image_format: 'jpeg',
         jpeg_quality: 90
     });
-
-    Webcam.attach( '#my_camera' );
-
+    var camera = document.getElementById("my_camera");
+    Webcam.attach( camera );
+</script>
+<script language="JavaScript">
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
             var formData =  $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "webcam_backend.php",
+                url: "edit_10x_backend.php",
                 type: "POST",
                 data: formData,
                 success: function () {
-
+                    window.location.reload()
                 },
 
             });
-            window.location.reload()
+
         } );
     }
 </script>
-<?php } ?>
+
 <script>
     $(document).ready(function() {
         $('.select').select2();
