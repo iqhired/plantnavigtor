@@ -472,7 +472,7 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM `10x_images` inner join 10x on 10x_images.10x_id = 10x.10x_id where line_no ='$station'");
+										$query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
