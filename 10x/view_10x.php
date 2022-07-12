@@ -358,27 +358,14 @@ include("../heading_banner.php");
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <?php if($idddd == 0){?>
                                                     <img src="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
                                                          alt="">
-                                                    <?php } else { ?>
-                                                        <img src="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
-                                                             alt="">
-                                                    <?php } ?>
                                                     <div class="caption-overflow">
-                                                        <?php if($idddd == 0){?>
-														<span>
+                                                        <span>
 															<a href="../assets/images/10x/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>
-                                                        <?php } elseif($idddd != 0) { ?>
-                                                        <span>
-															<a href="../assets/images/10x/<?php echo $rowcimage['image_name']; ?>"
-                                                               data-popup="lightbox" rel="gallery"
-                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
-														</span>
-                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
