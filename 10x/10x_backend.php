@@ -61,7 +61,6 @@ if($x_trace_id > 0){
 	}
 }
 
-
 $page = "10x.php?station=$station&station_event_id=$station_event_id";
 header('Location: ' . $page, true, 303);
 
