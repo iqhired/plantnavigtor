@@ -210,6 +210,9 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
             .border-primary {
                 border-color: #ffffff;
             }
+            .col-lg-3 {
+                width: 50%!important;
+            }
 
 
 
