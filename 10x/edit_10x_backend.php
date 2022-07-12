@@ -25,6 +25,10 @@ if(count($_POST)>0) {
     $edit_file = $_FILES['edit_image']['name'];
     $updated_by_user = $_SESSION['id'];
 
+    $edit_10x_id =  $_SESSION['edit_10x_id'];
+    $x_timestamp = time();
+
+
     //$sql0 = "UPDATE `material_tracability` SET `line_number`='$line_number',`part_number`='$part_number',`part_family`='$part_family',`part_name`='$part_name',`material_type`='$material_type',`serial_number`='$serial_number',`material_status`='$material_status',`fail_reason`='$fail_reason',`reason_desc`='$reason_desc',`quantity`='$quantity',`notes`='$notes',`created_at`='$created_by' WHERE `material_id` = '$form_id'";
     $sql0 = "UPDATE `10x` SET `created_by`='$updated_by_user',`line_no`='$line_number',`part_no`='$part_number',`part_family_id`='$part_family',`part_name`='$part_name',`notes`='$notes',`created_at`='$created_by' WHERE `10x_id` = '$x_id'";
     $result0 = mysqli_query($db, $sql0);
@@ -86,7 +90,13 @@ if(count($_POST)>0) {
         }
     }
 
+    $img = $_POST['image'];
+    $folderPath =  "../assets/images/10x/";
 
+    $image_parts = explode(";base64,", $img);
+    $image_type_aux = explode("image/", $image_parts[0]);
+
+    $image_type = $image_type_aux[1];
     $image_base64 = base64_decode($image_parts[1]);
     $fileName = uniqid() . '.png';
 
