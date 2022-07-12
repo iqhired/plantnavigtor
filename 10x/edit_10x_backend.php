@@ -54,7 +54,7 @@ if(count($_POST)>0 || count($_GET)>0) {
                 for($i=0;$i<$totalfiles;$i++){
                     $errors = array();
                     $file_name = $_FILES['edit_image']['name'][$i];
-                    $file_rename = $x_timestamp.'_'.$file_name. '.png';
+                    $file_rename = $x_timestamp.'_'.$file_name;
                     $file_size = $_FILES['edit_image']['size'][$i];
                     $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
                     $file_type = $_FILES['edit_image']['type'][$i];
