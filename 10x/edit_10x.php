@@ -391,7 +391,7 @@ include("../heading_banner.php");
 										<?php if($idddd == 0){?>
                                             <div id="my_camera"></div>
                                             <br/>
-                                            <input type=button value="Take Snapshot" onClick="take_snapshot(<?php echo $x_id?>)">
+                                            <input type="button" class="btn btn-primary " value="Take Snapshot" onClick="take_snapshot(<?php echo $x_id?>)">
                                             <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
 										<?php } ?>
 										<?php if($idddd != 0){?>
