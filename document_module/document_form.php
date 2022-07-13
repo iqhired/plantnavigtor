@@ -242,6 +242,47 @@ $datefrom = $yesdate;
         .input-group-append {
             width: 112%;
         }
+        .container {
+            margin: 0 auto;
+        }
+
+        .content_img {
+            width: 220px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .content_img span {
+            border: 2px solid red;
+            display: inline-block;
+            width: 99%;
+            text-align: center;
+            color: red;
+            margin-top: 6px;
+        }
+
+        .content_img span:hover {
+            cursor: pointer;
+        }
+        .action {
+            float: right;
+            margin-top: 12px;
+            margin-bottom: 9px;
+        }
+        #Renamediv{
+            padding: 10px;
+        }
+        #Renametext{
+            float: left;
+            width: 130px;
+            margin-left: -7px;
+        }
+
 
     </style>
 </head>
@@ -315,12 +356,57 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Document file : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="file[]" id="file-input" class="form-control" required>
-                                    <div id="preview"></div>
+                                    <input type="file" name="file[]" id="file" class="form-control" required>
+                                    <div class="container"></div>
                                 </div>
 
                             </div>
                             <br/>
+                        <div class="row">
+                            <label class="col-lg-2 control-label">Previous File : </label>
+                            <div class="col-md-6">
+                                <?php
+                                $time_stamp = $_SESSION['timestamp_id'];
+                                if(!empty($time_stamp)){
+                                    $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
+
+                                    $qurimage = mysqli_query($db, $query2);
+                                    $i =0 ;
+                                    while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                        $image = $rowcimage['image_name'];
+                                        $d_tag = "delete_image_" . $i;
+                                        $r_tag = "remove_image_" . $i;
+                                        ?>
+
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="thumbnail">
+                                                <div class="thumb">
+                                                    <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
+                                                         alt="">
+                                                    <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
+                                                    <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+
+
+                                                    <!--                                                <div class="caption-overflow">-->
+                                                    <!--														<span>-->
+                                                    <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+                                                    <!--                                                               data-popup="lightbox" rel="gallery"-->
+                                                    <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+                                                    <!--                                                                        class="icon-plus3"></i></a>-->
+                                                    <!--														</span>-->
+                                                    <!---->
+                                                    <!--                                                </div>-->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;}
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <br>
                             <div class="row">
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Document Name : </label>
                                 <div class="col-md-6">
@@ -540,47 +626,97 @@ include("../heading_banner.php");
 
     });
 
+</script>
+<script>
+    // Upload
 
-    //image preview
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
 
-    function previewImages() {
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_doc_file.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='Renametext' placeholder='rename file'><button type='submit' id='rename' class='btn-primary rename'>Save</button></div></div>");
+                }
+            }
+        });
+    });
 
 
-        $("#preview").html(" ");
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
 
-        var preview = document.querySelector('#preview');
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_doc_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
 
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
+// rename file
+    $('.container').on('click', '.content_img .rename', function (no) {
+        var info = {
+            id: $("#Renametext_" +no).val(),
+        };
 
-        function readAndPreview(file) {
-
-            // Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-              //  return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#file-input').addEventListener("change", previewImages);
+        $.ajax({
+            url: 'rename_doc_file.php',
+            type: 'post',
+            data: info,
+            async: false,
+            success: function () {
+               alert('huj');
+            },
+        });
+    });
 
 
 </script>
+
+
 <script>
     $(document).ready(function() {
         $("input[name$='doc_type']").click(function() {

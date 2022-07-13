@@ -15,7 +15,6 @@ if(count($_POST)>0) {
     $created_by = date("Y-m-d H:i:s");
 
     $sql0 = "UPDATE `document_data` SET `doc_name`='$doc_name',`station`='$station',`doc_type`='$doc_type',`doc_category`='$category',`part_number`='$part_number',`status`='$status',`expiry_date`='$exp_date',`created_at`='$created_by' WHERE `doc_id` = '$doc_id'";
-
     $result0 = mysqli_query($db, $sql0);
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
