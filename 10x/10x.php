@@ -454,7 +454,7 @@ include("../heading_banner.php");
 									<?php if(($idddd != 0)){?>
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary "btn-block btn-outlined"">Take Snapshot</label>
-                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot"/>
+                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
                                         <div class="container"></div>
 									<?php } ?>
                                 </div>
