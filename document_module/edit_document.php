@@ -245,12 +245,18 @@ $datefrom = $yesdate;
         .col-lg-3.file {
             width: 45%;
         }
-        .remove {
-            float: right;
-            margin-left: -27px;
+        input[type="file"] {
+            display: block;
         }
-        .thumb {
-            padding: 4px;
+        .imageThumb {
+            max-height: 100px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
         }
         .remove {
             display: block;
@@ -293,6 +299,7 @@ include("../heading_banner.php");
         $status = $row1['status'];
         $station = $row1['station'];
         $expirydate = $row1['expiry_date'];
+        $part_number = $row1['part_number'];
 
 
         $sql1 = "SELECT * FROM `cam_line` where line_id = '$station'";
@@ -355,8 +362,27 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                     <div class="col-md-6">
                                         <input type="hidden" name="doc_id" value="<?php echo $id; ?>">
-                                        <input type="hidden" name="station" value="<?php echo $station; ?>">
-                                        <input type="text" name="station1" id="station1" class="form-control" value="<?php echo $line_name; ?>" placeholder="Enter Station" required>
+<!--                                        <input type="hidden" name="station" value="--><?php //echo $station; ?><!--">-->
+                                        <select name="station" id="station" class="select form-control"
+                                                style="float: left;width: initial;">
+                                            <option value="" selected disabled>--- Select Station ---</option>
+                                            <?php
+                                            $sql1 = "SELECT * FROM `cam_line` ";
+                                            $result1 = $mysqli->query($sql1);
+                                            //                                            $entry = 'selected';
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                $lin = $row1['line_id'];
+
+                                                if ($station == $lin) {
+                                                    $entry = 'selected';
+                                                } else {
+                                                    $entry = '';
+                                                }
+                                                echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+<!--                                        <input type="text" name="station1" id="station1" class="form-control" value="--><?php //echo $line_name; ?><!--" placeholder="Enter Station" required>-->
                                     </div>
                                     <div id="error1" class="red">Document Name</div>
                                 </div>
@@ -436,32 +462,56 @@ include("../heading_banner.php");
 
                                 </div>
 
-
-                                <div class="row desc" id="Carspart_number" style="display: none;">
+                               <?php if($doc_type == "part_number"){ ?>
+                                <div class="row desc" id="Carspart_number">
                                     <br/>
 
                                     <div class="row">
-
-
                                         <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Number *  :</label>
-
                                         <div class="col-md-6">
                                             <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Part Number ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `pm_part_number` where station = '$st' ORDER BY `part_number` ASC  ";
+                                                $sql1 = "SELECT * FROM `pm_part_number` ORDER BY `part_number` ASC  ";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
+                                                    if ($part_number = $row1['pm_part_number_id']){
+                                                        $entry = 'selected';
+                                                    }else{
+                                                        $entry = '';
+                                                    }
 
-                                                    echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                                    echo "<option value='" . $row1['pm_part_number_id'] . "' $entry>" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
                                                 }
                                                 ?>
                                             </select>
                                         </div>
                                     </div>
-
                                 </div>
                                 <br/>
+                                <?php } else { ?>
+                                   <div class="row desc" id="Carspart_number" style="display: none;">
+                                       <br/>
+
+                                       <div class="row">
+                                           <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Number *  :</label>
+                                           <div class="col-md-6">
+                                               <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
+                                                   <option value="" selected disabled>--- Select Part Number ---</option>
+                                                   <?php
+                                                   $sql1 = "SELECT * FROM `pm_part_number` where station = '$st' ORDER BY `part_number` ASC  ";
+                                                   $result1 = $mysqli->query($sql1);
+                                                   while ($row1 = $result1->fetch_assoc()) {
+
+                                                       echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                                   }
+                                                   ?>
+                                               </select>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <br/>
+                                <?php } ?>
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Document Category : </label>
                                     <div class="col-md-6">

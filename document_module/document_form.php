@@ -327,16 +327,16 @@ include("../heading_banner.php");
                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                 <?php } ?>
                 <?php
-//                if (!empty($import_status_message)) {
-//                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-//                }
-//                ?>
-<!--                --><?php
-//                if (!empty($_SESSION[import_status_message])) {
-//                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-//                    $_SESSION['message_stauts_class'] = '';
-//                    $_SESSION['import_status_message'] = '';
-//                }
+                if (!empty($import_status_message)) {
+                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                }
+                ?>
+               <?php
+                if (!empty($_SESSION[import_status_message])) {
+                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    $_SESSION['message_stauts_class'] = '';
+                    $_SESSION['import_status_message'] = '';
+                }
                 ?>
 
 
@@ -347,8 +347,26 @@ include("../heading_banner.php");
 
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
                                 <div class="col-md-6">
-                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                    <input type="text" name="station1" id="station1" class="form-control" value="<?php echo $line_name; ?>" placeholder="Enter Station" required>
+<!--                                    <input type="hidden" name="station" value="--><?php //echo $st; ?><!--">-->
+                                    <select name="station" id="station" class="select form-control"
+                                            style="float: left;width: initial;">
+                                        <option value="" selected disabled>--- Select Station ---</option>
+                                        <?php
+                                        $sql1 = "SELECT * FROM `cam_line` ";
+                                        $result1 = $mysqli->query($sql1);
+                                        //                                            $entry = 'selected';
+                                        while ($row1 = $result1->fetch_assoc()) {
+                                            $lin = $row1['line_id'];
+
+                                            if ($st == $lin) {
+                                                $entry = 'selected';
+                                            } else {
+                                                $entry = '';
+                                            }
+                                            echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div id="error1" class="red">Document Name</div>
                             </div>
@@ -387,16 +405,6 @@ include("../heading_banner.php");
                                                     <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 
 
-                                                    <!--                                                <div class="caption-overflow">-->
-                                                    <!--														<span>-->
-                                                    <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
-                                                    <!--                                                               data-popup="lightbox" rel="gallery"-->
-                                                    <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
-                                                    <!--                                                                        class="icon-plus3"></i></a>-->
-                                                    <!--														</span>-->
-                                                    <!---->
-                                                    <!--                                                </div>-->
-
                                                 </div>
                                             </div>
                                         </div>
@@ -414,36 +422,6 @@ include("../heading_banner.php");
                                 </div>
                                 <div id="error1" class="red">Document Name</div>
                             </div>
-                            <br/>
-
-
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">station : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <select name="station" id="station" class="select" data-style="bg-slate">-->
-<!--                                        <option value="" selected disabled>--- Select station ---</option>-->
-<!--                                        --><?php
-//                                        $st_dashboard = $_POST['station'];
-//                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-//                                        $result1 = $mysqli->query($sql1);
-//                                        //                                            $entry = 'selected';
-//                                        while ($row1 = $result1->fetch_assoc()) {
-//                                            if($st_dashboard == $row1['line_id'])
-//                                            {
-//                                                $entry = 'selected';
-//                                            }
-//                                            else
-//                                            {
-//                                                $entry = '';
-//
-//                                            }
-//                                            echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-//                                        }
-//                                        ?>
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div id="error6" class="red">Please Enter station</div>-->
                             <br/>
 
                             <div class="row">
@@ -650,7 +628,7 @@ include("../heading_banner.php");
                     count = Number(count) + 1;
 
                     // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='Renametext' placeholder='rename file'><button type='submit' id='rename' class='btn-primary rename'>Save</button></div></div>");
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename' placeholder='rename file'><button type='submit' id='rename_" + count + "' class='btn-primary rename'>Save</button></div></div>");
                 }
             }
         });
@@ -697,21 +675,20 @@ include("../heading_banner.php");
     });
 
 // rename file
-    $('.container').on('click', '.content_img .rename', function (no) {
-        var info = {
-            id: $("#Renametext_" +no).val(),
-        };
-
-        $.ajax({
-            url: 'rename_doc_file.php',
-            type: 'post',
-            data: info,
-            async: false,
-            success: function () {
-               alert('huj');
-            },
-        });
-    });
+    // $('.container').on('click', '.content_img .rename', function () {
+    //
+    //     var info = $('#rename').val();
+    //
+    //     $.ajax({
+    //         url: 'rename_doc_file.php',
+    //         type: 'post',
+    //         data: info,
+    //         async: false,
+    //         success: function () {
+    //            alert('huj');
+    //         },
+    //     });
+    // });
 
 
 </script>
