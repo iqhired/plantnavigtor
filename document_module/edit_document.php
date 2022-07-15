@@ -421,7 +421,7 @@ include("../heading_banner.php");
                                                     <div class="thumb">
                                                         <img src="../document_files/<?php echo $item_id; ?>/<?php echo $image; ?>"
                                                              alt="">
-                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>" value="<?php echo $rowcimage['doc_file_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                     </div>
                                                 </div>
