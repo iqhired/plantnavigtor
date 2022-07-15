@@ -247,7 +247,8 @@ $datefrom = $yesdate;
         }
 
         .content_img {
-            width: 220px;
+            /*width: 220px;*/
+            width: 112px;
             float: left;
             margin-right: 5px;
             border: 1px solid gray;
@@ -274,14 +275,14 @@ $datefrom = $yesdate;
             margin-top: 12px;
             margin-bottom: 9px;
         }
-        #Renamediv{
-            padding: 10px;
-        }
-        #Renametext{
-            float: left;
-            width: 130px;
-            margin-left: -7px;
-        }
+        /*#Renamediv{*/
+        /*    padding: 10px;*/
+        /*}*/
+        /*#Renametext{*/
+        /*    float: left;*/
+        /*    width: 130px;*/
+        /*    margin-left: -7px;*/
+        /*}*/
 
 
     </style>
@@ -630,7 +631,9 @@ include("../heading_banner.php");
                     count = Number(count) + 1;
 
                     // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename_" + count + "' placeholder='rename file'><button type='submit' id='renamebtn_" + count + "' class='btn-primary renamebtn'>Save</button></div></div>");
+                    // $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename_" + count + "' placeholder='rename file'><button type='submit' id='renamebtn_" + count + "' class='btn-primary renamebtn'>Save</button></div></div>");
+                     $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+
                 }
             }
         });
@@ -677,20 +680,20 @@ include("../heading_banner.php");
     });
 
 // rename file
-    $('.container').on('click', '.content_img .renamebtn', function () {
-        var id = this.id;
-        var split_id = id.split('_');
-        var num = split_id[1];
-        var rename = $("#rename_" + num).val();
-        $.ajax({
-            url: 'rename_doc_file.php',
-            data: {rename: rename,},
-            type: 'POST',
-            success: function (data) {
-
-            }
-        });
-    });
+//     $('.container').on('click', '.content_img .renamebtn', function () {
+//         var id = this.id;
+//         var split_id = id.split('_');
+//         var num = split_id[1];
+//         var rename = $("#rename_" + num).val();
+//         $.ajax({
+//             url: 'rename_doc_file.php',
+//             data: {rename: rename,},
+//             type: 'POST',
+//             success: function (data) {
+//
+//             }
+//         });
+//     });
 
 
 
