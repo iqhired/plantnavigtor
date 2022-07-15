@@ -272,14 +272,14 @@ include("heading_banner.php");
                                         <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                         <i class="icon-eye"></i> View Assigned Crew</a>
                                     </li>
-<!--                                    <li>-->
-<!--                                        <a href="document_module/document_form.php?station=--><?php //echo $line; ?><!--&station_event_id=--><?php //echo $station_event_id; ?><!--" target="_BLANK">-->
-<!--                                            <i class="fa fa-file"></i> Upload Document </a>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a href="document_module/document_search.php?station=--><?php //echo $line; ?><!--&part=--><?php //echo $p_no; ?><!--" target="_BLANK">-->
-<!--                                            <i class="fa fa-file"></i> View Document </a>-->
-<!--                                    </li>-->
+                                    <li>
+                                        <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                            <i class="fa fa-file"></i> Upload Document </a>
+                                    </li>
+                                    <li>
+                                        <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                            <i class="fa fa-file"></i> View Document </a>
+                                    </li>
                                 </ul>
 
                             </li>
@@ -450,14 +450,14 @@ include("heading_banner.php");
                                     <a href="view_assigned_crew.php?station=<?php echo $rowc["line_id"]; ?>"><i
                                                 class="icon-eye"></i> View Assigned Crew</a>
                                 </li>
-<!--                                <li>-->
-<!--                                    <a href="document_module/document_form.php?station=--><?php //echo $line; ?><!--&station_event_id=--><?php //echo $station_event_id; ?><!--" target="_BLANK">-->
-<!--                                        <i class="fa fa-file"></i> Upload Document </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="document_module/document_search.php?station=--><?php //echo $line; ?><!--&part=--><?php //echo $p_no; ?><!--" target="_BLANK">-->
-<!--                                        <i class="fa fa-file"></i> View Document </a>-->
-<!--                                </li>-->
+                                <li>
+                                    <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                        <i class="fa fa-file"></i> Upload Document </a>
+                                </li>
+                                <li>
+                                    <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                        <i class="fa fa-file"></i> View Document </a>
+                                </li>
 
 
 
@@ -664,14 +664,14 @@ include("heading_banner.php");
                                                 <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                                 ><i class="icon-eye"></i> View Assigned Crew</a>
                                             </li>
-<!--                                            <li>-->
-<!--                                                <a href="document_module/document_form.php?station=--><?php //echo $line; ?><!--&station_event_id=--><?php //echo $station_event_id; ?><!--" target="_BLANK">-->
-<!--                                                    <i class="fa fa-file"></i>Upload Document </a>-->
-<!--                                            </li>-->
-<!--                                            <li>-->
-<!--                                                <a href="document_module/document_search.php?station=--><?php //echo $line; ?><!--&part=--><?php //echo $p_no; ?><!--" target="_BLANK">-->
-<!--                                                    <i class="fa fa-file"></i> View Document </a>-->
-<!--                                            </li>-->
+                                            <li>
+                                                <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                    <i class="fa fa-file"></i>Upload Document </a>
+                                            </li>
+                                            <li>
+                                                <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                                    <i class="fa fa-file"></i> View Document </a>
+                                            </li>
 
                                         </ul>
                                     </li>
@@ -843,14 +843,14 @@ include("heading_banner.php");
                                             <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
                                                target="_BLANK"><i class="icon-eye"></i> View Assigned Crew</a>
                                         </li>
-<!--                                        <li>-->
-<!--                                            <a href="document_module/document_form.php?station=--><?php //echo $line; ?><!--&station_event_id=--><?php //echo $station_event_id; ?><!--" target="_BLANK">-->
-<!--                                                <i class="fa fa-file"></i> Upload Document </a>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <a href="document_module/document_search.php?station=--><?php //echo $line; ?><!--&part=--><?php //echo $p_no; ?><!--" target="_BLANK">-->
-<!--                                                <i class="fa fa-file"></i> View Document </a>-->
-<!--                                        </li>-->
+                                        <li>
+                                            <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
+                                                <i class="fa fa-file"></i> Upload Document </a>
+                                        </li>
+                                        <li>
+                                            <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                                <i class="fa fa-file"></i> View Document </a>
+                                        </li>
 
                                     </ul>
 
