@@ -562,6 +562,8 @@ include("../heading_banner.php");
             <div  class="panel-footer p_footer">
                 <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn" style="background-color:#1e73be;">Submit</button>
             </div>
+
+
             </form>
 
 
@@ -628,7 +630,7 @@ include("../heading_banner.php");
                     count = Number(count) + 1;
 
                     // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename' placeholder='rename file'><button type='submit' id='rename_" + count + "' class='btn-primary rename'>Save</button></div></div>");
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename_" + count + "' placeholder='rename file'><button type='submit' id='renamebtn_" + count + "' class='btn-primary renamebtn'>Save</button></div></div>");
                 }
             }
         });
@@ -675,20 +677,21 @@ include("../heading_banner.php");
     });
 
 // rename file
-    // $('.container').on('click', '.content_img .rename', function () {
-    //
-    //     var info = $('#rename').val();
-    //
-    //     $.ajax({
-    //         url: 'rename_doc_file.php',
-    //         type: 'post',
-    //         data: info,
-    //         async: false,
-    //         success: function () {
-    //            alert('huj');
-    //         },
-    //     });
-    // });
+    $('.container').on('click', '.content_img .renamebtn', function () {
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        var rename = $("#rename_" + num).val();
+        $.ajax({
+            url: 'rename_doc_file.php',
+            data: {rename: rename,},
+            type: 'POST',
+            success: function (data) {
+
+            }
+        });
+    });
+
 
 
 </script>

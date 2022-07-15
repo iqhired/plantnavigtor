@@ -30,6 +30,7 @@ if(count($_POST)>0) {
     $doc_id = $rowc04["doc_id"];
     $station = $rowc04["station"];
     $part_number = $rowc04["part_number"];
+    $time_stamp = $_SESSION['timestamp_id'];
     //multiple image
     if (isset($_FILES['file'])) {
 
@@ -52,10 +53,10 @@ if(count($_POST)>0) {
                 $import_status_message = 'Error: File size must be excately 2 MB';
             }
             if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "../document_files/" . $file_name);
+                $file_new_name = $time_stamp.'_'.$file_name;
+                move_uploaded_file($file_tmp, "../document_files/" .$doc_id.'/'. $file_new_name);
 
-                $sql = "INSERT INTO `document_files`(`file_name`,`doc_id`,`part_number`,`station`,`created_at`) VALUES ('$file_name','$doc_id' ,'$part_number','$station','$created_by' )";
-
+                $sql = "INSERT INTO `document_files`(`file_name`,`doc_id`,`part_number`,`station`,`created_at`) VALUES ('$file_new_name','$doc_id' ,'$part_number','$station','$created_by' )";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $message_stauts_class = 'alert-success';

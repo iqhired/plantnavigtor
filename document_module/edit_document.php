@@ -315,7 +315,7 @@ include("../heading_banner.php");
             $doc_category = $row_cat['document_type_name'];
         }
 
-        $path = "../document_files/";
+        $path = "../document_files/".$id.'/';
         $sql_file = sprintf("SELECT * FROM `document_files` where station = '$station' AND part_number  = '0' ");
         $qurmain1 = mysqli_query($db, $sql_file);
         while($rowcmain1 = mysqli_fetch_array($qurmain1)){
@@ -407,33 +407,27 @@ include("../heading_banner.php");
                                         $item_id = $rowc1['doc_id'];
 
                                         $query2 = sprintf("SELECT * FROM  document_files where doc_id = '$item_id'");
+
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;
-                                        ?>
+                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                            $image = $rowcimage['file_name'];
+                                            $d_tag = "delete_image_" . $i;
+                                            $r_tag = "remove_image_" . $i;
+                                            ?>
 
-                                        <div class="col-lg-3 col-sm-6 file">
-                                            <div class="thumbnail">
-                                                <?php
-                                                   while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                                    $image = $rowcimage['file_name'];
-                                                    $d_tag = "delete_image_" . $i;
-                                                    $r_tag = "remove_image_" . $i;
-                                                    ?>
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
                                                     <div class="thumb">
-
-                                                        <!--                                                <img src="../document_files/--><?php //echo $image; ?><!--" alt="">-->
-                                                        <a href="../document_files/<?php echo $image; ?>"><?php echo $image; ?></a>
-                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['doc_file_id']; ?>">
-                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove File </span>
-                                                        <br>
-
-
+                                                        <img src="../document_files/<?php echo $item_id; ?>/<?php echo $image; ?>"
+                                                             alt="">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['material_images_id']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                     </div>
-                                                    <?php
-                                                    $i++;} ?>
+                                                </div>
                                             </div>
-                                        </div>
-
+                                            <?php
+                                            $i++;} ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -591,17 +585,15 @@ include("../heading_banner.php");
     });
 </script>
 
-
 <script>
     $(document).on('click', '.remove_image', function () {
         var del_id = this.id.split("_")[2];
-        var doc_img_id = this.parentElement.childNodes[3].value;
+        var mat_img_id = this.parentElement.childNodes[3].value;
         var info =  document.getElementById("delete_image"+del_id);
-        console.log(doc_img_id);
-        var info =  "id="+del_id+"&doc_id="+doc_img_id;
-        console.log(info);
+        var info =  "id="+del_id+"&doc_id="+mat_img_id;
         $.ajax({
-            type: "POST", url: "../document_module/delete_document_file.php",
+            type: "POST",
+            url: "../document_module/delete_document_file.php",
             data: info,
             success: function (data) {
             }
