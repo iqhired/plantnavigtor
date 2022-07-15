@@ -277,7 +277,7 @@ include("heading_banner.php");
                                             <i class="fa fa-file"></i> Upload Document </a>
                                     </li>
                                     <li>
-                                        <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                        <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                             <i class="fa fa-file"></i> View Document </a>
                                     </li>
                                 </ul>
@@ -455,7 +455,7 @@ include("heading_banner.php");
                                         <i class="fa fa-file"></i> Upload Document </a>
                                 </li>
                                 <li>
-                                    <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                    <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                         <i class="fa fa-file"></i> View Document </a>
                                 </li>
 
@@ -669,7 +669,7 @@ include("heading_banner.php");
                                                     <i class="fa fa-file"></i>Upload Document </a>
                                             </li>
                                             <li>
-                                                <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                                <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                                     <i class="fa fa-file"></i> View Document </a>
                                             </li>
 
@@ -848,7 +848,7 @@ include("heading_banner.php");
                                                 <i class="fa fa-file"></i> Upload Document </a>
                                         </li>
                                         <li>
-                                            <a href="document_module/document_search.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
+                                            <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                                 <i class="fa fa-file"></i> View Document </a>
                                         </li>
 

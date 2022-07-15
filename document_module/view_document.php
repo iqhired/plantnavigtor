@@ -161,7 +161,9 @@ include("../heading_banner.php");
 
     <!-- Content area -->
     <div class="content">
-       <?php $station = $_GET['station'];
+       <?php
+             $id = $_GET['id'];
+             $station = $_GET['station'];
              $part = $_GET['part'];
        $sql_file_station = sprintf("SELECT * FROM `document_data` where part_number = '$part'");
        $qurmain = mysqli_query($db, $sql_file_station);
@@ -186,14 +188,15 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <?php
 
-                        $path = "../document_files/";
+
                         $sql_file = sprintf("SELECT * FROM `document_files` where station = '$station' AND part_number  = '0' ");
                         $qurmain1 = mysqli_query($db, $sql_file);
                         while($rowcmain1 = mysqli_fetch_array($qurmain1)){
-                            $file_name = $rowcmain1['file_name']; ?>
+                            $file_name = $rowcmain1['file_name'];
+                            $id =  $rowcmain1['doc_id'];?>
 
                         <div class="form_row row">
-                            <a href="../document_files/<?php echo $file_name; ?>">
+                            <a href="<?php echo $siteURL; ?>document_files/<?php echo $id ?>/<?php echo $file_name; ?>">
                             <div class="col-md-6">
 
                             <input type="text" name="notes" class="form-control pn_none" id="notes"
