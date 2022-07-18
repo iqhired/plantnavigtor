@@ -1337,13 +1337,7 @@ $msg = explode(',', $msg); ?>
                                                     </a>
                                                 </div>
                                                 <?php }
-                                                if (in_array('74', $msg)) { ?>
-                                                <div class="mb-3">
-                                                    <a href="<?php echo $siteURL; ?>document_module/document_category.php"
-                                                       class="mega-link"><h3 class="text-muted fs-6">Document Config </h3>
-                                                    </a>
-                                                </div>
-                                                <?php } ?>
+                                                ?>
                                             </div>
                                         </div>
 
@@ -1648,6 +1642,14 @@ $msg = explode(',', $msg); ?>
                                                         <a href="<?php echo $siteURL; ?>document_module/document_search.php" class="mega-link"><h3
                                                                     class="text-muted fs-6">Edit Document</h3></a>
                                                     </div>
+
+                                                   <?php if (in_array('74', $msg)) { ?>
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>document_module/document_category.php"
+                                                           class="mega-link"><h3 class="text-muted fs-6">Document Config </h3>
+                                                        </a>
+                                                    </div>
+                                                    <?php } ?>
 
                                                 </div>
                                             </div>
