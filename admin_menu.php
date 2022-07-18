@@ -1644,6 +1644,11 @@ $msg = explode(',', $msg); ?>
                                                                     class="text-muted fs-6">Upload Document</h3></a>
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>document_module/document_search.php" class="mega-link"><h3
+                                                                    class="text-muted fs-6">Edit Document</h3></a>
+                                                    </div>
+
                                                 </div>
                                             </div>
 
