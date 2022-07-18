@@ -1,14 +1,12 @@
-<?php
-include("../config.php");
-$chicagotime = date("Y-m-d H:i:s");
+<?php include("../config.php");
+$curdate = date('Y-m-d');
+$button = "";
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+    header('location: logout.php');
 }
+
+
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -19,35 +17,40 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
     session_unset();
     //Destroy the session
     session_destroy();
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
-
+    header($redirect_logout_path);
 //	header('location: ../logout.php');
     exit;
 }
-$is_tab_login = $_SESSION['is_tab_user'];
-$is_cell_login = $_SESSION['is_cell_login'];
-$station = $_GET['station'];
-$station_event_id =  $_GET['station_event_id'];
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
-$i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
-    header('location: ../dashboard.php');
-}
-if (count($_POST) > 0) {
+$button_event = "button3";
+$curdate = date('Y-m-d');
+$dfrom =   date('Y-m-d',strtotime("-1 days"));
+$dateto = $curdate;
+$datefrom = $dfrom;
+$temp = "";
 
+$_SESSION['station'] = "";
+$_SESSION['date_from'] = "";
+$_SESSION['date_to'] = "";
+$_SESSION['part_number'] = "";
+
+if (count($_POST) > 0) {
+    $_SESSION['station'] = $_POST['station'];
+    $_SESSION['part_number'] = $_POST['part_number'];
+    $_SESSION['date_from'] = $_POST['date_from'];
+    $_SESSION['date_to'] = $_POST['date_to'];
+
+
+    $station = $_POST['station'];
+    $pn = $_POST['part_number'];
     $dateto = $_POST['date_to'];
     $datefrom = $_POST['date_from'];
-    $button = $_POST['button'];
-}else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
+}
+
+$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station' ");
+while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+    $station1 = $rowctemp["line_name"];
 }
 
 ?>
@@ -57,7 +60,7 @@ if (count($_POST) > 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | Material Form List</title>
+    <title><?php echo $sitename; ?> | Document List</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 
@@ -92,18 +95,13 @@ if (count($_POST) > 0) {
             color: red;
             display: none;
         }
-
-
         .col-md-6.date {
             width: 25%;
         }
         .create {
             float: right;
             padding: 12px;
-
         }
-
-
         @media
         only screen and (max-width: 760px),
         (min-device-width: 768px) and (max-device-width: 1024px)  {
@@ -114,10 +112,6 @@ if (count($_POST) > 0) {
             .form_create{
                 display: none;
             }
-
-
-
-
         }
         @media
         only screen and (max-width: 400px),
@@ -133,11 +127,6 @@ if (count($_POST) > 0) {
                 width: 100%;
                 float: right;
             }
-
-
-
-
-
         }
     </style>
 
@@ -158,78 +147,184 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Content area -->
 
-    <div class="content" style="padding: 70px 30px !important;">
+    <div class="content">
+        <div class="panel panel-flat">
+            <form action="" id="doc_form" class="form-horizontal" method="post">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6 mobile">
 
-        <?php
 
-        $result = "SELECT * FROM `document_data` where station = '$station' ORDER BY `doc_id` DESC";
-        $qur = mysqli_query($db,$result); ?>
-        <div class="panel panel-flat" >
+                            <label class="col-lg-2 control-label">Station :</label>
+
+                            <div class="col-lg-8">
+                                <select name="station" id="station" class="select"
+                                        style="float: left;width: initial;">
+                                    <option value="" selected disabled>--- Select Station ---</option>
+                                    <?php
+                                    $st_dashboard = $_POST['station'];
+                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+                                    $result1 = $mysqli->query($sql1);
+                                    //                                            $entry = 'selected';
+                                    while ($row1 = $result1->fetch_assoc()) {
+//                                        if($st_dashboard == $row1['line_id'])
+//                                        {
+//                                            $entry = 'selected';
+//                                        }
+//                                        else
+//                                        {
+//                                            $entry = '';
+//
+//                                        }
+                                        echo "<option value='" . $row1['line_id'] . "' >" . $row1['line_name'] . "</option>";
+                                    }
+                                    ?>
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mobile">
+                            <label class="col-lg-3 control-label">Part Number *  :</label>
+                            <div class="col-lg-8">
+                                <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
+                                    <option value="" selected disabled>--- Select Part Number ---</option>
+                                    <?php
+
+                                    $sql1 = "SELECT * FROM `pm_part_number` where  is_deleted = 0 ";
+                                    $result1 = $mysqli->query($sql1);
+                                    while ($row1 = $result1->fetch_assoc()) {
+//                                        if($st_dashboard == $row1['pm_part_number_id'])
+//                                        {
+//                                            $entry = 'selected';
+//                                        }
+//                                        else
+//                                        {
+//                                            $entry = '';
+//
+//                                        }
+                                        echo "<option value='" . $row1['pm_part_number_id'] . "'>" . $row1['part_number']."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6 date">
+
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                From : &nbsp;&nbsp;</label>
+                            <input type="date" name="date_from" id="date_from" class="form-control"
+                                   value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
+                                   required>
+                        </div>
+                        <div class="col-md-6 date">
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                To: &nbsp;&nbsp;</label>
+                            <input type="date" name="date_to" id="date_to" class="form-control"
+                                   value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
+
+                        </div>
+
+                    </div>
+                    <br/>
+                    <?php
+                    //                    if (!empty($import_status_message)) {
+                    //                        echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                    //                    }
+                    //                    ?>
+                    <!--                    --><?php
+                    //                    if (!empty($_SESSION[import_status_message])) {
+                    //                        echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    //                        $_SESSION['message_stauts_class'] = '';
+                    //                        $_SESSION['import_status_message'] = '';
+                    //                    }
+                    ?>
+
+                </div>
+                <div class="panel-footer p_footer">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary"
+                                    style="background-color:#1e73be;">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" onclick='window.location.reload();'
+                                    style="background-color:#1e73be;">Reset
+                            </button>
+                        </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+        <div class="panel panel-flat">
             <table class="table datatable-basic">
                 <thead>
                 <tr>
-                    <th>Sl. No</th>
                     <th>Action</th>
                     <th>Station</th>
+                    <th>Part</th>
                     <th>Document Name</th>
-                    <th>Document Type</th>
-                    <th>Status</th>
-                    <th class="form_create">Created At</th>
+                    <th>Time</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 <?php
+
+                $q = ("SELECT pn.part_number,pn.part_name,cl.line_name,dd.created_at,dd.doc_id,dd.doc_name FROM  document_data as dd inner join cam_line as cl on dd.station = cl.line_id inner join pm_part_number as pn on dd.part_number=pn.pm_part_number_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station';");
+                $qur = mysqli_query($db, $q);
+
                 while ($rowc = mysqli_fetch_array($qur)) {
-                    $line_name = $rowc["station"];
-                    $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
-                    $resultnumber = mysqli_query($db,$sqlnumber);
-                    $rowcnumber = mysqli_fetch_array($resultnumber);
-                    $station = $rowcnumber['line_name'];
+                    ?>
+                    <tr>
+                        <?php
+                        $un = $rowc['station'];
+                        $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$station' ");
+                        while ($rowc04 = mysqli_fetch_array($qur04)) {
+                            $lnn = $rowc04["line_name"];
+                        }
+                        ?>
+                        <td>
 
-                    $doc_name = $rowc["doc_name"];
-                    $doc_type = $rowc["doc_type"];
-                    $status = $rowc["status"];
-                    $created_at= $rowc["created_at"];
-
-                    if($status == 'active'){
-                        $style = "style='background-color:#a8d8a8;'";
-                    }else{
-
-                        $style = "style='background-color:#eca9a9;'";
-                    }?>
-                    <tr <?php echo $style; ?>>
-                        <td> <?php echo ++$counter; ?></td>
-                        <td >
-                            <a href="view_document.php?id=<?php echo $rowc['doc_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-
-                            <a href="edit_document.php?id=<?php echo $rowc['doc_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
-
+                        <a href="<?php echo $siteURL; ?>document_module/edit_document.php?id=<?php echo $rowc['doc_id'];?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-edit" aria-hidden="true"></i></a>
                         </td>
+                        <td><?php echo $lnn; ?></td>
+                        <td><?php echo $rowc['part_number']." - ".$rowc['part_name']; ?></td>
+                        <td><?php echo $rowc['doc_name']; ?></td>
+                        <td><?php echo $rowc['created_at']; ?></td>
 
-                        <td> <?php echo $station ?></td>
-
-                        <td> <?php echo $doc_name ?></td>
-                        <td> <?php echo $doc_type ?></td>
-                        <td> <?php echo $status ?></td>
-                        <td> <?php echo $created_at ?></td>
                     </tr>
-
                 <?php } ?>
                 </tbody>
             </table>
-            </form>
         </div>
 
 
-    </div>
-</div>
 
 </div>
 <!-- /content area -->
 
 
+<script>
+    $('#station').on('change', function (e) {
+        $("#doc_form").submit();
+    });
 
+    });
+    $('#part_number').on('change', function (e) {
+        $("#doc_form").submit();
+    });
+</script>
 
 <?php include ('../footer.php') ?>
 </body>

@@ -270,6 +270,35 @@ $datefrom = $yesdate;
             background: white;
             color: black;
         }
+        .container {
+            margin: 0 auto;
+        }
+
+        .content_img {
+            /*width: 220px;*/
+            width: 112px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .content_img span {
+            border: 2px solid red;
+            display: inline-block;
+            width: 99%;
+            text-align: center;
+            color: red;
+            margin-top: 6px;
+        }
+
+        .content_img span:hover {
+            cursor: pointer;
+        }
+
 
     </style>
 </head>
@@ -289,6 +318,7 @@ include("../heading_banner.php");
     <?php
 
     $id = $_GET['id'];
+    $_SESSION['edit_id'] = $id;
     $sql1 = "SELECT * FROM `document_data` where doc_id = '$id'";
     $result1 = mysqli_query($db, $sql1);
 
@@ -300,7 +330,8 @@ include("../heading_banner.php");
         $station = $row1['station'];
         $expirydate = $row1['expiry_date'];
         $part_number = $row1['part_number'];
-
+        $_SESSION['doc_station'] = $station;
+        $_SESSION['doc_part_number'] = $part_number;
 
         $sql1 = "SELECT * FROM `cam_line` where line_id = '$station'";
         $result1 = mysqli_query($db,$sql1);
@@ -390,8 +421,8 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Document file : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="file[]" id="file-input" class="form-control">
-                                        <div id="preview"></div>
+                                        <input type="file" name="file[]" id="file" class="form-control" required>
+                                        <div class="container"></div>
                                     </div>
 
                                 </div>
@@ -444,10 +475,10 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label">Document Type : </label>
                                     <div class="col-md-6">
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" id="pass" name="doc_type" value="station" class="form-check-input"  <?php if($doc_type == "station"){echo 'checked';} ?>  required>
+                                            <input type="radio" id="pass" name="doc_type" value="1" class="form-check-input"  <?php if($doc_type == "1"){echo 'checked';} ?>  required>
                                             <label for="pass" class="item_label">Station</label>
 
-                                            <input type="radio" id="fail" name="doc_type" value="part_number" class="form-check-input reject" <?php if($doc_type == "part_number"){echo 'checked';}?> required>
+                                            <input type="radio" id="fail" name="doc_type" value="0" class="form-check-input reject" <?php if($doc_type == "0"){echo 'checked';}?> required>
                                             <label for="fail" class="item_label">Part Number</label>
                                         </div>
 
@@ -613,34 +644,101 @@ include("../heading_banner.php");
     });
 </script>
 <script>
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
 
-    $("#file-input").on("change", function(e) {
-        var files = e.target.files,
-            filesLength = files.length;
-        for (var i = 0; i < filesLength; i++) {
-            var f = files[i]
-            var fileReader = new FileReader();
-            fileReader.onload = (function(e) {
-                var file = e.target;
-                $("<span class=\"pip\">" +
-                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                    "<br/><span class=\"remove\">Remove image</span>" +
-                    "</span>").insertAfter("#file-input");
-                $(".remove").click(function(){
-                    $(this).parent(".pip").remove();
-                });
+        // AJAX request
+        $.ajax({
+            url: 'edit_delete_doc_file.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
 
-                // Old code here
-                /*$("<img></img>", {
-                  class: "imageThumb",
-                  src: e.target.result,
-                  title: file.name + " | Click to remove"
-                }).insertAfter("#files").click(function(){$(this).remove();});*/
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
 
-            });
-            fileReader.readAsDataURL(f);
-        }
+                    // Show image preview with Delete button
+                    // $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><div class='action'> <span class='rename' id='rename_" + count + "'>Rename</span><span class='delete' id='delete_" + count + "'>Delete</span></div><div id='Renamediv'><input type='text' class='form-control' name='rename' id='rename_" + count + "' placeholder='rename file'><button type='submit' id='renamebtn_" + count + "' class='btn-primary renamebtn'>Save</button></div></div>");
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+
+                }
+            }
+        });
     });
+
+
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'edit_delete_doc_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // $("#file-input").on("change", function(e) {
+    //     var files = e.target.files,
+    //         filesLength = files.length;
+    //     for (var i = 0; i < filesLength; i++) {
+    //         var f = files[i]
+    //         var fileReader = new FileReader();
+    //         fileReader.onload = (function(e) {
+    //             var file = e.target;
+    //             $("<span class=\"pip\">" +
+    //                 "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+    //                 "<br/><span class=\"remove\">Remove image</span>" +
+    //                 "</span>").insertAfter("#file-input");
+    //             $(".remove").click(function(){
+    //                 $(this).parent(".pip").remove();
+    //             });
+    //
+    //             // Old code here
+    //             /*$("<img></img>", {
+    //               class: "imageThumb",
+    //               src: e.target.result,
+    //               title: file.name + " | Click to remove"
+    //             }).insertAfter("#files").click(function(){$(this).remove();});*/
+    //
+    //         });
+    //         fileReader.readAsDataURL(f);
+    //     }
+    // });
 
 </script>
 

@@ -429,10 +429,10 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label">Document Type : </label>
                                 <div class="col-md-6">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="pass" name="doc_type" value ="station" class="form-check-input" checked required>
+                                        <input type="radio" id="pass" name="doc_type" value ="1" class="form-check-input" checked required>
                                         <label for="pass" class="item_label">Station</label>
 
-                                        <input type="radio" id="fail" name="doc_type"  value ="part_number" class="form-check-input reject" required>
+                                        <input type="radio" id="fail" name="doc_type"  value ="0" class="form-check-input reject" required>
                                         <label for="fail" class="item_label">Part Number</label>
 
 
