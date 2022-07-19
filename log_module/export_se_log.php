@@ -86,5 +86,4 @@ header("Content-Disposition: attachment; filename=Station Events Log.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 print "$header\n$result";
-
 ?>
