@@ -50,13 +50,13 @@ while ($row = mysqli_fetch_array($result0)) {
         if ($end_hrs < 24) {
             $tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);
             $end_time2 = $s_arr_1[0] . ' ' . $tt;
-            $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assign_by`,`last_assigned_by`) 
+            $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`) 
                 values ('$assign_crew_log_id','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$assign_time','$unassign_time','$resource_type','$total_time','0','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
             $result1 = mysqli_query($db, $page);
         }else{
             $tt_time_1 = 24 - $assign_time;
             $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
-            $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assign_by`,`last_assigned_by`) 
+            $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`) 
                 values ('$assign_crew_log_id','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$assign_time','$endtime_1','$resource_type','$tt_time_1','0','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
             $result1 = mysqli_query($db, $page);
             $start_date2 = $s_arr_1[0];
@@ -67,12 +67,12 @@ while ($row = mysqli_fetch_array($result0)) {
                 if($tt_time_2 < 24){
                     $tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
                     $end_time2 = $start_date2 . ' ' . $tt;
-                    $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assign_by`,`last_assigned_by`)                 
+                    $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`)                 
 				values ('$assign_crew_log_id','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$start_time2','$end_time2','$resource_type','$tt_time_2','0','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
                     $result1 = mysqli_query($db, $page);
                 }else{
                     $end_time2 = $start_date2 . ' ' . '23:59:59';
-                    $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assign_by`,`last_assigned_by`)                 
+                    $page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`)                 
 				values ('$assign_crew_log_id','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$start_time2','$end_time2','$resource_type','24','0','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
                     $result1 = mysqli_query($db, $page);
                 }
@@ -83,7 +83,7 @@ while ($row = mysqli_fetch_array($result0)) {
 
     }else{
 
-        $page_tot = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assign_by`,`last_assigned_by`)
+        $page_tot = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`check_total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`)
                 values ('$assign_crew_log_id','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$assign_time','$unassign_time','$resource_type','$total_time','1','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
         $result_tot = mysqli_query($db, $page_tot);
     }
