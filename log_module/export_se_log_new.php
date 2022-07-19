@@ -63,40 +63,38 @@ for ($i = 0; $i < $fields; $i++) {
     $header .= mysqli_field_name($db, $exportData, $i) . "\t";
 }
 $k =1;
-$datefrom1 = $datefrom;
 
+$datefrom1 = date('Y-m-d', strtotime($datefrom. ' + 1 days'));
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
-    if($datefrom1){
-        foreach ($row as $value) {
-            if ((!isset($value) ) || ( $value == "" )) {
-                $value = "\t";
-            } else {
-                $value = str_replace('"', '""', $value);
-                if ($j == 1) {
-                    $un = $value;
-                    $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
-                    while ($rowc04 = mysqli_fetch_array($qur04)) {
-                        $lnn = $rowc04["line_name"];
-                    }
-                    $value = $lnn;
-                }
-                $value = '"' . $value . '"' . "\t";
-            }
-            $line .= $value;
-            $j++;
+    if($datefrom1 > $row['created_on']){
+        $print_data .= "Date : " . $datefrom1 . "\n";
+        print "\n\n$print_data\n\n\n\n";
+    }
 
+    foreach ($row as $value) {
+        if ((!isset($value) ) || ( $value == "" )) {
+            $value = "\t";
+        } else {
+            $value = str_replace('"', '""', $value);
+            if ($j == 1) {
+                $un = $value;
+                $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
+                while ($rowc04 = mysqli_fetch_array($qur04)) {
+                    $lnn = $rowc04["line_name"];
+                }
+                $value = $lnn;
+            }
+            $value = '"' . $value . '"' . "\t";
         }
+        $line .= $value;
+        $j++;
 
     }
 
-
-    $result .= trim($line) . "\n";
-    print "$header\n$result";
-    print "\n\n$print_data\n\n\n\n";
 }
-$datefrom = date('Y-m-d', strtotime($datefrom. ' + 1 days'));
+
 $k++;
 
 $result = str_replace("\r", "", $result);
