@@ -62,30 +62,45 @@ $fields = mysqli_num_fields($db, $exportData);
 for ($i = 0; $i < $fields; $i++) {
     $header .= mysqli_field_name($db, $exportData, $i) . "\t";
 }
+$k =1;
+$datefrom1 = $datefrom;
+
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
-    foreach ($row as $value) {
-        if ((!isset($value) ) || ( $value == "" )) {
-            $value = "\t";
-        } else {
-            $value = str_replace('"', '""', $value);
-            if ($j == 1) {
-                $un = $value;
-                $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
-                while ($rowc04 = mysqli_fetch_array($qur04)) {
-                    $lnn = $rowc04["line_name"];
+    if($datefrom1){
+        foreach ($row as $value) {
+            if ((!isset($value) ) || ( $value == "" )) {
+                $value = "\t";
+            } else {
+                $value = str_replace('"', '""', $value);
+                if ($j == 1) {
+                    $un = $value;
+                    $qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
+                    while ($rowc04 = mysqli_fetch_array($qur04)) {
+                        $lnn = $rowc04["line_name"];
+                    }
+                    $value = $lnn;
                 }
-                $value = $lnn;
+                $value = '"' . $value . '"' . "\t";
             }
-            $value = '"' . $value . '"' . "\t";
+            $line .= $value;
+            $j++;
+
         }
-        $line .= $value;
-        $j++;
+
     }
+
+
     $result .= trim($line) . "\n";
+    print "$header\n$result";
+    print "\n\n$print_data\n\n\n\n";
 }
+$datefrom = date('Y-m-d', strtotime($datefrom. ' + 1 days'));
+$k++;
+
 $result = str_replace("\r", "", $result);
+
 if ($result == "") {
     $result = "\nNo Record(s) Found!\n";
 }
