@@ -53,7 +53,7 @@ if ($event_category != "") {
     $q = $q . " AND  e_log.event_cat_id ='$event_category'";
 }
 
-$q = $q . " ORDER BY e_log.created_on  DESC";
+$q = $q . " ORDER BY e_log.created_on  ASC";
 
 $exportData = mysqli_query($db, $q);
 $header = "Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t" .  "Total Time" . "\t";
@@ -64,12 +64,14 @@ for ($i = 0; $i < $fields; $i++) {
 }
 $k =1;
 
-$datefrom1 = date('Y-m-d', strtotime($datefrom. ' + 1 days'));
 while ($row = mysqli_fetch_row($exportData)) {
+       $date_n = $row['created_on'];
+       $date_ne = explode(' ',$date_n);
+       $date_next = $date_ne[0];
     $line = '';
     $j = 1;
-    if($datefrom1 > $row['created_on']){
-        $print_data .= "Date : " . $datefrom1 . "\n";
+    if($datefrom < $date_next){
+        $print_data .= "Date : " . $date_next . "\n";
         print "\n\n$print_data\n\n\n\n";
     }
 
