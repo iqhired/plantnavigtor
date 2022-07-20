@@ -509,7 +509,7 @@ include("../heading_banner.php");
                     </div>
                     </form>
                     <div class="col-md-2">
-                        <form action="export_se_log_update.php" method="post" name="export_excel">
+                        <form action="export_se_log_new.php" method="post" name="export_excel">
                             <button type="submit" class="btn btn-primary"
                                     style="background-color:#1e73be;width:120px;"
                                     id="export" name="export" data-loading-text="Loading...">Export Data
