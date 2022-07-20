@@ -18,7 +18,7 @@ if ($delete_check != "") {
         $stationpos = $rowc04["assign_crew_id"];
         if ($stationpos == "") {
         
-			$sql1 = "DELETE FROM `cam_station_pos_rel` WHERE `station_pos_rel_id`='$delete_check[$i]'";
+			$sql1 = "UPDATE `cam_station_pos_rel` SET `is_deleted`='1' WHERE `station_pos_rel_id`='$delete_check[$i]'";
 			if (!mysqli_query($db, $sql1)) {
 				$_SESSION['message_stauts_class'] = 'alert-danger';
 				$_SESSION['import_status_message'] = 'Please Try Again.';

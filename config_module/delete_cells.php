@@ -4,7 +4,7 @@ $delete_check = $_POST['delete_check'];
 if ($delete_check != "") {
 	$cnt = count($delete_check);
 	for ($i = 0; $i < $cnt;) {
-		$sql1 = "DELETE FROM `cell_grp` WHERE `c_id` = '$delete_check[$i]'";
+		$sql1 = "Update `cell_grp` SET `is_deleted`='1' WHERE `c_id` = '$delete_check[$i]'";
 		if (!mysqli_query($db, $sql1)) {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Please Retry.';

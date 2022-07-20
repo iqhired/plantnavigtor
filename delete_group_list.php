@@ -15,7 +15,7 @@ if ($delete_check != "") {
 		
 		if ($task_id == "") {
         
-			$sql1 = "DELETE FROM `sg_group` WHERE `group_id`='$delete_check[$i]'";
+			$sql1 = "UPDATE `sg_group` SET `is_deleted`='1' WHERE `group_id`='$delete_check[$i]'";
 			if (!mysqli_query($db, $sql1)) {
 				echo "Invalid Data";
 			} else {

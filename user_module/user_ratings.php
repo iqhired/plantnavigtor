@@ -298,7 +298,7 @@ if (count($_POST) > 0) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $query = sprintf("SELECT * FROM  cam_user_rating");
+                                            $query = sprintf("SELECT * FROM  cam_user_rating where is_deleted!='1'");
                                             $qur = mysqli_query($db, $query);
                                             while ($rowc = mysqli_fetch_array($qur)) {
                                                 ?> 

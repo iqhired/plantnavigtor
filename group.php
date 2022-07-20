@@ -207,7 +207,7 @@ if (count($_POST) > 0) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = sprintf("SELECT * FROM  sg_group ");
+                                        $query = sprintf("SELECT * FROM  sg_group where is_deleted!='1' ");
                                         $qur = mysqli_query($db, $query);
                                         while ($rowc = mysqli_fetch_array($qur)) {
                                             ?> 

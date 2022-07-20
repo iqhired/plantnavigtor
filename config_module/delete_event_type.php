@@ -18,7 +18,7 @@ if ($delete_val != "") {
 			$result1 = mysqli_query($db, $sql);
 		}
 	}
-	$sql1 = "DELETE FROM `event_type` WHERE `event_type_id`='$delete_check'";
+	$sql1 = "UPDATE `event_type` SET `is_deleted`='1' WHERE `event_type_id`='$delete_check'";
 	if (!mysqli_query($db, $sql1)) {
 		echo "Invalid Data";
 	} else {

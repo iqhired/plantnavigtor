@@ -18,7 +18,7 @@ if ($delete_check != "") {
 		{	
 		
         if ($assigned == "0" && $assigned2 == "0") {
-            $sql1 = "DELETE FROM `cam_users` WHERE `users_id`='$delete_check[$i]'";
+            $sql1 = "UPDATE `cam_users` SET `is_deleted` = '1' WHERE `users_id`='$delete_check[$i]'";
             if (!mysqli_query($db, $sql1)) {
                 $_SESSION['message_stauts_class'] = 'alert-danger';
                 $_SESSION['import_status_message'] = 'Please retry';

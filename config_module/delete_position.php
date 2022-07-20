@@ -9,7 +9,7 @@ if ($delete_check != "") {
         $rowc04 = mysqli_fetch_array($qur04);
         $posname = $rowc04["assign_crew_id"];
         if ($posname == "") {
-            $sql1 = "DELETE FROM `cam_position` WHERE `position_id`='$delete_check[$i]'";
+            $sql1 = "UPDATE `cam_position` SET `is_deleted`='1' WHERE `position_id`='$delete_check[$i]'";
             if (!mysqli_query($db, $sql1)) {
                 $_SESSION['message_stauts_class'] = 'alert-danger';
                 $_SESSION['import_status_message'] = 'Please Try Again.';

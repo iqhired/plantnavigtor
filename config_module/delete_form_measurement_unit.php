@@ -4,7 +4,7 @@ $delete_check = $_POST['delete_check'];
 if ($delete_check != "") {
     $cnt = count($delete_check);
     for ($i = 0; $i < $cnt;) {
-        $sql1 = "DELETE FROM `form_measurement_unit` WHERE `form_measurement_unit_id`='$delete_check[$i]'";
+        $sql1 = "UPDATE `form_measurement_unit` SET `is_deleted`='1' WHERE `form_measurement_unit_id`='$delete_check[$i]'";
         if (!mysqli_query($db, $sql1)) {
             echo "Invalid Data";
         } else {

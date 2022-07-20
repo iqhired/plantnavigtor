@@ -182,7 +182,7 @@ if (!empty($import_status_message)) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = sprintf("SELECT * FROM  cam_position");
+                                        $query = sprintf("SELECT * FROM  cam_position where is_deleted!='1'");
                                         $qur = mysqli_query($db, $query);
                                         while ($rowc = mysqli_fetch_array($qur)) {
                                             ?> 

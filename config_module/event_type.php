@@ -303,7 +303,7 @@ include("../heading_banner.php");?>
                             </thead>
                             <tbody>
 							<?php
-							$query = sprintf("SELECT * FROM  event_type as et inner join events_category as ec on et.event_cat_id = ec.events_cat_id order by so ASC");
+							$query = sprintf("SELECT * FROM  event_type as et inner join events_category as ec on et.event_cat_id = ec.events_cat_id where et.is_deleted!='1' order by so ASC");
 							$qur = mysqli_query($db, $query);
 							$total_rows = $qur->num_rows;
 							while ($rowc = mysqli_fetch_array($qur)) {

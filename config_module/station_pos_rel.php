@@ -195,7 +195,7 @@ include("../heading_banner.php");
                             </thead>
                             <tbody>
 							<?php
-							$query = sprintf("SELECT * FROM  cam_station_pos_rel");
+							$query = sprintf("SELECT * FROM  cam_station_pos_rel where is_deleted!='1'");
 							$qur = mysqli_query($db, $query);
 							while ($rowc = mysqli_fetch_array($qur)) {
 								?>

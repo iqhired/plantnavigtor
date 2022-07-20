@@ -241,7 +241,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = sprintf("SELECT * FROM  cam_line");
+                                        $query = sprintf("SELECT * FROM  cam_line where is_deleted!='1'");
                                         $qur = mysqli_query($db, $query);
                                         while ($rowc = mysqli_fetch_array($qur)) {
                                             ?> 

@@ -290,7 +290,7 @@ if (!empty($_SESSION[import_status_message])) {
                                         </thead>
                                         <tbody>
                                 <?php
-                                $query = sprintf("SELECT * FROM  tm_equipment");
+                                $query = sprintf("SELECT * FROM  tm_equipment where is_deleted!='1'");
                                 $qur = mysqli_query($db, $query);
                                 while ($rowc = mysqli_fetch_array($qur)) {
                                     ?> 
@@ -324,7 +324,7 @@ if (!empty($_SESSION[import_status_message])) {
                                         </thead>
                                         <tbody>
 <?php
-$query = sprintf("SELECT * FROM  tm_property");
+$query = sprintf("SELECT * FROM  tm_property where is_deleted!='1'");
 $qur = mysqli_query($db, $query);
 while ($rowc = mysqli_fetch_array($qur)) {
     ?> 
@@ -360,7 +360,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
                                         </thead>
                                         <tbody>
 <?php
-$query = sprintf("SELECT * FROM  tm_building");
+$query = sprintf("SELECT * FROM  tm_building where is_deleted!='1'");
 $qur = mysqli_query($db, $query);
 while ($rowc = mysqli_fetch_array($qur)) {
     ?> 

@@ -474,7 +474,7 @@ include("../heading_banner.php");
 							</thead>
 							<tbody>
 							<?php
-							$query = sprintf("SELECT * FROM cell_grp ;  ");
+							$query = sprintf("SELECT * FROM cell_grp where is_deleted!='1';  ");
 							$qur = mysqli_query($db, $query);
 
 							while ($rowc = mysqli_fetch_array($qur)) {

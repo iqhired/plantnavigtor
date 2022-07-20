@@ -221,7 +221,7 @@ include("../heading_banner.php");?>
                     <tbody>
 					<?php
 					$i = 1;
-					$query = sprintf("SELECT * FROM  events_category");
+					$query = sprintf("SELECT * FROM  events_category where is_deleted!='1'");
 					$qur = mysqli_query($db, $query);
 					while ($rowc = mysqli_fetch_array($qur)) {
 						?>

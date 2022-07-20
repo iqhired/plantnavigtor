@@ -193,7 +193,7 @@ if (count($_POST) > 0) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = sprintf("SELECT * FROM  form_measurement_unit");
+                                        $query = sprintf("SELECT * FROM  form_measurement_unit where is_deleted!='1'");
                                         $qur = mysqli_query($db, $query);
                                         while ($rowc = mysqli_fetch_array($qur)) {
                                             ?> 

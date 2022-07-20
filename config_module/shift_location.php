@@ -192,7 +192,7 @@ if (!empty($_SESSION[import_status_message])) {
                                     </thead>
                                     <tbody>
 <?php
-$query = sprintf("SELECT * FROM  cam_shift");
+$query = sprintf("SELECT * FROM  cam_shift where is_deleted!='1'");
 $qur = mysqli_query($db, $query);
 while ($rowc = mysqli_fetch_array($qur)) {
     ?> 
