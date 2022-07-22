@@ -61,15 +61,16 @@ while ($row = mysqli_fetch_array($result0)) {
             $cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
             $curr_time = round($cu_time, 2);
 
-            $i = 1;
+
             $tt_time_1 = 24 - $start_time;
             $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 
             $page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
-                values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
+                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
             $result1 = mysqli_query($db, $page);
             $start_date2 = $s_arr_1[0];
             $tt_time_2 = $end_hrs - $tt_time_1;
+            $i = 2;
             while($tt_time_2 > 0){
                 $start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
                 $start_time2 = $start_date2 . ' ' . '00:00:00';
