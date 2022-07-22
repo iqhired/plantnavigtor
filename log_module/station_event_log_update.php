@@ -35,21 +35,14 @@ while ($row = mysqli_fetch_array($result0)) {
     $current_time = date("Y-m-d H:i:s");
     $time = ($created_on);
 
-    if (!empty($time)) {
-        $s_arr_1 = explode(' ', $time);
-        $s_arr = explode(':', $s_arr_1[1]);
-        $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
-        $start_time = round($st_time, 2);
 
-        $c_arr_1 = explode(' ',$current_time);
-        $c_arr = explode(':', $c_arr_1[1]);
-        $cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
-        $curr_time = round($cu_time, 2);
-
-    }
     if (empty($total_time)) {
+        $datetime1 = strtotime($current_time);
+        $datetime2 = strtotime($time);
 
-        $end_hrs = $current_time - $time / 60;
+        $end_hrs_insecs = $datetime1 - $datetime2;
+        $end_hrs = $end_hrs_insecs/3600;
+//        $end_hrs = ($current_time - $time) / 60;
        // $tt = sprintf('%02d:%02d', (int)$current_time, fmod($current_time, 1) * 60);
         if ($end_hrs < 24) {
             $tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);
@@ -58,6 +51,16 @@ while ($row = mysqli_fetch_array($result0)) {
                 values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
             $result1 = mysqli_query($db, $page);
         }else{
+            $s_arr_1 = explode(' ', $time);
+            $s_arr = explode(':', $s_arr_1[1]);
+            $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
+            $start_time = round($st_time, 2);
+
+            $c_arr_1 = explode(' ',$current_time);
+            $c_arr = explode(':', $c_arr_1[1]);
+            $cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
+            $curr_time = round($cu_time, 2);
+
             $i = 1;
             $tt_time_1 = 24 - $start_time;
             $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
@@ -86,11 +89,6 @@ while ($row = mysqli_fetch_array($result0)) {
                 $i++;
             }
         }
-    }else{
-
-        $page_tot = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`check_total_time`,`created_by`) 
-                values ('$station_event_log_id','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','1','$created_by')";
-        $result_tot = mysqli_query($db, $page_tot);
     }
 }
 
