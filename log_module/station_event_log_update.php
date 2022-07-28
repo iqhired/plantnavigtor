@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_array($result0)) {
     $created_on = $row['created_on'];
     $total_time = $row['total_time'];
     $created_by = $row['created_by'];
-   // $current_time = date('Y-m-d',strtotime("-1 days"));
+   // $current_time = date('Y-m-d H:i:s');
 
     $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
     $current_time = $yesdate;
@@ -45,7 +45,7 @@ while ($row = mysqli_fetch_array($result0)) {
         $datetime2 = strtotime($time);
 
         $end_hrs_insecs = $datetime1 - $datetime2;
-        $end_hrs = $end_hrs_insecs/3600;
+        $end_hrs = round($end_hrs_insecs/3600 ,2);
 //        $end_hrs = ($current_time - $time) / 60;
        // $tt = sprintf('%02d:%02d', (int)$current_time, fmod($current_time, 1) * 60);
         if ($end_hrs < 24) {
@@ -88,9 +88,8 @@ while ($row = mysqli_fetch_array($result0)) {
 
 
             $i = 2;
-            while($i > $j){
-            if($tt_time_2 > 0){
-
+            while($tt_time_2 > 0){
+                if($i > $j){
                     $start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
                     $start_time2 = $start_date2 . ' ' . '00:00:00';
                     if($tt_time_2 < 24){
