@@ -32,10 +32,10 @@ while ($row = mysqli_fetch_array($result0)) {
     $created_on = $row['created_on'];
     $total_time = $row['total_time'];
     $created_by = $row['created_by'];
-   // $current_time = date('Y-m-d H:i:s');
+    $current_time = date('Y-m-d H:i:s');
 
-    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
-    $current_time = $yesdate;
+//    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
+//    $current_time = $yesdate;
 
     $time = ($created_on);
 
@@ -56,10 +56,13 @@ while ($row = mysqli_fetch_array($result0)) {
             $result1 = mysqli_query($db, $page);
         }else{
 
-            $co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_new;";
+        //    $co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_new";
+            $co_sql = "SELECT sg_station_event_update_id, end_time FROM sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1;";
             $result_sql = mysqli_query($db, $co_sql);
             $count_sql = mysqli_fetch_array($result_sql);
-            $j = $count_sql[0];
+          //  $j = $count_sql[0];
+            $j = $count_sql['sg_station_event_update_id'];
+
 
             $s_arr_1 = explode(' ', $time);
             $s_arr = explode(':', $s_arr_1[1]);
@@ -75,20 +78,24 @@ while ($row = mysqli_fetch_array($result0)) {
             $tt_time_1 = 24 - $start_time;
             $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 
+            $start_date2 = $s_arr_1[0];
+            $tt_time_2 = $end_hrs - $tt_time_1;
+
             $i = 1;
 
             if($i > $j){
 
-                $page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
+                $page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
                 values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
                 $result1 = mysqli_query($db, $page);
-                $start_date2 = $s_arr_1[0];
-                $tt_time_2 = $end_hrs - $tt_time_1;
+
             }
 
 
             $i = 2;
+
             while($tt_time_2 > 0){
+
                 if($i > $j){
                     $start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
                     $start_time2 = $start_date2 . ' ' . '00:00:00';
