@@ -62,6 +62,13 @@ while ($row = mysqli_fetch_array($result0)) {
 			$j = $count_sql[0];
 			$i = 1;
 
+//			//    $co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_new";
+//			$co_sql = "SELECT sg_station_event_update_id, end_time FROM sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1;";
+//			$result_sql = mysqli_query($db, $co_sql);
+//			$count_sql = mysqli_fetch_array($result_sql);
+//			//  $j = $count_sql[0];
+//			$j = $count_sql['sg_station_event_update_id'];
+
 			if($i > $j){
 				$s_arr_1 = explode(' ', $time);
 				$s_arr = explode(':', $s_arr_1[1]);
