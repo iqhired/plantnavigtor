@@ -20,7 +20,7 @@ while ($mainrowc = mysqli_fetch_array($mainqur)) {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAuth = true;
     $mail->Username = 'admin@plantnavigator.com';
-    $mail->Password = 'S@@rgummi@2021';
+    $mail->Password = 'S@@rgummi_2021';
     $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
     $taskboard_id = $mainrowc["taskboard"];
 // taskboard name

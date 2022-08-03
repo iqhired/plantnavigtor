@@ -107,7 +107,7 @@
 		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 		$mail->SMTPAuth = true;
 		$mail->Username = 'admin@plantnavigator.com';
-		$mail->Password = 'S@@rgummi@2021';
+		$mail->Password = 'S@@rgummi_2021';
 		$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 
 		$structure = '<html><body>';
