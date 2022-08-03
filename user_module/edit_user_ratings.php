@@ -145,7 +145,7 @@ include("../heading_banner.php");
                                             $sql_line = "SELECT line_id,line_name FROM `cam_line`";
                                             $result_line = mysqli_query($db,$sql_line);
                                             while ($row_line = mysqli_fetch_array($result_line)) {
-                                                if($line_id = $row_line['line_id']){
+                                                if($line_id == $row_line['line_id']){
                                                     $entry = 'selected';
                                                 }else{
                                                     $entry = '';
@@ -169,7 +169,7 @@ include("../heading_banner.php");
                                             $sql1 = "SELECT position_id,position_name FROM `cam_position`";
                                             $result1 = mysqli_query($db,$sql1);
                                             while ($row1 = mysqli_fetch_array($result1)) {
-                                                if($position = $row1['position_id']){
+                                                if($position == $row1['position_id']){
                                                     $entry = 'selected';
                                                 }else{
                                                     $entry = '';
@@ -191,10 +191,10 @@ include("../heading_banner.php");
                                         <select name="edit_user_name" id="edit_user_name" class="select form-control" data-style="bg-slate" >
                                             <option value="" disabled>--- Select User ---</option>
                                             <?php
-                                            $sql1 = "SELECT firstname,lastname FROM `cam_users`";
+                                            $sql1 = "SELECT users_id,firstname,lastname FROM `cam_users`  where `users_id` != '1' order BY `user_name`";
                                             $result1 = mysqli_query($db,$sql1);
                                             while ($row1 =mysqli_fetch_array($result1)) {
-                                                if($user_id = $row1['users_id']){
+                                                if($user_id == $row1['users_id']){
                                                     $entry = 'selected';
                                                 }else{
                                                     $entry = '';
