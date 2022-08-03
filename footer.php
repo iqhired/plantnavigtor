@@ -98,7 +98,7 @@
 	if($minutes >= $min)
 	{
 	if ($notification_mail_flag == '1') {
-		require '../vendor/autoload.php';
+		require './vendor/autoload.php';
 		$mail = new PHPMailer();
 		$mail->isSMTP();
 		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
