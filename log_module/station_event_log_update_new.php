@@ -57,7 +57,7 @@ while ($row = mysqli_fetch_array($result0)) {
 			$result1 = mysqli_query($db, $page);
 		}else{
 
-			$co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_new;";
+			$co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_new where station_event_id = '$station_event_id';";
 			$result_sql = mysqli_query($db, $co_sql);
 			$count_sql = mysqli_fetch_array($result_sql);
 			$j = $count_sql[0];
