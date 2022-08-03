@@ -254,7 +254,7 @@ if (count($_POST) > 0) {
                                     
                                     <br/><br/>	
                                     <?php
-                                    if (!empty($_SESSION[import_status_message])) {
+                                    if (!empty($_SESSION['import_status_message'])) {
                                         echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                         $_SESSION['message_stauts_class'] = '';
                                         $_SESSION['import_status_message'] = '';
@@ -301,6 +301,7 @@ if (count($_POST) > 0) {
                                             $query = sprintf("SELECT * FROM  cam_user_rating where is_deleted!='1'");
                                             $qur = mysqli_query($db, $query);
                                             while ($rowc = mysqli_fetch_array($qur)) {
+                                                $user_rating_id = $rowc["user_rating_id"];
                                                 ?> 
                                                 <tr>
                                                     <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["user_rating_id"]; ?>"></td>
@@ -332,10 +333,9 @@ if (count($_POST) > 0) {
                                                     <td><?php echo $first; ?>&nbsp;<?php echo $last; ?></td>
                                                     <td><?php echo $rowc['ratings']; ?></td>
                                                     <td>
-                                                        <button type="button" id="edit" class="btn btn-info btn-xs" data-edit_iid="<?php echo $rowc['user_rating_id']; ?>" data-ratings="<?php echo $rowc['ratings']; ?>"  data-position_name="<?php echo $rowc['position_id']; ?>" data-id="<?php echo $rowc['user_rating_id']; ?>" data-line_name="<?php echo $rowc['line_id']; ?>" data-user_name="<?php echo $rowc['user_id']; ?>" data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>
-                                                        <!--									&nbsp; 
-                                                                                                                                <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['user_rating_id']; ?>">Delete </button>
-                                                        -->									
+<!--                                                        <button type="button" id="edit" class="btn btn-info btn-xs" data-edit_iid="--><?php //echo $rowc['user_rating_id']; ?><!--" data-ratings="--><?php //echo $rowc['ratings']; ?><!--"  data-position_name="--><?php //echo $rowc['position_id']; ?><!--" data-id="--><?php //echo $rowc['user_rating_id']; ?><!--" data-line_name="--><?php //echo $rowc['line_id']; ?><!--" data-user_name="--><?php //echo $rowc['user_id']; ?><!--" data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>-->
+                                                        <a href="edit_user_ratings.php?id=<?php echo $user_rating_id; ?>&line_id=<?php echo $station1; ?>&pos=<?php echo $position1; ?>&user=<?php echo $un; ?>&rate=<?php echo $rowc['ratings']; ?>" class="btn btn-primary"  style="background-color:#1e73be;">Edit</a>
+
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -409,7 +409,14 @@ if (count($_POST) > 0) {
                                                             <select name="edit_user_name" id="edit_user_name" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" disabled>--- Select User ---</option>
                                                                 <?php
-                                                                $sql1 = "SELECT * FROM `cam_users` where `users_id` != '1' order BY `user_name`";
+                                                                $query = sprintf("SELECT * FROM  cam_user_rating where is_deleted!='1'");
+                                                                $qur = mysqli_query($db, $query);
+                                                                while ($res_q = mysqli_fetch_array($qur));
+                                                                {
+                                                                    $user_id = $res_q['user_id'];
+                                                                }
+
+                                                                $sql1 = "SELECT * FROM `cam_users` where `users_id` != '1'";
                                                                 $result1 = $mysqli->query($sql1);
                                                                 while ($row1 = $result1->fetch_assoc()) {
                                                                     echo "<option value='" . $row1['users_id'] . "'$entry>" . $row1['firstname'] . " " . $row1['lastname'] . "</option>";

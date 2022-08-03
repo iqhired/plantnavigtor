@@ -24,15 +24,13 @@ $_SESSION['LAST_ACTIVITY'] = $time;
 
 $u_id = $_GET['id'];
 
-
 if (count($_POST) > 0) {
 //edit
-	$id = $_POST['edit_id'];
-    $edit_line_name = $_POST['edit_line_name'];
-    $edit_position = $_POST['edit_position_name'];
-    $edit_user = $_POST['edit_user_name'];
-    $edit_ratings = $_POST['edit_ratings'];
-
+	$id = $_GET['id'];
+    $edit_line_name = $_GET['line_id'];
+    $edit_position = $_GET['pos'];
+    $edit_user = $_GET['user'];
+    $edit_ratings = $_GET['rate'];
 
 	$sql = "update cam_user_rating set line_id='$edit_line_name', position_id='$edit_position' , user_id='$edit_user',ratings ='$edit_ratings'   where user_rating_id='$id'";
 
@@ -45,7 +43,7 @@ if (count($_POST) > 0) {
 		$import_status_message = 'Error: Please Insert valid data';
 	}
 
-	header('location: line.php');
+	header('location: user_ratings.php');
 
 }
 
@@ -243,7 +241,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_user_ratings.php?id=<?php echo $edit_id;?>");
+        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_user_ratings.php?id=<?php echo $edit_id;?>&line_id=<?php echo $edit_line_name; ?>&pos=<?php echo $edit_position; ?>&user=<?php echo $edit_user; ?>&rate=<?php echo $edit_ratings?>");
     }
 </script>
 
