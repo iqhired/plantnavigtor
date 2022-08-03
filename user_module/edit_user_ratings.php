@@ -26,13 +26,11 @@ $u_id = $_GET['id'];
 
 if (count($_POST) > 0) {
 //edit
-	$id = $_GET['id'];
-    $edit_line_name = $_GET['line_id'];
-    $edit_position = $_GET['pos'];
-    $edit_user = $_GET['user'];
-    $edit_ratings = $_GET['rate'];
+	$id = $_POST['edit_id'];
 
-	$sql = "update cam_user_rating set line_id='$edit_line_name', position_id='$edit_position' , user_id='$edit_user',ratings ='$edit_ratings'   where user_rating_id='$id'";
+    $edit_ratings = $_POST['edit_ratings'];
+
+	$sql = "update cam_user_rating set ratings ='$edit_ratings' where user_rating_id='$id'";
 
 	$result1 = mysqli_query($db, $sql);
 	if ($result1) {
@@ -135,7 +133,7 @@ include("../heading_banner.php");
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">Station:*</label>
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-7"  style="pointer-events: none;">
                                         <input type="hidden" name="edit_id" value="<?php echo $edit_id; ?>">
                                         <select name="edit_line_name" id="edit_line_name" class="select form-control" data-style="bg-slate" >
                                             <option value="" disabled>--- Select Station ---</option>
@@ -160,7 +158,7 @@ include("../heading_banner.php");
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">Position:*</label>
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-7"  style="pointer-events: none;">
                                         <select name="edit_position_name" id="edit_position_name" class="select form-control" data-style="bg-slate" >
                                             <option value="" disabled>--- Select Position ---</option>
                                             <?php
@@ -184,7 +182,7 @@ include("../heading_banner.php");
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label class="col-lg-5 control-label">user:*</label>
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-7"  style="pointer-events: none;">
                                         <input type="hidden" name="edit_e" id="edit_e" >
                                         <select name="edit_user_name" id="edit_user_name" class="select form-control" data-style="bg-slate" >
                                             <option value="" disabled>--- Select User ---</option>
@@ -240,9 +238,9 @@ include("../heading_banner.php");
 <!-- /page container -->
 
 <script>
-    window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>config_module/edit_user_ratings.php?id=<?php echo $edit_id;?>&line_id=<?php echo $edit_line_name; ?>&pos=<?php echo $edit_position; ?>&user=<?php echo $edit_user; ?>&rate=<?php echo $edit_ratings?>");
-    }
+    //window.onload = function() {
+    //    history.replaceState("", "", "<?php //echo $scriptName; ?>//config_module/edit_user_ratings.php?id=<?php //echo $edit_id;?>//");
+    //}
 </script>
 
 

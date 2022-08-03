@@ -334,7 +334,7 @@ if (count($_POST) > 0) {
                                                     <td><?php echo $rowc['ratings']; ?></td>
                                                     <td>
 <!--                                                        <button type="button" id="edit" class="btn btn-info btn-xs" data-edit_iid="--><?php //echo $rowc['user_rating_id']; ?><!--" data-ratings="--><?php //echo $rowc['ratings']; ?><!--"  data-position_name="--><?php //echo $rowc['position_id']; ?><!--" data-id="--><?php //echo $rowc['user_rating_id']; ?><!--" data-line_name="--><?php //echo $rowc['line_id']; ?><!--" data-user_name="--><?php //echo $rowc['user_id']; ?><!--" data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>-->
-                                                        <a href="edit_user_ratings.php?id=<?php echo $user_rating_id; ?>&line_id=<?php echo $station1; ?>&pos=<?php echo $position1; ?>&user=<?php echo $un; ?>&rate=<?php echo $rowc['ratings']; ?>" class="btn btn-primary"  style="background-color:#1e73be;">Edit</a>
+                                                        <a href="edit_user_ratings.php?id=<?php echo $user_rating_id; ?>" class="btn btn-primary"  style="background-color:#1e73be;">Edit</a>
 
                                                     </td>
                                                 </tr>
