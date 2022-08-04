@@ -7,19 +7,19 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
-if (count($_POST) > 0) {
+//if (count($_POST) > 0) {
+//
+//	$page_from = $_POST['id_from'];
+//	$page_to = $_POST['id_to'];
+//}
+//$sql0 = "select * from sg_station_event_log WHERE station_event_log_id BETWEEN '$page_from' AND '$page_to'";
 
-	$page_from = $_POST['id_from'];
-	$page_to = $_POST['id_to'];
-}
-$sql0 = "select * from sg_station_event_log WHERE station_event_log_id BETWEEN '$page_from' AND '$page_to'";
+$sql_st = "select sg_station_event_old_id from sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1";
+$result_st = mysqli_query($db,$sql_st);
+$row_st =  mysqli_fetch_array($result_st);
+$station_event_old_id = $row_st['sg_station_event_old_id'];
 
-//$sql_st = "select sg_station_event_old_id from sg_station_event_log_update ORDER BY sg_station_event_update_id DESC LIMIT 1";
-//$result_st = mysqli_query($db,$sql_st);
-//$row_st =  mysqli_fetch_array($result_st);
-//$station_event_old_id = $row_st['sg_station_event_old_id'];
-
-//$sql0 = "SELECT * FROM sg_station_event_log ";
+$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id'";
 $result0 = mysqli_query($db, $sql0);
 while ($row = mysqli_fetch_array($result0)) {
 	$station_event_log_id = $row['station_event_log_id'];
