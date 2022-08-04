@@ -32,28 +32,28 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 ?>
-<form action="update_crew_assign_log_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
+<form action="crew_assign_log_update_new.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
 
-    <div class="row">
+                                <div class="row">
 
-        <div class="col-md-6 mobile">
+                                        <div class="col-md-6 mobile">
 
-            <label class="col-lg-3 control-label">Page From :</label>
-            <div class="col-lg-8">
-                <input type="text" name="id_from" id="id_from" class="form-control" placeholder="Enter Page" required="">
-            </div>
+                                            <label class="col-lg-3 control-label">Page From :</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" name="id_from" id="id_from" class="form-control" placeholder="Enter Page" required="">
+                                                </div>
 
-        </div>A
+                                        </div>
 
-        <div class="col-md-6 mobile">
-            <label class="col-lg-3 control-label">Page To : &nbsp;&nbsp;</label>
+                                    <div class="col-md-6 mobile">
+                                            <label class="col-lg-3 control-label">Page To : &nbsp;&nbsp;</label>
 
-            <div class="col-lg-8">
-                <input type="text" name="id_to" id="id_to" class="form-control" placeholder="Enter Page" required="">
+                                    <div class="col-lg-8">
+                                        <input type="text" name="id_to" id="id_to" class="form-control" placeholder="Enter Page" required="">
 
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Search</button>
 
-    </div>
-</form>
+                                    </div>
+  </form>

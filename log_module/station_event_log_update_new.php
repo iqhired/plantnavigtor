@@ -7,19 +7,19 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
-//if (count($_POST) > 0) {
-//
-//	$page_from = $_POST['id_from'];
-//	$page_to = $_POST['id_to'];
-//}
-//$sql0 = "select * from sg_station_event_log WHERE station_event_log_id BETWEEN '$page_from' AND '$page_to'";
-//
+if (count($_POST) > 0) {
+
+	$page_from = $_POST['id_from'];
+	$page_to = $_POST['id_to'];
+}
+$sql0 = "select * from sg_station_event_log WHERE station_event_log_id BETWEEN '$page_from' AND '$page_to'";
+
 //$sql_st = "select sg_station_event_old_id from sg_station_event_log_update ORDER BY sg_station_event_update_id DESC LIMIT 1";
 //$result_st = mysqli_query($db,$sql_st);
 //$row_st =  mysqli_fetch_array($result_st);
 //$station_event_old_id = $row_st['sg_station_event_old_id'];
 
-$sql0 = "SELECT * FROM sg_station_event_log";
+//$sql0 = "SELECT * FROM sg_station_event_log ";
 $result0 = mysqli_query($db, $sql0);
 while ($row = mysqli_fetch_array($result0)) {
 	$station_event_log_id = $row['station_event_log_id'];
@@ -88,9 +88,7 @@ while ($row = mysqli_fetch_array($result0)) {
 				$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
                 values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
 				$result1 = mysqli_query($db, $page);
-
 			}
-
 
 			$start_date2 = $s_arr_1[0];
 			$tt_time_2 = $end_hrs - $tt_time_1;
@@ -155,10 +153,10 @@ while ($row = mysqli_fetch_array($result0)) {
 				}
 				$tt_time_2 = ($tt_time_2 - 24);
 				$i++;
-			}
 		}
+			}
 	}else if(!empty($total_time)) {
-		$i = 1;
+
 		$s_arr_1 = explode(' ', $time);
 		$s_arr = explode(':', $s_arr_1[1]);
 		$st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
@@ -174,16 +172,18 @@ while ($row = mysqli_fetch_array($result0)) {
 			$tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);
 			$end_time2 = $s_arr_1[0] . ' ' . $tt;
 			$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
-                values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
+                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
 			$result1 = mysqli_query($db, $page);
 		}else{
+
 			$tt_time_1 = 24 - $start_time;
 			$endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 			$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
-                values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
+                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
 			$result1 = mysqli_query($db, $page);
 			$start_date2 = $s_arr_1[0];
 			$tt_time_2 = $total_time - $tt_time_1;
+			$i = 2;
 			while($tt_time_2 > 0){
 				$start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
 				$start_time2 = $start_date2 . ' ' . '00:00:00';
@@ -207,6 +207,7 @@ while ($row = mysqli_fetch_array($result0)) {
 }
 
 if ($result0) {
+
 	$_SESSION['message_stauts_class'] = 'alert-success';
 	$_SESSION['import_status_message'] = 'Form Created Sucessfully.';
 } else {

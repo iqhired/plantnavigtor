@@ -32,7 +32,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
 ?>
-<form action="update_station_event_log_backend.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
+<form action="station_event_log_update_new.php" id="form_settings" enctype="multipart/form-data" class="form-horizontal" method="post">
 
                                 <div class="row">
 
@@ -43,7 +43,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
                                                     <input type="text" name="id_from" id="id_from" class="form-control" placeholder="Enter Page" required="">
                                                 </div>
 
-                                        </div>A
+                                        </div>
 
                                     <div class="col-md-6 mobile">
                                             <label class="col-lg-3 control-label">Page To : &nbsp;&nbsp;</label>
