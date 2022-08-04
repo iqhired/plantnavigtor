@@ -153,7 +153,7 @@ if(empty($datefrom)){
     </style>
     <script>
         window.onload = function () {
-            history.replaceState("", "", "<?php echo $scriptName; ?>log_module/station_events_log.php");
+            history.replaceState("", "", "<?php echo $siteURL; ?>log_module/station_events_log.php");
         }
     </script>
 
@@ -470,9 +470,9 @@ include("../heading_banner.php");
                             </div>
                             </form>
                             <div class="col-md-2">
-                            <form action="export_se_log.php" method="post" name="export_excel">
+                            <form action="export_se_log_new.php" method="post" name="export_excel">
                                 <button type="submit" class="btn btn-primary"
-                                        style="background-color:#1e73be;width:120px;"
+                                            style="background-color:#1e73be;width:120px;"
                                         id="export" name="export" data-loading-text="Loading...">Export Data
                                 </button>
                             </form>
