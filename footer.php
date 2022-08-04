@@ -98,7 +98,7 @@
 	if($minutes >= $min)
 	{
 	if ($notification_mail_flag == '1') {
-		require '../vendor/autoload.php';
+		require './vendor/autoload.php';
 		$mail = new PHPMailer();
 		$mail->isSMTP();
 		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -107,7 +107,7 @@
 		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 		$mail->SMTPAuth = true;
 		$mail->Username = 'admin@plantnavigator.com';
-		$mail->Password = 'S@@rgummi@2021';
+		$mail->Password = 'S@@rgummi_2021';
 		$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 
 		$structure = '<html><body>';
