@@ -54,7 +54,7 @@ if ($event_category != "") {
 	$q = $q . " AND  e_log.event_cat_id ='$event_category'";
 }
 
-$q = $q . " ORDER BY e_log.created_on  ASC";
+$q = $q . " ORDER BY e_log.created_on  DESC";
 
 $exportData = mysqli_query($db, $q);
 $header = "Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t" .  "Total Time" . "\t";
