@@ -144,16 +144,13 @@ include("../heading_banner.php");
                 <!-- Basic datatable -->
 				<?php
 				if (!empty($import_status_message)) {
-					echo '
- <div class="panel panel-flat">
-						<div class="panel-heading">
-<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>
+					echo '<div class="panel panel-flat"><div class="panel-heading"><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>
  						</div>
 						</div> ';
 				}
 				?>
 				<?php
-				if (!empty($_SESSION[import_status_message])) {
+				if (!empty($_SESSION['import_status_message'])) {
 					echo '
 <div class="panel panel-flat">
 						<div class="panel-heading">
