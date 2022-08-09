@@ -425,7 +425,7 @@ include("../heading_banner.php");
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -753,7 +753,8 @@ include("../heading_banner.php");
 </script>
 <script>
     function submitForm(url) {
-        $(':input[type="button"]').prop('disabled', true);
+     //   $(':input[type="button"]').prop('disabled', true);
+        location.reload();
         var data = $("#update-form").serialize();
         $.ajax({
             type: 'POST',
@@ -761,7 +762,7 @@ include("../heading_banner.php");
             data: data,
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
+             //   $(':input[type="button"]').prop('disabled', false);
                 location.reload();
             }
         });
