@@ -264,7 +264,7 @@ include("../heading_banner.php");?>
 						}
 						?>
 						<?php
-						if (!empty($_SESSION[import_status_message])) {
+						if (!empty($_SESSION['import_status_message'])) {
 							echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 							$_SESSION['message_stauts_class'] = '';
 							$_SESSION['import_status_message'] = '';
