@@ -205,7 +205,7 @@ include("../heading_banner.php");
 					}
 					?>
 					<?php
-					if (!empty($_SESSION[$import_status_message])) {
+                    if (!empty($_SESSION['import_status_message'])) {
 						echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 						$_SESSION['message_stauts_class'] = '';
 						$_SESSION['import_status_message'] = '';
@@ -235,7 +235,7 @@ include("../heading_banner.php");
                             </thead>
                             <tbody>
 							<?php
-							$query = sprintf("SELECT * FROM  document_type");
+							$query = sprintf("SELECT * FROM  document_type where is_deleted != '1'");
 							$qur = mysqli_query($db, $query);
 							while ($rowc = mysqli_fetch_array($qur)) {
 								?>
