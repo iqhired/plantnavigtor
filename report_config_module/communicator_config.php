@@ -122,8 +122,8 @@ if (count($_POST) > 0) {
         <?php
         $cust_cam_page_header = "Communicator Config";
         include("../header_folder.php");
-        include("../heading_banner.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <!-- /main navbar -->
         <!-- Page container -->
@@ -154,7 +154,7 @@ if (count($_POST) > 0) {
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';

@@ -99,8 +99,8 @@ if (count($_POST) > 0) {
         <?php
         $cust_cam_page_header = "Training Mail Config";
         include("../header_folder.php");
-        include("../heading_banner.php");
         include("../admin_menu.php");
+        include("../heading_banner.php");
         ?>
         <!-- /main navbar -->
         <!-- Page container -->
