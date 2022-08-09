@@ -424,16 +424,16 @@ if (!empty($_GET['import_status'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = sprintf("SELECT * FROM  cam_users where role != '1' order by `firstname` ;  ");
+                                        $query = sprintf("SELECT * FROM  cam_users where role != '1' AND is_deleted !='1' order by `firstname` ;  ");
 $sessiontraiong = $_SESSION['training'];
  if($sessiontraiong == "1")
  {
-		$query = sprintf("SELECT * FROM  cam_users where role != '1' and training = '1' order by `firstname` ;  ");
+		$query = sprintf("SELECT * FROM  cam_users where role != '1' and training = '1' AND is_deleted !='1' order by `firstname` ;  ");
  $_SESSION['training'] = "";
  }
  if($ch == '5')
  {
-		$query = sprintf("SELECT * FROM  cam_users where pin_flag = '1' and role != '1'  order by `firstname` ; ");	 
+		$query = sprintf("SELECT * FROM  cam_users where pin_flag = '1' and role != '1'  AND is_deleted !='1' order by `firstname` ; ");
  }
 
 										$qur = mysqli_query($db, $query);
