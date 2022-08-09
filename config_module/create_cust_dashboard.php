@@ -239,7 +239,6 @@ include("../heading_banner.php");
                         <!-- Enabled -->
                         <div class="col-md-6 mobile">
                             <div class="form-group">
-                                <!--										<div class="col-lg-8 mobile">-->
                                 <label class="col-lg-4 control-label">Enabled: </label>
                                 <div class="col-lg-8">
 
@@ -250,7 +249,6 @@ include("../heading_banner.php");
                                         <label for="no" class="item_label">No</label>
 
                                     </div>
-                                    <!--										</div>-->
                                 </div>
                             </div>
                         </div>
@@ -268,16 +266,16 @@ include("../heading_banner.php");
 										//												$sql1 = "SELECT `line_id`, `line_name` FROM `cam_line` where enabled = 1 order by line_name ASC";
 										$result1 = $mysqli->query($sql1);
 										while ($row1 = $result1->fetch_assoc()) {
-											echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "' $selected>" . $row1['line_name'] . "</option>";
+											echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "'>" . $row1['line_name'] . "</option>";
 										}
 										?>
 
 									</select>
 								</div>
 
-								<div class="col-lg-2">
-									<button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>
-								</div>
+<!--								<div class="col-lg-2">-->
+<!--									<button type="button" class="btn btn-primary" style="background-color:#1e73be;" onclick="group1()"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
+<!--								</div>-->
 							</div>
 						</div>
 						<?php
@@ -286,7 +284,7 @@ include("../heading_banner.php");
 						}
 						?>
 						<?php
-						if (!empty($_SESSION[import_status_message])) {
+						if (!empty($_SESSION['import_status_message'])) {
 							echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 							$_SESSION['message_stauts_class'] = '';
 							$_SESSION['import_status_message'] = '';
@@ -329,7 +327,7 @@ include("../heading_banner.php");
 					</thead>
 					<tbody>
 					<?php
-					$query = sprintf("SELECT * FROM sg_cust_dashboard ;  ");
+					$query = sprintf("SELECT * FROM sg_cust_dashboard where is_deleted!='1'");
 					$qur = mysqli_query($db, $query);
 
 					while ($rowc = mysqli_fetch_array($qur)) {
@@ -338,7 +336,7 @@ include("../heading_banner.php");
 						?>
 						<tr>
 							<td><input type="checkbox" id="delete_check[]" name="delete_check[]"
-									   value="<?php echo $c_id; ?>"></td>
+                                       value="<?php echo $c_id; ?>"></td>
 							<td><?php echo ++$counter; ?>
 							</td>
 							<td><?php echo $rowc["sg_cust_dash_name"]; ?>
@@ -375,16 +373,9 @@ include("../heading_banner.php");
 							<td><?php echo $c_status; ?>
 							</td>
 							<td>
-								<button type="button" id="edit" class="btn btn-info btn-xs"
-										data-id="<?php echo $rowc['sg_cust_group_id']; ?>"
-										data-cell_name="<?php echo $rowc['sg_cust_dash_name']; ?>"
-										data-cell_enabled="<?php echo $rowc['enabled']; ?>"
-										data-cell_stations="<?php echo $stations; ?>"
-										data-assigned_line="<?php echo implode(",", $line_array); ?>"
-										data-toggle="modal" style="background-color:#1e73be;"
-										data-target="#edit_modal_theme_primary">Edit
-								</button>
-							</td>
+                                <a href="edit_create_cust_dashboard.php?id=<?php echo $c_id; ?>" class="btn btn-primary" data-id="<?php echo $rowc['defect_list_id']; ?>"  style="background-color:#1e73be;">Edit</a>
+
+                            </td>
 						</tr>
 					<?php } ?>
 					</tbody>
@@ -392,168 +383,28 @@ include("../heading_banner.php");
 			</div>
 		</form>
 
-		<!-- edit modal -->
-		<div id="edit_modal_theme_primary" class="modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-primary">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h6 class="modal-title">
-							Update Cell
-						</h6>
-					</div>
-					<form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
-						  method="post">
-						<div class="modal-body">
-							<!--Part Number-->
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="col-lg-4 control-label">Dashboard Name * : </label>
-										<div class="col-lg-8">
-                                            <?php $edit_id = $_GET['data-id']; ?>
-
-											<input type="text" name="edit_cell_name" id="edit_cell_name"
-												   class="form-control" required>
-											<input type="hidden" name="edit_id" id="edit_id" value="<?php echo $edit_id; ?>">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--Station-->
-							<div class="row">
-
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="col-lg-4 control-label">Stations : *</label>
-										<div class="col-lg-8">
-											<?php
-                                            $query = sprintf("SELECT * FROM sg_cust_dashboard ;  ");
-											$qur = mysqli_query($db, $query);
-											$rowc = mysqli_fetch_array($qur);
-											?>
-											<select required name="edit_cell_stations[]" id="edit_cell_stations"  class="select-border-color form-control"
-													multiple="multiple">
-												<!--                                                        <select name="edit_part_number[]" id="edit_part_number" class="form-control" multiple>-->
-												<?php
-												$arrteam = explode(',', $rowc["stations"]);
-												$sql1 = "SELECT `line_id`, `line_name` FROM `cam_line` where enabled = 1  order by line_name ASC";
-
-												//$sql1 = "SELECT line_id , line_name FROM `cam_line` where enabled = 1 and line_id NOT in ('$assigned_stations') order by line_name ASC";
-												$result1 = $mysqli->query($sql1);
-												while ($row1 = $result1->fetch_assoc()) {
-													if (in_array($row1['line_id'], $arrteam)) {
-														$selected = "selected";
-//															echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "' $selected>" . $row1['line_name'] . "</option>";
-													} else {
-														$selected = "";
-
-													}
-													echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "' $selected>" . $row1['line_name'] . "</option>";
-
-												}
-
-												?>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="col-lg-4 control-label">Enabled : </label>
-
-										<div class="col-lg-8">
-											<select name="edit_enabled" id="edit_enabled" class="form-control"
-													style="float: left;
-                                                             width: initial;">
-												<!--        <option value="" selected disabled>--- Select Ratings ---</option>-->
-												<option value="1">Yes</option>
-												<option value="0">No</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary">Save</button>
-							</div>
-						</div>
-				</div>
-
-				</form>
-			</div>
-		</div>
-
-		<!-- /dashboard content -->
+			<!-- /dashboard content -->
 
 	</div>
 	<!-- /content area -->
 
 </div>
-<script>
-    $(document).on('click', '#edit', function () {
-        var element = $(this);
-        var edit_id = $(this).data("id");
-        var cell_name = $(this).data("cell_name");
-        var cell_enabled = $(this).data("cell_enabled");
-        var assigned_line = $(this).data("assigned_line");
-        var cell_stations = $(this).data("cell_stations");
-        $("#edit_name").val(name);
-        $("#edit_cell_name").val(cell_name);
-        $("#edit_cs").val(cell_stations);
-        // $("#edit_cell_account").val(cell_account_id);
-        $("#edit_cell_stations").val(cell_stations);
-        $("#edit_enabled").val(cell_enabled);
-        // $("#editlogo").attr("src","../supplier_logo/"+cell_logo);
-        $("#edit_id").val(edit_id);
-
-        var assLineArr = assigned_line.split(',');
-
-        // const sb = document.querySelector('#cell_stations');
-        var sb1 = document.querySelector('#edit_cell_stations');
-        // create a new option
-        var stations = cell_stations.split(',');
-        var options = [];
-        var options1 = sb1.options;
-        var nasslinearr = [];
-        // $("#edit_part_number").val(options);
-        $('#edit_modal_theme_primary .select2 .selection .select2-selection--multiple .select2-selection__choice').remove();
-        var j = assigned_line.length;
-
-        for (var i = 0; i < options1.length; i++) {
-            if(stations.includes(options1[i].value)){ // EDITED THIS LINE
-                options1[i].selected="selected";
-                options1[i].className = ("select2-results__option--highlighted");
-                var opt = document.getElementById(options1[i].value).outerHTML.split(">");
-                // $('#edit_cell_stations').prop('selectedIndex',i);
-                $('#select2-results .select2-results__option').prop('selectedIndex',i);
-                var gg = '<li class="select2-selection__choice" title="' + opt[1].replace('</option','') + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + opt[1].replace('</option','') + '</li>';
-                $('#edit_modal_theme_primary .select2-selection__rendered').append(gg);
-                options[j]= options1[i];
-                j++;
-                nasslinearr [j] = options1[i].value;
-                // $('.select2-search__field').style.visibility='hidden';
-            }else if(assLineArr.includes(options1[i].value)){
-                document.getElementById(options1[i].value).remove();
-                i--;
-            }
-
-        }
-    });
-    $(".select").select2();
-</script>
 
 <script>
     window.onload = function () {
         history.replaceState("", "", "<?php echo $scriptName; ?>config_module/create_cust_dashboard.php");
     }
 </script>
+
+<script>
+    $("#checkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+</script>
 <script>
     function submitForm(url) {
-        $(':input[type="button"]').prop('disabled', true);
+        //   $(':input[type="button"]').prop('disabled', true);
+        location.reload();
         var data = $("#update-form").serialize();
         $.ajax({
             type: 'POST',
@@ -561,18 +412,13 @@ include("../heading_banner.php");
             data: data,
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
+                //   $(':input[type="button"]').prop('disabled', false);
                 location.reload();
             }
         });
     }
 </script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-</script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js">
+
     </body>
     </html>
