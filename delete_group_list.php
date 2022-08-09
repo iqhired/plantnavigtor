@@ -1,4 +1,4 @@
-<?php
+    <?php
 include("config.php");
 $delete_check = $_POST['delete_check'];
 if ($delete_check != "") {
