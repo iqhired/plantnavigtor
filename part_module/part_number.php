@@ -511,18 +511,18 @@ include("../heading_banner.php");
                             </div>
 
 
-<!--							--><?php
-//							if (!empty($import_status_message)) {
-//								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-//							}
-//							?>
-<!--							--><?php
-//							if (!empty($_SESSION[import_status_message])) {
-//								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-//								$_SESSION['message_stauts_class'] = '';
-//								$_SESSION['import_status_message'] = '';
-//							}
-//							?>
+							<?php
+							if (!empty($import_status_message)) {
+								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+							}
+							?>
+							<?php
+							if (!empty($_SESSION['import_status_message'])) {
+								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+								$_SESSION['message_stauts_class'] = '';
+								$_SESSION['import_status_message'] = '';
+							}
+							?>
                         </div>
                         <div class="panel-footer p_footer">
                             <div class="col-md-4">
