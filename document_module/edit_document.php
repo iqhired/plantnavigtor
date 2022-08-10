@@ -372,16 +372,16 @@ include("../heading_banner.php");
                                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button> <span class="text-semibold">Group</span> Updated Successfully. </div>
                         <?php } ?>
                         <?php
-                        //                if (!empty($import_status_message)) {
-                        //                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                        //                }
-                        //                ?>
-                        <!--                --><?php
-                        //                if (!empty($_SESSION[import_status_message])) {
-                        //                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                        //                    $_SESSION['message_stauts_class'] = '';
-                        //                    $_SESSION['import_status_message'] = '';
-                        //                }
+                                        if (!empty($import_status_message)) {
+                                            echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                        }
+                                        ?>
+                                        <?php
+                                        if (!empty($_SESSION['import_status_message'])) {
+                                            echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                            $_SESSION['message_stauts_class'] = '';
+                                            $_SESSION['import_status_message'] = '';
+                                        }
                         ?>
 
 
@@ -515,7 +515,7 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
                                 <?php } else { ?>
-                                   <div class="row desc" id="Carspart_number" style="display: none;">
+                                   <div class="row desc" id="Cars0" style="display: none;">
                                        <br/>
 
                                        <div class="row">
