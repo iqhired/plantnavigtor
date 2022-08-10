@@ -217,8 +217,14 @@ include("../heading_banner.php");
                     $part_name = $row_part['part_name'];
                 }
                 ?>
+                <?php $query = sprintf("SELECT line_id,event_status FROM `sg_station_event` where line_id = '$station'");
 
-                <h5 class="panel-title form_panel_title"><?php echo $part_name; ?></h5>
+                $qur_st = mysqli_query($db, $query);
+                while($row_st = mysqli_fetch_array($qur_st)){
+                $event_status = $row_st['event_status'];
+
+                if ($event_status == '1'){ ?>
+                        <h5 class="panel-title form_panel_title"><?php echo $part_name; ?></h5>
                 <div class="row ">
                     <form action="" id="form_settings" enctype="multipart/form-data"
                           class="form-horizontal" method="post" autocomplete="off">
@@ -228,8 +234,9 @@ include("../heading_banner.php");
                             $qurmain1 = mysqli_query($db, $sql_file);
                             while($rowcmain1 = mysqli_fetch_array($qurmain1)){
                                 $file_name = $rowcmain1['file_name'];
-                                $id =  $rowcmain1['doc_id'];?>
+                                $id =  $rowcmain1['doc_id'];
 
+                                ?>
                                 <div class="form_row row">
                                     <a href="../document_files/<?php echo $id ?>/<?php echo $file_name; ?>">
                                         <div class="col-md-6">
@@ -245,6 +252,9 @@ include("../heading_banner.php");
                         </div>
                     </form>
                 </div>
+               <?php  }  ?>
+
+               <?php } ?>
                 </div>
 
             </div>
