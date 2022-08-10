@@ -25,8 +25,8 @@ if(count($_POST)>0) {
     $newfolder = "../document_files/".$doc_trace_id;
     $update_sql ="UPDATE `document_files` SET `part_number`='$part_number',`station`='$station' WHERE `doc_id` = '$doc_trace_id'";
     $result_up = mysqli_query($db, $update_sql);
+    rename("$folderPath","$newfolder");
     if ($result0) {
-        rename( $folderPath, $newfolder) ;
         $_SESSION['message_stauts_class'] = 'alert-success';
         $_SESSION['import_status_message'] = 'Document Created Sucessfully.';
     } else {
