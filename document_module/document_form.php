@@ -333,7 +333,7 @@ include("../heading_banner.php");
                 }
                 ?>
                <?php
-                if (!empty($_SESSION[import_status_message])) {
+                if (!empty($_SESSION['import_status_message'])) {
                     echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                     $_SESSION['message_stauts_class'] = '';
                     $_SESSION['import_status_message'] = '';
@@ -375,7 +375,7 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Document file : </label>
                                 <div class="col-md-6">
-                                    <input type="file" name="file[]" id="file" class="form-control" required>
+                                    <input type="file" name="file" id="file" class="form-control" required>
                                     <div class="container"></div>
                                 </div>
 
@@ -444,7 +444,7 @@ include("../heading_banner.php");
                             </div>
 
 
-                            <div class="row desc" id="Carspart_number" style="display: none;">
+                            <div class="row desc" id="Cars0" style="display: none;">
 <!--                                <div class="row">-->
 <!---->
 <!--                                    <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Family *  :</label>-->
@@ -572,7 +572,17 @@ include("../heading_banner.php");
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $("input[name$='doc_type']").click(function() {
+            var test = $(this).val();
+             //   console.log(test);
+            $("div.desc").hide();
+            $("#Cars" + test).show();
 
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -700,17 +710,7 @@ include("../heading_banner.php");
 </script>
 
 
-<script>
-    $(document).ready(function() {
-        $("input[name$='doc_type']").click(function() {
-            var test = $(this).val();
-            //    console.log(test);
-            $("div.desc").hide();
-            $("#Cars" + test).show();
 
-        });
-    });
-</script>
 
 
 <?php include('../footer.php') ?>
