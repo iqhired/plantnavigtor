@@ -9,15 +9,18 @@ $dateto = $_SESSION['date_to'];
 $datefrom = $_SESSION['date_from'];
 $button = $_SESSION['button'];
 $timezone = $_SESSION['timezone'];
-$q = "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as t_time FROM `cam_assign_crew_log` WHERE 1 ";
+$print_data='';
+$q = "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as t_time FROM `cam_assign_crew_log_update` WHERE 1 ";
 
 if ($name != "" ) {
 	$q = $q . "and `user_id` = '$name' ";
-//	$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
+    $print_data .= "User : " . $name . "\n";
+//	$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log_update` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
 }
 if ($station != "" ) {
 	$q = $q . "and `station_id` = '$station'";
-//		$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
+    $print_data .= "Station : " . $station . "\n";
+//		$exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`unassign_time`,`total_time`  as time FROM `cam_assign_crew_log_update` WHERE DATE_FORMAT(`assign_time`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`assign_time`,'%Y-%m-%d') <= '$dateto' and `user_id` = '$name' and `station_id` = '$station'");
 }
 
 if($datefrom != "" && $dateto != ""){
@@ -39,10 +42,27 @@ for ($i = 0; $i < $fields; $i++) {
     $header .= mysqli_field_name($db, $exportData, $i) . "\t";
 }
 while ($row = mysqli_fetch_row($exportData)) {
+    $date_n = $row[6];
+    $date_ne = explode(' ',$date_n);
+    $date_next = $date_ne[0];
     $line = '';
     $j = 1;
-    foreach ($row as $value) {
-        if ((!isset($value) ) || ( $value == "" )) {
+    if (($datefrom == $date_next) && ($k == 1)) {
+        $date_data = "\nDate : " . $date_next . "\n";
+        $line .= "$date_data\n$header\n";
+        $k =0;
+    }else if ($datefrom < $date_next) {
+        $line .= ".\n";
+        $date_data = "Date : " . $date_next . "\n";
+        $line .= "$date_data\n$header\n";
+        $datefrom = $date_next;
+    }
+    $skipped = array('0', '2', '6' , '7');
+    foreach ($row as $key => $value) {
+        if(in_array($key, $skipped)) {
+            continue;
+        }
+        if ((!isset($value)) || ($value == "")) {
             $value = "\t";
         } else {
             $value = str_replace('"', '""', $value);
@@ -103,5 +123,6 @@ header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=Assign Log.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
+print "\n\n$print_data\n\n";
 print "$header\n$result";
 ?>
