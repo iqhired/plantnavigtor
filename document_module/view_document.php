@@ -227,7 +227,8 @@ include("../heading_banner.php");
                             $sql_file = sprintf("SELECT * FROM `document_files` where station = '$station' AND part_number = '$part' AND  part_number != '0' ");
                             $qurmain1 = mysqli_query($db, $sql_file);
                             while($rowcmain1 = mysqli_fetch_array($qurmain1)){
-                                $file_name = $rowcmain1['file_name']; ?>
+                                $file_name = $rowcmain1['file_name'];
+                                $id =  $rowcmain1['doc_id'];?>
 
                                 <div class="form_row row">
                                     <a href="../document_files/<?php echo $id ?>/<?php echo $file_name; ?>">
