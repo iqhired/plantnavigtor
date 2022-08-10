@@ -230,7 +230,7 @@ include("../heading_banner.php");
                                 $file_name = $rowcmain1['file_name']; ?>
 
                                 <div class="form_row row">
-                                    <a href="../document_files/<?php echo $file_name; ?>">
+                                    <a href="../document_files/<?php echo $id ?>/<?php echo $file_name; ?>">
                                         <div class="col-md-6">
 
                                             <input type="text" name="notes" class="form-control pn_none" id="notes"
