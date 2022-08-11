@@ -328,18 +328,18 @@ if(empty($datefrom)){
                                     <br>
 
                                
-                                <?php
-                                if (!empty($import_status_message)) {
-                                    echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                }
-                                ?>
-                                <?php
-                                if (!empty($_SESSION[import_status_message])) {
-                                    echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                    $_SESSION['message_stauts_class'] = '';
-                                    $_SESSION['import_status_message'] = '';
-                                }
-                                ?>
+<!--                                --><?php
+//                                if (!empty($import_status_message)) {
+//                                    echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+//                                }
+//                                ?>
+<!--                                --><?php
+//                                if (!empty($_SESSION[import_status_message])) {
+//                                    echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+//                                    $_SESSION['message_stauts_class'] = '';
+//                                    $_SESSION['import_status_message'] = '';
+//                                }
+//                                ?>
 
 
 
@@ -354,7 +354,7 @@ if(empty($datefrom)){
                                         </div>
                                 </form>
                                         <div class="col-md-2">
-                                            <form action="export_log.php" method="post" name="export_excel">
+                                            <form action="export_crew_log.php" method="post" name="export_excel">
                                                 <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
                                             </form>
                                         </div>
@@ -564,6 +564,6 @@ if(empty($datefrom)){
 
         <!-- /page container -->
         <?php include('../footer.php') ?>
-        <script type="text/javascript" src="../assets/js/core/app.js"></script>
+
     </body>
 </html>
