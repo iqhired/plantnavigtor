@@ -1,6 +1,6 @@
 <?php
 include("../config.php");
-
+$chicagotime = date("Y-m-d H:i:s");
     // Validate whether selected file is a CSV file
     if (!empty($_FILES['file']['name']))
     {
@@ -17,14 +17,16 @@ include("../config.php");
                 $name = mysqli_real_escape_string($db,$row[0]);
                 $mobile = mysqli_real_escape_string($db,$row[1]);
                 $email = mysqli_real_escape_string($db,$row[2]);
-                $password = mysqli_real_escape_string($db,$row[3]);
-                $role = mysqli_real_escape_string($db,$row[4]);
-                $s_question1 = mysqli_real_escape_string($db,$row[5]);
-                $s_question2 = mysqli_real_escape_string($db,$row[6]);
-                $s_question3 = mysqli_real_escape_string($db,$row[7]);
+                $password = mysqli_real_escape_string($db,md5('welcome#123'));
+                $role = mysqli_real_escape_string($db,$row[3]);
+                $created_at = mysqli_real_escape_string($db,$chicagotime);
+                $firstname = mysqli_real_escape_string($db,$row[4]);
+                $lastname = mysqli_real_escape_string($db,$row[5]);
+                $hiring_date = mysqli_real_escape_string($db,$row[6]);
+                $job_title_description = mysqli_real_escape_string($db,$row[7]);
                 $query = "
-                        INSERT INTO cam_users(user_name,mobile,email,password,role,s_question1,s_question2,s_question3)
-                      VALUES('$name','$mobile','$email','$password','$role','$s_question1','$s_question2','$s_question3')
+                        INSERT INTO cam_users(user_name,mobile,email,password,role,created_at,firstname,lastname,hiring_date,job_title_description)
+                      VALUES('$name','$mobile','$email','$password','$role','$created_at','$firstname','$lastname','$hiring_date','$job_title_description')
                 ";
 
                 mysqli_query($db,$query);
