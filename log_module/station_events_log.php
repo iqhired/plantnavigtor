@@ -253,7 +253,7 @@ include("../heading_banner.php");
                                         <option value="" selected disabled>--- Select Event Type ---</option>
                                         <?php
                                         $ev_ty_post = $_POST['event_type'];
-                                        $sql1 = "SELECT * FROM `event_type` ";
+                                        $sql1 = "SELECT * FROM `event_type` where is_deleted != 1 ";
                                         $result1 = $mysqli->query($sql1);
                                         //                                            $entry = 'selected';
                                         while ($row1 = $result1->fetch_assoc()) {
@@ -292,7 +292,7 @@ include("../heading_banner.php");
                                         <option value="" selected disabled>--- Select Event Catagory ---</option>
 										<?php
 										$ev_cat_post = $_POST['event_category'];
-										$sql1 = "SELECT * FROM `events_category` ";
+										$sql1 = "SELECT * FROM `events_category` where is_deleted != 1 ";
 										$result1 = $mysqli->query($sql1);
 										//                                            $entry = 'selected';
 										while ($row1 = $result1->fetch_assoc()) {
@@ -321,7 +321,7 @@ include("../heading_banner.php");
                                                 style="float: left;width: initial;">
                                             <option value="" selected disabled>--- Select Station ---</option>
                                             <?php
-                                            $sql1 = "SELECT * FROM `cam_line` ";
+                                            $sql1 = "SELECT * FROM `cam_line` where is_deleted != 1 ";
                                             $result1 = $mysqli->query($sql1);
                                             //                                            $entry = 'selected';
                                             while ($row1 = $result1->fetch_assoc()) {
@@ -448,7 +448,7 @@ include("../heading_banner.php");
 //							}
 //							?>
 <!--							--><?php
-//							if (!empty($_SESSION[import_status_message])) {
+//							if (!empty($_SESSION['import_status_message'])) {
 //								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 //								$_SESSION['message_stauts_class'] = '';
 //								$_SESSION['import_status_message'] = '';

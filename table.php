@@ -156,7 +156,7 @@ if($p != "")
                             <select  name="radio" id="radio" class="select form-control" data-style="bg-slate"  style="float: left;width: initial;" >
                                 <option value="" selected disabled>--- Select Station ---</option>
                                 <?php
-                                $sql1 = "SELECT DISTINCT `line_id` FROM cam_user_rating ORDER BY `line_name`";
+                                $sql1 = "SELECT DISTINCT `line_id` FROM cam_user_rating where is_deleted != 1 ORDER BY `line_name`";
                                 $result1 = $mysqli->query($sql1);
                                 //                                            $entry = 'selected';
                                 $m = 1;
@@ -172,7 +172,7 @@ if($p != "")
                                         $entry = '';
                                     }
                                     $station1 = $row1['line_id'];
-                                    $qurtemp =  mysqli_query($db,"SELECT * FROM  cam_line where line_id = '$station1' ");
+                                    $qurtemp =  mysqli_query($db,"SELECT * FROM  cam_line where line_id = '$station1' and is_deleted != 1");
                                     $rowctemp = mysqli_fetch_array($qurtemp);
                                     $station = $rowctemp["line_name"];
 

@@ -305,7 +305,7 @@ include("../heading_banner.php");
                                             <select name="form_type" id="form_type"  class="select" data-style="bg-slate">
                                                 <option value="" selected disabled>--- Select Form Type ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `form_type` ";
+                                                $sql1 = "SELECT * FROM `form_type` where is_deleted != 1";
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -325,7 +325,7 @@ include("../heading_banner.php");
                                                 <?php
 												$st_dashboard = $_GET['station'];
                                                 if($is_tab_login){
-                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
+                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
                                                     $result1 = $mysqli->query($sql1);
 
                                                     while ($row1 = $result1->fetch_assoc()) {
@@ -334,7 +334,7 @@ include("../heading_banner.php");
                                                     }
                                                 }else if($is_cell_login){
                                                     $c_stations = implode("', '", $c_login_stations_arr);
-                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
+                                                    $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
                                                     $result1 = $mysqli->query($sql1);
 //													                $                        $entry = 'selected';
                                                     $i = 0;
@@ -351,7 +351,7 @@ include("../heading_banner.php");
                                                         $i++;
                                                     }
                                                 }else{
-                                                    $sql1 = "SELECT * FROM `cam_line`  where enabled = '1' ORDER BY `line_name` ASC";
+                                                    $sql1 = "SELECT * FROM `cam_line`  where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC";
                                                     $result1 = $mysqli->query($sql1);
                                                     //                                            $entry = 'selected';
                                                     while ($row1 = $result1->fetch_assoc()) {
@@ -380,7 +380,7 @@ include("../heading_banner.php");
                                                 <option value="" selected disabled>--- Select Part Family ---</option>
                                                 <?php
                                                 $st_dashboard = $_GET['station'];
-                                                $sql1 = "SELECT * FROM `pm_part_family`  where  is_deleted = 0";
+                                                $sql1 = "SELECT * FROM `pm_part_family`  where is_deleted != 1";
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -398,12 +398,12 @@ include("../heading_banner.php");
                                             <select name="part_number" id="part_number" class="select form-control" data-style="bg-slate">
                                                 <option value="" selected disabled>--- Select Part Number ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `pm_part_number` where is_deleted = 0; ";
+                                                $sql1 = "SELECT * FROM `pm_part_number` where is_deleted != 1";
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
                                                     $station = $row1['station'];
-                                                    $row_station ="select line_id,line_name from cam_line where line_id = '$station'";
+                                                    $row_station ="select line_id,line_name from cam_line where line_id = '$station' and is_deleted != 1";
                                                     $sta_row = mysqli_query($db,$row_station);
                                                     $row = mysqli_fetch_assoc($sta_row);
                                                     $line_name = $row['line_name'];

@@ -1,6 +1,6 @@
 <?php
 include("../config.php");
-include("../sup_config.php");
+//include("../sup_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -187,7 +187,7 @@ include("../admin_menu.php");
 							}
 							?>
 							<?php
-							if (!empty($_SESSION[import_status_message])) {
+							if (!empty($_SESSION['import_status_message'])) {
 								echo "<br/>";
 								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 								$_SESSION['message_stauts_class'] = '';

@@ -183,7 +183,7 @@ if ($ps != "") {
                                 <h5 class="panel-title">Select Station</h5>
                                 <hr/>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -198,7 +198,7 @@ if ($ps != "") {
                                                     <select name="assign_line" id="assign_line" class="select form-control" data-style="bg-slate" >
                                                         <option value="" selected disabled>--- Select Station ---</option>
                                                         <?php
-                                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1'";
+                                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1";
                                                         $result1 = $mysqli->query($sql1);
 //                                            $entry = 'selected';
                                                         while ($row1 = $result1->fetch_assoc()) {

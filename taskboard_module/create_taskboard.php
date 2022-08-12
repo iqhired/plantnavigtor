@@ -150,7 +150,7 @@ if (count($_POST) > 0) {
                                                     <select name="group_id" id="group_id" class="select form-control" data-style="bg-slate">
                                                         <option value="" selected disabled>--- Select Group ---</option>
                                                         <?php
-                                                        $sql1 = "SELECT DISTINCT `group_id` FROM `sg_group`";
+                                                        $sql1 = "SELECT DISTINCT `group_id` FROM `sg_group` where is_deleted != '1'";
                                                         $result1 = $mysqli->query($sql1);
                                                         while ($row1 = $result1->fetch_assoc()) {
                                                             $station1 = $row1['group_id'];
@@ -177,7 +177,7 @@ if (count($_POST) > 0) {
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -275,11 +275,11 @@ if (count($_POST) > 0) {
                                                         <select name="edit_group_id" id="edit_group_id" class="select select2 form-control" data-style="bg-slate">
 <!--                                                            <option value="" selected disabled>--- Select Group ---</option>-->
                                                             <?php
-                                                            $sql1 = "SELECT DISTINCT `group_id` FROM `sg_group`";
+                                                            $sql1 = "SELECT DISTINCT `group_id` FROM `sg_group` where is_deleted != 1";
                                                             $result1 = $mysqli->query($sql1);
                                                             while ($row1 = $result1->fetch_assoc()) {
                                                                 $station1 = $row1['group_id'];
-                                                                $qurtemp = mysqli_query($db, "SELECT group_name FROM  sg_group where group_id = '$station1' ");
+                                                                $qurtemp = mysqli_query($db, "SELECT group_name FROM  sg_group where group_id = '$station1' and is_deleted != 1 ");
                                                                 $rowctemp = mysqli_fetch_array($qurtemp);
                                                                 $station = $rowctemp["group_name"];
                                                                 echo "<option value='" . $row1['group_id'] . "'$entry>" . $station . "</option>";

@@ -7,8 +7,36 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: ../logout.php');
 }
+// server should keep session data for 3 hour
+/*ini_set('session.gc_maxlifetime', 10800);*/
 
+// each client remember their session id for exactly 1 hour
+/*session_set_cookie_params(10800);
+//start the session if not started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}*/
+//set button for whenever we want destroy the session
+/*if (! empty($_SESSION['user']))
+{
+    */?><!--
 
+    <p>here is my super-secret content</p>
+    <a href='../logout.php'>Click here to log out</a>
+
+    --><?php
+/*}
+else
+{
+    echo 'You are not logged in. <a href="index.php">Click here</a> to log in.';
+}*/
+//its automatically session logout from web page
+/*if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 10800)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+}*/
+$_SESSION['LAST_ACTIVITY'] = time();
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -333,7 +361,7 @@ include("../heading_banner.php");
 							}
 							?>
 							<?php
-							if (!empty($_SESSION[import_status_message])) {
+							if (!empty($_SESSION['import_status_message'])) {
 								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 								$_SESSION['message_stauts_class'] = '';
 								$_SESSION['import_status_message'] = '';

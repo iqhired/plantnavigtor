@@ -236,7 +236,7 @@ include("../heading_banner.php");
 
                                 ?>
                                 <div class="form_row row">
-                                    <a href="../document_files/<?php echo $id; ?>/<?php echo $file_name; ?>">
+                                    <a href="../document_files/<?php echo $id; ?>/<?php echo $file_name; ?>" target="_blank">
                                         <div class="col-md-6">
 
                                             <input type="text" name="notes" class="form-control pn_none" id="notes"

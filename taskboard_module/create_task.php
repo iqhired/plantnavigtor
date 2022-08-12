@@ -249,7 +249,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -298,7 +298,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                                 <select name="user_name1" id="user_name1" class="select form-control" data-style="bg-slate">
                                                                     <?php
                                                                     $iddd = $_SESSION["id"];
-                                                                    $sql1 = "SELECT * FROM `cam_users` where users_id = '$iddd' ";
+                                                                    $sql1 = "SELECT * FROM `cam_users` where users_id = '$iddd' and is_deleted != 1 ";
                                                                     $result1 = $mysqli->query($sql1);
                                                                     while ($row1 = $result1->fetch_assoc()) {
                                                                         echo "<option value='" . $row1['users_id'] . "' selected >" . $row1['user_name'] . "</option>";
@@ -326,7 +326,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                             <select name="building" id="building" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" selected disabled>--- Select Building ---</option>
                                                                 <?php
-                                                                $sql1 = "SELECT * FROM `tm_building` ORDER BY `tm_building_name` ASC ";
+                                                                $sql1 = "SELECT * FROM `tm_building` where is_deleted != 1 ORDER BY `tm_building_name` ASC ";
                                                                 $result1 = $mysqli->query($sql1);
 //                                            $entry = 'selected';
                                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -345,7 +345,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                             <select name="property" id="property" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" selected disabled>--- Select Property ---</option>
                                                                 <?php
-                                                                $sql1 = "SELECT * FROM `tm_property` ORDER BY `tm_property_name` ASC";
+                                                                $sql1 = "SELECT * FROM `tm_property` where is_deleted != 1 ORDER BY `tm_property_name` ASC";
                                                                 $result1 = $mysqli->query($sql1);
                                                                 //                                            $entry = 'selected';
                                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -367,7 +367,7 @@ $assign_fullname = $rowc04["firstname"]." ".$rowc04["lastname"];
                                                             <select name="equipment" id="equipment" class="select form-control" data-style="bg-slate" >
                                                                 <option value="" selected disabled>--- Select Equipment ---</option>
                                                                 <?php
-                                                                $sql1 = "SELECT * FROM `tm_equipment` ORDER BY `tm_equipment_name` ASC";
+                                                                $sql1 = "SELECT * FROM `tm_equipment` where is_deleted != 1 ORDER BY `tm_equipment_name` ASC";
                                                                 $result1 = $mysqli->query($sql1);
                                                                 //                                            $entry = 'selected';
                                                                 while ($row1 = $result1->fetch_assoc()) {
