@@ -68,6 +68,7 @@ if (count($_POST) > 0) {
 		$message_stauts_class = 'alert-danger';
 		$import_status_message = 'Error: Please Insert valid data';
 	}
+    header('location: line.php');
 
 	if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
 		$errors = array();
@@ -130,7 +131,8 @@ if (count($_POST) > 0) {
 //			$import_status_message = 'Upload Files Successfully';
 		}
 	}
-	header('location: line.php');
+
+    header('location: line.php');
 
 }
 
@@ -213,6 +215,7 @@ include("../heading_banner.php");
 								$enabled = $row1['enabled'];
 								$zpl_status = $row1['zpl_file_status'];
                                 $print_label = $row1['print_label'];
+                                $indivisual_label = $row1['indivisual_label'];
 							}
 							?>
                             <div class="col-md-9">
@@ -266,6 +269,16 @@ include("../heading_banner.php");
                                     <label class="col-lg-5 control-label">Print label Enabled:*</label>
                                     <div class="col-lg-7">
                                         <input type="checkbox" class="print_status" name="print_status" id="print_status" value="<?php echo $line_id; ?>" <?php echo ($print_label == 1 ? 'checked' : '');?>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">Print Indivisual label :*</label>
+                                    <div class="col-lg-7">
+                                        <input type="checkbox" class="print_status" name="p_label" id="p_label" value="<?php echo $line_id; ?>" <?php echo ($indivisual_label == 1 ? 'checked' : '');?>>
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +393,20 @@ include("../heading_banner.php");
 
     });
 </script>
-
+<script>
+    $("input#p_label").click(function () {
+        var isChecked = $(this)[0].checked;
+        var val = $(this).val();
+        var data_1 = "&p_label=" + val+ "&isChecked=" + isChecked;
+        $.ajax({
+            type: 'POST',
+            url: "print_label.php",
+            data: data_1,
+            success: function (response) {
+            }
+        });
+    });
+</script>
 
 <?php include('../footer.php') ?>
 <!--<script type="text/javascript" src="../assets/js/core/app.js"></script>-->

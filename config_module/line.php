@@ -151,6 +151,9 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                 margin-top: 10px;
             }
         }
+        .col-lg-2 {
+            width: 21.666667%;
+        }
     </style>
 
         <!-- Main navbar -->
@@ -210,7 +213,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -235,6 +238,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                             <th>Priority Order</th>
                                             <th>Enabled</th>
                                             <th>GBP Dashboard Required</th>
+                                            <th>Print Indivisual Required</th>
                                             <th>Print Required</th>
                                             <th>Action</th>
                                         </tr>
@@ -257,6 +261,9 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         <!-- <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
                                                 <td>
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="p_label" id="p_label" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['indivisual_label']==1 ? 'checked' : '');?>>
                                                 </td>
                                                 <td>
                                                     <?php
@@ -313,6 +320,17 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                     </div>
 
                                 </div>
+<!--                                <div class="row">-->
+<!--                                    <label class="col-lg-2 control-label">Select Printer : </label>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <select  name="printer" id="printer" class="select form-control" data-style="bg-slate">-->
+<!--                                            <option value="" disabled selected>Select Printer</option>-->
+<!--                                            <option value="0" >Zebra Printer</option>-->
+<!--                                            <option value="1" >EPSON Printer</option>-->
+<!--                                            <option value="1" >HP Printer</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -374,6 +392,23 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         });
 
                     </script>
+                    <script>
+               $("input#p_label").click(function () {
+                var isChecked = $(this)[0].checked;
+                var val = $(this).val();
+                var data_1 = "&p_label=" + val+ "&isChecked=" + isChecked;
+                $.ajax({
+                    type: 'POST',
+                    url: "print_label.php",
+                    data: data_1,
+                    success: function (response) {
+
+                    }
+                });
+
+            });
+
+        </script>
                    <script>
                    $(".print_status").on('click', function () {
                     var element = $(this);

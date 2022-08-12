@@ -345,14 +345,17 @@ if (!empty($_GET['import_status'])) {
                                 </div>
                                 <hr>						
                                 <div class="row">
-                                    <form action="import_users.php" method="post" enctype="multipart/form-data" id="import_form">				
-                                        <div class="col-md-6">
+
+                                    <form action="" id="upload_csv" method="post" enctype="multipart/form-data" id="import_form">
+                                        <div class="col-md-4">
                                             <input type="file" name="file" />
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <input type="submit" class="btn btn-primary" style="background-color:#1e73be;" name="import_data" value="IMPORT">
-                                        </div>			
-                                    </form> 
+                                            <a href="export.php" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-download" aria-hidden="true"></i> Export</a>
+                                        </div>
+
+                                    </form>
                                 </div>
                                 <?php if (!empty($import_status_message)) { ?>
                                     <?php echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>'; ?>
@@ -1022,6 +1025,27 @@ window.onload = function() {
     history.replaceState("", "", "<?php echo $scriptName; ?>user_module/users_list.php");
 }
 </script>
+
+        <script>
+            $(document).ready(function (){
+                $('#upload_csv').on('submit',function (e){
+                    e.preventDefault();
+                    $.ajax({
+                        url:"import.php",
+                        method:"POST",
+                        data:new FormData(this),
+                        contentType:false,
+                        cache:false,
+                        processData:false,
+                        success:function (data){
+                           // console.log(data);
+                            alert('done');
+
+                        }
+                    });
+                });
+            });
+        </script>
     <script>
         $("#checkAll").click(function () {
             $('input:checkbox').not(this).prop('checked', this.checked);
