@@ -118,18 +118,16 @@ include("heading_banner.php");
     <div class="panel panel-flat">
         <div class="panel-heading">
 <div class="row">
-<div class="col-md-3 ">
+<div class="col-md-2">
 					<?php
-$pageno = "";					
-                        
-
+                        $pageno = "";
                         if (isset($_GET['pageno'])) {
                             $pageno = $_GET['pageno'];
                         }
 						if($pageno == "") {
                             $pageno = 1;
                         }
-if (isset($_POST['page'])) {
+                        if (isset($_POST['page'])) {
                             $pageno = $_POST['page'];
                         }
                         $no_of_records_per_page = 1;
@@ -189,11 +187,29 @@ if($p != "")
                             ?> <br/><button type="submit" id="submit" style="display:none;">submit</button>
 	</form>
 </div>
-<div class="col-md-3 btn_mob">
-<form action="export_table.php" method="post" name="export_excel">
+<!--    <form action="" id="upload_csv" method="post" enctype="multipart/form-data" id="import_form">-->
+<!--        <div class="col-md-3 btn_mob">-->
+<!--            <input type="file" name="file" />-->
+<!--        </div>-->
+<!--        <div class="col-md-3 btn_mob">-->
+<!--            <input type="submit" class="btn btn-primary" style="background-color:#1e73be;" name="import_data" value="IMPORT">-->
+<!--            <a href="export.php" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-download" aria-hidden="true"></i> Export</a>-->
+<!--        </div>-->
+<!---->
+<!--    </form>-->
+<div class="col-md-6 btn_mob">
+    <form action="" id="upload_csv" method="post" enctype="multipart/form-data" id="import_form">
+        <div class="col-md-4">
+            <input type="file" name="file" />
+        </div>
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-primary" style="background-color:#1e73be;" name="import_data" value="IMPORT">
+        </div>
+
+    </form><form action="export_table.php" method="post" name="export_excel">
 <input type="hidden" name="li" value="<?php echo $ln; ?>">
 <button type="submit" class="btn btn-primary " style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
-										</form>
+</form>
 </div>
 <!--
 <div class="col-md-2">
@@ -204,7 +220,7 @@ if($p != "")
 </div>
 -->
 
-<div class="col-md-6 btn_mob" style="text-align: right;">
+<div class="col-md-4 btn_mob" style="text-align: right;">
                             <ul class="pagination">
                             <li ><a href="?pageno=1" class="btn btn-default btn-raised" style="color: black!important;">&nbsp; First &nbsp;</a></li>
                             <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
@@ -215,18 +231,17 @@ if($p != "")
                             </li>
                             <li><a class="btn btn-default btn-raised" href="?pageno=<?php echo $total_pages; ?>" style="color: black!important;">&nbsp; Last &nbsp;</a></li>
                         </ul>
-</div>
-</div>
-        </div>
-    </div>
-<?php
-$query = sprintf("SELECT COUNT(DISTINCT `position_id`) as cnt FROM `cam_user_rating` WHERE `line_id` = '$ln'");
-
-$qur =  mysqli_query($db,$query);
-while($rowc = mysqli_fetch_array($qur)){
-    $possitioncnt = $rowc['cnt'];
-}
-?>
+                    </div>
+                  </div>
+               </div>
+            </div>
+                   <?php
+                  $query = sprintf("SELECT COUNT(DISTINCT `position_id`) as cnt FROM `cam_user_rating` WHERE `line_id` = '$ln'");
+                      $qur =  mysqli_query($db,$query);
+                      while($rowc = mysqli_fetch_array($qur)){
+                       $possitioncnt = $rowc['cnt'];
+                  }
+                 ?>
             <!-- Content area -->
 
                 <div class="panel panel-flat">
@@ -240,13 +255,12 @@ while($rowc = mysqli_fetch_array($qur)){
                             <th>Job Title</th>
                             <th>Shift</th>
                             <th>Status</th>
-<?php
-$qurtemp =  mysqli_query($db,"SELECT * FROM  cam_line where line_id = '$ln' ");
-	while($rowctemp = mysqli_fetch_array($qurtemp)){
-		$station = $rowctemp["line_name"];	
-		
-	}
-?>							
+                            <?php
+                          $qurtemp =  mysqli_query($db,"SELECT * FROM  cam_line where line_id = '$ln' ");
+	                      while($rowctemp = mysqli_fetch_array($qurtemp)){
+	                    	$station = $rowctemp["line_name"];
+			                        }
+                           ?>
                             <th colspan="<?php echo $possitioncnt; ?>" style="text-align:center;"><?php echo $station; ?></th>
 
                         </tr>
@@ -257,12 +271,11 @@ $qurtemp =  mysqli_query($db,"SELECT * FROM  cam_line where line_id = '$ln' ");
 
                             $qur =  mysqli_query($db,$query);
                             while($rowc = mysqli_fetch_array($qur)){
-$position1 = $rowc['position_id'];
-$qurtemp1 =  mysqli_query($db,"SELECT * FROM  cam_position where position_id = '$position1' ");
-	$rowctemp1 = mysqli_fetch_array($qurtemp1);
-		$position = $rowctemp1["position_name"];	
-	
-                                ?>
+                                $position1 = $rowc['position_id'];
+                                $qurtemp1 =  mysqli_query($db,"SELECT * FROM  cam_position where position_id = '$position1' ");
+	                            $rowctemp1 = mysqli_fetch_array($qurtemp1);
+		                        $position = $rowctemp1["position_name"];
+	                                ?>
                                 <th><?php echo $position;
                                     $possarr[] = $rowc['position_id'];
                                     ?></th>
@@ -296,9 +309,9 @@ $qurtemp1 =  mysqli_query($db,"SELECT * FROM  cam_position where position_id = '
 									$fulllname = $firstnm." ".$lastnm;
 
                                 }
-$now = time(); // or your date as well
-$your_date = strtotime($hirin_date);
-$datediff = $now - $your_date;
+                              $now = time(); // or your date as well
+                              $your_date = strtotime($hirin_date);
+                              $datediff = $now - $your_date;
 
 								
                                 ?>
@@ -316,7 +329,6 @@ $datediff = $now - $your_date;
                                 {
                                     $pn = $possarr[$i];
                                     $query55 = sprintf("SELECT * FROM `cam_user_rating` WHERE `position_id` = '$pn' AND `user_id` = '$nnm' AND `line_id` = '$ln'  ");
-
                                     $qur55 =  mysqli_query($db,$query55);
                                     while($rowc55 = mysqli_fetch_array($qur55)){
                                         $rrting = $rowc55["ratings"];
@@ -344,6 +356,26 @@ $datediff = $now - $your_date;
     <!-- /main content -->
 
 <!-- /page container -->
+<script>
+    $(document).ready(function (){
+        $('#upload_csv').on('submit',function (e){
+            e.preventDefault();
+            $.ajax({
+                url:"import_training_matrix.php",
+                method:"POST",
+                data:new FormData(this),
+                contentType:false,
+                cache:false,
+                processData:false,
+                success:function (data){
+                    // console.log(data);
+                    alert('done');
+
+                }
+            });
+        });
+    });
+</script>
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>table.php");
