@@ -126,7 +126,7 @@ if ($material_status == '0') {
 	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 	$mail->SMTPAuth = true;
 	$mail->Username = 'admin@plantnavigator.com';
-	$mail->Password = 'S@@rgummi@2021';
+	$mail->Password = 'S@@rgummi_2021';
 	$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
