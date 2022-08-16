@@ -136,7 +136,7 @@ include("../heading_banner.php");
 													}
 												}
 												if($is_tab_login){
-													$sql1 = "SELECT line_id, line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
+													$sql1 = "SELECT line_id, line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
 													$result1 = $mysqli->query($sql1);
 													//                                            $entry = 'selected';
 													while ($row1 = $result1->fetch_assoc()) {
@@ -146,7 +146,7 @@ include("../heading_banner.php");
 												}else if($is_cell_login){
 													if(empty($_REQUEST)) {
 														$c_stations = implode("', '", $c_login_stations_arr);
-														$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
+														$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
 														$result1 = $mysqli->query($sql1);
 														//													                $                        $entry = 'selected';
 														$i = 0;
@@ -167,7 +167,7 @@ include("../heading_banner.php");
 														if(empty($line_id)){
 															$line_id = $_REQUEST['station'];
 														}
-														$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id'";
+														$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id' and is_deleted != 1";
 														$result1 = $mysqli->query($sql1);
 														while ($row1 = $result1->fetch_assoc()) {
 															$entry = 'selected';
@@ -181,7 +181,7 @@ include("../heading_banner.php");
 													if (!isset($st_dashboard)) {
 														$st_dashboard = $_REQUEST['station'];
 													}
-													$sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+													$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
 													$result1 = $mysqli->query($sql1);
 													//                                            $entry = 'selected';
 													while ($row1 = $result1->fetch_assoc()) {
@@ -225,7 +225,7 @@ include("../heading_banner.php");
 												if(empty($station) && ($is_cell_login == 1) && !empty($c_station)){
 													$station = $c_station;
 												}
-												$sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station' ORDER BY `part_family_name` ASC";
+												$sql1 = "SELECT * FROM `pm_part_family` where station = '$station' and is_deleted != 1 ORDER BY `part_family_name` ASC";
 												$result1 = $mysqli->query($sql1);
 												//                                            $entry = 'selected';
 												while ($row1 = $result1->fetch_assoc()) {
@@ -262,7 +262,7 @@ include("../heading_banner.php");
 												//	$st_dashboard = $_POST['part_number'];
 												$part_family = $_REQUEST['part_family'];
 												$st_dashboard = $_REQUEST['part_number'];
-												$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0  ORDER BY `part_name` ASC";
+												$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1  ORDER BY `part_name` ASC";
 												$result1 = $mysqli->query($sql1);
 												while ($row1 = $result1->fetch_assoc()) {
 													if ($st_dashboard == $row1['pm_part_number_id']) {
@@ -291,7 +291,7 @@ include("../heading_banner.php");
 												<?php
 												$st_dashboard = $_POST['form_type'];
 
-												$sql1 = "SELECT * FROM `form_type` ";
+												$sql1 = "SELECT * FROM `form_type` where is_deleted != 1 ";
 												$result1 = $mysqli->query($sql1);
 												//                                            $entry = 'selected';
 												while ($row1 = $result1->fetch_assoc()) {

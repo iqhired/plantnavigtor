@@ -179,7 +179,7 @@ include("../heading_banner.php");?>
                                                         <select name="event_cat" id="event_cat" class="select-border-color select-access-multiple-open" required>
                                                             <option value="" selected disabled>--- Select Event Category ---</option>
 															<?php
-															$sql1 = "SELECT * FROM `events_category`";
+															$sql1 = "SELECT * FROM `events_category` where is_deleted != 1";
 															$result1 = $mysqli->query($sql1);
 															while ($row1 = $result1->fetch_assoc()) {
 																echo "<option value='" . $row1['events_cat_id'] . "'$entry>" . $row1['events_cat_name'] . "</option>";

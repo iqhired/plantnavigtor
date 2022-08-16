@@ -228,7 +228,7 @@ if(empty($datefrom)){
                                                     <select  name="user" id="user" class="select" style="float: left;width: initial;" >
                                                         <option value="" selected >--- Select User ---</option>
                                                         <?php
-                                                        $sql1 = "SELECT DISTINCT tt.assign_to FROM tm_task as tt right join cam_users as cu on tt.assign_to = cu.users_id where tt.assign_to != ''";
+                                                        $sql1 = "SELECT DISTINCT tt.assign_to FROM tm_task as tt right join cam_users as cu on tt.assign_to = cu.users_id where tt.assign_to != '' and cu.is_deleted != 1";
                                                         $result1 = $mysqli->query($sql1);
                                                         //$entry = 'selected';
                                                         while ($row1 = $result1->fetch_assoc()) {
@@ -238,7 +238,7 @@ if(empty($datefrom)){
                                                             } else {
                                                                 $entry = '';
                                                             }
-                                                            $qur05 = mysqli_query($db, "SELECT * FROM  cam_users where users_id = '$lin' ");
+                                                            $qur05 = mysqli_query($db, "SELECT * FROM  cam_users where users_id = '$lin' and is_deleted != 1 ");
                                                             while ($rowc05 = mysqli_fetch_array($qur05)) {
                                                                 $lnnm = $rowc05["firstname"]." ".$rowc05["lastname"];
                                                             }
@@ -341,7 +341,7 @@ if(empty($datefrom)){
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';

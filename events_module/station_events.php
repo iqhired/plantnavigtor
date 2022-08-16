@@ -284,7 +284,7 @@ include("../heading_banner.php");
                                         <?php
                                         if($is_tab_login){
                                             $station_id=$tab_line;
-                                            $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
+                                            $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
                                             $result1 = $mysqli->query($sql1);
                                             //                                            $entry = 'selected';
                                             while ($row1 = $result1->fetch_assoc()) {
@@ -294,7 +294,7 @@ include("../heading_banner.php");
                                         }else if($is_cell_login){
                                             if(empty($_REQUEST)){
                                                 $c_stations = implode("', '", $c_login_stations_arr);
-                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
+                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
                                                 $result1 = $mysqli->query($sql1);
 //													                $                        $entry = 'selected';
                                                 $i = 0;
@@ -316,7 +316,7 @@ include("../heading_banner.php");
                                                 if(empty($line_id)){
                                                     $line_id = $_REQUEST['station'];
                                                 }
-                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id'";
+                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id' and is_deleted != 1";
                                                 $result1 = $mysqli->query($sql1);
 //
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -330,7 +330,7 @@ include("../heading_banner.php");
 
                                         }else{
                                             $station = $station_id;
-                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC";
+                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
                                                 $lid = $row1['line_id'];
@@ -367,7 +367,7 @@ include("../heading_banner.php");
                                         if(empty($part_family) && !empty($_REQUEST['part_family'])){
                                             $part_family = $_REQUEST['part_family'];
                                         }
-                                        $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station' ORDER BY `part_family_name` ASC";
+                                        $sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1 and station = '$station' ORDER BY `part_family_name` ASC";
                                         $result1 = $mysqli->query($sql1);
                                         //                                            $entry = 'selected';
                                         while ($row1 = $result1->fetch_assoc()) {
@@ -400,7 +400,7 @@ include("../heading_banner.php");
                                         if(empty($part_number) && !empty($_REQUEST['part_number'])){
                                             $part_number = $_REQUEST['part_number'];
                                         }
-                                        $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0  ORDER BY `part_name` ASC";
+                                        $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1  ORDER BY `part_name` ASC";
                                         $result1 = $mysqli->query($sql1);
                                         //                                            $entry = 'selected';
                                         while ($row1 = $result1->fetch_assoc()) {
@@ -433,7 +433,7 @@ include("../heading_banner.php");
 
                                         //$sql1 = "SELECT * FROM `event_type` ORDER BY `event_type_name` ASC";
                                         //												$sql1 = "SELECT event_type_id , FIND_IN_SET('$station', stations) AS result from `event_type` ORDER BY so ASC";
-                                        $sql1 = "SELECT event_type_id ,event_type_name, FIND_IN_SET('$station', stations) from `event_type` where FIND_IN_SET('$station', stations) IS NOT NULL and FIND_IN_SET('$station', stations) > 0 ORDER BY so ASC";
+                                        $sql1 = "SELECT event_type_id ,event_type_name, FIND_IN_SET('$station', stations) from `event_type` where FIND_IN_SET('$station', stations) IS NOT NULL and FIND_IN_SET('$station', stations) > 0 and is_deleted != 1 ORDER BY so ASC";
                                         $result1 = $mysqli->query($sql1);
                                         if ($result1 != null) {
                                             $count = $result1->num_rows;

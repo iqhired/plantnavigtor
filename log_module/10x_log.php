@@ -180,7 +180,7 @@ include("../heading_banner.php");
                                     <option value="" selected disabled>--- Select Station ---</option>
                                     <?php
                                     $st_dashboard = $_POST['station'];
-                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
                                     $result1 = $mysqli->query($sql1);
                                     //                                            $entry = 'selected';
                                     while ($row1 = $result1->fetch_assoc()) {
@@ -212,7 +212,7 @@ include("../heading_banner.php");
                                     $st_dashboard = $_POST['part_family'];
                                     $station = $_POST['station'];
                                     $ss = (isset($station)?' and station = ' . $station : '');
-                                    $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0" . $ss;
+                                    $sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1" . $ss;
                                     $result1 = $mysqli->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
                                         if($st_dashboard == $row1['pm_part_family_id'])
@@ -241,7 +241,7 @@ include("../heading_banner.php");
                                     <?php
                                     $st_dashboard = $_POST['part_number'];
                                     $part_family = $_POST['part_family'];
-                                    $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+                                    $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1 ";
                                     $result1 = $mysqli->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
                                         if($st_dashboard == $row1['pm_part_number_id'])

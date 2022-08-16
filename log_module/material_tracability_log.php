@@ -184,7 +184,7 @@ include("../heading_banner.php");
 
 
                                     $st_dashboard = $_POST['station'];
-                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+                                    $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
                                     $result1 = $mysqli->query($sql1);
                                     //                                            $entry = 'selected';
                                     while ($row1 = $result1->fetch_assoc()) {
@@ -216,7 +216,7 @@ include("../heading_banner.php");
                                     $st_dashboard = $_POST['part_family'];
                                     $station = $_POST['station'];
                                     $ss = (isset($station)?' and station = ' . $station : '');
-                                    $sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0" . $ss;
+                                    $sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1" . $ss;
                                     $result1 = $mysqli->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
                                         if($st_dashboard == $row1['pm_part_family_id'])
@@ -245,7 +245,7 @@ include("../heading_banner.php");
                                     <?php
                                     $st_dashboard = $_POST['part_number'];
                                     $part_family = $_POST['part_family'];
-                                    $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+                                    $sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1 ";
                                     $result1 = $mysqli->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
                                         if($st_dashboard == $row1['pm_part_number_id'])
@@ -279,7 +279,7 @@ include("../heading_banner.php");
                                     while ($row1 = mysqli_fetch_assoc($result1)) {
 //                                        $material_id = $row1['material_id'];
                                         $material = $row1['material_type'];
-										$sql2 = "SELECT  (material_type) FROM `material_config` where material_id = " . $material ;
+										$sql2 = "SELECT  (material_type) FROM `material_config` where is_deleted != 1 and material_id = " . $material ;
 										$result2 = mysqli_query($db,$sql2);
 										$row2 = mysqli_fetch_assoc($result2);
 
@@ -321,7 +321,7 @@ include("../heading_banner.php");
                     }
                     ?>
                     <?php
-                    if (!empty($_SESSION[import_status_message])) {
+                    if (!empty($_SESSION['import_status_message'])) {
                         echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                         $_SESSION['message_stauts_class'] = '';
                         $_SESSION['import_status_message'] = '';

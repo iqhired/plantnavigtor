@@ -217,7 +217,7 @@ include("../heading_banner.php");
 												<?php
 												$st_dashboard = $_GET['station'];
 												if($is_tab_login){
-													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' ORDER BY `line_name` ASC";
+													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
 													$result1 = $mysqli->query($sql1);
 													//                                            $entry = 'selected';
 													while ($row1 = $result1->fetch_assoc()) {
@@ -226,7 +226,7 @@ include("../heading_banner.php");
 													}
 												}else if($is_cell_login){
 													$c_stations = implode("', '", $c_login_stations_arr);
-													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') ORDER BY `line_name` ASC";
+													$sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
 													$result1 = $mysqli->query($sql1);
 //													                $                        $entry = 'selected';
 													$i = 0;
@@ -262,7 +262,7 @@ include("../heading_banner.php");
 												}else{
 													$st_dashboard = $_POST['station'];
 													$station22 = $st_dashboard;
-													$sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+													$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
 													$result1 = $mysqli->query($sql1);
 													//                                            $entry = 'selected';
 													while ($row1 = $result1->fetch_assoc()) {
@@ -307,7 +307,7 @@ include("../heading_banner.php");
 													$station22 = $c_station;
 												}
 												$part_family_name = $_POST['part_family_name'];
-												$sql1 = "SELECT * FROM `pm_part_family` where is_deleted = 0 and station = '$station22' ";
+												$sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1 and station = '$station22' ";
 												$result1 = $mysqli->query($sql1);
 												//                                            $entry = 'selected';
 												while ($row1 = $result1->fetch_assoc()) {
@@ -342,7 +342,7 @@ include("../heading_banner.php");
 												$st_dashboard = $_POST['part_number'];
 												$part_family = $_POST['part_family'];
 
-												$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted = 0 ";
+												$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1 ";
 												$result1 = $mysqli->query($sql1);
 												//                                            $entry = 'selected';
 												while ($row1 = $result1->fetch_assoc()) {
@@ -372,7 +372,7 @@ include("../heading_banner.php");
 												<?php
 												$st_dashboard = $_POST['form_type'];
 
-												$sql1 = "SELECT * FROM `form_type` ";
+												$sql1 = "SELECT * FROM `form_type` where is_deleted != 1 ";
 												$result1 = $mysqli->query($sql1);
 												//                                            $entry = 'selected';
 												while ($row1 = $result1->fetch_assoc()) {

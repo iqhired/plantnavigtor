@@ -236,7 +236,7 @@ if(empty($datefrom)){
                                                     } else {
                                                         $entry = '';
                                                     }
-                                                    $qur05 = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$lin' ");
+                                                    $qur05 = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$lin' and is_deleted != 1 ");
                                                     while ($rowc05 = mysqli_fetch_array($qur05)) {
                                                         $lnnm = $rowc05["line_name"];
                                                     }
@@ -334,7 +334,7 @@ if(empty($datefrom)){
                                 }
                                 ?>
                                 <?php
-                                if (!empty($_SESSION[import_status_message])) {
+                                if (!empty($_SESSION['import_status_message'])) {
                                     echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
                                     $_SESSION['import_status_message'] = '';
@@ -354,7 +354,7 @@ if(empty($datefrom)){
                                         </div>
                                 </form>
                                         <div class="col-md-2">
-                                            <form action="export_log.php" method="post" name="export_excel">
+                                            <form action="export_crew_log.php" method="post" name="export_excel">
                                                 <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
                                             </form>
                                         </div>
@@ -564,6 +564,6 @@ if(empty($datefrom)){
 
         <!-- /page container -->
         <?php include('../footer.php') ?>
-        <script type="text/javascript" src="../assets/js/core/app.js"></script>
+
     </body>
 </html>

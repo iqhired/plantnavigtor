@@ -338,7 +338,7 @@ include("../heading_banner.php");
                                                     data-style="bg-slate">
                                                 <option value="" selected disabled>--- Select Customer / Account  ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `cus_account` where c_status = 1 ORDER BY `c_name` ASC";
+                                                $sql1 = "SELECT * FROM `cus_account` where c_status = 1 and is_deleted != 1 ORDER BY `c_name` ASC";
                                                 $result1 = $mysqli->query($sql1);
                                                 //                                            $entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -620,7 +620,7 @@ include("../heading_banner.php");
                                                     <option value="" selected disabled>--- Select Account Type ---
                                                     </option>
 													<?php
-													$sql1 = "SELECT * FROM `cus_account` ORDER BY `c_name` ASC";
+													$sql1 = "SELECT * FROM `cus_account` and is_deleted != 1 ORDER BY `c_name` ASC";
 													$result1 = $mysqli->query($sql1);
 													//                                            $entry = 'selected';
 													while ($row1 = $result1->fetch_assoc()) {
