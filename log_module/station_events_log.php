@@ -341,9 +341,6 @@ include("../heading_banner.php");
                             </div>
                             <div class="row_date">
                                 <div class="col-md-6 mobile_date">
-
-<!--                                    <label class="control-label" >Date Range</label>-->
-
                                     <?php
                                     if ($button != "button2") {
                                         $checked = "checked";
@@ -351,10 +348,6 @@ include("../heading_banner.php");
                                         $checked == "";
                                     }
                                     ?>
-
-<!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"-->
-<!--                                           style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
-
 
                                     <label class="col-lg-2 control-label">Date From :</label>
                                     <input type="date" name="date_from" id="date_from" class="form-control"
@@ -368,92 +361,10 @@ include("../heading_banner.php");
 
                                 </div>
 
-<!--                                <div class="col-md-5">-->
-<!--                                    <label class="control-label"-->
-<!--                                           style="float: left;padding-top: 15px; font-weight: 500;">Select Period :-->
-<!--                                        &nbsp;&nbsp;</label>-->
-<!--									--><?php
-//									if ($button == "button2") {
-//										$checked = "checked";
-//									} else {
-//										$checked = "";
-//									}
-//									?>
-<!--                                    <input type="radio" name="button" id="button2" value="button2" class="form-control"-->
-<!--                                           style="float: left;width: initial;" --><?php //echo $checked; ?><!--</input>-->
-<!--                                    <label class="control-label"-->
-<!--                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
-<!--                                    <select name="timezone" id="timezone" class="form-control"-->
-<!--                                            style="float: left;width: 60%;">-->
-<!--                                        <option value="" selected disabled>--- Select Period ---</option>-->
-<!--										--><?php
-//										if ($timezone == "1") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="1" --><?php //echo $selected; ?><!--One Day</option>-->
-<!--										--><?php
-//										if ($timezone == "7") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="7" --><?php //echo $selected; ?><!--One Week</option>-->
-<!--										--><?php
-//										if ($timezone == "30") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="30" --><?php //echo $selected; ?><!--One Month</option>-->
-<!--										--><?php
-//										if ($timezone == "90") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="90" --><?php //echo $selected; ?><!--Three Month</option>-->
-<!--										--><?php
-//										if ($timezone == "180") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="180" --><?php //echo $selected; ?><!--Six Month</option>-->
-<!--										--><?php
-//										if ($timezone == "365") {
-//											$selected = "selected";
-//										} else {
-//											$selected = "";
-//										}
-//										?>
-<!--                                        <option value="365" --><?php //echo $selected; ?><!--One Year</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-
-
                             </div>
 
 
                             <br/>
-<!--							--><?php
-//							if (!empty($import_status_message)) {
-//								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-//							}
-//							?>
-<!--							--><?php
-//							if (!empty($_SESSION['import_status_message'])) {
-//								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-//								$_SESSION['message_stauts_class'] = '';
-//								$_SESSION['import_status_message'] = '';
-//							}
-//							?>
                     </div>
                     <div class="panel-footer p_footer">
                         <div class="row">
@@ -579,184 +490,12 @@ where 1 ";
 
 							$q = $q . " ORDER BY e_log.created_on  DESC";
 
-
-//							if ($event_type != "") {
-//							    /* If Data Range is selected */
-//								if ($button == "button1") {
-//									if ($station != "" && $datefrom != "" && $dateto != "") {
-////									$qur = mysqli_query($db, );
-//										$query = $q . " DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom'
-//and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' and sg_events.line_id = '$station' and e_log.event_type_id = '$event_type' ";
-//									} else if ($station != "" && $datefrom == "" && $dateto == "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND  `sg_events.line_id` = '$station' and `sg_events.event_type_id` = '$event_type'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num,pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on e_log.event_type_id = et.event_type_id
-//where e_log.line_id = '$station' and e_log.event_type_id = '$event_type'";
-//									} else if ($station == "" && $datefrom != "" && $dateto != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `event_type_id` = '$event_type'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,
-//sg_events.created_on as start_time , sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on e_log.event_type_id = et.event_type_id
-//where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' and e_log.event_type_id = '$event_type'";
-//									}
-//
-//								} else {
-//								    /* If Date Period is Selected */
-//									$curdate = date('Y-m-d');
-//									if ($timezone == "7") {
-//										$countdate = date('Y-m-d', strtotime('-7 days'));
-//									} else if ($timezone == "1") {
-//										$countdate = date('Y-m-d', strtotime('-1 days'));
-//									} else if ($timezone == "30") {
-//										$countdate = date('Y-m-d', strtotime('-30 days'));
-//									} else if ($timezone == "90") {
-//										$countdate = date('Y-m-d', strtotime('-90 days'));
-//									} else if ($timezone == "180") {
-//										$countdate = date('Y-m-d', strtotime('-180 days'));
-//									} else if ($timezone == "365") {
-//										$countdate = date('Y-m-d', strtotime('-365 days'));
-//									}
-//									if ($station != "" && $timezone != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$curdate' and `line_id` = '$station' and `event_type_id` = '$event_type'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate'
-//and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and `line_id` = '$station' and `event_type_id` = '$event_type'";
-//									} else if ($station != "" && $timezone == "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND  `line_id` = '$station' and `event_type_id` = '$event_type'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where  sg_events.line_id = '$station' and e_log.event_type_id = '$event_type'";
-//									} else if ($taskboard == "" && $timezone != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$curdate' and `event_type_id` = '$event_type'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and e_log.event_type_id = '$event_type'";
-//									}
-//								}
-//
-//							}
-
-//							//event category
-//							if ($event_category != "") {
-//								if ($button == "button1") {
-//									if ($station != "" && $datefrom != "" && $dateto != "") {
-////									$qur = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `line_id` = '$station' and `event_category_id` = '$event_category' ");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'
-//and sg_events.line_id = '$station'  and e_log.event_cat_id = '$event_category'";
-//									} else if ($station != "" && $datefrom == "" && $dateto == "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND  `line_id` = '$station' and `event_category_id` = '$event_category'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-// sg_events.modified_on as end_time ,e_log.total_time as total_time
-// from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-// INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-// inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id where
-//sg_events.line_id = '$station' and e_log.event_cat_id  = '$event_category'";
-//									} else if ($station == "" && $datefrom != "" && $dateto != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' and `event_category_id` = '$event_category'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where  DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom'
-//and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' and e_log.event_cat_id ='$event_category'";
-//									}
-//
-//								} else {
-//									$curdate = date('Y-m-d');
-//									if ($timezone == "7") {
-//										$countdate = date('Y-m-d', strtotime('-7 days'));
-//									} else if ($timezone == "1") {
-//										$countdate = date('Y-m-d', strtotime('-1 days'));
-//									} else if ($timezone == "30") {
-//										$countdate = date('Y-m-d', strtotime('-30 days'));
-//									} else if ($timezone == "90") {
-//										$countdate = date('Y-m-d', strtotime('-90 days'));
-//									} else if ($timezone == "180") {
-//										$countdate = date('Y-m-d', strtotime('-180 days'));
-//									} else if ($timezone == "365") {
-//										$countdate = date('Y-m-d', strtotime('-365 days'));
-//									}
-//									if ($station != "" && $timezone != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$curdate' and `line_id` = '$station' and `event_category_id` = '$event_category'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$countdate'
-//and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$station' and e_log.event_cat_id = '$event_category'";
-//									} else if ($station != "" && $timezone == "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND  `line_id` = '$station' and `event_category_id` = '$event_category'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id
-//where sg_events.line_id = '$station' and e_log.event_cat_id = '$event_category'";
-//									} else if ($taskboard == "" && $timezone != "") {
-////									$qur = mysqli_query($db, "SELECT line_id,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , sg_events.modified_on as end_time ,SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(sg_events.modified_on ,sg_events.created_on))) as total_time from sg_station_event as sg_events INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id where event_status = 0 AND DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$curdate' and `event_category_id` = '$event_category'");
-//										$query = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = '$event_category') as cat_name ,
-//pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time ,
-//sg_events.modified_on as end_time ,e_log.total_time as total_time
-//from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
-//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-//inner join event_type as et on sg_events.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$countdate'
-//and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$curdate' and e_log.event_cat_id = '$event_category'";
-//									}
-//								}
-//
-//							}
-
 						}
-
 						/* Execute the Query Built*/
 						$qur = mysqli_query($db, $q);
 						while ($rowc = mysqli_fetch_array($qur)) {
 							$dateTime = $rowc["assign_time"];
 							$dateTime2 = $rowc["unassign_time"];
-//$nt = TIMEDIFF($dateTime, $dateTime2);
 							?>
                             <tr>
 								<?php
@@ -770,39 +509,9 @@ where 1 ";
                                 <td><?php echo $rowc["e_type"]; ?></td>
                                 <td><?php echo $rowc["cat_name"]; ?></td>
 
-                                <!--                                --><?php //if($event_type != ""){ ?>
-                                <!--								-->
-                                <!--								--><?php
-								//								$un = $event_type;
-								//								$qur04 = mysqli_query($db, "SELECT event_type_name FROM  event_type where event_type_id = '$un' ");
-								//								while ($rowc04 = mysqli_fetch_array($qur04)) {
-								//									$lnn = $rowc04["event_type_name"];
-								//								}
-								//								?>
-                                <!--								-->
-                                <!--								<td>--><?php //echo $lnn; ?><!--</td>-->
-                                <!--								-->
-                                <!--								--><?php //}else if($event_category != ""){ ?>
-                                <!--								--><?php
-								//								$un = $event_category;
-								//								$qur04 = mysqli_query($db, "SELECT events_cat_name FROM  events_category where events_cat_id = '$un' ");
-								//								while ($rowc04 = mysqli_fetch_array($qur04)) {
-								//									$lnn = $rowc04["events_cat_name"];
-								//								}
-								//								?>
-                                <!--								<td>--><?php //echo $lnn; ?><!--</td>-->
-                                <!--								--><?php //}else{ ?>
-                                <!--                                    <td>-->
-								<?php //echo $rowc['e_type']; ?><!--</td>-->
-                                <!--								--><?php //} ?>
-
                                 <td><?php echo $rowc['p_num']; ?></td>
                                 <td><?php echo $rowc['p_name']; ?></td>
                                 <td><?php echo $rowc['pf_name']; ?></td>
-                                <!--                                <td>-->
-								<?php //echo $rowc['start_time']; ?><!--</td>-->
-                                <!--                                <td>-->
-								<?php //echo $rowc['end_time']; ?><!--</td>-->
                                 <td><?php echo $rowc['created_on']; ?></td>
                                 <td><?php
                                     $total_time = '0 hrs';
@@ -856,6 +565,5 @@ where 1 ";
 </div>
 <!-- /page container -->
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js"></script>
 </body>
 </html>

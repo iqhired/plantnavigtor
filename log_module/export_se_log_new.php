@@ -33,9 +33,7 @@ if ($line_id != null) {
 	$q = $q . " and sg_events.line_id = '$line_id' ";
 
 }
-//if(!empty($datefrom)){
-//    $print_data .= "Date  : " . $datefrom . "\n";
-//}
+
 
 if($datefrom != "" && $dateto != ""){
 	$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
@@ -59,10 +57,10 @@ $q = $q . " ORDER BY e_log.created_on  ASC";
 $exportData = mysqli_query($db, $q);
 $header = "Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t" .  "Total Time" . "\t";
 $result = '';
-$fields = mysqli_num_fields($db, $exportData);
-for ($i = 0; $i < $fields; $i++) {
-	$header .= mysqli_field_name($db, $exportData, $i) . "\t";
-}
+//$fields = mysqli_num_fields($db, $exportData);
+//for ($i = 0; $i < $fields; $i++) {
+//	$header .= mysqli_field_name($db, $exportData, $i) . "\t";
+//}
 $k =1;
 
 while ($row = mysqli_fetch_row($exportData)) {
@@ -93,14 +91,6 @@ while ($row = mysqli_fetch_row($exportData)) {
 			$value = "\t";
 		} else {
 			$value = str_replace('"', '""', $value);
-//			if ($j == 1) {
-//				$un = $value;
-//				$qur04 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un' ");
-//				while ($rowc04 = mysqli_fetch_array($qur04)) {
-//					$lnn = $rowc04["line_name"];
-//				}
-//				$value = $lnn;
-//			}
 			$value = '"' . $value . '"' . "\t";
 		}
 		$line .= $value;
