@@ -342,6 +342,20 @@ include("../heading_banner.php");
                                     </div>
                                 </div>
                                 <div class="form_row row">
+                                    <label class="col-lg-2 control-label">Submitted User : </label>
+                                    <div class="col-md-6">
+                                        <?php $create_user = $rowcmain['created_by'];
+                                        $user = "select firstname,lastname from cam_users where users_id = '$create_user' ";
+                                        $row_user = mysqli_query($db,$user);
+                                        $user_q = mysqli_fetch_array($row_user);
+                                        $fname = $user_q['firstname'];
+                                        $lname = $user_q['lastname'];
+                                        ?>
+                                        <input type="text" name="createdby" class="form-control" id="createdby"
+                                               value="<?php echo $fname." ".$lname; ?>" disabled>
+                                    </div>
+                                </div>
+                                <div class="form_row row">
 
                                     <?php
                                     $query1 = sprintf("SELECT 10x_id FROM  10x where 10x_id = '$id'");
