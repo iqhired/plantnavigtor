@@ -200,13 +200,14 @@ if($p != "")
 <div class="col-md-6 btn_mob">
     <form action="" id="upload_csv" method="post" enctype="multipart/form-data" id="import_form">
         <div class="col-md-4">
-            <input type="file" name="file" />
+            <input type="file" name="file" required/>
         </div>
         <div class="col-md-2">
             <input type="submit" class="btn btn-primary" style="background-color:#1e73be;" name="import_data" value="IMPORT">
         </div>
+    </form>
 
-    </form><form action="export_table.php" method="post" name="export_excel">
+    <form action="export_table.php" method="post" name="export_excel">
 <input type="hidden" name="li" value="<?php echo $ln; ?>">
 <button type="submit" class="btn btn-primary " style="background-color:#1e73be;" id="export" name="export"   data-loading-text="Loading...">Export Data</button>
 </form>
@@ -370,6 +371,7 @@ if($p != "")
                 success:function (data){
                     // console.log(data);
                     alert('done');
+                    location.reload();
 
                 }
             });

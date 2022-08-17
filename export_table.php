@@ -26,10 +26,10 @@ while ($row11 = mysqli_fetch_row($exportData11)) {
         $header .= $value11;
     }
 }
-$fields = mysqli_num_fields($db, $exportData);
-for ($i = 0; $i < $fields; $i++) {
-    $header .= mysqli_field_name($db, $exportData, $i) . "\t";
-}
+//$fields = mysqli_num_fields($db, $exportData);
+//for ($i = 0; $i < $fields; $i++) {
+//    $header .= mysqli_field_name($db, $exportData, $i) . "\t";
+//}
 $pnhed = "0";
 while ($row = mysqli_fetch_row($exportData)) {
     //$nnm = $row;
@@ -46,7 +46,7 @@ while ($row = mysqli_fetch_row($exportData)) {
         $line .= $value;
     }
     $nnm = $g;
-    $exportData1 = mysqli_query($db, " SELECT hiring_date,DATEDIFF(now(),`hiring_date`),job_title_description,shift_location FROM  cam_users where users_id = '$nnm'");
+    $exportData1 = mysqli_query($db, " SELECT firstname,lastname,hiring_date,DATEDIFF(now(),`hiring_date`),job_title_description,shift_location FROM  cam_users where users_id = '$nnm'");
     $row1 = mysqli_fetch_row($exportData1);
     foreach ($row1 as $value1) {
         if ((!isset($value1) ) || ( $value1 == "" )) {
