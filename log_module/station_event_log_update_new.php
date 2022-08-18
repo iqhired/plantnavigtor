@@ -37,7 +37,7 @@ while ($row = mysqli_fetch_array($result0)) {
 	$current_time = date("Y-m-d H:i:s");
 	$Start_time = $created_on;
 	$end_time = $ended_on;
-	//$total_time = $tt;
+	$time = ($created_on);
 
 
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
@@ -45,7 +45,7 @@ while ($row = mysqli_fetch_array($result0)) {
 
 
 
-	if (empty($total_time)) {
+	if (empty($e_time)) {
 		$datetime1 = strtotime($current_time);
 		$datetime2 = strtotime($time);
 
@@ -166,7 +166,7 @@ while ($row = mysqli_fetch_array($result0)) {
 				$i++;
 		}
 			}
-	}else if(!empty($tt)) {
+	}else if(!empty($e_time)) {
 
 		$s_arr_1 = explode(' ', $created_on);
 		$s_arr = explode(':', $s_arr_1[1]);
