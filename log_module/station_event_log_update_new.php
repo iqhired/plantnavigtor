@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_array($result0)) {
 	$created_on = $row['created_on'];
 	$ended_on = $row['ended_on'];
 	$total_time = $row['total_time'];
-	$tt = $row['tt'];
+	$e_time = $row['tt'];
 	$created_by = $row['created_by'];
 	$current_time = date("Y-m-d H:i:s");
 	$Start_time = $created_on;
@@ -179,14 +179,14 @@ while ($row = mysqli_fetch_array($result0)) {
 		$end_time1 = round($en_time, 2);
 
 
-		$t_arr1 = explode('.', $tt);
+		$t_arr1 = explode('.', $e_time);
 		$t_arr = explode(':', $t_arr1[0]);
 		$tot_time = $t_arr[0] + ($t_arr[1] / 60) + ($t_arr[2] / 3600);
 		$total_time = round($tot_time, 2);
 		$total_time = $total_time;
 
 		$tt = sprintf('%02d:%02d', (int)$start_time1, fmod($start_time1, 1) * 60);
-		if ($end_hrs < 24) {
+		if ($total_time < 24) {
 
 //			$tot_t = "SELECT *,(SELECT created_on FROM sg_station_event_log s1 WHERE s1.station_event_log_id > sg_station_event_log.station_event_log_id ORDER BY station_event_log_id ASC LIMIT 1) as previous_created_on FROM `sg_station_event_log` WHERE 1 ORDER by sg_station_event_log.station_event_log_id DESC";
 //			$result_tot = mysqli_query($db, $tot_t);
@@ -196,14 +196,14 @@ while ($row = mysqli_fetch_array($result0)) {
 			$tt = sprintf('%02d:%02d', (int)$end_time1, fmod($end_time1, 1) * 60);
 			$end_time2 = $s_arr_1[0] . ' ' . $tt;
 			$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`tt`,`created_by`) 
-                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$tt','$created_by')";
+                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$e_time','$created_by')";
 			$result1 = mysqli_query($db, $page);
 		}else{
 
 			$tt_time_1 = 24 - $start_time1;
 			$endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 			$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`tt`,`created_by`) 
-                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$tt','$created_by')";
+                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$e_time','$created_by')";
 			$result1 = mysqli_query($db, $page);
 			$start_date2 = $s_arr_1[0];
 			$tt_time_2 = $total_time - $tt_time_1;
@@ -215,12 +215,12 @@ while ($row = mysqli_fetch_array($result0)) {
 					$tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
 					$end_time2 = $start_date2 . ' ' . $tt;
 					$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`tt`,`created_by`)                 
-				values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','$tt_time_2','$tt','$created_by')";
+				values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','$tt_time_2','$e_time','$created_by')";
 					$result1 = mysqli_query($db, $page);
 				}else{
 					$end_time2 = $start_date2 . ' ' . '23:59:59';
 					$page = "INSERT INTO `sg_station_event_log_new`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`tt`,`created_by`)                 
-				values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','24','$tt','$created_by')";
+				values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','24','$e_time','$created_by')";
 					$result1 = mysqli_query($db, $page);
 				}
 				$tt_time_2 = ($tt_time_2 - 24);
