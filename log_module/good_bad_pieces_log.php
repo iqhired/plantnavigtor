@@ -26,9 +26,15 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $button_event = "button3";
-$curdate = date('Y-m-d');
-$dateto = $curdate;
-$datefrom = $curdate;
+if(empty($dateto)){
+    $curdate = date('Y-m-d');
+    $dateto = $curdate;
+}
+
+if(empty($datefrom)){
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
+    $datefrom = $yesdate;
+}
 $button = "";
 $temp = "";
 // if (!isset($_SESSION['user'])) {
