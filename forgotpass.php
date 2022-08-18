@@ -101,33 +101,32 @@ if (count($_POST) > 0) {
                 <!-- Main content -->
                 <div class="content-wrapper">
                     <!-- Content area -->
-                    <div class="content pb-20">
-                        <!-- Form with validation -->
-                        <form action="" name="form" id="form" class="form-validate" method="post">
-                            <div class="panel panel-body login-form" style="background-color:#333c;color:white;">
-                                <?php
-                                if (!empty($import_status_message)) {
-                                    echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                }
-                                ?>						
-                                <div class="text-center" >
-                                    <div class="icon-object border-slate-300 text-slate-300" style="background-color:white;"><img src="assets/images/SGG_logo.png" alt=""  style="width:100px;"/></div>
-                                    <h5 class="content-group">Forgot Password</h5>
-                                </div>
-                                <div class="form-group has-feedback has-feedback-left">
-                                    <input type="email" class="form-control" placeholder="Enter your Email" name="email" id="email" required="required" style="color:white;">
-                                    <div class="form-control-feedback">
-                                        <i class="icon-user text-muted"></i>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" name="log" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Send Password<i class="icon-arrow-right14 position-right"></i></button>	
-<!--                                    <a href="security_questions.php" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Reset With Security Questions<i class="icon-arrow-right14 position-right"></i></a>	-->
+                    <form action="" name="form" id="form" class="form-validate" method="post">
+                        <div class="panel panel-body login-form" style="background-color:#333c;color:white;">
+                            <?php
+                            if (!empty($import_status_message)) {
+                                echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                            }
+                            ?>
+                            <div class="text-center" >
+                                <div class="icon-object border-slate-300 text-slate-300" style="background-color:white;"><img src="assets/images/SGG_logo.png" alt=""  style="width:100px;"/></div>
+                                <h5 class="content-group">Forgot Password</h5>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                <input type="email" class="form-control" placeholder="Enter your Email" name="email" id="email" required="required" style="color:white;">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user text-muted"></i>
                                 </div>
                             </div>
-                        </form>
-                        <!-- /form with validation -->
-                    </div>
+                            <div class="form-group">
+                                <button type="submit" name="log" class="btn bg-pink-200 btn-block" style="background-color:#1e73be;">Send Password<i class="icon-arrow-right14 position-right"></i></button>
+                                <!--                                    <a href="security_questions.php" class="btn bg-pink-400 btn-block" style="background-color:#1e73be;">Reset With Security Questions<i class="icon-arrow-right14 position-right"></i></a>	-->
+                            </div>
+                            <div class="text-center" >
+                                <h8 class="content-group"><u>Note:</u> If you don't have email kindly contact your admin to change password</h8>
+                            </div>
+                        </div>
+                    </form>
                     <!-- /content area -->
                 </div>
                 <!-- /main content -->

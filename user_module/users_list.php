@@ -56,7 +56,7 @@ if (count($_POST) > 0) {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAuth = true;
     $mail->Username = 'admin@plantnavigator.com';
-    $mail->Password = 'S@@rgummi@2021';
+    $mail->Password = 'S@@rgummi_2021';
     $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
     if ($name != "") {
         $name = $_POST['name'];
@@ -72,10 +72,19 @@ if (count($_POST) > 0) {
 		$station = $_POST['station'];
 		$position = $_POST['position'];
 		$trainee1 = $_POST['trainee1'];
-		
-		
-        if ($email != "") {
-            $message = "Account has been created. Your Username :-" . $name . " and Password :- Welcome123!";
+        $status = '1';
+
+        $link = "<button><a href='http://localhost/plantnavigtor/index.php'>login page</a></button>";
+
+if ($email != "") {
+    // Compose a simple HTML email message
+    $message = '<html><body"><form>';
+    $message .= '<p style="font-size:14px;"><b>Account has been created.</b></p>';
+    $message .= '<p style="font-size:14px;"><b>Your Username :</b>'.$name.'</p>';
+    $message .= '<p style="font-size:14px;"><b>Your Password :</b> Welcome123!</p>';
+    $message .= '<p style="font-size:14px;"><b>'.$link.'</b></p>';
+    $message .= '</form></body></html>';
+
             //   $headers = "From: admin@plantnavigator.com\r\n";
 //	$headers .= 'Cc: ' . $email . "\r\n";
             $subject = "Account created.";
@@ -97,8 +106,8 @@ if (count($_POST) > 0) {
                 return $result;
             }
         }
-        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`) 
-                          VALUES ('$station','$position','$trainee1','$name','$email','$role','$password','user.png','0','0','$firstname','$lastname','$hiring_date','$total_days','$job_title_description','$shift_location','$chicagotime','$chicagotime')";
+        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`,`status`) 
+                          VALUES ('$station','$position','$trainee1','$name','$email','$role','$password','user.png','0','0','$firstname','$lastname','$hiring_date','$total_days','$job_title_description','$shift_location','$chicagotime','$chicagotime','$status')";
         if (!mysqli_query($db, $sql1)) {
             $message_stauts_class = 'alert-danger';
             $import_status_message = 'Error: User with this Username or Mail-id Already Exists';
@@ -251,6 +260,7 @@ if (!empty($_GET['import_status'])) {
             $import_status_message = '';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
