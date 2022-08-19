@@ -12,14 +12,17 @@ if (count($_POST) > 0) {
     $result = mysqli_query($db, "SELECT * FROM cam_users WHERE email='" . $_POST["email"] . "'");
     $row = mysqli_fetch_array($result);
     if (is_array($row)) {
-
         $id = $row['users_id'];
         $name = $row['user_name'];
         $password = "PW" . rand(10000, 500000);
         $pp = md5($password);
-        $msg = "Your new password is :-" . $password;
+        $msg = "Note: This is one time password once you login system ask to change password...";
+        $msg .= " ";
+        $msg .= "Your new password is :-" . $password;
         $sql = "update `cam_users` set `password` = '$pp' where `users_id`='$id'";
         mysqli_query($db, $sql);
+        $sql1 = "update `cam_users` set status = '1' where `users_id`='$id'";
+        mysqli_query($db, $sql1);
         $mail = new PHPMailer();
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -58,8 +61,10 @@ if (count($_POST) > 0) {
         $message_stauts_class = $_SESSION["alert_danger_class"];
         $import_status_message = $_SESSION["error_3"];
     }
+
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
