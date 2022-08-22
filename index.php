@@ -62,7 +62,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$_SESSION['role_id'] = $row->role;
 		$_SESSION['uu_img'] = $row->profile_pic;
 		$_SESSION['sqq1'] = $row->s_question1;
-		$status = $row->status;
+		$status = $row->u_status;
 		$_SESSION['session_user'] = $logid;
 		$_SESSION['fullname'] = $row->firstname . "&nbsp;" . $row->lastname;
 		$_SESSION['pin'] = $row->pin;
