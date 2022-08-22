@@ -73,16 +73,22 @@ if (count($_POST) > 0) {
 		$position = $_POST['position'];
 		$trainee1 = $_POST['trainee1'];
         $status = '1';
-
-        $link = "<button><a href='http://localhost/plantnavigtor/index.php'>login page</a></button>";
+        $cdate = date("Y-m-d");
+        $signature = '- Plantnavigator Admin';
+        $link = $siteURL;
 
 if ($email != "") {
     // Compose a simple HTML email message
-    $message = '<html><body"><form>';
-    $message .= '<p style="font-size:14px;"><b>Account has been created.</b></p>';
-    $message .= '<p style="font-size:14px;"><b>Your Username :</b>'.$name.'</p>';
-    $message .= '<p style="font-size:14px;"><b>Your Password :</b> Welcome123!</p>';
+    $message = '<html><body><form>';
+    $message .= '<p style="font-size:14px;"><b>Hello '.$firstname.' '.$lastname.'</b></p>';
+    $message .= '<p style="font-size:14px;">Congratulations your plantnavigator account has been created. Please find the details below!</p>';
+    $message .= '<p style="font-size:14px;"><b>Login Id : </b>'.$name.'</p>';
+    $message .= '<p style="font-size:14px;"><b>One time Password : </b> Welcome123!</p>';
+    $message .= '<br>';
+    $message .= '<p style="font-size:14px;">please find the login link below</p>';
     $message .= '<p style="font-size:14px;"><b>'.$link.'</b></p>';
+    $message .= '<br>';
+    $message .= '<p style="font-size:14px;"><b>'.$signature.'</b></p>';
     $message .= '</form></body></html>';
 
             //   $headers = "From: admin@plantnavigator.com\r\n";
@@ -106,8 +112,8 @@ if ($email != "") {
                 return $result;
             }
         }
-        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`,`status`) 
-                          VALUES ('$station','$position','$trainee1','$name','$email','$role','$password','user.png','0','0','$firstname','$lastname','$hiring_date','$total_days','$job_title_description','$shift_location','$chicagotime','$chicagotime','$status')";
+        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`,`status`,`createdate`) 
+                          VALUES ('$station','$position','$trainee1','$name','$email','$role','$password','user.png','0','0','$firstname','$lastname','$hiring_date','$total_days','$job_title_description','$shift_location','$chicagotime','$chicagotime','$status','$cdate')";
         if (!mysqli_query($db, $sql1)) {
             $message_stauts_class = 'alert-danger';
             $import_status_message = 'Error: User with this Username or Mail-id Already Exists';

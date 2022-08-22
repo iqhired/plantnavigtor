@@ -115,7 +115,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 	}
 	if($status == '1')
 	{
-		header("Location:change_pass.php");
+		header("Location:change_password.php");
 	}else {
 		header("Location:line_status_grp_dashboard.php");
 	}
