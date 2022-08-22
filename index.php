@@ -4,6 +4,7 @@ use \Firebase\JWT\JWT;
 $message = "";
 include("config.php");
 $chicagotime = date("Y-m-d H:i:s");
+$status = '0';
 if (!empty($_POST['user']) && !empty($_POST['pass']) ){
     $user = $_POST["user"];
     $password = md5($_POST["pass"]);
@@ -102,7 +103,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$message_stauts_class = $_SESSION["alert_danger_class"];
 		$import_status_message = $_SESSION["error_1"];
 	}
-	if($status == '1')
+	if($status == "1")
 	{
 		header("Location:change_password.php");
 	}else {
