@@ -62,7 +62,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$_SESSION['role_id'] = $row->role;
 		$_SESSION['uu_img'] = $row->profile_pic;
 		$_SESSION['sqq1'] = $row->s_question1;
-		$status = $row->status;
+		$status = $row->u_status;
 		$_SESSION['session_user'] = $logid;
 		$_SESSION['fullname'] = $row->firstname . "&nbsp;" . $row->lastname;
 		$_SESSION['pin'] = $row->pin;
@@ -106,19 +106,24 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 	if($status == "1")
 	{
 		header("Location:change_password.php");
+		exit;
 	}else {
 		header("Location:line_status_grp_dashboard.php");
+		exit;
 	}
 	if ($pin_flag == "1") {
 		if ($pin == "0") {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Please Fill Pin';
 			header("Location:profile.php");
+			exit;
 		} else {
 			header("Location:line_status_grp_dashboard.php");
+			exit;
 		}
 	} else {
 		header("Location:line_status_grp_dashboard.php");
+		exit;
 	}
 }
 $tmp = $_SESSION['temp'];
