@@ -30,7 +30,7 @@ if (count($_POST) > 0) {
       //  echo "Password validation failure: $error";
     } else {
       //  echo "Your password is strong.";
-        $sql1 = "UPDATE `cam_users` SET status = '0' and password='" . md5($_POST['newpass']) . "' where user_name = '$mob'";
+        $sql1 = "UPDATE `cam_users` SET password='" . (md5($_POST["newpass"])) . "' where user_name = '$mob'";
         if (!mysqli_query($db, $sql1)) {
 // die('Unable to Connect');
             echo "Invalid Data";
@@ -39,6 +39,7 @@ if (count($_POST) > 0) {
             $page = "profile.php";
             header('Location: '.$page, true, 303);
         }
+        mysqli_query($db, "UPDATE cam_users set status = '0' where user_name = '$mob'");
     }
 
 }
