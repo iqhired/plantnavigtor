@@ -16,9 +16,12 @@ if (count($_POST) > 0) {
         $name = $row['user_name'];
         $password = "PW" . rand(10000, 500000);
         $pp = md5($password);
+        $link = "<button><a href='http://localhost/plantnavigtor/index.php'>login page</a></button>";
         $msg = "Note: This is one time password once you login system ask to change password...";
-        $msg .= " ";
+        $msg .= "<br>";
         $msg .= "Your new password is :-" . $password;
+        $msg .= "<br>";
+        $msg .= "Click to login the page :-" .$link;
         $sql = "update `cam_users` set `password` = '$pp' where `users_id`='$id'";
         mysqli_query($db, $sql);
         $sql1 = "update `cam_users` set status = '1' where `users_id`='$id'";
