@@ -39,7 +39,8 @@ if (count($_POST) > 0) {
             $page = "passuccess.php";
             header('Location: '.$page, true, 303);
         }
-        mysqli_query($db, "UPDATE cam_users set status = '0' where user_name = '$mob'");
+        mysqli_query($db, "UPDATE cam_users set u_status = '0' where user_name = '$mob'");
+       // mysqli_query($db, "UPDATE cam_users set createdate = '$date' where user_name = '$mob'");
     }
 
 }

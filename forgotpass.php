@@ -24,7 +24,7 @@ if (count($_POST) > 0) {
         $msg .= "Click to login the page :-" .$link;
         $sql = "update `cam_users` set `password` = '$pp' where `users_id`='$id'";
         mysqli_query($db, $sql);
-        $sql1 = "update `cam_users` set status = '1' where `users_id`='$id'";
+        $sql1 = "update `cam_users` set u_status = '1' where `users_id`='$id'";
         mysqli_query($db, $sql1);
         $mail = new PHPMailer();
         $mail->isSMTP();

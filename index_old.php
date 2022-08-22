@@ -64,7 +64,8 @@ if (count($_POST) > 0){
         $_SESSION["role_id"] = $row['role'];
         $_SESSION["uu_img"] = $row['profile_pic'];
         $_SESSION["sqq1"] = $row['s_question1'];
-        $status = $row['status'];
+        $status = $row['u_status'];
+        $createdate = $row['createdate'];
         $_SESSION["session_user"] = $logid;
         $_SESSION["fullname"] = $row['firstname'] . "&nbsp;" . $row['lastname'];
         $_SESSION["pin"] = $row['pin'];
@@ -75,13 +76,13 @@ if (count($_POST) > 0){
         $_SESSION['is_tab_user'] = null;
         $pin = $row['pin'];
         $pin_flag = $row['pin_flag'];
-        $uip=$_SERVER['REMOTE_ADDR'];
-        $host=$_SERVER['HTTP_HOST'];
+        $uip = $_SERVER['REMOTE_ADDR'];
+        $host = $_SERVER['HTTP_HOST'];
         $time = date("H:i:s");
         $date = date("Y-m-d");
 
         //mysqli_query($db, "INSERT INTO `cam_session_log`(`users_id`,`created_at`) VALUES ('$logid','$chicagotime')");
-        mysqli_query($db, "INSERT INTO `cam_session_log_p`(`users_id`,`created_at`,`uip`,`host`,`username`,`logoutdate`,`logouttime`) VALUES ('$logid','$chicagotime','$uip','$host','$user','$date','$time')");
+        mysqli_query($db, "INSERT INTO `cam_session_log_p`(`users_id`,`created_at`,`uip`,`host`,`username`,`logoutdate`,`logouttime`) VALUES ('$logid','$chicagotime','$uip','$host','$user','','')");
 
         $roleid = $row['role'];
         $result11 = mysqli_query($db, "SELECT * FROM `cam_role` WHERE role_id ='$roleid'");
@@ -104,14 +105,9 @@ if (count($_POST) > 0){
         $message_stauts_class = $_SESSION["alert_danger_class"];
         $import_status_message = $_SESSION["error_1"];
     }
-    if($status == '1')
-    {
-        header("Location:change_pass.php");
-    }else {
-        header("Location:line_status_grp_dashboard.php");
-    }
-    //header("Location:line_status_grp_dashboard.php");
-    /*if ($pin_flag == "1") {
+
+    header("Location:line_status_grp_dashboard.php");
+    if ($pin_flag == "1") {
         if ($pin == "0") {
             $_SESSION['message_stauts_class'] = 'alert-danger';
             $_SESSION['import_status_message'] = 'Please Fill Pin';
@@ -121,8 +117,16 @@ if (count($_POST) > 0){
         }
     } else {
         header("Location:line_status_grp_dashboard.php");
-    }*/
+    }
+    if($status == '1')
+    {
+        header("Location:change_password.php");
+    }else {
+        header("Location:line_status_grp_dashboard.php");
+    }
+
 }
+
 
 /*if($status == 0)
 {

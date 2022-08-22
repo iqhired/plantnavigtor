@@ -112,7 +112,7 @@ if ($email != "") {
                 return $result;
             }
         }
-        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`,`status`) 
+        $sql1 = "INSERT INTO `cam_users`(`training_station`,`training_position`,`training`,`user_name`, `email`, `role`, `password` , `profile_pic` , `assigned` ,`assigned2` , `firstname`, `lastname`, `hiring_date`, `total_days`, `job_title_description`, `shift_location`, `created_at`, `updated_at`,`u_status`) 
                           VALUES ('$station','$position','$trainee1','$name','$email','$role','$password','user.png','0','0','$firstname','$lastname','$hiring_date','$total_days','$job_title_description','$shift_location','$chicagotime','$chicagotime','$status')";
         if (!mysqli_query($db, $sql1)) {
             $message_stauts_class = 'alert-danger';
