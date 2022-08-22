@@ -24,25 +24,18 @@ $chicagotime = date("Y-m-d H:i:s");
                 $lastname = mysqli_real_escape_string($db,$row[5]);
                 $hiring_date = mysqli_real_escape_string($db,$row[6]);
                 $job_title_description = mysqli_real_escape_string($db,$row[7]);
+                $shift_location = mysqli_real_escape_string($db,$row[8]);
                 $query = "
-                        INSERT INTO cam_users(user_name,mobile,email,password,role,created_at,firstname,lastname,hiring_date,job_title_description)
-                      VALUES('$name','$mobile','$email','$password','$role','$created_at','$firstname','$lastname','$hiring_date','$job_title_description')
+                        INSERT INTO cam_users(user_name,mobile,email,password,role,created_at,firstname,lastname,hiring_date,job_title_description,shift_location)
+                      VALUES('$name','$mobile','$email','$password','$role','$created_at','$firstname','$lastname','$hiring_date','$job_title_description','$shift_location')
                 ";
-
                 mysqli_query($db,$query);
-
-
             }
      //   }
-
-
-
     }
     else
     {
         echo "Please select valid file";
     }
-
-
 //header("Location: users_list.php" );
 ?>

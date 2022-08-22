@@ -6,11 +6,15 @@ session_start();
 include 'config.php';
 $hed[] = "";
 $line = $_POST['li'];
+$line04 = mysqli_query($db, "select line_name from cam_line where line_id = '$line'");
+while ($rowc_line = mysqli_fetch_array($line04)) {
+    $line_name = $rowc_line["line_name"];
+}
 $lwn = $line;
 $exportData = mysqli_query($db, " SELECT DISTINCT `user_id` FROM `cam_user_rating` WHERE `line_id` = '$line'");
-$header = "Emp Name" . "\t" . "Hire Date" . "\t" . "Total Days" . "\t" . "Job Title" . "\t" . "Shift" . "\t" . "Status" . "\t" . "" . "\t" . "" . "\t" . "$line" . "\t";
+$header = "First Name" . "\t" ."Last Name" . "\t" . "Hire Date" . "\t" . "Total Days" . "\t" . "Job Title" . "\t" . "Shift" . "\t" . "Status" . "\t" . "" . "\t" . "" . "\t" . "$line_name" . "\t";
 $result = '';
-$header1 = "\n" . "" . "\t" . "" . "\t" . "" . "\t" . "" . "\t" . "" . "\t" . "Status" . "\t";
+$header1 = "\n" . "" . "\t" . "" . "\t" . "" . "\t" . "" . "\t" . "" . "\t" . "\t" . "" . "\t" ;
 $header .= $header1;
 $exportData11 = mysqli_query($db, " SELECT DISTINCT `position_id`FROM `cam_user_rating` WHERE `line_id` = '$line'");
 while ($row11 = mysqli_fetch_row($exportData11)) {
@@ -21,6 +25,12 @@ while ($row11 = mysqli_fetch_row($exportData11)) {
         } else {
             $value11 = str_replace('"', '""', $value11);
             $hed[] = $value11;
+            $qur04 = mysqli_query($db, "SELECT position_name FROM  cam_position where position_id = '$value11' ");
+            while ($rowc04 = mysqli_fetch_array($qur04)) {
+                $lnn = $rowc04["position_name"];
+            }
+            $value11 = $lnn;
+
             $value11 = '"' . $value11 . '"' . "\t";
         }
         $header .= $value11;
@@ -41,9 +51,9 @@ while ($row = mysqli_fetch_row($exportData)) {
         } else {
             $value = str_replace('"', '""', $value);
             $g = $value;
-            $value = '"' . $value . '"' . "\t";
+           // $value = '"' . $value . '"' . "\t";
         }
-        $line .= $value;
+    //    $line .= $value;
     }
     $nnm = $g;
     $exportData1 = mysqli_query($db, " SELECT firstname,lastname,hiring_date,DATEDIFF(now(),`hiring_date`),job_title_description,shift_location FROM  cam_users where users_id = '$nnm'");
