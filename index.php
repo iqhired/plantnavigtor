@@ -102,6 +102,12 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$message_stauts_class = $_SESSION["alert_danger_class"];
 		$import_status_message = $_SESSION["error_1"];
 	}
+	if($status == '1')
+	{
+		header("Location:change_password.php");
+	}else {
+		header("Location:line_status_grp_dashboard.php");
+	}
 	if ($pin_flag == "1") {
 		if ($pin == "0") {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
@@ -111,12 +117,6 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 			header("Location:line_status_grp_dashboard.php");
 		}
 	} else {
-		header("Location:line_status_grp_dashboard.php");
-	}
-	if($status == '1')
-	{
-		header("Location:change_password.php");
-	}else {
 		header("Location:line_status_grp_dashboard.php");
 	}
 }
