@@ -140,14 +140,14 @@ include("heading_banner.php");
                         $sql = "SELECT DISTINCT `line_id` FROM cam_user_rating ORDER BY `line_name` LIMIT $offset, $no_of_records_per_page";
                         $res_data = mysqli_query($db,$sql);
                         while($row = mysqli_fetch_array($res_data)){ 
-//$message = $row['line_name'];
-//echo "<script type='text/javascript'>alert('$message');</script>";
-$ln = $row['line_id'];
-$p = $_POST['radio'];
-if($p != "")
-{
-	$ln = $p;
-}
+//                      $message = $row['line_name'];
+//                      echo "<script type='text/javascript'>alert('$message');</script>";
+                        $ln = $row['line_id'];
+                        $p = $_POST['radio'];
+                        if($p != "")
+                        {
+	                     $ln = $p;
+                        }
 						?>
 						
                         <form action="" class="form-validate" method="post">
@@ -179,6 +179,7 @@ if($p != "")
                                     $m = $m + 1;
                                 }
                                 ?>
+
                             </select>
 
 <!--                            <input type="radio"  id="radio" name="radio" value="<?php echo $row['line_name']; ?>" <?php echo $selected; ?>>	<?php echo $row['line_name']; ?>&nbsp; -->
