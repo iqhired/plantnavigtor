@@ -106,19 +106,24 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 	if($status == "1")
 	{
 		header("Location:change_password.php");
+		exit;
 	}else {
 		header("Location:line_status_grp_dashboard.php");
+		exit;
 	}
 	if ($pin_flag == "1") {
 		if ($pin == "0") {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
 			$_SESSION['import_status_message'] = 'Please Fill Pin';
 			header("Location:profile.php");
+			exit;
 		} else {
 			header("Location:line_status_grp_dashboard.php");
+			exit;
 		}
 	} else {
 		header("Location:line_status_grp_dashboard.php");
+		exit;
 	}
 }
 $tmp = $_SESSION['temp'];
