@@ -13,7 +13,7 @@
     function ss(url) {
         sendFile(url);
     }
-    function ss(url , cnt) {
+    function ss1(url,cnt) {
         for(var i = 1; i <= cnt; i++) {
             sendFile(url);
         }

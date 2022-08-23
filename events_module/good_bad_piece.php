@@ -615,11 +615,12 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     if(ipe == '1'){
                         var i;
                         var nogp = document.getElementById("good_name").value;
-                        for(i = 1; i <= nogp; i++) {
-                            document.getElementById("resultFrame").contentWindow.ss(file);
-                            // alert('no of good pieces are' +nogp);
-                        }
-                       // document.getElementById("resultFrame").contentWindow.ss(file , nogp);
+                        //alert('no of good pieces are' +nogp);
+                        //for(var i = 1; i <= nogp; i++) {
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                        // alert('no of good pieces are' +nogp);
+                        //}
+                        // document.getElementById("resultFrame").contentWindow.ss(file , nogp);
                     }else{
                         document.getElementById("resultFrame").contentWindow.ss(file1);
                     }
