@@ -78,8 +78,9 @@ if (count($_POST) > 0) {
 
 if ($email != "") {
     // Compose a simple HTML email message
-    $message = "hello".$firstname .$lastname;
-    $message = "Congratulations your plantnavigator account has been created. Please find the details below!";
+    $message  = "hello" .$firstname .$lastname;
+    $message .= "<br>";
+    $message .= "Congratulations your plantnavigator account has been created. Please find the details below!";
     $message .= "<br>";
     $message .= "Login Id :-" . $name;
     $message .= "<br>";
