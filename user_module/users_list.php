@@ -73,13 +73,26 @@ if (count($_POST) > 0) {
 		$position = $_POST['position'];
 		$trainee1 = $_POST['trainee1'];
         $status = '1';
-        $cdate = date("Y-m-d");
         $signature = '- Plantnavigator Admin';
         $link = $siteURL;
 
 if ($email != "") {
     // Compose a simple HTML email message
-    $message = '<html><body><form>';
+    $message  = "hello" .$firstname .$lastname;
+    $message .= "<br>";
+    $message .= "Congratulations your plantnavigator account has been created. Please find the details below!";
+    $message .= "<br>";
+    $message .= "Login Id :-" . $name;
+    $message .= "<br>";
+    $message .= "One time Password :-  Welcome123!";
+    $message .= "<br>";
+    $message .= "please find the login link below";
+    $message .= "<br>";
+    $message .= "Click to login the page :-" .$link;
+    $message .= "<br>";
+    $message .= " " .$signature;
+
+   /* $message  = '<html><body>';
     $message .= '<p style="font-size:14px;"><b>Hello '.$firstname.' '.$lastname.'</b></p>';
     $message .= '<p style="font-size:14px;">Congratulations your plantnavigator account has been created. Please find the details below!</p>';
     $message .= '<p style="font-size:14px;"><b>Login Id : </b>'.$name.'</p>';
@@ -89,7 +102,7 @@ if ($email != "") {
     $message .= '<p style="font-size:14px;"><b>'.$link.'</b></p>';
     $message .= '<br>';
     $message .= '<p style="font-size:14px;"><b>'.$signature.'</b></p>';
-    $message .= '</form></body></html>';
+    $message .= '</body></html>';*/
 
             //   $headers = "From: admin@plantnavigator.com\r\n";
 //	$headers .= 'Cc: ' . $email . "\r\n";

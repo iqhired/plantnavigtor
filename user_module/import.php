@@ -17,17 +17,19 @@ $chicagotime = date("Y-m-d H:i:s");
                 $name = mysqli_real_escape_string($db,$row[0]);
                 $mobile = mysqli_real_escape_string($db,$row[1]);
                 $email = mysqli_real_escape_string($db,$row[2]);
-                $password = mysqli_real_escape_string($db,md5('welcome#123'));
+                $password = mysqli_real_escape_string($db,md5('Welcome123!'));
                 $role = mysqli_real_escape_string($db,$row[3]);
+                $profile = mysqli_real_escape_string($db,'user.png');
                 $created_at = mysqli_real_escape_string($db,$chicagotime);
                 $firstname = mysqli_real_escape_string($db,$row[4]);
                 $lastname = mysqli_real_escape_string($db,$row[5]);
                 $hiring_date = mysqli_real_escape_string($db,$row[6]);
                 $job_title_description = mysqli_real_escape_string($db,$row[7]);
                 $shift_location = mysqli_real_escape_string($db,$row[8]);
+                $u_status = mysqli_real_escape_string($db,$row[9]);
                 $query = "
-                        INSERT INTO cam_users(user_name,mobile,email,password,role,created_at,firstname,lastname,hiring_date,job_title_description,shift_location)
-                      VALUES('$name','$mobile','$email','$password','$role','$created_at','$firstname','$lastname','$hiring_date','$job_title_description','$shift_location')
+                        INSERT INTO cam_users(user_name,mobile,email,password,role,profile_pic,created_at,firstname,lastname,hiring_date,job_title_description,shift_location,u_status)
+                      VALUES('$name','$mobile','$email','$password','$role','$profile','$created_at','$firstname','$lastname','$hiring_date','$job_title_description','$shift_location','$u_status')
                 ";
                 mysqli_query($db,$query);
             }
