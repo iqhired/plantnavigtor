@@ -50,7 +50,7 @@ if (count($_POST) > 0) {
     require '../vendor/autoload.php';
     $mail = new PHPMailer();
     $mail->isSMTP();
-//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -78,7 +78,7 @@ if (count($_POST) > 0) {
 
 if ($email != "") {
     // Compose a simple HTML email message
-    $message  = "hello" .$firstname .$lastname;
+    $message  = "Hello" .$firstname .$lastname;
     $message .= "<br>";
     $message .= "Congratulations your plantnavigator account has been created. Please find the details below!";
     $message .= "<br>";
@@ -86,9 +86,11 @@ if ($email != "") {
     $message .= "<br>";
     $message .= "One time Password :-  Welcome123!";
     $message .= "<br>";
-    $message .= "please find the login link below";
+    $message .= "Please find the login link below";
+    $message .= "<br>";
     $message .= "<br>";
     $message .= "Click to login the page :-" .$link;
+    $message .= "<br>";
     $message .= "<br>";
     $message .= " " .$signature;
 
