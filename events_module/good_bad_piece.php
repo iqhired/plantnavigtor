@@ -51,6 +51,7 @@ $resultnumber = $mysqli->query($sqlprint);
 $rowcnumber = $resultnumber->fetch_assoc();
 $printenabled = $rowcnumber['print_label'];
 $p_line_name = $rowcnumber['line_name'];
+$individualenabled = $rowcnumber['indivisual_label'];
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
@@ -196,7 +197,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 		}
 		?>
 		<?php
-		if (!empty($_SESSION[import_status_message])) {
+		if (!empty($_SESSION['import_status_message'])) {
 			echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 			$_SESSION['message_stauts_class'] = '';
 			$_SESSION['import_status_message'] = '';
@@ -391,6 +392,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <input type="hidden" name="time" value="<?php echo time(); ?>">
                     <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
+                    <input type="hidden" name="ipe" value="<?php echo $individualenabled; ?>">
                     <div class="modal-body">
                         <!--Part Number-->
                         <div class="row">
@@ -483,6 +485,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <input type="hidden" name="time" value="<?php echo time(); ?>">
                     <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
+                    <input type="hidden" name="ipe" id="ipe" value="<?php echo $individualenabled; ?>">
+
                     <div class="modal-body">
                         <!--Part Number-->
 
@@ -605,9 +609,18 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff1 = this.data.split('&')[3].split("=")[1];
                 var file1 = '../assets/label_files/' + line_id +'/g_'+ff1;
+                var file = '../assets/label_files/' + line_id +'/g_'+ff1;;
+                var ipe = document.getElementById("ipe").value;
                 if(pe == '1'){
-                    document.getElementById("resultFrame").contentWindow.ss(file1);
+                    if(ipe == '1'){
+                        var i;
+                        var nogp = document.getElementById("good_name").value;
+                        document.getElementById("resultFrame").contentWindow.ss(file , nogp);
+                    }else{
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                    }
                 }
+                //var ipe = this.data.split('&')[2].split("=")[1];
                 // location.reload();
             }
         });

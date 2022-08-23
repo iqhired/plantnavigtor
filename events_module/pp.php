@@ -10,6 +10,11 @@
     function ss(url) {
         sendFile(url);
     }
+    function ss(url , cnt) {
+        for(var i = 1; i <= cnt; i++) {
+            sendFile(url);
+        }
+    }
 </script>
 </body>
 </html>
