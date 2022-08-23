@@ -68,6 +68,7 @@ if ($ipe == $chk){
 					$patterns[3] = '/UserName/';
 					$patterns[4] = '/StationName/';
 					$patterns[5] = '/Qty/';
+					$patterns[6] = '/^PQ1/';
 					$replacements = array();
 					$replacements[0] = $pm_part_number;
 					$replacements[1] = $pm_part_name;
@@ -75,6 +76,7 @@ if ($ipe == $chk){
 					$replacements[3] = $user_fullname;
 					$replacements[4] = $p_line_name;
 					$replacements[5] = $label_quantity;
+					$replacements[6] = "^PQ".$good_name;
 					file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, '');
 					$output = preg_replace($patterns, $replacements, $format_file);
 					file_put_contents('../assets/label_files/'. $line_id .'/g_'.$f_postfix, $output);
