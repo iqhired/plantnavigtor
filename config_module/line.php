@@ -238,7 +238,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                             <th>Priority Order</th>
                                             <th>Enabled</th>
                                             <th>GBP Dashboard Required</th>
-                                            <th>Print Indivisual Required</th>
+                                            <th>Print Individual Required</th>
                                             <th>Print Required</th>
                                             <th>Action</th>
                                         </tr>

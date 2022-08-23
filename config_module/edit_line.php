@@ -276,7 +276,7 @@ include("../heading_banner.php");
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="form-group">
-                                    <label class="col-lg-5 control-label">Print Indivisual label :*</label>
+                                    <label class="col-lg-5 control-label">Print Individual label :*</label>
                                     <div class="col-lg-7">
                                         <input type="checkbox" class="print_status" name="p_label" id="p_label" value="<?php echo $line_id; ?>" <?php echo ($indivisual_label == 1 ? 'checked' : '');?>>
                                     </div>
