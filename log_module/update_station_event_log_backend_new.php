@@ -12,7 +12,7 @@ if (count($_POST) > 0) {
 	$page_from = $_POST['id_from'];
 	$page_to = $_POST['id_to'];
 }
-$sql0 = "select * from sg_station_event_log WHERE station_event_log_id BETWEEN '$page_from' AND '$page_to'";
+$sql0 = "select * from sg_station_event_log WHERE ignore_id != '1' AND station_event_log_id BETWEEN '$page_from' AND '$page_to'";
 
 //$sql_st = "select sg_station_event_old_id from sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1";
 //$result_st = mysqli_query($db,$sql_st);
