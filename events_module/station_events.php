@@ -89,11 +89,11 @@ if (count($_POST) > 0) {
         $res_event = "select count(*) as isPresent from sg_station_event_log where station_event_id = '$station_event_id' and event_type_id = '7'";
         $sta_res = mysqli_query($db,$res_event);
         $event_row = mysqli_fetch_array($sta_res);
-        $is_present = $event_row['isPresent'];
+        $is_present = (int)$event_row['isPresent'];
 
-        if ($is_present > 0 ){
+        if ($is_present > '0' ){
             $message_stauts_class = 'alert-success';
-            $import_status_message = 'Event was already ended.';
+            $import_status_message = 'Event cycle was already ended.';
         }else{
             if ($edit_event_id == $fr_event_type_id) {
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
