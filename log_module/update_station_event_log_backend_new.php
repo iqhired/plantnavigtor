@@ -22,7 +22,6 @@ $sql0 = "select * from sg_station_event_log WHERE ignore_id != '1' AND station_e
 //$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id'";
 $result0 = mysqli_query($db, $sql0);
 while ($row = mysqli_fetch_array($result0)) {
-	$z=0;
 	$station_event_log_id = $row['station_event_log_id'];
 	$event_seq = $row['event_seq'];
 	$station_event_id = $row['station_event_id'];
@@ -42,6 +41,7 @@ while ($row = mysqli_fetch_array($result0)) {
 
 
 	if (empty($total_time)) {
+		$z=0;
 		$datetime1 = strtotime($current_time);
 		$datetime2 = strtotime($time);
 
