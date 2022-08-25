@@ -3,46 +3,46 @@ $station = $_GET['id'];
 $sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1' and line_id = '$station'";
 $result1 = mysqli_query($db, $sql1);
 while ($cam1 = mysqli_fetch_array($result1)) {
-	$station1 = $cam1['line_id'];
-	$station2 = $cam1['line_name'];
+    $station1 = $cam1['line_id'];
+    $station2 = $cam1['line_name'];
 }
 
 $sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$station1' and event_status = 1";
 $resultmain = mysqli_query($db, $sqlmain);
 if (!empty($resultmain)) {
-	$rowcmain = mysqli_fetch_array($resultmain);
-	if (!empty($rowcmain)) {
-		$part_family = $rowcmain['part_family_id'];
-		$part_number = $rowcmain['part_number_id'];
-		$station_id = $rowcmain['station_event_id'];
-	}
+    $rowcmain = mysqli_fetch_array($resultmain);
+    if (!empty($rowcmain)) {
+        $part_family = $rowcmain['part_family_id'];
+        $part_number = $rowcmain['part_number_id'];
+        $station_id = $rowcmain['station_event_id'];
+    }
 
-	$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-	$resultnumber = $mysqli->query($sqlnumber);
-	$rowcnumber = $resultnumber->fetch_assoc();
-	$pm_part_number = $rowcnumber['part_number'];
-	$pm_part_name = $rowcnumber['part_name'];
-	$budget_scrape_rate = $rowcnumber['budget_scrape_rate'];
+    $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+    $resultnumber = $mysqli->query($sqlnumber);
+    $rowcnumber = $resultnumber->fetch_assoc();
+    $pm_part_number = $rowcnumber['part_number'];
+    $pm_part_name = $rowcnumber['part_name'];
+    $budget_scrape_rate = $rowcnumber['budget_scrape_rate'];
 
-	if (!empty($part_family)) {
-		$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-		$resultfamily = mysqli_query($db, $sqlfamily);
-		$rowcfamily = $resultfamily->fetch_assoc();
-		$pm_part_family_name = $rowcfamily['part_family_name'];
+    if (!empty($part_family)) {
+        $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
+        $resultfamily = mysqli_query($db, $sqlfamily);
+        $rowcfamily = $resultfamily->fetch_assoc();
+        $pm_part_family_name = $rowcfamily['part_family_name'];
 
-		$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-		$resultaccount = mysqli_query($db, $sqlaccount);
-		$rowcaccount = $resultaccount->fetch_assoc();
-		$account_id = $rowcaccount['account_id'];
+        $sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
+        $resultaccount = mysqli_query($db, $sqlaccount);
+        $rowcaccount = $resultaccount->fetch_assoc();
+        $account_id = $rowcaccount['account_id'];
 
-		if (!empty($account_id)) {
-			$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-			$resultcus = mysqli_query($db, $sqlcus);
-			$rowccus = $resultcus->fetch_assoc();
-			$cus_name = $rowccus['c_name'];
-			$logo = $rowccus['logo'];
-		}
-	}
+        if (!empty($account_id)) {
+            $sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
+            $resultcus = mysqli_query($db, $sqlcus);
+            $rowccus = $resultcus->fetch_assoc();
+            $cus_name = $rowccus['c_name'];
+            $logo = $rowccus['logo'];
+        }
+    }
 
 }
 
@@ -55,7 +55,7 @@ $result = mysqli_query($db, $sql);
 $data = array();
 
 while ($row = $result->fetch_assoc()) {
-	$posts[] = array('good_pieces' => $row['good_pieces'], 'bad_pieces' => $row['bad_pieces'], 'rework' => $row['rework']);
+    $posts[] = array('good_pieces' => $row['good_pieces'], 'bad_pieces' => $row['bad_pieces'], 'rework' => $row['rework']);
 
 }
 $response['posts'] = $posts;
@@ -186,17 +186,17 @@ include("../hp_header.php");
         <div class="media">
             <div class="media-body" style="padding: 0px 30px 20px 30px;background-color: #fff;height: 350px;">
                 <img src="../supplier_logo/<?php if ($logo != "") {
-					echo $logo;
-				} else {
-					echo "user.png";
-				} ?>" style="display: block;margin-left: auto;margin-right: auto;width:40%;" alt="">
+                    echo $logo;
+                } else {
+                    echo "user.png";
+                } ?>" style="display: block;margin-left: auto;margin-right: auto;width:40%;" alt="">
 
                 <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;"
                     class="text-semibold no-margin"><?php if ($cus_name != "") {
-						echo $cus_name;
-					} else {
-						echo "Customer Name";
-					} ?> </h5>
+                        echo $cus_name;
+                    } else {
+                        echo "Customer Name";
+                    } ?> </h5>
                 <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family
                         :-</b> <?php echo $pm_part_family_name; ?></small>
                 <small style="font-size: x-large;" class="display-block"><b>Part Number
@@ -205,46 +205,29 @@ include("../hp_header.php");
                         :-</b> <?php echo $pm_part_name; ?></small>
 
             </div>
-
-            <div id="sgf_container" style="height: 400px; margin-top: 15px ;"></div>
+            <div id="sgf_container" style="height: 350px; margin-top: 15px ;"></div>
         </div>
         <!--							</div>-->
     </div>
-    <div class="col-md-5">
-        <div id="" style="padding: 10px 20px;height: 450px;background-color: #f7f7f7; margin-top: 10px">
-            <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-                class="text-semibold no-margin">Budget Scrap Rate</h8>-->
-            <div id="scrap_rate_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px; width: 400px"></div>
-
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div id="" style="padding: 10px 20px;height: 450px;background-color: #f7f7f7; margin-top: 10px">
-            <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-                class="text-semibold no-margin">Net Pack Rate</h8>-->
-            <div id="npr_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px; width: 400px; padding-right: 0px"></div>
-
-        </div>
-    </div>
-
     <!--   -->
     <div class="col-md-5" style="">
         <!--        <div id="sgf_container2" style="padding: 30px;height: 400px;background-color: #fff; "></div>-->
-        <div id="" style="padding: 10px 20px;height: 400px;background-color: #f7f7f7; margin-top: 15px">
-            <h6 style="font-size: large;padding : 5px; text-align: left;"
-                class="text-semibold no-margin">Top 5 Defect Details</h6>
-            <div id="sgf_container1" style="height: 300px;border:1px solid #efefef; margin-top: 10px"></div>
+        <div id="" style="padding: 10px 20px;height: 810px;background-color: #f7f7f7;">
+            <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
+                class="text-semibold no-margin">Top 5 Defect Details</h5>
+            <div id="sgf_container1" style="height: 700px;border:1px solid #efefef; margin-top: 10px"></div>
         </div>
     </div>
+
     <div class="col-md-4">
-        <div id="" style="padding: 10px 20px;height: 400px;background-color: #f7f7f7; margin-top: 15px">
-            <h8 style="font-size: large;padding : 5px; text-align: center;"
-                class="text-semibold no-margin">Current Staff Efficiency</h8>
-            <div id="eff_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px"></div>
+        <div id="" style="padding: 10px;height: 810px;background-color: #f7f7f7;">
+            <h5 style="font-size: xx-large;padding : 5px; text-align: center;"
+                class="text-semibold no-margin">Status</h5>
+            <div id="scrap_rate_container" style="height: 350px; margin-top: 10px;border:1px solid #efefef;"></div>
+            <div id="npr_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px"></div>
 
         </div>
     </div>
-
 </div>
 
 <!-- /main content -->
@@ -333,7 +316,7 @@ include("../hp_header.php");
                 var title = chart.title();
 //enables HTML tags
                 title.useHtml(true);
-                title.text("<div style='font-weight: 10;font-size:24px;margin-bottom:50px'></div>");
+                title.text("<div style='font-weight: 900;font-size:24px;margin-bottom:50px'>Top 5 Defect Details</div>");
                 // chart.labels().format("{%value}");
                 // chart.labels().enabled(true).format('{%Value}');
                 chart.tooltip().format(': {%Value}');
@@ -545,7 +528,7 @@ include("../hp_header.php");
                 gauge
                     .fill('#fff')
                     .stroke(null)
-                    .padding(10)
+                    .padding(50)
                     .margin(0)
                     .startAngle(270)
                     .sweepAngle(180);
@@ -574,7 +557,7 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'color:#333; font-size: 24px;\'>Budget Scrap Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +bsr+' </strong>%</span></div>' +
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Budget Scrap Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +bsr+' </strong>%</span></div>' +
                     '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 22px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
                 );
 
@@ -709,7 +692,7 @@ include("../hp_header.php");
                 gauge
                     .fill('#fff')
                     .stroke(null)
-                    .padding(10)
+                    .padding(50)
                     .margin(0)
                     .startAngle(270)
                     .sweepAngle(180);
@@ -738,8 +721,8 @@ include("../hp_header.php");
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                    '<div style=\'color:#333; font-size: 22px;\'>Net Pack Rate -<span style="color:#009900; font-size: 22px;"><strong> ' +npr+' </strong> per hour </span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 22px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_npr +' </strong> per hour </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Target Net Pack Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +npr+' </strong> per hour </span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_npr +' </strong> per hour </span></div><br/><br/>'
                 );
 
                 gauge
@@ -826,177 +809,6 @@ include("../hp_header.php");
             }
         });
     });
-
-    //Efficiency
-    anychart.onDocumentReady(function () {
-        var data = this.window.location.href.split('?')[1];
-        $.ajax({
-            type: 'POST',
-            url: 'gbp_staff_eff.php',
-            // dataType: 'good_bad_piece_fa.php',
-            data: data,
-            success: function (data1) {
-                var data = JSON.parse(data1);
-                // console.log(data);
-                var target_eff = data.posts.map(function (elem) {
-                    return elem.target_eff;
-                });
-                // console.log(goodpiece);
-                // var avg_npr = data.posts.map(function (elem) {
-                //     return elem.avg_npr;
-                // });
-                var actual_eff = data.posts.map(function (elem) {
-                    return elem.actual_eff;
-                });
-
-                var eff = data.posts.map(function (elem) {
-                    return elem.eff;
-                });
-                // var range1 = avg_npr;
-                var range1 = target_eff;
-                var range2 = actual_eff;
-                var range3 = eff;
-
-                var fill3 = '#009900 0.8';
-                var fill2 = '#B31B1B 0.8';
-                var fill1 = '#B31B1B 0.8';
-
-                var maxr3 =  parseFloat(range3) + parseFloat(range3 * .2)
-
-
-                if((target_eff >= actual_eff)){
-                    range1 = target_eff;
-                    // range2 = avg_npr;
-                    range2 = actual_eff;
-                    fill1 = '#009900 0.8';
-                    fill2 = '#009900 0.8';
-                    fill3 = '#B31B1B 0.8';
-                    maxr3 =  parseFloat(target_eff) + parseFloat(target_eff * .2)
-                }
-
-                var gauge = anychart.gauges.circular();
-                gauge
-                    .fill('#fff')
-                    .stroke(null)
-                    .padding(40)
-                    .margin(0)
-                    .startAngle(270)
-                    .sweepAngle(180);
-
-                gauge
-                    .axis()
-                    .labels()
-                    .padding(5)
-                    .fontSize(20)
-                    .position('outside')
-                    .format('{%Value}');
-
-                gauge.data([target_eff]);
-                gauge
-                    .axis()
-                    .scale()
-                    .minimum(0)
-                    .maximum(maxr3)
-                    .ticks({ interval: 1 })
-                    .minorTicks({ interval: 1 });
-
-                gauge
-                    .axis()
-                    .fill('#545f69')
-                    .width(1)
-                    .ticks({ type: 'line', fill: 'white', length: 2 });
-
-                gauge.title(
-                    '<div style=\'color:#333; font-size: 20px;\'>Target days: <span style="color:#009900; font-size: 22px;"><strong> ' +target_eff+' </strong><l/span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 20px;\'>Actul days: <span style="color:#009900; font-size: 22px;"><strong> ' +actual_eff+' </strong></span></div><br/><br/>' +
-                    '<div style=\'color:#333; font-size: 20px;\'>Efficiency: <span style="color:#009900; font-size: 22px;"><strong> ' +eff+' </strong>%</span></div><br/><br/>'
-                );
-
-                gauge
-                    .title()
-                    .useHtml(true)
-                    .padding(0)
-                    .fontColor('#212121')
-                    .hAlign('center')
-                    .margin([0, 0, 10, 0]);
-
-                gauge
-                    .needle()
-                    .stroke('2 #545f69')
-                    .startRadius('5%')
-                    .endRadius('90%')
-                    .startWidth('0.1%')
-                    .endWidth('0.1%')
-                    .middleWidth('0.1%');
-
-                gauge.cap().radius('3%').enabled(true).fill('#545f69');
-
-                gauge.range(0, {
-                    from: 0,
-                    to: range1,
-                    position: 'inside',
-                    fill: fill1,
-                    startSize: 50,
-                    endSize: 50,
-                    radius: 98
-                });
-
-                gauge.range(1, {
-                    from: range1,
-                    to: range2,
-                    position: 'inside',
-                    fill: fill2,
-                    startSize: 50,
-                    endSize: 50,
-                    radius: 98
-                });
-
-                gauge.range(2, {
-                    from: range2,
-                    to: (maxr3),
-                    position: 'inside',
-                    fill: '#009900 0.8',
-                    startSize: 50,
-                    endSize: 50,
-                    radius: 98
-
-                });
-
-                gauge
-                    .label(1)
-                    .text('')
-                    .fontColor('#212121')
-                    .fontSize(20)
-                    .offsetY('68%')
-                    .offsetX(25)
-                    .anchor('center');
-                gauge
-                    .label(2)
-                    .text('')
-                    .fontColor('#212121')
-                    .fontSize(20)
-                    .offsetY('68%')
-                    .offsetX(90)
-                    .anchor('center');
-
-                gauge
-                    .label(3)
-                    .text('')
-                    .fontColor('#212121')
-                    .fontSize(20)
-                    .offsetY('68%')
-                    .offsetX(155)
-                    .anchor('center');
-
-
-                // set container id for the chart
-                gauge.container('eff_container');
-                // initiate chart drawing
-                gauge.draw();
-            }
-        });
-    });
-
 </script>
 
 <?php //include('../footer.php') ?>
