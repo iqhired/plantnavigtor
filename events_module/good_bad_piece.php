@@ -652,7 +652,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff2 = this.data.split('&')[3].split("=")[1];
-                var deftype = this.data.split('&')[5].split("=")[1];
+                var deftype = this.data.split('&')[6].split("=")[1];
                 var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
                 if((pe == '1') && (deftype != 'bad_piece')){
                     document.getElementById("resultFrame").contentWindow.ss(file2);
