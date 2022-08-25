@@ -22,6 +22,7 @@ $sql0 = "select * from sg_station_event_log WHERE ignore_id != '1' AND station_e
 //$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id'";
 $result0 = mysqli_query($db, $sql0);
 while ($row = mysqli_fetch_array($result0)) {
+	$z=0;
 	$station_event_log_id = $row['station_event_log_id'];
 	$event_seq = $row['event_seq'];
 	$station_event_id = $row['station_event_id'];
@@ -79,6 +80,9 @@ while ($row = mysqli_fetch_array($result0)) {
 			$c_arr = explode(':', $c_arr_1[1]);
 			$cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
 			$curr_time = round($cu_time, 2);
+			$tt_time_1 = 0;
+
+
 
 			if($i > $j){
 				$tt_time_1 = 24 - $start_time;
@@ -88,6 +92,13 @@ while ($row = mysqli_fetch_array($result0)) {
 				$page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
                 values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
 				$result1 = mysqli_query($db, $page);
+			}else if(($j>0) && ($start_time < 24) && ($z == 0)){
+				$tt_time_1 = 24 - $start_time;
+				$endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
+				$page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+                values ('$station_event_log_id','$i','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
+				$result1 = mysqli_query($db, $page);
+				$z = 1;
 			}
 
 			$start_date2 = $s_arr_1[0];
@@ -115,9 +126,15 @@ while ($row = mysqli_fetch_array($result0)) {
 				}
 				if(($i > $j) && ( $j !=0)) {
 					if(empty($start_date21)){
-						$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
-						$start_time21 = $start_date21 . ' ' . '00:00:00';
+						if (empty($end_date_se)){
+							$start_date21 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
+							$start_time21 = $start_date21 . ' ' . '00:00:00';
+						}else{
+							$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
+							$start_time21 = $start_date21 . ' ' . '00:00:00';
+						}
 					}else{
+
 						$start_date21 = date('Y-m-d', strtotime($start_date21 . " +1 days"));
 						$start_time21 = $start_date21 . ' ' . '00:00:00';
 					}
