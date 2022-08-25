@@ -93,7 +93,7 @@ if (count($_POST) > 0) {
 
         if ($is_present > '0' ){
             $message_stauts_class = 'alert-success';
-            $import_status_message = 'Event cycle was already ended.';
+            $import_status_message = 'Event cycle was already Ended.';
         }else{
             if ($edit_event_id == $fr_event_type_id) {
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
