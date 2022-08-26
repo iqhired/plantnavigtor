@@ -26,11 +26,11 @@ if(count($_POST)>0) {
 
     $need_approval1 = $_POST['need_approval'];
 
-    if($need_approval1 == ""){
-        $need_approval = 'no';
-    }else{
-        $need_approval = 'yes';
-    }
+//    if($need_approval1 == ""){
+//        $need_approval = 'no';
+//    }else{
+//        $need_approval = 'yes';
+//    }
 	$approval_by1 = $_POST['approval_by'];
 	$valid_from = $_POST['valid_from'];
 	$valid_till = $_POST['valid_till'];
@@ -59,7 +59,7 @@ if(count($_POST)>0) {
 
 
 
-	$sql0 = "UPDATE `form_create` SET `name`='$name',`form_classification`='$form_classification',`form_type`='$form_type',`station`='$station',`part_family`='$part_family',`part_number`='$part_number',`po_number`='$po_number',`da_number`='$da_number',`out_of_tolerance_mail_list`='$array_out_of_tolerance_mail_list',`out_of_control_list`='$array_out_of_control_list',`notification_list`='$array_notification_list',`form_create_notes`='$form_create_notes',`need_approval`='$need_approval',`approval_by`='$array_approval_by',`valid_from`='$valid_from',`valid_till`='$valid_till',`frequency`='$frequency',`updated_by`='$updated_by' WHERE `form_create_id` = '$hidden_id'";
+	$sql0 = "UPDATE `form_create` SET `name`='$name',`form_classification`='$form_classification',`form_type`='$form_type',`station`='$station',`part_family`='$part_family',`part_number`='$part_number',`po_number`='$po_number',`da_number`='$da_number',`out_of_tolerance_mail_list`='$array_out_of_tolerance_mail_list',`out_of_control_list`='$array_out_of_control_list',`notification_list`='$array_notification_list',`form_create_notes`='$form_create_notes',`need_approval`='$need_approval1',`approval_by`='$array_approval_by',`valid_from`='$valid_from',`valid_till`='$valid_till',`frequency`='$frequency',`updated_by`='$updated_by' WHERE `form_create_id` = '$hidden_id'";
 	$result0 = mysqli_query($db, $sql0);
 	if ($result0) {
 		$_SESSION['message_stauts_class'] = 'alert-success';
