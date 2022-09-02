@@ -20,8 +20,9 @@ while ($rowc = mysqli_fetch_array($qur1)) {
 	$line_id = $rowc['line_id'];
 	$part_number = $rowc['part_number_id'];
 }
-if ($ipe == $chk){
+
 	if ($good_name != "") {
+		if ($ipe == $chk){
 		$label_quantity = $chk;
 //        $sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1' and defect_name is NULL";
 		$sql = "select * from good_bad_pieces  where station_event_id ='$station_event_id' and event_status = '1'";
