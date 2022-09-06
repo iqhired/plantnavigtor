@@ -455,7 +455,7 @@ include("../heading_banner.php");
                                 <b><h4 class="panel-title form_panel_title">Form Information</h4></b>
 								<?php
 								$is_form_editable = ($rowcmain['form_comp_status'] == '0');
-								$query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id'");
+								$query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id' order by form_item_seq+0 ASC ");
 								$qur = mysqli_query($db, $query);
 
 								$op_data = $rowcmain["form_user_data_item_op"];
