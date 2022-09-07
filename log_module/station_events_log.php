@@ -463,7 +463,6 @@ INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
 where 1 ";
-
 							/* If Line is selected. */
 							if ($line_id != null) {
                                 $q = $q . " and sg_events.line_id = '$line_id' ";
