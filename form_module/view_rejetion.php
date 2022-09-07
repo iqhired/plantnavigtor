@@ -155,7 +155,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 </head>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "View Rejection Form";
+$cust_cam_page_header = "View Form";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -380,29 +380,30 @@ include("../heading_banner.php");
                                            value="<?php echo date('d-M-Y h:i:s', $create_date); ?>" disabled>
                                 </div>
                             </div>
+                            <br/>
                             <div class="form_row row">
-                                <label class="col-lg-2 control-label">Rejection reason : </label>
+                                <label class="col-lg-2 control-label">Comments : </label>
                                 <div class="col-md-6">
                                     <?php
-
-                                    $qur05 = mysqli_query($db, "SELECT a.reject_reason as reject_reason11  FROM form_approval as a,form_user_data as b WHERE a.form_user_data_id = b.form_user_data_id");
-                                    $rowc05 = mysqli_fetch_array($qur05);
-                                    $reject_reason = $rowc05["reject_reason11"];
-
+                                    $comments = $rowcmain['comments'];
                                     ?>
-                                    <input type="text" name="reason" class="form-control" id="reason"
-                                           value="<?php echo $reject_reason; ?>" disabled>
+                                    <input type="text" name="comments" class="form-control" id="comments"
+                                           value="<?php echo $comments; ?>" disabled>
                                 </div>
                             </div>
+                            <br/>
                             <div class="form_row row">
-                                <label class="col-lg-2 control-label">Enter the pin: </label>
-                            <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important;padding: 0px 30px !important;">
-                                                            <input type="password" name="pin[]" id="pin_<?php echo $j ?>"
-                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
-                                                                   placeholder="Enter Pin..."  autocomplete="off" >
-                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error_<?php echo $j; ?>">Invalid Pin.</span>
-                                                        </span>
+                                <label class="col-lg-2 control-label">File name : </label>
+                                <div class="col-md-6">
+                                    <?php
+                                    $filename = $rowcmain['filename'];
+                                    ?>
+                                    <input type="text" name="comments" class="form-control" id="comments"
+                                           value="<?php echo $filename; ?>" disabled>
+                                </div>
                             </div>
+                            <br/>
+
 </div>
 
 <!-- /main charts -->

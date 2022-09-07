@@ -94,10 +94,6 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
     <style>
-        .red {
-            color: red;
-            display: none;
-        }
         .tooltip {
             position: relative;
             display: inline-block;
@@ -108,7 +104,7 @@ if (count($_POST) > 0) {
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 120px;
-            background-color: #26a69a;
+            background-color: #d6d8db;
             color: #fff;
             text-align: center;
             border-radius: 6px;
@@ -432,15 +428,6 @@ include("../heading_banner.php");
                                 style="background-color:#1e73be;width:120px;" onclick="location.reload();">Reset
                         </button>
                     </div>
-                    <div class="col-md-2">
-                        <form action="export_view_form.php" method="post" name="export_excel">
-                            <input type="hidden" name="export">
-                            <button type="submit" class="btn btn-primary"
-                                    style="background-color:#1e73be;width:120px;"
-                                    id="export_btn" name="export_btn" data-loading-text="Loading...">Export Data
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -455,11 +442,11 @@ include("../heading_banner.php");
                     <tr>
                         <th>Sl. No</th>
                         <th>Action</th>
-                        <th>Tracker Id</th>
                         <th>Form Name</th>
-                        <th>Station</th>
-                        <th>PartNo and Name</th>
+                        <th>Part</th>
                         <th>Part family</th>
+                        <th>Form status</th>
+                        <th>Created at</th>
 
                     </tr>
                     </thead>
@@ -484,20 +471,20 @@ include("../heading_banner.php");
 
                     if ($button == "button1") {
                         if ($station != "" && $datefrom != "" && $dateto != "") {
-                            $result = "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC";
+                            $result = "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC";
                             $qur = mysqli_query($db,$result);
                         } else if ($station != "" && $user != "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE  station = '$station' ");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE  station = '$station' ");
                         } else if ($station != "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC ");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC ");
                         } else if ($station != "" && $user == "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE station = '$station'");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE station = '$station'");
                         } else if ($station == "" && $user != "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and station = '$station' " . $q_str . "ORDER BY form_user_data_id DESC");
                         } else if ($station == "" && $user != "" && $datefrom == "" && $dateto == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE  station = '$station'");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE  station = '$station'");
                         } else if ($station == "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ");
                         }
 
                     }else {
@@ -516,43 +503,45 @@ include("../heading_banner.php");
                             $countdate = date('Y-m-d', strtotime('-365 days'));
                         }
                         if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
                         } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE  station = '$station' and `assign_to` = '$user'");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE  station = '$station' and `assign_to` = '$user'");
                         } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
                         } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE  station = '$station'");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE  station = '$station'");
                         } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC");
                         } else if ($station != "" && $timezone == "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE station = '$station' ");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE station = '$station' ");
                         } else if ($station != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`form_type`,`form_create_id`,`created_at`,`updated_at` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' ");
+                            $qur = mysqli_query($db, "SELECT `form_user_data_id`,`tracker_id`,`formname`,`partfamily`,`partnumber`,`form_type`,`form_create_id`,`created_at`,`updated_at`,`r_flag` FROM `form_rejection_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' ");
                         }
                     }
-                    //
-                    //							$query = "SELECT * FROM `form_user_data` where station = '$station'" . $q_str . "ORDER BY form_user_data_id DESC";
-                    //							$qur = mysqli_query($db, $query);
-                    //
 
                     while ($rowc = mysqli_fetch_array($qur)) {
-
-
                         $form_id = $rowc["form_user_data_id"];
+                        $partfamily = $rowc["partfamily"];
+                        $pno = $rowc["partnumber"];
+                        $r_flag = $rowc["r_flag"];
+                        if($r_flag == '1'){
+                            $rflag = 'In progress';
+                        }else{
+                            $rflag = 'Closed';
+                        }
 
-                        $query1  = mysqli_query($db, "SELECT partnumber,created_at ,form_create_id FROM `form_rejection_data` where form_user_data_id = ' $form_id' LIMIT 1");
+                        $query1  = mysqli_query($db, "SELECT partnumber,created_at,form_create_id FROM `form_rejection_data` where form_user_data_id = ' $form_id' LIMIT 1");
 
                         $rowc1 = mysqli_fetch_array($query1);
                        // $pno = $rowc1['partnumber'];
-                        $query2  = mysqli_query($db, "SELECT part_number,part_name FROM `pm_part_number`,`form_rejection_data` where pm_part_number_id = partnumber");
+                        $query2  = mysqli_query($db, "SELECT part_number,part_name FROM `pm_part_number` where pm_part_number_id = '$pno'");
 
                         $rowc2 = mysqli_fetch_array($query2);
 
-                        //retrieve the station name
-                        $query3  = mysqli_query($db, "SELECT `line_name` FROM `cam_line`,`form_rejection_data` WHERE `line_id` = station");
 
-                        $rowc3 = mysqli_fetch_array($query3);
+                        $query4  = mysqli_query($db, "SELECT part_family_name FROM `pm_part_family` WHERE `pm_part_family_id` = '$partfamily' LIMIT 1");
+
+                        $rowc4 = mysqli_fetch_array($query4);
 
                         $datetime = $rowc1["created_at"];
                         $date_time = strtotime($datetime);
@@ -571,34 +560,18 @@ include("../heading_banner.php");
                             $rowc05 = mysqli_fetch_array($qur05);
 
 
-
-
-
-//							if($comp_status == '1'){
-//
-//								$comp = "Complete";
-//							}else{
-//								$comp = "Yet to fill optional data.";
-//							}
-
                             $approval_status = (int)$rowc05["app_status"];
                             $reject_status = (int)$rowc05["rej_status"];
                             $style = "";
                             if ($reject_status >= 1) {
                                 $form_status = "Rejected";
-                                $style = "style='background-color:#eca9a9;'";
+                                $style = "style='background-color:white;'";
                             } else if ($approval_status >= 1) {
                                 $form_status = "Approved";
-                                $style = "style='background-color:#a8d8a8;'";
+                                $style = "style='background-color:green;'";
                             }
-// else {
-//								continue;
-////                                    $form_status = "Incomplete";
-////                                    $style = "style='background-color:#b1cdff;'";
-//							}
-//							if ($comp_status == '0') {
-//								$style = "style='background-color:#b1cdff;'";
-//							}
+
+
                         }
 
                         ?>
@@ -630,8 +603,8 @@ include("../heading_banner.php");
                             if($option == 0){?>
 
                                 <td class="tooltip">
-                                    <a href="view_user_form_data.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    <span class="tooltiptext">View User Form</span>
+                                    <a href="view_user_form_data.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <!--<span class="tooltiptext">View User Form</span>-->
                                 </td>
 
 
@@ -639,23 +612,31 @@ include("../heading_banner.php");
 
                                 if ($check_status != null){  ?>
                                     <td class="tooltip">
-                                        <a href="view_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                        <span class="tooltiptext">View User Form</span>
+                                        <a href="view_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <!--<span class="tooltiptext">View User Form</span>-->
                                     </td>
 
                                 <?php } else if($check_status == null) { ?>
+                                        <?php if($r_flag != '1'){ ?>
                                     <td class="tooltip">
-                                        <a href="edit_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                        <span class="tooltiptext">Edit User Form</span>
-                                    </td>
 
-                                <?php }
+                                        <a href="edit_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;" disabled><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <!--<span class="tooltiptext">Edit User Form</span>-->
+                                    </td>
+                                            <?php }else if($r_flag == '1'){ ?>
+                                        <td class="tooltip">
+
+                                            <a href="edit_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <!--<span class="tooltiptext">Edit User Form</span>-->
+                                        </td>
+                                <?php }}
                             } ?>
-                            <td><?php echo $rowc["tracker_id"]; ?></td>
                             <td><?php echo $rowc["formname"]; ?></td>
-                            <td><?php echo $rowc3["line_name"]; ?></td>
-                            <td><?php echo $rowc2["part_number"] . '-' . $rowc2["part_name"] ; ?></td>
-                            <td><?php echo $rowc["partfamily"]; ?></td>
+                            <td><?php echo $rowc2["part_number"] .'-'. $rowc2["part_name"]; ?></td>
+                            <td><?php echo $rowc4["part_family_name"]; ?></td>
+                            <td><?php echo $rflag; ?></td>
+                            <td><?php echo $rowc["created_at"]; ?></td>
+
 
 
 
@@ -674,6 +655,23 @@ include("../heading_banner.php");
 </div>
 <!-- Dashboard content -->
 <!-- /dashboard content -->
+
+<script>
+    function checkAvailability() {
+        $("#loaderIcon").show();
+        jQuery.ajax({
+            url: "check_availability.php",
+            data:'username='+$("#username").val(),
+            type: "POST",
+            success:function(data){
+                $("#user-availability-status").html(data);
+                $("#loaderIcon").hide();
+            },
+            error:function (){}
+        });
+    }
+</script>
+
 <script> $(document).on('click', '#delete', function () {
         var element = $(this);
         var del_id = element.attr("data-id");
@@ -709,7 +707,6 @@ include("../heading_banner.php");
 </script>
 </div>
 <!-- /content area -->
-
 
 
 <script>
