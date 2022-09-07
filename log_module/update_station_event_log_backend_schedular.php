@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
 $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$sql_st = "select * from sg_station_event_log WHERE created_on <= '$chicagotime1' AND ignore_id != '1'";
+$sql_st = "select * from sg_station_event_log WHERE created_on <= '$chicagotime1' AND ignore_id != '1' ORDER BY created_on  DESC LIMIT 1 ";
 
 $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
