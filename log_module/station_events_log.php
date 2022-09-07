@@ -62,12 +62,12 @@ if (count($_POST) > 0) {
 	}
 }
 if(empty($dateto)){
-	$curdate = date('Y-m-d');
+	$curdate = date('Y-m-d',strtotime("-1 days"));
 	$dateto = $curdate;
 }
 
 if(empty($datefrom)){
-	$yesdate = date('Y-m-d',strtotime("-1 days"));
+	$yesdate = date('Y-m-d',strtotime("-2 days"));
 	$datefrom = $yesdate;
 }
 
