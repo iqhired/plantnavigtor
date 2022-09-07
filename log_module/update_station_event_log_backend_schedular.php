@@ -14,7 +14,7 @@ $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
 $station_event_old_id = $row_st['sg_station_event_old_id'];
 
-$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id' AND created_on <= '$chicagotime1'";
+$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id' AND created_on like '$chicagotime1%'";
 $result0 = mysqli_query($db, $sql0);
 
 while ($row = mysqli_fetch_array($result0)) {
