@@ -8,10 +8,15 @@ if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
 $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
+$sql_st = "select * from sg_station_event_log WHERE created_on <= '$chicagotime1' AND ignore_id != '1'";
 
-$sql0 = "select * from sg_station_event_log WHERE created_on <= '$chicagotime1' AND ignore_id != '1'";
+$result_st = mysqli_query($db,$sql_st);
+$row_st =  mysqli_fetch_array($result_st);
+$station_event_old_id = $row_st['sg_station_event_old_id'];
 
+$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id'";
 $result0 = mysqli_query($db, $sql0);
+
 while ($row = mysqli_fetch_array($result0)) {
 	$station_event_log_id = $row['station_event_log_id'];
 	$event_seq = $row['event_seq'];
@@ -28,8 +33,6 @@ while ($row = mysqli_fetch_array($result0)) {
 
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
 //    $current_time = $yesdate;
-
-
 
 	if (empty($total_time)) {
 		$datetime1 = strtotime($current_time);
@@ -208,6 +211,3 @@ if ($result0) {
 
 $url = "update_station_event_log_backend_page.php";
 header('Location: ' . $url, true, 303);
-
-?>
-
