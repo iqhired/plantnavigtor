@@ -416,7 +416,7 @@ from sg_station_event_log as e_log
 left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'order by e_log.station_event_log_id  DESC";
+inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'ORDER BY e_log.created_on  ASC";
 						$line = $_POST['station'];
 
 						/* If Line is selected. */
@@ -429,7 +429,7 @@ left join sg_station_event as sg_events on e_log.station_event_id = sg_events.st
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
 inner Join event_type as et on e_log.event_type_id = et.event_type_id where
-DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' order by e_log.station_event_log_id DESC";
+DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' ORDER BY e_log.created_on  ASC";
 						}
 
 						/* Build the query to fetch the data*/
