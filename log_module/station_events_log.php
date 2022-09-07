@@ -399,14 +399,12 @@ include("../heading_banner.php");
                         <tr>
                             <th>Station</th>
                             <th>Event Type</th>
-                            <th>Event Category</th>
-                            <!--                            <th>Start Time</th>-->
                             <th>Part Number</th>
                             <th>Part Name</th>
                             <th>Part Family</th>
-                            <!--                            <th>Completion Time</th>-->
-                            <th>Created On</th>
-                            <th>Total Duration</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Total Time</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -449,9 +447,9 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 							//event type
 
                             $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
-pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,sg_events.created_on as start_time , 
-sg_events.modified_on as end_time ,e_log.total_time as total_time  , e_log.created_on as created_on
-from sg_station_event_log as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
+e_log.end_time as end_time ,e_log.total_time as total_time  
+from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
@@ -459,43 +457,33 @@ where 1 ";
 
 							/* If Line is selected. */
 							if ($line_id != null) {
-								$q = $q . " and sg_events.line_id = '$line_id' ";
+                                $q = $q . " and sg_events.line_id = '$line_id' ";
 							}
 
 
-							if($datefrom != "" && $dateto != ""){
-								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
-							}else if($datefrom != "" && $dateto == ""){
-								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
-							}else if($datefrom == "" && $dateto != ""){
-								$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
-							}
-
-
-							if ($event_type != "") {
-								if ($station != "" ) {
-									$q = $q . "  and sg_events.line_id = '$station' and e_log.event_type_id = '$event_type' ";
-								} else if ($station == "") {
-									$query = " and e_log.event_type_id = '$event_type'";
-								}
-							}
-
-                            if ($event_category != "") {
-								if ($station != "") {
-									$q = $q . " AND sg_events.line_id = '$station'  and e_log.event_cat_id = '$event_category'";
-								} else if ($station == "") {
-									$q = $q . " AND  e_log.event_cat_id ='$event_category'";
-								}
+                            if ($datefrom != "" && $dateto != "") {
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+                            } else if ($datefrom != "" && $dateto == "") {
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
+                            } else if ($datefrom == "" && $dateto != "") {
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
                             }
 
-							$q = $q . " ORDER BY e_log.created_on  DESC";
+                            if ($event_type != "") {
+                                $q = $q . " and e_log.event_type_id = '$event_type'";
+                            }
+
+                            if ($event_category != "") {
+                                $q = $q . " AND  e_log.event_cat_id ='$event_category'";
+                            }
+
+                            $q = $q . " ORDER BY e_log.created_on  ASC";
 
 						}
 						/* Execute the Query Built*/
 						$qur = mysqli_query($db, $q);
 						while ($rowc = mysqli_fetch_array($qur)) {
-							$dateTime = $rowc["assign_time"];
-							$dateTime2 = $rowc["unassign_time"];
+
 							?>
                             <tr>
 								<?php
@@ -507,24 +495,13 @@ where 1 ";
 								?>
                                 <td><?php echo $lnn; ?></td>
                                 <td><?php echo $rowc["e_type"]; ?></td>
-                                <td><?php echo $rowc["cat_name"]; ?></td>
-
                                 <td><?php echo $rowc['p_num']; ?></td>
                                 <td><?php echo $rowc['p_name']; ?></td>
                                 <td><?php echo $rowc['pf_name']; ?></td>
-                                <td><?php echo $rowc['created_on']; ?></td>
-                                <td><?php
-                                    $total_time = '0 hrs';
-                                    $tt = $rowc['total_time'];
-                                    if(!empty($tt)){
-                                        $t_arr = explode(':',$tt);
-                                        $tot_time = $t_arr[0] + ($t_arr[1] / 60) + ($t_arr[2] /3600);
-									    echo round($tot_time, 3) .'  hrs';
-                                    }else{
-										echo $total_time;
-                                    }
+                                <td><?php echo $rowc['start_time']; ?></td>
+                                <td><?php echo $rowc['end_time']; ?></td>
+                                <td><?php echo $rowc['total_time']; ?></td>
 
-                                     ?></td>
 
                             </tr>
 						<?php } ?>
