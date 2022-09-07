@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
 $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_update_id` DESC LIMIT 1 ";
+$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1 ";
 
 $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
