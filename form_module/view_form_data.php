@@ -326,7 +326,7 @@ include("../hp_header.php");
                             <b><h4 class="panel-title form_panel_title">Form Information</h4></b>
 							<?php
 
-							$query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id'");
+							$query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id' order by form_item_seq+0 ASC ");
 							$qur = mysqli_query($db, $query);
 							$aray_item_cnt = 0;
 							$f_data = $rowcmain["form_user_data_item_op"];

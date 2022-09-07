@@ -86,7 +86,7 @@ if (count($_POST) > 0) {
         $qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0 = mysqli_query($db, $qur3);
 
-        $res_event = "select count(*) as isPresent from sg_station_event_log where station_event_id = '$station_event_id' and event_type_id = '7'";
+        $res_event = "select count(*) as isPresent from sg_station_event_log where station_event_id = '$station_event_id' and event_type_id = '7' and ignore_id = '0'";
         $sta_res = mysqli_query($db,$res_event);
         $event_row = mysqli_fetch_array($sta_res);
         $is_present = (int)$event_row['isPresent'];
