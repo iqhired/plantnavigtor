@@ -34,7 +34,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
-
 $_SESSION['station'] = "";
 $_SESSION['date_from'] = "";
 $_SESSION['date_to'] = "";
