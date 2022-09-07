@@ -226,9 +226,8 @@ include("../heading_banner.php");
                                 <th><input type="checkbox" id="checkAll"></th>
                                 <th>S.No</th>
                                 <th>Form Type</th>
-                                <!--                                      <th>Created At</th>-->
-                                <!--                                      <th>Updated At</th>-->
                                 <th>Is Work Order/Lot required ?</th>
+                                <th>Form Enabled/Disabled ?</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -248,6 +247,9 @@ include("../heading_banner.php");
 									<?php //echo $rowc['created_at']; ?><!--</td>-->
                                     <!--                                        <td>-->
 									<?php //echo $rowc['updated_at']; ?><!--</td>-->
+                                    <td>
+                                        <input type="checkbox" name="form_reject" id="form_reject" value="<?php echo $rowc["form_type_id"]; ?>" <?php echo ($rowc['form_type_reject']==1 ? 'checked' : '');?>>
+                                    </td>
                                     <td>
                                         <button type="button" id="edit" class="btn btn-info btn-xs"
                                                 data-id="<?php echo $rowc['form_type_id']; ?>"
@@ -354,7 +356,23 @@ include("../heading_banner.php");
 
 </div>
 <!-- /page container -->
+<script>
+    $("input#form_reject").click(function () {
+        var isChecked = $(this)[0].checked;
+        var val = $(this).val();
+        var data_1 = "&form_reject=" + val+ "&isChecked=" + isChecked;
+        $.ajax({
+            type: 'POST',
+            url: "form_type_reject.php",
+            data: data_1,
+            success: function (response) {
 
+            }
+        });
+
+    });
+
+</script>
 <script>
     window.onload = function () {
         history.replaceState("", "", "<?php echo $scriptName; ?>config_module/form_type.php");
