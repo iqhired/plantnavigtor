@@ -14,14 +14,7 @@ $event_category = $_SESSION['event_category'];
 $line_id = $_SESSION['station'];
 $print_data='';
 
-$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
-e_log.end_time as end_time ,e_log.total_time as total_time  
-from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
-INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
-inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
-inner join event_type as et on e_log.event_type_id = et.event_type_id 
-inner join cam_line as cl on sg_events.line_id = cl.line_id 
-where 1 ";
+$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,cast(e_log.created_on AS date),cast(e_log.created_on AS Time), cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id inner join event_type as et on e_log.event_type_id = et.event_type_id inner join cam_line as cl on sg_events.line_id = cl.line_id where 1";
 
 /* If Line is selected. */
 if ($line_id != null) {
@@ -57,7 +50,7 @@ if ($event_category != "") {
 $q = $q . " ORDER BY e_log.created_on  ASC";
 
 $exportData = mysqli_query($db, $q);
-$header = "Station" . "\t" ."Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t"  . "Start Time" . "\t" ."End Time" . "\t" ."Total Time" . "\t" ;
+$header = "Station" . "\t" ."Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t"  . "Date" .  "\t". "Start Time" . "\t" ."End Time" . "\t" ."Total Time" . "\t" ;
 $result = '';
 //$fields = mysqli_num_fields($db, $exportData);
 //for ($i = 0; $i < $fields; $i++) {
