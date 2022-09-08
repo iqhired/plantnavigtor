@@ -72,6 +72,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_select2.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/gallery.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
+
+
     <script type="text/javascript" src="index.js" ></script>
     <script type="text/javascript" src="constants.js" ></script>
     <script type="text/javascript" src="speech.js" ></script>
@@ -89,154 +91,118 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         }
     </script>
     <style>
-        body {
-            font: 15px arial, sans-serif;
-            background-color: #d9d9d9;
-            padding-top: 15px;
-            padding-bottom: 15px;
+        #sub_app {
+            padding: 20px 40px;
+            color: red;
+            font-size: initial;
         }
 
-        #bodybox {
-            margin: auto;
-            max-width: 550px;
-            max-height: 350px;
-            font: 15px arial, sans-serif;
-            background-color: white;
-            border-style: solid;
-            border-width: 1px;
-            padding-top: 20px;
-            padding-bottom: 25px;
-            padding-right: 25px;
-            padding-left: 25px;
-            box-shadow: 5px 5px 5px grey;
-            border-radius: 15px;
+        #approve_msg {
+            color: red;
+            font-size: x-small;;
+        }
+        #success_msg{
+            font-size: large;
+            padding: 12px;
+            width: 30%;
+
+        }
+        .form-control[disabled]{
+            color: #000 !important;
+        }
+        #rej_reason_div_{
+            display: none;
+        }
+        .select2-container {
+            width: auto !important;
+            float: left !important;
         }
 
-        #chatborder {
-            border-style: solid;
-            background-color: #f6f9f6;
-            border-width: 3px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-            padding-top: 10px;
-            padding-bottom: 15px;
-            padding-right: 20px;
-            padding-left: 15px;
-            border-radius: 15px;
+        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
+            color: #060818!important;
+            border-block-start: none;
+            border-bottom-color: #191e3a!important;
+        }
+        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
+            color: #999;
+            border-bottom-style: none;
+        }
+        .approve {
+            background-color: #1e73be;
+            font-size: 12px;
+            margin-left: 16px;
+            margin-top: 1px;
+        }
+        .reject {
+            background-color: #1e73be;
+            font-size: 12px;
+            margin-left: 16px;
+            margin-top: 1px;
         }
 
-        .chatlog {
-            font: 15px arial, sans-serif;
-        }
 
-        #chatbox {
-            font: 17px arial, sans-serif;
-            height: 22px;
-            width: 100%;
-        }
 
-        h1 {
-            margin: auto;
-        }
 
-        pre {
-            background-color: #f0f0f0;
-            margin-left: 20px;
+
+        @media
+        only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px) {
+            #success_msg{
+
+                width: 45%;
+
+            }
+
+            .form_row_item{
+                width: 100%;
+            }
+
+            .col-md-3.mob{
+                width:40%;
+            }
+            .form_tab_td{
+                padding: 10px 100px;
+            }
+            /*.reject {*/
+            /*    background-color: #1e73be;*/
+            /*    font-size: 12px;*/
+            /*    margin-left: 16px;*/
+            /*    margin-top: -36px;*/
+            /*    float: right;*/
+            /*}*/
+            textarea.form-control {
+                height: auto;
+                font-size: 15px;
+            }
+
+        }
+        @media
+        only screen and (max-width: 400px),
+        (min-device-width: 400px) and (max-device-width: 670px)  {
+            #success_msg{
+
+                width: 45%;
+
+            }
+            .form_tab_td{
+                padding: 0px 0px;
+            }
+
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered{
+            line-height: 21px!important;
+        }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            .col-lg-3{
+                width: 35%!important;
+            }
+
+            .select2-selection--single{
+                border-block-start: inherit;
+            }
+
         }
     </style>
-    <script>
-
-        var messages = [], //array that hold the record of each string in chat
-            lastUserMessage = "", //keeps track of the most recent input string from the user
-            botMessage = "", //var keeps track of what the chatbot is going to say
-            botName = '', //name of the chatbot
-            talking = true; //when false the speach function doesn't work
-        //edit this function to change what the chatbot says
-        function chatbotResponse() {
-            talking = true;
-            //botMessage = "I'm confused"; //the default message
-
-            //if (lastUserMessage === 'hi' || lastUserMessage =='hello') {
-            //const hi = ['hi','howdy','hello']
-            //botMessage = hi[Math.floor(Math.random()*(hi.length))];;
-            // }
-
-            //if (lastUserMessage === 'name') {
-            //  botMessage = 'My name is ' + botName;
-            // }
-        }
-        //this runs each time enter is pressed.
-        //It controls the overall input and output
-        function newEntry() {
-            //if the message from the user isn't empty then run
-            if (document.getElementById("chatbox").value != "") {
-                //pulls the value from the chatbox ands sets it to lastUserMessage
-                lastUserMessage = document.getElementById("chatbox").value;
-                //sets the chat box to be clear
-                document.getElementById("chatbox").value = "";
-                //adds the value of the chatbox to the array messages
-                messages.push(lastUserMessage);
-                //Speech(lastUserMessage);  //says what the user typed outloud
-                //sets the variable botMessage in response to lastUserMessage
-                chatbotResponse();
-                //add the chatbot's name and message to the array messages
-                messages.push("<b>" + botName + "</b> " + botMessage);
-                // says the message using the text to speech function written below
-                Speech(botMessage);
-                //outputs the last few array elements of messages to html
-                for (var i = 1; i < 8; i++) {
-                    if (messages[messages.length - i])
-                        document.getElementById("chatlog" + i).innerHTML = messages[messages.length - i];
-                }
-            }
-        }
-
-        //text to Speech
-        //https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API
-        function Speech(say) {
-            if ('speechSynthesis' in window && talking) {
-                var utterance = new SpeechSynthesisUtterance(say);
-                //msg.voice = voices[10]; // Note: some voices don't support altering params
-                //msg.voiceURI = 'native';
-                //utterance.volume = 1; // 0 to 1
-                //utterance.rate = 0.1; // 0.1 to 10
-                //utterance.pitch = 1; //0 to 2
-                //utterance.text = 'Hello World';
-                //utterance.lang = 'en-US';
-                speechSynthesis.speak(utterance);
-            }
-        }
-
-        //runs the keypress() function when a key is pressed
-        document.onkeypress = keyPress;
-        //if the key pressed is 'enter' runs the function newEntry()
-        function keyPress(e) {
-            var x = e || window.event;
-            var key = (x.keyCode || x.which);
-            if (key == 13 || key == 3) {
-                //runs this function when enter is pressed
-                newEntry();
-            }
-            if (key == 38) {
-                console.log('hi')
-                //document.getElementById("chatbox").value = lastUserMessage;
-            }
-        }
-
-        //clears the placeholder text ion the chatbox
-        //this function is set to run when the users brings focus to the chatbox, by clicking on it
-        function placeHolder() {
-            document.getElementById("chatbox").placeholder = "Enter the comments";
-        }
-    </script>
-    <script>
-        function save() {
-            var msg = document.getElementById('msg');
-            msg.innerHTML = 'Data submitted and the button disabled ☺';
-        }
-    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=WindSong&display=swap');
 
@@ -322,7 +288,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 </head>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Edit Form";
+$cust_cam_page_header = "Edit Rejection Form";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -361,24 +327,7 @@ include("../heading_banner.php");
                                    value="<?php echo $rowcmain['form_create_id']; ?>">
                             <input type="hidden" name="form_user_data_id" id="form_user_data_id"
                                    value="<?php echo $id; ?>">
-                            <br/>
-                            <input type="text" name="comment" id="comment">
-                            <input type='submit' value='Submit' id='btClickMe'
-                                   onclick='save(); this.disabled = true;'/>
-                            <br/>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">link : </label>
-                                <div class="col-md-6">
-                                    <?php
-                                    //$form_user_data_id = $rowcmain['form_user_data_id'];
-                                    $qurt = mysqli_query($db, "SELECT comments FROM  form_comments where form_user_data_id = '$id' ");
-                                    $rowct = mysqli_fetch_array($qurt);
 
-                                    ?>
-                                    <input type="text" name="comment" class="form-control" id="comment"
-                                           value="<?php echo $rowct["comments"]; ?>" disabled>
-                                </div>
-                            </div>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Form link : </label>
                                 <div class="col-md-6">
@@ -387,7 +336,6 @@ include("../heading_banner.php");
                                     </a>
                                 </div>
                             </div>
-                            <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Form Type : </label>
                                 <div class="col-md-6">
@@ -421,7 +369,6 @@ include("../heading_banner.php");
                                     </select>
                                 </div>
                             </div>
-                            <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Station : </label>
                                 <div class="col-md-6">
@@ -456,7 +403,6 @@ include("../heading_banner.php");
                                     </select>
                                 </div>
                             </div>
-                            <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Part Family : </label>
                                 <div class="col-md-6">
@@ -491,7 +437,6 @@ include("../heading_banner.php");
                                     </select>
                                 </div>
                             </div>
-                            <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Part Number : </label>
                                 <div class="col-md-6">
@@ -526,8 +471,6 @@ include("../heading_banner.php");
                                     </select>
                                 </div>
                             </div>
-                            <br/>
-
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Operator : </label>
                                 <div class="col-md-6">
@@ -547,20 +490,12 @@ include("../heading_banner.php");
                                            value="<?php echo $fullnnm; ?>" disabled>
                                 </div>
                             </div>
-
+<!--
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Submitted Time : </label>
                                 <div class="col-md-6">
                                     <input type="text" name="createdby" class="form-control" id="createdby"
-                                           value="<?php echo date('d-M-Y h:i:s', $create_date); ?>" disabled>
-                                </div>
-                            </div>
-                            <br/>
-<!--
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Comments : </label>
-                                <div class="col-md-6">
-                                    <textarea id="comment" name="comment" rows="4" placeholder="Enter comments..." class="form-control"></textarea>
+                                           value="<?php /*echo date('d-M-Y h:i:s', $create_date); */?>" disabled>
                                 </div>
                             </div>
                             <br/>-->
@@ -570,52 +505,51 @@ include("../heading_banner.php");
                                     <input type="file" name="file">
                                 </div>
                             </div>
-                            <br/>
-                            <!--<div class="form_row row">
-                                <label class="col-lg-2 control-label">Pin : </label>
-                                <div class="col-md-2">
-                                    <input type="password" name="pin2" id="pin2" class="form-control">
+
+                            <div class="form_row row">
+                                <label class="col-lg-2 control-label">Comments : </label>
+                                <div class="col-md-8">
+                                    <?php
+                                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                    while ($rowct = mysqli_fetch_array($qurt)) {
+                                    $message = $rowct["message"];
+                                    $comment_date = $rowct["comment_date"];
+                                    ?>
+                                   <ul class="media-list chat-list content-group">
+                                        <li class="media">
+                                           <div class="media-body">
+                                                <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
+                                                <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" style="padding-left: 950px;">
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary"
+                                            style="background-color:#1e73be;">
+                                        Submit
+                                    </button>
                                 </div>
                             </div>
-                            <br/>-->
-                                <div class="row">
-                                    <div class="col-md-2" style="padding-left: 950px;">
-                                        <button type="submit" name="submit" id="submit" class="btn btn-primary"
-                                                style="background-color:#1e73be;">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-
-                            <div>
-                                <hr class="form_hr"/>
-
-                            </div>
-
                             <div class="form_row row" id="check">
                                 <label class="col-lg-2 control-label" style="padding-top: 5px">To close form : </label>
                                 <div class="col-md-3">
                                         <div style="font-size: small !important;">
-                                            <select class="select-border-color"
-                                                    name="approval_initials"
-                                                    id="approval_initials"
-                                                    class="select" data-style="bg-slate">
-                                                <option value="" selected disabled>--- Select Approver
-                                                    ---
-                                                </option>
                                                 <?php
                                                     $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
                                                     $rowctemp = mysqli_fetch_array($qurtemp);
                                                     if ($rowctemp != NULL) {
                                                         $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
-
-                                                        echo "<option value='" . $fullnn . "' >" . $fullnn . "</option>";
                                                     }
                                                     $fullnm = "";
 
                                                 ?>
-                                            </select>
-                                            <span style="font-size: x-small;color: darkred;display: none;" id="user">Select User.</span>
+                                           <input type="text" name="username" class="form-control" id="username"
+                                                   value="<?php echo $fullnnm; ?>" disabled>
                                         </div>
 
                                 </div>
@@ -638,19 +572,20 @@ include("../heading_banner.php");
 
 
                             </form>
-
+                        <?php } ?>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <?php } ?>
-
-<!-- /main charts -->
-<!-- edit modal -->
-<!-- Dashboard content -->
-<!-- /dashboard content -->
+            <form action="" id="update-form" method="post" class="form-horizontal" style="width: 250px;background-color: #d6d8db;padding-top: 0px;">
+                <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
+                <textarea name="enter-message" style="padding-top: 20px;background-color: white;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+                <div class="row" style="padding-top: 0px;">
+                    <div class="col-xs-6 text-right" style="padding-left: 150px;">
+                        <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
+                    </div>
+                </div>
+            </form>
 </div>
 <!-- /content area -->
 </div>
@@ -680,8 +615,29 @@ include("../heading_banner.php");
     });
 
 </script>
+<!--chatbox message-->
+<script>
+    function submitForm(url) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        var data = $("#update-form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+
+                $("#textarea").val("")
+                // window.location.href = window.location.href + "?aa=Line 1";
+                //                   $(':input[type="button"]').prop('disabled', false);
+                //                   location.reload();
+                $(".enter-message").val("");
+            }
+        });
+    }
+
+</script>
 <?php
-$comment = $_POST['comment'];
+/*$comment = $_POST['comment'];
 $sqlt = "UPDATE `form_rejection_data` SET `comments`='$comment' where form_user_data_id = '$form_user_data_id'";
 $qurmaint = mysqli_query($db, $sqlt);
 if($qurmaint)
@@ -690,7 +646,7 @@ if($qurmaint)
 }else{
     echo 'fail';
 }
-?>
+*/?>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 

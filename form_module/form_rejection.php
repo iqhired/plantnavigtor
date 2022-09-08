@@ -568,7 +568,7 @@ include("../heading_banner.php");
                                 $style = "style='background-color:white;'";
                             } else if ($approval_status >= 1) {
                                 $form_status = "Approved";
-                                $style = "style='background-color:green;'";
+                                $style = "style='background-color:#90EE90;'";
                             }
 
 

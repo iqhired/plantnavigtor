@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
                 // Upload file to server
                 if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
                     // Insert image file name into database
-                    $insert = $db->query("UPDATE `form_comments` SET `filename`='$fileName' where form_user_data_id = '$form_user_data_id'");
+                    $insert = $db->query("UPDATE `form_rejection_data` SET `filename`='$fileName' where form_user_data_id = '$form_user_data_id'");
                     if ($insert) {
                         $statusMsg = "uploaded successfully.";
                     }

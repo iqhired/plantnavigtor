@@ -155,7 +155,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 </head>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "View Form";
+$cust_cam_page_header = "View Rejection Form";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
