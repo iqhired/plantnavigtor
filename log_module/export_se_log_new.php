@@ -58,7 +58,7 @@ if ($event_category != "") {
 }
 
 if (empty($line_id)){
-    $q = $q . " ORDER BY sg_events.line_id";
+    $q = $q . " ORDER BY sg_events.line_id,e_log.created_on";
 }else{
     $q = $q . " ORDER BY e_log.created_on  ASC";
 }
