@@ -86,44 +86,41 @@ if (count($_POST) > 0) {
         $qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0 = mysqli_query($db, $qur3);
 
-        $res_event = "select event_type_id from sg_station_event_log where station_event_id = '$station_event_id' and ignore_id = '0'";
-        $sta_res = mysqli_query($db,$res_event);
-        $event_row = mysqli_fetch_array($sta_res);
-        $is_present = $event_row['event_type_id'];
+		$res_event = "select event_type_id from sg_station_event where station_event_id = '$station_event_id'";
+		$sta_res = mysqli_query($db,$res_event);
+		$event_row = mysqli_fetch_array($sta_res);
+		$is_present = $event_row['event_type_id'];
 
-        if ($is_present == '7' ){
+		if ($is_present == '7' ){
             $message_stauts_class = 'alert-success';
             $import_status_message = 'Event cycle was already Ended.';
         }else{
             if ($edit_event_id == $fr_event_type_id) {
+				$sql = "update sg_station_event set event_status = '0' ,event_type_id='$edit_event_id', modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
+				$result1 = mysqli_query($db, $sql);
+				if ($result1) {
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Event Cycle Completed for the Station.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
+
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
-                $event_status_lat = 0;
+				$result0 = mysqli_query($db, $sql);
             } else {
+				$sql = "update sg_station_event set event_type_id='$edit_event_id', reason='$reason' ,modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
+				$result1 = mysqli_query($db, $sql);
+				if ($result1) {
+
+					$message_stauts_class = 'alert-success';
+					$import_status_message = 'Event status Updated successfully.';
+				} else {
+					$message_stauts_class = 'alert-danger';
+					$import_status_message = 'Error: Please Insert valid data';
+				}
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`reason`,`event_seq` , `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',1,'$chicagotime','$user_id')";
-
-            }
-            $result0 = mysqli_query($db, $sql);
-            if ($event_status_lat == 1) {
-                $sql = "update sg_station_event set event_type_id='$edit_event_id', reason='$reason' ,modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
-                $result1 = mysqli_query($db, $sql);
-                if ($result1) {
-
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Event status Updated successfully.';
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Insert valid data';
-                }
-            } else {
-                $sql = "update sg_station_event set event_status = '$event_status_lat' ,event_type_id='$edit_event_id', modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
-                $result1 = mysqli_query($db, $sql);
-                if ($result1) {
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Event Cycle Completed for the Station.';
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Insert valid data';
-                }
+				$result0 = mysqli_query($db, $sql);
             }
         }
     } else {
