@@ -364,12 +364,8 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label" >Date To:</label>
                                     <input type="date" name="date_to" id="date_to" class="form-control"
                                            value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-
                                 </div>
-
                             </div>
-
-
                             <br/>
                     </div>
                     <div class="panel-footer p_footer">
@@ -417,25 +413,26 @@ include("../heading_banner.php");
 						<?php
 
                         /* Default Query */
-						$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
-e_log.total_time as total_time , e_log.created_on as created_on
-from sg_station_event_log as e_log  
-left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+						$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
+e_log.end_time as end_time ,e_log.total_time as total_time  
+from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
-inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-inner Join event_type as et on e_log.event_type_id = et.event_type_id where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'ORDER BY e_log.created_on  ASC";
+inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
+inner join event_type as et on e_log.event_type_id = et.event_type_id 
+where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'ORDER BY e_log.created_on  ASC";
 						$line = $_POST['station'];
 
 						/* If Line is selected. */
 						if ($line != null) {
 							$line = $_POST['station'];
-							$q = "SELECT sg_events.line_id,et.event_type_name as e_type,( select events_cat_name from events_category where events_cat_id = e_log.event_cat_id) as cat_name ,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name, 
-e_log.total_time as total_time  , e_log.created_on as created_on
-from sg_station_event_log as e_log  
-left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+							$q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,e_log.created_on as start_time , 
+e_log.end_time as end_time ,e_log.total_time as total_time  
+from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
-inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
-inner Join event_type as et on e_log.event_type_id = et.event_type_id where
+inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
+inner join event_type as et on e_log.event_type_id = et.event_type_id where
 DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' ORDER BY e_log.created_on  ASC";
 						}
 
@@ -450,6 +447,9 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 							$event_type = $_POST['event_type'];
 							$event_category = $_POST['event_category'];
 							$timezone = $_POST['timezone'];
+
+                            $_SESSION['date_from1'] = $_POST['date_from'];
+                            $_SESSION['date_to1'] = $_POST['date_to'];
 							//event type
 
                             $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
@@ -505,14 +505,12 @@ where 1 ";
                                 <td><?php echo $rowc['start_time']; ?></td>
                                 <td><?php echo $rowc['end_time']; ?></td>
                                 <td><?php echo $rowc['total_time']; ?></td>
-
                             </tr>
 						<?php } ?>
                         </tbody>
                     </table>
                 </div>
                 <!-- /basic datatable -->
-
                 <!-- /dashboard content -->
                 <script>
                     $(function () {
