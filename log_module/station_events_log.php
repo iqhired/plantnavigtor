@@ -447,9 +447,6 @@ DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_ev
 							$event_type = $_POST['event_type'];
 							$event_category = $_POST['event_category'];
 							$timezone = $_POST['timezone'];
-
-                            $_SESSION['date_from1'] = $_POST['date_from'];
-                            $_SESSION['date_to1'] = $_POST['date_to'];
 							//event type
 
                             $q = "SELECT sg_events.line_id,et.event_type_name as e_type, ( select events_cat_name from events_category where events_cat_id = et.event_cat_id) as cat_name ,
