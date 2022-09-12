@@ -604,7 +604,7 @@ include("../heading_banner.php");
                 <label class="col-lg-2 control-label"></label>
                 <div class="col-md-3">
             <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
-            <textarea name="enter-message" style="padding-top: 20px;background-color: white;width: 250px;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+            <textarea name="enter-message" id="enter-message" style="padding-top: 20px;background-color: white;width: 250px;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
                 </div>
             </div>
             <div class="row" style="padding-top: 0px;">
@@ -717,16 +717,9 @@ include("../heading_banner.php");
             success: function (data) {
                 var pin1 = document.getElementById('pin').value;
                 var pin2 = document.getElementById('pin1').value;
-                var r_flag = document.getElementById('r_flag').value;
+
                 $("#input").val("")
                 $(".pin").val("");
-                if(r_flag == '0')
-                {
-                    event.preventDefault()
-                    $("form :input").prop("disabled", true);
-                    $(':input[type="button"]').prop('disabled', true);
-                    window.scrollTo(0, 0);
-                }else{}
                 if(pin1 == pin2) {
                     event.preventDefault()
                     $("form :input").prop("disabled", true);
@@ -740,6 +733,18 @@ include("../heading_banner.php");
         });
     }
 
+</script>
+<script>
+    let flag = document.getElementById('r_flag').value;
+    if(flag == '0')
+    {
+        document.getElementById('submit').disabled = true;
+        document.getElementById('save').disabled = true;
+        document.getElementById('send').disabled = true;
+        document.getElementById('file').disabled = true;
+        document.getElementById('enter-message').disabled = true;
+
+    }else{}
 </script>
 <!--chatbox message-->
 <script>
