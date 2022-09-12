@@ -38,8 +38,6 @@ while ($row = mysqli_fetch_array($result0)) {
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
 //    $current_time = $yesdate;
 
-
-
 	if (empty($total_time)) {
 		$datetime1 = strtotime($current_time);
 		$datetime2 = strtotime($time);
@@ -167,6 +165,7 @@ while ($row = mysqli_fetch_array($result0)) {
 		$total_time = round($tot_time, 2);
 		$total_time = $total_time;
 		$end_hrs = $start_time + $total_time;
+
 		$tt = sprintf('%02d:%02d', (int)$start_time, fmod($start_time, 1) * 60);
 		if ($end_hrs < 24) {
 			$tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);

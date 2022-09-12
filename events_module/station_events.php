@@ -86,6 +86,9 @@ if (count($_POST) > 0) {
         $qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0 = mysqli_query($db, $qur3);
 
+        $qur3_new = "update `sg_station_event_log_update` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $result0_new = mysqli_query($db, $qur3_new);
+
 		$res_event = "select event_type_id from sg_station_event where station_event_id = '$station_event_id'";
 		$sta_res = mysqli_query($db,$res_event);
 		$event_row = mysqli_fetch_array($sta_res);
@@ -108,6 +111,15 @@ if (count($_POST) > 0) {
 
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
 				$result0 = mysqli_query($db, $sql);
+
+                $row_sql = mysqli_query($db,"select station_event_log_id from sg_station_event_log ORDER BY station_event_log_id DESC LIMIT 1");
+                $row_result = mysqli_fetch_array($row_sql);
+                $station_event_log_id = $row_result['station_event_log_id'];
+
+
+                $sql_new = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_log_id','$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
+                $result0_new = mysqli_query($db, $sql_new);
+
             } else {
 				$sql = "update sg_station_event set event_type_id='$edit_event_id', reason='$reason' ,modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
 				$result1 = mysqli_query($db, $sql);
@@ -121,6 +133,14 @@ if (count($_POST) > 0) {
 				}
                 $sql = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`reason`,`event_seq` , `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',1,'$chicagotime','$user_id')";
 				$result0 = mysqli_query($db, $sql);
+
+                $row_sql = mysqli_query($db,"select station_event_log_id from sg_station_event_log ORDER BY station_event_log_id DESC LIMIT 1");
+                $row_result = mysqli_fetch_array($row_sql);
+                $station_event_log_id = $row_result['station_event_log_id'];
+
+
+                $sql_new = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_log_id','$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
+                $result0_new = mysqli_query($db, $sql_new);
             }
         }
     } else {
@@ -168,8 +188,22 @@ if (count($_POST) > 0) {
                     $qur4 = "update`sg_station_event_log` set total_time = '$total_time' where station_event_log_id = '$prev_seq'";
                     $result0 = mysqli_query($db, $qur4);
 
+                    $qur4_new = "update`sg_station_event_log_update` set total_time = '$total_time' where sg_station_event_old_id = '$prev_seq'";
+                    $result0_new = mysqli_query($db, $qur4_new);
+
+
                     $sql0 = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'$chicagotime','$user_id')";
                     $result0 = mysqli_query($db, $sql0);
+
+
+                    $row_sql = mysqli_query($db,"select station_event_log_id from sg_station_event_log ORDER BY station_event_log_id DESC LIMIT 1");
+                    $row_result = mysqli_fetch_array($row_sql);
+                    $station_event_log_id = $row_result['station_event_log_id'];
+
+
+                    $sql0_new = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_log_id','$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'$chicagotime','$user_id')";
+                    $result0_new = mysqli_query($db, $sql0_new);
+
 
                     $message_stauts_class = 'alert-success';
                     $import_status_message = 'Station Event Created successfully.';
