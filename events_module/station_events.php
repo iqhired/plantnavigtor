@@ -83,10 +83,15 @@ if (count($_POST) > 0) {
         $firstrow = mysqli_fetch_array($res);
         $event_cat_id = $firstrow['cat_id'];
 
+        $qur2_new="Select SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF('$chicagotime', created_on))) as total_time_new from `sg_station_event_log_update` WHERE station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $res_new = mysqli_query($db, $qur2_new);
+        $firstrow_new = mysqli_fetch_array($res_new);
+        $total_time_new = $firstrow_new['total_time_new'];
+
         $qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0 = mysqli_query($db, $qur3);
 
-        $qur3_new = "update `sg_station_event_log_update` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $qur3_new = "update `sg_station_event_log_update` set total_time = '$total_time_new' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0_new = mysqli_query($db, $qur3_new);
 
 		$res_event = "select event_type_id from sg_station_event where station_event_id = '$station_event_id'";
@@ -188,7 +193,12 @@ if (count($_POST) > 0) {
                     $qur4 = "update`sg_station_event_log` set total_time = '$total_time' where station_event_log_id = '$prev_seq'";
                     $result0 = mysqli_query($db, $qur4);
 
-                    $qur4_new = "update`sg_station_event_log_update` set total_time = '$total_time' where sg_station_event_old_id = '$prev_seq'";
+                    $qur2_new="Select SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF('$chicagotime', created_on))) as total_time_new from `sg_station_event_log_update` WHERE station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+                    $res_new = mysqli_query($db, $qur2_new);
+                    $firstrow_new = mysqli_fetch_array($res_new);
+                    $total_time_new = $firstrow_new['total_time_new'];
+
+                    $qur4_new = "update`sg_station_event_log_update` set total_time = '$total_time_new' where sg_station_event_old_id = '$prev_seq'";
                     $result0_new = mysqli_query($db, $qur4_new);
 
 
