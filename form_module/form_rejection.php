@@ -619,8 +619,8 @@ include("../heading_banner.php");
                                 <?php } else if($check_status == null) { ?>
                                         <?php if($r_flag != '1'){ ?>
                                     <td class="tooltip">
-
-                                        <a href="edit_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;" disabled><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <input type="button" value="✓" />
+                                        <!--<a href="" class="btn btn-primary" style="background-color:#1e73be;" disabled><i class="fa fa-edit" aria-hidden="true"></i></a>-->
                                         <!--<span class="tooltiptext">Edit User Form</span>-->
                                     </td>
                                             <?php }else if($r_flag == '1'){ ?>
@@ -636,9 +636,6 @@ include("../heading_banner.php");
                             <td><?php echo $rowc4["part_family_name"]; ?></td>
                             <td><?php echo $rflag; ?></td>
                             <td><?php echo $rowc["created_at"]; ?></td>
-
-
-
 
                         </tr>
                     <?php } ?>

@@ -7,6 +7,7 @@ if (count($_POST) > 0) {
     if ($message != null) {
         $sql1 = "INSERT INTO `comments`(`userid`, `message`,`comment_date`) VALUES ('$userid','$message','$chicagotime')";
         if (!mysqli_query($db, $sql1)) {
+            //header("Location:edit_rejection.php");
         } else {
         }
 
