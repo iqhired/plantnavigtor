@@ -176,6 +176,7 @@ include("../heading_banner.php");
 
         while ($rowcmain = mysqli_fetch_array($qurmain)) {
         $formname = $rowcmain['form_name'];
+        $form_user_data_id = $rowcmain['form_user_data_id'];
 
         ?>
 
@@ -383,24 +384,53 @@ include("../heading_banner.php");
                             <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Comments : </label>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <?php
-                                    $comments = $rowcmain['comments'];
+                                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                    while ($rowct = mysqli_fetch_array($qurt)) {
+                                    $message = $rowct["message"];
+                                    $comment_date = $rowct["comment_date"];
                                     ?>
-                                    <input type="text" name="comments" class="form-control" id="comments"
-                                           value="<?php echo $comments; ?>" disabled>
+                                    <ul class="media-list chat-list content-group">
+                                        <li class="media">
+                                            <div class="media-body">
+                                                <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
+                                                <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+
                                 </div>
+                                <?php } ?>
                             </div>
                             <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">File name : </label>
                                 <div class="col-md-6">
-                                    <?php
-                                    $filename = $rowcmain['filename'];
+                                <?php
+
+                                $qurimage = mysqli_query($db, "SELECT * FROM  form_rejection_data where form_user_data_id = '$form_user_data_id'");
+                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
                                     ?>
-                                    <input type="text" name="comments" class="form-control" id="comments"
-                                           value="<?php echo $filename; ?>" disabled>
-                                </div>
+
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="thumbnail">
+                                            <div class="thumb">
+                                                <img src="../form_images/<?php echo $rowcimage['filename']; ?>"
+                                                     alt="">
+                                                <div class="caption-overflow">
+														<span>
+															<a href="../form_images/<?php echo $rowcimage['filename']; ?>"
+                                                               data-popup="lightbox" rel="gallery"
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                        class="icon-plus3"></i></a>
+														</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
                             </div>
                             <br/>
 

@@ -77,6 +77,18 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <script type="text/javascript" src="index.js" ></script>
     <script type="text/javascript" src="constants.js" ></script>
     <script type="text/javascript" src="speech.js" ></script>
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input#save').on('click', function () {
+                var myForm = $("form#save_update");
+                if (myForm) {
+                    $(this).prop('disabled', true);
+                    $(myForm).submit();
+                }
+            });
+        });
+    </script>
     <script>
         const synth = window.speechSynthesis;
 
@@ -201,6 +213,32 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 border-block-start: inherit;
             }
 
+        }
+        .container {
+            margin: 0 auto;
+        }
+
+        .content_img {
+            width: 113px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .content_img span {
+            border: 2px solid red;
+            display: inline-block;
+            width: 99%;
+            text-align: center;
+            color: red;
+        }
+
+        .content_img span:hover {
+            cursor: pointer;
         }
     </style>
     <style>
@@ -485,17 +523,32 @@ include("../heading_banner.php");
                                     $pin = $rowc04["pin"];
 
                                     ?>
+                                    <input type="hidden" name="pin1" class="form-control" id="pin1"
+                                           value="<?php echo $pin; ?>" disabled>
 
                                     <input type="text" name="createdby" class="form-control" id="createdby"
                                            value="<?php echo $fullnnm; ?>" disabled>
                                 </div>
                             </div>
+
+                            <div class="form_row row">
+                                 <?php
+                                    $qur1 = mysqli_query($db, "SELECT r_flag FROM  form_rejection_data where form_user_data_id = '$form_user_data_id' ");
+                                    $row1 = mysqli_fetch_array($qur1);
+                                    $r_flag = $row1["r_flag"];
+                                    ?>
+                                    <input type="hidden" name="r_flag" class="form-control" id="r_flag"
+                                           value="<?php echo $r_flag; ?>" disabled>
+
+                            </div>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Attachments : </label>
                                 <div class="col-md-6">
                                     <input type="file" name="file" id="file"><br/>
+                                    <div class="container"></div>
                                 </div>
                                 <div class="col-md-2">
+                                    <input type="hidden" name="click_id" id="click_id">
                                     <button type="submit" name="submit" id="submit" onclick="submitForm2('update_user_form_backend.php')" class="btn btn-primary" style="background-color:#1e73be;">submit</button>
                                 </div>
                             </div>
@@ -514,9 +567,6 @@ include("../heading_banner.php");
                 </div>
             </div>
         </div>
-        <form action="" id="image_update" method="post" class="form-horizontal" style="width: 1320px;background-color: white;padding-top: 0px;">
-
-        </form>
         <form action="" id="update-form" method="post" class="form-horizontal" style="width: 1320px;background-color: white;padding-top: 0px;">
             <!--<div class="form_row row">
                 <label class="col-lg-2 control-label">Attachments : </label>
@@ -541,6 +591,7 @@ include("../heading_banner.php");
                         <li class="media">
                             <div class="media-body">
                                 <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
+                                <span class="media-annotation display-block mt-15"><?php echo $fullnnm;?> </span>
                                 <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
                             </div>
                         </li>
@@ -558,11 +609,11 @@ include("../heading_banner.php");
             </div>
             <div class="row" style="padding-top: 0px;">
                 <div class="col-xs-6 text-right" style="padding-left: 280px;">
-                    <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
+                    <button type="button" name="send" id="send" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
                 </div>
             </div>
         </form>
-        <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;">
+        <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;" class="form-disable">
             <div class="form_row row">
                 <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
                 <div class="col-md-3">
@@ -583,21 +634,17 @@ include("../heading_banner.php");
 
                 </div>
                 <div class="col-md-3">
-                                            <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
+                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
                                                             <input type="password" name="pin" id="pin"
                                                                    class="form-control" style=" margin-bottom: 5px;width: auto !important;"
                                                                    placeholder="Enter Pin..."  autocomplete="off" >
                                                             <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                                                        </span>
+                    </span>
                 </div>
                 <div class="col-md-2" style="padding-top: 5px;">
                     <div class="col-xs-6 text-right" style="padding-left: 10px;">
-                        <button type="button" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;">Save</button>
+                        <button type="button" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
                     </div>
-                   <!-- <button type="submit" name="save" id="save" class="btn btn-primary"
-                            style="background-color:#1e73be;">
-                        Save
-                    </button>-->
                 </div>
 
             </div>
@@ -606,6 +653,32 @@ include("../heading_banner.php");
 </div>
 <!-- /content area -->
 </div>
+<script>
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_form_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'></div>");
+                }
+            }
+        });
+    });
+</script>
 <!-- /page container -->
 <script>
     $("#commit").click(function (e) {
@@ -642,12 +715,27 @@ include("../heading_banner.php");
             url: url,
             data: data,
             success: function (data) {
-
+                var pin1 = document.getElementById('pin').value;
+                var pin2 = document.getElementById('pin1').value;
+                var r_flag = document.getElementById('r_flag').value;
                 $("#input").val("")
-                // window.location.href = window.location.href + "?aa=Line 1";
-                //                   $(':input[type="button"]').prop('disabled', false);
-                location.reload();
                 $(".pin").val("");
+                if(r_flag == '0')
+                {
+                    event.preventDefault()
+                    $("form :input").prop("disabled", true);
+                    $(':input[type="button"]').prop('disabled', true);
+                    window.scrollTo(0, 0);
+                }else{}
+                if(pin1 == pin2) {
+                    event.preventDefault()
+                    $("form :input").prop("disabled", true);
+                    $(':input[type="button"]').prop('disabled', true);
+                    window.scrollTo(0, 0);
+                }else
+                {
+                    alert('entered pin is wrong');
+                }
             }
         });
     }
@@ -674,6 +762,7 @@ include("../heading_banner.php");
     }
 
 </script>
+<!--update the filename to database-->
 <script>
     function submitForm2(url) {
         //          $(':input[type="button"]').prop('disabled', true);
@@ -694,19 +783,6 @@ include("../heading_banner.php");
     }
 
 </script>
-
-<?php
-/*$comment = $_POST['comment'];
-$sqlt = "UPDATE `form_rejection_data` SET `comments`='$comment' where form_user_data_id = '$form_user_data_id'";
-$qurmaint = mysqli_query($db, $sqlt);
-if($qurmaint)
-{
-    echo 'success';
-}else{
-    echo 'fail';
-}
-*/?>
-<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 
 </html>
