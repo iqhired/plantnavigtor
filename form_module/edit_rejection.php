@@ -490,6 +490,15 @@ include("../heading_banner.php");
                                            value="<?php echo $fullnnm; ?>" disabled>
                                 </div>
                             </div>
+                            <div class="form_row row">
+                                <label class="col-lg-2 control-label">Attachments : </label>
+                                <div class="col-md-6">
+                                    <input type="file" name="file" id="file"><br/>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" name="submit" id="submit" onclick="submitForm2('update_user_form_backend.php')" class="btn btn-primary" style="background-color:#1e73be;">submit</button>
+                                </div>
+                            </div>
 <!--
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Submitted Time : </label>
@@ -499,93 +508,101 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                             <br/>-->
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Attachments : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="file">
-                                </div>
-                            </div>
-
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Comments : </label>
-                                <div class="col-md-8">
-                                    <?php
-                                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
-                                    while ($rowct = mysqli_fetch_array($qurt)) {
-                                    $message = $rowct["message"];
-                                    $comment_date = $rowct["comment_date"];
-                                    ?>
-                                   <ul class="media-list chat-list content-group">
-                                        <li class="media">
-                                           <div class="media-body">
-                                                <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
-                                                <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <?php } ?>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="padding-left: 950px;">
-                                    <button type="submit" name="submit" id="submit" class="btn btn-primary"
-                                            style="background-color:#1e73be;">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form_row row" id="check">
-                                <label class="col-lg-2 control-label" style="padding-top: 5px">To close form : </label>
-                                <div class="col-md-3">
-                                        <div style="font-size: small !important;">
-                                                <?php
-                                                    $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
-                                                    $rowctemp = mysqli_fetch_array($qurtemp);
-                                                    if ($rowctemp != NULL) {
-                                                        $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
-                                                    }
-                                                    $fullnm = "";
-
-                                                ?>
-                                           <input type="text" name="username" class="form-control" id="username"
-                                                   value="<?php echo $fullnnm; ?>" disabled>
-                                        </div>
-
-                                </div>
-                                <div class="col-md-3">
-                                            <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
-                                                            <input type="password" name="pin[]" id="pin"
-                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
-                                                                   placeholder="Enter Pin..."  autocomplete="off" >
-                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                                                        </span>
-                                </div>
-                                <div class="col-md-2" style="padding-top: 5px;">
-                                    <button type="submit" name="save" id="save" class="btn btn-primary"
-                                            style="background-color:#1e73be;">
-                                        Save
-                                    </button>
-                                </div>
-
-                            </div>
-
-
-                            </form>
+                         </form>
                         <?php } ?>
                     </div>
                 </div>
             </div>
         </div>
-            <form action="" id="update-form" method="post" class="form-horizontal" style="width: 250px;background-color: #d6d8db;padding-top: 0px;">
-                <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
-                <textarea name="enter-message" style="padding-top: 20px;background-color: white;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
-                <div class="row" style="padding-top: 0px;">
-                    <div class="col-xs-6 text-right" style="padding-left: 150px;">
-                        <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
-                    </div>
+        <form action="" id="image_update" method="post" class="form-horizontal" style="width: 1320px;background-color: white;padding-top: 0px;">
+
+        </form>
+        <form action="" id="update-form" method="post" class="form-horizontal" style="width: 1320px;background-color: white;padding-top: 0px;">
+            <!--<div class="form_row row">
+                <label class="col-lg-2 control-label">Attachments : </label>
+                <div class="col-md-6">
+                    <input type="hidden" id="id" name="id" value="<?php /*echo $id; */?>">
+                    <input type="file" name="file" id="file"><br/>
                 </div>
-            </form>
+                <div class="col-md-2">
+                    <button type="button" name="submit" id="submit" class="btn btn-primary" onclick="submitForm2('update_user_form_backend.php')"  style="background-color:#1e73be;">submit</button>
+                </div>
+            </div>-->
+            <div class="form_row row">
+                <label class="col-lg-2 control-label">Comments : </label>
+                <div class="col-md-3">
+                    <?php
+                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                    while ($rowct = mysqli_fetch_array($qurt)) {
+                    $message = $rowct["message"];
+                    $comment_date = $rowct["comment_date"];
+                    ?>
+                    <ul class="media-list chat-list content-group">
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
+                                <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <?php } ?>
+            </div>
+            <div class="form_row row">
+                <label class="col-lg-2 control-label"></label>
+                <div class="col-md-3">
+            <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
+            <textarea name="enter-message" style="padding-top: 20px;background-color: white;width: 250px;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 0px;">
+                <div class="col-xs-6 text-right" style="padding-left: 280px;">
+                    <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
+                </div>
+            </div>
+        </form>
+        <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;">
+            <div class="form_row row">
+                <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
+                <div class="col-md-3">
+                    <div style="font-size: small !important;padding-top: 7px;">
+                        <?php
+                        $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
+                        $rowctemp = mysqli_fetch_array($qurtemp);
+                        if ($rowctemp != NULL) {
+                            $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
+                        }
+                        $fullnm = "";
+
+                        ?>
+                        <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
+                        <input type="text" name="username" class="form-control" id="username"
+                               value="<?php echo $fullnnm; ?>" disabled>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                                            <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
+                                                            <input type="password" name="pin" id="pin"
+                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
+                                                                   placeholder="Enter Pin..."  autocomplete="off" >
+                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
+                                                        </span>
+                </div>
+                <div class="col-md-2" style="padding-top: 5px;">
+                    <div class="col-xs-6 text-right" style="padding-left: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;">Save</button>
+                    </div>
+                   <!-- <button type="submit" name="save" id="save" class="btn btn-primary"
+                            style="background-color:#1e73be;">
+                        Save
+                    </button>-->
+                </div>
+
+            </div>
+        </form>
+
 </div>
 <!-- /content area -->
 </div>
@@ -615,6 +632,27 @@ include("../heading_banner.php");
     });
 
 </script>
+<!--//to close the form-->
+<script>
+    function submitForm1(url) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        var data = $("#save_update").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+
+                $("#input").val("")
+                // window.location.href = window.location.href + "?aa=Line 1";
+                //                   $(':input[type="button"]').prop('disabled', false);
+                location.reload();
+                $(".pin").val("");
+            }
+        });
+    }
+
+</script>
 <!--chatbox message-->
 <script>
     function submitForm(url) {
@@ -629,13 +667,34 @@ include("../heading_banner.php");
                 $("#textarea").val("")
                 // window.location.href = window.location.href + "?aa=Line 1";
                 //                   $(':input[type="button"]').prop('disabled', false);
-                //                   location.reload();
+                                  location.reload();
                 $(".enter-message").val("");
             }
         });
     }
 
 </script>
+<script>
+    function submitForm2(url) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        var data = $("#form_update").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+
+                $("#input").val("")
+                // window.location.href = window.location.href + "?aa=Line 1";
+                //                   $(':input[type="button"]').prop('disabled', false);
+                location.reload();
+                $(".file").val("");
+            }
+        });
+    }
+
+</script>
+
 <?php
 /*$comment = $_POST['comment'];
 $sqlt = "UPDATE `form_rejection_data` SET `comments`='$comment' where form_user_data_id = '$form_user_data_id'";

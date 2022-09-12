@@ -7,16 +7,24 @@ $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 $temp_j = 0;
 if(count($_POST)>0) {
+    $rejtracker_id = "RJT" . rand(10000, 500000);
+    $name = $_POST['name'];
+    $station = $_POST['station'];
+    $part_family = $_POST['part_family'];
+    $part_number = $_POST['part_number'];
 	$created_by = $_SESSION['id'];
 	$is_update = $_POST['update_fud'];
 	$reject_reason = $_POST['reject_reason'];
 	if(!empty($is_update) && ($is_update == 1)){
 		$fid = $_POST['form_user_data_id'];
+        $formcreateid = $_POST['formcreateid'];
+        $form_type = $_POST['form_type'];
+        $created_at = date("Y-m-d H:i:s");
 		$updated_at = date("Y-m-d H:i:s");
-
 		$qur04 = mysqli_query($db, "SELECT count(*) as r_count FROM  form_approval where form_user_data_id = '$fid' and reject_status = '1'");
 		$rowc04 = mysqli_fetch_array($qur04);
 		$r_count = $rowc04['r_count'];
+
 		$sql0 = "";
 
 		$qur08 = mysqli_query($db, "SELECT form_approval_id as app_id FROM `form_approval` where form_user_data_id = '$fid' order by form_approval_id ASC");
@@ -30,7 +38,19 @@ if(count($_POST)>0) {
 				mysqli_query($db, $reason0);
 			}
 			$r ++;
+
 		}
+       /* $qur14 = mysqli_query($db, "SELECT * FROM  form_approval where form_user_data_id = '$fid' and reject_status = '1'");
+        $rowc14 = mysqli_fetch_array($qur14);
+        while ($rowc14 = mysqli_fetch_array($qur14)) {
+            $r_status = $rowc14['reject_status'];
+            $r_flag = 1;
+            if ($r_status == '1') {
+                $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`created_at` ,`updated_at`,`update_by`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$created_at','$updated_at','$updated_at','$r_flag')";
+                mysqli_query($db, $reason1);
+            }
+        }*/
+
 
 		if(!empty($r_count) && ((int)$r_count > 0)){
 			$sql0 = "update `form_user_data` set form_status = 0 , approval_status = 1 where form_user_data_id = '$fid'";
@@ -112,7 +132,8 @@ if(count($_POST)>0) {
 //			$out_of_tolerance_mail_list1 = $rowc0006["out_of_tolerance_mail_list"];
 				}
 				if ($temp_j > 0) {
-
+                    $r_flag = 1;
+                    $file = '';
 //	$subject = "Out of Tolerence Mail Report";
 					require '../vendor/autoload.php';
 					$subject = "Out of Tolerence Mail Report";
@@ -127,6 +148,9 @@ if(count($_POST)>0) {
 					$mail->Username = 'admin@plantnavigator.com';
 					$mail->Password = 'S@@rgummi_2021';
 					$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+                    //insert fail data to new table
+                    $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`created_at` ,`updated_at`,`update_by`,`filename`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$created_at','$updated_at','$updated_at','$file','$r_flag')";
+                    mysqli_query($db, $reason1);
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
 					$del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name , name as form_name   FROM  form_create as fc inner join cam_line as cl on fc.station = cl.line_id inner join pm_part_family as pf on fc.part_family= pf.pm_part_family_id 
@@ -198,6 +222,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 							}
 						}
 					}
+
 
 				}
 			}
@@ -401,5 +426,6 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
 		}
 
 	}
+
 }
 ?>
