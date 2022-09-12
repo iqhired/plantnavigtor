@@ -5,8 +5,8 @@ $taskboard = $_SESSION['taskboard'];
 $user = $_SESSION['user'];
 $date = $_SESSION['assign_date'];
 $curdate = date('Y-m-d');
-$dateto = $_SESSION['date_to1'];
-$datefrom = $_SESSION['date_from1'];
+$dateto = $_SESSION['date_to'];
+$datefrom = $_SESSION['date_from'];
 $button = $_SESSION['button_event'];
 $timezone = $_SESSION['timezone'];
 $event_type = $_SESSION['event_type'];
@@ -14,7 +14,17 @@ $event_category = $_SESSION['event_category'];
 $line_id = $_SESSION['station'];
 $print_data='';
 
-$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,cast(e_log.created_on AS date),cast(e_log.created_on AS Time), cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id inner join event_type as et on e_log.event_type_id = et.event_type_id inner join cam_line as cl on sg_events.line_id = cl.line_id where 1";
+if(empty($dateto)){
+    $curdate = date('Y-m-d',strtotime("-1 days"));
+    $dateto = $curdate;
+}
+
+if(empty($datefrom)){
+    $yesdate = date('Y-m-d',strtotime("-2 days"));
+    $datefrom = $yesdate;
+}
+
+$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,cast(e_log.created_on AS date),cast(e_log.created_on AS Time), cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id inner join event_type as et on e_log.event_type_id = et.event_type_id inner join cam_line as cl on sg_events.line_id = cl.line_id ";
 
 /* If Line is selected. */
 if ($line_id != null) {
@@ -35,7 +45,7 @@ if($datefrom != "" && $dateto != ""){
 }else if($datefrom != "" && $dateto == ""){
 	$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
 }else if($datefrom == "" && $dateto != ""){
-	$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
+	$q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'";
 }
 
 
@@ -47,7 +57,12 @@ if ($event_category != "") {
 	$q = $q . " AND  e_log.event_cat_id ='$event_category'";
 }
 
-$q = $q . " ORDER BY e_log.created_on  ASC";
+if (empty($line_id)){
+    $q = $q . " ORDER BY sg_events.line_id,e_log.created_on";
+}else{
+    $q = $q . " ORDER BY e_log.created_on  ASC";
+}
+
 
 $exportData = mysqli_query($db, $q);
 $header = "Station" . "\t" ."Event Type" . "\t" . "Part Number" . "\t" . "Part Name" . "\t" . "Part Family" .  "\t"  . "Date" .  "\t". "Start Time" . "\t" ."End Time" . "\t" ."Total Time" . "\t" ;
