@@ -155,10 +155,8 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 </head>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "View Rejection Form";
-include("../header.php");
-include("../admin_menu.php");
-include("../heading_banner.php");
+//$cam_page_header = "View Form Data";
+include("../hp_header.php");
 ?>
 <body class="alt-menu sidebar-noneoverflow">
 <!-- /main navbar -->
@@ -395,6 +393,7 @@ include("../heading_banner.php");
                                         <li class="media">
                                             <div class="media-body">
                                                 <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
+                                                <span class="media-annotation display-block mt-15"><?php echo $fullnnm;?> </span>
                                                 <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
                                             </div>
                                         </li>
@@ -405,7 +404,7 @@ include("../heading_banner.php");
                             </div>
                             <br/>
                             <div class="form_row row">
-                                <label class="col-lg-2 control-label">File name : </label>
+                                <label class="col-lg-2 control-label">File: </label>
                                 <div class="col-md-6">
                                 <?php
 
@@ -417,13 +416,13 @@ include("../heading_banner.php");
                                         <div class="thumbnail">
                                             <div class="thumb">
                                                 <img src="../form_images/<?php echo $rowcimage['filename']; ?>"
-                                                     alt="">
+                                                     alt="" target="_blank">
                                                 <div class="caption-overflow">
 														<span>
-															<a href="../form_images/<?php echo $rowcimage['filename']; ?>"
+															<a href="../form_images/<?php echo $rowcimage['filename']; ?>" target="_blank"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3"></i></a>
+                                                                        class="icon-plus3" ></i></a>
 														</span>
                                                 </div>
                                             </div>
@@ -645,8 +644,6 @@ include("../heading_banner.php");
     });
 
 </script>
-<?php include('../footer.php') ?>
-<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 
 </html>
