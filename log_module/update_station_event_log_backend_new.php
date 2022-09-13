@@ -113,8 +113,14 @@ while ($row = mysqli_fetch_array($result0)) {
 				}
 				if(($i > $j) && ( $j !=0)) {
 					if(empty($start_date21)){
-						$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
-						$start_time21 = $start_date21 . ' ' . '00:00:00';
+						if(!empty($end_date_se)){
+							$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
+							$start_time21 = $start_date21 . ' ' . '00:00:00';
+						}elseif (!empty($endtime_1)){
+							$s_et = explode(' ', $endtime_1);
+							$start_date21 = date('Y-m-d', strtotime($s_et[0] . " +1 days"));
+							$start_time21 = $start_date21 . ' ' . '00:00:00';
+						}
 					}else{
 						$start_date21 = date('Y-m-d', strtotime($start_date21 . " +1 days"));
 						$start_time21 = $start_date21 . ' ' . '00:00:00';
