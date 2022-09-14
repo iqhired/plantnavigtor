@@ -823,7 +823,9 @@ $('#reject').on('change', function () {
                 data: data,
                 success: function (data) {
                     $('#btnSubmit').attr('disabled', 'disabled');
-
+                    $('form input[type="radio"]').prop("disabled", true);
+                    $('form input[type="number"]').prop("disabled", true);
+                    $('form input[type="text"]').prop("disabled", true);
                     document.getElementById("form_user_data_id").value = data["form_user_data_id"];
                     document.getElementById("approval_dept_cnt").value = data["approval_dept_cnt"];
                     document.getElementById("rejected_dept_cnt").value = data["rejected_dept_cnt"];
@@ -836,6 +838,7 @@ $('#reject').on('change', function () {
                         var y = document.getElementById("btnSubmit");
                         y.style.display = "none";
                     }
+
                     if(err_cnt > 0){
                         for(var i =0 ; i<dept_cnt ; i++){
                             var z = document.getElementById("rej_reason_div_"+i);

@@ -74,10 +74,18 @@ if (count($_POST) > 0) {
 	$sta = $_POST['station'];
 	$pf = $_POST['part_family'];
 	$pn = $_POST['part_number'];
-	$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
-	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
-		$station1 = $rowctemp["line_name"];
-	}
+	if($station1 == "all"){
+		$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where enabled = '1' and is_deleted != 1 ");
+		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+			$station1 = $rowctemp["line_name"];
+		}
+    }else{
+		$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
+		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+			$station1 = $rowctemp["line_name"];
+		}
+    }
+
 }
 
 if(empty($dateto)){
@@ -93,7 +101,9 @@ if(empty($datefrom)){
 $wc = '';
 
 if(isset($station)){
-	$wc = $wc . " and sg_station_event.line_id = '$station'";
+    if($station != 'all'){
+		$wc = $wc . " and sg_station_event.line_id = '$station'";
+    }
 }
 if(isset($pf)){
 	$_SESSION['pf'] = $pf;
@@ -349,10 +359,17 @@ include("../heading_banner.php");
                                     <select name="station" id="station" class="select"
                                             style="float: left;width: initial;">
                                         <option value="" selected disabled>--- Select Station ---</option>
+
 										<?php
+										$entry = '';
 										$st_dashboard = $_POST['station'];
 										$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
 										$result1 = $mysqli->query($sql1);
+										if($st_dashboard == 'all'){
+											$entry = 'selected';
+                                        }
+										echo "<option value='all'  $entry>" . '--- All Stations ---' . "</option>";
+
 										//                                            $entry = 'selected';
 										while ($row1 = $result1->fetch_assoc()) {
 											if($st_dashboard == $row1['line_id'])
@@ -383,7 +400,7 @@ include("../heading_banner.php");
 										<?php
 										$st_dashboard = $_POST['part_family'];
 										$station = $_POST['station'];
-										$ss = (isset($station)?' and station = ' . $station : '');
+										$ss = ((isset($station) && ($station != 'all'))?' and station = ' . $station : '');
 										$sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1" . $ss;
 										$result1 = $mysqli->query($sql1);
 										while ($row1 = $result1->fetch_assoc()) {

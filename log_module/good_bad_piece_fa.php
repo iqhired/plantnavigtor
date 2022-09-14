@@ -40,9 +40,11 @@ if (count($_POST) > 0) {
 	$sta = $_POST['station'];
 	$pf = $_POST['part_family'];
 	$pn = $_POST['part_number'];
-	$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
-	while ($rowctemp = mysqli_fetch_array($qurtemp)) {
-		$station1 = $rowctemp["line_name"];
+	if(isset($station1) && $station1 != 'all'){
+		$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
+		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
+			$station1 = $rowctemp["line_name"];
+		}
 	}
 }else{
 	$datefrom = $curdate;
@@ -50,9 +52,9 @@ if (count($_POST) > 0) {
 }
 $wc = '';
 
-//if(isset($station)){
+if(isset($station) && $station != 'all'){
 	$wc = $wc . " and sg_station_event.line_id = '$station'";
-//}
+}
 if(isset($pf)){
 	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
 }
