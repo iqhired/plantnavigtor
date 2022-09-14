@@ -28,26 +28,48 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //	header('location: ../logout.php');
     exit;
 }
+$is_tab_login = $_SESSION['is_tab_user'];
+$is_cell_login = $_SESSION['is_cell_login'];
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
 }
+if (count($_POST) > 0) {
+
+    $dateto = $_POST['date_to'];
+    $datefrom = $_POST['date_from'];
+    $button = $_POST['button'];
+
+    $_SESSION['station_1'] = $_POST['station'];
+    $_SESSION['part_family_1'] = $_POST['part_family'];
+    $_SESSION['part_number_1'] = $_POST['part_number'];
+    $_SESSION['form_type_1'] = $_POST['form_type'];
+    $_SESSION['date_from_1'] = $_POST['date_from'];
+    $_SESSION['date_to_1'] = $_POST['date_to'];
+    $_SESSION['timezone_1'] = $_POST['timezone'];
+}else{
+    $curdate = date('Y-m-d');
+    $dateto = $curdate;
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
+    $datefrom = $yesdate;
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?php echo $sitename; ?> |Edit Rejection Form</title>
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
-          type="text/css">
+    <title><?php echo $sitename; ?> | View Rejection Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">-->
+
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>-->
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
     <link href="<?php echo $siteURL; ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $siteURL; ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $siteURL; ?>assets/css/core.css" rel="stylesheet" type="text/css">
@@ -56,503 +78,321 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <link href="<?php echo $siteURL; ?>assets/css/style_main.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     <!-- Core JS files -->
-
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/libs/jquery-3.6.0.min.js"> </script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/media/fancybox.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_select2.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/gallery.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
-
-
-    <script type="text/javascript" src="index.js" ></script>
-    <script type="text/javascript" src="constants.js" ></script>
-    <script type="text/javascript" src="speech.js" ></script>
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('input#save').on('click', function () {
-                var myForm = $("form#save_update");
-                if (myForm) {
-                    $(this).prop('disabled', true);
-                    $(myForm).submit();
-                }
-            });
-        });
-    </script>
-    <script>
-        const synth = window.speechSynthesis;
-
-        const textToSpeech = (string) => {
-            let voice = new SpeechSynthesisUtterance(string);
-            voice.text = string;
-            voice.lang = "en-US";
-            voice.volume = 1;
-            voice.rate = 1;
-            voice.pitch = 1; // Can be 0, 1, or 2
-            synth.speak(voice);
-        }
-    </script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
     <style>
-        #sub_app {
-            padding: 20px 40px;
-            color: red;
-            font-size: initial;
+
+        .mb-4, .my-4 {
+            margin-bottom: 0rem!important;
         }
-
-        #approve_msg {
-            color: red;
-            font-size: x-small;;
+        .pb-2, .py-2 {
+            margin-bottom: 0rem;
         }
-        #success_msg{
-            font-size: large;
-            padding: 12px;
-            width: 30%;
-
+        .card-body {
+            flex: 1 1 auto;
+            padding: 2rem 3rem!important;
         }
-        .form-control[disabled]{
-            color: #000 !important;
+        .mt-3{
+            font-size: 15px!important;
         }
-        #rej_reason_div_{
-            display: none;
-        }
-        .select2-container {
-            width: auto !important;
-            float: left !important;
-        }
-
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #060818!important;
-            border-block-start: none;
-            border-bottom-color: #191e3a!important;
-        }
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #999;
-            border-bottom-style: none;
-        }
-        .approve {
-            background-color: #1e73be;
-            font-size: 12px;
-            margin-left: 16px;
-            margin-top: 1px;
-        }
-        .reject {
-            background-color: #1e73be;
-            font-size: 12px;
-            margin-left: 16px;
-            margin-top: 1px;
-        }
-
-
-
-
-
-        @media
-        only screen and (max-width: 760px),
-        (min-device-width: 768px) and (max-device-width: 1024px) {
-            #success_msg{
-
-                width: 45%;
-
-            }
-
-            .form_row_item{
-                width: 100%;
-            }
-
-            .col-md-3.mob{
-                width:40%;
-            }
-            .form_tab_td{
-                padding: 10px 100px;
-            }
-            /*.reject {*/
-            /*    background-color: #1e73be;*/
-            /*    font-size: 12px;*/
-            /*    margin-left: 16px;*/
-            /*    margin-top: -36px;*/
-            /*    float: right;*/
-            /*}*/
-            textarea.form-control {
-                height: auto;
-                font-size: 15px;
-            }
+        .card-footer {
+            padding: 0.5rem 2rem!important;
 
         }
-        @media
-        only screen and (max-width: 400px),
-        (min-device-width: 400px) and (max-device-width: 670px)  {
-            #success_msg{
-
-                width: 45%;
-
-            }
-            .form_tab_td{
-                padding: 0px 0px;
-            }
-
+        .col-lg-6 {
+            width: 100%;
         }
-        .select2-container--default .select2-selection--single .select2-selection__rendered{
-            line-height: 21px!important;
+        .scrollable {
+            height: 294px; /* or any value */
+            overflow-y: auto;
         }
-        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-            .col-lg-3{
-                width: 35%!important;
-            }
-
-            .select2-selection--single{
-                border-block-start: inherit;
-            }
-
-        }
-        .container {
-            margin: 0 auto;
-        }
-
-        .content_img {
-            width: 113px;
-            float: left;
-            margin-right: 5px;
-            border: 1px solid gray;
-            border-radius: 3px;
-            padding: 5px;
-            margin-top: 10px;
-        }
-
-        /* Delete */
-        .content_img span {
-            border: 2px solid red;
-            display: inline-block;
-            width: 99%;
-            text-align: center;
-            color: red;
-        }
-
-        .content_img span:hover {
-            cursor: pointer;
-        }
-    </style>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=WindSong&display=swap');
-
-        .signature {
-
-            font-family: 'WindSong', swap;
-            font-size: 25px;
-            font-weight: 600;
-        }
-
-        #form_save_btn {
-            background-color: #1e73be;
-            margin-left: 35px;
-            padding: 12px 22px 10px 18px;
-            margin-bottom: 10px;
-        }
-
-        .pn_none {
-            pointer-events: none;
-            color: #050505;
-        }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            /*border-bottom: 1px dotted black;*/
-            opacity: 1!important;
-            overflow: inherit;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #26a69a;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-
-        }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #191e3a!important;
-            line-height: 20px!important;
-        }
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #060818!important;
-            border-block-start: none;
-            border-bottom-color: #191e3a!important;
-        }
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #999;
-            border-bottom-style: inset;
-        }
-        #check {
-            background-color: #90A4AE;
-        }
-
     </style>
 </head>
+<body>
 <!-- Main navbar -->
-<?php
-$cust_cam_page_header = "Edit Rejection Form";
+<?php $cust_cam_page_header = "View Rejection Form";
 include("../header.php");
-include("../admin_menu.php");
+
+if (($is_tab_login || $is_cell_login)) {
+    include("../tab_menu.php");
+} else {
+    include("../admin_menu.php");
+}
 include("../heading_banner.php");
 ?>
-<body class="alt-menu sidebar-noneoverflow">
-<!-- /main navbar -->
-<!-- Page container -->
 <div class="page-container">
-
     <!-- Content area -->
     <div class="content">
-        <?php
-        $id = $_GET['id'];
-        $fill_op_data = $_GET['optional'];
+        <div class="col-md-12" style="background-color: #eee;">
+            <div class="col-md-6">
+                <form action="update_user_form_backend.php" id="form_update" enctype="multipart/form-data"
+                      class="form-horizontal" method="post" autocomplete="off" style="padding-top: 30px;">
+                            <?php
+                            $id = $_GET['id'];
+                            $fill_op_data = $_GET['optional'];
 
-        $querymain = sprintf("SELECT * FROM `form_user_data` where form_user_data_id = '$id' ");
-        $qurmain = mysqli_query($db, $querymain);
+                            $querymain = sprintf("SELECT * FROM `form_user_data` where form_user_data_id = '$id' ");
+                            $qurmain = mysqli_query($db, $querymain);
 
-        while ($rowcmain = mysqli_fetch_array($qurmain)) {
-        $formname = $rowcmain['form_name'];
-        $form_user_data_id = $rowcmain['form_user_data_id'];
+                            while ($rowcmain = mysqli_fetch_array($qurmain)) {
+                                $formname = $rowcmain['form_name'];
+                                $form_user_data_id = $rowcmain['form_user_data_id'];
 
-        ?>
+                                ?>
 
-        <div class="panel panel-flat">
-            <!--                <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
-            <div class="panel-heading">
-                <h5 class="panel-title form_panel_title"><?php echo $rowcmain['form_name']; ?>  </h5>
-                <div class="row ">
-                    <div class="col-md-12">
-                        <form action="update_user_form_backend.php" id="form_update" enctype="multipart/form-data"
-                              class="form-horizontal" method="post" autocomplete="off">
-                            <input type="hidden" name="name" id="name"
-                                   value="<?php echo $rowcmain['form_name']; ?>">
-                            <input type="hidden" name="formcreateid" id="formcreateid"
-                                   value="<?php echo $rowcmain['form_create_id']; ?>">
-                            <input type="hidden" name="form_user_data_id" id="form_user_data_id"
-                                   value="<?php echo $id; ?>">
+                <div class="panel panel-flat">
+                    <!--                <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
+                    <div class="panel-heading">
+                        <h5 class="panel-title form_panel_title"><?php echo $rowcmain['form_name']; ?>  </h5>
+                        <div class="row ">
+                            <div class="col-md-12">
 
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Form link : </label>
-                                <div class="col-md-6">
-                                    <a href="view_rejetion.php?id=<?php echo $rowcmain['form_user_data_id'];?>">
-                                            <u>Link for view the form</u>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Form Type : </label>
-                                <div class="col-md-6">
-                                    <?php
-                                    $get_form_type = $rowcmain['form_type'];
-                                    if ($get_form_type != '') {
-                                        $disabled = 'disabled';
-                                    } else {
-                                        $disabled = '';
-                                    }
-                                    ?>
-                                    <input type="hidden" name="form_type" id="form_type"
-                                           value="<?php echo $get_form_type; ?>">
-                                    <select name="form_type1" id="form_type"
-                                            class="select-border-color" <?php echo $disabled; ?>>
-                                        <option value="" selected disabled>--- Select Form Type ---</option>
-                                        <?php
+                                    <input type="hidden" name="name" id="name"
+                                           value="<?php echo $rowcmain['form_name']; ?>">
+                                    <input type="hidden" name="formcreateid" id="formcreateid"
+                                           value="<?php echo $rowcmain['form_create_id']; ?>">
+                                    <input type="hidden" name="form_user_data_id" id="form_user_data_id"
+                                           value="<?php echo $id; ?>">
 
-                                        $sql1 = "SELECT * FROM `form_type` ";
-                                        $result1 = $mysqli->query($sql1);
-                                        // $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if ($get_form_type == $row1['form_type_id']) {
-                                                $entry = 'selected';
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Form link : </label>
+                                        <div class="col-md-6">
+                                            <a href="view_rejetion.php?id=<?php echo $rowcmain['form_user_data_id'];?>">
+                                                <u>Link for view the form</u>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Form Type : </label>
+                                        <div class="col-md-6">
+                                            <?php
+                                            $get_form_type = $rowcmain['form_type'];
+                                            if ($get_form_type != '') {
+                                                $disabled = 'disabled';
                                             } else {
-                                                $entry = '';
+                                                $disabled = '';
                                             }
-                                            echo "<option value='" . $row1['form_type_id'] . "'  $entry>" . $row1['form_type_name'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Station : </label>
-                                <div class="col-md-6">
+                                            ?>
+                                            <input type="hidden" name="form_type" id="form_type"
+                                                   value="<?php echo $get_form_type; ?>">
+                                            <select name="form_type1" id="form_type"
+                                                    class="select-border-color form-control" <?php echo $disabled; ?>>
+                                                <option value="" selected disabled>--- Select Form Type ---</option>
+                                                <?php
 
-                                    <?php
-                                    $get_station = $rowcmain['station'];
-                                    if ($get_station != '') {
-                                        $disabled = 'disabled';
-                                    } else {
-                                        $disabled = '';
-                                    }
-                                    ?>
+                                                $sql1 = "SELECT * FROM `form_type` ";
+                                                $result1 = $mysqli->query($sql1);
+                                                // $entry = 'selected';
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    if ($get_form_type == $row1['form_type_id']) {
+                                                        $entry = 'selected';
+                                                    } else {
+                                                        $entry = '';
+                                                    }
+                                                    echo "<option value='" . $row1['form_type_id'] . "'  $entry>" . $row1['form_type_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Station : </label>
+                                        <div class="col-md-6">
 
-                                    <input type="hidden" name="station" id="station"
-                                           value="<?php echo $get_station; ?>">
-                                    <select name="station1" id="station1"
-                                            class="select-border-color" <?php echo $disabled; ?>>
-                                        <option value="" selected disabled>--- Select Station ---</option>
-                                        <?php
-                                        $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if ($get_station == $row1['line_id']) {
-                                                $entry = 'selected';
+                                            <?php
+                                            $get_station = $rowcmain['station'];
+                                            if ($get_station != '') {
+                                                $disabled = 'disabled';
                                             } else {
-                                                $entry = '';
+                                                $disabled = '';
                                             }
-                                            echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Part Family : </label>
-                                <div class="col-md-6">
+                                            ?>
 
-                                    <?php
-                                    $get_part_family = $rowcmain['part_family'];
-                                    if ($get_part_family != '') {
-                                        $disabled = 'disabled';
-                                    } else {
-                                        $disabled = '';
-                                    }
-                                    ?>
+                                            <input type="hidden" name="station" id="station"
+                                                   value="<?php echo $get_station; ?>">
+                                            <select name="station1" id="station1"
+                                                    class="select-border-color form-control" <?php echo $disabled; ?>>
+                                                <option value="" selected disabled>--- Select Station ---</option>
+                                                <?php
+                                                $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
+                                                $result1 = $mysqli->query($sql1);
+                                                //                                            $entry = 'selected';
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    if ($get_station == $row1['line_id']) {
+                                                        $entry = 'selected';
+                                                    } else {
+                                                        $entry = '';
+                                                    }
+                                                    echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Part Family : </label>
+                                        <div class="col-md-6">
 
-                                    <input type="hidden" name="part_family" id="part_family"
-                                           value="<?php echo $get_part_family; ?>">
-                                    <select name="part_family1" id="part_family1"
-                                            class="select-border-color" <?php echo $disabled; ?>>
-                                        <option value="" selected disabled>--- Select Part Family ---</option>
-                                        <?php
-                                        $sql1 = "SELECT * FROM `pm_part_family` ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if ($get_part_family == $row1['pm_part_family_id']) {
-                                                $entry = 'selected';
+                                            <?php
+                                            $get_part_family = $rowcmain['part_family'];
+                                            if ($get_part_family != '') {
+                                                $disabled = 'disabled';
                                             } else {
-                                                $entry = '';
+                                                $disabled = '';
                                             }
-                                            echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Part Number : </label>
-                                <div class="col-md-6">
+                                            ?>
 
-                                    <?php
-                                    $get_part_number = $rowcmain['part_number'];
-                                    if ($get_part_number != '') {
-                                        $disabled = 'disabled';
-                                    } else {
-                                        $disabled = '';
-                                    }
-                                    ?>
+                                            <input type="hidden" name="part_family" id="part_family"
+                                                   value="<?php echo $get_part_family; ?>">
+                                            <select name="part_family1" id="part_family1"
+                                                    class="select-border-color form-control" <?php echo $disabled; ?>>
+                                                <option value="" selected disabled>--- Select Part Family ---</option>
+                                                <?php
+                                                $sql1 = "SELECT * FROM `pm_part_family` ";
+                                                $result1 = $mysqli->query($sql1);
+                                                //                                            $entry = 'selected';
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    if ($get_part_family == $row1['pm_part_family_id']) {
+                                                        $entry = 'selected';
+                                                    } else {
+                                                        $entry = '';
+                                                    }
+                                                    echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Part Number : </label>
+                                        <div class="col-md-6">
 
-                                    <input type="hidden" name="part_number" id="part_number"
-                                           value="<?php echo $get_part_number; ?>">
-                                    <select name="part_number1" id="part_number1"
-                                            class="select-border-color" <?php echo $disabled; ?>>
-                                        <option value="" selected disabled>--- Select Part Number ---</option>
-                                        <?php
-                                        $sql1 = "SELECT * FROM `pm_part_number` ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if ($get_part_number == $row1['pm_part_number_id']) {
-                                                $entry = 'selected';
+                                            <?php
+                                            $get_part_number = $rowcmain['part_number'];
+                                            if ($get_part_number != '') {
+                                                $disabled = 'disabled';
                                             } else {
-                                                $entry = '';
+                                                $disabled = '';
                                             }
-                                            echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
-                                        }
+                                            ?>
+
+                                            <input type="hidden" name="part_number" id="part_number"
+                                                   value="<?php echo $get_part_number; ?>">
+                                            <select name="part_number1" id="part_number1"
+                                                    class="select-border-color form-control" <?php echo $disabled; ?> style=" width: 360px;">
+                                                <option value="" selected disabled>--- Select Part Number ---</option>
+                                                <?php
+                                                $sql1 = "SELECT * FROM `pm_part_number` ";
+                                                $result1 = $mysqli->query($sql1);
+                                                //                                            $entry = 'selected';
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    if ($get_part_number == $row1['pm_part_number_id']) {
+                                                        $entry = 'selected';
+                                                    } else {
+                                                        $entry = '';
+                                                    }
+                                                    echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form_row row">
+                                        <label class="col-lg-2 control-label">Operator : </label>
+                                        <div class="col-md-6">
+
+                                            <?php
+                                            $createdby = $rowcmain['created_by'];
+                                            $datetime = $rowcmain["created_at"];
+                                            $create_date = strtotime($datetime);
+                                            $qur04 = mysqli_query($db, "SELECT firstname,lastname,pin FROM  cam_users where users_id = '$createdby' ");
+                                            $rowc04 = mysqli_fetch_array($qur04);
+                                            $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
+                                            $pin = $rowc04["pin"];
+
+                                            ?>
+                                            <input type="hidden" name="pin1" class="form-control" id="pin1"
+                                                   value="<?php echo $pin; ?>" disabled>
+
+                                            <input type="text" name="createdby" class="form-control" id="createdby"
+                                                   value="<?php echo $fullnnm; ?>" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form_row row">
+                                        <?php
+                                        $qur1 = mysqli_query($db, "SELECT r_flag FROM  form_rejection_data where form_user_data_id = '$form_user_data_id' ");
+                                        $row1 = mysqli_fetch_array($qur1);
+                                        $r_flag = $row1["r_flag"];
                                         ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Operator : </label>
-                                <div class="col-md-6">
+                                        <input type="hidden" name="r_flag" class="form-control" id="r_flag"
+                                               value="<?php echo $r_flag; ?>" disabled>
 
-                                    <?php
-                                    $createdby = $rowcmain['created_by'];
-                                    $datetime = $rowcmain["created_at"];
-                                    $create_date = strtotime($datetime);
-                                    $qur04 = mysqli_query($db, "SELECT firstname,lastname,pin FROM  cam_users where users_id = '$createdby' ");
-                                    $rowc04 = mysqli_fetch_array($qur04);
-                                    $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
-                                    $pin = $rowc04["pin"];
+                                    </div>
+<!--                                    <div class="form_row row">-->
+<!--                                        <label class="col-lg-2 control-label">Attachments : </label>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <input type="file" name="file" id="file"><br/>-->
+<!--                                            <div class="container"></div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-2">-->
+<!--                                            <input type="hidden" name="click_id" id="click_id">-->
+<!--                                            <button type="submit" name="submit" id="submit" onclick="submitForm2('update_user_form_backend.php')" class="btn btn-primary" style="background-color:#1e73be;">submit</button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
-                                    ?>
-                                    <input type="hidden" name="pin1" class="form-control" id="pin1"
-                                           value="<?php echo $pin; ?>" disabled>
+                                    <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;" class="form-disable">
+                                        <div class="form_row row" style="background-color: #eee;">
+                                            <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
+                                            <div class="col-md-3">
+                                                <div style="font-size: small !important;padding-top: 7px;">
+                                                    <?php
+                                                    $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
+                                                    $rowctemp = mysqli_fetch_array($qurtemp);
+                                                    if ($rowctemp != NULL) {
+                                                        $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
+                                                    }
+                                                    $fullnm = "";
 
-                                    <input type="text" name="createdby" class="form-control" id="createdby"
-                                           value="<?php echo $fullnnm; ?>" disabled>
-                                </div>
-                            </div>
+                                                    ?>
+                                                    <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
+                                                    <input type="text" name="username" class="form-control" id="username"
+                                                           value="<?php echo $fullnnm; ?>" disabled>
+                                                </div>
 
-                            <div class="form_row row">
-                                 <?php
-                                    $qur1 = mysqli_query($db, "SELECT r_flag FROM  form_rejection_data where form_user_data_id = '$form_user_data_id' ");
-                                    $row1 = mysqli_fetch_array($qur1);
-                                    $r_flag = $row1["r_flag"];
-                                    ?>
-                                    <input type="hidden" name="r_flag" class="form-control" id="r_flag"
-                                           value="<?php echo $r_flag; ?>" disabled>
+                                            </div>
+                                            <div class="col-md-3">
+                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
+                                                            <input type="password" name="pin" id="pin"
+                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
+                                                                   placeholder="Enter Pin..."  autocomplete="off" >
+                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
+                    </span>
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 5px;">
+                                                <div class="col-xs-6 text-right" style="padding-left: 50px;">
+                                                    <button type="button" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
+                                                </div>
+                                            </div>
 
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Attachments : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="file" id="file"><br/>
-                                    <div class="container"></div>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="hidden" name="click_id" id="click_id">
-                                    <button type="submit" name="submit" id="submit" onclick="submitForm2('update_user_form_backend.php')" class="btn btn-primary" style="background-color:#1e73be;">submit</button>
-                                </div>
-                            </div>
-<!--
+                                        </div>
+                                    </form>
+                                    <!--
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Submitted Time : </label>
                                 <div class="col-md-6">
@@ -561,124 +401,77 @@ include("../heading_banner.php");
                                 </div>
                             </div>
                             <br/>-->
-                         </form>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <form action="" id="update-form" method="post" class="form-horizontal" style="width: 1320px;background-color: white;padding-top: 0px;">
-            <!--<div class="form_row row">
-                <label class="col-lg-2 control-label">Attachments : </label>
-                <div class="col-md-6">
-                    <input type="hidden" id="id" name="id" value="<?php /*echo $id; */?>">
-                    <input type="file" name="file" id="file"><br/>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" name="submit" id="submit" class="btn btn-primary" onclick="submitForm2('update_user_form_backend.php')"  style="background-color:#1e73be;">submit</button>
-                </div>
-            </div>-->
-            <div class="form_row row">
-                <label class="col-lg-2 control-label">Comments : </label>
-                <div class="col-md-3">
-                    <?php
-                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
-                    while ($rowct = mysqli_fetch_array($qurt)) {
-                    $message = $rowct["message"];
-                    $comment_date = $rowct["comment_date"];
-                    ?>
-                    <ul class="media-list chat-list content-group">
-                        <li class="media">
-                            <div class="media-body">
-                                <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
-                                <span class="media-annotation display-block mt-15"><?php echo $fullnnm;?> </span>
-                                <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
+
+
                             </div>
-                        </li>
-                    </ul>
-
-                </div>
-                <?php } ?>
-            </div>
-            <div class="form_row row">
-                <label class="col-lg-2 control-label"></label>
-                <div class="col-md-3">
-            <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
-            <textarea name="enter-message" id="enter-message" style="padding-top: 20px;background-color: white;width: 250px;" class="form-control content-group enter-message" rows="3" cols="1" placeholder="Enter your message..."></textarea>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 0px;">
-                <div class="col-xs-6 text-right" style="padding-left: 280px;">
-                    <button type="button" name="send" id="send" class="btn btn-primary" onclick="submitForm('comment_backend.php')"  style="background-color:#1e73be;">Send</button>
-                </div>
-            </div>
-        </form>
-        <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;" class="form-disable">
-            <div class="form_row row">
-                <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
-                <div class="col-md-3">
-                    <div style="font-size: small !important;padding-top: 7px;">
-                        <?php
-                        $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
-                        $rowctemp = mysqli_fetch_array($qurtemp);
-                        if ($rowctemp != NULL) {
-                            $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
-                        }
-                        $fullnm = "";
-
-                        ?>
-                        <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
-                        <input type="text" name="username" class="form-control" id="username"
-                               value="<?php echo $fullnnm; ?>" disabled>
-                    </div>
-
-                </div>
-                <div class="col-md-3">
-                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
-                                                            <input type="password" name="pin" id="pin"
-                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
-                                                                   placeholder="Enter Pin..."  autocomplete="off" >
-                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                    </span>
-                </div>
-                <div class="col-md-2" style="padding-top: 5px;">
-                    <div class="col-xs-6 text-right" style="padding-left: 10px;">
-                        <button type="button" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
+                        </div>
                     </div>
                 </div>
-
+                            <?php } ?>
+                </form>
             </div>
-        </form>
+            <div class="col-md-6">
+                <form action="" id="update-form" method="post"  class="form-horizontal">
+                <section>
+                    <div class="container my-5">
+                        <div class="row d-flex justify-content-center ">
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="card">
+                                    <div class="card-body scrollable">
+                                        <?php
+                                        $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                        while ($rowct = mysqli_fetch_array($qurt)) {
+                                        $message = $rowct["message"];
+                                        $comment_date = $rowct["comment_date"];
+                                        ?>
+                                        <p class="mt-3 pb-2">
+                                            <?php echo $rowct["message"]."<br/>"; ?>
+                                        </p>
 
+
+                                            <p class="small mb-0">
+                                                <?php echo $fullnnm;?> - <?php echo $rowct["comment_date"];?>
+                                            </p>
+
+
+                                        <?php } ?>
+                                    </div>
+
+                                    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                                        <div class="d-flex flex-start w-100">
+
+                                            <div class="form-outline w-100">
+                                                <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
+                                               <textarea class="form-control" name="enter-message" id="enter-message" rows="4" style="background: #fff;"></textarea>
+                                                <label class="form-label" for="textAreaExample">Message</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-lg-2 control-label">Attachments : </label>
+                                            <div class="col-md-6">
+                                                <input type="file" name="com_file" id="com_file"><br/>
+                                                <div class="container"></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="mt-2 pt-1">
+                                            <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')">SEND</button>
+<!--                                            <button type="button" class="btn btn-outline-primary">Cancel</button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </form>
+
+                        </div>
+                    </div>
+    </div>
 </div>
-<!-- /content area -->
-</div>
-<script>
-    $("#file").on("change", function () {
-        var fd = new FormData();
-        var files = $('#file')[0].files[0];
-        fd.append('file', files);
-        fd.append('request', 1);
-        // AJAX request
-        $.ajax({
-            url: 'add_delete_form_image.php',
-            type: 'post',
-            data: fd,
-            contentType: false,
-            processData: false,
-            success: function (response) {
 
-                if (response != 0) {
-                    var count = $('.container .content_img').length;
-                    count = Number(count) + 1;
 
-                    // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'></div>");
-                }
-            }
-        });
-    });
-</script>
 <!-- /page container -->
 <script>
     $("#commit").click(function (e) {
@@ -686,6 +479,7 @@ include("../heading_banner.php");
             var data = $("#form_update").serialize();
             $.ajax({
                 type: 'POST',
+                url: 'edit_rejection.php',
                 url: 'edit_rejection.php',
                 dataType: "json",
                 // context: this,
@@ -760,7 +554,7 @@ include("../heading_banner.php");
                 $("#textarea").val("")
                 // window.location.href = window.location.href + "?aa=Line 1";
                 //                   $(':input[type="button"]').prop('disabled', false);
-                                  location.reload();
+                location.reload();
                 $(".enter-message").val("");
             }
         });
@@ -789,5 +583,3 @@ include("../heading_banner.php");
 
 </script>
 </body>
-
-</html>
