@@ -538,7 +538,7 @@ include("../heading_banner.php");
                                     <div class="row">
                                         <label class="col-lg-2 control-label">Needs Approval : </label>
                                         <div class="col-md-6">
-                                          <input type="checkbox" class="checkbox-control" name="need_approval" id="need_approval">
+                                          <input type="checkbox" class="checkbox-control" name="need_approval" id="need_approval" checked>
                                         </div>
                                     </div>
                                     <br/>

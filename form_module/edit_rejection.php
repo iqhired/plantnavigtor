@@ -432,6 +432,7 @@ include("../heading_banner.php");
                                             <p class="small mb-0">
                                                 <?php echo $fullnnm;?> - <?php echo $rowct["comment_date"];?>
                                             </p>
+                                            <hr>
 
 
                                         <?php } ?>
