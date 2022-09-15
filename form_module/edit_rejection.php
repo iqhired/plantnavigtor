@@ -121,6 +121,18 @@ if (count($_POST) > 0) {
             height: 294px; /* or any value */
             overflow-y: auto;
         }
+        .thumbnail{
+            padding: 0px;
+            width: 100px;
+            height: 100px;
+        }
+        .thumb img:not(.media-preview){
+            height: 100px !important;
+        }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            .com-mobile-version {
+                width: 100%;
+            }
     </style>
 </head>
 <body>
@@ -139,7 +151,7 @@ include("../heading_banner.php");
     <!-- Content area -->
     <div class="content">
         <div class="col-md-12" style="background-color: #eee;">
-            <div class="col-md-6">
+            <div class="col-md-6 com-mobile-version">
                 <form action="update_user_form_backend.php" id="form_update" enctype="multipart/form-data"
                       class="form-horizontal" method="post" autocomplete="off" style="padding-top: 30px;">
                             <?php
@@ -410,7 +422,8 @@ include("../heading_banner.php");
                             <?php } ?>
                 </form>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-6 com-mobile-version">
                 <form action="" id="update-form" method="post"  class="form-horizontal">
                 <section>
                     <div class="container my-5">
@@ -419,18 +432,42 @@ include("../heading_banner.php");
                                 <div class="card">
                                     <div class="card-body scrollable">
                                         <?php
-                                        $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                        $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
                                         while ($rowct = mysqli_fetch_array($qurt)) {
+                                        $comment_id = $rowct["slno"];
                                         $message = $rowct["message"];
                                         $comment_date = $rowct["comment_date"];
                                         ?>
                                         <p class="mt-3 pb-2">
                                             <?php echo $rowct["message"]."<br/>"; ?>
                                         </p>
+                                            <p class="small mb-0">
+                                                <?php
+                                                $c_file = mysqli_query($db, "SELECT * FROM  comment_files where comment_id = '$comment_id' ");
+                                                while ($rowct = mysqli_fetch_array($c_file)) {
+                                                    $file_name = $rowct["file_name"];
 
+                                                } ?>
+
+                                            <div class="thumbnail">
+                                                <div class="thumb">
+                                                    <img src="../comment_files/<?php echo $file_name; ?>"
+                                                         alt="">
+                                                    <div class="caption-overflow">
+														<span>
+															<a href="../comment_files/<?php echo $file_name; ?>"
+                                                               data-popup="lightbox" rel="gallery"
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                        class="icon-plus3"></i></a>
+														</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            </p>
 
                                             <p class="small mb-0">
-                                                <?php echo $fullnnm;?> - <?php echo $rowct["comment_date"];?>
+                                                <?php echo $fullnnm;?> - <?php echo $comment_date;?>
                                             </p>
                                             <hr>
 
@@ -560,6 +597,27 @@ include("../heading_banner.php");
             }
         });
     }
+
+
+    $("#com_file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#com_file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+
+        // AJAX request
+        $.ajax({
+            url: 'comment_file_backend.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+
+            }
+        });
+    });
 
 </script>
 <!--update the filename to database-->
