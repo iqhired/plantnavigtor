@@ -152,7 +152,7 @@ include("../heading_banner.php");
     <div class="content">
         <div class="col-md-12" style="background-color: #eee;">
             <div class="col-md-6 com-mobile-version">
-                <form action="update_user_form_backend.php" id="form_update" enctype="multipart/form-data"
+                <form action="" id="form_update" enctype="multipart/form-data"
                       class="form-horizontal" method="post" autocomplete="off" style="padding-top: 30px;">
                             <?php
                             $id = $_GET['id'];
@@ -368,42 +368,10 @@ include("../heading_banner.php");
 <!--                                        </div>-->
 <!--                                    </div>-->
 
-                                    <form action="" id="save_update" method="post" style="background-color: lightslategray;height: 70px;" class="form-disable">
-                                        <div class="form_row row" style="background-color: #eee;">
-                                            <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
-                                            <div class="col-md-3">
-                                                <div style="font-size: small !important;padding-top: 7px;">
-                                                    <?php
-                                                    $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
-                                                    $rowctemp = mysqli_fetch_array($qurtemp);
-                                                    if ($rowctemp != NULL) {
-                                                        $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
-                                                    }
-                                                    $fullnm = "";
+                                <!--<form action="savepin_backend.php" id="save_update" enctype="multipart/form-data"
+                                      class="form-horizontal" method="post" autocomplete="off" style="padding-top: 30px;">
 
-                                                    ?>
-                                                    <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
-                                                    <input type="text" name="username" class="form-control" id="username"
-                                                           value="<?php echo $fullnnm; ?>" disabled>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-3">
-                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
-                                                            <input type="password" name="pin" id="pin"
-                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
-                                                                   placeholder="Enter Pin..."  autocomplete="off" >
-                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                    </span>
-                                            </div>
-                                            <div class="col-md-2" style="padding-top: 5px;">
-                                                <div class="col-xs-6 text-right" style="padding-left: 50px;">
-                                                    <button type="button" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </form>
+                                    </form>-->
                                     <!--
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Submitted Time : </label>
@@ -414,7 +382,40 @@ include("../heading_banner.php");
                             </div>
                             <br/>-->
 
+                                <div class="form_row row" style="background-color: #eee;">
+                                    <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
+                                    <div class="col-md-3">
+                                        <div style="font-size: small !important;padding-top: 7px;">
+                                            <?php
+                                            $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
+                                            $rowctemp = mysqli_fetch_array($qurtemp);
+                                            if ($rowctemp != NULL) {
+                                                $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
+                                            }
+                                            $fullnm = "";
 
+                                            ?>
+                                            <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
+                                            <input type="text" name="username" class="form-control" id="username"
+                                                   value="<?php echo $fullnnm; ?>" disabled>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
+                                                            <input type="password" name="pin" id="pin"
+                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
+                                                                   placeholder="Enter Pin..."  autocomplete="off" >
+                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
+                    </span>
+                                    </div>
+                                    <div class="col-md-2" style="padding-top: 5px;">
+                                        <div class="col-xs-6 text-right" style="padding-left: 50px;">
+                                            <button type="submit" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -493,7 +494,7 @@ include("../heading_banner.php");
 
                                         </div>
                                         <div class="mt-2 pt-1">
-                                            <button type="button" class="btn btn-primary" onclick="submitForm('comment_backend.php')">SEND</button>
+                                            <button type="button" id="send" class="btn btn-primary" onclick="submitForm('comment_backend.php')">SEND</button>
 <!--                                            <button type="button" class="btn btn-outline-primary">Cancel</button>-->
                                         </div>
                                     </div>
@@ -541,8 +542,25 @@ include("../heading_banner.php");
 <script>
     function submitForm1(url) {
         //          $(':input[type="button"]').prop('disabled', true);
-        var data = $("#save_update").serialize();
+        var data = $("#form_update").serialize();
         $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+
+                $("#input").val("")
+                // window.location.href = window.location.href + "?aa=Line 1";
+                //                   $(':input[type="button"]').prop('disabled', false);
+                event.preventDefault()
+                $("form :input").prop("disabled", true);
+                $(':input[type="button"]').prop('disabled', true);
+                window.scrollTo(0, 0);
+                $(".pin").val("");
+            }
+        });
+    }
+       /* $.ajax({
             type: 'POST',
             url: url,
             data: data,
@@ -563,18 +581,16 @@ include("../heading_banner.php");
                 }
             }
         });
-    }
+    }*/
 
 </script>
 <script>
     let flag = document.getElementById('r_flag').value;
     if(flag == '0')
     {
-        document.getElementById('submit').disabled = true;
         document.getElementById('save').disabled = true;
+        document.getElementById('com_file').disabled = true;
         document.getElementById('send').disabled = true;
-        document.getElementById('file').disabled = true;
-        document.getElementById('enter-message').disabled = true;
 
     }else{}
 </script>
@@ -622,7 +638,7 @@ include("../heading_banner.php");
 </script>
 <!--update the filename to database-->
 <script>
-    function submitForm2(url) {
+  /*  function submitForm2(url) {
         //          $(':input[type="button"]').prop('disabled', true);
         var data = $("#form_update").serialize();
         $.ajax({
@@ -638,7 +654,7 @@ include("../heading_banner.php");
                 $(".file").val("");
             }
         });
-    }
+    }*/
 
 </script>
 </body>
