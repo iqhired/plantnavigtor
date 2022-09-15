@@ -450,7 +450,6 @@ include("../heading_banner.php");
                                         </div>
 									<?php } ?>
                                 </div>
-
                                 <br/>
                                 <b><h4 class="panel-title form_panel_title">Form Information</h4></b>
 								<?php
