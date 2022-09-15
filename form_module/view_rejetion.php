@@ -149,6 +149,9 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             color: #999;
             border-bottom-style: inset;
         }
+        .chat-list, .chat-stacked {
+            max-height: 350px;
+        }
 
 
     </style>
@@ -382,14 +385,15 @@ include("../hp_header.php");
                             <br/>
                             <div class="form_row row">
                                 <label class="col-lg-2 control-label">Comments : </label>
-                                <div class="col-md-3">
-                                    <?php
-                                    $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
-                                    while ($rowct = mysqli_fetch_array($qurt)) {
-                                    $message = $rowct["message"];
-                                    $comment_date = $rowct["comment_date"];
-                                    ?>
+                                <div class="col-md-6">
+
                                     <ul class="media-list chat-list content-group">
+                                        <?php
+                                        $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                        while ($rowct = mysqli_fetch_array($qurt)) {
+                                        $message = $rowct["message"];
+                                        $comment_date = $rowct["comment_date"];
+                                        ?>
                                         <li class="media">
                                             <div class="media-body">
                                                 <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
@@ -397,10 +401,11 @@ include("../hp_header.php");
                                                 <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
                                             </div>
                                         </li>
+                                        <?php } ?>
                                     </ul>
 
                                 </div>
-                                <?php } ?>
+
                             </div>
                             <br/>
                             <div class="form_row row">
