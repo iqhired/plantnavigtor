@@ -152,6 +152,20 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         .chat-list, .chat-stacked {
             max-height: 350px;
         }
+        .thumbnail{
+            padding: 0px;
+            width: 100px;
+            height: 100px;
+        }
+        .thumb img:not(.media-preview){
+            height: 100px !important;
+        }
+        .display-block, label.display-block {
+            display: inherit;
+        }
+        .icon-plus3 {
+            color: #fff;
+        }
 
 
     </style>
@@ -389,15 +403,40 @@ include("../hp_header.php");
 
                                     <ul class="media-list chat-list content-group">
                                         <?php
-                                        $qurt = mysqli_query($db, "SELECT message,comment_date FROM  comments where userid = '$form_user_data_id' ");
+                                        $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
                                         while ($rowct = mysqli_fetch_array($qurt)) {
                                         $message = $rowct["message"];
                                         $comment_date = $rowct["comment_date"];
+                                        $comment_id = $rowct["slno"];
                                         ?>
                                         <li class="media">
                                             <div class="media-body">
                                                 <div class="media-content"><?php echo $rowct["message"]."<br/>"; ?></div>
-                                                <span class="media-annotation display-block mt-15"><?php echo $fullnnm;?> </span>
+
+
+                                                <?php
+
+                                                $qurimage = mysqli_query($db, "SELECT * FROM  comment_files where comment_id = '$comment_id'");
+                                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                                    ?>
+
+                                                        <div class="thumbnail">
+                                                            <div class="thumb">
+                                                                <img src="../comment_files/<?php echo $rowcimage['file_name']; ?>"
+                                                                     alt="" target="_blank">
+                                                                <div class="caption-overflow">
+														<span style="margin-left: -50px;">
+															<a href="../comment_files/<?php echo $rowcimage['file_name']; ?>" target="_blank"
+                                                               data-popup="lightbox" rel="gallery"
+                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                        class="icon-plus3" ></i></a>
+														</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                <?php } ?>
+                                                <span class="media-annotation display-block mt-15"><?php echo $fullnnm ." -- ";?> </span>
                                                 <span class="media-annotation display-block mt-15"><?php echo $rowct["comment_date"];?> </span>
                                             </div>
                                         </li>
@@ -406,35 +445,6 @@ include("../hp_header.php");
 
                                 </div>
 
-                            </div>
-                            <br/>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">File: </label>
-                                <div class="col-md-6">
-                                <?php
-
-                                $qurimage = mysqli_query($db, "SELECT * FROM  form_rejection_data where form_user_data_id = '$form_user_data_id'");
-                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                    ?>
-
-                                    <div class="col-lg-3 col-sm-6">
-                                        <div class="thumbnail">
-                                            <div class="thumb">
-                                                <img src="../form_images/<?php echo $rowcimage['filename']; ?>"
-                                                     alt="" target="_blank">
-                                                <div class="caption-overflow">
-														<span>
-															<a href="../form_images/<?php echo $rowcimage['filename']; ?>" target="_blank"
-                                                               data-popup="lightbox" rel="gallery"
-                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3" ></i></a>
-														</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            </div>
                             </div>
                             <br/>
 
