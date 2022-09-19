@@ -63,7 +63,7 @@ if (count($_POST) > 0) {
     $timezone = $_POST['timezone'];
 }
 if (count($_POST) > 0) {
-    $pf = $_POST['pm_part_family_id'];
+    $pf = $_POST['part_family'];
     $station = $_POST['station'];
 }
 
@@ -80,11 +80,11 @@ if(empty($datefrom)){
 $wc = '';
 if(isset($pf)){
     $_SESSION['pf'] = $pf;
-    $wc = $wc . " and pm_part_family.part_family_id = '$pf'";
+    $wc = $wc . " and form_user_data.part_family = '$pf'";
 }
 if(isset($station)){
     $_SESSION['station'] = $station;
-        $wc = $wc . " and pm_part_family.station = 'station'";
+        $wc = $wc . " and form_user_data.station = '$station'";
 }
 /* If Data Range is selected */
 if ($button == "button1") {
@@ -162,7 +162,7 @@ if ($button == "button1") {
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script>
-        $(document).ready(function(){
+       /* $(document).ready(function(){
             $("select.cus_id").change(function(){
                 var selectedCountry = $(".cus_id option:selected").val();
                 $.ajax({
@@ -173,7 +173,7 @@ if ($button == "button1") {
                     $("#part_family").html(data);
                 });
             });
-        });
+        });*/
     </script>
     <style>
         .anychart-credits{
@@ -310,10 +310,10 @@ include("../heading_banner.php");
                                     <?php
                                     $entry = '';
                                     $st_dashboard = $_POST['cus_id'];
-                                    $sql1 = "SELECT * FROM `part_family_account_relation` ORDER BY `part_family_id` ASC ";
-                                    $result1 = $mysqli->query($sql1);
-                                    while ($row1 = $result1->fetch_assoc()) {
-                                        if($st_dashboard == $row1['part_family_id'])
+                                    $sql11 = "SELECT * FROM `cus_account` ORDER BY `c_name` ASC ";
+                                    $result11 = $mysqli->query($sql11);
+                                    while ($row11 = $result11->fetch_assoc()) {
+                                        if($st_dashboard == $row11['c_id'])
                                         {
                                             $entry = 'selected';
                                         }
@@ -322,62 +322,70 @@ include("../heading_banner.php");
                                             $entry = '';
 
                                         }
-                                        echo "<option value='" . $row1['part_family_id'] . "'  $entry>" . $row1['part_family_id'] . "</option>";
+                                        echo "<option value='" . $row11['c_id'] . "'$entry>" . $row11['c_name'] . "</option>";
                                     }
                                     ?>
 
                                 </select>
                             </div>
-                            <!--
-                                                         <div class="col-md-1"></div>-->
                         </div>
-                            <div class="col-md-6 mobile">
+                        <div class="col-md-6 mobile">
 
-                                <label class="col-lg-3 control-label" >Part Family *  :</label>
+                            <label class="col-lg-3 control-label" >Part Family  :</label>
 
-                                <div class="col-lg-5">
-                                    <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
-                                        <option value="" selected disabled>--- Select Part Family ---</option>
-                                        <?php
-                                        $st_dashboard1 = $_POST['part_family'];
-                                        $sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1 and pm_part_family_id = '$st_dashboard'";
-                                        $result1 = $mysqli->query($sql1);
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            $st_station = $row1['station'];
-                                            if($st_dashboard == $row1['pm_part_family_id'])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
-
-                                            }
-                                            echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+                            <div class="col-lg-8">
+                                <select name="part_f" id="part_f" class="select" data-style="bg-slate" >
+                                    <option value="" selected disabled>--- Select Part Family ---</option>
+                                    <?php
+                                    $entry = '';
+                                    $st_dashboard1 = $_POST['part_f'];
+                                    $sql22 = "SELECT * FROM `part_family_account_relation` where account_id = '$st_dashboard'";
+                                    $result22 = $mysqli->query($sql22);
+                                    while ($row22 = $result22->fetch_assoc()) {
+                                        $part_family_id = $row22['part_family_id'];
+                                        if($st_dashboard1 == $row22['account_id'])
+                                        {
+                                            $entry = 'selected';
                                         }
-                                        ?>
-                                    </select>
-                                </div>
-                    </div>
+                                        else
+                                        {
+                                            $entry = '';
+
+                                        }
+                                        $sqlp = "SELECT pm_part_family_id,part_family_name,station FROM `pm_part_family` where `pm_part_family_id` = '$part_family_id'";
+                                        $resultp = $mysqli->query($sqlp);
+                                        while ($row22 = $resultp->fetch_assoc()) {
+                                            $part_station = $row22['station'];
+                                            $pm_part_family_id = $row22['pm_part_family_id'];
+                                            echo "<option value='" . $row22['pm_part_family_id '] . "'$entry>" . $row22['part_family_name'] . "</option>";
+
+                                        }
+
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                         <br/>
                         <div class="row">
                             <div class="col-md-6 mobile">
 
+
                                 <label class="col-lg-2 control-label">Station :</label>
 
-                                <div class="col-lg-6">
-                                    <select name="station" id="station" class="select"
+                                <div class="col-lg-8">
+                                    <select name="stationp" id="stationp" class="select"
                                             style="float: left;width: initial;">
                                         <option value="" selected disabled>--- Select Station ---</option>
-
                                         <?php
                                         $entry = '';
-                                        $st_dashboard2 = $_POST['station'];
-                                        $sql1 = "SELECT * FROM `cam_line` where is_deleted != 1 and line_id = '$st_station' ORDER BY `line_name` ASC ";
-                                        $result1 = $mysqli->query($sql1);
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            if($st_dashboard == $row1['line_id'])
+                                        $st_dashboard2 = $_POST['stationp'];
+                                        $sql32 = "SELECT * FROM `pm_part_family` where pm_part_family_id = '$pm_part_family_id'";
+                                        $result32 = $mysqli->query($sql32);
+                                        while ($row32 = $result32->fetch_assoc()) {
+                                            $station1 = $row32['station'];
+                                            if($st_dashboard2 == $row22['pm_part_family_id '])
                                             {
                                                 $entry = 'selected';
                                             }
@@ -386,12 +394,68 @@ include("../heading_banner.php");
                                                 $entry = '';
 
                                             }
-                                            echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                                            $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$station1' and is_deleted != 1";
+                                            $resultp1 = $mysqli->query($sqlp1);
+                                            while ($row33 = $resultp1->fetch_assoc()) {
+                                                echo "<option value='" . $row33['line_id '] . "'$entry>" . $row33['line_name'] . "</option>";
+
+                                            }
+
                                         }
                                         ?>
 
                                     </select>
                                 </div>
+                           <!-- <div class="col-md-6 mobile">
+
+                                <label class="col-lg-2 control-label">Station :</label>
+                                <div class="col-lg-6">
+                                    <select name="st" id="st" class="select"
+                                            style="float: left;width: initial;">
+                                        <option value="" selected disabled>--- Select Station ---</option>
+                                        <?php
+/*                                    /*    $entry = '';
+                                        $st_dashboard2 = $_POST['st'];
+                                        $sql32 = "SELECT * FROM `pm_part_family` where pm_part_family_id = '$part_station'";
+                                        $result32 = $mysqli->query($sql32);
+                                        while ($row32 = $result32->fetch_assoc()) {
+                                            $station1 = $row32['station'];
+                                           if($st_dashboard1 == $row22['pm_part_family_id '])
+                                            {
+                                                $entry = 'selected';
+                                            }
+                                            else
+                                            {
+                                                $entry = '';
+
+                                            }
+                                            $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$station1'";
+                                            $resultp1 = $mysqli->query($sqlp1);
+                                            while ($row33 = $resultp1->fetch_assoc()) {
+                                                echo "<option value='" . $row33['line_id '] . "'$entry>" . $row33['line_name'] . "</option>";
+
+                                            }
+
+                                        }*/
+                                        /*$entry = '';
+                                        $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$part_station' and and is_deleted != 1";
+                                        $resultp1 = $mysqli->query($sqlp1);
+                                        while ($row32 = $resultp1->fetch_assoc()) {
+                                           if($part_station == $row32['line_id'])
+                                            {
+                                                $entry = 'selected';
+                                            }
+                                            else
+                                            {
+                                                $entry = '';
+
+                                            }
+                                                echo "<option value='" . $row32['line_id'] . "' $entry>" . $row32['line_name'] . "</option>";
+                                        }*/
+                                        ?>
+
+                                    </select>
+                                </div>-->
                             </div>
                             <div class="col-md-3 date">
                                 <label class="control-label"
@@ -448,6 +512,9 @@ include("../heading_banner.php");
         <div class="col-md-4">
             <div id="lab_container" style="height: 500px; width: 100%;"></div>
         </div>
+        <div class="col-md-4">
+            <div id="op_container" style="height: 500px; width: 100%;"></div>
+        </div>
     </div>
 </form>
 
@@ -462,23 +529,13 @@ include("../heading_banner.php");
 </div>
 <!-- /page content -->
 <script>
-    function fetchddl(id){
-        $('#part_family').html('');
-        $.ajax({
-            type:'post',
-            url: 'form_submit_view.php',
-            data: { cus_id: id}
-            success: function (data){
-                $('#part_family').html(data);
-            }
-        })
-    }
-</script>
-<script>
     $('#cus_id').on('change', function (e) {
         $("#view_count").submit();
     });
     $('#part_family').on('change', function (e) {
+        $("#view_count").submit();
+    });
+    $('#station').on('change', function (e) {
         $("#view_count").submit();
     });
     anychart.onDocumentReady(function () {
@@ -513,7 +570,7 @@ include("../heading_banner.php");
 //enables HTML tags
                 title.useHtml(true);
                 title.text(
-                    "<br><br>"+"FSLD"+
+                    "<br><br>"+"First Piece Sheet Lab"+
                     "<br><br><br>"
                 );
 
@@ -552,7 +609,78 @@ include("../heading_banner.php");
             }
         });
     });
+//op
+    anychart.onDocumentReady(function () {
+        var data = $("#view_count").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'lab_form_count.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data + "&fa_op=2",
+            success: function(data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var d_count = data.posts .map(function(elem){
+                    return elem.d_count;
+                });
+                /* // console.log(goodpiece);
+                 var bad_pieces = data.posts .map(function(elem){
+                     return elem.bad_pieces;
+                 });
+                 var rework = data.posts .map(function(elem){
+                     return elem.rework;
+                 });*/
+                var data = [
+                    {x: 'Count', value: d_count , fill : '#177b09'},
+                ];
+                // create pareto chart with data
+                var chart = anychart.pareto(data);
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>"+"First Piece Sheet Op"+
+                    "<br><br><br>"
+                );
 
+                // set measure y axis title
+                chart.yAxis(0).title('Numbers');
+                // cumulative percentage y axis title
+                chart.yAxis(1).title(' Percentage');
+                // set interval
+                chart.yAxis(1).scale().ticks().interval(10);
+
+                // get pareto column series and set settings
+                var column = chart.getSeriesAt(0);
+
+                column.labels().enabled(true).format('{%Value}');
+                column.tooltip().format('Value: {%Value}');
+
+                // background border color
+                // column.labels().background().stroke("#663399");
+                column.labels().background().enabled(true).stroke("Green");
+
+                // get pareto line series and set settings
+                var line = chart.getSeriesAt(1);
+                line
+                    .tooltip()
+                    // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                    .format('Percent : {%RF}%');
+
+                // turn on the crosshair and set settings
+                chart.crosshair().enabled(true).xLabel(false);
+                chart.xAxis().labels().rotation(-90);
+
+                // set container id for the chart
+                chart.container('op_container');
+                // initiate chart drawing
+                chart.draw();
+            }
+        });
+    });
 </script>
 
 <!-- /dashboard content -->
