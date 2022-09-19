@@ -8,7 +8,7 @@ $temp = "";
 // if (!isset($_SESSION['user'])) {
 // 	header('location: logout.php');
 // }
-$_SESSION['station'] = "";
+//$_SESSION['station'] = "";
 $_SESSION['date_from'] = "";
 $_SESSION['date_to'] = "";
 $_SESSION['button'] = "";
@@ -18,7 +18,7 @@ $_SESSION['event_type'] = "";
 $_SESSION['event_category'] = "";
 
 if (count($_POST) > 0) {
-	$_SESSION['station'] = $_POST['station'];
+	//$_SESSION['station'] = $_POST['station'];
 	$_SESSION['date_from'] = $_POST['date_from'];
 	$_SESSION['date_to'] = $_POST['date_to'];
 	$_SESSION['button'] = $_POST['button'];
@@ -29,27 +29,29 @@ if (count($_POST) > 0) {
 	$button_event = $_POST['button_event'];
 	$event_type = $_POST['event_type'];
 	$event_category = $_POST['event_category'];
-	$station = $_POST['station'];
+	//$station = $_POST['station'];
 	$dateto = $_POST['date_to'];
 	$datefrom = $_POST['date_from'];
 	$button = $_POST['button'];
 	$timezone = $_POST['timezone'];
 }
 if (count($_POST) > 0) {
-    $station = $_POST['station'];
-	$pf = $_POST['pm_part_family_id'];
+    $cus_id = $_POST['cus_id'];
+	$pf = $_POST['part_family'];
 }else{
 	$datefrom = $curdate;
 	$dateto = $curdate;
 }
-$wc = '';
 
-if(isset($station)){
-	$wc = $wc . " and pm_part_family.station = '$station'";
-}
+$wc = '';
 if(isset($pf)){
-	$wc = $wc . " and pm_part_family.pm_part_family_id = '$pf'";
+    $_SESSION['pf'] = $pf;
+    $wc = $wc . " and form_user_data.part_family = '$pf'";
 }
+/*if(isset($station)){
+    $_SESSION['station'] = $station;
+    $wc = $wc . " and form_user_data.station = '$station'";
+}*/
 
 /* If Data Range is selected */
 if ($button == "button1") {
@@ -82,18 +84,31 @@ if ($button == "button1") {
 	$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 }
 if($_POST['fa_op'] == 1){
-	$sql = "SELECT count(`form_type`) as cc FROM `form_user_data`  where form_type in (4,5)". $wc;
+	$sql = "SELECT count(`form_type`) as cc,part_family FROM `form_user_data` where part_family = '$pf' and form_type = 4". $wc;
 	$response = array();
 	$posts = array();
 	$result = mysqli_query($db,$sql);
 //$result = $mysqli->query($sql);
 	$data =array();
 		while ($row=$result->fetch_assoc()){
-			$posts[] = array('d_count'=> $row['cc']);
+            $cc = $row['cc'];
+			$posts[] = array('d_count'=> $cc);
 		}
-
-
 	$response['posts'] = $posts;
 	echo json_encode($response);
+}
+if($_POST['fa_op'] == 2){
+    $sql = "SELECT count(`form_type`) as cd,part_family FROM `form_user_data` where part_family = '$pf' and form_type = 5". $wc;
+    $response = array();
+    $posts = array();
+    $result = mysqli_query($db,$sql);
+//$result = $mysqli->query($sql);
+    $data =array();
+    while ($row=$result->fetch_assoc()){
+        $cc = $row['cd'];
+        $posts[] = array('d_count'=> $cc);
+    }
+    $response['posts'] = $posts;
+    echo json_encode($response);
 }
 

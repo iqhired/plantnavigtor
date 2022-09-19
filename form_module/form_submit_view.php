@@ -63,8 +63,8 @@ if (count($_POST) > 0) {
     $timezone = $_POST['timezone'];
 }
 if (count($_POST) > 0) {
+    $cus_id = $_POST['cus_id'];
     $pf = $_POST['part_family'];
-    $station = $_POST['station'];
 }
 
 if(empty($dateto)){
@@ -78,14 +78,18 @@ if(empty($datefrom)){
 }
 
 $wc = '';
+/*if(isset($cus_id)){
+    $_SESSION['cus_id'] = $cus_id;
+    $wc = $wc . " and form_user_data.part_family = '$cus_id'";
+}*/
 if(isset($pf)){
     $_SESSION['pf'] = $pf;
     $wc = $wc . " and form_user_data.part_family = '$pf'";
 }
-if(isset($station)){
+/*if(isset($station)){
     $_SESSION['station'] = $station;
         $wc = $wc . " and form_user_data.station = '$station'";
-}
+}*/
 /* If Data Range is selected */
 if ($button == "button1") {
     if(isset($datefrom)){
@@ -161,20 +165,6 @@ if ($button == "button1") {
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
-    <script>
-       /* $(document).ready(function(){
-            $("select.cus_id").change(function(){
-                var selectedCountry = $(".cus_id option:selected").val();
-                $.ajax({
-                    type: "POST",
-                    url: "form_submit_view.php",
-                    data: { cus_id : selectedcus_id }
-                }).done(function(data){
-                    $("#part_family").html(data);
-                });
-            });
-        });*/
-    </script>
     <style>
         .anychart-credits{
             display: none !important;
@@ -334,11 +324,11 @@ include("../heading_banner.php");
                             <label class="col-lg-3 control-label" >Part Family  :</label>
 
                             <div class="col-lg-8">
-                                <select name="part_f" id="part_f" class="select" data-style="bg-slate" >
+                                <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
                                     <option value="" selected disabled>--- Select Part Family ---</option>
                                     <?php
                                     $entry = '';
-                                    $st_dashboard1 = $_POST['part_f'];
+                                    $st_dashboard1 = $_POST['part_family'];
                                     $sql22 = "SELECT * FROM `part_family_account_relation` where account_id = '$st_dashboard'";
                                     $result22 = $mysqli->query($sql22);
                                     while ($row22 = $result22->fetch_assoc()) {
@@ -369,7 +359,7 @@ include("../heading_banner.php");
                     </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-6 mobile">
+                           <!-- <div class="col-md-6 mobile">
 
 
                                 <label class="col-lg-2 control-label">Station :</label>
@@ -379,7 +369,7 @@ include("../heading_banner.php");
                                             style="float: left;width: initial;">
                                         <option value="" selected disabled>--- Select Station ---</option>
                                         <?php
-                                        $entry = '';
+/*                                        $entry = '';
                                         $st_dashboard2 = $_POST['stationp'];
                                         $sql32 = "SELECT * FROM `pm_part_family` where pm_part_family_id = '$pm_part_family_id'";
                                         $result32 = $mysqli->query($sql32);
@@ -402,10 +392,10 @@ include("../heading_banner.php");
                                             }
 
                                         }
-                                        ?>
+                                        */?>
 
                                     </select>
-                                </div>
+                                </div>-->
                            <!-- <div class="col-md-6 mobile">
 
                                 <label class="col-lg-2 control-label">Station :</label>
@@ -577,9 +567,9 @@ include("../heading_banner.php");
                 // set measure y axis title
                 chart.yAxis(0).title('Numbers');
                 // cumulative percentage y axis title
-                chart.yAxis(1).title(' Percentage');
+                //chart.yAxis(1).title(' Percentage');
                 // set interval
-                chart.yAxis(1).scale().ticks().interval(10);
+                //chart.yAxis(1).scale().ticks().interval(10);
 
                 // get pareto column series and set settings
                 var column = chart.getSeriesAt(0);
@@ -596,7 +586,7 @@ include("../heading_banner.php");
                 line
                     .tooltip()
                     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                    .format('Percent : {%RF}%');
+                   // .format('Percent : {%RF}%');
 
                 // turn on the crosshair and set settings
                 chart.crosshair().enabled(true).xLabel(false);
@@ -649,9 +639,9 @@ include("../heading_banner.php");
                 // set measure y axis title
                 chart.yAxis(0).title('Numbers');
                 // cumulative percentage y axis title
-                chart.yAxis(1).title(' Percentage');
+                /*chart.yAxis(1).title(' Percentage');
                 // set interval
-                chart.yAxis(1).scale().ticks().interval(10);
+                chart.yAxis(1).scale().ticks().interval(10);*/
 
                 // get pareto column series and set settings
                 var column = chart.getSeriesAt(0);
@@ -668,7 +658,7 @@ include("../heading_banner.php");
                 line
                     .tooltip()
                     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                    .format('Percent : {%RF}%');
+                    //.format('Percent : {%RF}%');
 
                 // turn on the crosshair and set settings
                 chart.crosshair().enabled(true).xLabel(false);
