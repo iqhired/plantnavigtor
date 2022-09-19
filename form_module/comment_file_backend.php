@@ -20,6 +20,7 @@ if ($request == 1) {
         echo 0;
     } else {
         /* Upload file */
+        $filename = pathinfo($_FILES["file"]["name"])[filename]. '_' . time(). '.' .  pathinfo($_FILES["file"]["name"])[extension];
         $destination = $location .  $filename;
         if (move_uploaded_file($file_tmp, $destination)) {
             $sql = "INSERT INTO `comment_files`(`file_name`,`comment_id`,`created_at`) VALUES ('$filename','0' ,'$created_by' )";

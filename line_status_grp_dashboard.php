@@ -304,7 +304,7 @@ $cust_cam_page_header = "Production Cell Overview";
 
                                                 // Set the date we're counting down to
                                                 var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
-                                                console.log(iddd<?php echo $countervariable; ?>);
+                                                //console.log(iddd<?php //echo $countervariable; ?>//);
                                                 var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
                                                 // Update the count down every 1 second
                                                 var x = setInterval(function () {
@@ -432,7 +432,7 @@ $cust_cam_page_header = "Production Cell Overview";
 
                                             // Set the date we're counting down to
                                             var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
-                                            console.log(iddd<?php echo $countervariable; ?>);
+                                            //console.log(iddd<?php //echo $countervariable; ?>//);
                                             var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
                                             // Update the count down every 1 second
                                             var x = setInterval(function () {

@@ -600,6 +600,7 @@ include("../heading_banner.php");
 
                             ?>
                             <?php
+                            $option = 1;
                             if($option == 0){?>
 
                                 <td class="tooltip">

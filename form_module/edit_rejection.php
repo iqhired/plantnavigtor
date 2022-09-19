@@ -1,5 +1,4 @@
-<?php
-include("../config.php");
+<?php include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -95,6 +94,7 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/gallery.js"></script>
     <style>
 
         .mb-4, .my-4 {
@@ -445,10 +445,13 @@ include("../heading_banner.php");
                                             <p class="small mb-0">
                                                 <?php
                                                 $c_file = mysqli_query($db, "SELECT * FROM  comment_files where comment_id = '$comment_id' ");
+                                                $file_name = null;
                                                 while ($rowct = mysqli_fetch_array($c_file)) {
                                                     $file_name = $rowct["file_name"];
 
-                                                } ?>
+                                                }
+                                                if(!empty($file_name)){
+                                                ?>
 
                                             <div class="thumbnail">
                                                 <div class="thumb">
@@ -466,7 +469,8 @@ include("../heading_banner.php");
                                             </div>
 
                                             </p>
-
+                                            <?php }
+                                                ?>
                                             <p class="small mb-0">
                                                 <?php echo $fullnnm;?> - <?php echo $comment_date;?>
                                             </p>
