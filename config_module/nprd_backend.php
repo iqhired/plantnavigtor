@@ -3,7 +3,6 @@ include("../config.php");
 $npd_check = $_POST['npd'];
 $npd_is_checked = $_POST['isChecked'];
 if ($npd_check != "") {
-
     if($npd_is_checked =='true') {
         $sql1 = "UPDATE  `cam_line` set  npr_id = 1  WHERE `line_id`='$npd_check'";
     }else{

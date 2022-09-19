@@ -19,7 +19,6 @@ if (!empty($resultmain)) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

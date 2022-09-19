@@ -158,7 +158,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <?php
                 $sql1 = "SELECT * FROM `cam_line`";
                 $result1 = $mysqli->query($sql1);
-
                 while ($row1 = mysqli_fetch_array($result1)) {
                     $npr_id = $row1['npr_id'];
                     $line_name = $row1['line_name'];
