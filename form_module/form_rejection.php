@@ -599,26 +599,7 @@ include("../heading_banner.php");
                             // echo $opt_id;
 
                             ?>
-                            <?php
-                            $option = 1;
-                            if($option == 0){?>
-
-                                <td class="tooltip">
-                                    <a href="view_user_form_data.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                    <!--<span class="tooltiptext">View User Form</span>-->
-                                </td>
-
-
-                            <?php } else if($option == 1){
-
-                                if ($check_status != null){  ?>
-                                    <td class="tooltip">
-                                        <a href="view_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                        <!--<span class="tooltiptext">View User Form</span>-->
-                                    </td>
-
-                                <?php } else if($check_status == null) { ?>
-                                        <?php if($r_flag != '1'){ ?>
+                            <?php if($r_flag != '1'){ ?>
                                     <td class="tooltip">
                                         <!--<input type="button" value="✓" />-->
                                         <a href="view_rejetion.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
@@ -630,8 +611,8 @@ include("../heading_banner.php");
                                             <a href="edit_rejection.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                             <!--<span class="tooltiptext">Edit User Form</span>-->
                                         </td>
-                                <?php }}
-                            } ?>
+                                <?php }
+                             ?>
                             <td><?php echo $rowc["formname"]; ?></td>
                             <td><?php echo $rowc2["part_number"] .'-'. $rowc2["part_name"]; ?></td>
                             <td><?php echo $rowc4["part_family_name"]; ?></td>
