@@ -150,6 +150,18 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Content area -->
     <div class="content">
+                                <?php
+                                if (!empty($import_status_message)) {
+                                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                }
+                                ?>
+                                <?php
+                                if (!empty($_SESSION['import_status_message'])) {
+                                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                    $_SESSION['message_stauts_class'] = '';
+                                    $_SESSION['import_status_message'] = '';
+                                }
+                                ?>
         <div class="col-md-12" style="background-color: #eee;">
             <div class="col-md-6 com-mobile-version">
                 <form action="" id="form_update" enctype="multipart/form-data"
@@ -417,6 +429,7 @@ include("../heading_banner.php");
                                         <input type="password" name="pin" id="pin"  class="form-control" style=" margin-bottom: 5px;width: auto !important;" placeholder="Enter Pin..."  autocomplete="off" >
                                         <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
                                       </span>
+
                                     </div>
                                     <div class="col-md-2" style="padding-top: 5px;">
                                         <div class="col-xs-6 text-right" style="padding-left: 50px;">
@@ -533,7 +546,6 @@ include("../heading_banner.php");
             $.ajax({
                 type: 'POST',
                 url: 'edit_rejection.php',
-                url: 'edit_rejection.php',
                 dataType: "json",
                 // context: this,
                 async: false,
@@ -555,22 +567,13 @@ include("../heading_banner.php");
 <!--//to close the form-->
 <script>
     function submitForm1(url) {
-        //          $(':input[type="button"]').prop('disabled', true);
         var data = $("#form_update").serialize();
         $.ajax({
             type: 'POST',
             url: url,
             data: data,
-            success: function (data) {
-
-                $("#input").val("")
-                // window.location.href = window.location.href + "?aa=Line 1";
-                //                   $(':input[type="button"]').prop('disabled', false);
-                event.preventDefault()
+            success: function (data){
                 $("form :input").prop("disabled", true);
-                $(':input[type="button"]').prop('disabled', true);
-                window.scrollTo(0, 0);
-                $(".pin").val("");
             }
         });
     }
@@ -606,6 +609,8 @@ include("../heading_banner.php");
         document.getElementById('com_file').disabled = true;
         document.getElementById('send').disabled = true;
         document.getElementById('username').disabled = true;
+        document.getElementById('pin').disabled = true;
+        document.getElementById('enter-message').disabled = true;
 
     }else{}
 </script>
