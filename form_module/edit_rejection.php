@@ -485,7 +485,7 @@ include("../heading_banner.php");
 															<a href="../comment_files/<?php echo $file_name; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3"></i></a>
+                                                                        class="icon-plus3" target="_blank"></i></a>
 														</span>
                                                     </div>
                                                 </div>
