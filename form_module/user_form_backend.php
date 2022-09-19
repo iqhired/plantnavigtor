@@ -87,6 +87,7 @@ if(count($_POST)>0) {
 			$query0003 = sprintf("SELECT * FROM  form_create where form_create_id = '$formcreateid' ");
 			$qur0003 = mysqli_query($db, $query0003);
 			$rowc0003 = mysqli_fetch_array($qur0003);
+            $approval_by = $rowc0003['approval_by'];
 			$out_of_tolerance_mail_list1 = $rowc0003["out_of_tolerance_mail_list"];
 			if(!empty($out_of_tolerance_mail_list1)) {
 				$query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
@@ -149,7 +150,7 @@ if(count($_POST)>0) {
 					$mail->Password = 'S@@rgummi_2021';
 					$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
                     //insert fail data to new table
-                    $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`created_at` ,`updated_at`,`update_by`,`filename`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$created_at','$updated_at','$updated_at','$file','$r_flag')";
+                    $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`approval_by`,`created_at` ,`updated_at`,`update_by`,`filename`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$approval_by','$created_at','$updated_at','$updated_at','$file','$r_flag')";
                     mysqli_query($db, $reason1);
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";

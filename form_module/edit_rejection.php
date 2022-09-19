@@ -386,28 +386,37 @@ include("../heading_banner.php");
                                     <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
                                     <div class="col-md-3">
                                         <div style="font-size: small !important;padding-top: 7px;">
-                                            <?php
-                                            $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where pin_flag = '1' ");
-                                            $rowctemp = mysqli_fetch_array($qurtemp);
-                                            if ($rowctemp != NULL) {
-                                                $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
-                                            }
-                                            $fullnm = "";
-
-                                            ?>
                                             <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
-                                            <input type="text" name="username" class="form-control" id="username"
-                                                   value="<?php echo $fullnnm; ?>" disabled>
-                                        </div>
+                                            <?php
+                                            $qurtemp = mysqli_query($db, "SELECT * FROM `form_rejection_data` where form_user_data_id = '$form_user_data_id' ");
+                                            while ( $rowctemp = mysqli_fetch_array($qurtemp)) {
+                                            $approval_by_array = $rowctemp['approval_by'];
+                                            $arrteam = explode(',', $approval_by_array);
+                                            $arr = implode (",",$arrteam);  ?>
+                                            <select class="select form-control" name="username" id="username">
+                                            <?php
+                                            $sql1 = "SELECT * FROM `sg_user_group` WHERE group_id IN ('$arr')";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                $user_id = $row1['user_id'];
+                                                $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where users_id = '$user_id' and pin_flag = '1' ");
+                                                $rowctemp = mysqli_fetch_array($qurtemp);
+                                                if ($rowctemp != NULL) {
+                                                    $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
+                                                    echo "<option value='" . $user_id . "' >" . $fullnn . "</option>";
+                                                }
+                                              }
+                                              $fullnm = "";
+                                            }  ?>
 
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
-                    <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
-                                                            <input type="password" name="pin" id="pin"
-                                                                   class="form-control" style=" margin-bottom: 5px;width: auto !important;"
-                                                                   placeholder="Enter Pin..."  autocomplete="off" >
-                                                            <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                    </span>
+                                     <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
+                                        <input type="password" name="pin" id="pin"  class="form-control" style=" margin-bottom: 5px;width: auto !important;" placeholder="Enter Pin..."  autocomplete="off" >
+                                        <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
+                                      </span>
                                     </div>
                                     <div class="col-md-2" style="padding-top: 5px;">
                                         <div class="col-xs-6 text-right" style="padding-left: 50px;">
@@ -444,6 +453,7 @@ include("../heading_banner.php");
                                         </p>
                                             <p class="small mb-0">
                                                 <?php
+                                                $file_name = "";
                                                 $c_file = mysqli_query($db, "SELECT * FROM  comment_files where comment_id = '$comment_id' ");
                                                 $file_name = null;
                                                 while ($rowct = mysqli_fetch_array($c_file)) {
@@ -595,6 +605,7 @@ include("../heading_banner.php");
         document.getElementById('save').disabled = true;
         document.getElementById('com_file').disabled = true;
         document.getElementById('send').disabled = true;
+        document.getElementById('username').disabled = true;
 
     }else{}
 </script>
