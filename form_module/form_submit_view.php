@@ -281,12 +281,12 @@ include("../heading_banner.php");
                         <div class="col-md-6 mobile">
 
 
-                            <label class="col-lg-2 control-label">Customer Id :</label>
+                            <label class="col-lg-2 control-label">Customer :</label>
 
                             <div class="col-lg-8">
                                 <select name="cus_id" id="cus_id" class="select"
                                         style="float: left;width: initial;">
-                                    <option value="" selected disabled>--- Select Customer Id ---</option>
+                                    <option value="" selected disabled>--- Select Customer ---</option>
 
                                     <?php
                                     $entry = '';
@@ -317,7 +317,7 @@ include("../heading_banner.php");
                             <div class="col-lg-8">
                                 <select name="part_family" id="part_family" class="select"
                                         style="float: left;width: initial;">
-                                    <option value="" selected disabled>--- Select Customer Id ---</option>
+                                    <option value="" selected disabled>--- Select Part Family ---</option>
 
                                     <?php
                                     $cus_id = $_POST['cus_id'];
@@ -326,7 +326,7 @@ include("../heading_banner.php");
                                     $result21 = $mysqli->query($sql21);
                                         while ($row21 = $result21->fetch_assoc()) {
                                             $part_family_id = $row21['part_family_id'];
-                                            if ($st_dashboard == $row21['account_id']) {
+                                            if ($st_dashboard == $row21['part_family_id']) {
                                                 $entry = 'selected';
                                             } else {
                                                 $entry = '';
