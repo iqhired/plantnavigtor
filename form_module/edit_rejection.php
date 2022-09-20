@@ -133,11 +133,12 @@ if (count($_POST) > 0) {
             .com-mobile-version {
                 width: 100%;
             }
+        }
     </style>
 </head>
 <body>
 <!-- Main navbar -->
-<?php $cust_cam_page_header = "View Rejection Form";
+<?php $cust_cam_page_header = "Rejected Form Action";
 include("../header.php");
 
 if (($is_tab_login || $is_cell_login)) {
@@ -453,7 +454,7 @@ include("../heading_banner.php");
                         <div class="row d-flex justify-content-center ">
                             <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="card">
-                                    <div class="card-body scrollable">
+                                    <div class="card-body scrollable" id="scroll">
                                         <?php
                                         $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
                                         while ($rowct = mysqli_fetch_array($qurt)) {
@@ -485,15 +486,14 @@ include("../heading_banner.php");
 															<a href="../comment_files/<?php echo $file_name; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3" target="_blank"></i></a>
+                                                                        class="icon-plus3" style="color: #fff"></i></a>
 														</span>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             </p>
-                                            <?php }
-                                                ?>
+                                            <?php } ?>
                                             <p class="small mb-0">
                                                 <?php echo $fullnnm;?> - <?php echo $comment_date;?>
                                             </p>
@@ -531,9 +531,8 @@ include("../heading_banner.php");
                     </div>
                 </section>
                 </form>
-
-                        </div>
-                    </div>
+            </div>
+          </div>
     </div>
 </div>
 
@@ -566,6 +565,10 @@ include("../heading_banner.php");
 </script>
 <!--//to close the form-->
 <script>
+    var comment = document.querySelector('#scroll');
+    comment.scrollTop = comment.scrollHeight - comment.clientHeight;
+</script>
+<script>
     function submitForm1(url) {
         var data = $("#form_update").serialize();
         $.ajax({
@@ -577,28 +580,7 @@ include("../heading_banner.php");
             }
         });
     }
-       /* $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                var pin1 = document.getElementById('pin').value;
-                var pin2 = document.getElementById('pin1').value;
 
-                $("#input").val("")
-                $(".pin").val("");
-                if(pin1 == pin2) {
-                    event.preventDefault()
-                    $("form :input").prop("disabled", true);
-                    $(':input[type="button"]').prop('disabled', true);
-                    window.scrollTo(0, 0);
-                }else
-                {
-                    alert('entered pin is wrong');
-                }
-            }
-        });
-    }*/
 
 </script>
 <script>

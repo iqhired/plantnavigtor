@@ -528,6 +528,7 @@ include("../heading_banner.php");
                             $rflag = 'In progress';
                         }else{
                             $rflag = 'Closed';
+                            $style = "style='background-color:rgb(67, 160, 71);'";
                         }
 
                         $query1  = mysqli_query($db, "SELECT partnumber,created_at,form_create_id FROM `form_rejection_data` where form_user_data_id = ' $form_id' LIMIT 1");
@@ -576,7 +577,7 @@ include("../heading_banner.php");
 
                         ?>
 
-                        <tr <?php echo $style; ?>>
+                        <tr <?php if ($r_flag != '1') {  ?> style='background-color:#90ee908f;' <?php  } ?>>
 
                             <td><?php echo ++$counter; ?></td>
 
