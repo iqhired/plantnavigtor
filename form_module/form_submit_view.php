@@ -434,34 +434,35 @@ include("../heading_banner.php");
             type: 'POST',
             url: 'lab_form_count.php',
             // dataType: 'good_bad_piece_fa.php',
-            data: data + "&fa_op=1",
+            data: data,
             success: function(data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
-                var d_count = data.posts .map(function(elem){
+                var d_count = data.posts.map(function (elem) {
                     return elem.d_count;
                 });
                 var data = [
-                    {x: 'Count', value: d_count , fill : '#177b09'},
+                    {x: 'Total First Piece Sheet Lab Submitted', value: d_count, fill: '#177b09'},
+
                 ];
                 // create pareto chart with data
-                var chart = anychart.pareto(data);
-
+                var chart = anychart.column(data);
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
                 var title = chart.title();
                 title.enabled(true);
 //enables HTML tags
                 title.useHtml(true);
                 title.text(
-                    "<br><br>"+"First Piece Sheet Lab"+
-                    "<br><br><br>"
+                    "<br><br>"
                 );
 
                 // set measure y axis title
-                chart.yAxis(0).title('Numbers');
+                // chart.yAxis(0).title('Numbers');
                 // cumulative percentage y axis title
-                //chart.yAxis(1).title(' Percentage');
+                // chart.yAxis(1).title(' Percentage');
                 // set interval
-                //chart.yAxis(1).scale().ticks().interval(10);
+                // chart.yAxis(1).scale().ticks().interval(10);
 
                 // get pareto column series and set settings
                 var column = chart.getSeriesAt(0);
@@ -469,20 +470,50 @@ include("../heading_banner.php");
                 column.labels().enabled(true).format('{%Value}');
                 column.tooltip().format('Value: {%Value}');
 
-                // background border color
+                var labels = column.labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(24);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
                 // column.labels().background().stroke("#663399");
-                column.labels().background().enabled(true).stroke("Green");
+                // column.labels().background().enabled(true).stroke("Green");
 
-                // get pareto line series and set settings
-                var line = chart.getSeriesAt(1);
-                line
-                    .tooltip()
-                // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                // .format('Percent : {%RF}%');
+                var xLabelsBackground = column.labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
 
-                // turn on the crosshair and set settings
-                chart.crosshair().enabled(true).xLabel(false);
-                chart.xAxis().labels().rotation(-90);
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(18);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                var xLabelsBackground = chart.xAxis().labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
+
+                //
+                // // get pareto line series and set settings
+                // var line = chart.getSeriesAt(1);
+                // line
+                //     .tooltip()
+                //     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                //     .format('Percent : {%RF}%');
+                //
+                // // turn on the crosshair and set settings
+                // chart.crosshair().enabled(true).xLabel(false);
+                // chart.xAxis().labels().rotation(-90);
 
                 // set container id for the chart
                 chart.container('lab_container');
@@ -491,32 +522,28 @@ include("../heading_banner.php");
             }
         });
     });
+</script>
+<script>
     //op
     anychart.onDocumentReady(function () {
         var data = $("#view_count").serialize();
         $.ajax({
             type: 'POST',
-            url: 'lab_form_count.php',
+            url: 'lab_form_count1.php',
             // dataType: 'good_bad_piece_fa.php',
-            data: data + "&fa_op=2",
+            data: data,
             success: function(data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
-                var d_count = data.posts .map(function(elem){
-                    return elem.d_count;
+                var cd = data.posts.map(function (elem) {
+                    return elem.cd;
                 });
-                /* // console.log(goodpiece);
-                 var bad_pieces = data.posts .map(function(elem){
-                     return elem.bad_pieces;
-                 });
-                 var rework = data.posts .map(function(elem){
-                     return elem.rework;
-                 });*/
                 var data = [
-                    {x: 'Count', value: d_count , fill : '#177b09'},
+                    {x: 'Total First Piece Sheet Op Submitted', value: cd, fill: '#177b09'},
+
                 ];
                 // create pareto chart with data
-                var chart = anychart.pareto(data);
+                var chart = anychart.column(data);
                 // set chart title text settings
                 // chart.title('Good Pieces & Bad Pieces');
                 var title = chart.title();
@@ -524,16 +551,15 @@ include("../heading_banner.php");
 //enables HTML tags
                 title.useHtml(true);
                 title.text(
-                    "<br><br>"+"First Piece Sheet Op"+
-                    "<br><br><br>"
+                    "<br><br>"
                 );
 
                 // set measure y axis title
-                chart.yAxis(0).title('Numbers');
+                // chart.yAxis(0).title('Numbers');
                 // cumulative percentage y axis title
-                /*chart.yAxis(1).title(' Percentage');
+                // chart.yAxis(1).title(' Percentage');
                 // set interval
-                chart.yAxis(1).scale().ticks().interval(10);*/
+                // chart.yAxis(1).scale().ticks().interval(10);
 
                 // get pareto column series and set settings
                 var column = chart.getSeriesAt(0);
@@ -541,20 +567,50 @@ include("../heading_banner.php");
                 column.labels().enabled(true).format('{%Value}');
                 column.tooltip().format('Value: {%Value}');
 
-                // background border color
+                var labels = column.labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(24);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
                 // column.labels().background().stroke("#663399");
-                column.labels().background().enabled(true).stroke("Green");
+                // column.labels().background().enabled(true).stroke("Green");
 
-                // get pareto line series and set settings
-                var line = chart.getSeriesAt(1);
-                line
-                    .tooltip()
-                // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                //.format('Percent : {%RF}%');
+                var xLabelsBackground = column.labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
 
-                // turn on the crosshair and set settings
-                chart.crosshair().enabled(true).xLabel(false);
-                chart.xAxis().labels().rotation(-90);
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(18);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                var xLabelsBackground = chart.xAxis().labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
+
+                //
+                // // get pareto line series and set settings
+                // var line = chart.getSeriesAt(1);
+                // line
+                //     .tooltip()
+                //     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                //     .format('Percent : {%RF}%');
+                //
+                // // turn on the crosshair and set settings
+                // chart.crosshair().enabled(true).xLabel(false);
+                // chart.xAxis().labels().rotation(-90);
 
                 // set container id for the chart
                 chart.container('op_container');
