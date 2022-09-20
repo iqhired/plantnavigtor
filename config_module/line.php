@@ -238,6 +238,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                             <th>Priority Order</th>
                                             <th>Enabled</th>
                                             <th>GBP Dashboard Required</th>
+                                            <th>NPR Dashboard Required</th>
                                             <th>Print Individual Required</th>
                                             <th>Print Required</th>
                                             <th>Action</th>
@@ -261,6 +262,9 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         <!-- <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
                                                 <td>
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="npd" id="npd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['npr_id']==1 ? 'checked' : '');?>>
                                                 </td>
                                                 <td>
                                                     <input type="checkbox" name="p_label" id="p_label" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['indivisual_label']==1 ? 'checked' : '');?>>
@@ -392,6 +396,23 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                         });
 
                     </script>
+        <script>
+            $("input#npd").click(function () {
+                var isChecked = $(this)[0].checked;
+                var val = $(this).val();
+                var data_1 = "&npd=" + val+ "&isChecked=" + isChecked;
+                $.ajax({
+                    type: 'POST',
+                    url: "nprd_backend.php",
+                    data: data_1,
+                    success: function (response) {
+
+                    }
+                });
+
+            });
+
+        </script>
                     <script>
                $("input#p_label").click(function () {
                 var isChecked = $(this)[0].checked;
