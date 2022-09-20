@@ -364,9 +364,9 @@ include("../heading_banner.php");
 
 
                                         <div class="form_row row" style="background-color: #eee;">
-                                            <label class="col-lg-2 control-label" style="padding-top: 15px">To close form : </label>
-                                            <div class="col-md-3">
-                                                <div style="font-size: small !important;padding-top: 7px;">
+                                            <label class="col-lg-2 control-label" style="width: 140px;">Loop Closed By : </label>
+                                            <div class="col-md-6">
+
                                                     <input type="hidden" id="userid" name="userid" value="<?php echo $id; ?>">
                                                     <?php
                                                     $qurtemp = mysqli_query($db, "SELECT * FROM `form_rejection_data` where form_user_data_id = '$form_user_data_id' ");
@@ -378,22 +378,12 @@ include("../heading_banner.php");
                                                     $user_name = $rowcuser['firstname']." ".$rowcuser['lastname'];
 
                                                     ?>
-                                                    <input class="form-control" name="username" id="username" value="<?php echo $user_name; ?>">
+                                                    <input class="form-control" name="username" id="username" value="<?php echo $user_name; ?>" disabled>
 
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                      <span class="form_tab_td" id="approve_msg" style="float: left !important;width: 40% !important; padding-top: 5px;">
-                                        <input type="password" name="pin" id="pin"  class="form-control" style=" margin-bottom: 5px;width: auto !important;" placeholder="Enter Pin..."  autocomplete="off" disabled>
-                                        <span style="font-size: x-small;color: darkred; display: none;" id="pin_error">Invalid Pin.</span>
-                                      </span>
 
                                             </div>
-                                            <div class="col-md-2" style="padding-top: 5px;">
-                                                <div class="col-xs-6 text-right" style="padding-left: 50px;">
-                                                    <button type="submit" name="save" id="save" class="btn btn-primary" onclick="submitForm1('savepin_backend.php')"  style="background-color:#1e73be;" onclick="this.disabled='disabled'">Save</button>
-                                                </div>
-                                            </div>
+
+
 <?php } ?>
                                         </div>
                                     </div>
