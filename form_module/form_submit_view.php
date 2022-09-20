@@ -35,7 +35,6 @@ if(empty($datefrom)){
 }
 $button = "";
 $temp = "";
-$_SESSION['station'] = "";
 $_SESSION['date_from'] = "";
 $_SESSION['date_to'] = "";
 $_SESSION['button'] = "";
@@ -46,7 +45,6 @@ $_SESSION['event_category'] = "";
 $_SESSION['pf'] = "";
 
 if (count($_POST) > 0) {
-    $_SESSION['station'] = $_POST['station'];
     $_SESSION['date_from'] = $_POST['date_from'];
     $_SESSION['date_to'] = $_POST['date_to'];
     $_SESSION['button'] = $_POST['button'];
@@ -78,18 +76,11 @@ if(empty($datefrom)){
 }
 
 $wc = '';
-/*if(isset($cus_id)){
-    $_SESSION['cus_id'] = $cus_id;
-    $wc = $wc . " and form_user_data.part_family = '$cus_id'";
-}*/
 if(isset($pf)){
     $_SESSION['pf'] = $pf;
     $wc = $wc . " and form_user_data.part_family = '$pf'";
 }
-/*if(isset($station)){
-    $_SESSION['station'] = $station;
-        $wc = $wc . " and form_user_data.station = '$station'";
-}*/
+
 /* If Data Range is selected */
 if ($button == "button1") {
     if(isset($datefrom)){
@@ -324,146 +315,58 @@ include("../heading_banner.php");
                             <label class="col-lg-3 control-label" >Part Family  :</label>
 
                             <div class="col-lg-8">
-                                <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
-                                    <option value="" selected disabled>--- Select Part Family ---</option>
+                                <select name="part_family" id="part_family" class="select"
+                                        style="float: left;width: initial;">
+                                    <option value="" selected disabled>--- Select Customer Id ---</option>
+
                                     <?php
-                                    $entry = '';
-                                    $st_dashboard1 = $_POST['part_family'];
-                                    $sql22 = "SELECT * FROM `part_family_account_relation` where account_id = '$st_dashboard'";
-                                    $result22 = $mysqli->query($sql22);
-                                    while ($row22 = $result22->fetch_assoc()) {
-                                        $part_family_id = $row22['part_family_id'];
-                                        if($st_dashboard1 == $row22['account_id'])
-                                        {
-                                            $entry = 'selected';
-                                        }
-                                        else
-                                        {
-                                            $entry = '';
+                                    $cus_id = $_POST['cus_id'];
+                                    $st_dashboard = $_POST['part_family'];
+                                    $sql21 = "SELECT * FROM `part_family_account_relation` where account_id = '$cus_id'";
+                                    $result21 = $mysqli->query($sql21);
+                                        while ($row21 = $result21->fetch_assoc()) {
+                                            $part_family_id = $row21['part_family_id'];
+                                            if ($st_dashboard == $row21['account_id']) {
+                                                $entry = 'selected';
+                                            } else {
+                                                $entry = '';
+                                            }
+                                                $sqlp = "SELECT pm_part_family_id,part_family_name,station FROM `pm_part_family` where `pm_part_family_id` = '$part_family_id'";
+                                                $resultp = $mysqli->query($sqlp);
+                                                while($row2 = $resultp->fetch_assoc())
+                                                {
 
-                                        }
-                                        $sqlp = "SELECT pm_part_family_id,part_family_name,station FROM `pm_part_family` where `pm_part_family_id` = '$part_family_id'";
-                                        $resultp = $mysqli->query($sqlp);
-                                        while ($row22 = $resultp->fetch_assoc()) {
-                                            $part_station = $row22['station'];
-                                            $pm_part_family_id = $row22['pm_part_family_id'];
-                                            echo "<option value='" . $row22['pm_part_family_id '] . "'$entry>" . $row22['part_family_name'] . "</option>";
+                                                   echo "<option value='" . $row2['pm_part_family_id'] . "'$entry>" . $row2['part_family_name'] . "</option>";
 
+                                                }
                                         }
+                                        ?>
 
-                                    }
-                                    ?>
+
                                 </select>
                             </div>
                         </div>
                     </div>
-                        <br/>
-                        <div class="row">
-                           <!-- <div class="col-md-6 mobile">
+                    <br/>
 
-
-                                <label class="col-lg-2 control-label">Station :</label>
-
-                                <div class="col-lg-8">
-                                    <select name="stationp" id="stationp" class="select"
-                                            style="float: left;width: initial;">
-                                        <option value="" selected disabled>--- Select Station ---</option>
-                                        <?php
-/*                                        $entry = '';
-                                        $st_dashboard2 = $_POST['stationp'];
-                                        $sql32 = "SELECT * FROM `pm_part_family` where pm_part_family_id = '$pm_part_family_id'";
-                                        $result32 = $mysqli->query($sql32);
-                                        while ($row32 = $result32->fetch_assoc()) {
-                                            $station1 = $row32['station'];
-                                            if($st_dashboard2 == $row22['pm_part_family_id '])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
-
-                                            }
-                                            $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$station1' and is_deleted != 1";
-                                            $resultp1 = $mysqli->query($sqlp1);
-                                            while ($row33 = $resultp1->fetch_assoc()) {
-                                                echo "<option value='" . $row33['line_id '] . "'$entry>" . $row33['line_name'] . "</option>";
-
-                                            }
-
-                                        }
-                                        */?>
-
-                                    </select>
-                                </div>-->
-                           <!-- <div class="col-md-6 mobile">
-
-                                <label class="col-lg-2 control-label">Station :</label>
-                                <div class="col-lg-6">
-                                    <select name="st" id="st" class="select"
-                                            style="float: left;width: initial;">
-                                        <option value="" selected disabled>--- Select Station ---</option>
-                                        <?php
-/*                                    /*    $entry = '';
-                                        $st_dashboard2 = $_POST['st'];
-                                        $sql32 = "SELECT * FROM `pm_part_family` where pm_part_family_id = '$part_station'";
-                                        $result32 = $mysqli->query($sql32);
-                                        while ($row32 = $result32->fetch_assoc()) {
-                                            $station1 = $row32['station'];
-                                           if($st_dashboard1 == $row22['pm_part_family_id '])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
-
-                                            }
-                                            $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$station1'";
-                                            $resultp1 = $mysqli->query($sqlp1);
-                                            while ($row33 = $resultp1->fetch_assoc()) {
-                                                echo "<option value='" . $row33['line_id '] . "'$entry>" . $row33['line_name'] . "</option>";
-
-                                            }
-
-                                        }*/
-                                        /*$entry = '';
-                                        $sqlp1 = "SELECT * FROM `cam_line` where `line_id` = '$part_station' and and is_deleted != 1";
-                                        $resultp1 = $mysqli->query($sqlp1);
-                                        while ($row32 = $resultp1->fetch_assoc()) {
-                                           if($part_station == $row32['line_id'])
-                                            {
-                                                $entry = 'selected';
-                                            }
-                                            else
-                                            {
-                                                $entry = '';
-
-                                            }
-                                                echo "<option value='" . $row32['line_id'] . "' $entry>" . $row32['line_name'] . "</option>";
-                                        }*/
-                                        ?>
-
-                                    </select>
-                                </div>-->
-                            </div>
-                            <div class="col-md-3 date">
-                                <label class="control-label"
-                                       style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                    From : &nbsp;&nbsp;</label>
-                                <input type="date" name="date_from" id="date_from" class="form-control"
-                                       value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
-                                       required>
-                            </div>
-                            <div class="col-md-3 date">
-                                <label class="control-label"
-                                       style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                    To: &nbsp;&nbsp;</label>
-                                <input type="date" name="date_to" id="date_to" class="form-control"
-                                       value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-
-                            </div>
+                    <div class="row">
+                        <div class="col-md-3 date">
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                From : &nbsp;&nbsp;</label>
+                            <input type="date" name="date_from" id="date_from" class="form-control"
+                                   value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
+                                   required>
                         </div>
+                        <div class="col-md-3 date">
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                To: &nbsp;&nbsp;</label>
+                            <input type="date" name="date_to" id="date_to" class="form-control"
+                                   value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
+
+                        </div>
+                    </div>
                     <br/>
                     <?php
                     if (!empty($import_status_message)) {
@@ -497,16 +400,16 @@ include("../heading_banner.php");
 
         </div>
     </div>
-<form>
-    <div class="row">
-        <div class="col-md-4">
-            <div id="lab_container" style="height: 500px; width: 100%;"></div>
+    <form>
+        <div class="row">
+            <div class="col-md-4">
+                <div id="lab_container" style="height: 500px; width: 100%;"></div>
+            </div>
+            <div class="col-md-4">
+                <div id="op_container" style="height: 500px; width: 100%;"></div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <div id="op_container" style="height: 500px; width: 100%;"></div>
-        </div>
-    </div>
-</form>
+    </form>
 
 
 
@@ -522,12 +425,9 @@ include("../heading_banner.php");
     $('#cus_id').on('change', function (e) {
         $("#view_count").submit();
     });
-    $('#part_family').on('change', function (e) {
+    /*$('#part_family').on('change', function (e) {
         $("#view_count").submit();
-    });
-    $('#station').on('change', function (e) {
-        $("#view_count").submit();
-    });
+    });*/
     anychart.onDocumentReady(function () {
         var data = $("#view_count").serialize();
         $.ajax({
@@ -541,20 +441,12 @@ include("../heading_banner.php");
                 var d_count = data.posts .map(function(elem){
                     return elem.d_count;
                 });
-               /* // console.log(goodpiece);
-                var bad_pieces = data.posts .map(function(elem){
-                    return elem.bad_pieces;
-                });
-                var rework = data.posts .map(function(elem){
-                    return elem.rework;
-                });*/
                 var data = [
                     {x: 'Count', value: d_count , fill : '#177b09'},
                 ];
                 // create pareto chart with data
                 var chart = anychart.pareto(data);
-                // set chart title text settings
-                // chart.title('Good Pieces & Bad Pieces');
+
                 var title = chart.title();
                 title.enabled(true);
 //enables HTML tags
@@ -585,8 +477,8 @@ include("../heading_banner.php");
                 var line = chart.getSeriesAt(1);
                 line
                     .tooltip()
-                    // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                   // .format('Percent : {%RF}%');
+                // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                // .format('Percent : {%RF}%');
 
                 // turn on the crosshair and set settings
                 chart.crosshair().enabled(true).xLabel(false);
@@ -599,7 +491,7 @@ include("../heading_banner.php");
             }
         });
     });
-//op
+    //op
     anychart.onDocumentReady(function () {
         var data = $("#view_count").serialize();
         $.ajax({
@@ -657,8 +549,8 @@ include("../heading_banner.php");
                 var line = chart.getSeriesAt(1);
                 line
                     .tooltip()
-                    // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                    //.format('Percent : {%RF}%');
+                // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                //.format('Percent : {%RF}%');
 
                 // turn on the crosshair and set settings
                 chart.crosshair().enabled(true).xLabel(false);
