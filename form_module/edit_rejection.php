@@ -479,11 +479,11 @@ include("../heading_banner.php");
 
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <img src="../comment_files/<?php echo $file_name; ?>"
+                                                    <img src="../assets/comment_files/<?php echo $file_name; ?>"
                                                          alt="">
                                                     <div class="caption-overflow">
 														<span>
-															<a href="../comment_files/<?php echo $file_name; ?>"
+															<a href="../assets/comment_files/<?php echo $file_name; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
                                                                         class="icon-plus3" style="color: #fff"></i></a>
@@ -600,11 +600,21 @@ include("../heading_banner.php");
 <script>
     function submitForm(url) {
         //          $(':input[type="button"]').prop('disabled', true);
+        var fd = new FormData();
         var data = $("#update-form").serialize();
+        var files = $('#com_file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+        fd.append('data', data);
+        // fd.append(data);
+       // data =  { data : 'data1', fd : 'data2' },;
+
         $.ajax({
             type: 'POST',
             url: url,
-            data: data,
+            data: fd,
+            contentType: false,
+            processData: false,
             success: function (data) {
 
                 $("#textarea").val("")
@@ -612,12 +622,14 @@ include("../heading_banner.php");
                 //                   $(':input[type="button"]').prop('disabled', false);
                 location.reload();
                 $(".enter-message").val("");
+
+
             }
         });
     }
 
 
-    $("#com_file").on("change", function () {
+    $("#com_file").on("", function () {
         var fd = new FormData();
         var files = $('#com_file')[0].files[0];
         fd.append('file', files);
