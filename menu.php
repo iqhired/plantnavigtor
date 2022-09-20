@@ -44,3 +44,13 @@ $temp = "";
     <h3><?php echo $siteURL ?>form_module/view_rejetion.php</h3>
 </a>
 <br>
+<h3>Daily/Monthly/Yearly Report</h3>
+<a href="<?php echo $siteURL ?>config_module/form_sumbit_view_dashboard.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/form_sumbit_view_dashboard.php</h3>
+</a>
+<br>
+<h3>Daily/Monthly/Yearly Report By graph</h3>
+<a href="<?php echo $siteURL ?>config_module/form_submit_view_chart.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/form_submit_view_chart.php</h3>
+</a>
+<br>
