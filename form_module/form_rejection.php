@@ -603,7 +603,7 @@ include("../heading_banner.php");
                             <?php if($r_flag != '1'){ ?>
                                     <td class="tooltip">
                                         <!--<input type="button" value="✓" />-->
-                                        <a href="view_rejetion.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="view_closed_form.php?id=<?php echo $rowc['form_user_data_id']; ?>&optional=<?php echo $option; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         <!--<span class="tooltiptext">Edit User Form</span>-->
                                     </td>
                                             <?php }else if($r_flag == '1'){ ?>
