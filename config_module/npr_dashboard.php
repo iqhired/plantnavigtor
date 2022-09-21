@@ -192,7 +192,7 @@ include("../hp_header1.php");
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
-                <?php } ?>
+                <?php }?>
             </tr>
            <tr>
                 <?php
