@@ -13,7 +13,7 @@ if (count($_POST) > 0) {
 
        if ($pin_old == $pin_new){
 
-               $sql1 = "UPDATE `form_rejection_data` SET `r_flag`='0' where form_user_data_id = '$id'";
+               $sql1 = "UPDATE `form_rejection_data` SET `r_flag`='0',`closed_by` = '$user_id' where form_user_data_id = '$id'";
                mysqli_query($db, $sql1);
                $_SESSION['message_stauts_class'] = 'alert-success';
                $_SESSION['import_status_message'] = 'Form Closed';

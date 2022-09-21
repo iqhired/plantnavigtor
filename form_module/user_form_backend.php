@@ -149,9 +149,20 @@ if(count($_POST)>0) {
 					$mail->Username = 'admin@plantnavigator.com';
 					$mail->Password = 'S@@rgummi_2021';
 					$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+                    //fetch rejecction loop required or not
+
+                    $form_type_id = $rowc04['form_type'];
+
+                    $sql = "select form_rejection_loop from form_type where form_type_id = '$form_type_id'";
+                    $sql_query = mysqli_query($db,$sql);
+                    $form_result = mysqli_fetch_array($sql_query);
+                    $form_type = $form_result['form_rejection_loop'];
                     //insert fail data to new table
-                    $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`approval_by`,`created_at` ,`updated_at`,`update_by`,`filename`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$approval_by','$created_at','$updated_at','$updated_at','$file','$r_flag')";
-                    mysqli_query($db, $reason1);
+                    if ($form_type == '1'){
+                        $reason1 = "INSERT INTO `form_rejection_data`(`tracker_id`,`form_user_data_id`,`form_type`,`form_create_id`,`formname`,`station`,`partnumber`,`partfamily`,`approval_by`,`created_at` ,`updated_at`,`update_by`,`filename`,`r_flag`) VALUES ('$rejtracker_id','$fid','$form_type','$formcreateid','$name','$station','$part_number','$part_family','$approval_by','$created_at','$updated_at','$updated_at','$file','$r_flag')";
+                        mysqli_query($db, $reason1);
+                    }
+
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
 					$del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name , name as form_name   FROM  form_create as fc inner join cam_line as cl on fc.station = cl.line_id inner join pm_part_family as pf on fc.part_family= pf.pm_part_family_id 

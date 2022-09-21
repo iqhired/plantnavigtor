@@ -64,11 +64,6 @@ if (count($_POST) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $sitename; ?> | View Rejection Form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">-->
-
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-    <!--<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>-->
-    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
     <link href="<?php echo $siteURL; ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $siteURL; ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $siteURL; ?>assets/css/core.css" rel="stylesheet" type="text/css">
@@ -77,24 +72,21 @@ if (count($_POST) > 0) {
     <link href="<?php echo $siteURL; ?>assets/css/style_main.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     <!-- Core JS files -->
-    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
-    <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/media/fancybox.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/components_modals.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_select2.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/gallery.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
     <style>
 
         .mb-4, .my-4 {
@@ -133,11 +125,12 @@ if (count($_POST) > 0) {
             .com-mobile-version {
                 width: 100%;
             }
+        }
     </style>
 </head>
 <body>
 <!-- Main navbar -->
-<?php $cust_cam_page_header = "View Rejection Form";
+<?php $cust_cam_page_header = "Rejected Form Action";
 include("../header.php");
 
 if (($is_tab_login || $is_cell_login)) {
@@ -453,7 +446,7 @@ include("../heading_banner.php");
                         <div class="row d-flex justify-content-center ">
                             <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="card">
-                                    <div class="card-body scrollable">
+                                    <div class="card-body scrollable" id="scroll">
                                         <?php
                                         $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
                                         while ($rowct = mysqli_fetch_array($qurt)) {
@@ -478,22 +471,21 @@ include("../heading_banner.php");
 
                                             <div class="thumbnail">
                                                 <div class="thumb">
-                                                    <img src="../comment_files/<?php echo $file_name; ?>"
+                                                    <img src="../assets/comment_files/<?php echo $file_name; ?>"
                                                          alt="">
                                                     <div class="caption-overflow">
 														<span>
-															<a href="../comment_files/<?php echo $file_name; ?>"
+															<a href="../assets/comment_files/<?php echo $file_name; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded"><i
-                                                                        class="icon-plus3" target="_blank"></i></a>
+                                                                        class="icon-plus3" style="color: #fff"></i></a>
 														</span>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             </p>
-                                            <?php }
-                                                ?>
+                                            <?php } ?>
                                             <p class="small mb-0">
                                                 <?php echo $fullnnm;?> - <?php echo $comment_date;?>
                                             </p>
@@ -531,9 +523,8 @@ include("../heading_banner.php");
                     </div>
                 </section>
                 </form>
-
-                        </div>
-                    </div>
+            </div>
+          </div>
     </div>
 </div>
 
@@ -566,6 +557,10 @@ include("../heading_banner.php");
 </script>
 <!--//to close the form-->
 <script>
+    var comment = document.querySelector('#scroll');
+    comment.scrollTop = comment.scrollHeight - comment.clientHeight;
+</script>
+<script>
     function submitForm1(url) {
         var data = $("#form_update").serialize();
         $.ajax({
@@ -577,28 +572,7 @@ include("../heading_banner.php");
             }
         });
     }
-       /* $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                var pin1 = document.getElementById('pin').value;
-                var pin2 = document.getElementById('pin1').value;
 
-                $("#input").val("")
-                $(".pin").val("");
-                if(pin1 == pin2) {
-                    event.preventDefault()
-                    $("form :input").prop("disabled", true);
-                    $(':input[type="button"]').prop('disabled', true);
-                    window.scrollTo(0, 0);
-                }else
-                {
-                    alert('entered pin is wrong');
-                }
-            }
-        });
-    }*/
 
 </script>
 <script>
@@ -618,11 +592,21 @@ include("../heading_banner.php");
 <script>
     function submitForm(url) {
         //          $(':input[type="button"]').prop('disabled', true);
+        var fd = new FormData();
         var data = $("#update-form").serialize();
+        var files = $('#com_file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+        fd.append('data', data);
+        // fd.append(data);
+       // data =  { data : 'data1', fd : 'data2' },;
+
         $.ajax({
             type: 'POST',
             url: url,
-            data: data,
+            data: fd,
+            contentType: false,
+            processData: false,
             success: function (data) {
 
                 $("#textarea").val("")
@@ -630,12 +614,14 @@ include("../heading_banner.php");
                 //                   $(':input[type="button"]').prop('disabled', false);
                 location.reload();
                 $(".enter-message").val("");
+
+
             }
         });
     }
 
 
-    $("#com_file").on("change", function () {
+    $("#com_file").on("", function () {
         var fd = new FormData();
         var files = $('#com_file')[0].files[0];
         fd.append('file', files);

@@ -648,11 +648,23 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                     </tr>
                                                     <?php if ($form_status == 'Rejected') { ?>
                                                         <tr id="rej_reason_div" style="display: table-row;border: 1px solid red;">
-                                                            <td class="form_tab_td" colspan="4"> Reject Reason : <textarea
-                                                                        placeholder="<?php echo $rowc05['reject_reason']; ?>"
-                                                                        class="form-control pn_none" name="rej_reason" rows="1"></textarea></td>
+                                                            <td class="form_tab_td" colspan="4"> Reject Reason :
+                                                                <textarea  placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                                        class="form-control pn_none" name="rej_reason" rows="1">
+
+                                                                </textarea>
+                                                            </td>
                                                         </tr>
-                                                    <?php }
+                                                    <?php } else if ($form_status == 'Approved') { ?>
+                                                        <tr id="rej_reason_div" style="display: table-row;border: 1px solid green;">
+                                                            <td class="form_tab_td" colspan="4"> Approve Reason :
+                                                                <textarea  placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                                        class="form-control pn_none" name="rej_reason" rows="1">
+
+                                                                </textarea>
+                                                            </td>
+                                                        </tr>
+                                                  <?php  }
                                                     $fullnnm = "";
                                                     $passcd = "";
                                                 }
@@ -743,12 +755,19 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
                                                     <?php if ($form_status == 'Rejected') { ?>
                                                         <div id="rej_reason_div" style="border: 1px solid red;padding: 10px;">
-                                                            <td class="form_tab_td pn_none" colspan="4"> Reject Reason : <textarea
+                                                            <td class="form_tab_td pn_none" colspan="4">Reject Reason : <textarea
                                                                         placeholder="<?php echo $rowc05['reject_reason']; ?>"
-                                                                        style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea></td>
+                                                                        style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea>
+                                                            </td>
                                                         </div>
-                                                    <?php }
-                                                    ?>
+                                                    <?php }  else if ($form_status == 'Approved') { ?>
+                                                        <div id="rej_reason_div" style="border: 1px solid green;padding: 10px;">
+                                                            <td class="form_tab_td pn_none" colspan="4">Approve Reason : <textarea
+                                                                        placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                                        style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea>
+                                                            </td>
+                                                        </div>
+                                                <?php  } ?>
                                                 </div>
                                                 <?php     $fullnnm = "";
                                                 $passcd = "";

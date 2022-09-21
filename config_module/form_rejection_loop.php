@@ -1,13 +1,13 @@
 <?php
 include("../config.php");
-$form_type_check = $_POST['form_reject'];
+$form_rejection = $_POST['rejection_loop'];
 $form_is_checked = $_POST['isChecked'];
-if ($form_type_check != "") {
+if ($form_rejection != "") {
 
     if($form_is_checked =='true') {
-        $sql1 = "UPDATE  `form_type` set  form_type_reject = 1  WHERE `form_type_id`='$form_type_check'";
+        $sql1 = "UPDATE  `form_type` set  form_rejection_loop = 1  WHERE `form_type_id`='$form_rejection'";
     }else{
-        $sql1 = "UPDATE  `form_type` set  form_type_reject = 0  WHERE `form_type_id`='$form_type_check'";
+        $sql1 = "UPDATE  `form_type` set  form_rejection_loop = 0  WHERE `form_type_id`='$form_rejection'";
     }
     if (mysqli_query($db, $sql1)) {
         $_SESSION['message_stauts_class'] = 'alert-success';
