@@ -228,6 +228,7 @@ include("../heading_banner.php");
                                 <th>Form Type</th>
                                 <th>Is Work Order/Lot required ?</th>
                                 <th>Form Enabled/Disabled ?</th>
+                                <th>Form Rejection Loop ?</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -238,17 +239,15 @@ include("../heading_banner.php");
 							while ($rowc = mysqli_fetch_array($qur)) {
 								?>
                                 <tr>
-                                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]"
-                                               value="<?php echo $rowc["form_type_id"]; ?>"></td>
+                                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["form_type_id"]; ?>"></td>
                                     <td><?php echo ++$counter; ?></td>
                                     <td><?php echo $rowc["form_type_name"]; ?></td>
                                     <td><?php if($rowc["wol"] == 0){ echo 'No' ;}else{ echo 'Yes' ;}?></td>
-                                    <!--                                         <td>-->
-									<?php //echo $rowc['created_at']; ?><!--</td>-->
-                                    <!--                                        <td>-->
-									<?php //echo $rowc['updated_at']; ?><!--</td>-->
                                     <td>
                                         <input type="checkbox" name="form_reject" id="form_reject" value="<?php echo $rowc["form_type_id"]; ?>" <?php echo ($rowc['form_type_reject']==1 ? 'checked' : '');?>>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="rejection_loop" id="rejection_loop" value="<?php echo $rowc["form_type_id"]; ?>" <?php echo ($rowc['form_rejection_loop']==1 ? 'checked' : '');?>>
                                     </td>
                                     <td>
                                         <button type="button" id="edit" class="btn btn-info btn-xs"
@@ -260,10 +259,7 @@ include("../heading_banner.php");
                                                 data-target="#edit_modal_theme_primary">
                                             Edit
                                         </button>
-                                        <!--									&nbsp;
-                                                                                                                            <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['job_title_id']; ?>">Delete </button>
-                                                    -->
-                                    </td>
+                                  </td>
                                 </tr>
 							<?php } ?>
                             </tbody>
@@ -286,9 +282,7 @@ include("../heading_banner.php");
                                         <div class="form-group">
                                             <label class="col-lg-5 control-label">Form Type:*</label>
                                             <div class="col-lg-6">
-                                                <input type="text" name="edit_name" id="edit_name" class="form-control"
-                                                       required>
-
+                                                <input type="text" name="edit_name" id="edit_name" class="form-control" required>
                                                 <input type="hidden" name="edit_id" id="edit_id">
                                             </div>
                                         </div>
@@ -296,15 +290,11 @@ include("../heading_banner.php");
                                         <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-lg-5 control-label">Work Order/Lot:*</label>
-
                                             <div class="col-lg-6">
-
                                                     <input type="radio" id="edit_yes" name="edit_wol" value="yes">
                                                     <label for="yes" class="item_label" id="">Yes</label>
                                                     <input type="radio" id="edit_no" name="edit_wol" value="no">
                                                     <label for="no" class="item_label" id="">No</label>
-
-
                                             </div>
                                         </div>
                                         </div>
@@ -364,6 +354,23 @@ include("../heading_banner.php");
         $.ajax({
             type: 'POST',
             url: "form_type_reject.php",
+            data: data_1,
+            success: function (response) {
+
+            }
+        });
+
+    });
+
+</script>
+<script>
+    $("input#rejection_loop").click(function () {
+        var isChecked = $(this)[0].checked;
+        var val = $(this).val();
+        var data_1 = "&rejection_loop=" + val+ "&isChecked=" + isChecked;
+        $.ajax({
+            type: 'POST',
+            url: "form_rejection_loop.php",
             data: data_1,
             success: function (response) {
 
