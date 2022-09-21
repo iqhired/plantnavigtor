@@ -24,6 +24,11 @@ $temp = "";
     <h3><?php echo $siteURL ?>config_module/npr_dashboard.php?id=5</h3>
 </a>
 <br>
+<h3>NPR data store hourly basis</h3>
+<a href="<?php echo $siteURL ?>events_module/npr_data_store.php" target="_blank">
+    <h3><?php echo $siteURL ?>events_module/npr_data_store.php</h3>
+</a>
+<br>
 <h3>Form Submit View Graph</h3>
 <a href="<?php echo $siteURL ?>form_module/form_submit_view.php" target="_blank">
     <h3><?php echo $siteURL ?>form_module/form_submit_view.php</h3>
@@ -53,4 +58,5 @@ $temp = "";
 <a href="<?php echo $siteURL ?>config_module/form_submit_view_chart.php" target="_blank">
     <h3><?php echo $siteURL ?>config_module/form_submit_view_chart.php</h3>
 </a>
+
 <br>
