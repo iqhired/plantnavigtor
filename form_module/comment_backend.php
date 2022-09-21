@@ -2,23 +2,24 @@
 include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 if (count($_POST) > 0) {
+    $message = $mysqli->real_escape_string($_POST['s_message']);
     $data =  $_POST['data'];
     $data_arr = (explode("&",$data));
-    $message = null;
+   // $message = null;
     $userid = null;
     foreach ($data_arr as $data) {
        $d_arr =  (explode("=",$data));
        if($d_arr[0] === 'sender'){
            $userid = $d_arr[1];
-       }else{
-           $message = $d_arr[1];
+       }else if($d_arr[0] === 'rej_loop_form_id'){
+           $rej_loop_form_id = $d_arr[1];
        }
     }
 
 
 
     $comment_id = null;
-    $sql1 = "INSERT INTO `comments`(`userid`, `message`,`comment_date`) VALUES ('$userid','$message','$chicagotime')";
+    $sql1 = "INSERT INTO `comments`(`userid`,`rej_loop_form_id`, `message`,`comment_date`) VALUES ('$userid','$rej_loop_form_id','$message','$chicagotime')";
     if ($mysqli->query($sql1) === TRUE) {
         $comment_id = $mysqli->insert_id;
     }

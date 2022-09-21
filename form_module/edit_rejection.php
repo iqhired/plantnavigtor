@@ -35,6 +35,7 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
 }
+$loggedin_uid = $_SESSION['id'];
 if (count($_POST) > 0) {
 
     $dateto = $_POST['date_to'];
@@ -448,10 +449,11 @@ include("../heading_banner.php");
                                 <div class="card">
                                     <div class="card-body scrollable" id="scroll">
                                         <?php
-                                        $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
+                                        $qurt = mysqli_query($db, "SELECT message,userid,comment_date,slno FROM  comments where rej_loop_form_id = '$form_user_data_id' ");
                                         while ($rowct = mysqli_fetch_array($qurt)) {
                                         $comment_id = $rowct["slno"];
                                         $message = $rowct["message"];
+                                        $uid = $rowct["userid"];
                                         $comment_date = $rowct["comment_date"];
                                         ?>
                                         <p class="mt-3 pb-2">
@@ -485,9 +487,16 @@ include("../heading_banner.php");
                                             </div>
 
                                             </p>
-                                            <?php } ?>
+                                            <?php }
+                                            $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where users_id = '$uid' ");
+                                            $rowctemp = mysqli_fetch_array($qurtemp);
+                                            $uname ='';
+                                            if ($rowctemp != NULL) {
+                                                $uname = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
+                                               // echo "<option value='" . $user_id . "' >" . $fullnn . "</option>";
+                                            }?>
                                             <p class="small mb-0">
-                                                <?php echo $fullnnm;?> - <?php echo $comment_date;?>
+                                                <?php echo $uname;?> - <?php echo $comment_date;?>
                                             </p>
                                             <hr>
 
@@ -499,7 +508,8 @@ include("../heading_banner.php");
                                         <div class="d-flex flex-start w-100">
 
                                             <div class="form-outline w-100">
-                                                <input type="hidden" id="sender" name="sender" value="<?php echo $id; ?>">
+                                                <input type="hidden" id="sender" name="sender" value="<?php echo $loggedin_uid; ?>">
+                                                <input type="hidden" id="rej_loop_form_id" name="rej_loop_form_id" value="<?php echo $form_user_data_id; ?>">
                                                <textarea class="form-control" name="enter-message" id="enter-message" rows="4" style="background: #fff;"></textarea>
                                                 <label class="form-label" for="textAreaExample">Message</label>
                                             </div>
@@ -597,6 +607,7 @@ include("../heading_banner.php");
         var files = $('#com_file')[0].files[0];
         fd.append('file', files);
         fd.append('request', 1);
+        fd.append('s_message', document.getElementById('enter-message').value.trim());
         fd.append('data', data);
         // fd.append(data);
        // data =  { data : 'data1', fd : 'data2' },;
