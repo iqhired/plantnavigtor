@@ -190,7 +190,7 @@ include("../heading_banner.php");
                                     <div class="form_row row">
                                         <label class="col-lg-2 control-label">Form link : </label>
                                         <div class="col-md-6">
-                                            <a href="view_rejetion.php?id=<?php echo $rowcmain['form_user_data_id'];?>">
+                                            <a target="_blank" href="view_rejetion.php?id=<?php echo $rowcmain['form_user_data_id'];?>">
                                                 <u>Link for view the form</u>
                                             </a>
                                         </div>
