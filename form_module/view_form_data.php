@@ -382,32 +382,18 @@ include("../hp_header.php");
 											?>
                                         </div>
 										<?php if ($checked >= $final_lower && $checked <= $final_upper) { ?>
-                                            <div class="col-md-3"><?php if ($rowc['optional'] != '1') { ?>
+                                            <div class="col-md-3">
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" required step="any"
                                                            value="<?php echo $itemVal; ?>"  disabled>
-													<?php
-												} else { ?>
-                                                    <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                           id="<?php echo $rowc['form_item_id']; ?>"
-                                                           class="form-control compare_text pn_none" required step="any"
-                                                           value="<?php echo $itemVal; ?>"  style="background-color: #ffadad !important" disabled>
-												<?php } ?>
                                             </div>
 										<?php } else { ?>
-                                            <div class="col-md-2"><?php if ($rowc['optional'] != '1') { ?>
+                                            <div class="col-md-2">
                                                     <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"
                                                            class="form-control compare_text pn_none" required step="any"
                                                            value="<?php echo $itemVal; ?>"  style="background-color: #ffadad !important" disabled>
-													<?php
-												} else { ?>
-                                                    <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                           id="<?php echo $rowc['form_item_id']; ?>"
-                                                           class="form-control compare_text pn_none" required step="any"
-                                                           value="<?php echo $itemVal; ?>"  style="background-color: #ffadad !important" disabled>
-												<?php } ?>
                                             </div>
 										<?php } ?>
                                         <div class="col-md-1" style="padding-top: 15px;">
