@@ -92,3 +92,13 @@ if ($button == "button1") {
 		}
 	$response['posts'] = $posts;
 	echo json_encode($response);
+
+      /*  $q1 = "SELECT * FROM `sg_station_event` WHERE `part_family_id` = '$pf'". $wc;
+        $r1 = mysqli_query($db,$q1);
+        $row1 = $r1->fetch_assoc();
+        $station_event_id = $row1["station_event_id"];
+        $q2 = "SELECT * FROM `sg_station_event` WHERE `station_event_id` = '$station_event_id'". $wc;
+        $r2 = mysqli_query($db,$q2);
+        $row2 = $r2->fetch_assoc();
+        $event_cat_id = $row2["event_cat_id"];
+        $created_on = $row2["created_on"];*/
