@@ -23,6 +23,7 @@ if (!empty($resultmain)) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $sitename; ?> | NPR Log</title>
@@ -62,23 +63,10 @@ if (!empty($resultmain)) {
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
-
     <style>
-        body.alt-menu.sidebar-noneoverflow.pace-done {
-            background-color: #ccc !important;
+        div.panel panel-flat{
+            padding-top: 2px;
         }
-
-        .anychart-credits {
-            display: none !important;
-        }
-
-        .datatable-scroll {
-            width: 100%;
-            overflow-x: scroll;
-        }
-    </style>
-    <style type="text/css">
-
         .line_head {
             font-size: 16px !important;
             margin: 30px !important;
@@ -99,8 +87,27 @@ if (!empty($resultmain)) {
             }
 
         }
-        table,th,tr,td{
-            border:1px solid black;
+        table {
+            border-collapse: separate;
+            width: 100%;
+        }
+
+        thead {
+            border-collapse: separate;
+            position: sticky;
+            top: 0px;
+            background-color: white;
+        }
+
+
+        /* for styling only */
+
+        td {
+            top: 0px;
+            border: 1px solid black;
+        }
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+            padding: 0.5px!important;
         }
     </style>
 </head>
@@ -114,7 +121,8 @@ include("../hp_header1.php");
 
 <body class="alt-menu sidebar-noneoverflow">
 <div class="panel panel-flat">
-    <table class="table datatable-basic">
+    <div class="table-responsive-sm">
+    <table class="table table-sm">
         <thead>
         <tr>
             <th>Hours</th>
@@ -945,6 +953,6 @@ include("../hp_header1.php");
         </tbody>
     </table>
 </div>
-
+</div>
 </body>
 </html>
