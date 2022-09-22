@@ -417,32 +417,18 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                    </div>
 
 												<?php if ($checked >= $final_lower && $checked <= $final_upper) { ?>
-                                                    <div class="col-md-2"><?php if ($rowc['optional'] != '1') { ?>
-                                                            <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"
-                                                                   class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $itemVal; ?>"  disabled>
-															<?php
-														} else { ?>
-                                                            <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"
-                                                                   class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
-														<?php } ?>
+                                                    <div class="col-md-2">
+                                                        <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
+                                                               id="<?php echo $rowc['form_item_id']; ?>"
+                                                               class="form-control compare_text pn_none" required step="any"
+                                                               value="<?php echo $itemVal; ?>"  disabled>
                                                     </div>
 												<?php } else { ?>
-                                                    <div class="col-md-2"><?php if ($rowc['optional'] != '1') { ?>
-                                                            <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"
-                                                                   class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
-															<?php
-														} else { ?>
-                                                            <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"
-                                                                   class="form-control compare_text pn_none" required step="any"
-                                                                   value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
-														<?php } ?>
+                                                    <div class="col-md-2">
+                                                        <input type="number" name="<?php echo $rowc['form_item_id']; ?>"
+                                                               id="<?php echo $rowc['form_item_id']; ?>"
+                                                               class="form-control compare_text pn_none" required step="any"
+                                                               value="<?php echo $itemVal; ?>"  style="background-color: #ffadad" disabled>
                                                     </div>
 												<?php } ?>
 
@@ -825,7 +811,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         } else {
             if ($.isNumeric(text_val)) {
 
-                if (text_val >= lower_compare && text_val <= upper_compare)
+                if (text_val >= lower_compare && text_val <= upper_compare){
                     $(this).css("background-color", "");
                 } else {
                     $(this).css("background-color", "#ffadad");
