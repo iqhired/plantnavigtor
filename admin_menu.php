@@ -29,6 +29,7 @@ if (!empty($result1)) {
 		$tm_task_id = $row1['tm_task_id'];
 	}
 }
+
 ?>
 
 <?php
@@ -261,6 +262,7 @@ $msg = explode(',', $msg); ?>
                         </div>
                     </div>
 				<?php } ?>
+
             </div>
 		<?php } ?>
 
@@ -312,6 +314,25 @@ $msg = explode(',', $msg); ?>
                                     View Form
                                 </a>
                             </div>
+                        <?php }
+                        if (in_array('78', $msg)) { ?>
+                                <div class="ms-3">
+                                    <?php $query1 = sprintf("SELECT * FROM `cam_users` WHERE users_id = '$iid' and `pin_flag` = '1'");
+                                    $qur1 = mysqli_query($db, $query1);
+
+                                    while ($rowc1 = mysqli_fetch_array($qur1)) {
+                                        $pin_flag = $rowc1["pin_flag"];
+                                        if ($pin_flag == '1') { ?>
+                                            <div class="mt-3">
+                                                <a target="_blank"
+                                                   href="<?php echo $siteURL; ?>config_module/sg_cust_dashboard.php"
+                                                   class="text-muted mobile">
+                                                    Form Rejection Loop
+                                                </a>
+                                            </div>
+                                        <?php }
+                                    } ?>
+                                </div>
 						<?php }
 						if (in_array('60', $msg)) { ?>
                             <div class="mt-3">
@@ -320,8 +341,7 @@ $msg = explode(',', $msg); ?>
                                     Restore Form
                                 </a>
                             </div>
-						<?php } ?>
-
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -714,7 +734,7 @@ $msg = explode(',', $msg); ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>user_module/role_list.php"
                                                    class="text-muted mobile">
-                                                    Add User Role(s)
+                                                    Add/Update User Role(s)
                                                 </a>
                                             </div>
 										<?php }
@@ -1052,6 +1072,41 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
                             <?php } ?>
+                            <?php /*if (in_array('76', $msg)) { */?><!--
+                                <div class='tutorial_section'>
+
+                                    <div class="toggle" id="toggle-2">
+                                        <a href="<?php /*echo $siteURL; */?>config_module/npr_dashboard_station.php">
+
+                                           <span>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                    </span>
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                            </svg> </span>
+                                            <span class="ms-2 fw-light">NPR Dashboard</span>
+                                            <span class="float-end" id="toggle-2-arrow">
+                                </span>
+                                        </a>
+                                    </div>
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            --><?php /*} */?>
                         </div>
                     </div>
                 </li>
@@ -1081,6 +1136,18 @@ $msg = explode(',', $msg); ?>
 								if (in_array('44', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>form_module/form_search.php">View Form</a></li>
 								<?php }
+                                if (in_array('78', $msg)) { ?>
+                                    <?php $query1 = sprintf("SELECT * FROM `cam_users` WHERE users_id = '$iid' and `pin_flag` = '1'");
+                                    $qur1 = mysqli_query($db, $query1);
+
+                                    while ($rowc1 = mysqli_fetch_array($qur1)) {
+                                        $pin_flag = $rowc1["pin_flag"];
+                                        if ($pin_flag == '1') { ?>
+                                            <li><a href="<?php echo $siteURL; ?>form_module/form_rejection.php">Form Rejection Loop</a></li>
+                                        <?php }
+                                    } ?>
+
+                                <?php }
 								if (in_array('60', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>form_module/forms_recycle_bin.php">Restore
                                             Form</a></li>
@@ -1519,7 +1586,7 @@ $msg = explode(',', $msg); ?>
 													if (in_array('14', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>user_module/role_list.php"
-                                                               class="mega-link"><h3 class="text-muted fs-6">Add User
+                                                               class="mega-link"><h3 class="text-muted fs-6">Add/Update User
                                                                     Role(s)</h3></a>
                                                         </div>
 													<?php }
