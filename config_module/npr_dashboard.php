@@ -129,7 +129,7 @@ include("../hp_header1.php");
             <th>Goodpiece</th>
             <th>Badpiece</th>
             <th>Target NPR</th>
-            <th>Actul NPR</th>
+            <th>Actual NPR</th>
             <th>Effieciency</th>
         </tr>
         </thead>

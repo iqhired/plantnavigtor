@@ -34,19 +34,17 @@ $temp = "";
     <h3><?php echo $siteURL ?>form_module/form_submit_view.php</h3>
 </a>
 <br>
-<h3>View Form Rejection</h3>
-<a href="<?php echo $siteURL ?>form_module/form_rejection.php" target="_blank">
-    <h3><?php echo $siteURL ?>form_module/form_rejection.php</h3>
+<h3>Upload document</h3>
+<a href="<?php echo $siteURL ?>document_module/document_form.php" target="_blank">
+    <h3><?php echo $siteURL ?>document_module/document_form.php</h3>
 </a>
-<br>
-<h3>Edit Form Rejection</h3>
-<a href="<?php echo $siteURL ?>form_module/edit_rejection.php" target="_blank">
-    <h3><?php echo $siteURL ?>form_module/edit_rejection.php</h3>
+<h3>Edit document</h3>
+<a href="<?php echo $siteURL ?>document_module/document_search.php" target="_blank">
+    <h3><?php echo $siteURL ?>document_module/document_search.php</h3>
 </a>
-<br>
-<h3>View Form Rejection</h3>
-<a href="<?php echo $siteURL ?>form_module/view_rejetion.php" target="_blank">
-    <h3><?php echo $siteURL ?>form_module/view_rejetion.php</h3>
+<h3>Create document category</h3>
+<a href="<?php echo $siteURL ?>document_module/document_category.php" target="_blank">
+    <h3><?php echo $siteURL ?>document_module/document_category.php</h3>
 </a>
 <br>
 <h3>Daily/Monthly/Yearly Report</h3>
