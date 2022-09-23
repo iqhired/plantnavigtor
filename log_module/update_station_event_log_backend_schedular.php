@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
 $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1 ";
+$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
 
 $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
@@ -16,7 +16,7 @@ $station_event_old_id = $row_st['sg_station_event_old_id'];
 
 
 
-$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id'";
+$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id' AND created_on <= '$chicagotime1'";
 $result0 = mysqli_query($db, $sql0);
 
 while ($row = mysqli_fetch_array($result0)) {
