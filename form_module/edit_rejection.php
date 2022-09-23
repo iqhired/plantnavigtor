@@ -145,11 +145,13 @@ include("../heading_banner.php");
     <!-- Content area -->
     <div class="content">
                                 <?php
+
                                 if (!empty($import_status_message)) {
                                     echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
                                 }
                                 ?>
                                 <?php
+
                                 if (!empty($_SESSION['import_status_message'])) {
                                     echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                                     $_SESSION['message_stauts_class'] = '';
@@ -174,7 +176,6 @@ include("../heading_banner.php");
                                 ?>
 
                 <div class="panel panel-flat">
-                    <!--                <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
                     <div class="panel-heading">
                         <h5 class="panel-title form_panel_title"><?php echo $rowcmain['form_name']; ?>  </h5>
                         <div class="row ">
