@@ -7,14 +7,14 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
-$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1 ";
+$chicagotime = date("Y-m-d H:i:s");
+$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
 
 $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
 $station_event_old_id = $row_st['sg_station_event_old_id'];
 
-$sql0 = "SELECT * FROM sg_station_event_log where station_event_log_id > '$station_event_old_id'";
+$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id'";
 $result0 = mysqli_query($db, $sql0);
 
 while ($row = mysqli_fetch_array($result0)) {
@@ -45,10 +45,43 @@ while ($row = mysqli_fetch_array($result0)) {
         // $tt = sprintf('%02d:%02d', (int)$current_time, fmod($current_time, 1) * 60);
         if ($end_hrs < 24) {
             $tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);
-            $end_time2 = $s_arr_1[0] . ' ' . $tt;
-            $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`) 
-                values ('$station_event_log_id','1','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
-            $result1 = mysqli_query($db, $page);
+            $end_time2 = $curdate . ' ' . $tt;
+            if ($created_on < $curdate) {
+
+                $s_arr_1 = explode(' ', $created_on);
+                $s_arr = explode(':', $s_arr_1[1]);
+                $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
+                $start_time = round($st_time, 2);
+
+
+                $tt_time_1 = 24 - $start_time;
+                $tt_time_2 = $end_hrs - $tt_time_1;
+
+                $end_time2 = $s_arr_1[0] . ' ' . '23:59:59';
+                if ($z === 0){
+                    $z = 1;
+                }
+                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$tt_time_1','$created_by')";
+                $result1 = mysqli_query($db, $page);
+
+                 $z++;
+
+                $start_time2 = $curdate . ' ' . '00:00:00';
+                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$current_time','$tt_time_2','$created_by')";
+                $result1 = mysqli_query($db, $page);
+
+
+            }else{
+                if ($z === 0){
+                    $z = 1;
+                }
+                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+                values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
+                $result1 = mysqli_query($db, $page);
+            }
+
         }else{
 
             $co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_update where station_event_id = '$station_event_id';";
@@ -62,6 +95,10 @@ while ($row = mysqli_fetch_array($result0)) {
             $ds_sql = mysqli_fetch_array($result_sql);
             $z = $ds_sql[0];
 
+            if ($z === 0){
+                $z = 1;
+            }
+
 //
 //			$co_sql = "SELECT sg_station_event_update_id, end_time FROM sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1;";
 //			$result_sql = mysqli_query($db, $co_sql);
@@ -69,6 +106,7 @@ while ($row = mysqli_fetch_array($result0)) {
 //			//  $j = $count_sql[0];
 //			$j = $count_sql['sg_station_event_update_id'];
 //			$en_time_new = $count_sql['end_time'];
+
             $s_arr_1 = explode(' ', $time);
             $s_arr = explode(':', $s_arr_1[1]);
             $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
