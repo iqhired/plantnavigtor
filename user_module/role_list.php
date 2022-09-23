@@ -143,7 +143,7 @@ if (count($_POST) > 0) {
     <body>
         <!-- Main navbar -->
         <?php
-        $cust_cam_page_header = "Add User Roles";
+        $cust_cam_page_header = "Add/Update User Role(s)";
         include("../header_folder.php");
         include("../admin_menu.php");
         include("../heading_banner.php");
