@@ -7,16 +7,14 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
 }
-$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
+//$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
 $sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
 
 $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
 $station_event_old_id = $row_st['sg_station_event_old_id'];
 
-
-
-$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id' AND created_on <= '$chicagotime1'";
+$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id' AND created_on < '$curdate'";
 $result0 = mysqli_query($db, $sql0);
 
 while ($row = mysqli_fetch_array($result0)) {
@@ -85,9 +83,7 @@ while ($row = mysqli_fetch_array($result0)) {
                 $tt_time_1 = 24 - $start_time;
                 $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 
-                if ($z == 0){
-                    $z = 1;
-                }
+
                 $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
                 values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
                 $result1 = mysqli_query($db, $page);
