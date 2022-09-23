@@ -30,7 +30,7 @@ while ($row = mysqli_fetch_array($result0)) {
     $created_on = $row['created_on'];
     $total_time = $row['total_time'];
     $created_by = $row['created_by'];
-    $current_time = date('Y-m-d', strtotime('-1 days'));
+    $current_time = date('Y-m-d');
     $time = ($created_on);
 
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
@@ -86,7 +86,6 @@ while ($row = mysqli_fetch_array($result0)) {
                 $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
 
                 if ($z == 0){
-
                     $z = 1;
                 }
                 $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
