@@ -640,7 +640,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                 </textarea>
                                                             </td>
                                                         </tr>
-                                                    <?php } else if ($form_status == 'Approved') { ?>
+                                                    <?php } else if ($form_status == 'Approved') {
+                                                                   if ($rowc05['reject_reason'] != ""){?>
                                                         <tr id="rej_reason_div" style="display: table-row;border: 1px solid green;">
                                                             <td class="form_tab_td" colspan="4"> Approve Reason :
                                                                 <textarea class="form-control pn_none" name="rej_reason" rows="1"><?php echo $rowc05['reject_reason']; ?>
@@ -648,7 +649,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                 </textarea>
                                                             </td>
                                                         </tr>
-                                                  <?php  }
+                                                  <?php  } }
                                                     $fullnnm = "";
                                                     $passcd = "";
                                                 }
