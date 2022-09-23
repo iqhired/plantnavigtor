@@ -30,7 +30,7 @@ while ($row = mysqli_fetch_array($result0)) {
     $created_on = $row['created_on'];
     $total_time = $row['total_time'];
     $created_by = $row['created_by'];
-    $current_time = date('Y-m-d');
+    $current_time = date("Y-m-d H:i:s");
     $time = ($created_on);
 
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
