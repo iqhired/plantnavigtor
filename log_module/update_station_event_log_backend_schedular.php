@@ -88,9 +88,12 @@ while ($row = mysqli_fetch_array($result0)) {
                 if ($z == 0){
                     $z = 1;
                 }
-                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+                if ($created_on <= $chicagotime1){
+                    $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
                 values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
-                $result1 = mysqli_query($db, $page);
+                    $result1 = mysqli_query($db, $page);
+                }
+
             }
 
             $start_date2 = $s_arr_1[0];
@@ -135,14 +138,18 @@ while ($row = mysqli_fetch_array($result0)) {
                     if ($tt_time_2 < 24) {
                         $tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
                         $end_time2 = $start_date21 . ' ' . $tt;
-                        $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+                        if ($start_time21 <= $chicagotime1) {
+                            $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$end_time2','$tt_time_2','$created_by')";
-                        $result1 = mysqli_query($db, $page);
+                            $result1 = mysqli_query($db, $page);
+                        }
                     } else {
                         $end_time2 = $start_date21 . ' ' . '23:59:59';
-                        $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+                        if ($start_time21 <= $chicagotime1) {
+                            $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$end_time2','24','$created_by')";
-                        $result1 = mysqli_query($db, $page);
+                            $result1 = mysqli_query($db, $page);
+                        }
                     }
                 }else if(empty($j)){
                     $start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
@@ -150,14 +157,19 @@ while ($row = mysqli_fetch_array($result0)) {
                     if ($tt_time_2 < 24) {
                         $tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
                         $end_time2 = $start_date2 . ' ' . $tt;
-                        $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+                        if ($start_time2 <= $chicagotime1){
+                            $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','$tt_time_2','$created_by')";
-                        $result1 = mysqli_query($db, $page);
+                            $result1 = mysqli_query($db, $page);
+                        }
+
                     } else {
                         $end_time2 = $start_date2 . ' ' . '23:59:59';
-                        $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+                        if ($start_time2 <= $chicagotime1) {
+                            $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','24','$created_by')";
-                        $result1 = mysqli_query($db, $page);
+                            $result1 = mysqli_query($db, $page);
+                        }
                     }
                 }
                 $tt_time_2 = ($tt_time_2 - 24);
