@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 include("../config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
-$temp_j = 0;
+$temp_j =  0;
 if(count($_POST)>0) {
     $rejtracker_id = "RJT" . rand(10000, 500000);
     $name = $_POST['name'];
