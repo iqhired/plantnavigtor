@@ -21,7 +21,7 @@ $temp = "";
 <br>
 <h3>NPR Efficiency each station based on Hour</h3>
 <a href="<?php echo $siteURL ?>config_module/npr_dashboard.php?id=5" target="_blank">
-    <h3><?php echo $siteURL ?>config_module/npr_dashboard.php?id=5</h3>
+    <h3><?php echo $siteURL ?>config_module/npr_dashboard.php</h3>
 </a>
 <br>
 <h3>Form Submit View Graph</h3>
