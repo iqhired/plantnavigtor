@@ -63,6 +63,50 @@ if (!empty($resultmain)) {
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script>
+        var today = new Date();
+        var day = today.getDay();
+        var daylist = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
+        console.log("Today is : " + daylist[day] + ".");
+        var hour = today.getHours();
+        var minute = today.getMinutes();
+        var second = today.getSeconds();
+        var prepand = (hour >= 12)? " PM ":" AM ";
+        hour = (hour >= 12)? hour - 12: hour;
+        if (hour===0 && prepand===' PM ')
+        {
+            if (minute===0 && second===0)
+            {
+                hour=12;
+                prepand=' Noon';
+            }
+            else
+            {
+                hour=12;
+                prepand=' PM';
+            }
+        }
+        if (hour===0 && prepand===' AM ')
+        {
+            if (minute===0 && second===0)
+            {
+                hour=12;
+                prepand=' Midnight';
+            }
+            else
+            {
+                hour=12;
+                prepand=' AM';
+            }
+        }
+        var abc = document.getElementById('abc').value;
+        if(abc == hour){
+            document.getElementById('abc').style.backgroundColor = #ffffff;
+        }
+        //console.log("Current Time : "+hour + prepand + " : " + minute + " : " + second);
+
+    </script>
     <style>
         div.panel panel-flat{
             padding-top: 2px;
@@ -91,14 +135,14 @@ if (!empty($resultmain)) {
             border-collapse: separate;
             width: 100%;
         }
-
-        thead {
-            border-collapse: separate;
-            position: sticky;
+        th {
             top: 0px;
-            background-color: white;
+            border: 1px solid black;
+            background-color: #f5f5f5;
+           /* background-color: #f5f5f5;
+            border-right-style: groove;*/
+            /*border-style: solid;*/
         }
-
 
         /* for styling only */
 
@@ -107,9 +151,14 @@ if (!empty($resultmain)) {
             border: 1px solid black;
         }
         .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-            padding: 0.5px!important;
+            padding: 1.5px!important;
+            align: center;
+        }
+        .hightlight{
+            background-color: red;
         }
     </style>
+
 </head>
 
 
@@ -122,19 +171,19 @@ include("../hp_header1.php");
 <body class="alt-menu sidebar-noneoverflow">
 <div class="panel panel-flat">
     <div class="table-responsive-sm">
-    <table class="table table-sm">
+    <table class="table table-sm" style="text-align:center;">
         <thead>
         <tr>
-            <th>Hours</th>
-            <th>Goodpiece</th>
-            <th>Badpiece</th>
-            <th>Target NPR</th>
-            <th>Actual NPR</th>
-            <th>Effieciency</th>
+            <th style="text-align:center;">Hours</th>
+            <th style="text-align:center;">Goodpiece</th>
+            <th style="text-align:center;">Badpiece</th>
+            <th style="text-align:center;">Target NPR</th>
+            <th style="text-align:center;">Actual NPR</th>
+            <th style="text-align:center;">Effieciency</th>
         </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr value="00">
                 <?php
                 $pm_npr= 30;
                 $qur04 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '00' and date(`update_date`) = CURDATE() group by npr_h";
@@ -168,7 +217,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="01">
                 <?php
                 $pm_npr2= 30;
                 $qur042 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '01' and date(`update_date`) = CURDATE() group by npr_h";
@@ -202,7 +251,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php }?>
             </tr>
-           <tr>
+           <tr value="02">
                 <?php
                 $pm_npr311= 30;
                 $qur043 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '02' and date(`update_date`) = CURDATE() group by npr_h";
@@ -236,7 +285,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                <?php } ?>
             </tr>
-            <tr>
+            <tr value="03">
                 <?php
                 $pm_npr4= 30;
                 $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '03' and date(`update_date`) = CURDATE() group by npr_h";
@@ -270,7 +319,7 @@ include("../hp_header1.php");
                        <td><?php echo '0'; ?></td>
                    <?php } ?>
             </tr>
-            <tr>
+            <tr value="04">
                 <?php
                 $pm_npr55= 30;
                 $qur55 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '04' and date(`update_date`) = CURDATE() group by npr_h";
@@ -304,7 +353,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="05">
                 <?php
                 $pm_npr2= 30;
                 $qur21 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '05' and date(`update_date`) = CURDATE() group by npr_h";
@@ -338,7 +387,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="06">
                 <?php
                 $pm_npr3= 30;
                 $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '06' and date(`update_date`) = CURDATE() group by npr_h";
@@ -372,7 +421,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="07">
                 <?php
                 $pm_npr41= 30;
                 $qur41 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '07' and date(`update_date`) = CURDATE() group by npr_h";
@@ -406,7 +455,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="08">
                 <?php
                 $pm_npr51= 30;
                 $qur51 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '08' and date(`update_date`) = CURDATE() group by npr_h";
@@ -440,7 +489,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="09">
                 <?php
                 $pm_npr61= 30;
                 $qur61 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '09' and date(`update_date`) = CURDATE() group by npr_h";
@@ -474,7 +523,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="11">
                 <?php
                 $pm_npr71= 30;
                 $qur71 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '10' and date(`update_date`) = CURDATE() group by npr_h";
@@ -508,7 +557,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="11">
                 <?php
                 $pm_npr81= 30;
                 $qur81 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '11' and date(`update_date`) = CURDATE() group by npr_h";
@@ -542,7 +591,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="12">
                 <?php
                 $pm_npr91= 30;
                 $qur91 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '12' and date(`update_date`) = CURDATE() group by npr_h";
@@ -576,7 +625,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="13">
                 <?php
                 $pm_npr911= 30;
                 $qur911 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '13' and date(`update_date`) = CURDATE() group by npr_h";
@@ -610,7 +659,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="14">
                 <?php
                 $pm_npr921= 30;
                 $qur921 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '14' and date(`update_date`) = CURDATE() group by npr_h";
@@ -644,7 +693,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="15">
                 <?php
                 $pm_npr931= 30;
                 $qur931 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '15' and date(`update_date`) = CURDATE() group by npr_h";
@@ -678,7 +727,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="16">
                 <?php
                 $pm_npr941= 30;
                 $qur941 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '16' and date(`update_date`) = CURDATE() group by npr_h";
@@ -712,7 +761,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="17" id="abc">
                 <?php
                 $pm_npr951= 30;
                 $qur951 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '17' and date(`update_date`) = CURDATE() group by npr_h";
@@ -746,7 +795,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="18">
                 <?php
                 $pm_npr961= 30;
                 $qur961 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '18' and date(`update_date`) = CURDATE() group by npr_h";
@@ -780,7 +829,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="19">
                 <?php
                 $pm_npr971= 30;
                 $qur971 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '19' and date(`update_date`) = CURDATE() group by npr_h";
@@ -814,7 +863,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="20">
                 <?php
                 $pm_npr981= 30;
                 $qur981 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '20' and date(`update_date`) = CURDATE() group by npr_h";
@@ -848,7 +897,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="21">
                 <?php
                 $pm_npr991= 30;
                 $qur991 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '21' and date(`update_date`) = CURDATE() group by npr_h";
@@ -882,7 +931,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="22">
                 <?php
                 $pm_npr191= 30;
                 $qur191 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '22' and date(`update_date`) = CURDATE() group by npr_h";
@@ -916,7 +965,7 @@ include("../hp_header1.php");
                     <td><?php echo '0'; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <tr value="23">
                 <?php
                 $pm_npr291= 30;
                 $qur291 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,date(`update_date`) FROM `npr_data` where station_event_id = '$station_id' and npr_h = '23' and date(`update_date`) = CURDATE() group by npr_h";
