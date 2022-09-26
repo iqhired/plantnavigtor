@@ -14,6 +14,10 @@ $result_st = mysqli_query($db,$sql_st);
 $row_st =  mysqli_fetch_array($result_st);
 $station_event_old_id = $row_st['sg_station_event_old_id'];
 
+if (empty($station_event_old_id)){
+    $station_event_old_id = 0;
+}
+
 $sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND created_on < '$curdate%' AND station_event_log_id > '$station_event_old_id' OR is_incomplete = 1";
 $result0 = mysqli_query($db, $sql0);
 
