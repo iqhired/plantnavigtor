@@ -6,15 +6,21 @@ $button = "";
 $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: logout.php');
-}
-$chicagotime = date("Y-m-d H:i:s");
-//$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
-//
-//$result_st = mysqli_query($db,$sql_st);
-//$row_st =  mysqli_fetch_array($result_st);
-//$station_event_old_id = $row_st['sg_station_event_old_id'];
+    }
 
-$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND event_type_id = '7' AND event_status = '0' ORDER BY `station_event_log_id` DESC";
+$sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
+
+$result_st = mysqli_query($db,$sql_st);
+$row_st =  mysqli_fetch_array($result_st);
+$station_event_old_id = $row_st['sg_station_event_old_id'];
+
+if (empty($station_event_old_id)){
+    $station_event_old_id = 0;
+}
+
+$curdate1 = date('Y-m-d', strtotime('-1 days'));
+
+$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND created_on < '$curdate1%' AND station_event_log_id > '$station_event_old_id' OR is_incomplete = 1";
 $result0 = mysqli_query($db, $sql0);
 
 while ($row = mysqli_fetch_array($result0)) {
@@ -65,22 +71,27 @@ while ($row = mysqli_fetch_array($result0)) {
 				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$tt_time_1','$created_by')";
                 $result1 = mysqli_query($db, $page);
 
-                 $z++;
+                $sql_result = "Update sg_station_event_log SET is_incomplete = '1' where station_event_log_id = '$station_event_log_id'";
+                $sql_result1 = mysqli_query($db,$sql_result);
 
-                $start_time2 = $curdate . ' ' . '00:00:00';
-                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
-				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$current_time','$tt_time_2','$created_by')";
-                $result1 = mysqli_query($db, $page);
+//                 $z++;
 
 
-            }else{
-                if ($z === 0){
-                    $z = 1;
-                }
-                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
-                values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
-                $result1 = mysqli_query($db, $page);
+//                $start_time2 = $curdate . ' ' . '00:00:00';
+//                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+//				values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$current_time','$tt_time_2','$created_by')";
+//                $result1 = mysqli_query($db, $page);
+
+
             }
+//            else{
+//                if ($z === 0){
+//                    $z = 1;
+//                }
+//                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+//                values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
+//                $result1 = mysqli_query($db, $page);
+//            }
 
         }else{
 
