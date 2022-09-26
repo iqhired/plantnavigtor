@@ -77,14 +77,15 @@ while ($row = mysqli_fetch_array($result0)) {
 //                $result1 = mysqli_query($db, $page);
 
 
-            }else{
-                if ($z === 0){
-                    $z = 1;
-                }
-                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
-                values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
-                $result1 = mysqli_query($db, $page);
             }
+//            else{
+//                if ($z === 0){
+//                    $z = 1;
+//                }
+//                $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
+//                values ('$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$total_time','$created_by')";
+//                $result1 = mysqli_query($db, $page);
+//            }
 
         }else{
 
