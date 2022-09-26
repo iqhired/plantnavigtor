@@ -123,7 +123,7 @@ $line = "";
 <body>
 <!-- Main navbar -->
 <?php
-$cam_page_header = "Good & Bad Pieces";
+$cam_page_header = "NPR Data";
 include("../header_folder.php");
 if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
     include("../tab_menu.php");
@@ -154,50 +154,34 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </br>
             <div class="row">
                 <?php
-                  /*  $sql1 = "SELECT distinct npr_id,line_name,line_id FROM `cam_line` where npr_id = '1'";
+                    $sql1 = "SELECT * FROM `cam_line` where npr_id = '1'";
                     $result1 = $mysqli->query($sql1);
                     while ($row1 = mysqli_fetch_array($result1)) {
                         $npr_id = $row1['npr_id'];
                         $line_name = $row1['line_name'];
                         $line_id = $row1['line_id'];
-                        $sql2 = "SELECT distinct station_event_id,event_status,line_id FROM `sg_station_event` where line_id = '$line_id'";
+                        $sql2 = "SELECT count(*) as a  FROM `sg_station_event` where line_id = '$line_id' and event_status = '1' and event_type_id != 7";
                         $result2 = $mysqli->query($sql2);
                         while ($row2 = mysqli_fetch_array($result2)) {
-                            $event_status = $row2['event_status'];
-                       if ($event_status == '1'){*/?><!--
+                            $a = $row2['a'];
+                            if($a > 0){
+                            ?>
                         <div class="col-md-3">
-                            <a target="_blank" href="<?php /*echo $siteURL; */?>config_module/npr_dashboard.php?id=<?php /*echo $line_id */?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#008000 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php /*echo $line_name */?></button></a>
+                            <a target="_blank" href="<?php echo $siteURL; ?>config_module/npr_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#008000 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
                         </div>
-                    --><?php /*}}}*/?>
-                <!--<div class="col-md-3">
-                    <a target="_blank" href="<?php /*echo $siteURL; */?>config_module/npr_dashboard.php?id=<?php /*echo $line_id */?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php /*echo $line_name */?></button></a>
-                </div>
-                --><?php /*} */?>
+                                <?php }else{?>
+                                <div class="col-md-3">
+                                    <a target="_blank" href="<?php echo $siteURL;?>config_module/npr_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
+                                </div>
+                  <?php }}} ?>
 
-        </div>
-            <div class="row">
-                <?php
-                $sql1 = "SELECT * FROM `cam_line` WHERE npr_id = '1'";
-                $result1 = $mysqli->query($sql1);
+           </div>
 
-                while ($row1 = mysqli_fetch_array($result1)) {
-                    $npr_id = $row1['npr_id'];
-                    $line_name = $row1['line_name'];
-                    $line_id = $row1['line_id'];
-                    if ($npr_id == 1) { ?>
-                        <div class="col-md-3">
-                            <a target="_blank" href="<?php echo $siteURL; ?>config_module/npr_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp"
-                                                                                                                                                style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
 
-                        </div>
-                    <?php }
-                } ?>
-            </div>
+       </div>
+
 
     </div>
-    <!-- Basic datatable -->
-
-</div>
 <!-- /content area -->
 
 <script>
