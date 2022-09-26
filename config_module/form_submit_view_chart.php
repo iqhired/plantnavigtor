@@ -94,11 +94,11 @@
 <body class="alt-menu sidebar-noneoverflow">
 <!-- Main navbar -->
 <?php
-/*$cust_cam_page_header = "Form Submit View Count";
+$cam_page_header = "Form Submit View Chart";
 include("../header_folder.php");
 
 include("../admin_menu.php");
-include("../heading_banner.php");*/
+include("../heading_banner.php");
 ?>
 
 <!-- /main navbar -->
