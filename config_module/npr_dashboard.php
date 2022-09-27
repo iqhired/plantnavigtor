@@ -1,5 +1,6 @@
 <?php include("../config.php");
-$chicagotime = date("Y-m-d");
+$chicagotime = date("Y-m-d H:i:s");
+$time = date("H");
 $station = $_GET['id'];
 $sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$station'";
 $result1 = mysqli_query($db, $sql1);
@@ -18,6 +19,11 @@ if (!empty($resultmain)) {
         $station_id = $rowcmain['station_event_id'];
     }
 }
+/*$sad ="\\U1F60C";*/
+$text = "\\u1F600";
+$text1 = "\\U1F621";
+$html = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text1);
+$html1 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,49 +70,10 @@ if (!empty($resultmain)) {
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script>
-        var today = new Date();
-        var day = today.getDay();
-        var daylist = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
-        console.log("Today is : " + daylist[day] + ".");
-        var hour = today.getHours();
-        var minute = today.getMinutes();
-        var second = today.getSeconds();
-        var prepand = (hour >= 12)? " PM ":" AM ";
-        hour = (hour >= 12)? hour - 12: hour;
-        if (hour===0 && prepand===' PM ')
-        {
-            if (minute===0 && second===0)
-            {
-                hour=12;
-                prepand=' Noon';
-            }
-            else
-            {
-                hour=12;
-                prepand=' PM';
-            }
-        }
-        if (hour===0 && prepand===' AM ')
-        {
-            if (minute===0 && second===0)
-            {
-                hour=12;
-                prepand=' Midnight';
-            }
-            else
-            {
-                hour=12;
-                prepand=' AM';
-            }
-        }
-        var abc = document.getElementById('abc').value;
-        if(abc == hour){
-            document.getElementById('abc').style.backgroundColor = #ffffff;
-        }
-        //console.log("Current Time : "+hour + prepand + " : " + minute + " : " + second);
-
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https:////cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <style>
         div.panel panel-flat{
             padding-top: 2px;
@@ -154,14 +121,13 @@ if (!empty($resultmain)) {
             padding: 1.5px!important;
             align: center;
         }
-        .hightlight{
-            background-color: red;
+        .text1
+        {
+            color: red;
         }
     </style>
 
 </head>
-
-
 <!-- Main navbar -->
 <?php
 $cam_page_header = "NPR Dashboard - " . $station2;
@@ -169,7 +135,9 @@ include("../hp_header1.php");
 ?>
 
 <body class="alt-menu sidebar-noneoverflow">
+<input type="hidden" name="time" id="time" value="<?php echo $time;?>" >
 <div class="panel panel-flat">
+    <div id="time-now">
     <div class="table-responsive-sm">
     <table class="table table-sm" style="text-align:center;">
         <thead>
@@ -180,10 +148,21 @@ include("../hp_header1.php");
             <th style="text-align:center;">Target NPR</th>
             <th style="text-align:center;">Actual NPR</th>
             <th style="text-align:center;">Effieciency</th>
+            <th style="text-align:center;">Status</th>
         </tr>
         </thead>
         <tbody>
-            <tr value="00">
+
+                   <?php
+                      $i1 = 00;
+                      if($i1 == $time){
+                      $randomcolor1 = "lightgreen";
+                      }else{
+                      $randomcolor1 = "white";
+                      }
+
+                      ?>
+            <tr style="background-color: <?php echo $randomcolor1 ?>;">
                 <?php
                 $pm_npr= 30;
                 $qur04 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '00' and date(`update_date`) = CURDATE() group by npr_h";
@@ -196,28 +175,45 @@ include("../hp_header1.php");
                     $npr_b = $rowc04["npr_b"];
                     $target_npr = $pm_npr;
                     $actual_npr = round($npr_gr/$h,2);
+                    if($actual_npr < $target_npr){
+                        $s = $html;
+                        $color = 'red';
+                    }else{
+                        $s = $html1;
+                        $color = 'red';
+                    }
                     //effieciency
                     $target_eff = round($pm_npr * $h);
                     $actual_eff = $npr_gr;
                     $eff = round(100 * ($actual_eff/$target_eff));
                     if($npr_h == '00'){
                 ?>
-                <td><?php echo '00-01AM'; ?></td>
+                <td><?php echo '00-01'; ?></td>
                 <td><?php echo $npr_gr; ?></td>
                 <td><?php echo $npr_b; ?></td>
                 <td><?php echo $target_npr; ?></td>
                 <td><?php echo $actual_npr; ?></td>
                 <td><?php echo $eff; ?></td>
+                <td><?php echo $s; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '00-01AM'; ?></td>
+                    <td><?php echo '00-01'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo "<span style='color:red'>".$s."</span>"; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="01">
+            <?php
+            $i = 01;
+            if($i == $time){
+                $randomcolor = "lightgreen";
+            }else{
+                $randomcolor = "white";
+            }
+            ?>
+            <tr style="background-color: <?php echo $randomcolor ?>;">
                 <?php
                 $pm_npr2= 30;
                 $qur042 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '01' and date(`update_date`) = CURDATE() group by npr_h";
@@ -230,29 +226,46 @@ include("../hp_header1.php");
                 $npr_b2 = $rowc042["npr_b"];
                 $target_npr2 = $pm_npr2;
                 $actual_npr2 = round($npr_gr2/$h2,2);
+                if($actual_npr2 < $target_npr2){
+                    $s2 = $html;
+                }else{
+                    $s2 = $html1;
+                }
                 //effieciency
                 $target_eff2 = round($pm_npr2 * $h2);
                 $actual_eff2 = $npr_gr2;
                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                 if($npr_h2 == '01'){
                 ?>
-                <td><?php echo '01-02AM'; ?></td>
+                <td><?php echo '01-02'; ?></td>
                     <td><?php echo $npr_gr2; ?></td>
                     <td><?php echo $npr_b2; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo $actual_npr2; ?></td>
                     <td><?php echo $eff2; ?></td>
+                    <td><?php echo $s2; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '01-02AM'; ?></td>
+                    <td><?php echo '01-02'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s2; ?></td>
                 <?php }?>
             </tr>
-           <tr value="02">
-                <?php
+
+                   <?php
+                   $i2 = 02;
+                   if($i2 == $time){
+                       $randomcolor2 = "lightgreen";
+                   }else{
+                       $randomcolor2 = "white";
+                   }
+
+                   ?>
+                   <tr style="background-color: <?php echo $randomcolor2 ?>;">
+                   <?php
                 $pm_npr311= 30;
                 $qur043 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '02' and date(`update_date`) = CURDATE() group by npr_h";
                 $result33 = mysqli_query($db,$qur043);
@@ -264,28 +277,43 @@ include("../hp_header1.php");
                     $npr_b33 = $rowc043["npr_b"];
                     $target_npr33 = $pm_npr311;
                     $actual_npr33 = round($npr_gr33/$h3,2);
+                    if($actual_npr33 < $target_npr33){
+                       $s33 = $html;
+                    }else{
+                       $s33 = $html1;
+                    }
                     //effieciency
                     $target_eff33 = round($pm_npr311 * $h3);
                     $actual_eff33 = $npr_gr33;
                     $eff3 = round(100 * ($actual_eff33/$target_eff33));
                     if($npr_h3 == '02'){
                     ?>
-                    <td><?php echo '02-03AM'; ?></td>
+                    <td><?php echo '02-03'; ?></td>
                     <td><?php echo $npr_gr33; ?></td>
                     <td><?php echo $npr_b33; ?></td>
                     <td><?php echo $target_npr33; ?></td>
                     <td><?php echo $actual_npr33; ?></td>
                     <td><?php echo $eff3; ?></td>
+                        <td><?php echo $s33; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '02-03AM'; ?></td>
+                    <td><?php echo '02-03'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr33; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                        <td><?php echo $s33; ?></td>
                <?php } ?>
             </tr>
-            <tr value="03">
+                   <?php
+                   $i3 = 03;
+                   if($i3 == $time){
+                       $randomcolor3 = "lightgreen";
+                   }else{
+                       $randomcolor3 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor3 ?>;">
                 <?php
                 $pm_npr4= 30;
                 $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '03' and date(`update_date`) = CURDATE() group by npr_h";
@@ -298,28 +326,44 @@ include("../hp_header1.php");
                     $npr_b4 = $rowc044["npr_b"];
                     $target_npr4 = $pm_npr4;
                     $actual_npr4 = round($npr_gr4/$h4,2);
+                    if($actual_npr4 < $target_npr4){
+                      $s4 = $html;
+                    }else{
+                      $s4 = $html1;
+                    }
                     //effieciency
                     $target_eff4 = round($pm_npr4 * $h4);
                     $actual_eff4 = $npr_gr4;
                     $eff4 = round(100 * ($actual_eff4/$target_eff4));
+
                    if($npr_h3 == '03'){
                     ?>
-                    <td><?php echo '03-04AM'; ?></td>
+                    <td><?php echo '03-04'; ?></td>
                     <td><?php echo $npr_gr4; ?></td>
                     <td><?php echo $npr_b4; ?></td>
                     <td><?php echo $target_npr4; ?></td>
                     <td><?php echo $actual_npr4; ?></td>
                     <td><?php echo $eff4; ?></td>
+                       <td><?php echo $s4; ?></td>
                    <?php }else{ ?>
-                       <td><?php echo '03-04AM'; ?></td>
+                       <td><?php echo '03-04'; ?></td>
                        <td><?php echo '0'; ?></td>
                        <td><?php echo '0'; ?></td>
                        <td><?php echo $target_npr4; ?></td>
                        <td><?php echo '0'; ?></td>
                        <td><?php echo '0'; ?></td>
+                       <td><?php echo $s4; ?></td>
                    <?php } ?>
             </tr>
-            <tr value="04">
+                   <?php
+                   $i4 = 04;
+                   if($i4 == $time){
+                       $randomcolor4 = "lightgreen";
+                   }else{
+                       $randomcolor4 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor4 ?>;">
                 <?php
                 $pm_npr55= 30;
                 $qur55 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '04' and date(`update_date`) = CURDATE() group by npr_h";
@@ -332,28 +376,43 @@ include("../hp_header1.php");
                 $npr_b55 = $row55["npr_b"];
                 $target_npr55 = $pm_npr55;
                 $actual_npr55 = round($npr_gr55/$h55,2);
+                if($actual_npr55 < $target_npr55){
+                    $s55 = $html;
+                }else{
+                    $s55 = $html1;
+                }
                 //effieciency
                 $target_eff55 = round($pm_npr55 * $h55);
                 $actual_eff55 = $npr_gr55;
                 $eff55 = round(100 * ($actual_eff55/$target_eff55));
                 if($npr_h55 == '04'){
                     ?>
-                    <td><?php echo '04-05AM'; ?></td>
+                    <td><?php echo '04-05'; ?></td>
                     <td><?php echo $npr_gr55; ?></td>
                     <td><?php echo $npr_b55; ?></td>
                     <td><?php echo $target_npr55; ?></td>
                     <td><?php echo $actual_npr55; ?></td>
                     <td><?php echo $eff55; ?></td>
+                    <td><?php echo $s55; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '04-05AM'; ?></td>
+                    <td><?php echo '04-05'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr55; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s55; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="05">
+                   <?php
+                   $i5 = 05;
+                   if($i5 == $time){
+                       $randomcolor5 = "lightgreen";
+                   }else{
+                       $randomcolor5 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor5 ?>;">
                 <?php
                 $pm_npr2= 30;
                 $qur21 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '05' and date(`update_date`) = CURDATE() group by npr_h";
@@ -366,28 +425,43 @@ include("../hp_header1.php");
                 $npr_b2 = $row211["npr_b"];
                 $target_npr2 = $pm_npr2;
                 $actual_npr2 = round($npr_gr2/$h2,2);
+                if($actual_npr2 < $target_npr2){
+                    $s2 = $html;
+                }else{
+                    $s2 = $html1;
+                }
                 //effieciency
                 $target_eff2 = round($pm_npr2 * $h2);
                 $actual_eff2 = $npr_gr2;
                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                 if($npr_h2 == '05'){
                     ?>
-                    <td><?php echo '05-06AM'; ?></td>
+                    <td><?php echo '05-06'; ?></td>
                     <td><?php echo $npr_gr2; ?></td>
                     <td><?php echo $npr_b2; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo $actual_npr2; ?></td>
                     <td><?php echo $eff2; ?></td>
+                    <td><?php echo $s2; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '05-06AM'; ?></td>
+                    <td><?php echo '05-06'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s2; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="06">
+                   <?php
+                   $i6 = 06;
+                   if($i6 == $time){
+                       $randomcolor6 = "lightgreen";
+                   }else{
+                       $randomcolor6 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor6 ?>;">
                 <?php
                 $pm_npr3= 30;
                 $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '06' and date(`update_date`) = CURDATE() group by npr_h";
@@ -400,28 +474,43 @@ include("../hp_header1.php");
                 $npr_b3 = $row311["npr_b"];
                 $target_npr3 = $pm_npr3;
                 $actual_npr3 = round($npr_gr3/$h3,2);
+                if($actual_npr3 < $target_npr3){
+                    $s3 = $html;
+                }else{
+                    $s3 = $html1;
+                }
                 //effieciency
                 $target_eff3 = round($pm_npr3 * $h3);
                 $actual_eff3 = $npr_gr3;
                 $eff3 = round(100 * ($actual_eff3/$target_eff3));
                 if($npr_h3 == '06'){
                     ?>
-                    <td><?php echo '06-07AM'; ?></td>
+                    <td><?php echo '06-07'; ?></td>
                     <td><?php echo $npr_gr3; ?></td>
                     <td><?php echo $npr_b3; ?></td>
                     <td><?php echo $target_npr3; ?></td>
                     <td><?php echo $actual_npr3; ?></td>
                     <td><?php echo $eff3; ?></td>
+                    <td><?php echo $s3; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '06-07AM'; ?></td>
+                    <td><?php echo '06-07'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr3; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s3; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="07">
+                   <?php
+                   $i7 = 07;
+                   if($i7 == $time){
+                       $randomcolor7 = "lightgreen";
+                   }else{
+                       $randomcolor7 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor7 ?>;">
                 <?php
                 $pm_npr41= 30;
                 $qur41 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '07' and date(`update_date`) = CURDATE() group by npr_h";
@@ -434,28 +523,43 @@ include("../hp_header1.php");
                 $npr_b41 = $row411["npr_b"];
                 $target_npr41 = $pm_npr41;
                 $actual_npr41 = round($npr_gr41/$h41,2);
+                if($actual_npr41 < $target_npr41){
+                    $s41 = $html;
+                }else{
+                    $s41 = $html1;
+                }
                 //effieciency
                 $target_eff41 = round($pm_npr41 * $h41);
                 $actual_eff41 = $npr_gr41;
                 $eff41 = round(100 * ($actual_eff41/$target_eff41));
                 if($npr_h41 == '07'){
                     ?>
-                    <td><?php echo '07-08AM'; ?></td>
+                    <td><?php echo '07-08'; ?></td>
                     <td><?php echo $npr_gr41; ?></td>
                     <td><?php echo $npr_b41; ?></td>
                     <td><?php echo $target_npr41; ?></td>
                     <td><?php echo $actual_npr41; ?></td>
                     <td><?php echo $eff41; ?></td>
+                    <td><?php echo $s41; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '07-08AM'; ?></td>
+                    <td><?php echo '07-08'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr41; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s41; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="08">
+                   <?php
+                   $i8 = 8;
+                   if($i8 == $time){
+                       $randomcolor8 = "lightgreen";
+                   }else{
+                       $randomcolor8 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor8 ?>;">
                 <?php
                 $pm_npr51= 30;
                 $qur51 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '08' and date(`update_date`) = CURDATE() group by npr_h";
@@ -468,28 +572,43 @@ include("../hp_header1.php");
                 $npr_b51 = $row511["npr_b"];
                 $target_npr51 = $pm_npr51;
                 $actual_npr51 = round($npr_gr51/$h51,2);
+                if($actual_npr51 < $target_npr51){
+                    $s51 = $html;
+                }else{
+                    $s51 = $html1;
+                }
                 //effieciency
                 $target_eff51 = round($pm_npr51 * $h51);
                 $actual_eff51 = $npr_gr51;
                 $eff51 = round(100 * ($actual_eff51/$target_eff51));
                 if($npr_h51 == '08'){
                     ?>
-                    <td><?php echo '08-09AM'; ?></td>
+                    <td><?php echo '08-09'; ?></td>
                     <td><?php echo $npr_gr51; ?></td>
                     <td><?php echo $npr_b51; ?></td>
                     <td><?php echo $target_npr51; ?></td>
                     <td><?php echo $actual_npr51; ?></td>
                     <td><?php echo $eff51; ?></td>
+                    <td><?php echo $s51; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '08-09AM'; ?></td>
+                    <td><?php echo '08-09'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr41; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s51; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="09">
+                   <?php
+                   $i9 = 9;
+                   if($i9 == $time){
+                       $randomcolor9 = "lightgreen";
+                   }else{
+                       $randomcolor9 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor9 ?>;">
                 <?php
                 $pm_npr61= 30;
                 $qur61 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '09' and date(`update_date`) = CURDATE() group by npr_h";
@@ -502,28 +621,43 @@ include("../hp_header1.php");
                 $npr_b61 = $row611["npr_b"];
                 $target_npr61 = $pm_npr61;
                 $actual_npr61 = round($npr_gr61/$h61,2);
+                if($actual_npr61 < $target_npr61){
+                    $s61 = $html;
+                }else{
+                    $s61 = $html1;
+                }
                 //effieciency
                 $target_eff61 = round($pm_npr61 * $h61);
                 $actual_eff61 = $npr_gr61;
                 $eff61 = round(100 * ($actual_eff61/$target_eff61));
                 if($npr_h61 == '09'){
                     ?>
-                    <td><?php echo '09-10AM'; ?></td>
+                    <td><?php echo '09-10'; ?></td>
                     <td><?php echo $npr_gr61; ?></td>
                     <td><?php echo $npr_b61; ?></td>
                     <td><?php echo $target_npr61; ?></td>
                     <td><?php echo $actual_npr61; ?></td>
                     <td><?php echo $eff61; ?></td>
+                    <td><?php echo $s61; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '09-10AM'; ?></td>
+                    <td><?php echo '09-10'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr61; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s61; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="11">
+                   <?php
+                   $i10 = 10;
+                   if($i10 == $time){
+                       $randomcolor10 = "lightgreen";
+                   }else{
+                       $randomcolor10 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor10 ?>;">
                 <?php
                 $pm_npr71= 30;
                 $qur71 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '10' and date(`update_date`) = CURDATE() group by npr_h";
@@ -536,28 +670,43 @@ include("../hp_header1.php");
                 $npr_b71 = $row711["npr_b"];
                 $target_npr71 = $pm_npr71;
                 $actual_npr71 = round($npr_gr71/$h71,2);
+                if($actual_npr71 < $target_npr71){
+                    $s71 = $html;
+                }else{
+                    $s71 = $html1;
+                }
                 //effieciency
                 $target_eff71 = round($pm_npr71 * $h71);
                 $actual_eff71 = $npr_gr71;
                 $eff71 = round(100 * ($actual_eff71/$target_eff71));
                 if($npr_h71 == '10'){
                     ?>
-                    <td><?php echo '10-11AM'; ?></td>
+                    <td><?php echo '10-11'; ?></td>
                     <td><?php echo $npr_gr71; ?></td>
                     <td><?php echo $npr_b71; ?></td>
                     <td><?php echo $target_npr71; ?></td>
                     <td><?php echo $actual_npr71; ?></td>
                     <td><?php echo $eff71; ?></td>
+                    <td><?php echo $s71; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '10-11AM'; ?></td>
+                    <td><?php echo '10-11'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr71; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s71; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="11">
+                   <?php
+                   $i11 = 11;
+                   if($i11 == $time){
+                       $randomcolor11 = "lightgreen";
+                   }else{
+                       $randomcolor11 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor11 ?>;">
                 <?php
                 $pm_npr81= 30;
                 $qur81 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '11' and date(`update_date`) = CURDATE() group by npr_h";
@@ -570,28 +719,43 @@ include("../hp_header1.php");
                 $npr_b81 = $row811["npr_b"];
                 $target_npr81 = $pm_npr81;
                 $actual_npr81 = round($npr_gr81/$h81,2);
+                if($actual_npr81 < $target_npr81){
+                    $s81 = $html;
+                }else{
+                    $s81 = $html1;
+                }
                 //effieciency
                 $target_eff81 = round($pm_npr81 * $h81);
                 $actual_eff81 = $npr_gr81;
                 $eff81 = round(100 * ($actual_eff81/$target_eff81));
                 if($npr_h81 == '11'){
                     ?>
-                    <td><?php echo '11-12AM'; ?></td>
+                    <td><?php echo '11-12'; ?></td>
                     <td><?php echo $npr_gr81; ?></td>
                     <td><?php echo $npr_b81; ?></td>
                     <td><?php echo $target_npr81; ?></td>
                     <td><?php echo $actual_npr81; ?></td>
                     <td><?php echo $eff81; ?></td>
+                    <td><?php echo $s81; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '11-12AM'; ?></td>
+                    <td><?php echo '11-12'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr81; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s81; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="12">
+                   <?php
+                   $i12 = 12;
+                   if($i12 == $time){
+                       $randomcolor12 = "lightgreen";
+                   }else{
+                       $randomcolor12 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor12 ?>;">
                 <?php
                 $pm_npr91= 30;
                 $qur91 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '12' and date(`update_date`) = CURDATE() group by npr_h";
@@ -604,28 +768,43 @@ include("../hp_header1.php");
                 $npr_b91 = $row911["npr_b"];
                 $target_npr91 = $pm_npr91;
                 $actual_npr91 = round($npr_gr91/$h91,2);
+                if($actual_npr91 < $target_npr91){
+                    $s91 = $html;
+                }else{
+                    $s91 = $html1;
+                }
                 //effieciency
                 $target_eff91 = round($pm_npr91 * $h91);
                 $actual_eff91 = $npr_gr91;
                 $eff91 = round(100 * ($actual_eff91/$target_eff91));
                 if($npr_h91 == '12'){
                     ?>
-                    <td><?php echo '12-13PM'; ?></td>
+                    <td><?php echo '12-13'; ?></td>
                     <td><?php echo $npr_gr91; ?></td>
                     <td><?php echo $npr_b91; ?></td>
                     <td><?php echo $target_npr91; ?></td>
                     <td><?php echo $actual_npr91; ?></td>
                     <td><?php echo $eff91; ?></td>
+                    <td><?php echo $s91; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '12-13PM'; ?></td>
+                    <td><?php echo '12-13'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr91; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s91; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="13">
+                   <?php
+                   $i13 = 13;
+                   if($i13 == $time){
+                       $randomcolor13 = "lightgreen";
+                   }else{
+                       $randomcolor13 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor13 ?>;">
                 <?php
                 $pm_npr911= 30;
                 $qur911 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '13' and date(`update_date`) = CURDATE() group by npr_h";
@@ -638,28 +817,43 @@ include("../hp_header1.php");
                 $npr_b911 = $row9111["npr_b"];
                 $target_npr911 = $pm_npr911;
                 $actual_npr911 = round($npr_gr911/$h911,2);
+                if($actual_npr911 < $target_npr911){
+                    $s911 = $html;
+                }else{
+                    $s911 = $html1;
+                }
                 //effieciency
                 $target_eff911 = round($pm_npr911 * $h911);
                 $actual_eff911 = $npr_gr911;
                 $eff911 = round(100 * ($actual_eff911/$target_eff911));
                 if($npr_h911 == '13'){
                     ?>
-                    <td><?php echo '13-14PM'; ?></td>
+                    <td><?php echo '13-14'; ?></td>
                     <td><?php echo $npr_gr911; ?></td>
                     <td><?php echo $npr_b911; ?></td>
                     <td><?php echo $target_npr911; ?></td>
                     <td><?php echo $actual_npr911; ?></td>
                     <td><?php echo $eff911; ?></td>
+                    <td><?php echo $s911; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '13-14PM'; ?></td>
+                    <td><?php echo '13-14'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr911; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s911; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="14">
+                   <?php
+                   $i14 = 14;
+                   if($i14 == $time){
+                       $randomcolor14 = "lightgreen";
+                   }else{
+                       $randomcolor14 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor14 ?>;">
                 <?php
                 $pm_npr921= 30;
                 $qur921 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '14' and date(`update_date`) = CURDATE() group by npr_h";
@@ -672,28 +866,43 @@ include("../hp_header1.php");
                 $npr_b921 = $row9211["npr_b"];
                 $target_npr921 = $pm_npr921;
                 $actual_npr921 = round($npr_gr921/$h921,2);
+                if($actual_npr921 < $target_npr921){
+                    $s921 = $html;
+                }else{
+                    $s921 = $html1;
+                }
                 //effieciency
                 $target_eff921 = round($pm_npr921 * $h921);
                 $actual_eff921 = $npr_gr921;
                 $eff921 = round(100 * ($actual_eff921/$target_eff921));
                 if($npr_h921 == '14'){
                     ?>
-                    <td><?php echo '14-15PM'; ?></td>
+                    <td><?php echo '14-15'; ?></td>
                     <td><?php echo $npr_gr921; ?></td>
                     <td><?php echo $npr_b921; ?></td>
                     <td><?php echo $target_npr921; ?></td>
                     <td><?php echo $actual_npr921; ?></td>
                     <td><?php echo $eff921; ?></td>
+                    <td><?php echo $s921; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '14-15PM'; ?></td>
+                    <td><?php echo '14-15'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr921; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s921; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="15">
+                   <?php
+                   $i15 = 15;
+                   if($i15 == $time){
+                       $randomcolor15 = "lightgreen";
+                   }else{
+                       $randomcolor15 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor15 ?>;">
                 <?php
                 $pm_npr931= 30;
                 $qur931 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '15' and date(`update_date`) = CURDATE() group by npr_h";
@@ -706,28 +915,43 @@ include("../hp_header1.php");
                 $npr_b931 = $row9311["npr_b"];
                 $target_npr931 = $pm_npr931;
                 $actual_npr931 = round($npr_gr931/$h931,2);
+                if($actual_npr931 < $target_npr931){
+                    $s931 = $html;
+                }else{
+                    $s931 = $html1;
+                }
                 //effieciency
                 $target_eff931 = round($pm_npr931 * $h931);
                 $actual_eff931 = $npr_gr931;
                 $eff931 = round(100 * ($actual_eff931/$target_eff931));
                 if($npr_h931 == '15'){
                     ?>
-                    <td><?php echo '15-16PM'; ?></td>
+                    <td><?php echo '15-16'; ?></td>
                     <td><?php echo $npr_gr931; ?></td>
                     <td><?php echo $npr_b931; ?></td>
                     <td><?php echo $target_npr931; ?></td>
                     <td><?php echo $actual_npr931; ?></td>
                     <td><?php echo $eff931; ?></td>
+                    <td><?php echo $s931; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '15-16PM'; ?></td>
+                    <td><?php echo '15-16'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr931; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s931; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="16">
+                   <?php
+                   $i16 = 16;
+                   if($i16 == $time){
+                       $randomcolor16 = "lightgreen";
+                   }else{
+                       $randomcolor16 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor16 ?>;">
                 <?php
                 $pm_npr941= 30;
                 $qur941 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '16' and date(`update_date`) = CURDATE() group by npr_h";
@@ -740,28 +964,43 @@ include("../hp_header1.php");
                 $npr_b941 = $row9411["npr_b"];
                 $target_npr941 = $pm_npr941;
                 $actual_npr941 = round($npr_gr941/$h941,2);
+                if($actual_npr941 < $target_npr941){
+                    $s941 = $html;
+                }else{
+                    $s941 = $html1;
+                }
                 //effieciency
                 $target_eff941 = round($pm_npr941 * $h941);
                 $actual_eff941 = $npr_gr941;
                 $eff941 = round(100 * ($actual_eff941/$target_eff941));
                 if($npr_h941 == '16'){
                     ?>
-                    <td><?php echo '16-17PM'; ?></td>
+                    <td><?php echo '16-17'; ?></td>
                     <td><?php echo $npr_gr941; ?></td>
                     <td><?php echo $npr_b941; ?></td>
                     <td><?php echo $target_npr941; ?></td>
                     <td><?php echo $actual_npr941; ?></td>
                     <td><?php echo $eff941; ?></td>
+                    <td><?php echo $s941; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '16-17PM'; ?></td>
+                    <td><?php echo '16-17'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr941; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s941; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="17" id="abc">
+                   <?php
+                   $i17 = 17;
+                   if($i17 == $time){
+                       $randomcolor17 = "lightgreen";
+                   }else{
+                       $randomcolor17 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor17 ?>;">
                 <?php
                 $pm_npr951= 30;
                 $qur951 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '17' and date(`update_date`) = CURDATE() group by npr_h";
@@ -774,28 +1013,43 @@ include("../hp_header1.php");
                 $npr_b951 = $row9511["npr_b"];
                 $target_npr951 = $pm_npr951;
                 $actual_npr951 = round($npr_gr951/$h951,2);
+                if($actual_npr951 < $target_npr951){
+                    $s951 = $html;
+                }else{
+                    $s951 = $html1;
+                }
                 //effieciency
                 $target_eff951 = round($pm_npr951 * $h951);
                 $actual_eff951 = $npr_gr951;
                 $eff951 = round(100 * ($actual_eff951/$target_eff951));
                 if($npr_h951 == '17'){
                     ?>
-                    <td><?php echo '17-18PM'; ?></td>
+                    <td><?php echo '17-18'; ?></td>
                     <td><?php echo $npr_gr951; ?></td>
                     <td><?php echo $npr_b951; ?></td>
                     <td><?php echo $target_npr951; ?></td>
                     <td><?php echo $actual_npr951; ?></td>
                     <td><?php echo $eff951; ?></td>
+                    <td><?php echo $s951; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '17-18PM'; ?></td>
+                    <td><?php echo '17-18'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr951; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s951; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="18">
+                   <?php
+                   $i18 = 18;
+                   if($i18 == $time){
+                       $randomcolor18 = "lightgreen";
+                   }else{
+                       $randomcolor18 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor18 ?>;">
                 <?php
                 $pm_npr961= 30;
                 $qur961 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '18' and date(`update_date`) = CURDATE() group by npr_h";
@@ -808,28 +1062,43 @@ include("../hp_header1.php");
                 $npr_b961 = $row9611["npr_b"];
                 $target_npr961 = $pm_npr961;
                 $actual_npr961 = round($npr_gr961/$h961,2);
+                if($actual_npr961 < $target_npr961){
+                    $s961 = $html;
+                }else{
+                    $s961 = $html1;
+                }
                 //effieciency
                 $target_eff961 = round($pm_npr961 * $h961);
                 $actual_eff961 = $npr_gr961;
                 $eff961 = round(100 * ($actual_eff961/$target_eff961));
                 if($npr_h961 == '18'){
                     ?>
-                    <td><?php echo '18-19PM'; ?></td>
+                    <td><?php echo '18-19'; ?></td>
                     <td><?php echo $npr_gr961; ?></td>
                     <td><?php echo $npr_b961; ?></td>
                     <td><?php echo $target_npr961; ?></td>
                     <td><?php echo $actual_npr961; ?></td>
                     <td><?php echo $eff961; ?></td>
+                    <td><?php echo $s961; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '18-19PM'; ?></td>
+                    <td><?php echo '18-19'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr961; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s961; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="19">
+                   <?php
+                   $i19 = 19;
+                   if($i19 == $time){
+                       $randomcolor19 = "lightgreen";
+                   }else{
+                       $randomcolor19 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor19 ?>;">
                 <?php
                 $pm_npr971= 30;
                 $qur971 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '19' and date(`update_date`) = CURDATE() group by npr_h";
@@ -842,28 +1111,43 @@ include("../hp_header1.php");
                 $npr_b971 = $row9711["npr_b"];
                 $target_npr971 = $pm_npr971;
                 $actual_npr971 = round($npr_gr971/$h971,2);
+                if($actual_npr971 < $target_npr971){
+                    $s971 = $html;
+                }else{
+                    $s971 = $html1;
+                }
                 //effieciency
                 $target_eff971 = round($pm_npr971 * $h971);
                 $actual_eff971 = $npr_gr971;
                 $eff971 = round(100 * ($actual_eff971/$target_eff971));
                 if($npr_h971 == '19'){
                     ?>
-                    <td><?php echo '19-20PM'; ?></td>
+                    <td><?php echo '19-20'; ?></td>
                     <td><?php echo $npr_gr971; ?></td>
                     <td><?php echo $npr_b971; ?></td>
                     <td><?php echo $target_npr971; ?></td>
                     <td><?php echo $actual_npr971; ?></td>
                     <td><?php echo $eff971; ?></td>
+                    <td><?php echo $s971; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '19-20PM'; ?></td>
+                    <td><?php echo '19-20'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr971; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s971; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="20">
+                   <?php
+                   $i20 = 20;
+                   if($i20 == $time){
+                       $randomcolor20 = "lightgreen";
+                   }else{
+                       $randomcolor20 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor20 ?>;">
                 <?php
                 $pm_npr981= 30;
                 $qur981 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '20' and date(`update_date`) = CURDATE() group by npr_h";
@@ -876,28 +1160,43 @@ include("../hp_header1.php");
                 $npr_b981 = $row9811["npr_b"];
                 $target_npr981 = $pm_npr981;
                 $actual_npr981 = round($npr_gr981/$h981,2);
+                if($actual_npr981 < $target_npr981){
+                    $s981 = $html;
+                }else{
+                    $s981 = $html1;
+                }
                 //effieciency
                 $target_eff981 = round($pm_npr981 * $h981);
                 $actual_eff981 = $npr_gr981;
                 $eff981 = round(100 * ($actual_eff981/$target_eff981));
                 if($npr_h981 == '20'){
                     ?>
-                    <td><?php echo '20-21PM'; ?></td>
+                    <td><?php echo '20-21'; ?></td>
                     <td><?php echo $npr_gr981; ?></td>
                     <td><?php echo $npr_b981; ?></td>
                     <td><?php echo $target_npr981; ?></td>
                     <td><?php echo $actual_npr981; ?></td>
                     <td><?php echo $eff981; ?></td>
+                    <td><?php echo $s981; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '20-21PM'; ?></td>
+                    <td><?php echo '20-21'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr981; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s981; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="21">
+                   <?php
+                   $i21 = 21;
+                   if($i21 == $time){
+                       $randomcolor21 = "lightgreen";
+                   }else{
+                       $randomcolor21 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor21 ?>;">
                 <?php
                 $pm_npr991= 30;
                 $qur991 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '21' and date(`update_date`) = CURDATE() group by npr_h";
@@ -910,28 +1209,43 @@ include("../hp_header1.php");
                 $npr_b991 = $row9911["npr_b"];
                 $target_npr991 = $pm_npr991;
                 $actual_npr991 = round($npr_gr991/$h991,2);
+                if($actual_npr991 < $target_npr991){
+                    $s991 = $html;
+                }else{
+                    $s991 = $html1;
+                }
                 //effieciency
                 $target_eff991 = round($pm_npr991 * $h991);
                 $actual_eff991 = $npr_gr991;
                 $eff991 = round(100 * ($actual_eff991/$target_eff991));
                 if($npr_h991 == '21'){
                     ?>
-                    <td><?php echo '21-22PM'; ?></td>
+                    <td><?php echo '21-22'; ?></td>
                     <td><?php echo $npr_gr991; ?></td>
                     <td><?php echo $npr_b991; ?></td>
                     <td><?php echo $target_npr991; ?></td>
                     <td><?php echo $actual_npr991; ?></td>
                     <td><?php echo $eff991; ?></td>
+                    <td><?php echo $s991; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '21-22PM'; ?></td>
+                    <td><?php echo '21-22'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr991; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s991; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="22">
+                   <?php
+                   $i22 = 22;
+                   if($i22 == $time){
+                       $randomcolor22 = "lightgreen";
+                   }else{
+                       $randomcolor22 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor22 ?>;">
                 <?php
                 $pm_npr191= 30;
                 $qur191 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '22' and date(`update_date`) = CURDATE() group by npr_h";
@@ -944,28 +1258,43 @@ include("../hp_header1.php");
                 $npr_b191 = $row1911["npr_b"];
                 $target_npr191 = $pm_npr191;
                 $actual_npr191 = round($npr_gr191/$h191,2);
+                if($actual_npr191 < $target_npr191){
+                    $s191 = $html;
+                }else{
+                    $s191 = $html1;
+                }
                 //effieciency
                 $target_eff191 = round($pm_npr191 * $h191);
                 $actual_eff191 = $npr_gr191;
                 $eff191 = round(100 * ($actual_eff191/$target_eff191));
                 if($npr_h191 == '22'){
                     ?>
-                    <td><?php echo '22-23PM'; ?></td>
+                    <td><?php echo '22-23'; ?></td>
                     <td><?php echo $npr_gr191; ?></td>
                     <td><?php echo $npr_b191; ?></td>
                     <td><?php echo $target_npr191; ?></td>
                     <td><?php echo $actual_npr191; ?></td>
                     <td><?php echo $eff191; ?></td>
+                    <td><?php echo $s191; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '22-23PM'; ?></td>
+                    <td><?php echo '22-23'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr191; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s191; ?></td>
                 <?php } ?>
             </tr>
-            <tr value="23">
+                   <?php
+                   $i23 = 23;
+                   if($i23 == $time){
+                       $randomcolor23 = "lightgreen";
+                   }else{
+                       $randomcolor23 = "white";
+                   }
+                   ?>
+            <tr style="background-color: <?php echo $randomcolor23 ?>;">
                 <?php
                 $pm_npr291= 30;
                 $qur291 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,date(`update_date`) FROM `npr_data` where station_event_id = '$station_id' and npr_h = '23' and date(`update_date`) = CURDATE() group by npr_h";
@@ -978,29 +1307,38 @@ include("../hp_header1.php");
                 $npr_b291 = $row2911["npr_b"];
                 $target_npr291 = $pm_npr291;
                 $actual_npr291 = round($npr_gr291/$h291,2);
+                if($actual_npr291 < $target_npr291){
+                    $s291 = $html;
+                }else{
+                    $s291 = $html1;
+                }
                 //effieciency
                 $target_eff291 = round($pm_npr191 * $h291);
                 $actual_eff291 = $npr_gr291;
                 $eff291 = round(100 * ($actual_eff291/$target_eff291));
+                //
                 if($npr_h291 == '23'){
                     ?>
-                    <td><?php echo '23-24PM'; ?></td>
+                    <td><?php echo '23-24'; ?></td>
                     <td><?php echo $npr_gr291; ?></td>
                     <td><?php echo $npr_b291; ?></td>
                     <td><?php echo $target_npr291; ?></td>
                     <td><?php echo $actual_npr291; ?></td>
                     <td><?php echo $eff291; ?></td>
+                    <td><?php echo $s291; ?></td>
                 <?php }else{ ?>
-                    <td><?php echo '23-24PM'; ?></td>
+                    <td><?php echo '23-24'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo $target_npr291; ?></td>
                     <td><?php echo '0'; ?></td>
                     <td><?php echo '0'; ?></td>
+                    <td><?php echo $s291; ?></td>
                 <?php } ?>
             </tr>
         </tbody>
     </table>
+</div>
 </div>
 </div>
 </body>
