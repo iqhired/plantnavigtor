@@ -823,9 +823,9 @@ $('#reject').on('change', function () {
                 data: data,
                 success: function (data) {
                     $('#btnSubmit').attr('disabled', 'disabled');
-                    $('form input[type="radio"]').prop("disabled", true);
-                    $('form input[type="number"]').prop("disabled", true);
-                    $('form input[type="text"]').prop("disabled", true);
+                    $('form input[type="radio"]').css('pointer-events','none');
+                    $('form input[type="number"]').css('pointer-events','none');
+                    $('form input[type="text"]').css('pointer-events','none');
                     document.getElementById("form_user_data_id").value = data["form_user_data_id"];
                     document.getElementById("approval_dept_cnt").value = data["approval_dept_cnt"];
                     document.getElementById("rejected_dept_cnt").value = data["rejected_dept_cnt"];
@@ -877,7 +877,6 @@ $('#reject').on('change', function () {
                 data: data,
                 success: function (data) {
                     $('#btnSubmit_app').attr('disabled', 'disabled');
-
                     $('#success_msg').text('Form submitted Successfully').css('background-color','#0080004f');
                     $("form :input").prop("disabled", true);
                     window.scrollTo(0, 0);
@@ -909,7 +908,7 @@ $('#reject').on('change', function () {
                     var x = document.getElementById("sub_app");
                     x.style.display = "none";
                     $('#success_msg').text('Form submitted Successfully').css('background-color', '#0080004f');
-                    $("form :input").prop("disabled", true);
+                    $("form :input").css('pointer-events','none');
                     window.scrollTo(0, 0);
                 }
             });

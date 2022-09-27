@@ -34,7 +34,7 @@ if (count($_POST) > 0) {
         $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"  && $imageFileType != "pdf" && $imageFileType != "xls") {
+            && $imageFileType != "gif"  && $imageFileType != "pdf" && $imageFileType != "xls" && $imageFileType != "docx" && $imageFileType != "doc") {
             $uploadOk = 0;
         }
         if ($uploadOk == 0) {
@@ -44,7 +44,7 @@ if (count($_POST) > 0) {
             $filename = pathinfo($_FILES["file"]["name"])['filename']. '_' . time(). '.' .  pathinfo($_FILES["file"]["name"])['extension'];
             $destination = $location .  $filename;
             if (move_uploaded_file($file_tmp, $destination)) {
-                $sql = "INSERT INTO `comment_files`(`file_name`,`comment_id`,`created_at`) VALUES ('$filename','$comment_id' ,'$created_by' )";
+                $sql = "INSERT INTO `comment_files`(`file_name`,`comment_id`,`created_at`) VALUES ('$filename','$comment_id' ,'$chicagotime' )";
                 $result1 = mysqli_query($db, $sql);
             }
         }

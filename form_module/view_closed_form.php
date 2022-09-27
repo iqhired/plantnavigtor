@@ -384,7 +384,7 @@ include("../heading_banner.php");
                                             </div>
 
 
-<?php } ?>
+                                     <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -428,13 +428,14 @@ include("../heading_banner.php");
                                                         <div class="thumb">
                                                             <?php
                                                             $imageFileType = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
                                                             if ($imageFileType == "xls") { ?>
-                                                                <img src="../assets/comment_files/excel.png"
-                                                                     alt="">
-                                                            <?php } else { ?>
-                                                                <img src="../assets/comment_files/<?php echo $file_name; ?>"
-                                                                     alt="">
+                                                                <img src="../assets/comment_files/excel.png" alt="">
+                                                            <?php } else if($imageFileType == "doc" || $imageFileType == "docx") { ?>
+                                                                <img src="../assets/comment_files/word.png" alt="">
+                                                            <?php } else if($imageFileType == "pdf") {  ?>
+                                                                <img src="../assets/comment_files/pdf.jpg" alt="">
+                                                            <?php }else{ ?>
+                                                                <img src="../assets/comment_files/<?php echo $file_name; ?>" alt="">
                                                             <?php } ?>
                                                             <div class="caption-overflow">
 														<span>
