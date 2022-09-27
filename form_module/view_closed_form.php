@@ -384,7 +384,7 @@ include("../heading_banner.php");
                                             </div>
 
 
-<?php } ?>
+                                     <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +403,7 @@ include("../heading_banner.php");
                                     <div class="card">
                                         <div class="card-body scrollable" id="scroll">
                                             <?php
-                                            $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where userid = '$form_user_data_id' ");
+                                            $qurt = mysqli_query($db, "SELECT message,comment_date,slno FROM  comments where rej_loop_form_id = '$form_user_data_id' ");
                                             while ($rowct = mysqli_fetch_array($qurt)) {
                                                 $comment_id = $rowct["slno"];
                                                 $message = $rowct["message"];
@@ -426,8 +426,17 @@ include("../heading_banner.php");
 
                                                     <div class="thumbnail">
                                                         <div class="thumb">
-                                                            <img src="../assets/comment_files/<?php echo $file_name; ?>"
-                                                                 alt="">
+                                                            <?php
+                                                            $imageFileType = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                                                            if ($imageFileType == "xls") { ?>
+                                                                <img src="../assets/comment_files/excel.png" alt="">
+                                                            <?php } else if($imageFileType == "doc" || $imageFileType == "docx") { ?>
+                                                                <img src="../assets/comment_files/word.png" alt="">
+                                                            <?php } else if($imageFileType == "pdf") {  ?>
+                                                                <img src="../assets/comment_files/pdf.jpg" alt="">
+                                                            <?php }else{ ?>
+                                                                <img src="../assets/comment_files/<?php echo $file_name; ?>" alt="">
+                                                            <?php } ?>
                                                             <div class="caption-overflow">
 														<span>
 															<a href="../assets/comment_files/<?php echo $file_name; ?>"
