@@ -109,7 +109,7 @@ while ($row = mysqli_fetch_array($result0)) {
             $z = $ds_sql[0];
             $et_time = $ds_sql[1];
 
-            if ($z === 0){
+            if (empty($z)){
                 $z = 1;
             }
 
@@ -127,13 +127,13 @@ while ($row = mysqli_fetch_array($result0)) {
             $start_time = round($st_time, 2);
 
             $c_arr_1 = explode(' ',$current_time);
-            $c_arr = explode(':', $c_arr_1[1]);
-            $cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
-            $curr_time = round($cu_time, 2);
 
             if($i > $j){
                 $tt_time_1 = 24 - $start_time;
                 $endtime_1 = $s_arr_1[0] . ' ' . '23:59:59';
+                $c_arr = explode(':', $c_arr_1[1]);
+                $cu_time = $c_arr[0] + ($c_arr[1] / 60) + ($c_arr[2] / 3600);
+                $curr_time = round($cu_time, 2);
 
 
                 $page = "INSERT INTO `sg_station_event_log_update`(`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)
