@@ -94,9 +94,8 @@
 <body class="alt-menu sidebar-noneoverflow">
 <!-- Main navbar -->
 <?php
-$cam_page_header = "Form Submit View Chart";
-include("../header_folder.php");
-
+$cust_cam_page_header = "First Piece Sheet Dashboard";
+include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
 ?>
