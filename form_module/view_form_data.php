@@ -603,11 +603,22 @@ include("../hp_header.php");
                                             </tr>
 											<?php if ($form_status == 'Rejected') { ?>
                                                 <tr id="rej_reason_div" style="display: table-row;border: 1px solid red;">
-                                                    <td class="form_tab_td" colspan="4"> Reject Reason : <div><textarea
-                                                                    placeholder="<?php echo $rowc05['reject_reason']; ?>"
-                                                                    class="pn_none" style="color: #333333 !important;width: 100%;height: auto; border: none; border-bottom: 1px solid;" name="rej_reason" rows="1"></textarea></div></td>
+                                                    <td class="form_tab_td" colspan="4"> Reject Reason :
+                                                        <textarea class="form-control pn_none" name="rej_reason" rows="1" ><?php echo $rowc05['reject_reason']; ?>
+
+                                                                </textarea>
+                                                    </td>
                                                 </tr>
-											<?php }
+											<?php } else if ($form_status == 'Approved') {
+												if ($rowc05['reject_reason'] != ""){?>
+                                                    <tr id="rej_reason_div" style="display: table-row;border: 1px solid green;">
+                                                        <td class="form_tab_td" colspan="4"> Approve Reason :
+                                                            <textarea class="form-control pn_none" name="rej_reason" rows="1"><?php echo $rowc05['reject_reason']; ?>
+
+                                                                </textarea>
+                                                        </td>
+                                                    </tr>
+												<?php  } }
 											$fullnnm = "";
 											$passcd = "";
 										}
