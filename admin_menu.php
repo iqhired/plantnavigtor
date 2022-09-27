@@ -150,6 +150,12 @@ $msg = explode(',', $msg); ?>
                                                     Crew status Overview
                                                 </a>
                                             </div>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>config_module/form_submit_view_chart.php"
+                                                   class="text-muted mobile">
+                                                    First Piece Sheet Dashboard
+                                                </a>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -917,6 +923,10 @@ $msg = explode(',', $msg); ?>
                                                            class="mega-link"><h3 class="text-muted fs-6">Crew Status
                                                                 Overview</h3></a>
                                                     </div>
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>config_module/form_submit_view_chart.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">First Piece Sheet Dashboard</h3></a>
+                                                </div>
 
 
                                             </div>
@@ -1072,11 +1082,11 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php /*if (in_array('76', $msg)) { */?><!--
+                            <?php if (in_array('76', $msg)) { ?>
                                 <div class='tutorial_section'>
 
                                     <div class="toggle" id="toggle-2">
-                                        <a href="<?php /*echo $siteURL; */?>config_module/npr_dashboard_station.php">
+                                        <a href="<?php echo $siteURL; ?>config_module/npr_dashboard_station.php">
 
                                            <span>
                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -1106,7 +1116,7 @@ $msg = explode(',', $msg); ?>
 
                                     </div>
                                 </div>
-                            --><?php /*} */?>
+                            <?php } ?>
                         </div>
                     </div>
                 </li>
