@@ -237,7 +237,7 @@ include("../heading_banner.php");
 					?>
                     <div class="row ">
                         <div class="col-md-12">
-                            <form action="user_form_backend.php" id="form_settings" enctype="multipart/form-data"
+                            <form action="" id="form_settings" enctype="multipart/form-data"
                                   class="form-horizontal" method="post" autocomplete="off">
                                 <input type="hidden" name="name" id="name" value="<?php echo $_GET['form_name']; ?>">
                                 <input type="hidden" name="formcreateid" id="formcreateid"
