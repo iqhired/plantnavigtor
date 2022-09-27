@@ -31,10 +31,10 @@ if (count($_POST) > 0) {
         $file_type = $_FILES['file']['type'];
         $location = "../assets/comment_files/";
         $uploadOk = 1;
-        $imageFileType = pathinfo($filename, PATHINFO_EXTENSION);
+        $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"  && $imageFileType != "pdf") {
+            && $imageFileType != "gif"  && $imageFileType != "pdf" && $imageFileType != "xls") {
             $uploadOk = 0;
         }
         if ($uploadOk == 0) {

@@ -474,8 +474,16 @@ include("../heading_banner.php");
 
                                             <div class="thumbnail">
                                                 <div class="thumb">
+                                               <?php
+                                                    $imageFileType = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+                                                    if ($imageFileType == "xls") { ?>
+                                                        <img src="../assets/comment_files/excel.png"
+                                                         alt="">
+                                                   <?php } else { ?>
                                                     <img src="../assets/comment_files/<?php echo $file_name; ?>"
                                                          alt="">
+                                                    <?php } ?>
                                                     <div class="caption-overflow">
 														<span>
 															<a href="../assets/comment_files/<?php echo $file_name; ?>"
