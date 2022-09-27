@@ -95,16 +95,19 @@ while ($row = mysqli_fetch_array($result0)) {
 
         }else{
 
-            $co_sql = "SELECT COUNT(sg_station_event_update_id) FROM sg_station_event_log_update where station_event_id = '$station_event_id';";
+            $co_sql = "SELECT COUNT(sg_station_event_update_id)  , SUM(total_time) FROM sg_station_event_log_update where station_event_id = '$station_event_id';";
             $result_sql = mysqli_query($db, $co_sql);
             $count_sql = mysqli_fetch_array($result_sql);
             $j = $count_sql[0];
+            $tt_ains = $count_sql[1];
+            $end_hrs = $end_hrs - $tt_ains;
             $i++;
 
-            $co_sql = "SELECT day_seq FROM sg_station_event_log_update where station_event_id = '$station_event_id' order by created_on desc Limit 1;";
+            $co_sql = "SELECT day_seq , end_time FROM sg_station_event_log_update where station_event_id = '$station_event_id' order by created_on desc Limit 1;";
             $result_sql = mysqli_query($db, $co_sql);
             $ds_sql = mysqli_fetch_array($result_sql);
             $z = $ds_sql[0];
+            $et_time = $ds_sql[1];
 
             if ($z === 0){
                 $z = 1;
@@ -146,6 +149,10 @@ while ($row = mysqli_fetch_array($result0)) {
             $start_date21 ='';
             $start_time21='';
             $z++;
+
+			$end_time_se_tt = explode(' ', $et_time);
+			$et_tt = $end_time_se_tt[0];
+
             while($tt_time_2 > 0){
 
                 if(($i == $j) && ( $z<$k)){
@@ -171,7 +178,11 @@ while ($row = mysqli_fetch_array($result0)) {
                             $s_et = explode(' ', $endtime_1);
                             $start_date21 = date('Y-m-d', strtotime($s_et[0] . " +1 days"));
                             $start_time21 = $start_date21 . ' ' . '00:00:00';
-                        }
+                        }elseif  (!empty($et_time)){
+							$s_et = explode(' ', $et_time);
+							$start_date21 = date('Y-m-d', strtotime($s_et[0] . " +1 days"));
+							$start_time21 = $start_date21 . ' ' . '00:00:00';
+						}
                     }else{
                         $start_date21 = date('Y-m-d', strtotime($start_date21 . " +1 days"));
                         $start_time21 = $start_date21 . ' ' . '00:00:00';
