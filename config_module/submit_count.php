@@ -2,7 +2,7 @@
 include("../config.php");
     $cus_id = $_POST['cus_id'];
     $pf = $_POST['part_family'];
-    if(!empty($cus_id)){
+
 //weekly data
 $sql2 = "SELECT distinct `form_type`,`station`,count(created_at) as cd,`part_family` FROM `form_user_data` WHERE part_family = '$pf' and form_type = '4' and YEARWEEK(`created_at`) = YEARWEEK(CURDATE()) GROUP BY form_type";
 $result2 = mysqli_query($db,$sql2);
@@ -33,7 +33,7 @@ while ($row=$result->fetch_assoc()){
 }
 $response['posts'] = $posts;
 echo json_encode($response);
-    }
+
 
 
 
