@@ -64,6 +64,7 @@ while ($row = mysqli_fetch_array($result0)) {
                 $tt_time_2 = $end_hrs - $tt_time_1;
 
                 $end_time2 = $s_arr_1[0] . ' ' . '23:59:59';
+
                 if ($z === 0){
                     $z = 1;
                 }
@@ -220,6 +221,8 @@ while ($row = mysqli_fetch_array($result0)) {
                 $i++;
                 $z++;
             }
+            $sql_result1 = "Update sg_station_event_log SET is_incomplete = '0' where station_event_log_id = '$station_event_log_id'";
+            $sql_result2 = mysqli_query($db,$sql_result1);
         }
     }else if(!empty($total_time)) {
 
