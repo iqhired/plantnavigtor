@@ -156,7 +156,12 @@ $msg = explode(',', $msg); ?>
                                                     First Piece Sheet Dashboard
                                                 </a>
                                             </div>
-
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>form_module/form_submit_view.php"
+                                                   class="text-muted mobile">
+                                                    First Piece View Dashboard
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 								<?php } ?>
@@ -927,7 +932,10 @@ $msg = explode(',', $msg); ?>
                                                     <a href="<?php echo $siteURL; ?>config_module/form_submit_view_chart.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">First Piece Sheet Dashboard</h3></a>
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>form_module/form_submit_view.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">First Piece View Dashboard</h3></a>
+                                                </div>
 
                                             </div>
                                         </div>
