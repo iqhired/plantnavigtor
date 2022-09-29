@@ -39,19 +39,6 @@ $temp = "";
     <h3><?php echo $siteURL ?>config_module/form_submit_view_chart.php</h3>
 </a>
 <br>
-<h3>Upload document</h3>
-<a href="<?php echo $siteURL ?>document_module/document_form.php" target="_blank">
-    <h3><?php echo $siteURL ?>document_module/document_form.php</h3>
-</a>
-<h3>Edit document</h3>
-<a href="<?php echo $siteURL ?>document_module/document_search.php" target="_blank">
-    <h3><?php echo $siteURL ?>document_module/document_search.php</h3>
-</a>
-<h3>Create document category</h3>
-<a href="<?php echo $siteURL ?>document_module/document_category.php" target="_blank">
-    <h3><?php echo $siteURL ?>document_module/document_category.php</h3>
-</a>
-<br>
 <h3>Spliting Records Through page_from to page_to </h3>
 <a href="<?php echo $siteURL ?>log_module/update_station_event_log_backend_page.php" target="_blank">
     <h3><?php echo $siteURL ?>log_module/update_station_event_log_backend_page.php</h3>
