@@ -85,7 +85,7 @@ if (count($_POST) > 0) {
 
 
 
-        $qur3 = "update `sg_station_event_log` set total_time = '$total_time' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $qur3 = "update `sg_station_event_log` set total_time = '$total_time' , is_incomplete = '0' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
         $result0 = mysqli_query($db, $qur3);
 
 
@@ -174,7 +174,7 @@ if (count($_POST) > 0) {
                     $firstrow = mysqli_fetch_array($res);
                     $total_time = $firstrow['completed_time'];
 
-                    $qur4 = "update`sg_station_event_log` set total_time = '$total_time' where station_event_log_id = '$prev_seq'";
+                    $qur4 = "update `sg_station_event_log` set total_time = '$total_time' , is_incomplete = '0' where station_event_log_id = '$prev_seq'";
                     $result0 = mysqli_query($db, $qur4);
 
 
