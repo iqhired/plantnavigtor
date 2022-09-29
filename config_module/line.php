@@ -31,7 +31,25 @@ if (count($_POST) > 0) {
         $name = $_POST['name'];
         $priority_order = $_POST['priority_order'];
         $enabled = $_POST['enabled'];
-        $sql0 = "INSERT INTO `cam_line`(`line_name`,`priority_order` , `enabled` , `created_at`) VALUES ('$name' , '$priority_order' , '$enabled', '$chicagotime')";
+        $gbpd = $_POST['gbpd'] ;
+        if($gbpd == '1'){
+            $g = '1';
+        }else{
+            $g = '0';
+        }
+        $npd = $_POST['npd'] ;
+        if($npd == '1'){
+            $n = '1';
+        }else{
+            $n = '0';
+        }
+        $p_label1 = $_POST['p_label1'] ;
+        if($p_label1 == '1'){
+            $i = '1';
+        }else{
+            $i = '0';
+        }
+        $sql0 = "INSERT INTO `cam_line`(`line_name`,`priority_order` , `enabled` ,`gbd_id` ,`npr_id` ,`indivisual_label` , `created_at`) VALUES ('$name' , '$priority_order' , '$enabled','$g','$n','$i', '$chicagotime')";
         $result0 = mysqli_query($db, $sql0);
         if ($result0) {
             $message_stauts_class = 'alert-success';
@@ -134,6 +152,12 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
         <script type="text/javascript" src="../assets/js/pages/components_modals.js"></script>
         <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
         <script type="text/javascript" src="../assets/js/pn.js"></script>
+        <script>
+            $('#gbpd').on('change', function(){
+                this.value = this.checked ? 1 : 0;
+                // alert(this.value);
+            }).change();
+        </script>
     </head>
     <style>
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -197,6 +221,18 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                         <option value="1" >Yes</option>
                                                     </select>
                                                 </div>
+                                                </div><br><br><br>
+                                                <div class="col-md-12">
+                                                    <div class="col-md-8">
+                                                    <div id="checkboxes">
+                                                        <label class="whatever" for="gbpd"><b>GBP Dashboard Required :</b></label>
+                                                        <input type="checkbox" name="gbpd" id="gbpd" value="1">
+                                                        <label class="whatever" for="npd">&nbsp;&nbsp;&nbsp;&nbsp;<b>NPR Dashboard Required : </b></label>
+                                                        <input type="checkbox" name="npd" id="npd" value="1">
+                                                        <label class="whatever" for="p_label">&nbsp;&nbsp;&nbsp;&nbsp;<b>Print Individual Required : </b></label>
+                                                        <input type="checkbox" name="p_label1" id="p_label1" value="1">
+                                                    </div>
+                                                    </div>
                                                     <div class="col-md-2 mob_user">
                                                         <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create Station</button>
                                                     </div>
@@ -260,7 +296,7 @@ if (isset($_FILES['good_file']) && isset($_FILES['bad_file'])) {
                                                     echo $yn_result;
                                                     ?></td>
         <!-- <td>--><?php //echo $rowc['created_at'];        ?><!--</td>-->
-                                                <td>
+                                               <td>
                                                         <input type="checkbox" name="gbpd" id="gbpd" value="<?php echo $rowc["line_id"]; ?>" <?php echo ($rowc['gbd_id']==1 ? 'checked' : '');?>>
                                                 </td>
                                                 <td>
