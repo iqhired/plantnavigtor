@@ -4,9 +4,6 @@ $curdate = date('Y-m-d');
 
 $button = "";
 $temp = "";
-if (!isset($_SESSION['user'])) {
-	header('location: logout.php');
-    }
 
 $sql_st = "SELECT * FROM `sg_station_event_log_update` ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
 

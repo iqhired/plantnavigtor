@@ -420,7 +420,7 @@ from sg_station_event_log_update as e_log left join sg_station_event as sg_event
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id 
-where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom%' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto%'ORDER BY e_log.created_on  ASC";
+where DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto'ORDER BY e_log.created_on  ASC";
 						$line = $_POST['station'];
 
 						/* If Line is selected. */
@@ -433,7 +433,7 @@ from sg_station_event_log_update as e_log left join sg_station_event as sg_event
 INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
 inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
 inner join event_type as et on e_log.event_type_id = et.event_type_id where
-DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate%' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate%' and sg_events.line_id = '$line' ORDER BY e_log.created_on  ASC";
+DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') >= '$curdate' and DATE_FORMAT(sg_events.created_on,'%Y-%m-%d') <= '$curdate' and sg_events.line_id = '$line' ORDER BY e_log.created_on  ASC";
 						}
 
 						/* Build the query to fetch the data*/
@@ -464,11 +464,11 @@ where 1 ";
 
 
                             if ($datefrom != "" && $dateto != "") {
-                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom%' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto%' ";
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
                             } else if ($datefrom != "" && $dateto == "") {
-                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom%' ";
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') >= '$datefrom' ";
                             } else if ($datefrom == "" && $dateto != "") {
-                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto%' ";
+                                $q = $q . " AND DATE_FORMAT(e_log.created_on,'%Y-%m-%d') <= '$dateto' ";
                             }
 
                             if ($event_type != "") {
