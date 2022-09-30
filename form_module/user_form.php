@@ -395,7 +395,7 @@ include("../heading_banner.php");
                                   <label class="col-lg-3 control-label">Work Order/Lot<span class="red-star" style="font-size: 10px; padding-left:10px;">★ </span>
                                     </label>
                                     <div class="col-md-7">
-                                    <textarea class="form-control" name = "wol" rows="1" required></textarea>
+                                    <textarea class="form-control" name = "wol" id="wol" rows="1" required></textarea>
                                     </div>
 
                                 </div>
@@ -442,6 +442,7 @@ include("../heading_banner.php");
 
 									<?php } ?>
                                 </div>
+
                                 <b><h4 class="panel-title form_panel_title">Form Information</h4></b>
 								<?php
 								$query = sprintf("SELECT * FROM  form_item where form_create_id = '$item_id' order by form_item_seq+0 ASC ");
@@ -632,7 +633,7 @@ include("../heading_banner.php");
                                     <br/>
                                     <!-- Approval List-->
 
-
+                                    <div id="app_list">
                                     <b><h4 class="panel-title form_panel_title">Approval List</h4></b>
                                     <form action="" id="approve_form" class="form-horizontal" method="post" autocomplete="off">
                                     <div class="form_table">
@@ -736,15 +737,12 @@ include("../heading_banner.php");
 													$j++;
 													$k++;
 												}
-
 											}
 											?>
                                             <input type="hidden" name="tot_approval_dept" id="tot_approval_dept"
                                                    value="<?php echo ($j); ?>">
                                             <input type="hidden" name="tot_rejected_dept" id="tot_rejected_dept"
                                                    value="<?php echo ($k); ?>">
-
-
 											<?php
 										}
 										?>
@@ -765,6 +763,7 @@ include("../heading_banner.php");
                                         </div>
                                     </div>
                                     </form>
+                                    </div>
                                 </div>
 							<?php
 							}
@@ -809,6 +808,7 @@ $('#reject').on('change', function () {
         }
     });
 </script> -->
+</body>
 <script>
 
     $("#btnSubmit").click(function (e) {
@@ -826,6 +826,10 @@ $('#reject').on('change', function () {
                     $('form input[type="radio"]').css('pointer-events','none');
                     $('form input[type="number"]').css('pointer-events','none');
                     $('form input[type="text"]').css('pointer-events','none');
+                    $("label[for='yes']").css('pointer-events','none');
+                    $("label[for='no']").css('pointer-events','none');
+                    $("textarea#wol").css('pointer-events','none');
+                    $("textarea#notes").css('pointer-events','none');
                     document.getElementById("form_user_data_id").value = data["form_user_data_id"];
                     document.getElementById("approval_dept_cnt").value = data["approval_dept_cnt"];
                     document.getElementById("rejected_dept_cnt").value = data["rejected_dept_cnt"];
@@ -1078,10 +1082,14 @@ $('#reject').on('change', function () {
 
                 if (text_val >= lower_compare && text_val <= upper_compare) {
                     $(this).attr('style','background-color:#abf3ab !important');
+                    document.getElementById("app_list").style.display = "none"
+                    document.getElementById("sub_app").style.display = "none"
                     document.getElementById("notes").required = false;
                     document.getElementsByClassName("reason").style.display = "none";
                 } else {
                     $(this).attr('style','background-color:#ffadad !important');
+                    document.getElementById("app_list").style.display = "block"
+                    document.getElementById("sub_app").style.display = "block"
                     document.getElementById("notes").required = true;
                     document.getElementsByClassName("reason").style.display = "block";
                 }
@@ -1097,10 +1105,14 @@ $('#reject').on('change', function () {
         var exact_val = $('input[name="' + radio_id + '"]:checked').val();
         if (exact_val == binary_compare) {
             $("." + radio_id).css("background-color", "#abf3ab");
+            document.getElementById("app_list").style.display = "none"
+            document.getElementById("sub_app").style.display = "none"
             document.getElementById("notes").required = false;
             document.getElementsByClassName("reason").style.display = "none";
         } else {
             $("." + radio_id).css("background-color", "#ffadad");
+            document.getElementById("app_list").style.display = "block"
+            document.getElementById("sub_app").style.display = "block"
              document.getElementById("notes").required = true;
             document.getElementsByClassName("reason").style.display = "block";
         }
