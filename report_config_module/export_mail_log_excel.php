@@ -5,7 +5,10 @@ session_start();
 include '../config.php';
 $chicagotime = date('d-m-Y', strtotime('-1 days'));
 $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-mkdir("../daily_report/" . $chicagotime);
+if (!file_exists("../daily_report/" . $chicagotime)) {
+    mkdir("../daily_report/" . $chicagotime, 0777, true);
+}
+
 $exportData = mysqli_query($db, "SELECT user_id,subject,message,signature,mail_sent_time FROM sg_sent_mail where DATE_FORMAT(`mail_sent_time`,'%Y-%m-%d') = '$chicagotime1' ");
 $header = "User Name" . "\t" . "Subject" . "\t" . "Message" . "\t" . "Signature" . "\t" . "Mail Sent Time" . "\t";
 $result = '';

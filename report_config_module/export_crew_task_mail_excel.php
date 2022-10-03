@@ -4,7 +4,9 @@ ini_set('display_errors', 'off');
 session_start();
 include '../config.php';
 $chicagotime = date('d-m-Y', strtotime('-1 days'));
-$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
+$chicagotime1 = date('Y-m-d', strtotime('-1 days'));if (!file_exists("../daily_report/" . $chicagotime)) {
+    mkdir("../daily_report/" . $chicagotime, 0777, true);
+}
 $qur05 = mysqli_query($db, "SELECT * FROM `tm_task_log_config` ");
 while ($rowc05 = mysqli_fetch_array($qur05)) {
     $taskboard_id = $rowc05["taskboard"];
