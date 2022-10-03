@@ -263,7 +263,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/assignment_log_config.php");
+        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/form_submit_log_config.php");
     }
 </script>
 <script>
