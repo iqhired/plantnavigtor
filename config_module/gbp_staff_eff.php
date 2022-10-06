@@ -24,8 +24,12 @@ if(!empty($resultmain)){
         $resultpnum = mysqli_query($db,$sqlpnum);
         $rowcpnum = $resultpnum->fetch_assoc();
         $pm_npr= $rowcpnum['npr'];
-        ///$pm_npr= $rowcpnum['npr'];
-
+        if($pm_npr == null)
+        {
+            $npr = 0;
+        }else{
+            $npr = $pm_npr;
+        }
 
         $sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$station1' and sg_station_event.event_status = 1" ;
         $result2 = mysqli_query($db,$sql2);
@@ -58,10 +62,10 @@ if(!empty($resultmain)){
             }
         }
         $total_time = (($total_time/60)/60);
-
-        $target_eff = round($pm_npr * $total_time);
+        $b = round($total_time);
+        $target_eff = round($npr * $b);
         $actual_eff = $total_gp;
-        $eff = round(100 * ($actual_eff/$target_eff), 2);
+        $eff = round(100 * ($target_eff/$actual_eff));
         // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
         $posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
 
