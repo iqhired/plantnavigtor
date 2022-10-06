@@ -1,5 +1,6 @@
 <?php include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
+
 $temp = "";
 if (!isset($_SESSION['user'])) {
 	if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
@@ -35,6 +36,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 	header('location: ../line_status_overview_dashboard.php');
 }
 $user_id = $_SESSION["id"];
+$def_ch = $_POST['def_ch'];
 $chicagotime = date("Y-m-d H:i:s");
 //$line = "<b>-</b>";
 $line = "";
@@ -62,6 +64,13 @@ $resultnumber = $mysqli->query($sqlnumber);
 $rowcnumber = $resultnumber->fetch_assoc();
 $pm_part_number = $rowcnumber['part_number'];
 $pm_part_name = $rowcnumber['part_name'];
+$pm_npr= $rowcnumber['npr'];
+if($pm_npr == null)
+{
+    $npr = 0;
+}else{
+    $npr = $pm_npr;
+}
 
 $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
 $resultfamily = $mysqli->query($sqlfamily);
@@ -79,6 +88,52 @@ $rowccus = $resultcus->fetch_assoc();
 $cus_name = $rowccus['c_name'];
 $logo = $rowccus['logo'];
 
+$sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$p_line_id' and sg_station_event.event_status = 1" ;
+$result2 = mysqli_query($db,$sql2);
+$total_time = 0;
+$row2=$result2->fetch_assoc();
+$total_gp =  $row2['good_pieces'] + $row2['rework'];
+
+$sql3 = "SELECT * FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
+$result3 = mysqli_query($db,$sql3);
+$ttot = null;
+$tt = null;
+while ($row3 = $result3->fetch_assoc()) {
+    $ct = $row3['created_on'];
+    $tot = $row3['total_time'];
+    if(!empty($row3['total_time'])){
+        $ttot = explode(':' , $row3['total_time']);
+        $i = 0;
+        foreach($ttot as $t_time) {
+            if($i == 0){
+                $total_time += ( $t_time * 60 * 60 );
+            }else if( $i == 1){
+                $total_time += ( $t_time * 60 );
+            }else{
+                $total_time += $t_time;
+            }
+            $i++;
+        }
+    }else{
+        $total_time +=  strtotime($chicagotime) - strtotime($ct);
+    }
+}
+$total_time = (($total_time/60)/60);
+$b = round($total_time);
+$target_eff = round($npr * $b);
+$actual_eff = $total_gp;
+$eff = round(100 * ($target_eff/$actual_eff));
+// $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
+$posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
+
+
+$response['posts'] = $posts;
+echo json_encode($response);
+?>
+<?php
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,16 +141,21 @@ $logo = $rowccus['logo'];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title><?php echo $sitename; ?>
-        | Good & Bad Pieces</title>
+    <title><?php echo $sitename; ?> </title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css"
+          rel="stylesheet">
     <link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/core.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css">
@@ -104,21 +164,31 @@ $logo = $rowccus['logo'];
     <!-- /global stylesheets -->
     <!-- Core JS files -->
     <script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
     <script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
+
     <script type="text/javascript" src="../assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"> </script>
-    <script type="text/javascript" src="../assets/js/plugins/notifications/sweet_alert.min.js"> </script>
-    <script type="text/javascript" src="../assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery-1.3.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+    <script>
+        $('#eff_container').load('../gbp_dashboard.php #eff_container');
+    </script>
+    <script>
+
+    </script>
     <style> .sidebar-default .navigation li > a {
             color: #f5f5f5
         }
@@ -156,6 +226,18 @@ $logo = $rowccus['logo'];
                 margin-top: 200px;
             }
         }
+        body.alt-menu.sidebar-noneoverflow.pace-done {
+            background-color: #ccc !important;
+        }
+
+        .anychart-credits {
+            display: none !important;
+        }
+
+        .datatable-scroll {
+            width: 100%;
+            overflow-x: scroll;
+        }
     </style>
 </head>
 <body>
@@ -174,8 +256,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 <div class="content">
     <!--			<div style="background-color: #fff;" class="row">-->
     <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;" class="row">
-        <div class="col-lg-3 col-md-8"></div>
-        <div class="col-lg-6 col-md-12">
+        <!--<div class="col-lg-3 col-md-8"></div>-->
+        <div class="col-lg-6 col-md-8">
             <!--							<div class="panel panel-body">-->
             <div class="media" style="padding-top:50px;">
                 <div class="media-left">
@@ -192,8 +274,37 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
                 </div>
             </div>
-            <!--							</div>-->
         </div>
+        <div class="col-lg-6 col-md-8">
+            <!--							<div class="panel panel-body">-->
+            <div class="media" style="padding-top:50px;">
+                <!--<div class="media-left">
+                    <div id="eff_container" style=" height: 45vh;width:30vh;margin : 5px 5px 5px 5px;background-color: #ffffff;" class="img-circle" alt=""></div>
+                </div>-->
+                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
+                <div class="media-left" style="padding-top: 5px;">
+                    <div id="eff_container" style=" height: 45vh;width:60vh;background-color: #ffffff;"></div>
+                </div>
+                <div class="media-body">
+
+                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target Days :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: large;" class="display-block"><b>Actual Days :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+
+                </div>
+
+            </div>
+        </div>
+     <!-- <div class="col-md-6 col-md-8">
+          <div class="media" style="padding-top:50px;">
+           <div id="" style="padding: 10px 20px;height: 400px; margin-top: 15px">
+                <h8 style="font-size: large;padding : 5px; text-align: center;"
+                    class="text-semibold no-margin">Current Staff Efficiency</h8>
+                    <div id="eff_container" style="height: 350px;border:1px solid #efefef;"></div>
+
+            </div>
+          </div>
+        </div>-->
 		<?php
 		if (!empty($import_status_message)) {
 			echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
@@ -207,6 +318,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 		}
 		?>
     </div>
+
     <div class="panel panel-flat">
 		<?php
 		$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
@@ -302,6 +414,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         </div>
 
     </div>
+
+
     <!-- Basic datatable -->
 
 
@@ -588,7 +702,177 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         </div>
     </div>
 </div>
-<!-- /content area -->
+<script>
+    //Efficiency
+    anychart.onDocumentReady(function () {
+        var data = this.window.location.href.split('?')[1];
+        $.ajax({
+            type: 'POST',
+            url: 'gbp_eff.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var target_eff = data.posts.map(function (elem) {
+                    return elem.target_eff;
+                });
+                // console.log(goodpiece);
+                // var avg_npr = data.posts.map(function (elem) {
+                //     return elem.avg_npr;
+                // });
+                var actual_eff = data.posts.map(function (elem) {
+                    return elem.actual_eff;
+                });
+
+                var eff = data.posts.map(function (elem) {
+                    return elem.eff;
+                });
+                // var range1 = avg_npr;
+                var range1 = actual_eff;
+                var range2 = target_eff;
+                var range3 = eff;
+
+                var fill3 = '#009900 0.8';
+                var fill2 = '#B31B1B 0.8';
+                var fill1 = '#B31B1B 0.8';
+
+                var maxr3 =  parseFloat(range2) + parseFloat(range2 * .2)
+
+
+                if((actual_eff >= target_eff)){
+                    range1 = target_eff;
+                    // range2 = avg_npr;
+                    range2 = actual_eff;
+                    fill1 = '#009900 0.8';
+                    fill2 = '#009900 0.8';
+                    fill3 = '#B31B1B 0.8';
+                    maxr3 =  parseFloat(target_eff) + parseFloat(target_eff * .2)
+                }
+
+                var gauge = anychart.gauges.circular();
+                gauge
+                    .fill('#fff')
+                    .stroke(null)
+                    .padding(50)
+                    .margin(0)
+                    .startAngle(270)
+                    .sweepAngle(180);
+
+                gauge
+                    .axis()
+                    .labels()
+                    .padding(5)
+                    .fontSize(15)
+                    .position('outside')
+                    .format('{%Value}');
+
+                gauge.data([actual_eff]);
+                gauge
+                    .axis()
+                    .scale()
+                    .minimum(0)
+                    .maximum(maxr3)
+                    .ticks({ interval: 1 })
+                    .minorTicks({ interval: 1 });
+
+                gauge
+                    .axis()
+                    .fill('#545f69')
+                    .width(1)
+                    .ticks({ type: 'line', fill: 'white', length: 2 });
+
+                gauge.title(
+                   /* '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +target_eff+' </strong><l/span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +actual_eff+' </strong></span></div><br/><br/>' +
+                    '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +eff+' </strong>%</span></div><br/><br/>'*/
+                );
+
+                gauge
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
+
+                gauge
+                    .needle()
+                    .stroke('2 #545f69')
+                    .startRadius('5%')
+                    .endRadius('90%')
+                    .startWidth('0.1%')
+                    .endWidth('0.1%')
+                    .middleWidth('0.1%');
+
+                gauge.cap().radius('3%').enabled(true).fill('#545f69');
+
+                gauge.range(0, {
+                    from: 0,
+                    to: range1,
+                    position: 'inside',
+                    fill: fill1,
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(1, {
+                    from: range1,
+                    to: range2,
+                    position: 'inside',
+                    fill: fill2,
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+                });
+
+                gauge.range(2, {
+                    from: range2,
+                    to: (maxr3),
+                    position: 'inside',
+                    fill: '#009900 0.8',
+                    startSize: 50,
+                    endSize: 50,
+                    radius: 98
+
+                });
+
+                gauge
+                    .label(1)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(20)
+                    .offsetY('68%')
+                    .offsetX(25)
+                    .anchor('center');
+                gauge
+                    .label(2)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(20)
+                    .offsetY('68%')
+                    .offsetX(90)
+                    .anchor('center');
+
+                gauge
+                    .label(3)
+                    .text('')
+                    .fontColor('#212121')
+                    .fontSize(20)
+                    .offsetY('68%')
+                    .offsetX(155)
+                    .anchor('center');
+
+
+                // set container id for the chart
+                gauge.container('eff_container');
+                // initiate chart drawing
+                gauge.draw();
+            }
+        });
+    });
+</script>
 
 <script>
     $("#submitForm_good").click(function (e) {
@@ -743,7 +1027,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 </script>
 <script>
     function submitForm_good(url) {
-
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#good_form").serialize();
         var main_url = "<?php echo $url; ?>";
