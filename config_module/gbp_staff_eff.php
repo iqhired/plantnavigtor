@@ -8,7 +8,6 @@ while ($cam1 = mysqli_fetch_array($result1)){
     $station1 = $cam1['line_id'];
     $station2 = $cam1['line_name'];
 }
-
 $sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$station1' and event_status = 1";
 $resultmain = mysqli_query($db,$sqlmain);
 if(!empty($resultmain)){
@@ -24,7 +23,7 @@ if(!empty($resultmain)){
         $resultpnum = mysqli_query($db,$sqlpnum);
         $rowcpnum = $resultpnum->fetch_assoc();
         $pm_npr= $rowcpnum['npr'];
-        if($pm_npr == null)
+        if(empty($pm_npr))
         {
             $npr = 0;
         }else{
