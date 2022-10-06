@@ -202,7 +202,6 @@ if($_POST['fa_op'] == 1){
         // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
         $posts[] = array( 'npr'=> $target_npr,  'actual_npr'=> $actual_npr,);
     }
-
     $response['posts'] = $posts;
     echo json_encode($response);
 }else if($_POST['fa_op'] == 4) {
