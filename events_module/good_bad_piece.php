@@ -257,7 +257,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
     <!--			<div style="background-color: #fff;" class="row">-->
     <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;" class="row">
         <!--<div class="col-lg-3 col-md-8"></div>-->
-        <div class="col-lg-6 col-md-8">
+        <div style="width: 47%;border: 1px solid gray;margin: 2% 0% 2% 2%;height: 380px;" class="col-lg-6 col-md-8">
             <!--							<div class="panel panel-body">-->
             <div class="media" style="padding-top:50px;">
                 <div class="media-left">
@@ -275,7 +275,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-8">
+        <div style="width: 47%;border: 1px solid gray;margin: 2% 0% 2% 2%;height: 380px;" class="col-lg-6 col-md-8">
             <!--							<div class="panel panel-body">-->
             <div class="media" style="padding-top:50px;">
                 <!--<div class="media-left">
