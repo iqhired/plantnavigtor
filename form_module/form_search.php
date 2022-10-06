@@ -566,17 +566,6 @@ include("../heading_banner.php");
 							$qur05 = mysqli_query($db, "SELECT SUM(approval_status) as app_status, SUM(reject_status) as rej_status FROM  form_approval where form_user_data_id = '$form_id' ");
 							$rowc05 = mysqli_fetch_array($qur05);
 
-
-
-
-
-//							if($comp_status == '1'){
-//
-//								$comp = "Complete";
-//							}else{
-//								$comp = "Yet to fill optional data.";
-//							}
-
 							$approval_status = (int)$rowc05["app_status"];
 							$reject_status = (int)$rowc05["rej_status"];
 							$style = "";
@@ -586,15 +575,11 @@ include("../heading_banner.php");
 							} else if ($approval_status >= 1) {
 								$form_status = "Approved";
 								$style = "style='background-color:#a8d8a8;'";
-							}
-// else {
-//								continue;
-////                                    $form_status = "Incomplete";
-////                                    $style = "style='background-color:#b1cdff;'";
-//							}
-//							if ($comp_status == '0') {
-//								$style = "style='background-color:#b1cdff;'";
-//							}
+							}else if (empty($approval_status) && empty($reject_status)){
+                                $form_status = "Auto Approved";
+                                $style = "style='background-color:#f5f5f5;'";
+                            }
+
 						}
 
 						?>

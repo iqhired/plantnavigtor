@@ -89,6 +89,13 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
            width: 30%;
 
         }
+        #success_msg_app{
+            font-size: large;
+            padding: 12px;
+            width: 30%;
+            width: 30%;
+
+        }
         .form-control[disabled]{
             color: #000 !important;
         }
@@ -134,6 +141,11 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
                 width: 45%;
 
             }
+            #success_msg_app{
+
+                width: 45%;
+
+            }
 
             .form_row_item{
                 width: 100%;
@@ -162,6 +174,11 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         only screen and (max-width: 400px),
         (min-device-width: 400px) and (max-device-width: 670px)  {
             #success_msg{
+
+                width: 45%;
+
+            }
+            #success_msg_app{
 
                 width: 45%;
 
@@ -204,6 +221,7 @@ include("../heading_banner.php");
             <!-- Page header -->
            <div class="panel panel-flat">
             <div id ="success_msg"></div>
+               <div id ="success_msg_app"></div>
 <!--            <h5 style="text-align: left;width: 90%;">--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
                 <div class="panel-heading ">
                     <b><h4 class="panel-title form_panel_title"><?php echo $get_form_name; ?></h4></b>
@@ -237,12 +255,20 @@ include("../heading_banner.php");
 					?>
                     <div class="row ">
                         <div class="col-md-12">
-                            <form action="" id="form_settings" enctype="multipart/form-data"
-                                  class="form-horizontal" method="post" autocomplete="off">
-                                <input type="hidden" name="name" id="name" value="<?php echo $_GET['form_name']; ?>">
-                                <input type="hidden" name="formcreateid" id="formcreateid"
-                                       value="<?php echo $_GET['id']; ?>">
+                            <form action="" id="form_settings" enctype="multipart/form-data"  class="form-horizontal" method="post" autocomplete="off">
+                             <?php
+                             $form_createid = $_GET['id'];
+                             $query1 = sprintf("SELECT form_create_id,need_approval,approval_list FROM  form_create where form_create_id = '$form_createid' ");
+                             $qur1 = mysqli_query($db, $query1);
+                             $rowc1 = mysqli_fetch_array($qur1);
+                             $item_id = $rowc1['form_create_id'];
+                             $need_approval = $rowc1['need_approval'];
+                             $bypass_approval = $rowc1['approval_list'];
+                             ?>
 
+                                <input type="hidden" name="name" id="name" value="<?php echo $_GET['form_name']; ?>">
+                                <input type="hidden" name="formcreateid" id="formcreateid"  value="<?php echo $_GET['id']; ?>">
+                                <input type="hidden" name="bypass_approve" id="bypass_approve" value="<?php echo $rowc1['approval_list']; ?>">
                                 <div class="form_row row">
                                     <label class="col-lg-3 control-label">Form Type : </label>
                                     <div class="col-md-7">
@@ -410,18 +436,8 @@ include("../heading_banner.php");
                                 <br/>
                                 <div class="form_row row">
 									<?php
-									$form_createid = $_GET['id'];
-									$query1 = sprintf("SELECT form_create_id,need_approval FROM  form_create where form_create_id = '$form_createid' ");
-									$qur1 = mysqli_query($db, $query1);
-									$rowc1 = mysqli_fetch_array($qur1);
-									$item_id = $rowc1['form_create_id'];
-									$need_approval = $rowc1['need_approval'];
-
-									$qurimage = mysqli_query($db, "SELECT * FROM  form_images where form_create_id = '$item_id'");
-									while ($rowcimage = mysqli_fetch_array($qurimage)) {
-
-
-										?>
+                                    $qurimage = mysqli_query($db, "SELECT * FROM  form_images where form_create_id = '$item_id'");
+									while ($rowcimage = mysqli_fetch_array($qurimage)) { ?>
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="thumbnail">
                                                 <div class="thumb">
@@ -471,10 +487,8 @@ include("../heading_banner.php");
 										$final_upper = $numeric_normal + $numeric_upper_tol1; // final upper value
 
 										?>
-                                        <input type="hidden" data-id="<?php echo $rowc['form_item_id']; ?>"
-                                               class="lower_compare" value="<?php echo $final_lower; ?>">
-                                        <input type="hidden" data-id="<?php echo $rowc['form_item_id']; ?>"
-                                               class="upper_compare" value="<?php echo $final_upper; ?>">
+                                        <input type="hidden" data-id="<?php echo $rowc['form_item_id']; ?>" class="lower_compare" value="<?php echo $final_lower; ?>">
+                                        <input type="hidden" data-id="<?php echo $rowc['form_item_id']; ?>" class="upper_compare" value="<?php echo $final_upper; ?>">
                                         <div class="row form_row_item">
                                             <div class="col-md-7 form_col_item">
                                                 <div><?php if ($rowc['optional'] != '1') {
@@ -649,6 +663,7 @@ include("../heading_banner.php");
 										$i = 0;
 										while ($rowc1 = mysqli_fetch_array($qur1)) {
 											$approval_by_array = $rowc1['approval_by'];
+
 											$arrteam = explode(',', $approval_by_array);
 											$j = 0;	$k = 0;
 											foreach ($arrteam as $arr) {
@@ -1046,8 +1061,6 @@ $('#reject').on('change', function () {
                     $('#rej_reason_div_'+this.id.split("_")[1]).attr('disabled', 'disabled');
 
                     $('#pin_'+this.id.split("_")[1]).attr('disabled', 'disabled');
-
-                    // $('#approve_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     $('#approve_'+this.id.split("_")[1]).css('display', 'none');
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                     // $('#btnSubmit_1').removeAttr('disabled');
@@ -1073,7 +1086,7 @@ $('#reject').on('change', function () {
         var lower_compare = parseFloat($(".lower_compare[data-id='" + text_id + "']").val());
         var upper_compare = parseFloat($(".upper_compare[data-id='" + text_id + "']").val());
         var text_val = $(this).val();
-
+        var bypass_approve = $("#bypass_approve").val();
         if ($(".compare_text").val().length == 0) {
             $(this).attr('style','background-color:white !important');
             return false;
@@ -1082,10 +1095,15 @@ $('#reject').on('change', function () {
 
                 if (text_val >= lower_compare && text_val <= upper_compare) {
                     $(this).attr('style','background-color:#abf3ab !important');
-                    document.getElementById("app_list").style.display = "none"
-                    document.getElementById("sub_app").style.display = "none"
+                    if (bypass_approve == 'yes') {
+                        document.getElementById("app_list").style.display = "none"
+                        document.getElementById("sub_app").style.display = "none"
+                        $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
+                    }
                     document.getElementById("notes").required = false;
                     document.getElementsByClassName("reason").style.display = "none";
+
+
                 } else {
                     $(this).attr('style','background-color:#ffadad !important');
                     document.getElementById("app_list").style.display = "block"
@@ -1103,22 +1121,28 @@ $('#reject').on('change', function () {
         var radio_id = $(this).attr("name");
         var binary_compare = $(".binary_compare[data-id='" + radio_id + "']").val();
         var exact_val = $('input[name="' + radio_id + '"]:checked').val();
+        var bypass_approve = $("#bypass_approve").val();
         if (exact_val == binary_compare) {
             $("." + radio_id).css("background-color", "#abf3ab");
-            document.getElementById("app_list").style.display = "none"
-            document.getElementById("sub_app").style.display = "none"
+            if (bypass_approve == 'yes'){
+                document.getElementById("app_list").style.display = "none"
+                document.getElementById("sub_app").style.display = "none"
+                $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
+            }
+
             document.getElementById("notes").required = false;
             document.getElementsByClassName("reason").style.display = "none";
+
+
         } else {
             $("." + radio_id).css("background-color", "#ffadad");
             document.getElementById("app_list").style.display = "block"
             document.getElementById("sub_app").style.display = "block"
-             document.getElementById("notes").required = true;
+            document.getElementById("notes").required = true;
             document.getElementsByClassName("reason").style.display = "block";
         }
     });
 </script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 </html>

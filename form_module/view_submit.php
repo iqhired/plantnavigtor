@@ -82,74 +82,66 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             font-weight: 600;
         }
 
-        #form_save_btn {
-            background-color: #1e73be;
-            margin-left: 35px;
-            padding: 12px 22px 10px 18px;
-            margin-bottom: 10px;
-        }
 
         .pn_none {
             pointer-events: none;
             color: #050505;
         }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            /*border-bottom: 1px dotted black;*/
-            opacity: 1!important;
-            overflow: inherit;
+        .form_table_mobile {
+            display: none;
         }
+        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+            .col-lg-2{
+                width: 35%!important;
+            }
+            .content:first-child {
+                padding-top: 90px!important;
+            }
+            .col-md-8.form_col_item {
+                float: left;
+                width: 100%;
+                padding-bottom: 10px;
+            }
+            .border-primary {
+                border-color: #ffffff;
+            }
+            .form_table_mobile {
+                display: block;
+            }
+            table.form_table {
+                display: none;
+            }
+            .form_table_mobile {
+                width: 100%;
+                background-color: #eee;
+                margin-top: 12px;
+            }
+            .form_table_mobile {
+                width: 100%;
+                background-color: #eee;
+                margin-top: 12px;
+            }
+            .form_row_mobile {
+                width: 100%;
+                height: auto;
+            }
+            .col-lg-8.mobile {
+                width: 58%;
+                float: right;
+                padding: 10px 30px 10px 26px;
+            }
+            label.col-lg-3.control-label.mobile {
+                width: 42%;
+                float: left;
+                padding: 10px 30px 10px 26px;
+            }
+            .col-md-2 {
+                width: 50%;
+                float: left;
+            }
 
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #26a69a;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
 
         }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #191e3a!important;
-            line-height: 20px!important;
-        }
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #060818!important;
-            border-block-start: none;
-            border-bottom-color: #191e3a!important;
-        }
-        .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
-            color: #999;
-            border-bottom-style: inset;
-        }
-
 
     </style>
 </head>
@@ -888,14 +880,22 @@ include("../heading_banner.php");
 
                     }
                     ?>
-
+                    <br/>
                     <?php
-                    $queryst = sprintf("SELECT * FROM `form_user_data` where form_user_data_id = '$id' ");
-                    $qur = mysqli_query($db, $queryst);
+                    $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where form_user_data_id = '$id' ");
+                    $rowc05 = mysqli_fetch_array($qur05);
+                    $app_in = $rowc05["approval_initials"];
+                    $passcd = $rowc05["passcode"];
+                    $datetime = $rowc05["created_at"];
+                    $date_time = strtotime($datetime);
 
-                    $rowcst = mysqli_fetch_array($qur);
-                    $status = $rowcst["form_status"];
-                    if ( $status != null ) {?>
+                    $approval_status = $rowc05["approval_status"];
+                    $reject_status = $rowc05["reject_status"];
+
+                    if (empty($approval_status) && empty($reject_status)){ ?>
+                        <b><h4 class="panel-title form_panel_title" style="background-color: #4caf507a;">Approved by System</h4></b>
+                    <?php }else{ ?>
+
                         <b><h4 class="panel-title form_panel_title">Approval List</h4></b>
                         <table class="form_table">
                             <tr class="form_tab_tr">
@@ -983,11 +983,22 @@ include("../heading_banner.php");
                                         </tr>
                                         <?php if ($form_status == 'Rejected') { ?>
                                             <tr id="rej_reason_div" style="display: table-row;border: 1px solid red;">
-                                                <td class="form_tab_td" colspan="4"> Reject Reason : <textarea
-                                                            placeholder="<?php echo $rowc05['reject_reason']; ?>"
-                                                            class="form-control" name="rej_reason" rows="1"></textarea></td>
+                                                <td class="form_tab_td" colspan="4"> Reject Reason :
+                                                    <textarea class="form-control pn_none" name="rej_reason" rows="1" ><?php echo $rowc05['reject_reason']; ?>
+
+                                                                </textarea>
+                                                </td>
                                             </tr>
-                                        <?php }
+                                        <?php } else if ($form_status == 'Approved') {
+                                            if ($rowc05['reject_reason'] != ""){?>
+                                                <tr id="rej_reason_div" style="display: table-row;border: 1px solid green;">
+                                                    <td class="form_tab_td" colspan="4"> Approve Reason :
+                                                        <textarea class="form-control pn_none" name="rej_reason" rows="1"><?php echo $rowc05['reject_reason']; ?>
+
+                                                                </textarea>
+                                                    </td>
+                                                </tr>
+                                            <?php  } }
                                         $fullnnm = "";
                                         $passcd = "";
                                     }
@@ -997,144 +1008,110 @@ include("../heading_banner.php");
 
 
                         </table>
-                    <?php } else { ?>
-                        <b><h4 class="panel-title form_panel_title">Approval List</h4></b>
-                        <form action="" id="approve_form" class="form-horizontal" method="post" autocomplete="off">
-                            <table class="form_table">
-                                <tr class="form_tab_tr">
-                                    <th class="form_tab_th">Department</th>
-                                    <th class="form_tab_th">Approver</th>
-                                    <th class="form_tab_th">Digital Signature</th>
-                                    <th class="form_tab_th">Actions</th>
-                                </tr>
-                                <?php
-                                $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$item_id' and need_approval = 'yes'");
-                                $qur1 = mysqli_query($db, $query1);
-                                $i = 0;
-                                while ($rowc1 = mysqli_fetch_array($qur1)) {
-                                    $approval_by_array = $rowc1['approval_by'];
-                                    $arrteam = explode(',', $approval_by_array);
-                                    $j = 0;	$k = 0;
-                                    foreach ($arrteam as $arr) {
-                                        if ($arr != "") {
-                                            ?>
-                                            <tr class="form_tab_tr">
-                                                <?php
-                                                $qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
-                                                $rowctemp = mysqli_fetch_array($qurtemp);
-                                                $groupname = $rowctemp["group_name"]
 
-                                                ?>
-                                                <td class="form_tab_td">
-                                                    <input type="hidden" name="approval_dept"
-                                                           id="approval_dept_<?php echo $j ?>"
-                                                           value="<?php echo $arr; ?>">
-                                                    <?php echo $groupname; ?>
-                                                </td>
-                                                <td class="form_tab_td">
-                                                    <select class="select-border-color"
-                                                            name="approval_initials"
-                                                            id="approval_initials_<?php echo $j ?>"
-                                                            class="select" data-style="bg-slate">
-                                                        <option value="" selected disabled>--- Select Approver
-                                                            ---
-                                                        </option>
-                                                        <?php
-                                                        $sql1 = "SELECT * FROM `sg_user_group` where group_id = '$arr'";
-                                                        $result1 = $mysqli->query($sql1);
-                                                        while ($row1 = $result1->fetch_assoc()) {
+                        <?php
+                        $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$item_id'");
+                        $qur1 = mysqli_query($db, $query1);
+                        $i = 0;
+                        while ($rowc1 = mysqli_fetch_array($qur1)) {
+                            $approval_dept_array = $rowcmain['approval_dept'];
+                            $approval_dept = explode(',', $approval_dept_array);
+                            $approval_initials_array = $rowcmain['approval_initials'];
+                            $approval_initials = explode(',', $approval_initials_array);
+                            $passcode_array = $rowcmain['passcode'];
+                            $passcode = explode(',', $passcode_array);
+                            $approval_by_array = $rowc1['approval_by'];
+                            $arrteam = explode(',', $approval_by_array);
 
-                                                            $user_id = $row1['user_id'];
-                                                            $qurtemp = mysqli_query($db, "SELECT firstname,lastname FROM `cam_users` where users_id = '$user_id' and pin_flag = '1' ");
-                                                            $rowctemp = mysqli_fetch_array($qurtemp);
-                                                            if ($rowctemp != NULL) {
-                                                                $fullnn = $rowctemp["firstname"] . " " . $rowctemp["lastname"];
 
-                                                                echo "<option value='" . $user_id . "' >" . $fullnn . "</option>";
-                                                            }
-                                                            $fullnm = "";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <span style="font-size: x-small;color: darkred;display: none;" id="u_error_<?php echo $j; ?>">Select User.</span>
-                                                </td>
-                                                <td class="form_tab_td" id="approve_msg">
-                                                    <input type="password" name="pin[]" id="pin_<?php echo $j ?>"
-                                                           class="form-control" style=" margin-bottom: 5px;"
-                                                           placeholder="Enter Pin..."  autocomplete="off" >
-                                                    <span style="font-size: x-small;color: darkred; display: none;" id="pin_error_<?php echo $j; ?>">Invalid Pin.</span>
-                                                </td>
+                            foreach ($arrteam as $arr) {
+                                if ($arr != "") {
+                                    ?>
+                                    <div class="form_table_mobile">
+                                        <?php
+                                        $qurtemp = mysqli_query($db, "SELECT group_name FROM `sg_group` where group_id = '$arr' ");
+                                        $rowctemp = mysqli_fetch_array($qurtemp);
+                                        $groupname = $rowctemp["group_name"];
 
-                                                <td class="form_tab_td ">
-                                                    <input type="hidden" id="form_user_data_id"
-                                                           name="form_user_data_id" value=""/>
-                                                    <input type="hidden" id="approval_dept_cnt"
-                                                           name="approval_dept_cnt" value=""/>
-                                                    <button type="submit" id="approve_<?php echo $j ?>"
-                                                            name="approve"
-                                                            class="btn btn-primary tooltip approve"
-                                                            style="background-color:#1e73be;font-size: 12px;margin-top: -22px;">
-                                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                                        <span class="tooltiptext">Approve</span>
-                                                    </button>
+                                        $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where approval_dept = '$arr' and form_user_data_id = '$id' ");
+                                        $rowc05 = mysqli_fetch_array($qur05);
+                                        $app_in = $rowc05["approval_initials"];
+                                        $passcd = $rowc05["passcode"];
+                                        $datetime = $rowc05["created_at"];
+                                        $date_time = strtotime($datetime);
 
-                                                    <!--                                                        </td>-->
-                                                    <!--                                                        <td class="form_tab_td" style="padding: 0px;">-->
-                                                    <input type="hidden" id="rejected_dept_cnt"
-                                                           name="rejected_dept_cnt" value=""/>
-                                                    <input type="hidden" id="reject_dept_cnt"
-                                                           name="reject_dept_cnt" value=""/>
-                                                    <button type="submit" id="reject_<?php echo $k ?>"
-                                                            name="reject"
-                                                            class="btn btn-primary tooltip reject"
-                                                            style="background-color:#1e73be;font-size: 12px;margin-left: 50px;margin-top: -22px;">
-                                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                                        <span class="tooltiptext">Reject</span>
-                                                    </button>
-                                                </td>
+                                        $approval_status = $rowc05["approval_status"];
+                                        $reject_status = $rowc05["reject_status"];
 
-                                            </tr>
-                                            <tr id="rej_reason_div_<?php echo $j ?>" style="display: none">
-                                                <td class="form_tab_td" colspan="4">
-                                                    <textarea class="form-control" placeholder="Enter Reject Reason..." id="rej_reason_<?php echo $j ?>" name = "rej_reason_<?php echo $j ?>" rows="1" ></textarea>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                            $j++;
-                                            $k++;
+                                        if ($approval_status == '0' && $reject_status == '1') {
+                                            $form_status = "Rejected";
+                                        } else {
+                                            $form_status = "Approved";
                                         }
 
-                                    }
-                                    ?>
-                                    <input type="hidden" name="tot_approval_dept" id="tot_approval_dept"
-                                           value="<?php echo ($j); ?>">
-                                    <input type="hidden" name="tot_rejected_dept" id="tot_rejected_dept"
-                                           value="<?php echo ($k); ?>">
+                                        $qur04 = mysqli_query($db, "SELECT firstname,lastname FROM  cam_users where users_id = '$app_in' ");
+                                        $rowc04 = mysqli_fetch_array($qur04);
+                                        $fullnnm = $rowc04["firstname"] . " " . $rowc04["lastname"];
+
+                                        ?>
+                                        <div class="row">
+                                            <label class="col-lg-3 control-label mobile">Department</label>
+                                            <div class="col-lg-8 mobile">   <?php echo $groupname; ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-lg-3 control-label mobile">Form Status</label>
+                                            <div class="col-lg-8 mobile">     <?php echo $form_status; ?></div>
+
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-lg-3 control-label mobile">Approver</label>
+                                            <div class="col-lg-8 mobile">
+                                                <input type="text" name="approve_initial[]" id=""
+                                                       value="<?php echo $rowc04["firstname"] . " " . $rowc04["lastname"];; ?>"
+                                                       class="form-control pn_none"></div>
+                                            <?php
+
+                                            $qur_pin = mysqli_query($db, "SELECT pin FROM  cam_users where users_id = '$id' ");
+                                            $row_pin = mysqli_fetch_assoc($qur_pin);
+                                            //  $full_pin = $row_pin["pin"];
 
 
-                                    <?php
+                                            ?>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-lg-3 control-label mobile">Time</label>
+                                            <div class="col-lg-8 mobile">
+                                                <input type="text" name="approval_time" id="approval_time"
+                                                       value="<?php echo date('d-M-Y h:i:s', $date_time); ?>"
+                                                       class="form-control pn_none">
+                                            </div>
+                                        </div>
+
+                                        <?php if ($form_status == 'Rejected') { ?>
+                                            <div id="rej_reason_div" style="border: 1px solid red;padding: 10px;">
+                                                <td class="form_tab_td pn_none" colspan="4">Reject Reason : <textarea
+                                                            placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                            style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea>
+                                                </td>
+                                            </div>
+                                        <?php }  else if ($form_status == 'Approved') { ?>
+                                            <div id="rej_reason_div" style="border: 1px solid green;padding: 10px;">
+                                                <td class="form_tab_td pn_none" colspan="4">Approve Reason : <textarea
+                                                            placeholder="<?php echo $rowc05['reject_reason']; ?>"
+                                                            style="color: #333333 !important;width: 100%;height: auto; border: none;padding: 14px;" name="rej_reason" rows="1"></textarea>
+                                                </td>
+                                            </div>
+                                        <?php  } ?>
+                                    </div>
+                                    <?php     $fullnnm = "";
+                                    $passcd = "";
                                 }
-                                ?>
-
-                            </table>
-                            <tr>
-                                <hr class="form_hr"/>
-
-                            </tr>
-                            <!--                                    </form>-->
-                            <div class="row form_row_item">
-                                <input type="hidden" name="click_id_1" id="click_id_1">
-                                <div class="col-md-2">
-                                    <button type="button" id="btnSubmit_1" class="btn btn-primary" disabled
-                                            style="background-color:#1e73be;">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    <?php  }
-                    ?>
-                    <br/> </form>
+                            }
+                        }
+                        ?>
+                    <?php  } ?>
+                    <br/>
+                    </form>
                 </div>
             </div>
         </div>
