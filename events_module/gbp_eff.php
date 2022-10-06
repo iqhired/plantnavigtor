@@ -1,15 +1,14 @@
 <?php include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
-$station = $_POST['id'];
-$def_ch = $_POST['def_ch'];
-$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1' and line_id = '$station'";
+/*$line_iid = $_POST['station_event_id'];
+$sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$line_iid'";
 $result1 = mysqli_query($db,$sql1);
 while ($cam1 = mysqli_fetch_array($result1)){
     $station1 = $cam1['line_id'];
     $station2 = $cam1['line_name'];
-}
-
-$sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$station1' and event_status = 1";
+}*/
+$station_event_id = $_POST['station_event_id'];
+$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
 $resultmain = mysqli_query($db,$sqlmain);
 if(!empty($resultmain)){
     $rowcmain = $resultmain->fetch_assoc();
@@ -17,8 +16,14 @@ if(!empty($resultmain)){
         $part_family = $rowcmain['part_family_id'];
         $part_number = $rowcmain['part_number_id'];
         $station_event_id = $rowcmain['station_event_id'];
+        $p_line_id = $rowcmain['line_id'];
     }
-
+    $sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$p_line_id'";
+    $result1 = mysqli_query($db,$sql1);
+    while ($cam1 = mysqli_fetch_array($result1)){
+        $station1 = $cam1['line_id'];
+        $station2 = $cam1['line_name'];
+    }
     if(!empty($part_number)){
         $sqlpnum= "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
         $resultpnum = mysqli_query($db,$sqlpnum);
