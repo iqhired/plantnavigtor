@@ -24,7 +24,7 @@ if(!empty($resultmain)){
         $resultpnum = mysqli_query($db,$sqlpnum);
         $rowcpnum = $resultpnum->fetch_assoc();
         $pm_npr= $rowcpnum['npr'];
-        if($pm_npr == null)
+        if(empty($pm_npr))
         {
             $npr = 0;
         }else{

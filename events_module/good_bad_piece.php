@@ -287,8 +287,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
                 <div class="media-body">
 
-                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target Days :-</b> <?php echo $target_eff; ?></small>
-                    <small style="font-size: large;" class="display-block"><b>Actual Days :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: large;" class="display-block"><b>Actual :-</b> <?php echo $actual_eff; ?></small>
                     <small style="font-size: large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
 
                 </div>

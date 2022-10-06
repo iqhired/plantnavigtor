@@ -156,7 +156,7 @@ if($_POST['fa_op'] == 1){
     $resultpnum1 = mysqli_query($db, $sqlpnum1);
     $rowcpnum1 = $resultpnum1->fetch_assoc();
     $pm_npr= $rowcpnum1['npr'];
-    if($pm_npr == null)
+    if(empty($pm_npr))
     {
         $npr = 0;
     }else{
@@ -215,7 +215,7 @@ if($_POST['fa_op'] == 1){
     $resultpnum1 = mysqli_query($db, $sqlpnum1);
     $rowcpnum1 = $resultpnum1->fetch_assoc();
     $pm_npr= $rowcpnum1['npr'];
-    if($pm_npr == null)
+    if(empty($pm_npr))
     {
         $npr = 0;
     }else{
