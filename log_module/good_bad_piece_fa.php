@@ -257,7 +257,7 @@ if($_POST['fa_op'] == 1){
         $b = round($total_time);
         $target_eff = round($npr * $b);
         $actual_eff = $total_gp;
-        $eff = round(100 * ($target_eff/$actual_eff));
+        $eff = round(100 * ($actual_eff/$target_eff));
         // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
         $posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
     }

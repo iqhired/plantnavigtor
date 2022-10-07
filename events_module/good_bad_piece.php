@@ -276,14 +276,10 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </div>
         </div>
         <div style="width: 47%;border: 1px solid gray;margin: 2% 0% 2% 2%;height: 380px;" class="col-lg-6 col-md-8">
-            <!--							<div class="panel panel-body">-->
             <div class="media" style="padding-top:50px;">
-                <!--<div class="media-left">
-                    <div id="eff_container" style=" height: 45vh;width:30vh;margin : 5px 5px 5px 5px;background-color: #ffffff;" class="img-circle" alt=""></div>
-                </div>-->
                 <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
                 <div class="media-left" style="padding-top: 5px;">
-                    <div id="eff_container" style=" height: 45vh;width:60vh;background-color: #ffffff;"></div>
+                    <div id="eff_container" style=" height: 35vh;width:60vh;background-color: #ffffff;"></div>
                 </div>
                 <div class="media-body">
 
@@ -295,16 +291,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
             </div>
         </div>
-     <!-- <div class="col-md-6 col-md-8">
-          <div class="media" style="padding-top:50px;">
-           <div id="" style="padding: 10px 20px;height: 400px; margin-top: 15px">
-                <h8 style="font-size: large;padding : 5px; text-align: center;"
-                    class="text-semibold no-margin">Current Staff Efficiency</h8>
-                    <div id="eff_container" style="height: 350px;border:1px solid #efefef;"></div>
-
-            </div>
-          </div>
-        </div>-->
 		<?php
 		if (!empty($import_status_message)) {
 			echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
