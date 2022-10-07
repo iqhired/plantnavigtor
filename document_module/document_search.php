@@ -167,16 +167,16 @@ include("../heading_banner.php");
                                     $result1 = $mysqli->query($sql1);
                                     //                                            $entry = 'selected';
                                     while ($row1 = $result1->fetch_assoc()) {
-//                                        if($st_dashboard == $row1['line_id'])
-//                                        {
-//                                            $entry = 'selected';
-//                                        }
-//                                        else
-//                                        {
-//                                            $entry = '';
-//
-//                                        }
-                                        echo "<option value='" . $row1['line_id'] . "' >" . $row1['line_name'] . "</option>";
+                                        if($st_dashboard == $row1['line_id'])
+                                        {
+                                            $entry = 'selected';
+                                        }
+                                        else
+                                        {
+                                            $entry = '';
+
+                                        }
+                                        echo "<option value='" . $row1['line_id'] . "' $entry>" . $row1['line_name'] . "</option>";
                                     }
                                     ?>
 
@@ -190,20 +190,20 @@ include("../heading_banner.php");
                                 <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                     <option value="" selected disabled>--- Select Part Number ---</option>
                                     <?php
-
+                                    $st_part = $_POST['part_number'];
                                     $sql1 = "SELECT * FROM `pm_part_number` where  is_deleted = 0 ";
                                     $result1 = $mysqli->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
-//                                        if($st_dashboard == $row1['pm_part_number_id'])
-//                                        {
-//                                            $entry = 'selected';
-//                                        }
-//                                        else
-//                                        {
-//                                            $entry = '';
-//
-//                                        }
-                                        echo "<option value='" . $row1['pm_part_number_id'] . "'>" . $row1['part_number']."</option>";
+                                        if($st_part == $row1['pm_part_number_id'])
+                                        {
+                                            $entry = 'selected';
+                                        }
+                                        else
+                                        {
+                                            $entry = '';
+
+                                        }
+                                        echo "<option value='" . $row1['pm_part_number_id'] . "'$entry>" . $row1['part_number']."</option>";
                                     }
                                     ?>
                                 </select>
@@ -235,29 +235,29 @@ include("../heading_banner.php");
                     </div>
                     <br/>
                     <?php
-                    //                    if (!empty($import_status_message)) {
-                    //                        echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                    //                    }
-                    //                    ?>
-                    <!--                    --><?php
-                    //                    if (!empty($_SESSION[import_status_message])) {
-                    //                        echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    //                        $_SESSION['message_stauts_class'] = '';
-                    //                        $_SESSION['import_status_message'] = '';
-                    //                    }
+                                        if (!empty($import_status_message)) {
+                                            echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                        }
+                                        ?>
+                                        <?php
+                                        if (!empty($_SESSION['import_status_message'])) {
+                                            echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                            $_SESSION['message_stauts_class'] = '';
+                                            $_SESSION['import_status_message'] = '';
+                                        }
                     ?>
 
                 </div>
                 <div class="panel-footer p_footer">
                     <div class="row">
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary"
+                            <button type="submit" id="submit_btn" class="btn btn-primary"
                                     style="background-color:#1e73be;">
                                 Submit
                             </button>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" onclick='window.location.reload();'
+                            <button type="button" class="btn btn-primary"  onclick="location.reload();"
                                     style="background-color:#1e73be;">Reset
                             </button>
                         </div>
@@ -281,7 +281,16 @@ include("../heading_banner.php");
                 <tbody>
                 <?php
 
-                $q = ("SELECT pn.part_number,pn.part_name,cl.line_name,dd.created_at,dd.doc_id,dd.doc_name FROM  document_data as dd inner join cam_line as cl on dd.station = cl.line_id inner join pm_part_number as pn on dd.part_number=pn.pm_part_number_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station';");
+                if ($station != "" && $pn == ""){
+                    $q = ("SELECT cl.line_name,dd.created_at,dd.doc_id,dd.doc_name,dd.part_number from document_data as dd INNER JOIN cam_line as cl ON dd.station = cl.line_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station';");
+
+                }
+
+                if ($station != ""  && $pn != ""){
+                    $q = ("SELECT pn.part_number,pn.part_name,cl.line_name,dd.created_at,dd.doc_id,dd.doc_name FROM  document_data as dd inner join cam_line as cl on dd.station = cl.line_id inner join pm_part_number as pn on dd.part_number=pn.pm_part_number_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station' and pn.pm_part_number_id='$pn'");
+
+                }
+
                 $qur = mysqli_query($db, $q);
 
                 while ($rowc = mysqli_fetch_array($qur)) {
@@ -299,7 +308,16 @@ include("../heading_banner.php");
                         <a href="<?php echo $siteURL; ?>document_module/edit_document.php?id=<?php echo $rowc['doc_id'];?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-edit" aria-hidden="true"></i></a>
                         </td>
                         <td><?php echo $lnn; ?></td>
-                        <td><?php echo $rowc['part_number']." - ".$rowc['part_name']; ?></td>
+                        <td><?php
+                            $part_number =  $rowc['part_number'];
+                            $part_sql ="select pm_part_number_id,part_number,part_name from pm_part_number where pm_part_number_id = '$part_number'";
+                            $que = mysqli_query($db,$part_sql);
+                            while ($row_part = mysqli_fetch_array($que)) {
+                                $part_number = $row_part['part_number'];
+                                $part_name = $row_part['part_name'];
+                                echo $part_number . " - " . $part_name;
+                            }?>
+                        </td>
                         <td><?php echo $rowc['doc_name']; ?></td>
                         <td><?php echo $rowc['created_at']; ?></td>
 
@@ -323,6 +341,15 @@ include("../heading_banner.php");
     });
     $('#part_number').on('change', function (e) {
         $("#doc_form").submit();
+    });
+
+    $(document).on("click","#submit_btn",function() {
+
+        var station = $("#station").val();
+        var part_number = $("#part_number").val();
+        $("#user_form").submit();
+
+
     });
 </script>
 
