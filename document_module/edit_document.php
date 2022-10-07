@@ -316,7 +316,6 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Page content -->
     <?php
-
     $id = $_GET['id'];
     $_SESSION['edit_id'] = $id;
     $sql1 = "SELECT * FROM `document_data` where doc_id = '$id'";
@@ -413,7 +412,6 @@ include("../heading_banner.php");
                                             }
                                             ?>
                                         </select>
-<!--                                        <input type="text" name="station1" id="station1" class="form-control" value="--><?php //echo $line_name; ?><!--" placeholder="Enter Station" required>-->
                                     </div>
                                     <div id="error1" class="red">Document Name</div>
                                 </div>
@@ -424,7 +422,6 @@ include("../heading_banner.php");
                                         <input type="file" name="file[]" id="file" class="form-control" required>
                                         <div class="container"></div>
                                     </div>
-
                                 </div>
                                 <br/>
 
@@ -446,7 +443,6 @@ include("../heading_banner.php");
                                             $d_tag = "delete_image_" . $i;
                                             $r_tag = "remove_image_" . $i;
                                             ?>
-
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">

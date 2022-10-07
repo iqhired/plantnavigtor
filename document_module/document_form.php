@@ -662,7 +662,7 @@ include("../heading_banner.php");
         var succ = false;
         // AJAX request
         $.ajax({
-            url: 'add_delete_doc_image.php',
+            url: 'add_delete_doc_file.php',
             type: 'post',
             data: {path: imgElement_src, request: 2},
             async: false,
