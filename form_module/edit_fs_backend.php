@@ -229,14 +229,14 @@ if(count($_POST)>0) {
                 $default_list_array = $_POST['default_list_'.$bansi_row];
                 $default_list = $default_list_array[0];
 
-                $none_alias_array = $_POST['radio_list_none'];
-                $none_alias = $none_alias_array[$z];
+                $none_alias = $_POST['radio_list_none'];
+                //$none_alias = $none_alias_array[$z];
 
-                $yes_alias_array = $_POST['radio_list_none'];
-                $yes_alias = $yes_alias_array[$z];
+                $yes_alias = $_POST['radio_list_yes'];
+              //  $yes_alias = $yes_alias_array[$z];
 
-                $no_alias_array = $_POST['radio_list_no'];
-                $no_alias = $no_alias_array[$z];
+                $no_alias = $_POST['radio_list_no'];
+              //  $no_alias = $no_alias_array[$z];
 
                 $sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
 `list_normal` = '$default_list',`list_name1` = '$none_alias',`list_name2` = '$yes_alias',`list_name3` = '$no_alias',`notes` = '$notes' ,
