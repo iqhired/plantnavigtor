@@ -65,13 +65,12 @@ $rowcnumber = $resultnumber->fetch_assoc();
 $pm_part_number = $rowcnumber['part_number'];
 $pm_part_name = $rowcnumber['part_name'];
 $pm_npr= $rowcnumber['npr'];
-if($pm_npr == null)
+if(empty($pm_npr))
 {
     $npr = 0;
 }else{
     $npr = $pm_npr;
 }
-
 $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
 $resultfamily = $mysqli->query($sqlfamily);
 $rowcfamily = $resultfamily->fetch_assoc();
@@ -120,7 +119,7 @@ while ($row3 = $result3->fetch_assoc()) {
 }
 $total_time = (($total_time/60)/60);
 $b = round($total_time);
-$target_eff = round($npr * $b);
+$target_eff = round($pm_npr * $b);
 $actual_eff = $total_gp;
 $eff = round(100 * ($actual_eff/$target_eff));
 ?>
@@ -277,8 +276,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
                 <div class="media-body">
 
-                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target :-</b> <?php echo $target_eff; ?></small>
-                    <small style="font-size: large;" class="display-block"><b>Actual :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: large;" class="display-block"><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
                     <small style="font-size: large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
 
                 </div>
@@ -304,22 +303,42 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 		$result1 = mysqli_query($db, $sql);
 		$rowc = mysqli_fetch_array($result1);
 		$gp = $rowc['good_pieces'];
+        if(empty($gp)){
+            $g = 0;
+        }else{
+            $g = $gp;
+        }
 		$bp = $rowc['bad_pieces'];
+        if(empty($bp)){
+            $b = 0;
+        }else{
+            $b = $bp;
+        }
 		$rwp = $rowc['rework'];
+        if(empty($rwp)){
+            $r = 0;
+        }else{
+            $r = $rwp;
+        }
 		$tp = $gp + $bp+ $rwp;
+        if(empty($tp)){
+            $t = 0;
+        }else{
+            $t = $tp;
+        }
 		?>
         <div class="row" style="background-color: #f3f3f3;margin: 0px">
             <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
-                <span>Total Pieces : <?php echo $tp ?></span>
+                <span>Total Pieces : <?php echo $t ?></span>
             </div>
             <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
-                <span>Total Good Pieces : <?php echo $gp ?></span>
+                <span>Total Good Pieces : <?php echo $g ?></span>
             </div>
             <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
-                <span>Total Bad Pieces : <?php echo $bp ?></span>
+                <span>Total Bad Pieces : <?php echo $b ?></span>
             </div>
             <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
-                <span>Rework : <?php echo $rwp ?></span>
+                <span>Rework : <?php echo $r ?></span>
             </div>
         </div>
         <div class="panel-heading" style="padding: 50px;">
