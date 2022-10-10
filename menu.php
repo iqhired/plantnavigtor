@@ -7,6 +7,11 @@ $temp = "";
     <h3><?php echo $siteURL ?>log_module/update_station_event_log_backend_schedular.php</h3>
 </a>
 <br>
+<h3>Line Utilisation Dashboard</h3>
+<a href="<?php echo $siteURL ?>config_module/line_utilization_dashboard.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/line_utilization_dashboard.php</h3>
+</a>
+<br>
 <h3>NPR data store hourly basis</h3>
 <a href="<?php echo $siteURL ?>events_module/npr_data_store.php" target="_blank">
     <h3><?php echo $siteURL ?>events_module/npr_data_store.php</h3>
