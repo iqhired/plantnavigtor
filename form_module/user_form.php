@@ -137,14 +137,10 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         only screen and (max-width: 760px),
         (min-device-width: 768px) and (max-device-width: 1024px) {
             #success_msg{
-
                 width: 45%;
-
             }
             #success_msg_app{
-
                 width: 45%;
-
             }
 
             .form_row_item{
@@ -157,36 +153,24 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             .form_tab_td{
                 padding: 10px 100px;
             }
-            /*.reject {*/
-            /*    background-color: #1e73be;*/
-            /*    font-size: 12px;*/
-            /*    margin-left: 16px;*/
-            /*    margin-top: -36px;*/
-            /*    float: right;*/
-            /*}*/
+
             textarea.form-control {
                 height: auto;
                 font-size: 15px;
             }
-
         }
         @media
         only screen and (max-width: 400px),
         (min-device-width: 400px) and (max-device-width: 670px)  {
             #success_msg{
-
                 width: 45%;
-
             }
             #success_msg_app{
-
                 width: 45%;
-
             }
             .form_tab_td{
                 padding: 0px 0px;
             }
-
         }
         .select2-container--default .select2-selection--single .select2-selection__rendered{
             line-height: 21px!important;
@@ -339,7 +323,6 @@ include("../heading_banner.php");
                                     </div>
                                 </div>
                                 <br/>
-
 										<?php
 										$get_part_family = $_GET['part_family'];
 										if ($get_part_family != '') {
@@ -373,8 +356,6 @@ include("../heading_banner.php");
                                         <?php
 										}
 										?>
-
-
 										<?php
 										$get_part_number = $_GET['part_number'];
 										if ($get_part_number != '') {
@@ -407,9 +388,6 @@ include("../heading_banner.php");
                                         <?php
 										}
 										?>
-
-
-
 									<?php
                                      $sql_wol = "SELECT wol FROM `form_type` where form_type_id = '$get_form_type' ";
                                      $res_wol = $mysqli->query($sql_wol);
@@ -582,6 +560,80 @@ include("../heading_banner.php");
                                             <!--<div class="col-md-3 form_col_item"><u></u></div>-->
                                         </div>
 									<?php }
+                                    if ($item_val == "list") {
+
+                                        $list_def = $rowc['list_normal'];
+                                        $lnf = $rowc['list_name1'];
+                                        $lnf1 = $rowc['list_name2'];
+                                        $lnf2 = $rowc['list_name2'];
+                                        ?>
+
+                                        <div class="row form_row_item">
+
+                                            <div class="col-md-7 form_col_item">
+                                                <input type="hidden" class="binary_compare"
+                                                       value="<?php echo $list_def; ?>"
+                                                       data-id="<?php echo $rowc['form_item_id']; ?>"/>
+                                                <?php if ($rowc['optional'] != '1') {
+                                                    echo '<span class="red-star">★</span>';
+                                                }
+                                                echo htmlspecialchars($rowc['item_desc']); ?>
+                                                <?php if (isset($rowc['discription']) && ($rowc['discription'] != '')) { ?>
+                                                    <div style="font-size: medium;font-color:#c1c1c1"><?php echo "(" . $rowc['discription'] . ")" ?></div>
+                                                <?php } ?>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input type="hidden" name="form_item_array[]"
+                                                       value="<?php echo $rowc['form_item_id']; ?>"/>
+                                                <div class="form-check form-check-inline form_col_option">
+                                                    <input type="radio" id="none"
+                                                           name="<?php echo $rowc['form_item_id']; ?>"
+                                                           value="none"
+                                                           class="form-check-input" <?php if ($list_def == 'none') {
+                                                        echo 'checked';
+                                                    }
+                                                    if ($rowc['optional'] != '1') {
+                                                        echo 'required';
+                                                    } ?> />
+                                                    <label for="none"
+                                                           class="item_label <?php echo $rowc['form_item_id']; ?>"
+                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
+                                                        echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+                                                    <input type="radio" id="yes"
+                                                           name="<?php echo $rowc['form_item_id']; ?>"
+                                                           value="yes"
+                                                           class="form-check-input" <?php if ($list_def == 'yes') {
+                                                        echo 'checked';
+                                                    }
+                                                    if ($rowc['optional'] != '1') {
+                                                        echo 'required';
+                                                    } ?> />
+                                                    <label for="yes"
+                                                           class="item_label <?php echo $rowc['form_item_id']; ?>"
+                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name2'];
+                                                        echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "Yes" ?></label>
+                                                    <input type="radio" id="no"
+                                                           name="<?php echo $rowc['form_item_id']; ?>"
+                                                           value="no"
+                                                           class="form-check-input" <?php if ($list_def == "no") {
+                                                        echo 'checked';
+                                                    }
+                                                    if ($rowc['optional'] != '1') {
+                                                        echo 'required';
+                                                    } ?> />
+                                                    <label for="no"
+                                                           class="item_label <?php echo $rowc['form_item_id']; ?>"
+                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
+                                                        echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
+                                                    <?php if ($rowc['optional'] == '1') {
+                                                        echo '<span style="color: #a1a1a1; font-size: small;">(Optional)</span>';
+                                                    } ?>
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-md-3 form_col_item"><u></u></div>-->
+                                        </div>
+                                    <?php }
 									if ($item_val == "text") {
 
 										?>
@@ -825,7 +877,6 @@ $('#reject').on('change', function () {
 </script> -->
 </body>
 <script>
-
     $("#btnSubmit").click(function (e) {
         if ($("#form_settings")[0].checkValidity()){
             var data = $("#form_settings").serialize();
@@ -1000,7 +1051,6 @@ $('#reject').on('change', function () {
                     $('#approval_initials_'+this.id.split("_")[1]).attr('disabled', 'disabled');
                 }
             },
-
         });
     });
 
@@ -1066,16 +1116,7 @@ $('#reject').on('change', function () {
                     // $('#btnSubmit_1').removeAttr('disabled');
                 }
             },
-
         });
-        // }
-            // else{
-        //
-        // }
-        // alert(x);
-        // var y = document.getElementById("pin_error_"+index);
-        // y.style.display = "none";
-
     });
 
 </script>
