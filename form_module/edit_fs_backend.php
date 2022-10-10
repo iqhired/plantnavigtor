@@ -131,6 +131,9 @@ if(count($_POST)>0) {
 
 //multi image over
 	$total_count =  $_POST['collapse_id'];
+	if($total_count > 0){
+		$total_count = $total_count - 1;
+	}
 	$click_id = $_POST['click_id'];
 	$notclick = $_POST['not_click_id'];
 
@@ -143,6 +146,7 @@ if(count($_POST)>0) {
 
 	$item_desc_array = $_POST['query_text'];
 	$bansi_row_click = $_POST['bansi_row_click'];
+	$bansi_row_click1 = $_POST['bansi_row_click1'];
 	$j = 1;
 	$z=0;
 	foreach ($bansi_row_click as $rd) {
@@ -150,6 +154,9 @@ if(count($_POST)>0) {
 		$cc = sizeof($exp);
 		$actual_row = $j;
 		$bansi_row = $exp[1];
+		if(empty($bansi_row)){
+			$bansi_row = $exp[0];
+		}
 		$itemarray = $_POST['item_' . $bansi_row];
 		$item = $itemarray[0];
 		$notes_array = $_POST['form_item_notes'];
@@ -340,15 +347,15 @@ if(count($_POST)>0) {
                 $default_list_array = $_POST['default_list_' . $bansi_row];
                 $default_list = $default_list_array[0];
 
-                $none_alias_array = $_POST['radio_list_none'];
-                $none_alias = $none_alias_array[($j-1)];
+				$none_alias = $_POST['radio_list_none'];
+//                $none_alias = $none_alias_array[($j-1)];
 
-                $yes_alias_array = $_POST['radio_list_yes'];
-                $yes_alias = $yes_alias_array[($j-1)];
+				$yes_alias = $_POST['radio_list_yes'];
+//                $yes_alias = $yes_alias_array[($j-1)];
 
 
-                $no_alias_array = $_POST['radio_list_no'];
-                $no_alias = $no_alias_array[($j-1)];
+				$no_alias = $_POST['radio_list_no'];
+//                $no_alias = $no_alias_array[($j-1)];
 
                 $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
 		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
