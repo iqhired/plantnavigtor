@@ -209,6 +209,25 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
             display: inline-block;
             margin: 10px 10px 0 0;
         }
+        input.radio_input {
+            border-top: none;
+            border-right-style: none;
+            border-left-style: none;
+            margin-left: 10px;
+            order-bottom-color: grey;
+            border-bottom-width: thin;
+        }
+        input.radio_input_add {
+            border-top: none;
+            border-right-style: none;
+            border-left-style: none;
+            margin-left: 17px;
+            order-bottom-color: grey;
+            border-bottom-width: thin;
+        }
+        button.remove {
+            margin-left: 15px;
+        }
     </style>
 </head>
 
@@ -1107,8 +1126,7 @@ include("../heading_banner.php");
                                                                                class="form-check-input" checked>
                                                                         <label for="numeric"
                                                                                class="item_label">Numeric</label>
-                                                                        <input type="radio"
-                                                                               id="binary_<?php echo $rowcount; ?>" <?php if ($item_val == "binary") {
+                                                                        <input type="radio" id="binary_<?php echo $rowcount; ?>" <?php if ($item_val == "binary") {
 																			echo 'checked';
 																		} ?> name="item_<?php echo $rowcount; ?>[]"
                                                                                value="binary"
@@ -1116,6 +1134,7 @@ include("../heading_banner.php");
                                                                                class="form-check-input">
                                                                         <label for="binary"
                                                                                class="item_label">Binary</label>
+
                                                                         <input type="radio" id="header"
                                                                                name="item_<?php echo $rowcount; ?>[]" <?php if ($item_val == "header") {
 																			echo 'checked';
@@ -1133,6 +1152,14 @@ include("../heading_banner.php");
                                                                                class="form-check-input">
                                                                         <label for="text"
                                                                                class="item_label">Text</label>
+                                                                        <input type="radio" id="list_<?php echo $rowcount; ?>" <?php if ($item_val == "list") {
+                                                                            echo 'checked';
+                                                                        } ?> name="item_<?php echo $rowcount; ?>[]"
+                                                                               value="list"
+                                                                               data-name="list_<?php echo $rowcount; ?>"
+                                                                               class="form-check-input">
+                                                                        <label for="list"
+                                                                               class="item_label">List</label>
 
                                                                     </div>
                                                                 </div>
@@ -1297,6 +1324,51 @@ include("../heading_banner.php");
                                                                                value="<?php echo $rowcitem['binary_no_alias']; ?>">
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="list_section"
+                                                                 id="listsection_<?php echo $rowcount; ?>" <?php if ($item_val != "list") {
+                                                                echo "style='display:none;'";
+                                                            } ?>>
+                                                                <div class="row">
+
+                                                                    <label class="col-lg-2 control-label" for="default">Values:</label>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <?php $defaultlist = $rowcitem['list_normal']; ?>
+                                                                            <input type="hidden"
+                                                                                   name="bansi_row_click[]"
+                                                                                   value="<?php echo $rowcitem['form_item_id'] . '-' .$rowcount; ?>">
+                                                                            <input type="radio" id="none"
+                                                                                   name="default_list_<?php echo $rowcount; ?>[]"
+                                                                                   value="none"
+                                                                                   class="form-check-input" <?php if ($defaultlist == "none") {
+                                                                                echo 'checked';
+                                                                            } ?>>
+                                                                            <input type="search" name="radio_list_none[]" id="radio_list_none[]" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
+
+                                                                            <input type="radio" id="yes"
+                                                                                   name="default_list_<?php echo $rowcount; ?>[]"
+                                                                                   value="yes"
+                                                                                   class="form-check-input" <?php if ($defaultlist == "yes") {
+                                                                                echo 'checked';
+                                                                            } ?>>
+
+                                                                            <input type="search" name="radio_list_none[]" id="radio_list_none[]" value="<?php echo $rowcitem['list_name2']; ?>" class="radio_input">
+
+                                                                            <input type="radio" id="no"
+                                                                                   name="default_list_<?php echo $rowcount; ?>[]"
+                                                                                   value="no"
+                                                                                   class="form-check-input" <?php if ($defaultlist == "no") {
+                                                                                echo 'checked';
+                                                                            } ?>>
+                                                                            <input type="search" name="radio_list_none[]" id="radio_list_none[]" value="<?php echo $rowcitem['list_name3']; ?>" class="radio_input">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+
                                                             </div>
                                                             <div class="row">
 
@@ -1536,22 +1608,31 @@ include("../heading_banner.php");
             $(".binary_section").hide();
             if ($('input:radio[name=item]:checked').val() == "numeric") {
                 $(".binary_section").hide();
+                $(".list_section").hide();
                 $(".numeric_section").show();
             }
 
             if ($('input:radio[name=item]:checked').val() == "binary") {
                 $(".numeric_section").hide();
+                $(".list_section").hide();
                 $(".binary_section").show();
             }
 
             if ($('input:radio[name=item]:checked').val() == "text") {
                 $(".numeric_section").hide();
+                $(".list_section").hide();
                 $(".binary_section").hide();
             }
 
             if ($('input:radio[name=item]:checked').val() == "header") {
                 $(".numeric_section").hide();
+                $(".list_section").hide();
                 $(".binary_section").hide();
+            }
+            if ($('input:radio[name=item]:checked').val() == "list") {
+                $(".numeric_section").hide();
+                $(".binary_section").hide();
+                $(".list_section").show();
             }
 
 
@@ -1566,7 +1647,7 @@ include("../heading_banner.php");
 
 
             // var html_content = '<div class="rowitem_' + count + '"><br/><div class="contextMenu"><button type="button" id="moveup" class="btn"><i class="fa fa-angle-up"></i></button><button type="button" id="movedown" class="btn"><i class="fa fa-angle-down"></i></button></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#' + collapse_id + '">Form Item ' + i + '</a><button type="button" name="remove_btn" class="btn btn-danger btn-xs remove_btn" id="btn_id' + i + '" data-id="' + i + '">-</button></h4></div><div id="' + collapse_id + '" class="panel-collapse collapse in"><div class="panel-body"><div class="qry_section" id="section_' + count + '"><div class="row"><div class="col-md-2"><input type="checkbox" id="optional_' + count + '[]" name="optional_' + count + '[]" class="checkbx" style="margin-right:15px;"/>Optional</div></div><br/><div class="row"><label class="col-lg-2 control-label" for="query_text">Item Description :</label><div class="col-md-6"><input class="form-control" name="query_text[]" id="query_text" autocomplete="off" placeholder="Form Item Description" required></div></div><br><div class="row"><label class="col-lg-2 control-label" for="item_class">Form Item Type:</label><div class="col-md-6"><div class="form-check form-check-inline"><input type="radio" id="numeric_' + count + '" name="item_' + count + '[]" value="numeric" data-name="numeric_' + count + '" class="form-check-input" checked> <label for="numeric" class="item_label">Numeric</label> <input type="radio" id="binary_' + count + '" name="item_' + count + '[]" value="binary" data-name="binary_' + count + '" class="form-check-input"> <label for="binary" class="item_label">Binary</label> <input type="radio" id="text_' + count + '_' + count + '" name="item_' + count + '[]" value="text" data-name="text_' + count + '" class="form-check-input"> <label for="text" class="item_label">Text</label> <input type="radio" id="header" name="item_' + count + '[]" value="header" data-name="header_' + count + '" class="form-check-input"> <label for="header" class="item_label">Header</label></div></div></div><br><div class="numeric_section" id="numericsection_' + count + '"><div class="row"><label class="col-lg-2 control-label" for="measurement">Measurement Unit:</label><div class="col-md-6"><select name="unit_of_measurement[]" id="unit_of_measurement' + count + '" class="form-control" ></select></div></div><br/><div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label><div class="col-md-6"><input class="form-control" name="normal[]" id="normal" autocomplete="off"></div></div><br><div class="row"><label class="col-lg-2 control-label" for="lower_tolerance">LowerTolerance:</label><div class="col-md-6"><input class="form-control" name="lower_tolerance[]" id="lower_tolerance" autocomplete="off"></div></div><br><div class="row"><label class="col-lg-2 control-label" for="upper_tolerance">UpperTolerance:</label><div class="col-md-6"><input class="form-control" name="upper_tolerance[]" id="upper_tolerance" autocomplete="off"></div></div><br></div><div class="binary_section" id="binarysection_' + count + '"><div class="row"><label class="col-lg-2 control-label" for="default">Default:</label></div><div class="col-md-6"><div class="form-check form-check-inline"><input type="radio" id="none" name="default_binary_' + count + '[]" value="none" class="form-check-input" checked> <label for="none" class="item_label">None</label> <input type="radio" id="yes" name="default_binary_' + count + '[]" value="yes" class="form-check-input"> <label for="yes" class="item_label">Yes</label><input type="hidden" name="bansi_row_click[]"  value=' + count + ' > <input type="radio" id="no" name="default_binary_' + count + '[]" value="no" class="form-check-input"> <label for="no" class="item_label">No</label></div></div></div><br><div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label><div class="col-md-6"><div class="form-check form-check-inline"><input type="radio" id="yes" name="normal_binary_' + count + '[]" value="yes" class="form-check-input" checked> <label for="yes" class="item_label">Yes</label> <input type="radio" id="no" name="normal_binary_' + count + '[]" value="no" class="form-check-input"> <label for="no" class="item_label">No</label></div></div></div><div class="row"><div class="col-md-2"><label for="yes_alias">Yes Alias:</label></div><div class="col-md-6"><input class="form-control" name="yes_alias[]" id="yes_alias" autocomplete="off"></div></div><div class="row"><div class="col-md-2"><label for="no_alias">No Alias:</label></div><div class="col-md-6"><input class="form-control" name="no_alias[]" id="no_alias" autocomplete="off"></div></div></div><div class="row"><div class="col-md-2"><label for="notes">Notes:</label></div><div class="col-md-6"><textarea class="form-control" aria-label="With textarea" id="notes" name="form_item_notes[]" autocomplete="off"></textarea></div></div><br/><div class="row"><div class="col-md-2"><label for="notes">Discription:</label></div><div class="col-md-6"><textarea class="form-control" aria-label="With textarea" id="disc" name="form_item_disc[]" autocomplete="off"></textarea></div></div></div></div></div></div></div>';
-            var html_content = '<div class="rowitem_' + count + '"><br/> <div class="contextMenu"> <button class="btn" id="moveup" type="button"><i class="fa fa-angle-up"></i></button> <button class="btn" id="movedown" type="button"><i class="fa fa-angle-down"></i></button> </div> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" href="#' + collapse_id + '">Form Item ' + i + '</a> <button class="btn btn-danger btn-xs remove_btn" data-id="' + i + '" id="btn_id' + i + '" name="remove_btn" type="button">- </button> </h4> </div> <div class="panel-collapse collapse in" id="' + collapse_id + '"> <div class="panel-body"> <div class="qry_section" id="section_' + count + '"> <div class="row"> <div class="col-md-2"><input class="checkbx" id="optional_' + count + '[]" name="optional_' + count + '[]" style="margin-right:15px;" type="checkbox"/>Optional </div> </div> <br/> <div class="row"><label class="col-lg-2 control-label" for="query_text">Item Description :</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="query_text" name="query_text[]" placeholder="Form Item Description" required> </div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="item_class">Form Item Type:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" data-name="numeric_' + count + '" id="numeric_' + count + '" name="item_' + count + '[]" type="radio" value="numeric"> <label class="item_label" for="numeric">Numeric</label> <input class="form-check-input" data-name="binary_' + count + '" id="binary_' + count + '" name="item_' + count + '[]" type="radio" value="binary"> <label class="item_label" for="binary">Binary</label> <input class="form-check-input" data-name="text_' + count + '" id="text_' + count + '_' + count + '" name="item_' + count + '[]" type="radio" value="text"> <label class="item_label" for="text">Text</label> <input class="form-check-input" data-name="header_' + count + '" id="header" name="item_' + count + '[]" type="radio" value="header"> <label class="item_label" for="header">Header</label></div> </div> </div> <br> <div class="numeric_section" id="numericsection_' + count + '"> <div class="row"><label class="col-lg-2 control-label" for="measurement">Measurement Unit:</label> <div class="col-md-6"><select class="form-control" id="unit_of_measurement' + count + '" name="unit_of_measurement[]"></select></div> </div> <br/> <div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="normal" name="normal[]"></div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="lower_tolerance">LowerTolerance:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="lower_tolerance" name="lower_tolerance[]"></div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="upper_tolerance">UpperTolerance:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="upper_tolerance" name="upper_tolerance[]"></div> </div> <br></div> <div class="binary_section" id="binarysection_' + count + '"> <div class="row"><label class="col-lg-2 control-label" for="default">Default:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" id="none" name="default_binary_' + count + '[]" type="radio" value="none"> <label class="item_label" for="none">None</label> <input class="form-check-input" id="yes" name="default_binary_' + count + '[]" type="radio" value="yes"> <label class="item_label" for="yes">Yes</label><input name="bansi_row_click[]" type="hidden" value=' + count + '> <input class="form-check-input" id="no" name="default_binary_' + count + '[]" type="radio" value="no"> <label class="item_label" for="no">No</label></div> </div></div> <div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" id="yes" name="normal_binary_' + count + '[]" type="radio" value="yes"> <label class="item_label" for="yes">Yes</label> <input class="form-check-input" id="no" name="normal_binary_' + count + '[]" type="radio" value="no"> <label class="item_label" for="no">No</label></div> </div> </div> <div class="row"> <div class="col-md-2"><label for="yes_alias">Yes Alias:</label></div> <div class="col-md-6"><input autocomplete="off" class="form-control" id="yes_alias" name="yes_alias[]"></div> </div> <div class="row"> <div class="col-md-2"><label for="no_alias">No Alias:</label></div> <div class="col-md-6"><input autocomplete="off" class="form-control" id="no_alias" name="no_alias[]"></div> </div> </div> <br> </div> <div class="row"> <div class="col-md-2"><label for="notes">Notes:</label></div> <div class="col-md-6"><textarea aria-label="With textarea" autocomplete="off" class="form-control" id="notes" name="form_item_notes[]"></textarea></div> </div> <br/> <div class="row"> <div class="col-md-2"><label for="notes">Discription:</label></div> <div class="col-md-6"><textarea aria-label="With textarea" autocomplete="off" class="form-control" id="disc" name="form_item_disc[]"></textarea></div> </div> </div> </div> </div> </div></div>';
+            var html_content = '<div class="rowitem_' + count + '"><br/> <div class="contextMenu"> <button class="btn" id="moveup" type="button"><i class="fa fa-angle-up"></i></button> <button class="btn" id="movedown" type="button"><i class="fa fa-angle-down"></i></button> </div> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" href="#' + collapse_id + '">Form Item ' + i + '</a> <button class="btn btn-danger btn-xs remove_btn" data-id="' + i + '" id="btn_id' + i + '" name="remove_btn" type="button">- </button> </h4> </div> <div class="panel-collapse collapse in" id="' + collapse_id + '"> <div class="panel-body"> <div class="qry_section" id="section_' + count + '"> <div class="row"> <div class="col-md-2"><input class="checkbx" id="optional_' + count + '[]" name="optional_' + count + '[]" style="margin-right:15px;" type="checkbox"/>Optional </div> </div> <br/> <div class="row"><label class="col-lg-2 control-label" for="query_text">Item Description :</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="query_text" name="query_text[]" placeholder="Form Item Description" required> </div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="item_class">Form Item Type:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" data-name="numeric_' + count + '" id="numeric_' + count + '" name="item_' + count + '[]" type="radio" value="numeric"> <label class="item_label" for="numeric">Numeric</label> <input class="form-check-input" data-name="binary_' + count + '" id="binary_' + count + '" name="item_' + count + '[]" type="radio" value="binary"> <label class="item_label" for="binary">Binary</label> <input class="form-check-input" data-name="text_' + count + '" id="text_' + count + '_' + count + '" name="item_' + count + '[]" type="radio" value="text"> <label class="item_label" for="text">Text</label> <input class="form-check-input" data-name="header_' + count + '" id="header" name="item_' + count + '[]" type="radio" value="header"> <label class="item_label" for="header">Header</label><input type="radio" id="list_' + count + '" name="item_' + count + '[]" value="list" data-name="list_' + count + '" class="form-check-input"><label for="list" class="item_label">List</label></div> </div> </div> <br> <div class="numeric_section" id="numericsection_' + count + '"> <div class="row"><label class="col-lg-2 control-label" for="measurement">Measurement Unit:</label> <div class="col-md-6"><select class="form-control" id="unit_of_measurement' + count + '" name="unit_of_measurement[]"></select></div> </div> <br/> <div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="normal" name="normal[]"></div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="lower_tolerance">LowerTolerance:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="lower_tolerance" name="lower_tolerance[]"></div> </div> <br> <div class="row"><label class="col-lg-2 control-label" for="upper_tolerance">UpperTolerance:</label> <div class="col-md-6"><input autocomplete="off" class="form-control" id="upper_tolerance" name="upper_tolerance[]"></div> </div> <br></div> <div class="binary_section" id="binarysection_' + count + '"> <div class="row"><label class="col-lg-2 control-label" for="default">Default:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" id="none" name="default_binary_' + count + '[]" type="radio" value="none"> <label class="item_label" for="none">None</label> <input class="form-check-input" id="yes" name="default_binary_' + count + '[]" type="radio" value="yes"> <label class="item_label" for="yes">Yes</label><input name="bansi_row_click[]" type="hidden" value=' + count + '> <input class="form-check-input" id="no" name="default_binary_' + count + '[]" type="radio" value="no"> <label class="item_label" for="no">No</label></div> </div></div> <div class="row"><label class="col-lg-2 control-label" for="normal">Nominal:</label> <div class="col-md-6"> <div class="form-check form-check-inline"><input checked class="form-check-input" id="yes" name="normal_binary_' + count + '[]" type="radio" value="yes"> <label class="item_label" for="yes">Yes</label> <input class="form-check-input" id="no" name="normal_binary_' + count + '[]" type="radio" value="no"> <label class="item_label" for="no">No</label></div> </div> </div> <div class="row"> <div class="col-md-2"><label for="yes_alias">Yes Alias:</label></div> <div class="col-md-6"><input autocomplete="off" class="form-control" id="yes_alias" name="yes_alias[]"></div> </div> <div class="row"> <div class="col-md-2"><label for="no_alias">No Alias:</label></div> <div class="col-md-6"><input autocomplete="off" class="form-control" id="no_alias" name="no_alias[]"></div> </div> </div> <br> </div> <div class="list_section" id="listsection_'+count+'"><div class="row"><label class="col-lg-2 control-label" for="default">Values:</label><div class="col-md-6"><div class="form-check form-check-inline"><input type="hidden" name="bansi_row_click[]"  value='+ count +' ><input type="radio" id="none" name="default_list_' + count + '[]" value="none" class="form-check-input custom-control-input" checked><input type="search" name="radio_list_none[]" id="radio_list_none[]" placeholder="Option1" class="radio_input"><input type="radio" id="yes" name="default_list_' + count + '[]" value="yes" class="form-check-input custom-control-input"><input type="search" name="radio_list_yes[]" id="radio_list_yes[]" placeholder="Option2" class="radio_input"><input type="radio" id="no" name="default_list_' + count + '[]" value="no" class="form-check-input custom-control-input"><input type="search" name="radio_list_no[]" id="radio_list_no" placeholder="Option3" class="radio_input"></div></div></div></div><br><div class="row"> <div class="col-md-2"><label for="notes">Notes:</label></div> <div class="col-md-6"><textarea aria-label="With textarea" autocomplete="off" class="form-control" id="notes" name="form_item_notes[]"></textarea></div> </div> <br/> <div class="row"> <div class="col-md-2"><label for="notes">Discription:</label></div> <div class="col-md-6"><textarea aria-label="With textarea" autocomplete="off" class="form-control" id="disc" name="form_item_disc[]"></textarea></div> </div> </div> </div> </div> </div></div>';
             $(".query_rows").append(html_content);
             $.ajax({
                 url: "retrive_unit_of_measurement.php",
@@ -1611,30 +1692,34 @@ include("../heading_banner.php");
 
         if (radio_txt == "numeric") {
             $("#binarysection_" + radio_id).hide();
+            $("#listsection_" + radio_id).hide();
             $("#numericsection_" + radio_id).show();
         }
         if (radio_txt == "binary") {
 
             $("#numericsection_" + radio_id).hide();
+            $("#listsection_" + radio_id).hide();
             $("#binarysection_" + radio_id).show();
+        }
+        if (radio_txt == "list") {
 
-
+            $("#numericsection_" + radio_id).hide();
+            $("#binarysection_" + radio_id).hide();
+            $("#listsection_" + radio_id).show();
         }
         if (radio_txt == "text") {
 
             $("#numericsection_" + radio_id).hide();
+            $("#listsection_" + radio_id).hide();
             $("#binarysection_" + radio_id).hide();
 
         }
         if (radio_txt == "header") {
             $("#numericsection_" + radio_id).hide();
+            $("#listsection_" + radio_id).hide();
             $("#binarysection_" + radio_id).hide();
         }
-
-
     })
-
-
 </script>
 <?php include('../footer.php') ?>
 </body>
