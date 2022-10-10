@@ -29,8 +29,9 @@ if(!empty($resultmain)){
         $resultpnum = mysqli_query($db,$sqlpnum);
         $rowcpnum = $resultpnum->fetch_assoc();
         $pm_npr= $rowcpnum['npr'];
-        if($pm_npr == null)
+        if(empty($pm_npr))
         {
+			$pm_npr = 0;
             $npr = 0;
         }else{
             $npr = $pm_npr;
@@ -70,7 +71,11 @@ if(!empty($resultmain)){
         $b = round($total_time);
         $target_eff = round($npr * $b);
         $actual_eff = $total_gp;
-        $eff = round(100 * ($actual_eff/$target_eff));
+		if( $actual_eff ===0 || $target_eff === 0){
+			$eff = 0;
+		}else{
+			$eff = round(100 * ($actual_eff/$target_eff));
+		}
         $posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
 
     }
