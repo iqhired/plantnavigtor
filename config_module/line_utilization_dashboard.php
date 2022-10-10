@@ -346,7 +346,7 @@ include("../heading_banner.php");
         var data = $("#line_data").serialize();
         $.ajax({
             type: 'POST',
-            url: 'line_count1.php',
+            url: 'line_count_daily.php',
             data: data,
             success: function (data1) {
                 var data = JSON.parse(data1);
@@ -404,7 +404,7 @@ include("../heading_banner.php");
         var data = $("#line_data").serialize();
         $.ajax({
             type: 'POST',
-            url: 'line_count2.php',
+            url: 'line_count_weekly.php',
             data: data,
             success: function (data1) {
                 var data = JSON.parse(data1);
@@ -462,7 +462,7 @@ include("../heading_banner.php");
         var data = $("#line_data").serialize();
         $.ajax({
             type: 'POST',
-            url: 'line_count3.php',
+            url: 'line_count_monthly.php',
             data: data,
             success: function (data1) {
                 var data = JSON.parse(data1);
@@ -520,7 +520,7 @@ include("../heading_banner.php");
         var data = $("#line_data").serialize();
         $.ajax({
             type: 'POST',
-            url: 'line_count4.php',
+            url: 'line_count_yearly.php',
             data: data,
             success: function (data1) {
                 var data = JSON.parse(data1);

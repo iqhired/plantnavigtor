@@ -123,7 +123,7 @@ $msg = explode(',', $msg); ?>
                 </a>
 				<?php if (in_array('67', $msg)) { ?>
                     <div class="collapse my-2" id="collapseInteractive">
-                        <div class="ms-4">
+                        <div class="ms-8">
                             <div class="mt-3">
                                 <a data-bs-toggle="collapse" href="#collapseInteractive1" role="button"
                                    aria-expanded="false" aria-controls="collapseInteractive1">
@@ -137,7 +137,7 @@ $msg = explode(',', $msg); ?>
                                 </a>
 								<?php if (in_array('68', $msg)) { ?>
                                     <div class="collapse my-2" id="collapseInteractive1">
-                                        <div class="ms-4">
+                                        <div class="ms-8">
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>line_status_grp_dashboard.php"
                                                    class="text-muted mobile">
@@ -160,6 +160,12 @@ $msg = explode(',', $msg); ?>
                                                 <a href="<?php echo $siteURL; ?>form_module/form_submit_view.php"
                                                    class="text-muted mobile">
                                                     First Piece View Dashboard
+                                                </a>
+                                            </div>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
+                                                   class="text-muted mobile">
+                                                    Line Utilisation Dashboard
                                                 </a>
                                             </div>
                                         </div>
@@ -936,7 +942,10 @@ $msg = explode(',', $msg); ?>
                                                     <a href="<?php echo $siteURL; ?>form_module/form_submit_view.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">First Piece View Dashboard</h3></a>
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Line Utilisation Dashboard Dashboard</h3></a>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1727,14 +1736,11 @@ $msg = explode(',', $msg); ?>
                                                         <a href="<?php echo $siteURL; ?>document_module/document_search.php" class="mega-link"><h3
                                                                     class="text-muted fs-6">Edit Document</h3></a>
                                                     </div>
-
-                                                   <?php if (in_array('74', $msg)) { ?>
                                                     <div class="mb-3">
                                                         <a href="<?php echo $siteURL; ?>document_module/document_category.php"
                                                            class="mega-link"><h3 class="text-muted fs-6">Document Config </h3>
                                                         </a>
                                                     </div>
-                                                    <?php } ?>
 
                                                 </div>
                                             </div>
