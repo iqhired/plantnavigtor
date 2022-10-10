@@ -68,6 +68,7 @@ $pm_npr= $rowcnumber['npr'];
 if(empty($pm_npr))
 {
     $npr = 0;
+	$pm_npr = 0;
 }else{
     $npr = $pm_npr;
 }
@@ -121,11 +122,11 @@ $total_time = (($total_time/60)/60);
 $b = round($total_time);
 $target_eff = round($pm_npr * $b);
 $actual_eff = $total_gp;
-$eff = round(100 * ($actual_eff/$target_eff));
-?>
-<?php
-
-
+if( $actual_eff ===0 || $target_eff === 0){
+	$eff = 0;
+}else{
+	$eff = round(100 * ($actual_eff/$target_eff));
+}
 
 ?>
 <!DOCTYPE html>
