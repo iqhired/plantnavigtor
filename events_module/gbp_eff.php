@@ -71,7 +71,7 @@ if(!empty($resultmain)){
         $b = round($total_time);
         $target_eff = round($npr * $b);
         $actual_eff = $total_gp;
-		if( $actual_eff ===0 || $target_eff === 0){
+		if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
 			$eff = 0;
 		}else{
 			$eff = round(100 * ($actual_eff/$target_eff));
