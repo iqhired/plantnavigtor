@@ -224,7 +224,35 @@ if(count($_POST)>0) {
 					$import_status_message = 'Error: Please Insert valid data';
 				}
 
-			} else if ($item != "") {
+			} else if($item == "list")
+            {
+                $default_list_array = $_POST['default_list_'.$bansi_row];
+                $default_list = $default_list_array[0];
+
+                $none_alias_array = $_POST['radio_list_none'];
+                $none_alias = $none_alias_array[$z];
+
+                $yes_alias_array = $_POST['radio_list_none'];
+                $yes_alias = $yes_alias_array[$z];
+
+                $no_alias_array = $_POST['radio_list_no'];
+                $no_alias = $no_alias_array[$z];
+
+                $sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
+`list_normal` = '$default_list',`list_name1` = '$none_alias',`list_name2` = '$yes_alias',`list_name3` = '$no_alias',`notes` = '$notes' ,
+`discription` = '$disc',`created_at`='$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
+
+                $result1 = mysqli_query($db, $sql1);
+                if ($result1) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Form Item created successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
+
+            }
+            else if ($item != "") {
 
 				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
 `notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by', `updated_at` = '$updated_by'  where form_item_id = '$exp[0]'";
@@ -308,7 +336,32 @@ if(count($_POST)>0) {
 					$import_status_message = 'Error: Please Insert valid data';
 				}
 
-			} else if ($item != "") {
+			} else if ($item == "list") {
+                $default_list_array = $_POST['default_list_' . $bansi_row];
+                $default_list = $default_list_array[0];
+
+                $none_alias_array = $_POST['radio_list_none'];
+                $none_alias = $none_alias_array[($j-1)];
+
+                $yes_alias_array = $_POST['radio_list_yes'];
+                $yes_alias = $yes_alias_array[($j-1)];
+
+
+                $no_alias_array = $_POST['radio_list_no'];
+                $no_alias = $no_alias_array[($j-1)];
+
+                $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+                $result1 = mysqli_query($db, $sql1);
+                if ($result1) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Form Item created successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
+
+            }else if ($item != "") {
 
 				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
 		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
