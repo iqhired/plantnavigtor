@@ -66,7 +66,7 @@ $mail->isHTML(true);
 $mail->Subject = $subject;
 $mail->Body = $structure;
 //$mail->addAttachment('./daily_report/'.$chicagotime.'/Communicator_Log_'.$chicagotime.'.xls', 'Communicator_Log_'.$chicagotime.'.xls');
-$mail->addAttachment('./daily_report/' . $chicagotime . '/Form_submit_Log_' . $chicagotime . '.xls', 'Form_submit_Log_' . $chicagotime . '.xls');
+$mail->addAttachment('./daily_report/' . $chicagotime . '/First_Piece_Sheet_Submit_Log_' . $chicagotime . '.xls', 'First_Piece_Sheet_Submit_Log_' . $chicagotime . '.xls');
 if (!$mail->send()) {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {

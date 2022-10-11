@@ -59,5 +59,5 @@ header("Content-Disposition: attachment; filename= " . $chicagotime . ".xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 print $header . "\n" . $result;
-file_put_contents("../daily_report/" . $chicagotime . "/Assignment_Log_" . $chicagotime . ".xls", $header . "\n" . $result);
+file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls", $header . "\n" . $result);
 ?>
