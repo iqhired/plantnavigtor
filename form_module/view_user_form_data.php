@@ -521,7 +521,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 										}
                                         if($item_val == "list"){
                                             $checked = $itemVal;
-                                            ?>
+                                             if ($rowc['list_enabled'] != 0){?>
                                             <div class="form_row_item row">
                                                 <div class="col-md-8 form_col_item">
                                                     <?php if ($rowc['optional'] != '1') {
@@ -600,6 +600,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                             <br/>
                                             <?php
                                             $aray_item_cnt++;
+                                             }
 
                                         }
 										if($item_val == "text"){

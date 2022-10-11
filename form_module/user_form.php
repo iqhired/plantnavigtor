@@ -566,8 +566,9 @@ include("../heading_banner.php");
                                         $lnf = $rowc['list_name1'];
                                         $lnf1 = $rowc['list_name2'];
                                         $lnf2 = $rowc['list_name2'];
+                                        $list_enabled =  $rowc['list_enabled'];
                                         ?>
-
+                                        <?php if ($list_enabled != '0'){?>
                                         <div class="row form_row_item">
 
                                             <div class="col-md-7 form_col_item">
@@ -631,8 +632,9 @@ include("../heading_banner.php");
                                                     } ?>
                                                 </div>
                                             </div>
-                                            <!--<div class="col-md-3 form_col_item"><u></u></div>-->
+
                                         </div>
+                                        <?php    } ?>
                                     <?php }
 									if ($item_val == "text") {
 

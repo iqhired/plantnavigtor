@@ -854,6 +854,7 @@ include("../heading_banner.php");
                             if($item_val == "list"){
                                 $checked = $itemVal;
                                 ?>
+                               <?Php if ($rowc['list_enabled'] != 0){ ?>
                                 <div class="form_row_item row">
                                     <div class="col-md-8 form_col_item">
                                         <?php if ($rowc['optional'] != '1') {
@@ -932,6 +933,7 @@ include("../heading_banner.php");
                                 <br/>
                                 <?php
                                 $aray_item_cnt++;
+                                }
 
                             }
                             if ($item_val == "text") {
