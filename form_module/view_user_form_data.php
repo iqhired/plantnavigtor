@@ -535,31 +535,31 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                     <div class="form-check form-check-inline">
 
                                                         <?php
-                                                        if ($checked == "yes") {
+                                                        if (($checked == "yes") || ($checked == $rowc['list_name2']) ) {
                                                             ?>
                                                             <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal1']; ?>"
+                                                                   value="<?php echo $rowc['list_name1']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
                                                             <label for="none"
                                                                    class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_normal1'];
+                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
                                                                 echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
 
                                                             <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal2']; ?>"
+                                                                   value="<?php echo $rowc['list_name2']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
                                                             <label for="yes"
                                                                    class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_normal2'];
+                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name2'];
                                                                 echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "Yes" ?></label>
                                                             <!--															<label for="yes" class="item_label" style="background-color: green;">--><?php //echo $rowc['binary_yes_alias'];
                                                             ?><!--</label>-->
                                                             <input type="radio" id="no" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal3']; ?>"
+                                                                   value="<?php echo $rowc['list_name3']; ?>"
                                                                    class="form-check-input pn_none" disabled >
                                                             <label for="no"
                                                                    class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_normal3'];
+                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
                                                                 echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
                                                             <!--															<label for="no" class="item_label"  style="background-color: green;">--><?php //echo $rowc['binary_no_alias'];
                                                             ?><!--</label>-->
@@ -568,21 +568,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <?php
                                                         } else { ?>
                                                             <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal1']; ?>"
+                                                                   value="<?php echo $rowc['list_name1']; ?>"
                                                                    class="form-check-input pn_none" disabled >
                                                             <label for="none" class="item_label" style="background-color: #ffadad;"
-                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_normal1']; ?></label>
+                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_name1']; ?></label>
 
                                                             <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal2']; ?>"
+                                                                   value="<?php echo $rowc['list_name2']; ?>"
                                                                    class="form-check-input pn_none" disabled >
                                                             <label for="yes" class="item_label" style="background-color: #ffadad;"
-                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_normal2']; ?></label>
+                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_name2']; ?></label>
                                                             <input type="radio" id="no" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $rowc['list_normal3']; ?>"
+                                                                   value="<?php echo $rowc['list_name3']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
                                                             <label for="no" class="item_label" style="background-color: #ffadad;"
-                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_normal3']; ?></label>
+                                                                   style="background-color: #ffadad;"><?php echo $rowc['list_name3']; ?></label>
 
                                                         <?php }
                                                         ?>
@@ -600,6 +600,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                             <br/>
                                             <?php
                                             $aray_item_cnt++;
+
 
                                         }
 										if($item_val == "text"){

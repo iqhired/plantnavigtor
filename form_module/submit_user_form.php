@@ -985,6 +985,14 @@ include("../heading_banner.php");
                                             if (($checked == "yes") || ($checked == $rowc['list_name2']) ) {
                                                 ?>
 
+                                                <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
+                                                       value="<?php echo $rowc['list_name1']; ?>"
+                                                       class="form-check-input pn_none" checked disabled >
+                                                <label for="none"
+                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
+                                                    echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
+
                                                 <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="<?php echo $rowc['list_name2']; ?>"
                                                        class="form-check-input pn_none" checked>
@@ -1008,6 +1016,14 @@ include("../heading_banner.php");
 
                                                 <?php
                                             } else { ?>
+
+                                                <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
+                                                       value="<?php echo $rowc['list_name1']; ?>"
+                                                       class="form-check-input pn_none" checked disabled >
+                                                <label for="none"
+                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
+                                                    echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
 
                                                 <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="<?php echo $rowc['list_name2']; ?>"
