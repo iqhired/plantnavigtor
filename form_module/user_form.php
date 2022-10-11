@@ -568,10 +568,12 @@ include("../heading_banner.php");
                                         $lnf2 = $rowc['list_name2'];
                                         $list_enabled =  $rowc['list_enabled'];
                                         ?>
-                                        <?php if ($list_enabled != '0'){?>
+
                                         <div class="row form_row_item">
 
                                             <div class="col-md-7 form_col_item">
+                                                <input type="hidden" class="list_enabled" name="list_enabled" data-id="<?php echo $rowc['form_item_id']; ?>" value="<?php echo $list_enabled; ?>"/>
+
                                                 <input type="hidden" class="binary_compare"
                                                        value="<?php echo $list_def; ?>"
                                                        data-id="<?php echo $rowc['form_item_id']; ?>"/>
@@ -634,7 +636,7 @@ include("../heading_banner.php");
                                             </div>
 
                                         </div>
-                                        <?php    } ?>
+
                                     <?php }
 									if ($item_val == "text") {
 
@@ -1165,8 +1167,13 @@ $('#reject').on('change', function () {
         var binary_compare = $(".binary_compare[data-id='" + radio_id + "']").val();
         var exact_val = $('input[name="' + radio_id + '"]:checked').val();
         var bypass_approve = $("#bypass_approve").val();
+        var list_value = $(".list_enabled[data-id='" + radio_id + "']").val();
         if (exact_val == binary_compare) {
-            $("." + radio_id).css("background-color", "#abf3ab");
+            if (list_value != '0') {
+                $("." + radio_id).css("background-color", "#abf3ab");
+            }else {
+                $("." + radio_id).css("background-color", "#FFF");
+            }
             if (bypass_approve == 'yes'){
                 document.getElementById("app_list").style.display = "none"
                 document.getElementById("sub_app").style.display = "none"
@@ -1178,7 +1185,12 @@ $('#reject').on('change', function () {
 
 
         } else {
-            $("." + radio_id).css("background-color", "#ffadad");
+            if (list_value != '0') {
+                $("." + radio_id).css("background-color", "#ffadad");
+            }
+            else {
+                $("." + radio_id).css("background-color", "#FFF");
+            }
             document.getElementById("app_list").style.display = "block"
             document.getElementById("sub_app").style.display = "block"
             document.getElementById("notes").required = true;

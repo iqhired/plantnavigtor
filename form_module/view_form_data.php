@@ -492,7 +492,6 @@ include("../hp_header.php");
                                 if($item_val == "list"){
                                     $checked = $itemVal;
                                     ?>
-                                  <?php  if ($rowc['list_enabled'] != 0){?>
                                     <div class="form_row_item row">
                                         <div class="col-md-8 form_col_item">
                                             <?php if ($rowc['optional'] != '1') {
@@ -571,7 +570,6 @@ include("../hp_header.php");
                                     <br/>
                                     <?php
                                     $aray_item_cnt++;
-                                    }
 
                                 }
 								if ($item_val == "text") {
