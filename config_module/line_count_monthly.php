@@ -2,18 +2,27 @@
 include("../config.php");
 $station = $_POST['station'];
 //select line down data
-$sql2 = sprintf("SELECT distinct sg_station_event.`line_id`,sg_station_event.`created_on`,sg_station_event.`station_event_id`,round(IFNULL(SEC_TO_TIME( SUM( TIME_TO_SEC( sg_station_event_log_update.`total_time` ) ) ),'00:00:00')) as t1,sg_station_event_log_update.`event_cat_id` FROM `sg_station_event` INNER JOIN sg_station_event_log_update on sg_station_event.station_event_id = sg_station_event_log_update.station_event_id WHERE Month(sg_station_event.`created_on`) = Month(CURDATE()) and  sg_station_event.line_id = '$station' and sg_station_event_log_update.event_cat_id = 3");
+$sql2 = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t1,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 2 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $result2 = mysqli_query($db,$sql2);
 $row2 = $result2->fetch_assoc();
 $t1 = $row2['t1'];
+if(empty($t1)){
+    $d1 = 0;
+}else{
+    $d1 = $t1;
+}
 
-$sql3 = sprintf("SELECT distinct sg_station_event.`line_id`,sg_station_event.`created_on`,sg_station_event.`station_event_id`,round(IFNULL(SEC_TO_TIME( SUM( TIME_TO_SEC( sg_station_event_log_update.`total_time` ) ) ),'00:00:00')) as t2,sg_station_event_log_update.`event_cat_id` FROM `sg_station_event` INNER JOIN sg_station_event_log_update on sg_station_event.station_event_id = sg_station_event_log_update.station_event_id WHERE Month(sg_station_event.`created_on`) = Month(CURDATE()) and  sg_station_event.line_id = '$station' and sg_station_event_log_update.event_cat_id = 4");
+$sql3 = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t2,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 3 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $result3 = mysqli_query($db,$sql3);
 $row3 = $result3->fetch_assoc();
 $t2 = $row3['t2'];
+if(empty($t2)){
+    $d2 = 0;
+}else{
+    $d2 = $t2;
+}
 
-
-$sqlv = sprintf("SELECT distinct sg_station_event.`line_id`,sg_station_event.`created_on`,sg_station_event.`station_event_id`,round(IFNULL(SEC_TO_TIME( SUM( TIME_TO_SEC( sg_station_event_log_update.`total_time` ) ) ),'00:00:00')) as t3,sg_station_event_log_update.`event_cat_id` FROM `sg_station_event` INNER JOIN sg_station_event_log_update on sg_station_event.station_event_id = sg_station_event_log_update.station_event_id WHERE Month(sg_station_event.`created_on`) = Month(CURDATE()) and  sg_station_event.line_id = '$station' and sg_station_event_log_update.event_cat_id = 2");
+$sqlv = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t3,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 4 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $response = array();
 $posts = array();
 $resultv = mysqli_query($db,$sqlv);
@@ -21,13 +30,13 @@ $resultv = mysqli_query($db,$sqlv);
 $data =array();
 
 while ($rowv=$resultv->fetch_assoc()){
-    $time = $rowv['t3'];
-    if($time === 0){
-        $t = 0;
+    $t = $rowv['t3'];
+    if(empty($t)){
+        $d3 = 0;
     }else{
-        $t = $time;
+        $d3 = $t;
     }
-    $posts[] = array('line_up2'=> $t,'line_down2'=> $t1,'eof2'=> $t2);
+    $posts[] = array('line_up2'=> $d1,'line_down2'=> $d2,'eof2'=> $d3);
 }
 $response['posts'] = $posts;
 echo json_encode($response);
