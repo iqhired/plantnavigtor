@@ -493,7 +493,7 @@ include("../hp_header.php");
                                     $checked = $itemVal;
                                     ?>
                                     <div class="form_row_item row">
-                                        <div class="col-md-8 form_col_item">
+                                        <div class="col-md-7 form_col_item">
                                             <?php if ($rowc['optional'] != '1') {
                                                 echo '<span class="red-star">★</span>';
                                             }
