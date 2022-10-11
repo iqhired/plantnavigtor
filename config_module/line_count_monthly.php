@@ -2,7 +2,7 @@
 include("../config.php");
 $station = $_POST['station'];
 //select line down data
-$sql2 = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t1,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 2 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
+$sql2 = sprintf("SELECT sum(sg_station_event_log_update.total_time) as t1 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 2 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $result2 = mysqli_query($db,$sql2);
 $row2 = $result2->fetch_assoc();
 $t1 = $row2['t1'];
@@ -12,7 +12,7 @@ if(empty($t1)){
     $d1 = $t1;
 }
 
-$sql3 = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t2,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 3 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
+$sql3 = sprintf("SELECT sum(sg_station_event_log_update.total_time) as t2 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 3 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $result3 = mysqli_query($db,$sql3);
 $row3 = $result3->fetch_assoc();
 $t2 = $row3['t2'];
@@ -22,7 +22,7 @@ if(empty($t2)){
     $d2 = $t2;
 }
 
-$sqlv = sprintf("SELECT DISTINCT sg_station_event.`line_id`,sg_station_event.`station_event_id`,sg_station_event.`created_on`,sum(sg_station_event_log_update.total_time) as t3,sg_station_event_log_update.event_cat_id FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 4 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
+$sqlv = sprintf("SELECT sum(sg_station_event_log_update.total_time) as t3 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 4 and sg_station_event.`created_on` > now() - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
 $response = array();
 $posts = array();
 $resultv = mysqli_query($db,$sqlv);
