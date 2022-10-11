@@ -12,6 +12,11 @@ $temp = "";
     <h3><?php echo $siteURL ?>config_module/line_utilization_dashboard.php</h3>
 </a>
 <br>
+<h3>Daily Report for First Piece Sheet</h3>
+<a href="<?php echo $siteURL ?>report_config_module/form_submit_log_config.php" target="_blank">
+    <h3><?php echo $siteURL ?>report_config_module/form_submit_log_config.php</h3>
+</a>
+<br>
 <h3>NPR data store hourly basis</h3>
 <a href="<?php echo $siteURL ?>events_module/npr_data_store.php" target="_blank">
     <h3><?php echo $siteURL ?>events_module/npr_data_store.php</h3>

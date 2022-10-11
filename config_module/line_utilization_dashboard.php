@@ -380,7 +380,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Daily Utilisation Data");
+                chart.title("Daily Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -438,7 +438,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Weekly Utilisation Data");
+                chart.title("Weekly Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -496,7 +496,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Monthly Utilisation Data");
+                chart.title("Monthly Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -554,7 +554,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Yearly Utilisation Data");
+                chart.title("Yearly Utilization Data");
 
                 // add the data
                 chart.data(data);
