@@ -199,7 +199,7 @@ if(count($_POST)>0) {
 //`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',
 //`notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by'
 				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`unit_of_measurement` = '$unit',`optional` = '$checked',`form_create_id` = '$form_create_id',
-`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',`numeric_graph` = '$graph_numeric',
+`item_desc` = '$item_desc',`item_val` = '$item',`numeric_normal` = '$normal',`numeric_lower_tol` = '$lower_tolerance',`numeric_upper_tol` = '$upper_tolerance',`numeric_graph` = '1',
 `notes` = '$notes' ,`discription` = '$disc',`created_at` = '$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
 				$result1 = mysqli_query($mysqli, $sql1);
 				if ($result1) {
@@ -228,7 +228,7 @@ if(count($_POST)>0) {
 				$no_alias = $no_alias_array[($z)];
 
 				$sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
-`binary_default` = '$default_binary',`binary_normal` = '$normal_binary',`binary_yes_alias` = '$yes_alias',`binary_no_alias` = '$no_alias',`binary_graph` = '$graph_binary' ,`notes` = '$notes' ,
+`binary_default` = '$default_binary',`binary_normal` = '$normal_binary',`binary_yes_alias` = '$yes_alias',`binary_no_alias` = '$no_alias',`binary_graph` = '1' ,`notes` = '$notes' ,
 `discription` = '$disc',`created_at`='$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
 				$result1 = mysqli_query($db, $sql1);
 				if ($result1) {
@@ -254,14 +254,15 @@ if(count($_POST)>0) {
                     $list_enabled = '1';
                 }
 
-                $none_alias = $_POST['radio_list_none'];
-                //$none_alias = $none_alias_array[$z];
+                $none_alias_array = $_POST['radio_list_none'];
+                $none_alias = $none_alias_array[($z)];
 
-                $yes_alias = $_POST['radio_list_yes'];
-              //  $yes_alias = $yes_alias_array[$z];
+                $yes_alias_array = $_POST['radio_list_yes'];
+                $yes_alias = $yes_alias_array[($z)];
 
-                $no_alias = $_POST['radio_list_no'];
-              //  $no_alias = $no_alias_array[$z];
+                $no_alias_array = $_POST['radio_list_no'];
+                $no_alias = $no_alias_array[($z)];
+
 
                 $sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
 `list_normal` = '$default_list',`list_name1` = '$none_alias',`list_name2` = '$yes_alias',`list_name3` = '$no_alias',`list_enabled` = '$list_enabled',`notes` = '$notes' ,
@@ -331,7 +332,7 @@ if(count($_POST)>0) {
 
 
 				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`numeric_graph`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
-		('$j','$unit'  , '$checked' , '$form_create_id', '$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' ,'$graph_numeric', '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+		('$j','$unit'  , '$checked' , '$form_create_id', '$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' ,'1', '$notes' ,'$disc' , '$created_by' , '$updated_by')";
 				$result1 = mysqli_query($db, $sql1);
 				if ($result1) {
 					$message_stauts_class = 'alert-success';
@@ -358,7 +359,7 @@ if(count($_POST)>0) {
 				$no_alias = $no_alias_array[($j-1)];
 
 				$sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`binary_graph`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
-		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' ,'$graph_binary', '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' ,'1', '$notes' ,'$disc' , '$created_by' , '$updated_by')";
 				$result1 = mysqli_query($db, $sql1);
 				if ($result1) {
 					$message_stauts_class = 'alert-success';
@@ -382,15 +383,15 @@ if(count($_POST)>0) {
                 }
 
 
-				$none_alias = $_POST['radio_list_none'];
-//                $none_alias = $none_alias_array[($j-1)];
+                $none_alias_array = $_POST['radio_list_none'];
+                $none_alias = $none_alias_array[($j-1)];
 
-				$yes_alias = $_POST['radio_list_yes'];
-//                $yes_alias = $yes_alias_array[($j-1)];
+                $yes_alias_array = $_POST['radio_list_yes'];
+                $yes_alias = $yes_alias_array[($j-1)];
 
 
-				$no_alias = $_POST['radio_list_no'];
-//                $no_alias = $no_alias_array[($j-1)];
+                $no_alias_array = $_POST['radio_list_no'];
+                $no_alias = $no_alias_array[($j-1)];
 
                 $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_enabled`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
 		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$list_enabled','$notes' ,'$disc' , '$created_by' , '$updated_by')";
