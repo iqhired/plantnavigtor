@@ -174,10 +174,14 @@ for($i = 1; $i <= $click_id; )
 		echo "upper_tolerance :- ".$upper_tolerance;
 		
 		$unit = $unit_of_measurement[$j];
-		
-		
-       $sql1 = "INSERT INTO `form_item`(`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$unit' , '$checked','$form_create_id' ,'$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+
+
+        $graph_numeric_array = $_POST['graph_numeric_'.$bansi_row];
+        $graph_numeric = $graph_numeric_array[0];
+
+
+       $sql1 = "INSERT INTO `form_item`(`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`numeric_graph`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$unit' , '$checked','$form_create_id' ,'$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '$graph_numeric','$notes' ,'$disc' , '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
@@ -196,14 +200,17 @@ for($i = 1; $i <= $click_id; )
 		$normal_binary_array = $_POST['normal_binary_'.$bansi_row];
 		$normal_binary = $normal_binary_array[0];
 
+        $graph_binary_array = $_POST['graph_binary_'.$bansi_row];
+        $graph_binary = $graph_binary_array[0];
+
 		$yes_alias_array = $_POST['yes_alias'];
 		$yes_alias = $yes_alias_array[$j];
 		
 		$no_alias_array = $_POST['no_alias'];
 		$no_alias = $no_alias_array[$j];
 		
-       $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc', '$created_by' , '$updated_by')";
+       $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`binary_graph`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias','$graph_binary','$notes' ,'$disc', '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
@@ -219,6 +226,15 @@ for($i = 1; $i <= $click_id; )
         $default_list_array = $_POST['default_list_'.$bansi_row];
         $default_list = $default_list_array[0];
 
+        $list_enabled_array = $_POST['list_enabled_'.$bansi_row];
+        $list_enabled = $list_enabled_array[0];
+
+        if($list_enabled == ""){
+            $list_enabled = '0';
+        }else{
+            $list_enabled = '1';
+        }
+
         $none_alias_array = $_POST['radio_list_none'];
         $none_alias = $none_alias_array[$j];
 
@@ -228,8 +244,8 @@ for($i = 1; $i <= $click_id; )
         $no_alias_array = $_POST['radio_list_no'];
         $no_alias = $no_alias_array[$j];
 
-            $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$notes' ,'$disc', '$created_by' , '$updated_by')";
+            $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_enabled`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$list_enabled','$notes' ,'$disc', '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
