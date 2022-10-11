@@ -3,12 +3,14 @@ ob_start();
 ini_set('display_errors', 'off');
 session_start();
 include '../config.php';
-$chicagotime = date('m-d-Y', strtotime('-1 days'));
+$chicagotime = date('d-m-Y', strtotime('-1 days'));
+$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
+
 //$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$exportData = mysqli_query($db, "SELECT distinct `station`,`form_type`,count(form_name) as cd,created_at FROM `form_user_data` WHERE form_type = 4 and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime' ");
+$exportData = mysqli_query($db,"SELECT distinct `station`,`form_type`,count(form_name) as cd,created_at FROM `form_user_data` WHERE form_type = 4 and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime1' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime1'");
 //$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
 $header = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
 $result = '';
