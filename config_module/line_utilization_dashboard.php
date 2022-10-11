@@ -127,55 +127,6 @@ include("../heading_banner.php");
                                     <select name="station" id="station" class="select form-control" data-style="bg-slate">
                                         <option value="" selected disabled>--- Select Station --- </option>
                                         <?php
-                                        if($_SESSION["role_id"] == "pn_user" &&  (!empty($is_tab_login) || $is_tab_login == 1) && (empty($is_cell_login) || $is_cell_login == 0)){
-                                            $is_tab_login = 1;
-                                            $tab_line = $_REQUEST['station'];
-                                            if(empty($tab_line)){
-                                                $tab_line = $_SESSION['tab_station'];
-                                            }
-                                        }
-                                        if($is_tab_login){
-                                            $sql1 = "SELECT line_id, line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
-                                            $result1 = $mysqli->query($sql1);
-                                            //                                            $entry = 'selected';
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                $entry = 'selected';
-                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                            }
-                                        }else if($is_cell_login){
-                                            if(empty($_REQUEST)) {
-                                                $c_stations = implode("', '", $c_login_stations_arr);
-                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
-                                                $result1 = $mysqli->query($sql1);
-                                                //													                $                        $entry = 'selected';
-                                                $i = 0;
-                                                while ($row1 = $result1->fetch_assoc()) {
-                                                    //														$entry = 'selected';
-                                                    if ($i == 0) {
-                                                        $entry = 'selected';
-                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
-                                                        $c_station = $row1['line_id'];
-                                                    } else {
-                                                        echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
-
-                                                    }
-                                                    $i++;
-                                                }
-                                            }else{
-                                                $line_id = $_REQUEST['line'];
-                                                if(empty($line_id)){
-                                                    $line_id = $_REQUEST['station'];
-                                                }
-                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id' and is_deleted != 1";
-                                                $result1 = $mysqli->query($sql1);
-                                                while ($row1 = $result1->fetch_assoc()) {
-                                                    $entry = 'selected';
-                                                    $station = $row1['line_id'];
-                                                    echo "<option value='" . $station . "'  $entry>" . $row1['line_name'] . "</option>";
-
-                                                }
-                                            }
-                                        }else{
                                             $st_dashboard = $_POST['station'];
                                             if (!isset($st_dashboard)) {
                                                 $st_dashboard = $_REQUEST['station'];
@@ -192,7 +143,7 @@ include("../heading_banner.php");
                                                 }
                                                 echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
                                             }
-                                        }
+
                                         ?>
                                     </select>
 
@@ -250,97 +201,6 @@ include("../heading_banner.php");
     $('#station').on('change', function (e) {
         $("#line_data").submit();
     });
-    //monthly utilisation data
-   /* anychart.onDocumentReady(function () {
-        var data = $("#line_data").serialize();
-        $.ajax({
-            type: 'POST',
-            url: 'line_count1.php',
-            data: data,
-            success: function (data1) {
-                var data = JSON.parse(data1);
-                // console.log(data);
-                var line_up = data.posts.map(function (elem) {
-                    return elem.line_up;
-                });
-                var line_down = data.posts.map(function (elem) {
-                    return elem.line_down;
-                });
-                var eof = data.posts.map(function (elem) {
-                    return elem.eof;
-                });
-
-                var data = [
-                    {x: 'Up', value: line_up, fill: '#177b09'},
-                    {x: 'Down', value: line_down, fill: '#FFFF00'},
-                    {x: 'Eof', value: eof, fill: '#FFA500'},
-                ];
-                // create pareto chart with data
-                var chart = anychart.column(data);
-                // set chart title text settings
-                //chart.title('Good Pieces & Bad Pieces');
-                var title = chart.title();
-                title.enabled(true);
-                //enables HTML tags
-                title.useHtml(true);
-                title.text(
-                    "<br><br>"
-                );
-                // set measure y axis title
-                // chart.yAxis(0).title('Numbers');
-                // cumulative percentage y axis title
-                // chart.yAxis(1).title(' Percentage');
-                // set interval
-                // chart.yAxis(1).scale().ticks().interval(10);
-
-                // get pareto column series and set settings
-                var column = chart.getSeriesAt(0);
-
-                column.labels().enabled(true).format('{%Value}');
-                column.tooltip().format('Time count by hours: {%Value}');
-
-                var labels = column.labels();
-                labels.fontFamily("Courier");
-                labels.fontSize(24);
-                labels.fontColor("#125393");
-                labels.fontWeight("bold");
-                labels.useHtml(false);
-                // background border color
-                // column.labels().background().stroke("#663399");
-                // column.labels().background().enabled(true).stroke("Green");
-
-                var xLabelsBackground = column.labels().background();
-                xLabelsBackground.enabled(true);
-                xLabelsBackground.stroke("#cecece");
-                xLabelsBackground.cornerType("round");
-                xLabelsBackground.corners(5);
-
-
-                var labels = chart.xAxis().labels();
-                labels.fontFamily("Courier");
-                labels.fontSize(18);
-                labels.fontColor("#125393");
-                labels.fontWeight("bold");
-                labels.useHtml(false);
-                // // background border color
-                // column.labels().background().stroke("#663399");
-                // column.labels().background().enabled(true).stroke("Green");
-
-                var xLabelsBackground = chart.xAxis().labels().background();
-                xLabelsBackground.enabled(true);
-                xLabelsBackground.stroke("#cecece");
-                xLabelsBackground.cornerType("round");
-                xLabelsBackground.corners(5);
-
-                // set container id for the chart
-                chart.container('m_container');
-                // initiate chart drawing
-                chart.draw();
-            }
-        });
-    });*/
-</script>
-<script>
     //daily data
     anychart.onDocumentReady(function () {
         var data = $("#line_data").serialize();
@@ -380,7 +240,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Daily Utilisation Data");
+                chart.title("Daily Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -397,8 +257,6 @@ include("../heading_banner.php");
         });
 
     });
-</script>
-<script>
     //Weekly data
     anychart.onDocumentReady(function () {
         var data = $("#line_data").serialize();
@@ -438,7 +296,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Weekly Utilisation Data");
+                chart.title("Weekly Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -455,8 +313,6 @@ include("../heading_banner.php");
         });
 
     });
-</script>
-<script>
     //Monthly data
     anychart.onDocumentReady(function () {
         var data = $("#line_data").serialize();
@@ -496,7 +352,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Monthly Utilisation Data");
+                chart.title("Monthly Utilization Data");
 
                 // add the data
                 chart.data(data);
@@ -513,8 +369,6 @@ include("../heading_banner.php");
         });
 
     });
-</script>
-<script>
     //Yearly data
     anychart.onDocumentReady(function () {
         var data = $("#line_data").serialize();
@@ -554,7 +408,7 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Yearly Utilisation Data");
+                chart.title("Yearly Utilization Data");
 
                 // add the data
                 chart.data(data);

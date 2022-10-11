@@ -711,8 +711,15 @@ $msg = explode(',', $msg); ?>
                                                     Training Completion Mail Config
                                                 </a>
                                             </div>
-										<?php } ?>
-
+										<?php }
+                                        if (in_array('83', $msg)) { ?>
+                                        <div class="mt-3">
+                                            <a href="<?php echo $siteURL; ?>report_config_module/form_submit_log_config.php"
+                                               class="text-muted mobile">
+                                                First Piece Sheet Report Config
+                                            </a>
+                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
 
@@ -944,7 +951,7 @@ $msg = explode(',', $msg); ?>
                                                 </div>
                                                 <div class="mb-3">
                                                     <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
-                                                       class="mega-link"><h3 class="text-muted fs-6">Line Utilisation Dashboard Dashboard</h3></a>
+                                                       class="mega-link"><h3 class="text-muted fs-6">Line Utilization Dashboard</h3></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1556,7 +1563,13 @@ $msg = explode(',', $msg); ?>
                                                                class="mega-link"><h3 class="text-muted fs-6">Training
                                                                     Completion Mail Config</h3></a>
                                                         </div>
-													<?php } ?>
+													<?php } if (in_array('82', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>report_config_module/form_submit_log_config.php"
+                                                               class="mega-link"><h3 class="text-muted fs-6">
+                                                                    First Piece Sheet Report Config</h3></a>
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
 
