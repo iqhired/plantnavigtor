@@ -8,9 +8,9 @@ $chicagotime1 = date('Y-m-d', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
-$sql2 = sprintf("SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE `form_type` = '4' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') >= '%d' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') <= '%d'" , $chicagotime1, $chicagotime1);
-//$exportData = mysqli_query($db, "SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime1' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime1' ");
-$exportData = mysqli_query($db,$sql2);
+//$sql2 = sprintf("SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE `form_type` = '4' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') >= '%d' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') <= '%d'" , $chicagotime1, $chicagotime1);
+$exportData = mysqli_query($db, "SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime1' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime1' and form_type = 4");
+//$exportData = mysqli_query($db,$sql2);
 //$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
 $header = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
 $result = '';
