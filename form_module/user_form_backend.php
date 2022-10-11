@@ -74,6 +74,7 @@ if(count($_POST)>0) {
             $qur0003 = mysqli_query($db, $query0003);
             $rowc0003 = mysqli_fetch_array($qur0003);
             $approval_by = $rowc0003['approval_by'];
+
             $out_of_tolerance_mail_list1 = $rowc0003["out_of_tolerance_mail_list"];
             if(!empty($out_of_tolerance_mail_list1)) {
                 $query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
@@ -83,6 +84,7 @@ if(count($_POST)>0) {
 
                     $item_val = $rowc0006['item_val'];
                     $val = $form_item_array1[$temp_i];
+                    $list_enabled = $rowc0006['list_enabled'];
                     $main_val = $_POST[$val];
                     if($item_val != "header") {
                         if ($item_val == "numeric") {
@@ -112,6 +114,16 @@ if(count($_POST)>0) {
                             } else {
                                 $temp_j++;
                             }
+
+                        } else if($item_val == "list" && $list_enabled != 0) {
+                            $list_normal = $rowc0006['list_normal'];
+
+
+                                if ($main_val == $list_normal) {
+
+                                } else {
+                                    $temp_j++;
+                                }
 
                         }
                         $temp_i++;
@@ -283,6 +295,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
             while ($rowc0006 = mysqli_fetch_array($qur0006)) {
 
                 $item_val = $rowc0006['item_val'];
+                $list_enabled = $rowc0006['list_enabled'];
                 $val = $form_item_array1[$temp_i];
                 $main_val = $_POST[$val];
                 if($item_val != "header") {
@@ -313,6 +326,17 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                         } else {
                             $temp_j++;
                         }
+
+                    }else if ($item_val == "list" && $list_enabled != 0) {
+                        $list_normal = $rowc0006['list_normal'];
+
+
+                            if ($main_val == $list_normal) {
+
+                            } else {
+                                $temp_j++;
+                            }
+
 
                     }
                     $temp_i++;
