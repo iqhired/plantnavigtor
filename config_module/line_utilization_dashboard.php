@@ -89,7 +89,16 @@
                 width: 30%!important;
                 float: left;
             }
+            .col-md-6 {
+                width: 100%;
+                float: right;
+            }
+            label.col-lg-3.control-label {
+                width: 25%;
+            }
         }
+
+
     </style>
     <script>
         window.onload = function () {
