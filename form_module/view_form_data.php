@@ -542,36 +542,36 @@ include("../hp_header.php");
                                                            value="<?php echo $rowc['list_name1']; ?>"
                                                            class="form-check-input pn_none" disabled >
                                                     <label for="none" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name1']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name1']; ?></label>
 
                                                     <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="<?php echo $rowc['list_name2']; ?>"
                                                            class="form-check-input pn_none" disabled >
                                                     <label for="yes" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name2']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name2']; ?></label>
                                                     <input type="radio" id="no" name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="<?php echo $rowc['list_name3']; ?>"
                                                            class="form-check-input pn_none" checked disabled >
                                                     <label for="no" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name3']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name3']; ?></label>
 
                                                 <?php } else{ ?>
                                                     <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="<?php echo $rowc['list_name1']; ?>"
                                                            class="form-check-input pn_none" checked disabled >
                                                     <label for="none" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name1']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1   ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name1']; ?></label>
 
                                                     <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="<?php echo $rowc['list_name2']; ?>"
                                                            class="form-check-input pn_none" disabled >
                                                     <label for="yes" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name2']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name2']; ?></label>
                                                     <input type="radio" id="no" name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="<?php echo $rowc['list_name3']; ?>"
                                                            class="form-check-input pn_none"  disabled >
                                                     <label for="no" class="item_label" style="background-color: #ffadad;"
-                                                        <?php if($list_enabled !=0 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name3']; ?></label>
+                                                        <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name3']; ?></label>
                                                 <?php }
                                                 ?>
                                                 <?php if ($rowc['optional'] == '1') {
