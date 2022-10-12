@@ -212,12 +212,36 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
             color: red;
             display: none;
         }
+        .graph_media{
+            width: 47%;
+            border: 1px solid gray;
+            margin: 2% 0% 2% 2%;
+            height: 380px;
+        }
+        .img-circle {
+            border-radius: 50%;
+            height: 35vh;
+            width: 40vh;
+            background-color: #fff;
+        }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .modal-dialog {
                 position: relative;
                 width: auto;
                 margin: 80px;
                 margin-top: 200px;
+            }
+            .graph_media{
+                width: 96%;
+                border: 1px solid gray;
+                margin: 2% 0% 2% 2%;
+                height: 380px;
+            }
+            .img-circle {
+                border-radius: 50%;
+                height: 18vh;
+                width: 23vh;
+                background-color: #fff;
             }
         }
         body.alt-menu.sidebar-noneoverflow.pace-done {
@@ -251,7 +275,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
     <!--			<div style="background-color: #fff;" class="row">-->
     <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;" class="row">
         <!--<div class="col-lg-3 col-md-8"></div>-->
-        <div style="width: 47%;border: 1px solid gray;margin: 2% 0% 2% 2%;height: 380px;" class="col-lg-6 col-md-8">
+        <div class="col-lg-6 col-md-8 graph_media">
             <!--							<div class="panel panel-body">-->
             <div class="media" style="padding-top:50px;">
                 <div class="media-left">
@@ -259,7 +283,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
                     <!--                                    </a>-->
                 </div>
-
                 <div class="media-body">
                     <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
                     <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
@@ -269,21 +292,22 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
             </div>
         </div>
-        <div style="width: 47%;border: 1px solid gray;margin: 2% 0% 2% 2%;height: 380px;" class="col-lg-6 col-md-8">
+        <div class="col-lg-6 col-md-8 graph_media">
             <div class="media" style="padding-top:50px;">
-                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
-                <div class="media-left" style="padding-top: 5px;">
-                    <div id="eff_container" style=" height: 35vh;width:60vh;background-color: #ffffff;"></div>
-                </div>
-                <div class="media-body">
+                <div class="media-left">
 
-                    <small style="font-size: large;margin-top: 115px;" class="display-block"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                    <small style="font-size: large;" class="display-block"><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                    <small style="font-size: large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+                    <div id="eff_container" class="img-circle"></div>
+            </div>
+                <div class="media-body">
+                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
+                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: x-large;" class="display-block"><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: x-large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
 
                 </div>
 
             </div>
+        </div>
         </div>
 		<?php
 		if (!empty($import_status_message)) {
