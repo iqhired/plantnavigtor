@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
 }
 $low_rate = 0;
 if (count($_POST) > 0){
-      if ($low_rate == 1){
+
 //assign crew delete
         $assign_line = $_POST['assign_line'];
         $position = $_POST['position'];
@@ -111,11 +111,13 @@ if (count($_POST) > 0){
                                 $mail->isHTML(true);
                                 $mail->Subject = $subject;
                                 $mail->Body = $message;
-                                if (!$mail->send()) {
-                                    //    echo 'Mailer Error: ' . $mail->ErrorInfo;
-                                } else {
-                                    //   $_SESSION['message_stauts_class'] = 'alert-success';
-                                    //$_SESSION['import_status_message'] = 'Mail-Sent Sucessfully.';
+                                if ($low_rate == 1) {
+                                    if (!$mail->send()) {
+                                        //    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                    } else {
+                                        //   $_SESSION['message_stauts_class'] = 'alert-success';
+                                        //$_SESSION['import_status_message'] = 'Mail-Sent Sucessfully.';
+                                    }
                                 }
                                 $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
                                 $imapStream = imap_open($path, $mail->Username, $mail->Password);
@@ -209,6 +211,5 @@ if (count($_POST) > 0){
         mysqli_close($conn);
         $assign_line = $_POST['assignline'];
         $_SESSION['aasignline'] = $_POST['assignline'];
-    }
 }
 ?>	
