@@ -632,7 +632,7 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
                                 <div class="row">
-                                    <label class="col-lg-2 control-label">Approve List : </label>
+                                    <label class="col-lg-2 control-label">Bypass Approve List : </label>
                                     <div class="col-md-6">
                                         <?php
 
