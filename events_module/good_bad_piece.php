@@ -220,9 +220,12 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
         }
         .img-circle {
             border-radius: 50%;
-            height: 35vh;
-            width: 40vh;
+            height: 42vh;
+            width: 84vh;
             background-color: #fff;
+        }
+        .media_details{
+            margin-top: -40px;
         }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .modal-dialog {
@@ -239,8 +242,8 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
             }
             .img-circle {
                 border-radius: 50%;
-                height: 18vh;
-                width: 23vh;
+                height: 26vh;
+                width: 60vh;
                 background-color: #fff;
             }
         }
@@ -277,14 +280,15 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         <!--<div class="col-lg-3 col-md-8"></div>-->
         <div class="col-lg-6 col-md-8 graph_media">
             <!--							<div class="panel panel-body">-->
-            <div class="media" style="padding-top:50px;">
+            <div class="media">
+                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
+
                 <div class="media-left">
                     <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
                     <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
                     <!--                                    </a>-->
                 </div>
                 <div class="media-body">
-                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
                     <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
                     <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
                     <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
@@ -293,16 +297,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </div>
         </div>
         <div class="col-lg-6 col-md-8 graph_media">
-            <div class="media" style="padding-top:50px;">
+            <div class="media">
+                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
+
                 <div class="media-left">
 
                     <div id="eff_container" class="img-circle"></div>
             </div>
+            </div>
+
+
+            <div class="media_details">
                 <div class="media-body">
-                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
-                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+                    <small style="font-size: x-large;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: x-large;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: x-large;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
 
                 </div>
 
