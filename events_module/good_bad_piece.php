@@ -305,8 +305,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <div id="eff_container" class="img-circle"></div>
             </div>
             </div>
-
-
             <div class="media_details">
                 <div class="media-body">
                     <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
