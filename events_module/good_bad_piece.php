@@ -289,9 +289,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <!--                                    </a>-->
                 </div>
                 <div class="media-body">
-                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
+                    <small style="font-size: 22px; margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
+                    <small style="font-size: 22px;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
+                    <small style="font-size: 22px;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
 
                 </div>
             </div>
@@ -309,9 +309,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
             <div class="media_details">
                 <div class="media-body">
-                    <small style="font-size: x-large;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                    <small style="font-size: x-large;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                    <small style="font-size: x-large;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+                    <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                    <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
+                    <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
 
                 </div>
 
