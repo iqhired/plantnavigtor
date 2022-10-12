@@ -227,6 +227,9 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
         .media_details{
             margin-top: -40px;
         }
+        .media-left, .media>.pull-left {
+            padding-right: 0px;
+        }
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .modal-dialog {
                 position: relative;
