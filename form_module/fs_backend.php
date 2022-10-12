@@ -31,6 +31,15 @@ if(count($_POST)>0) {
     }else{
         $need_approval = 'yes';
     }
+
+    $approve_list1 = $_POST['approval_list'];
+
+    if($approve_list1 == ""){
+        $approve_list = 'no';
+    }else{
+        $approve_list = 'yes';
+    }
+
     $approval_by1 = $_POST['approval_by'];
     $valid_from = $_POST['valid_from'];
     $valid_till = $_POST['valid_till'];
@@ -55,9 +64,9 @@ if(count($_POST)>0) {
     }
     
         $sql0 = "INSERT INTO `form_create`(`name`,`form_classification`,`form_type`,`station`,`part_family`,`part_number`,`po_number`,`da_number`,`out_of_tolerance_mail_list`
-		,`out_of_control_list`,`notification_list`,`form_create_notes`,`need_approval`,`approval_by`,`valid_from`,`valid_till`,`frequency`,`created_by` , `updated_by`) VALUES 
+		,`out_of_control_list`,`notification_list`,`form_create_notes`,`need_approval`,`approval_list`,`approval_by`,`valid_from`,`valid_till`,`frequency`,`created_by` , `updated_by`) VALUES 
 		('$name' , '$form_classification' ,'$form_type' , '$station' , '$part_family' , '$part_number' , '$po_number' , '$da_number' , '$array_out_of_tolerance_mail_list' 
-		, '$array_out_of_control_list' , '$array_notification_list' , '$form_create_notes' , '$need_approval' , '$array_approval_by' , '$valid_from' , '$valid_till' 
+		, '$array_out_of_control_list' , '$array_notification_list' , '$form_create_notes' , '$need_approval' ,'$approve_list', '$array_approval_by' , '$valid_from' , '$valid_till' 
 		, '$frequency' , '$created_by' , '$updated_by')";
         $result0 = mysqli_query($db, $sql0);
         if ($result0) {
