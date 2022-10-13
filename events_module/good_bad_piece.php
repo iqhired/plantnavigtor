@@ -246,7 +246,7 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
             .img-circle {
                 border-radius: 50%;
                 height: 26vh;
-                width: 42vh;
+                width: 35vh;
                 background-color: #fff;
             }
         }
