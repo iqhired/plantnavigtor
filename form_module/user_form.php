@@ -1179,11 +1179,12 @@ $('#reject').on('change', function () {
                 document.getElementById("app_list").style.display = "none"
                 document.getElementById("sub_app").style.display = "none"
                 $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
-                          }
+            }else{
+                document.getElementById("notes").required = false;
+                document.getElementsByClassName("reason").style.display = "none";
+            }
 
-            document.getElementById("notes").required = false;
-            document.getElementsByClassName("reason").style.display = "none";
-            window.scrollTo(0, 0);
+
 
         } else {
             if (list_value != '0') {
@@ -1197,6 +1198,7 @@ $('#reject').on('change', function () {
             document.getElementById("notes").required = true;
             document.getElementsByClassName("reason").style.display = "block";
         }
+
     });
 </script>
 <?php include('../footer.php') ?>
