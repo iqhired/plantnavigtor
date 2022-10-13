@@ -935,9 +935,10 @@ $('#reject').on('change', function () {
 
 
                     }else{
-                        document.getElementsByClassName("reason").style.display = "none";
+                        // document.getElementsByClassName("reason").style.display = "none";
                         if (bypass_approve == 'yes'){
                             $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
+                            window.scrollTo(0, 0);
                         }
                     }
 
@@ -1187,12 +1188,8 @@ $('#reject').on('change', function () {
                 document.getElementById("app_list").style.display = "none";
                 document.getElementById("sub_app").style.display = "none";
                 // $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
-            }else{
-                document.getElementById("notes").required = false;
-                // document.getElementsByClassName("reason").style.display = "none";
             }
-
-
+            document.getElementById("notes").required = false;
 
         } else {
             if (list_value != '0') {
@@ -1211,9 +1208,12 @@ $('#reject').on('change', function () {
 
                 // $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
             }else{
+                if ((list_value != '0') || (list_value == null)) {
+                    document.getElementById("notes").required = true;
+                }
                 document.getElementById("app_list").style.display = "block"
                 document.getElementById("sub_app").style.display = "block"
-                document.getElementById("notes").required = true;
+
                 // document.getElementsByClassName("reason").style.display = "block";
             }
 
