@@ -79,7 +79,7 @@ if (!empty($is_cell_login) && $is_cell_login == 1) {
 $msg = $_SESSION["side_menu"];
 $msg = explode(',', $msg); ?>
 <!-- Mobile navigation -->
-<nav class="d-block d-sm-none position-sticky top-0 z-index">
+<nav class="d-block d-sm-none position-sticky top-0">
     <div class="w-100 bg-white shadow-sm text-light">
         <div class="btn-group d-flex justify-content-between p-2" role="group">
             <div>

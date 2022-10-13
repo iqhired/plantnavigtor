@@ -241,12 +241,12 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
                 width: 96%;
                 border: 1px solid gray;
                 margin: 2% 0% 2% 2%;
-                height: 380px;
+                height: 442px;
             }
             .img-circle {
                 border-radius: 50%;
                 height: 26vh;
-                width: 60vh;
+                width: 42vh;
                 background-color: #fff;
             }
         }
