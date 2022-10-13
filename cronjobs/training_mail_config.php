@@ -18,7 +18,7 @@ if (count($_POST) > 0) {
     foreach ($users1 as $users) {
         $array_user .= $users . ",";
     }
-    $sql = "update sg_training_mail_config set teams='$array_team',users='$array_user',subject='$_POST[subject]',message='$_POST[message]',signature='$_POST[signature]' where sg_training_mail_config_id='1'";
+    $sql = "update sg_email_report_config set teams='$array_team',users='$array_user',subject='$_POST[subject]',message='$_POST[message]',signature='$_POST[signature]' where sg_mail_report_config_id='4'";
     $result1 = mysqli_query($db, $sql);
     if ($result1) {
         $message_stauts_class = 'alert-success';

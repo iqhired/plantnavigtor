@@ -3,7 +3,7 @@ ob_start();
 //ini_set('display_errors', 'off');
 //session_start();
 include '../config.php';
-$chicagotime = date('d-m-Y', strtotime('-1 days'));
+$chicagotime = date('m-d-Y', strtotime('-1 days'));
 //$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
 $chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
@@ -54,10 +54,48 @@ $result = str_replace("\r", "", $result);
 if ($result == "") {
     $result = "\nNo Record(s) Found!\n";
 }
+$exportData1 = mysqli_query($db, "SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 5");
+$header1 = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
+$result1 = '';
+while ($row1 = mysqli_fetch_row($exportData1)) {
+    $line1 = '';
+    $j1 = 1;
+    foreach ($row1 as $value1) {
+        if ((!isset($value1) ) || ( $value1 == "" )) {
+            $value1 = "\t";
+        } else {
+            $value1 = str_replace('"', '""', $value1);
+            if ($j1 == 1) {
+                $un1 = $value1;
+                $qur041 = mysqli_query($db, "SELECT line_name FROM  cam_line where line_id = '$un1' ");
+                while ($rowc041 = mysqli_fetch_array($qur041)) {
+                    $lnn1 = $rowc041["line_name"];
+                }
+                $value1 = $lnn1;
+            }
+            if ($j1 == 2) {
+                $un1= $value1;
+                $qur051 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$un1' ");
+                while ($rowc051 = mysqli_fetch_array($qur051)) {
+                    $pnn1 = $rowc051["form_type_name"];
+                }
+                $value1 = $pnn1;
+            }
+            $value1 = '"' . $value1 . '"' . "\t";
+        }
+        $line1 .= $value1;
+        $j1++;
+    }
+    $result1 .= trim($line1) . "\n";
+}
+$result1 = str_replace("\r", "", $result1);
+if ($result1 == "") {
+    $result1 = "\nNo Record(s) Found!\n";
+}
 header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename= " . $chicagotime . ".xls");
 header("Pragma: no-cache");
 header("Expires: 0");
-print $header . "\n" . $result;
-file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls", $header . "\n" . $result);
+print $header . "\n" . $result .$result1;
+file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls", $header . "\n" . $result . $result1);
 ?>
