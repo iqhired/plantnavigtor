@@ -570,7 +570,6 @@ include("../heading_banner.php");
                                         ?>
 
                                         <div class="row form_row_item">
-
                                             <div class="col-md-7 form_col_item">
                                                 <input type="hidden" class="list_enabled" name="list_enabled" data-id="<?php echo $rowc['form_item_id']; ?>" value="<?php echo $list_enabled; ?>"/>
 
@@ -603,6 +602,7 @@ include("../heading_banner.php");
                                                            class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
                                                         echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+
                                                     <input type="radio" id="yes"
                                                            name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="yes"
@@ -1168,21 +1168,22 @@ $('#reject').on('change', function () {
         var exact_val = $('input[name="' + radio_id + '"]:checked').val();
         var bypass_approve = $("#bypass_approve").val();
         var list_value = $(".list_enabled[data-id='" + radio_id + "']").val();
+
         if (exact_val == binary_compare) {
             if (list_value != '0') {
                 $("." + radio_id).css("background-color", "#abf3ab");
             }else {
                 $("." + radio_id).css("background-color", "#FFF");
             }
-            if (bypass_approve == 'yes'){
+            if (bypass_approve == 'yes' || exact_val == 'none'){
                 document.getElementById("app_list").style.display = "none"
                 document.getElementById("sub_app").style.display = "none"
                 $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
-            }
+                          }
 
             document.getElementById("notes").required = false;
             document.getElementsByClassName("reason").style.display = "none";
-
+            window.scrollTo(0, 0);
 
         } else {
             if (list_value != '0') {
