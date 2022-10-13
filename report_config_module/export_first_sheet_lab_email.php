@@ -67,12 +67,13 @@ while ($rowc = mysqli_fetch_array($qur)) {
     $mail->Subject = $subject;
     $mail->Body = $structure;
 //$mail->addAttachment('./daily_report/'.$chicagotime.'/Communicator_Log_'.$chicagotime.'.xls', 'Communicator_Log_'.$chicagotime.'.xls');
-    $mail->addAttachment('./daily_report/' . $chicagotime . '/First_Piece_Sheet_Submit_Log_' . $chicagotime . '.xls', 'First_Piece_Sheet_Submit_Log_' . $chicagotime . '.xls');
+    $mail->addAttachment("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls");
 if($mail_box == '1') {
-    if (!$mail->send()) {
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-    } else {
-
+    if(!$mail->Send()){
+        echo "Mailer Error: " . $mail->ErrorInfo;
+    }
+    else{
+        echo "Message has been sent";
     }
 }
     function save_mail($mail)

@@ -173,6 +173,11 @@ include("../hp_header1.php");
                     $npr_h = $rowc04["npr_h"];
                     $npr_gr = $rowc04["npr_gr"];
                     $npr_b = $rowc04["npr_b"];
+                    if(empty($npr_b)){
+                        $n1 = '0';
+                    }else{
+                        $n1 = $npr_b;
+                    }
                     $target_npr = $pm_npr;
                     $actual_npr = round($npr_gr/$h,2);
                     if($actual_npr < $target_npr){
@@ -190,7 +195,7 @@ include("../hp_header1.php");
                 ?>
                 <td><?php echo '00-01'; ?></td>
                 <td><?php echo $npr_gr; ?></td>
-                <td><?php echo $npr_b; ?></td>
+                <td><?php echo $n1; ?></td>
                 <td><?php echo $target_npr; ?></td>
                 <td><?php echo $actual_npr; ?></td>
                 <td><?php echo $eff; ?></td>
@@ -224,6 +229,11 @@ include("../hp_header1.php");
                 $npr_h2 = $rowc042["npr_h"];
                 $npr_gr2 = $rowc042["npr_gr"];
                 $npr_b2 = $rowc042["npr_b"];
+                if(empty($npr_b2)){
+                    $n2 = '0';
+                }else{
+                    $n2 = $npr_b2;
+                }
                 $target_npr2 = $pm_npr2;
                 $actual_npr2 = round($npr_gr2/$h2,2);
                 if($actual_npr2 < $target_npr2){
@@ -239,7 +249,7 @@ include("../hp_header1.php");
                 ?>
                 <td><?php echo '01-02'; ?></td>
                     <td><?php echo $npr_gr2; ?></td>
-                    <td><?php echo $npr_b2; ?></td>
+                    <td><?php echo $n2; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo $actual_npr2; ?></td>
                     <td><?php echo $eff2; ?></td>
@@ -275,6 +285,11 @@ include("../hp_header1.php");
                     $npr_h3 = $rowc043["npr_h"];
                     $npr_gr33 = $rowc043["npr_gr"];
                     $npr_b33 = $rowc043["npr_b"];
+                   if(empty($npr_b33)){
+                       $n3 = '0';
+                   }else{
+                       $n3 = $npr_b33;
+                   }
                     $target_npr33 = $pm_npr311;
                     $actual_npr33 = round($npr_gr33/$h3,2);
                     if($actual_npr33 < $target_npr33){
@@ -290,7 +305,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '02-03'; ?></td>
                     <td><?php echo $npr_gr33; ?></td>
-                    <td><?php echo $npr_b33; ?></td>
+                    <td><?php echo $n3; ?></td>
                     <td><?php echo $target_npr33; ?></td>
                     <td><?php echo $actual_npr33; ?></td>
                     <td><?php echo $eff3; ?></td>
@@ -324,6 +339,11 @@ include("../hp_header1.php");
                     $npr_h4 = $rowc044["npr_h"];
                     $npr_gr4 = $rowc044["npr_gr"];
                     $npr_b4 = $rowc044["npr_b"];
+                     if(empty($npr_b4)){
+                       $n4 = '0';
+                        }else{
+                       $n4 = $npr_b4;
+                     }
                     $target_npr4 = $pm_npr4;
                     $actual_npr4 = round($npr_gr4/$h4,2);
                     if($actual_npr4 < $target_npr4){
@@ -340,7 +360,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '03-04'; ?></td>
                     <td><?php echo $npr_gr4; ?></td>
-                    <td><?php echo $npr_b4; ?></td>
+                    <td><?php echo $n4; ?></td>
                     <td><?php echo $target_npr4; ?></td>
                     <td><?php echo $actual_npr4; ?></td>
                     <td><?php echo $eff4; ?></td>
@@ -374,6 +394,11 @@ include("../hp_header1.php");
                 $npr_h55 = $row55["npr_h"];
                 $npr_gr55 = $row55["npr_gr"];
                 $npr_b55 = $row55["npr_b"];
+                if(empty($npr_b55)){
+                    $n5 = '0';
+                }else{
+                    $n5 = $npr_b55;
+                }
                 $target_npr55 = $pm_npr55;
                 $actual_npr55 = round($npr_gr55/$h55,2);
                 if($actual_npr55 < $target_npr55){
@@ -389,7 +414,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '04-05'; ?></td>
                     <td><?php echo $npr_gr55; ?></td>
-                    <td><?php echo $npr_b55; ?></td>
+                    <td><?php echo $n5; ?></td>
                     <td><?php echo $target_npr55; ?></td>
                     <td><?php echo $actual_npr55; ?></td>
                     <td><?php echo $eff55; ?></td>
@@ -423,6 +448,11 @@ include("../hp_header1.php");
                 $npr_h2 = $row211["npr_h"];
                 $npr_gr2 = $row211["npr_gr"];
                 $npr_b2 = $row211["npr_b"];
+                if(empty($npr_b2)){
+                    $n6 = '0';
+                }else{
+                    $n6 = $npr_b2;
+                }
                 $target_npr2 = $pm_npr2;
                 $actual_npr2 = round($npr_gr2/$h2,2);
                 if($actual_npr2 < $target_npr2){
@@ -438,7 +468,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '05-06'; ?></td>
                     <td><?php echo $npr_gr2; ?></td>
-                    <td><?php echo $npr_b2; ?></td>
+                    <td><?php echo $n6; ?></td>
                     <td><?php echo $target_npr2; ?></td>
                     <td><?php echo $actual_npr2; ?></td>
                     <td><?php echo $eff2; ?></td>
@@ -472,6 +502,11 @@ include("../hp_header1.php");
                 $npr_h3 = $row311["npr_h"];
                 $npr_gr3 = $row311["npr_gr"];
                 $npr_b3 = $row311["npr_b"];
+                if(empty($npr_b3)){
+                    $n7 = '0';
+                }else{
+                    $n7 = $npr_b3;
+                }
                 $target_npr3 = $pm_npr3;
                 $actual_npr3 = round($npr_gr3/$h3,2);
                 if($actual_npr3 < $target_npr3){
@@ -487,7 +522,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '06-07'; ?></td>
                     <td><?php echo $npr_gr3; ?></td>
-                    <td><?php echo $npr_b3; ?></td>
+                    <td><?php echo $n7; ?></td>
                     <td><?php echo $target_npr3; ?></td>
                     <td><?php echo $actual_npr3; ?></td>
                     <td><?php echo $eff3; ?></td>
@@ -521,6 +556,11 @@ include("../hp_header1.php");
                 $npr_h41 = $row411["npr_h"];
                 $npr_gr41 = $row411["npr_gr"];
                 $npr_b41 = $row411["npr_b"];
+                if(empty($npr_b41)){
+                    $n8 = '0';
+                }else{
+                    $n8 = $npr_b41;
+                }
                 $target_npr41 = $pm_npr41;
                 $actual_npr41 = round($npr_gr41/$h41,2);
                 if($actual_npr41 < $target_npr41){
@@ -536,7 +576,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '07-08'; ?></td>
                     <td><?php echo $npr_gr41; ?></td>
-                    <td><?php echo $npr_b41; ?></td>
+                    <td><?php echo $n8; ?></td>
                     <td><?php echo $target_npr41; ?></td>
                     <td><?php echo $actual_npr41; ?></td>
                     <td><?php echo $eff41; ?></td>
@@ -570,6 +610,11 @@ include("../hp_header1.php");
                 $npr_h51 = $row511["npr_h"];
                 $npr_gr51 = $row511["npr_gr"];
                 $npr_b51 = $row511["npr_b"];
+                if(empty($npr_b51)){
+                    $n9 = '0';
+                }else{
+                    $n9 = $npr_b51;
+                }
                 $target_npr51 = $pm_npr51;
                 $actual_npr51 = round($npr_gr51/$h51,2);
                 if($actual_npr51 < $target_npr51){
@@ -585,7 +630,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '08-09'; ?></td>
                     <td><?php echo $npr_gr51; ?></td>
-                    <td><?php echo $npr_b51; ?></td>
+                    <td><?php echo $n9; ?></td>
                     <td><?php echo $target_npr51; ?></td>
                     <td><?php echo $actual_npr51; ?></td>
                     <td><?php echo $eff51; ?></td>
@@ -619,6 +664,11 @@ include("../hp_header1.php");
                 $npr_h61 = $row611["npr_h"];
                 $npr_gr61 = $row611["npr_gr"];
                 $npr_b61 = $row611["npr_b"];
+                if(empty($npr_b61)){
+                    $n = '0';
+                }else{
+                    $n = $npr_b61;
+                }
                 $target_npr61 = $pm_npr61;
                 $actual_npr61 = round($npr_gr61/$h61,2);
                 if($actual_npr61 < $target_npr61){
@@ -634,7 +684,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '09-10'; ?></td>
                     <td><?php echo $npr_gr61; ?></td>
-                    <td><?php echo $npr_b61; ?></td>
+                    <td><?php echo $n; ?></td>
                     <td><?php echo $target_npr61; ?></td>
                     <td><?php echo $actual_npr61; ?></td>
                     <td><?php echo $eff61; ?></td>
@@ -668,6 +718,11 @@ include("../hp_header1.php");
                 $npr_h71 = $row711["npr_h"];
                 $npr_gr71 = $row711["npr_gr"];
                 $npr_b71 = $row711["npr_b"];
+                if(empty($npr_b71)){
+                    $n10 = '0';
+                }else{
+                    $n10 = $npr_b71;
+                }
                 $target_npr71 = $pm_npr71;
                 $actual_npr71 = round($npr_gr71/$h71,2);
                 if($actual_npr71 < $target_npr71){
@@ -683,7 +738,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '10-11'; ?></td>
                     <td><?php echo $npr_gr71; ?></td>
-                    <td><?php echo $npr_b71; ?></td>
+                    <td><?php echo $n10; ?></td>
                     <td><?php echo $target_npr71; ?></td>
                     <td><?php echo $actual_npr71; ?></td>
                     <td><?php echo $eff71; ?></td>
@@ -717,6 +772,11 @@ include("../hp_header1.php");
                 $npr_h81 = $row811["npr_h"];
                 $npr_gr81 = $row811["npr_gr"];
                 $npr_b81 = $row811["npr_b"];
+                if(empty($npr_b81)){
+                    $n11 = '0';
+                }else{
+                    $n11 = $npr_b81;
+                }
                 $target_npr81 = $pm_npr81;
                 $actual_npr81 = round($npr_gr81/$h81,2);
                 if($actual_npr81 < $target_npr81){
@@ -732,7 +792,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '11-12'; ?></td>
                     <td><?php echo $npr_gr81; ?></td>
-                    <td><?php echo $npr_b81; ?></td>
+                    <td><?php echo $n11; ?></td>
                     <td><?php echo $target_npr81; ?></td>
                     <td><?php echo $actual_npr81; ?></td>
                     <td><?php echo $eff81; ?></td>
@@ -766,6 +826,11 @@ include("../hp_header1.php");
                 $npr_h91 = $row911["npr_h"];
                 $npr_gr91 = $row911["npr_gr"];
                 $npr_b91 = $row911["npr_b"];
+                if(empty($npr_b91)){
+                    $n12 = '0';
+                }else{
+                    $n12 = $npr_b91;
+                }
                 $target_npr91 = $pm_npr91;
                 $actual_npr91 = round($npr_gr91/$h91,2);
                 if($actual_npr91 < $target_npr91){
@@ -781,7 +846,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '12-13'; ?></td>
                     <td><?php echo $npr_gr91; ?></td>
-                    <td><?php echo $npr_b91; ?></td>
+                    <td><?php echo $n12; ?></td>
                     <td><?php echo $target_npr91; ?></td>
                     <td><?php echo $actual_npr91; ?></td>
                     <td><?php echo $eff91; ?></td>
@@ -815,6 +880,11 @@ include("../hp_header1.php");
                 $npr_h911 = $row9111["npr_h"];
                 $npr_gr911 = $row9111["npr_gr"];
                 $npr_b911 = $row9111["npr_b"];
+                if(empty($npr_b911)){
+                    $n13 = '0';
+                }else{
+                    $n13 = $npr_b911;
+                }
                 $target_npr911 = $pm_npr911;
                 $actual_npr911 = round($npr_gr911/$h911,2);
                 if($actual_npr911 < $target_npr911){
@@ -830,7 +900,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '13-14'; ?></td>
                     <td><?php echo $npr_gr911; ?></td>
-                    <td><?php echo $npr_b911; ?></td>
+                    <td><?php echo $n13; ?></td>
                     <td><?php echo $target_npr911; ?></td>
                     <td><?php echo $actual_npr911; ?></td>
                     <td><?php echo $eff911; ?></td>
@@ -864,6 +934,11 @@ include("../hp_header1.php");
                 $npr_h921 = $row9211["npr_h"];
                 $npr_gr921 = $row9211["npr_gr"];
                 $npr_b921 = $row9211["npr_b"];
+                if(empty($npr_b921)){
+                    $n14 = '0';
+                }else{
+                    $n14 = $npr_b921;
+                }
                 $target_npr921 = $pm_npr921;
                 $actual_npr921 = round($npr_gr921/$h921,2);
                 if($actual_npr921 < $target_npr921){
@@ -879,7 +954,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '14-15'; ?></td>
                     <td><?php echo $npr_gr921; ?></td>
-                    <td><?php echo $npr_b921; ?></td>
+                    <td><?php echo $n14; ?></td>
                     <td><?php echo $target_npr921; ?></td>
                     <td><?php echo $actual_npr921; ?></td>
                     <td><?php echo $eff921; ?></td>
@@ -913,6 +988,11 @@ include("../hp_header1.php");
                 $npr_h931 = $row9311["npr_h"];
                 $npr_gr931 = $row9311["npr_gr"];
                 $npr_b931 = $row9311["npr_b"];
+                if(empty($npr_b931)){
+                    $n15 = '0';
+                }else{
+                    $n15 = $npr_b931;
+                }
                 $target_npr931 = $pm_npr931;
                 $actual_npr931 = round($npr_gr931/$h931,2);
                 if($actual_npr931 < $target_npr931){
@@ -928,7 +1008,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '15-16'; ?></td>
                     <td><?php echo $npr_gr931; ?></td>
-                    <td><?php echo $npr_b931; ?></td>
+                    <td><?php echo $n15; ?></td>
                     <td><?php echo $target_npr931; ?></td>
                     <td><?php echo $actual_npr931; ?></td>
                     <td><?php echo $eff931; ?></td>
@@ -962,6 +1042,11 @@ include("../hp_header1.php");
                 $npr_h941 = $row9411["npr_h"];
                 $npr_gr941 = $row9411["npr_gr"];
                 $npr_b941 = $row9411["npr_b"];
+                if(empty($npr_b941)){
+                    $n16 = '0';
+                }else{
+                    $n16 = $npr_b941;
+                }
                 $target_npr941 = $pm_npr941;
                 $actual_npr941 = round($npr_gr941/$h941,2);
                 if($actual_npr941 < $target_npr941){
@@ -977,7 +1062,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '16-17'; ?></td>
                     <td><?php echo $npr_gr941; ?></td>
-                    <td><?php echo $npr_b941; ?></td>
+                    <td><?php echo $n16; ?></td>
                     <td><?php echo $target_npr941; ?></td>
                     <td><?php echo $actual_npr941; ?></td>
                     <td><?php echo $eff941; ?></td>
@@ -1011,6 +1096,11 @@ include("../hp_header1.php");
                 $npr_h951 = $row9511["npr_h"];
                 $npr_gr951 = $row9511["npr_gr"];
                 $npr_b951 = $row9511["npr_b"];
+                if(empty($npr_b951)){
+                    $n17 = '0';
+                }else{
+                    $n17 = $npr_b951;
+                }
                 $target_npr951 = $pm_npr951;
                 $actual_npr951 = round($npr_gr951/$h951,2);
                 if($actual_npr951 < $target_npr951){
@@ -1026,7 +1116,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '17-18'; ?></td>
                     <td><?php echo $npr_gr951; ?></td>
-                    <td><?php echo $npr_b951; ?></td>
+                    <td><?php echo $n17; ?></td>
                     <td><?php echo $target_npr951; ?></td>
                     <td><?php echo $actual_npr951; ?></td>
                     <td><?php echo $eff951; ?></td>
@@ -1060,6 +1150,11 @@ include("../hp_header1.php");
                 $npr_h961 = $row9611["npr_h"];
                 $npr_gr961 = $row9611["npr_gr"];
                 $npr_b961 = $row9611["npr_b"];
+                if(empty($npr_b961)){
+                    $n18 = '0';
+                }else{
+                    $n18 = $npr_b961;
+                }
                 $target_npr961 = $pm_npr961;
                 $actual_npr961 = round($npr_gr961/$h961,2);
                 if($actual_npr961 < $target_npr961){
@@ -1075,7 +1170,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '18-19'; ?></td>
                     <td><?php echo $npr_gr961; ?></td>
-                    <td><?php echo $npr_b961; ?></td>
+                    <td><?php echo $n18; ?></td>
                     <td><?php echo $target_npr961; ?></td>
                     <td><?php echo $actual_npr961; ?></td>
                     <td><?php echo $eff961; ?></td>
@@ -1109,6 +1204,11 @@ include("../hp_header1.php");
                 $npr_h971 = $row9711["npr_h"];
                 $npr_gr971 = $row9711["npr_gr"];
                 $npr_b971 = $row9711["npr_b"];
+                if(empty($npr_b971)){
+                    $n19 = '0';
+                }else{
+                    $n19 = $npr_b971;
+                }
                 $target_npr971 = $pm_npr971;
                 $actual_npr971 = round($npr_gr971/$h971,2);
                 if($actual_npr971 < $target_npr971){
@@ -1124,7 +1224,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '19-20'; ?></td>
                     <td><?php echo $npr_gr971; ?></td>
-                    <td><?php echo $npr_b971; ?></td>
+                    <td><?php echo $n19; ?></td>
                     <td><?php echo $target_npr971; ?></td>
                     <td><?php echo $actual_npr971; ?></td>
                     <td><?php echo $eff971; ?></td>
@@ -1158,6 +1258,11 @@ include("../hp_header1.php");
                 $npr_h981 = $row9811["npr_h"];
                 $npr_gr981 = $row9811["npr_gr"];
                 $npr_b981 = $row9811["npr_b"];
+                if(empty($npr_b981)){
+                    $n20 = '0';
+                }else{
+                    $n20 = $npr_b981;
+                }
                 $target_npr981 = $pm_npr981;
                 $actual_npr981 = round($npr_gr981/$h981,2);
                 if($actual_npr981 < $target_npr981){
@@ -1173,7 +1278,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '20-21'; ?></td>
                     <td><?php echo $npr_gr981; ?></td>
-                    <td><?php echo $npr_b981; ?></td>
+                    <td><?php echo $n20; ?></td>
                     <td><?php echo $target_npr981; ?></td>
                     <td><?php echo $actual_npr981; ?></td>
                     <td><?php echo $eff981; ?></td>
@@ -1207,6 +1312,11 @@ include("../hp_header1.php");
                 $npr_h991 = $row9911["npr_h"];
                 $npr_gr991 = $row9911["npr_gr"];
                 $npr_b991 = $row9911["npr_b"];
+                if(empty($npr_b991)){
+                    $n21 = '0';
+                }else{
+                    $n21 = $npr_b991;
+                }
                 $target_npr991 = $pm_npr991;
                 $actual_npr991 = round($npr_gr991/$h991,2);
                 if($actual_npr991 < $target_npr991){
@@ -1222,7 +1332,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '21-22'; ?></td>
                     <td><?php echo $npr_gr991; ?></td>
-                    <td><?php echo $npr_b991; ?></td>
+                    <td><?php echo $n21; ?></td>
                     <td><?php echo $target_npr991; ?></td>
                     <td><?php echo $actual_npr991; ?></td>
                     <td><?php echo $eff991; ?></td>
@@ -1256,6 +1366,11 @@ include("../hp_header1.php");
                 $npr_h191 = $row1911["npr_h"];
                 $npr_gr191 = $row1911["npr_gr"];
                 $npr_b191 = $row1911["npr_b"];
+                if(empty($npr_b191)){
+                    $n22 = '0';
+                }else{
+                    $n22 = $npr_b191;
+                }
                 $target_npr191 = $pm_npr191;
                 $actual_npr191 = round($npr_gr191/$h191,2);
                 if($actual_npr191 < $target_npr191){
@@ -1271,7 +1386,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '22-23'; ?></td>
                     <td><?php echo $npr_gr191; ?></td>
-                    <td><?php echo $npr_b191; ?></td>
+                    <td><?php echo $n22; ?></td>
                     <td><?php echo $target_npr191; ?></td>
                     <td><?php echo $actual_npr191; ?></td>
                     <td><?php echo $eff191; ?></td>
@@ -1305,6 +1420,11 @@ include("../hp_header1.php");
                 $npr_h291 = $row2911["npr_h"];
                 $npr_gr291 = $row2911["npr_gr"];
                 $npr_b291 = $row2911["npr_b"];
+                if(empty($npr_b291)){
+                    $n23 = '0';
+                }else{
+                    $n23 = $npr_b291;
+                }
                 $target_npr291 = $pm_npr291;
                 $actual_npr291 = round($npr_gr291/$h291,2);
                 if($actual_npr291 < $target_npr291){
@@ -1321,7 +1441,7 @@ include("../hp_header1.php");
                     ?>
                     <td><?php echo '23-24'; ?></td>
                     <td><?php echo $npr_gr291; ?></td>
-                    <td><?php echo $npr_b291; ?></td>
+                    <td><?php echo $n23; ?></td>
                     <td><?php echo $target_npr291; ?></td>
                     <td><?php echo $actual_npr291; ?></td>
                     <td><?php echo $eff291; ?></td>
