@@ -561,18 +561,15 @@ include("../heading_banner.php");
                                     </div>
 								<?php }
 								if ($item_val == "list") {
-
 									$list_def = $rowc['list_normal'];
 									$lnf = $rowc['list_name1'];
 									$lnf1 = $rowc['list_name2'];
 									$lnf2 = $rowc['list_name2'];
 									$list_enabled =  $rowc['list_enabled'];
 									?>
-
                                     <div class="row form_row_item">
                                         <div class="col-md-7 form_col_item">
                                             <input type="hidden" class="list_enabled" name="list_enabled" data-id="<?php echo $rowc['form_item_id']; ?>" value="<?php echo $list_enabled; ?>"/>
-
                                             <input type="hidden" class="binary_compare"
                                                    value="<?php echo $list_def; ?>"
                                                    data-id="<?php echo $rowc['form_item_id']; ?>"/>
@@ -584,24 +581,11 @@ include("../heading_banner.php");
                                                 <div style="font-size: medium;font-color:#c1c1c1"><?php echo "(" . $rowc['discription'] . ")" ?></div>
 											<?php } ?>
                                         </div>
-
                                         <div class="col-md-4">
                                             <input type="hidden" name="form_item_array[]"
                                                    value="<?php echo $rowc['form_item_id']; ?>"/>
                                             <div class="form-check form-check-inline form_col_option">
-                                                <input type="radio" id="none"
-                                                       name="<?php echo $rowc['form_item_id']; ?>"
-                                                       value="none"
-                                                       class="form-check-input" <?php if ($list_def == 'none') {
-													echo 'checked';
-												}
-												if ($rowc['optional'] != '1') {
-													echo 'required';
-												} ?> />
-                                                <label for="none"
-                                                       class="item_label <?php echo $rowc['form_item_id']; ?>"
-                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
-													echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+
 
                                                 <input type="radio" id="yes"
                                                        name="<?php echo $rowc['form_item_id']; ?>"
@@ -629,6 +613,21 @@ include("../heading_banner.php");
                                                        class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
 													echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
+                                                <?php if ($list_enabled == 1) {?>
+                                                    <input type="radio" id="none"
+                                                           name="<?php echo $rowc['form_item_id']; ?>"
+                                                           value="none"
+                                                           class="form-check-input" <?php if ($list_def == 'none') {
+                                                        echo 'checked';
+                                                    }
+                                                    if ($rowc['optional'] != '1') {
+                                                        echo 'required';
+                                                    } ?> />
+                                                    <label for="none"
+                                                           class="item_label <?php echo $rowc['form_item_id']; ?>"
+                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
+                                                        echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+                                                <?php } ?>
 												<?php if ($rowc['optional'] == '1') {
 													echo '<span style="color: #a1a1a1; font-size: small;">(Optional)</span>';
 												} ?>
@@ -639,7 +638,6 @@ include("../heading_banner.php");
 
 								<?php }
 								if ($item_val == "text") {
-
 									?>
                                     <div class="row form_row_item">
                                         <div class="col-md-7 form_col_item">
@@ -652,7 +650,6 @@ include("../heading_banner.php");
                                                 <div style="font-size: medium;font-color:#c1c1c1"><?php echo "(" . $rowc['discription'] . ")" ?></div>
 											<?php } ?>
                                         </div>
-
                                         <!-- <div class="col-md-4 form_col_item">-->
 										<?php //echo $rowc['item_desc']; ?><!-- </div>-->
                                         <div class="col-md-3 form">
@@ -821,7 +818,6 @@ include("../heading_banner.php");
                                         </div>
                                         <div>
                                             <hr class="form_hr"/>
-
                                         </div>
                                         <!--                                    </form>-->
                                         <div class="row form_row_item">
@@ -829,7 +825,7 @@ include("../heading_banner.php");
                                             <div class="col-md-2">
                                                 <button type="button" id="btnSubmit_1" class="btn btn-primary" disabled
                                                         style="background-color:#1e73be;">
-                                                    Submit
+                                                    <Submit></Submit>
                                                 </button>
                                             </div>
                                         </div>
@@ -840,8 +836,6 @@ include("../heading_banner.php");
 						}
 						?>
                             <br/>
-
-
                         </form>
                     </div>
                 </div>
@@ -1066,7 +1060,6 @@ $('#reject').on('change', function () {
             },
         });
     });
-
     $(".reject").click(function (e) {
         e.preventDefault();
         var index = this.id.split("_")[1];
@@ -1131,9 +1124,7 @@ $('#reject').on('change', function () {
             },
         });
     });
-
 </script>
-
 <script>
     $(".compare_text").keyup(function () {
         var text_id = $(this).attr("id");
@@ -1156,8 +1147,6 @@ $('#reject').on('change', function () {
                     }
                     document.getElementById("notes").required = false;
                     document.getElementsByClassName("reason").style.display = "none";
-
-
                 } else {
                     $(this).attr('style','background-color:#ffadad !important');
                     document.getElementById("app_list").style.display = "block"
@@ -1167,7 +1156,6 @@ $('#reject').on('change', function () {
                 }
             }
         }
-
     });
     $('form').attr('autocomplete', 'off');
     $('input').attr('autocomplete', 'off');
@@ -1180,7 +1168,9 @@ $('#reject').on('change', function () {
 
         if (exact_val == binary_compare) {
             if (list_value != '0') {
-                $("." + radio_id).css("background-color", "#abf3ab");
+                if (exact_val != 'none'){
+                    $("." + radio_id).css("background-color", "#abf3ab");
+                }
             }else {
                 $("." + radio_id).css("background-color", "#FFF");
             }
@@ -1190,12 +1180,16 @@ $('#reject').on('change', function () {
                 // $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
             }
             document.getElementById("notes").required = false;
-
         } else {
             if (list_value != '0') {
-                $("." + radio_id).css("background-color", "#ffadad");
+                if (exact_val != 'none') {
+                    $("." + radio_id).css("background-color", "#ffadad");
+                }else{
+                    $("." + radio_id).css("background-color", "#FFF");
+                }
             }
             else {
+
                 $("." + radio_id).css("background-color", "#FFF");
             }
             if (bypass_approve == 'yes' || exact_val == 'none'){
@@ -1205,7 +1199,6 @@ $('#reject').on('change', function () {
                     document.getElementById("app_list").style.display = "none";
                     document.getElementById("sub_app").style.display = "none";
                 }
-
                 // $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
             }else{
                 if ((list_value != '0') || (list_value == null)) {
@@ -1214,13 +1207,11 @@ $('#reject').on('change', function () {
                 document.getElementById("app_list").style.display = "block"
                 document.getElementById("sub_app").style.display = "block"
 
-                // document.getElementsByClassName("reason").style.display = "block";
             }
-
         }
-
     });
 </script>
+
 <?php include('../footer.php') ?>
 </body>
 </html>
