@@ -120,90 +120,6 @@ if (count($_POST) > 0) {
 			}
 		}
 	}
-//edit
-	$edit_name = $_POST['edit_cell_name'];
-	$edit_file = $_FILES['edit_logo_image']['name'];
-	if ($edit_name != "") {
-
-		$id = $_POST['edit_id'];
-		$stations = $_POST["edit_cell_stations"];
-		$account = (isset($_POST['edit_cell_account']))?$_POST['edit_cell_account']:NULL;
-		foreach ($stations as $station) {
-			$array_stations .= $station . ",";
-		}
-//eidt logo
-		if($edit_file != "")
-		{
-			if (isset($_FILES['edit_logo_image'])) {
-				$errors = array();
-				$file_name = $_FILES['edit_logo_image']['name'];
-				$file_size = $_FILES['edit_logo_image']['size'];
-				$file_tmp = $_FILES['edit_logo_image']['tmp_name'];
-				$file_type = $_FILES['edit_logo_image']['type'];
-				$file_ext = strtolower(end(explode('.', $file_name)));
-				$extensions = array("jpeg", "jpg", "png", "pdf");
-				if (in_array($file_ext, $extensions) === false) {
-					$errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-					$message_stauts_class = 'alert-danger';
-					$import_status_message = 'Error: Extension not allowed, please choose a JPEG or PNG file.';
-				}
-				if ($file_size > 2097152) {
-					$errors[] = 'File size must be excately 2 MB';
-					$message_stauts_class = 'alert-danger';
-					$import_status_message = 'Error: File size must be excately 2 MB';
-				}
-				if (empty($errors) == true) {
-					$fname = "cell_grp_" .time() . "_" . $file_name;
-					move_uploaded_file($file_tmp, "../supplier_logo/" . $fname);
-
-//					$sql = "update cus_account set logo='$file_name',c_name='$_POST[edit_cust_name]',c_type='$_POST[edit_account_type]',c_mobile='$_POST[edit_contact_number]',c_address='$_POST[edit_address]',c_website='$_POST[edit_website]',c_status='$_POST[edit_enabled]' where c_id='$id'";
-
-					if(isset($account)){
-						$sql = "update `cell_grp` set c_name = '$edit_name', account_id = '$account', cell_logo = '$fname', stations = '$array_stations', enabled = '$_POST[edit_enabled]'  where c_id='$id'";
-
-					}else{
-						$sql = "update `cell_grp` set c_name = '$edit_name', cell_logo = '$fname', stations = '$array_stations', enabled = '$_POST[edit_enabled]'  where c_id='$id'";
-
-					}
-				}
-			}
-		}
-		else
-		{
-			if(isset($account)){
-				$sql = "update `cell_grp` set c_name = '$edit_name', account_id = '$account',  stations = '$array_stations', enabled = '$_POST[edit_enabled]'  where c_id='$id'";
-
-			}else{
-				$sql = "update `cell_grp` set c_name = '$edit_name',  stations = '$array_stations', enabled = '$_POST[edit_enabled]'  where c_id='$id'";
-
-			}
-		}
-
-
-		$result1 = mysqli_query($db, $sql);
-		if ($result1) {
-			$message_stauts_class = 'alert-success';
-			$import_status_message = 'Cell Updated Successfully.';
-			$sql = "select stations from `cell_grp`";
-			$result1 = mysqli_query($db, $sql);
-			$line_array = array();
-			while ($rowc = mysqli_fetch_array($result1)) {
-				$arr_stations = explode(',', $rowc['stations']);
-				foreach ($arr_stations as $station){
-					if(isset($station) && $station != ''){
-						array_push($line_array , $station);
-					}
-				}
-			}
-		} else {
-			$message_stauts_class = 'alert-danger';
-			if($import_status_message == "")
-			{
-				$import_status_message = 'Error: Please Try Again.';
-			}
-		}
-
-	}
 }
 ?>
 <!DOCTYPE html>
@@ -247,51 +163,6 @@ if (count($_POST) > 0) {
             display: none;
         }
 
-        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-            .col-lg-8 {
-                float: right;
-                width: 58% !important;
-            }
-            .col-lg-7 {
-                float: right;
-                width: 58% !important;
-            }
-            .col-lg-6 {
-                float: right;
-                width: 60% !important;
-            }
-
-
-            label.col-lg-4.control-label {
-                width: 40%;
-                float: left;
-            }
-            label.col-lg-5.control-label {
-                width: 42%;
-            }
-            .col-lg-6 {
-                float: left;
-                width: 55% !important;
-            }
-            .col-lg-2 {
-                width: 5%;
-
-            }
-            .col-md-6.mobile_select {
-                width: 80%!important;
-                float: left;
-                margin-left: 1px;
-            }
-
-        }
-        .col-md-6.mobile_select {
-            width: 80%;
-            float: left;
-            margin-left: 1px;
-        }
-        .col-lg-6 {
-            width: 45%;
-        }
 
     </style>
 </head>
@@ -320,7 +191,7 @@ include("../heading_banner.php");
                                 <!-- Customer Name -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <label class="col-lg-5 control-label">Cell Group Name * : </label>
+                                        <label class="col-lg-3 control-label">Cell Group Name * : </label>
                                         <div class="col-lg-7">
                                             <input type="text" name="c_grp_name" id="c_grp_name" class="form-control"
                                                    placeholder="Enter Cell Group Name" required>
@@ -332,7 +203,7 @@ include("../heading_banner.php");
                                 <!-- Customer Type -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <label class="col-lg-5 control-label">Customer / Account : </label>
+                                        <label class="col-lg-3 control-label">Customer / Account : </label>
                                         <div class="col-lg-7">
                                             <select name="account" id="account" class="select"
                                                     data-style="bg-slate">
@@ -352,11 +223,11 @@ include("../heading_banner.php");
                                     </div>
                                 </div>
                             </div>
-                            <div class="row"  style="margin-top: 15px;">
+                            <div class="row"  style="margin-top: 5px;">
                                 <!-- File Upload -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <label class="col-lg-5 control-label">Upload Cell Image : </label>
+                                        <label class="col-lg-3 control-label">Upload Cell Image : </label>
                                         <div class="col-lg-7">
                                             <input type="file" name="image" id="image"
                                                    class="form-control">
@@ -370,8 +241,7 @@ include("../heading_banner.php");
                                 <!-- Enabled -->
                                 <div class="col-md-6 mobile">
                                     <div class="form-group">
-                                        <!--										<div class="col-lg-8 mobile">-->
-                                        <label class="col-lg-5 control-label">Enabled: </label>
+                                        <label class="col-lg-3 control-label">Enabled: </label>
                                         <div class="col-lg-7">
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" id="yes" name="enabled" value="1" class="form-check-input" checked>
@@ -381,21 +251,13 @@ include("../heading_banner.php");
 
                                             </div>
                                         </div>
-<!--                                        <div class="col-lg-8">-->
-<!--                                            <select name="enabled" id="enabled" class=" form-control"-->
-<!--                                                    style="float: left;-->
-<!--                                                             width: initial;">-->
-<!--                                                     <option value="" selected disabled>--- Select Ratings ---</option>-->
-<!--                                                <option value="1">Yes</option>-->
-<!--                                                <option value="0">No</option>-->
-<!--                                            </select>-->
-<!--                                           									</div>-->
-<!--                                        </div>-->
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row" >
                                 <div class="col-md-6 mobile_select" >
                                     <div class="form-group">
-                                        <label class="col-lg-4 control-label mobile">Select Stations * : </label>
+                                        <label class="col-lg-3 control-label mobile">Select Stations * : </label>
 
 
                                         <div class="col-lg-6">
@@ -526,17 +388,18 @@ include("../heading_banner.php");
 									<td><?php echo $c_status; ?>
 									</td>
 									<td>
-										<button type="button" id="edit" class="btn btn-info btn-xs"
-												data-id="<?php echo $rowc['c_id']; ?>"
-												data-cell_name="<?php echo $rowc['c_name']; ?>"
-												data-cell_enabled="<?php echo $rowc['enabled']; ?>"
-												data-cell_account_id="<?php echo $cust_id; ?>"
-												data-cell_stations="<?php echo $stations; ?>"
-												data-cell_logo="<?php echo $rowc['cell_logo']; ?>"
-												data-assigned_line="<?php echo implode(",", $line_array); ?>"
+                                        <a href="edit_dashboard_config.php?id=<?php echo $c_id; ?>" class="btn btn-primary" data-id="<?php echo $cust_id; ?>"  style="background-color:#1e73be;">Edit</a>
+										<!--<button type="button" id="edit" class="btn btn-info btn-xs"
+												data-id="<?php /*echo $rowc['c_id']; */?>"
+												data-cell_name="<?php /*echo $rowc['c_name']; */?>"
+												data-cell_enabled="<?php /*echo $rowc['enabled']; */?>"
+												data-cell_account_id="<?php /*echo $cust_id; */?>"
+												data-cell_stations="<?php /*echo $stations; */?>"
+												data-cell_logo="<?php /*echo $rowc['cell_logo']; */?>"
+												data-assigned_line="<?php /*echo implode(",", $line_array); */?>"
 												data-toggle="modal" style="background-color:#1e73be;"
 												data-target="#edit_modal_theme_primary">Edit
-										</button>
+										</button>-->
 									</td>
 								</tr>
 							<?php } ?>
@@ -544,147 +407,6 @@ include("../heading_banner.php");
 						</table>
                     </div>
                 </form>
-
-			<!-- edit modal -->
-			<div id="edit_modal_theme_primary" class="modal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header bg-primary">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h6 class="modal-title">
-								Update Cell
-							</h6>
-						</div>
-						<form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
-							  method="post">
-							<div class="modal-body">
-								<!--Part Number-->
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="col-lg-4 control-label">Cell Name * : </label>
-											<div class="col-lg-8">
-												<input type="text" name="edit_cell_name" id="edit_cell_name"
-													   class="form-control" required>
-												<input type="hidden" name="edit_id" id="edit_id">
-											</div>
-										</div>
-									</div>
-								</div>
-								<!--Station-->
-                                <div class="row">
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Stations : *</label>
-                                            <div class="col-lg-8">
-												<?php
-												$query = sprintf("SELECT * FROM `cam_line`");
-												$qur = mysqli_query($db, $query);
-												$rowc = mysqli_fetch_array($qur);
-												?>
-                                                <select required name="edit_cell_stations[]" id="edit_cell_stations"  class="select-border-color form-control"
-                                                        multiple="multiple">
-                                                    <!--                                                        <select name="edit_part_number[]" id="edit_part_number" class="form-control" multiple>-->
-													<?php
-													$arrteam = explode(',', $rowc["stations"]);
-													$sql1 = "SELECT `line_id`, `line_name` FROM `cam_line` where enabled = 1  order by line_name ASC";
-
-													//$sql1 = "SELECT line_id , line_name FROM `cam_line` where enabled = 1 and line_id NOT in ('$assigned_stations') order by line_name ASC";
-													$result1 = $mysqli->query($sql1);
-													while ($row1 = $result1->fetch_assoc()) {
-														if (in_array($row1['line_id'], $arrteam)) {
-															$selected = "selected";
-//															echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "' $selected>" . $row1['line_name'] . "</option>";
-														} else {
-															$selected = "";
-
-														}
-														echo "<option id='" . $row1['line_id'] . "'  value='" . $row1['line_id'] . "' $selected>" . $row1['line_name'] . "</option>";
-
-													}
-
-													?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Account : </label>
-                                            <div class="col-lg-8">
-                                                <select name="edit_cell_account" id="edit_cell_account"
-                                                        class="form-control">
-                                                    <option value="" selected disabled>--- Select Account Type ---
-                                                    </option>
-													<?php
-													$sql1 = "SELECT * FROM `cus_account` and is_deleted != 1 ORDER BY `c_name` ASC";
-													$result1 = $mysqli->query($sql1);
-													//                                            $entry = 'selected';
-													while ($row1 = $result1->fetch_assoc()) {
-														echo "<option value='" . $row1['c_id'] . "'  >" . $row1['c_name'] . "</option>";
-													}
-													?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="col-lg-4 control-label">Enabled : </label>
-
-											<div class="col-lg-8">
-												<select name="edit_enabled" id="edit_enabled" class="form-control"
-														style="float: left;
-                                                             width: initial;">
-													<!--        <option value="" selected disabled>--- Select Ratings ---</option>-->
-													<option value="1">Yes</option>
-                                                    <option value="0">No</option>
-												</select>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!--NPR-->
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="col-lg-4 control-label">Upload New Logo : </label>
-											<div class="col-lg-8">
-												<input type="file" name="edit_logo_image" id="edit_logo_image1"
-													   class="form-control">
-												<div id="error6" class="red">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="col-lg-4 control-label">Previous Logo Preview : </label>
-											<div class="col-lg-8">
-
-												<img src="" alt="Image not Available" name="editlogo" id="editlogo" style="height:150px;width:150px;"/>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary">Save</button>
-								</div>
-							</div>
-					</div>
-
-					</form>
-				</div>
-			</div>
-
 		<!-- /dashboard content -->
 
             </div>
