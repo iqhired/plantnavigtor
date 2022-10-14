@@ -1,5 +1,5 @@
 <?php include("../config.php");
-$chicagotime = date("Y-m-d H:i:s");
+$chicagotime = date("Y-m-d");
 $time = date("H");
 $station = $_GET['id'];
 $sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$station'";
@@ -165,7 +165,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor1 ?>;">
                 <?php
                 $pm_npr= 30;
-                $qur04 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '00' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur04 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '00' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result333 = mysqli_query($db,$qur04);
                 $rowc04 = $result333->fetch_assoc();
                     $h = 1;
@@ -221,7 +221,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor ?>;">
                 <?php
                 $pm_npr2= 30;
-                $qur042 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '01' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur042 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '01' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result332 = mysqli_query($db,$qur042);
                 $rowc042 = $result332->fetch_assoc();
                 $h2 = 1;
@@ -277,7 +277,7 @@ include("../hp_header1.php");
                    <tr style="background-color: <?php echo $randomcolor2 ?>;">
                    <?php
                 $pm_npr311= 30;
-                $qur043 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '02' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur043 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '02' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result33 = mysqli_query($db,$qur043);
                 $rowc043 = $result33->fetch_assoc();
                 $h3 = 1;
@@ -331,7 +331,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor3 ?>;">
                 <?php
                 $pm_npr4= 30;
-                $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '03' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '03' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result34 = mysqli_query($db,$qur31);
                 $rowc044 = $result34->fetch_assoc();
                     $h4 = 1;
@@ -386,7 +386,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor4 ?>;">
                 <?php
                 $pm_npr55= 30;
-                $qur55 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '04' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur55 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '04' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result55 = mysqli_query($db,$qur55);
                 $row55 = $result55->fetch_assoc();
                 $h55 = 1;
@@ -440,7 +440,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor5 ?>;">
                 <?php
                 $pm_npr2= 30;
-                $qur21 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '05' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur21 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '05' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result211 = mysqli_query($db,$qur21);
                 $row211 = $result211->fetch_assoc();
                 $h2 = 1;
@@ -494,7 +494,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor6 ?>;">
                 <?php
                 $pm_npr3= 30;
-                $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '06' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur31 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '06' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result311 = mysqli_query($db,$qur31);
                 $row311 = $result311->fetch_assoc();
                 $h3 = 1;
@@ -548,7 +548,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor7 ?>;">
                 <?php
                 $pm_npr41= 30;
-                $qur41 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '07' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur41 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '07' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result411 = mysqli_query($db,$qur41);
                 $row411 = $result411->fetch_assoc();
                 $h41 = 1;
@@ -602,7 +602,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor8 ?>;">
                 <?php
                 $pm_npr51= 30;
-                $qur51 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '08' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur51 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '08' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result511 = mysqli_query($db,$qur51);
                 $row511 = $result511->fetch_assoc();
                 $h51 = 1;
@@ -656,7 +656,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor9 ?>;">
                 <?php
                 $pm_npr61= 30;
-                $qur61 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '09' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur61 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '09' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result611 = mysqli_query($db,$qur61);
                 $row611 = $result611->fetch_assoc();
                 $h61 = 1;
@@ -710,7 +710,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor10 ?>;">
                 <?php
                 $pm_npr71= 30;
-                $qur71 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '10' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur71 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '10' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result711 = mysqli_query($db,$qur71);
                 $row711 = $result711->fetch_assoc();
                 $h71 = 1;
@@ -764,7 +764,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor11 ?>;">
                 <?php
                 $pm_npr81= 30;
-                $qur81 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '11' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur81 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '11' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result811 = mysqli_query($db,$qur81);
                 $row811 = $result811->fetch_assoc();
                 $h81 = 1;
@@ -818,7 +818,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor12 ?>;">
                 <?php
                 $pm_npr91= 30;
-                $qur91 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '12' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur91 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '12' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result911 = mysqli_query($db,$qur91);
                 $row911 = $result911->fetch_assoc();
                 $h91 = 1;
@@ -872,7 +872,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor13 ?>;">
                 <?php
                 $pm_npr911= 30;
-                $qur911 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '13' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur911 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '13' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9111 = mysqli_query($db,$qur911);
                 $row9111 = $result911->fetch_assoc();
                 $h911 = 1;
@@ -926,7 +926,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor14 ?>;">
                 <?php
                 $pm_npr921= 30;
-                $qur921 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '14' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur921 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '14' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9211 = mysqli_query($db,$qur921);
                 $row9211 = $result9211->fetch_assoc();
                 $h921 = 1;
@@ -980,7 +980,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor15 ?>;">
                 <?php
                 $pm_npr931= 30;
-                $qur931 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '15' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur931 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '15' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9311 = mysqli_query($db,$qur931);
                 $row9311 = $result9311->fetch_assoc();
                 $h931 = 1;
@@ -1034,7 +1034,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor16 ?>;">
                 <?php
                 $pm_npr941= 30;
-                $qur941 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '16' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur941 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '16' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9411 = mysqli_query($db,$qur941);
                 $row9411 = $result9411->fetch_assoc();
                 $h941 = 1;
@@ -1088,7 +1088,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor17 ?>;">
                 <?php
                 $pm_npr951= 30;
-                $qur951 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '17' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur951 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '17' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9511 = mysqli_query($db,$qur951);
                 $row9511 = $result9511->fetch_assoc();
                 $h951 = 1;
@@ -1142,7 +1142,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor18 ?>;">
                 <?php
                 $pm_npr961= 30;
-                $qur961 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '18' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur961 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '18' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9611 = mysqli_query($db,$qur961);
                 $row9611 = $result9611->fetch_assoc();
                 $h961 = 1;
@@ -1196,7 +1196,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor19 ?>;">
                 <?php
                 $pm_npr971= 30;
-                $qur971 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '19' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur971 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '19' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9711 = mysqli_query($db,$qur971);
                 $row9711 = $result9711->fetch_assoc();
                 $h971 = 1;
@@ -1250,7 +1250,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor20 ?>;">
                 <?php
                 $pm_npr981= 30;
-                $qur981 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '20' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur981 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '20' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9811 = mysqli_query($db,$qur981);
                 $row9811 = $result9811->fetch_assoc();
                 $h981 = 1;
@@ -1304,7 +1304,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor21 ?>;">
                 <?php
                 $pm_npr991= 30;
-                $qur991 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '21' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur991 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '21' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result9911 = mysqli_query($db,$qur991);
                 $row9911 = $result9911->fetch_assoc();
                 $h991 = 1;
@@ -1358,7 +1358,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor22 ?>;">
                 <?php
                 $pm_npr191= 30;
-                $qur191 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '22' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur191 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,update_date FROM `npr_data` where station_event_id = '$station_id' and npr_h = '22' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result1911 = mysqli_query($db,$qur191);
                 $row1911 = $result1911->fetch_assoc();
                 $h191 = 1;
@@ -1412,7 +1412,7 @@ include("../hp_header1.php");
             <tr style="background-color: <?php echo $randomcolor23 ?>;">
                 <?php
                 $pm_npr291= 30;
-                $qur291 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,date(`update_date`) FROM `npr_data` where station_event_id = '$station_id' and npr_h = '23' and date(`update_date`) = CURDATE() group by npr_h";
+                $qur291 = "SELECT distinct npr_h,max(`npr_b`) as npr_b,max(`npr_gr`) as npr_gr,date(`update_date`) FROM `npr_data` where station_event_id = '$station_id' and npr_h = '23' and date(`update_date`) = '$chicagotime' group by npr_h";
                 $result2911 = mysqli_query($db,$qur291);
                 $row2911 = $result2911->fetch_assoc();
                 $h291 = 1;
