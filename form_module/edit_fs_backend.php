@@ -256,6 +256,9 @@ if(count($_POST)>0) {
                 $list_enabled_array = $_POST['list_enabled_'.$bansi_row];
                 $list_enabled = $list_enabled_array[0];
 
+                $radio_enabled_array1 = $_POST['radio_list_extra_'.$bansi_row];
+                $radio_enabled_array = implode (", ", $radio_enabled_array1);
+
                 if($list_enabled == ""){
                     $list_enabled = '0';
                 }else{
@@ -273,7 +276,7 @@ if(count($_POST)>0) {
 
 
                 $sql1 = "update `form_item` SET `form_item_seq` = '$index',`form_create_id` = '$form_create_id',`optional` = '$checked',`item_desc` = '$item_desc',`item_val` = '$item',
-`list_normal` = '$default_list',`list_name1` = '$none_alias',`list_name2` = '$yes_alias',`list_name3` = '$no_alias',`list_enabled` = '$list_enabled',`notes` = '$notes' ,
+`list_normal` = '$default_list',`list_name1` = '$none_alias',`list_name2` = '$yes_alias',`list_name3` = '$no_alias',`list_enabled` = '$list_enabled',`list_name_extra` = '$radio_enabled_array' ,`notes` = '$notes' ,
 `discription` = '$disc',`created_at`='$created_by' , `updated_at` = '$updated_by' where form_item_id = '$exp[0]'";
 
                 $result1 = mysqli_query($db, $sql1);
@@ -384,6 +387,9 @@ if(count($_POST)>0) {
                 $list_enabled_array = $_POST['list_enabled_'.$bansi_row];
                 $list_enabled = $list_enabled_array[0];
 
+                $radio_enabled_array1 = $_POST['radio_list_extra'];
+                $radio_enabled_array = implode (", ", $radio_enabled_array1);
+
                 if($list_enabled == ""){
                     $list_enabled = '0';
                 }else{
@@ -401,8 +407,8 @@ if(count($_POST)>0) {
                 $no_alias_array = $_POST['radio_list_no'];
                 $no_alias = $no_alias_array[($j-1)];
 
-                $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_enabled`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
-		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$list_enabled','$notes' ,'$disc' , '$created_by' , '$updated_by')";
+                $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_enabled`,`list_name_extra`,`notes` ,`discription`,`created_at` , `updated_at`) VALUES
+		('$j','$form_create_id' , '$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$list_enabled','$radio_enabled_array','$notes' ,'$disc' , '$created_by' , '$updated_by')";
                 $result1 = mysqli_query($db, $sql1);
                 if ($result1) {
                     $message_stauts_class = 'alert-success';
