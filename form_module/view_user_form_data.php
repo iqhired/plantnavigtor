@@ -554,7 +554,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                    class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                    id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
                                                                 echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
-                                                            <?php if ($rowc['list_enabled'] == 1) {?>
+
                                                                  <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['list_name1']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
@@ -567,7 +567,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
 
                                                             <?php
-                                                        } } else if (($checked == "no") ) { ?>
+                                                        }  else if (($checked == "no") ) { ?>
 
                                                             <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['list_name2']; ?>"
@@ -582,11 +582,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['list_name1']; ?>"
                                                                    class="form-check-input pn_none" disabled >
-                                                            <?php if ($rowc['list_enabled'] == 1) {?>
+
                                                             <label for="none" class="item_label" style="background-color: #ffadad;"
                                                                 <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php echo $rowc['list_name1']; ?></label>
 
-                                                        <?php } } else{ ?>
+                                                        <?php }  else{ ?>
 
                                                             <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['list_name2']; ?>"
@@ -598,14 +598,14 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                    class="form-check-input pn_none"  disabled >
                                                             <label for="no" class="item_label" style="background-color: #ffadad;"
                                                                 <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff!important;"';}?>><?php echo $rowc['list_name3']; ?></label>
-                                                            <?php if ($rowc['list_enabled'] == 1) {?>
+
                                                             <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
                                                                    value="<?php echo $rowc['list_name1']; ?>"
                                                                    class="form-check-input pn_none" checked disabled >
                                                             <label for="none" class="item_label" style="background-color: #ffadad;"
                                                                 <?php if($rowc['list_enabled'] ==1  ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff!important;"';}?>><?php echo $rowc['list_name1']; ?></label>
 
-                                                        <?php } }
+                                                        <?php }
                                                         ?>
                                                         <?php if ($rowc['optional'] == '1') {
                                                             echo '<span style="color: #a1a1a1; font-size: small;padding-top: 15px;padding-left:15px;">(Optional)</span>';
