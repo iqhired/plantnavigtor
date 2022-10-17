@@ -1470,11 +1470,15 @@ include("../heading_banner.php");
                                                                            ?>
 
 
-                                                                            <div class="custom-control custom-radio" id="add_other_<?php echo $rowcount; ?>">
+                                                                            <div class="custom-control custom-radio add_other_options" name="add_other_options" id="add_other_options"></div>
+                                                                            <input type="hidden" name="add_option_id"  id="add_option_id" value="0">
 
-                                                                            </div>
-                                                                            <div class="custom-control copy-radio"> <label class="add_option" id="add_other_<?php echo $rowcount; ?>">Add More</label>
-                                                                            </div>
+                                                                            <br/>
+                                                                            <button type="button" class="add_option_btn" id="add_other_<?php echo $rowcount; ?>" class="btn btn-primary legitRipple"
+                                                                                    style="background-color:#1e73be;">Add More
+                                                                            </button>
+                                                                            <!--                                                                            <div class="custom-control copy-radio"> <label class="add_option" id="add_other_--><?php //echo $rowcount; ?><!--" value ="--><?php //echo $rowcount; ?><!--" >Add More</label>-->
+                                                                            <!--                                                                            </div>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1865,11 +1869,20 @@ include("../heading_banner.php");
 </script>
 
 <script>
-    $(document).on("click",".add_option",function() {
+    $(document).on("click",".add_option_btn",function() {
+        var op_val = $('#add_option_id')[0].value;
         var index = this.id.split("_")[2];
-        $('#add_other_' + index).append('<div>' + '<input type="radio" class="custom-control-input" name="defaultExampleRadios">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
+        if(op_val == '0'){
+            op_val = index;
+            $('#add_option_id')[0].value = index;
+        }else{
+            op_val = parseInt(op_val) + 1;
+            $('#add_option_id')[0].value = op_val;
+        }
+        //add_other_options
+        // document.getElementById("add_other_options").innerHTML;
+        this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" name="defaultExampleRadios">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
     });
-
     function removeDiv(btn) {
         ((btn.parentNode).parentNode).removeChild(btn.parentNode);
     }</script>
