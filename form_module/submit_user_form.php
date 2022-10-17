@@ -985,13 +985,6 @@ include("../heading_banner.php");
                                             if (($checked == "yes") || ($checked == $rowc['list_name2']) ) {
                                                 ?>
 
-                                                <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
-                                                       value="<?php echo $rowc['list_name1']; ?>"
-                                                       class="form-check-input pn_none" checked disabled >
-                                                <label for="none"
-                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
-                                                    echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
 
                                                 <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="<?php echo $rowc['list_name2']; ?>"
@@ -1012,11 +1005,6 @@ include("../heading_banner.php");
                                                     echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
                                                 <!--															<label for="no" class="item_label"  style="background-color: green;">--><?php //echo $rowc['binary_no_alias'];
                                                 ?><!--</label>-->
-
-
-                                                <?php
-                                            } else { ?>
-
                                                 <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="<?php echo $rowc['list_name1']; ?>"
                                                        class="form-check-input pn_none" checked disabled >
@@ -1024,6 +1012,12 @@ include("../heading_banner.php");
                                                        class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
                                                     echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
+
+
+
+                                                <?php
+                                            } else { ?>
+
 
                                                 <input type="radio" id="yes" name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="<?php echo $rowc['list_name2']; ?>"
@@ -1035,6 +1029,14 @@ include("../heading_banner.php");
                                                        class="form-check-input pn_none" checked>
                                                 <label for="no" class="item_label"
                                                        style="background-color: #ffadad !important;"><?php echo $rowc['list_name3']; ?></label>
+                                                <input type="radio" id="none" name="<?php echo $rowc['form_item_id']; ?>"
+                                                       value="<?php echo $rowc['list_name1']; ?>"
+                                                       class="form-check-input pn_none" checked disabled >
+                                                <label for="none"
+                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name1'];
+                                                    echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
+
 
                                             <?php }
                                             ?>
