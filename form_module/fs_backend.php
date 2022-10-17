@@ -238,6 +238,10 @@ for($i = 1; $i <= $click_id; )
         $list_enabled_array = $_POST['list_enabled_'.$bansi_row];
         $list_enabled = $list_enabled_array[0];
 
+        $radio_enabled_array1 = $_POST['radio_list_extra'];
+
+        $radio_enabled_array = implode (", ", $radio_enabled_array1);
+
         if($list_enabled == ""){
             $list_enabled = '0';
         }else{
@@ -253,8 +257,8 @@ for($i = 1; $i <= $click_id; )
         $no_alias_array = $_POST['radio_list_no'];
         $no_alias = $no_alias_array[$j];
 
-            $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_enabled`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$list_enabled','$notes' ,'$disc', '$created_by' , '$updated_by')";
+            $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_name_extra`,`list_enabled`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$radio_enabled_array' ,'$list_enabled','$notes' ,'$disc', '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
