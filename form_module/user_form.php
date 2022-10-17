@@ -825,7 +825,7 @@ include("../heading_banner.php");
                                             <div class="col-md-2">
                                                 <button type="button" id="btnSubmit_1" class="btn btn-primary" disabled
                                                         style="background-color:#1e73be;">
-                                                    <Submit></Submit>
+                                                   Submit
                                                 </button>
                                             </div>
                                         </div>
