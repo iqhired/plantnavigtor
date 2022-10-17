@@ -36,7 +36,7 @@ if (count($_POST) > 0) {
     foreach ($users1 as $users) {
         $array_user .= $users . ",";
     }
-    $sql = "update sg_email_report_config set teams='$array_team',users='$array_user',subject='$_POST[subject]',message='$_POST[message]',signature='$_POST[signature]' where sg_mail_report_config_id='3'";
+    $sql = "update sg_email_report_config set teams='$array_team',users='$array_user',subject='$_POST[subject]',message='$_POST[message]',signature='$_POST[signature]' where sg_mail_report_config_id='5'";
     $result1 = mysqli_query($db, $sql);
     if ($result1) {
         $message_stauts_class = 'alert-success';
@@ -53,7 +53,7 @@ if (count($_POST) > 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | First Piece Sheet Log Config</title>
+    <title><?php echo $sitename; ?> | Daily Efficiency Report Log </title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -114,7 +114,7 @@ if (count($_POST) > 0) {
 <body>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "First Piece Sheet Log Config";
+$cust_cam_page_header = "Daily Efficiency Report Log ";
 include("../header_folder.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -130,7 +130,7 @@ include("../heading_banner.php");
         <!-- Basic datatable -->
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <h5 class="panel-title">First Piece Sheet Log Config</h5>
+                <h5 class="panel-title">Daily Efficiency Report Log </h5>
                 <?php if ($temp == "one") { ?>
                     <br/>					<div class="alert alert-success no-border">
                         <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
@@ -263,7 +263,7 @@ include("../heading_banner.php");
 
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/form_submit_log_config.php");
+        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/daily_report_gbp_config.php");
     }
 </script>
 <script>

@@ -712,7 +712,7 @@ $msg = explode(',', $msg); ?>
                                                 </a>
                                             </div>
 										<?php }
-                                        if (in_array('81', $msg)) { ?>
+                                        if (in_array('82', $msg)) { ?>
                                         <div class="mt-3">
                                             <a href="<?php echo $siteURL; ?>report_config_module/form_submit_log_config.php"
                                                class="text-muted mobile">
@@ -720,11 +720,19 @@ $msg = explode(',', $msg); ?>
                                             </a>
                                         </div>
                                         <?php }
-                                        if (in_array('82', $msg)) { ?>
+                                        if (in_array('83', $msg)) { ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
                                                    class="text-muted mobile">
                                                     Email Report Config
+                                                </a>
+                                            </div>
+                                        <?php }
+                                        if (in_array('84', $msg)) { ?>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>report_config_module/daily_report_gbp_config.php"
+                                                   class="text-muted mobile">
+                                                    Daily Efficiency Report Config
                                                 </a>
                                             </div>
                                         <?php } ?>
@@ -1582,6 +1590,12 @@ $msg = explode(',', $msg); ?>
                                                             <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">
                                                                     Email Report Config</h3></a>
+                                                        </div>
+                                                    <?php } if (in_array('84', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>report_config_module/daily_report_gbp_config.php"
+                                                               class="mega-link"><h3 class="text-muted fs-6">
+                                                                    Daily Efficiency Report Config</h3></a>
                                                         </div>
                                                     <?php } ?>
                                                 </div>

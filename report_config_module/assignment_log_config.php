@@ -157,11 +157,11 @@ if (count($_POST) > 0) {
                                 ?>
                                 <hr/>
                                 <?php
-                                $query = sprintf("SELECT * FROM  sg_assignment_log_config");
+                                $query = sprintf("SELECT * FROM  sg_email_report_config");
                                 $qur = mysqli_query($db, $query);
                                 while ($rowc = mysqli_fetch_array($qur)) {
                                     ?> 
-                                    <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $rowc['sg_assignment_log_config_id']; ?>" >
+                                    <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $rowc['sg_mail_report_config_id']; ?>" >
                                     <div class="row">
                                         <div class="col-md-12">
                                             <form action="" id="user_form" enctype="multipart/form-data"  class="form-horizontal" method="post">
