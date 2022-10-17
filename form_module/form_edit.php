@@ -1444,7 +1444,7 @@ include("../heading_banner.php");
                                                                             } ?>>
                                                                             <input type="search" name="radio_list_no[]" id="radio_list_no" value="<?php echo $rowcitem['list_name3']; ?>" class="radio_input">
 
-                                                                            <div class="list_none" id="listnone_<?php echo $rowcount; ?>" style="display:none">
+                                                                            <div class="list_none" id="listnone_<?php echo $rowcount; ?>">
                                                                                 <input type="radio" id="none"
                                                                                    name="default_list_<?php echo $rowcount; ?>[]"
                                                                                    value="none"
@@ -1453,6 +1453,23 @@ include("../heading_banner.php");
                                                                             } ?>>
                                                                             <input type="search" name="radio_list_none[]" id="radio_list_none" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
                                                                             </div>
+
+                                                                           <?php $list_extra =  $rowcitem['list_name_extra'];
+                                                                           $arrteam = explode(',', $list_extra);
+                                                                           foreach ($arrteam as $arr) { ?>
+                                                                                 <div class="list_extra" id="listextra_<?php echo $rowcount; ?>">
+                                                                                <input type="radio" id="extra"
+                                                                                       name="default_list_<?php echo $rowcount; ?>[]"
+                                                                                       value="extra"
+                                                                                       class="form-check-input" <?php if ($defaultlist == "") {
+                                                                                    echo 'checked';
+                                                                                } ?>>
+                                                                            <input type="search" name="radio_list_extra_<?php echo $rowcount; ?>[]" id="radio_list_extra[]" value="<?php echo $arr; ?>" class="radio_input">
+                                                                        </div>
+                                                                        <?php   }
+                                                                           ?>
+
+
                                                                             <div class="custom-control custom-radio" id="add_other_<?php echo $rowcount; ?>">
 
                                                                             </div>
@@ -1846,15 +1863,7 @@ include("../heading_banner.php");
         }
     });
 </script>
-<script>
-    function addoptions() {
-        $('#add_other').append('<div>' + '<input type="radio" class="custom-control-input" name="defaultExampleRadios">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
-    }
 
-    function removeDiv(btn) {
-        ((btn.parentNode).parentNode).removeChild(btn.parentNode);
-    }
-</script>
 <script>
     $(document).on("click",".add_option",function() {
         var index = this.id.split("_")[2];
