@@ -22,7 +22,7 @@ if (!empty($resultmain)) {
 /*$sad ="\\U1F60C";*/
 $text = "\\u1F603";
 $text1 = "\\U1F61E";
-$text2 = "\\U1F642";
+$text2 = "\\U1F634";
 $html = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text1);
 $html1 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text);
 $html2 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text2);
@@ -59,9 +59,6 @@ $html2 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text2);
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/gallery.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
     <style>
-        .content{
-            height: 100px !important;
-        }
         .table table-sm1{
             text-align:center;
             font-size: large;
@@ -81,11 +78,11 @@ $html2 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text2);
         }
         .table>tbody>tr>td{
             text-align: center;
-            padding: 10px 20px 10px 20px;
+            padding: 7px 20px 7px 20px;
+            border: 1px solid lightgrey;
+            border-collapse: collapse;
         }
-        .npr_data{
-            height: 900px;
-        }
+
     </style>
 </head>
 <body>
@@ -94,23 +91,23 @@ $html2 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text2);
 $cam_page_header = "NPR Dashboard - " . $station2;
 include("../hp_header1.php");
 ?>
-<div class="page-container">
+<div class="page-container" style="width: 100%;">
     <!-- Content area -->
     <div class="content">
         <div class="col-md-12" style="background-color: #eee;">
             <div class="col-md-6 com-mobile-version">
                 <div class="panel panel-flat ab" style="margin-top: 10px;">
-                    <form class="npr_data">
+                    <form>
                         <table class="table table-sm1">
                             <thead>
                             <tr>
-                                <th style="text-align:center;">Hours</th>
-                                <th style="text-align:center;">Goodpiece</th>
-                                <th style="text-align:center;">Badpiece</th>
-                                <th style="text-align:center;">Target NPR</th>
-                                <th style="text-align:center;">Actual NPR</th>
-                                <th style="text-align:center;">Effieciency</th>
-                                <th style="text-align:center;">Status</th>
+                                <th style="text-align:center;border: 1px solid lightgray;">Hours<br>(AM)</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Goodpiece</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Badpiece</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Target NPR</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Actual NPR</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Effieciency</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -144,10 +141,11 @@ include("../hp_header1.php");
                                 $actual_npr = round($npr_gr/$h,2);
                                 if($actual_npr < $target_npr){
                                     $s = $html;
-                                    $color = 'red';
                                 }else{
                                     $s = $html1;
-                                    $color = 'red';
+                                }
+                                if($time < '00'){
+                                    $s = $html2;
                                 }
                                 //effieciency
                                 $target_eff = round($pm_npr * $h);
@@ -155,7 +153,7 @@ include("../hp_header1.php");
                                 $eff = round(100 * ($actual_eff/$target_eff));
                                 if($npr_h == '00'){
                                     ?>
-                                    <td><?php echo '00'; ?></td>
+                                    <td><?php echo '00-01'; ?></td>
                                     <td><?php echo $npr_gr; ?></td>
                                     <td><?php echo $n1; ?></td>
                                     <td><?php echo $target_npr; ?></td>
@@ -163,7 +161,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '00'; ?></td>
+                                    <td><?php echo '00-01'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr; ?></td>
@@ -203,13 +201,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s2 = $html1;
                                 }
+                                if($time < '01'){
+                                    $s2 = $html2;
+                                }
                                 //effieciency
                                 $target_eff2 = round($pm_npr2 * $h2);
                                 $actual_eff2 = $npr_gr2;
                                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                                 if($npr_h2 == '01'){
                                     ?>
-                                    <td><?php echo '01'; ?></td>
+                                    <td><?php echo '01-02'; ?></td>
                                     <td><?php echo $npr_gr2; ?></td>
                                     <td><?php echo $n2; ?></td>
                                     <td><?php echo $target_npr2; ?></td>
@@ -217,7 +218,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff2; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '01'; ?></td>
+                                    <td><?php echo '01-02'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr2; ?></td>
@@ -259,13 +260,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s33 = $html1;
                                 }
+                                if($time < '02'){
+                                    $s33 = $html2;
+                                }
                                 //effieciency
                                 $target_eff33 = round($pm_npr311 * $h3);
                                 $actual_eff33 = $npr_gr33;
                                 $eff3 = round(100 * ($actual_eff33/$target_eff33));
                                 if($npr_h3 == '02'){
                                     ?>
-                                    <td><?php echo '02'; ?></td>
+                                    <td><?php echo '02-03'; ?></td>
                                     <td><?php echo $npr_gr33; ?></td>
                                     <td><?php echo $n3; ?></td>
                                     <td><?php echo $target_npr33; ?></td>
@@ -273,7 +277,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff3; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s33 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '02'; ?></td>
+                                    <td><?php echo '02-03'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr33; ?></td>
@@ -313,6 +317,9 @@ include("../hp_header1.php");
                                 }else{
                                     $s4 = $html1;
                                 }
+                                if($time < '03'){
+                                    $s4 = $html2;
+                                }
                                 //effieciency
                                 $target_eff4 = round($pm_npr4 * $h4);
                                 $actual_eff4 = $npr_gr4;
@@ -320,7 +327,7 @@ include("../hp_header1.php");
 
                                 if($npr_h3 == '03'){
                                     ?>
-                                    <td><?php echo '03'; ?></td>
+                                    <td><?php echo '03-04'; ?></td>
                                     <td><?php echo $npr_gr4; ?></td>
                                     <td><?php echo $n4; ?></td>
                                     <td><?php echo $target_npr4; ?></td>
@@ -328,7 +335,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff4; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s4 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '03'; ?></td>
+                                    <td><?php echo '03-04'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr4; ?></td>
@@ -368,13 +375,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s55 = $html1;
                                 }
+                                if($time < '04'){
+                                    $s55 = $html2;
+                                }
                                 //effieciency
                                 $target_eff55 = round($pm_npr55 * $h55);
                                 $actual_eff55 = $npr_gr55;
                                 $eff55 = round(100 * ($actual_eff55/$target_eff55));
                                 if($npr_h55 == '04'){
                                     ?>
-                                    <td><?php echo '04'; ?></td>
+                                    <td><?php echo '04-05'; ?></td>
                                     <td><?php echo $npr_gr55; ?></td>
                                     <td><?php echo $n5; ?></td>
                                     <td><?php echo $target_npr55; ?></td>
@@ -382,7 +392,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff55; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s55 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '04'; ?></td>
+                                    <td><?php echo '04-05'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr55; ?></td>
@@ -422,13 +432,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s2 = $html1;
                                 }
+                                if($time < '05'){
+                                    $s2 = $html2;
+                                }
                                 //effieciency
                                 $target_eff2 = round($pm_npr2 * $h2);
                                 $actual_eff2 = $npr_gr2;
                                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                                 if($npr_h2 == '05'){
                                     ?>
-                                    <td><?php echo '05'; ?></td>
+                                    <td><?php echo '05-06'; ?></td>
                                     <td><?php echo $npr_gr2; ?></td>
                                     <td><?php echo $n6; ?></td>
                                     <td><?php echo $target_npr2; ?></td>
@@ -436,7 +449,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff2; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '05'; ?></td>
+                                    <td><?php echo '05-06'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr2; ?></td>
@@ -476,13 +489,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s3 = $html1;
                                 }
+                                if($time < '06'){
+                                    $s3 = $html2;
+                                }
                                 //effieciency
                                 $target_eff3 = round($pm_npr3 * $h3);
                                 $actual_eff3 = $npr_gr3;
                                 $eff3 = round(100 * ($actual_eff3/$target_eff3));
                                 if($npr_h3 == '06'){
                                     ?>
-                                    <td><?php echo '06'; ?></td>
+                                    <td><?php echo '06-07'; ?></td>
                                     <td><?php echo $npr_gr3; ?></td>
                                     <td><?php echo $n7; ?></td>
                                     <td><?php echo $target_npr3; ?></td>
@@ -490,7 +506,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff3; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s3 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '06'; ?></td>
+                                    <td><?php echo '06-07'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr3; ?></td>
@@ -530,13 +546,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s41 = $html1;
                                 }
+                                if($time < '07'){
+                                    $s41 = $html2;
+                                }
                                 //effieciency
                                 $target_eff41 = round($pm_npr41 * $h41);
                                 $actual_eff41 = $npr_gr41;
                                 $eff41 = round(100 * ($actual_eff41/$target_eff41));
                                 if($npr_h41 == '07'){
                                     ?>
-                                    <td><?php echo '07'; ?></td>
+                                    <td><?php echo '07-08'; ?></td>
                                     <td><?php echo $npr_gr41; ?></td>
                                     <td><?php echo $n8; ?></td>
                                     <td><?php echo $target_npr41; ?></td>
@@ -544,7 +563,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff41; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s41 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '07'; ?></td>
+                                    <td><?php echo '07-08'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr41; ?></td>
@@ -584,13 +603,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s51 = $html1;
                                 }
+                                if($time < '08'){
+                                    $s51 = $html2;
+                                }
                                 //effieciency
                                 $target_eff51 = round($pm_npr51 * $h51);
                                 $actual_eff51 = $npr_gr51;
                                 $eff51 = round(100 * ($actual_eff51/$target_eff51));
                                 if($npr_h51 == '08'){
                                     ?>
-                                    <td><?php echo '08'; ?></td>
+                                    <td><?php echo '08-09'; ?></td>
                                     <td><?php echo $npr_gr51; ?></td>
                                     <td><?php echo $n9; ?></td>
                                     <td><?php echo $target_npr51; ?></td>
@@ -598,7 +620,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff51; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s51 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '08'; ?></td>
+                                    <td><?php echo '08-09'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr41; ?></td>
@@ -638,13 +660,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s61 = $html1;
                                 }
+                                if($time < '09'){
+                                    $s61 = $html2;
+                                }
                                 //effieciency
                                 $target_eff61 = round($pm_npr61 * $h61);
                                 $actual_eff61 = $npr_gr61;
                                 $eff61 = round(100 * ($actual_eff61/$target_eff61));
                                 if($npr_h61 == '09'){
                                     ?>
-                                    <td><?php echo '09'; ?></td>
+                                    <td><?php echo '09-10'; ?></td>
                                     <td><?php echo $npr_gr61; ?></td>
                                     <td><?php echo $n; ?></td>
                                     <td><?php echo $target_npr61; ?></td>
@@ -652,7 +677,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff61; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s61 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '09'; ?></td>
+                                    <td><?php echo '09-10'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr61; ?></td>
@@ -692,13 +717,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s71 = $html1;
                                 }
+                                if($time < '10'){
+                                    $s71 = $html2;
+                                }
                                 //effieciency
                                 $target_eff71 = round($pm_npr71 * $h71);
                                 $actual_eff71 = $npr_gr71;
                                 $eff71 = round(100 * ($actual_eff71/$target_eff71));
                                 if($npr_h71 == '10'){
                                     ?>
-                                    <td><?php echo '10'; ?></td>
+                                    <td><?php echo '10-11'; ?></td>
                                     <td><?php echo $npr_gr71; ?></td>
                                     <td><?php echo $n10; ?></td>
                                     <td><?php echo $target_npr71; ?></td>
@@ -706,7 +734,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff71; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s71 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '10'; ?></td>
+                                    <td><?php echo '10-11'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr71; ?></td>
@@ -746,13 +774,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s81 = $html1;
                                 }
+                                if($time < '11'){
+                                    $s81 = $html2;
+                                }
                                 //effieciency
                                 $target_eff81 = round($pm_npr81 * $h81);
                                 $actual_eff81 = $npr_gr81;
                                 $eff81 = round(100 * ($actual_eff81/$target_eff81));
                                 if($npr_h81 == '11'){
                                     ?>
-                                    <td><?php echo '11'; ?></td>
+                                    <td><?php echo '11-12'; ?></td>
                                     <td><?php echo $npr_gr81; ?></td>
                                     <td><?php echo $n11; ?></td>
                                     <td><?php echo $target_npr81; ?></td>
@@ -760,7 +791,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff81; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '11'; ?></td>
+                                    <td><?php echo '11-12'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr81; ?></td>
@@ -769,6 +800,29 @@ include("../hp_header1.php");
                                     <td><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 com-mobile-version">
+                <div class="panel panel-flat cd" style="margin-top: 10px;">
+                    <!--<div class="panel-heading">-->
+                    <form>
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Hours<br>(PM)</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Goodpiece</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Badpiece</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Target NPR</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Actual NPR</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Effieciency</th>
+                                <th style="text-align:center;border: 1px solid lightgray;border-collapse: collapse;">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             <?php
                             $i12 = 12;
                             if($i12 == $time){
@@ -800,13 +854,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s91 = $html1;
                                 }
+                                if($time < '12'){
+                                    $s91 = $html2;
+                                }
                                 //effieciency
                                 $target_eff91 = round($pm_npr91 * $h91);
                                 $actual_eff91 = $npr_gr91;
                                 $eff91 = round(100 * ($actual_eff91/$target_eff91));
                                 if($npr_h91 == '12'){
                                     ?>
-                                    <td><?php echo '12'; ?></td>
+                                    <td><?php echo '00-01'; ?></td>
                                     <td><?php echo $npr_gr91; ?></td>
                                     <td><?php echo $n12; ?></td>
                                     <td><?php echo $target_npr91; ?></td>
@@ -814,7 +871,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff91; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '12'; ?></td>
+                                    <td><?php echo '00-01'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr91; ?></td>
@@ -823,29 +880,6 @@ include("../hp_header1.php");
                                     <td><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-6 com-mobile-version">
-                <div class="panel panel-flat cd" style="margin-top: 10px;">
-                    <!--<div class="panel-heading">-->
-                    <form>
-                        <table class="table table-sm">
-                            <thead>
-                            <tr>
-                                <th style="text-align:center;">Hours</th>
-                                <th style="text-align:center;">Goodpiece</th>
-                                <th style="text-align:center;">Badpiece</th>
-                                <th style="text-align:center;">Target NPR</th>
-                                <th style="text-align:center;">Actual NPR</th>
-                                <th style="text-align:center;">Effieciency</th>
-                                <th style="text-align:center;">Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
                             <?php
                             $i13 = 13;
                             if($i13 == $time){
@@ -877,13 +911,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s911 = $html1;
                                 }
+                                if($time < '13'){
+                                    $s911 = $html2;
+                                }
                                 //effieciency
                                 $target_eff911 = round($pm_npr911 * $h911);
                                 $actual_eff911 = $npr_gr911;
                                 $eff911 = round(100 * ($actual_eff911/$target_eff911));
                                 if($npr_h911 == '13'){
                                     ?>
-                                    <td><?php echo '13'; ?></td>
+                                    <td><?php echo '01-02'; ?></td>
                                     <td><?php echo $npr_gr911; ?></td>
                                     <td><?php echo $n13; ?></td>
                                     <td><?php echo $target_npr911; ?></td>
@@ -891,7 +928,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff911; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s911 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '13'; ?></td>
+                                    <td><?php echo '01-02'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr911; ?></td>
@@ -931,13 +968,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s921 = $html1;
                                 }
+                                if($time < '14'){
+                                    $s921 = $html2;
+                                }
                                 //effieciency
                                 $target_eff921 = round($pm_npr921 * $h921);
                                 $actual_eff921 = $npr_gr921;
                                 $eff921 = round(100 * ($actual_eff921/$target_eff921));
                                 if($npr_h921 == '14'){
                                     ?>
-                                    <td><?php echo '14'; ?></td>
+                                    <td><?php echo '02-03'; ?></td>
                                     <td><?php echo $npr_gr921; ?></td>
                                     <td><?php echo $n14; ?></td>
                                     <td><?php echo $target_npr921; ?></td>
@@ -945,7 +985,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff921; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s921 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '14'; ?></td>
+                                    <td><?php echo '02-03'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr921; ?></td>
@@ -985,13 +1025,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s931 = $html1;
                                 }
+                                if($time < '15'){
+                                    $s931 = $html2;
+                                }
                                 //effieciency
                                 $target_eff931 = round($pm_npr931 * $h931);
                                 $actual_eff931 = $npr_gr931;
                                 $eff931 = round(100 * ($actual_eff931/$target_eff931));
                                 if($npr_h931 == '15'){
                                     ?>
-                                    <td><?php echo '15'; ?></td>
+                                    <td><?php echo '03-04'; ?></td>
                                     <td><?php echo $npr_gr931; ?></td>
                                     <td><?php echo $n15; ?></td>
                                     <td><?php echo $target_npr931; ?></td>
@@ -999,7 +1042,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff931; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s931 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '15'; ?></td>
+                                    <td><?php echo '03-04'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr931; ?></td>
@@ -1039,6 +1082,9 @@ include("../hp_header1.php");
                                 }else{
                                     $s941 = $html1;
                                 }
+                                if($time < '16'){
+                                    $s941 = $html2;
+                                }
 
                                 //effieciency
                                 $target_eff941 = round($pm_npr941 * $h941);
@@ -1046,7 +1092,7 @@ include("../hp_header1.php");
                                 $eff941 = round(100 * ($actual_eff941/$target_eff941));
                                 if($npr_h941 == '16'){
                                     ?>
-                                    <td><?php echo '16'; ?></td>
+                                    <td><?php echo '04-05'; ?></td>
                                     <td><?php echo $npr_gr941; ?></td>
                                     <td><?php echo $n16; ?></td>
                                     <td><?php echo $target_npr941; ?></td>
@@ -1054,7 +1100,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff941; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s941 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '16'; ?></td>
+                                    <td><?php echo '04-05'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr941; ?></td>
@@ -1094,13 +1140,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s951 = $html1;
                                 }
+                                if($time < '17'){
+                                    $s951 = $html2;
+                                }
                                 //effieciency
                                 $target_eff951 = round($pm_npr951 * $h951);
                                 $actual_eff951 = $npr_gr951;
                                 $eff951 = round(100 * ($actual_eff951/$target_eff951));
                                 if($npr_h951 == '17'){
                                     ?>
-                                    <td><?php echo '17'; ?></td>
+                                    <td><?php echo '05-06'; ?></td>
                                     <td><?php echo $npr_gr951; ?></td>
                                     <td><?php echo $n17; ?></td>
                                     <td><?php echo $target_npr951; ?></td>
@@ -1108,7 +1157,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff951; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s951 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '17'; ?></td>
+                                    <td><?php echo '05-06'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr951; ?></td>
@@ -1148,13 +1197,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s961 = $html1;
                                 }
+                                if($time < '18'){
+                                    $s961 = $html2;
+                                }
                                 //effieciency
                                 $target_eff961 = round($pm_npr961 * $h961);
                                 $actual_eff961 = $npr_gr961;
                                 $eff961 = round(100 * ($actual_eff961/$target_eff961));
                                 if($npr_h961 == '18'){
                                     ?>
-                                    <td><?php echo '18'; ?></td>
+                                    <td><?php echo '06-07'; ?></td>
                                     <td><?php echo $npr_gr961; ?></td>
                                     <td><?php echo $n18; ?></td>
                                     <td><?php echo $target_npr961; ?></td>
@@ -1162,7 +1214,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff961; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s961 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '18'; ?></td>
+                                    <td><?php echo '06-07'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr961; ?></td>
@@ -1202,13 +1254,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s971 = $html1;
                                 }
+                                if($time < '19'){
+                                    $s971 = $html2;
+                                }
                                 //effieciency
                                 $target_eff971 = round($pm_npr971 * $h971);
                                 $actual_eff971 = $npr_gr971;
                                 $eff971 = round(100 * ($actual_eff971/$target_eff971));
                                 if($npr_h971 == '19'){
                                     ?>
-                                    <td><?php echo '19'; ?></td>
+                                    <td><?php echo '07-08'; ?></td>
                                     <td><?php echo $npr_gr971; ?></td>
                                     <td><?php echo $n19; ?></td>
                                     <td><?php echo $target_npr971; ?></td>
@@ -1216,7 +1271,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff971; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s971 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '19'; ?></td>
+                                    <td><?php echo '07-08'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr971; ?></td>
@@ -1256,13 +1311,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s981 = $html1;
                                 }
+                                if($time < '20'){
+                                    $s981 = $html2;
+                                }
                                 //effieciency
                                 $target_eff981 = round($pm_npr981 * $h981);
                                 $actual_eff981 = $npr_gr981;
                                 $eff981 = round(100 * ($actual_eff981/$target_eff981));
                                 if($npr_h981 == '20'){
                                     ?>
-                                    <td><?php echo '20'; ?></td>
+                                    <td><?php echo '08-09'; ?></td>
                                     <td><?php echo $npr_gr981; ?></td>
                                     <td><?php echo $n20; ?></td>
                                     <td><?php echo $target_npr981; ?></td>
@@ -1270,7 +1328,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff981; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s981 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '20'; ?></td>
+                                    <td><?php echo '08-09'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr981; ?></td>
@@ -1310,13 +1368,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s991 = $html1;
                                 }
+                                if($time < '21'){
+                                    $s991 = $html2;
+                                }
                                 //effieciency
                                 $target_eff991 = round($pm_npr991 * $h991);
                                 $actual_eff991 = $npr_gr991;
                                 $eff991 = round(100 * ($actual_eff991/$target_eff991));
                                 if($npr_h991 == '21'){
                                     ?>
-                                    <td><?php echo '21'; ?></td>
+                                    <td><?php echo '09-10'; ?></td>
                                     <td><?php echo $npr_gr991; ?></td>
                                     <td><?php echo $n21; ?></td>
                                     <td><?php echo $target_npr991; ?></td>
@@ -1324,7 +1385,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff991; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s991 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '21'; ?></td>
+                                    <td><?php echo '09-10'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr991; ?></td>
@@ -1364,13 +1425,16 @@ include("../hp_header1.php");
                                 }else{
                                     $s191 = $html1;
                                 }
+                                if($time < '22'){
+                                    $s191 = $html2;
+                                }
                                 //effieciency
                                 $target_eff191 = round($pm_npr191 * $h191);
                                 $actual_eff191 = $npr_gr191;
                                 $eff191 = round(100 * ($actual_eff191/$target_eff191));
                                 if($npr_h191 == '22'){
                                     ?>
-                                    <td><?php echo '22'; ?></td>
+                                    <td><?php echo '10-11'; ?></td>
                                     <td><?php echo $npr_gr191; ?></td>
                                     <td><?php echo $n22; ?></td>
                                     <td><?php echo $target_npr191; ?></td>
@@ -1378,7 +1442,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff191; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s191 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '22'; ?></td>
+                                    <td><?php echo '10-11'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr191; ?></td>
@@ -1418,6 +1482,9 @@ include("../hp_header1.php");
                                 }else{
                                     $s291 = $html1;
                                 }
+                                if($time < '23'){
+                                    $s291 = $html2;
+                                }
                                 //effieciency
                                 $target_eff291 = round($pm_npr191 * $h291);
                                 $actual_eff291 = $npr_gr291;
@@ -1425,7 +1492,7 @@ include("../hp_header1.php");
                                 //
                                 if($npr_h291 == '23'){
                                     ?>
-                                    <td><?php echo '23'; ?></td>
+                                    <td><?php echo '11-12'; ?></td>
                                     <td><?php echo $npr_gr291; ?></td>
                                     <td><?php echo $n23; ?></td>
                                     <td><?php echo $target_npr291; ?></td>
@@ -1433,7 +1500,7 @@ include("../hp_header1.php");
                                     <td><?php echo $eff291; ?>%</td>
                                     <td><?php echo '<span style="font-size: 22pt">' . $s291 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '23'; ?></td>
+                                    <td><?php echo '11-12'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo '0'; ?></td>
                                     <td><?php echo $target_npr291; ?></td>
