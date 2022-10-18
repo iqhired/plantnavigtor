@@ -157,7 +157,7 @@ if (count($_POST) > 0) {
                                 ?>
                                 <hr/>
                                 <?php
-                                $query = sprintf("SELECT * FROM  sg_email_report_config");
+                                $query = sprintf("SELECT * FROM  sg_email_report_config where sg_mail_report_config_id = '1'");
                                 $qur = mysqli_query($db, $query);
                                 while ($rowc = mysqli_fetch_array($qur)) {
                                     ?> 

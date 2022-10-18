@@ -157,7 +157,7 @@ include("../heading_banner.php");
                 ?>
                 <hr/>
                 <?php
-                $query = sprintf("SELECT * FROM  sg_email_report_config");
+                $query = sprintf("SELECT * FROM  sg_email_report_config where sg_mail_report_config_id = '5'");
                 $qur = mysqli_query($db, $query);
                 while ($rowc = mysqli_fetch_array($qur)) {
                     ?>
