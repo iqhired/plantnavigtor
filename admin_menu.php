@@ -680,7 +680,15 @@ $msg = explode(',', $msg); ?>
 
                                 <div class="collapse my-2" id="collapseJava3">
                                     <div class="ms-4">
-										<?php if (in_array('32', $msg)) { ?>
+                                        <?php if (in_array('83', $msg)) { ?>
+                                        <div class="mt-3">
+                                            <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
+                                               class="text-muted mobile">
+                                                Enable Disable Email Report Config
+                                            </a>
+                                        </div>
+										<?php }
+                                        if (in_array('32', $msg)) { ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>report_config_module/assignment_log_config.php"
                                                    class="text-muted mobile">
@@ -719,14 +727,6 @@ $msg = explode(',', $msg); ?>
                                                 First Piece Sheet Report Config
                                             </a>
                                         </div>
-                                        <?php }
-                                        if (in_array('83', $msg)) { ?>
-                                            <div class="mt-3">
-                                                <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
-                                                   class="text-muted mobile">
-                                                    Email Report Config
-                                                </a>
-                                            </div>
                                         <?php }
                                         if (in_array('84', $msg)) { ?>
                                             <div class="mt-3">
@@ -1555,7 +1555,13 @@ $msg = explode(',', $msg); ?>
                                         <div class="row">
                                             <div class="col-md-6 mt-2">
                                                 <div class="p-3">
-													<?php if (in_array('32', $msg)) { ?>
+                                                    <?php if (in_array('83', $msg)) { ?>
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
+                                                           class="mega-link"><h3 class="text-muted fs-6">
+                                                                Enable Disable Email Report Config</h3></a>
+                                                    </div>
+													<?php } if (in_array('32', $msg)) { ?>
                                                         <div class="mb-3">
                                                             <a href="<?php echo $siteURL; ?>report_config_module/assignment_log_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">Assignment
@@ -1584,12 +1590,6 @@ $msg = explode(',', $msg); ?>
                                                             <a href="<?php echo $siteURL; ?>report_config_module/form_submit_log_config.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">
                                                                     First Piece Sheet Report Config</h3></a>
-                                                        </div>
-                                                    <?php } if (in_array('83', $msg)) { ?>
-                                                        <div class="mb-3">
-                                                            <a href="<?php echo $siteURL; ?>report_config_module/email_report_config.php"
-                                                               class="mega-link"><h3 class="text-muted fs-6">
-                                                                    Email Report Config</h3></a>
                                                         </div>
                                                     <?php } if (in_array('84', $msg)) { ?>
                                                         <div class="mb-3">
