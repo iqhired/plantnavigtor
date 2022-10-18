@@ -14,7 +14,7 @@ $mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->SMTPAuth = true;
 $mail->Username = 'admin@plantnavigator.com';
-$mail->Password = 'S@@rgummi_2021';
+$mail->Password = 'S@@rgummi_2022';
 $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 $query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'crew assignment report'");
 $qur = mysqli_query($db, $query);

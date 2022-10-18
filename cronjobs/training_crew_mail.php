@@ -19,7 +19,7 @@ $temp = "0";
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAuth = true;
     $mail->Username = 'admin@plantnavigator.com';
-    $mail->Password = 'S@@rgummi@2021';
+    $mail->Password = 'S@@rgummi@2022';
     $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 
 

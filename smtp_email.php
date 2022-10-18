@@ -62,7 +62,7 @@ if ($name != "" || $group != "") {
 //Username to use for SMTP authentication - use full email address for gmail
     $mail->Username = 'admin@plantnavigator.com';
 //Password to use for SMTP authentication
-    $mail->Password = 'S@@rgummi@2021';
+    $mail->Password = 'S@@rgummi_2022';
 //Set who the message is to be sent from
     $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 //Set an alternative reply-to address
