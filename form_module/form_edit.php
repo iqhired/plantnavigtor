@@ -1870,29 +1870,22 @@ include("../heading_banner.php");
 
 <script>
     $(document).on("click",".add_option_btn",function() {
-        var data = $("#form_edit").serialize();
-        $.ajax({
-            type: 'POST',
-            url: 'edit_fs_backend.php',
-            data: data,
-            success: function (data) {
-                window.onload();
+        var op_val = this.parentElement.children.add_option_id.value;
+        var index = this.id.split("_")[2];
+        if (op_val == '0') {
+            op_val = 1;
+            index = op_val;
+            this.parentElement.children.add_option_id.value = index;
+        } else {
+            op_val = parseInt(op_val) + 1;
+            this.parentElement.children.add_option_id.value = op_val;
+            index = op_val;
+        }
 
-                var op_val = $('#add_option_id')[0].value;
-                var index = this.id.split("_")[2];
-                if (op_val == '0') {
-                    op_val = index;
-                    $('#add_option_id')[0].value = index;
-                } else {
-                    op_val = parseInt(op_val) + 1;
-                    $('#add_option_id')[0].value = op_val;
-                }
+        //add_other_options
+        // document.getElementById("add_other_options").innerHTML;
+        this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
 
-                //add_other_options
-                // document.getElementById("add_other_options").innerHTML;
-                this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
-            }
-        });
     });
     function removeDiv(btn) {
         ((btn.parentNode).parentNode).removeChild(btn.parentNode);
