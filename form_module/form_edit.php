@@ -1456,17 +1456,21 @@ include("../heading_banner.php");
 
                                                                             <?php $list_extra =  $rowcitem['list_name_extra'];
                                                                             $arrteam = explode(',', $list_extra);
+                                                                            $radiocount = 1;
                                                                             foreach ($arrteam as $arr) { ?>
-                                                                                <div class="list_extra" id="listextra_<?php echo $rowcount; ?>">
-                                                                                    <input type="radio" id="extra"
+                                                                              <div class="list_extra" id="listextra_<?php echo $rowcount; ?>">
+
+                                                                                    <input class="form-check-input" id="extra"
                                                                                            name="default_list_<?php echo $rowcount; ?>[]"
-                                                                                           value="extra"
-                                                                                           class="form-check-input" <?php if ($defaultlist == "") {
+                                                                                           type="radio"
+                                                                                           value="extra_<?php echo $radiocount; ?>"
+                                                                                           class="form-check-input" <?php if ($defaultlist == "extra_$radiocount") {
                                                                                         echo 'checked';
                                                                                     } ?>>
                                                                                     <input type="search" name="radio_list_extra_<?php echo $rowcount; ?>[]" id="radio_list_extra[]" value="<?php echo $arr; ?>" class="radio_input">
                                                                                 </div>
-                                                                            <?php   }
+
+                                                                       <?php $radiocount++;  }
                                                                             ?>
 
 
@@ -1871,7 +1875,7 @@ include("../heading_banner.php");
 <script>
     $(document).on("click",".add_option_btn",function() {
         var op_val = this.parentElement.children.add_option_id.value;
-        var index = this.id.split("_")[2];
+        var index1 = this.id.split("_")[2];
         if (op_val == '0') {
             op_val = 1;
             index = op_val;
@@ -1884,7 +1888,7 @@ include("../heading_banner.php");
 
         //add_other_options
         // document.getElementById("add_other_options").innerHTML;
-        this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
+        this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
 
     });
     function removeDiv(btn) {

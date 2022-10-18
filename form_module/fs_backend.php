@@ -248,6 +248,9 @@ for($i = 1; $i <= $click_id; )
             $list_enabled = '1';
         }
 
+        $radio_array1 = $_POST['extra_'.$bansi_row];
+        $radio_array = $radio_array1[0];
+
         $none_alias_array = $_POST['radio_list_none'];
         $none_alias = $none_alias_array[$j];
 

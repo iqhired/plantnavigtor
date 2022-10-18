@@ -298,9 +298,9 @@ if(count($_POST)>0) {
 					$message_stauts_class = 'alert-success';
 					$import_status_message = 'Form Item updated successfully.';
 				} else {
-					$message_stauts_class = 'alert-danger';
-					$import_status_message = 'Error: Please Insert valid data';
-				}
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
 			}
 
 //			$sql0 = "UPDATE `form_item` SET `form_item_seq`='$j' where form_item_id = '$exp[0]'";
