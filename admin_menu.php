@@ -168,6 +168,12 @@ $msg = explode(',', $msg); ?>
                                                     Line Utilisation Dashboard
                                                 </a>
                                             </div>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>config_module/line_utilization_view.php"
+                                                   class="text-muted mobile">
+                                                    Line Utilisation Data By Date
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 								<?php } ?>
@@ -968,6 +974,10 @@ $msg = explode(',', $msg); ?>
                                                 <div class="mb-3">
                                                     <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">Line Utilization Dashboard</h3></a>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>config_module/line_utilization_view.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Line Utilization Data By Date</h3></a>
                                                 </div>
                                             </div>
                                         </div>

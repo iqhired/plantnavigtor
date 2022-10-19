@@ -155,7 +155,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
         }
         .list_none {
             float: right;
-            margin-right: 58px;
+            margin-right: 95px;
         }
         div#add_other {
             padding: 10px;
