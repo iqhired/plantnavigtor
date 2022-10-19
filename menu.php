@@ -47,3 +47,8 @@ $temp = "";
     <h3><?php echo $siteURL ?>log_module/update_station_event_log_backend_page.php</h3>
 </a>
 <br>
+<h3>Graph Link for line graph </h3>
+<a href="<?php echo $siteURL ?>form_module/form_graph.php" target="_blank">
+    <h3><?php echo $siteURL ?>form_module/form_graph.php</h3>
+</a>
+<br>
