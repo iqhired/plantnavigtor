@@ -1475,7 +1475,7 @@ include("../heading_banner.php");
                                                                             ?>
 
 
-                                                                            <div class="custom-control custom-radio add_other_options" name="add_other_options" id="add_other_options"></div>
+                                                                            <div class="custom-control custom-radio add_other_options_<?php echo $rowcount; ?>" name="add_other_options_<?php echo $rowcount; ?>" id="add_other_options_<?php echo $rowcount; ?>"></div>
                                                                             <input type="hidden" name="add_option_id"  id="add_option_id" value="0">
 
                                                                             <br/>
@@ -1890,7 +1890,7 @@ include("../heading_banner.php");
 
         //add_other_options
         // document.getElementById("add_other_options").innerHTML;
-        $('.add_other_options').append('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra_' + index1 + '[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
+        $('.add_other_options_' + index1 + '').append('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra_' + index1 + '[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
 
     });
     function removeDiv(btn) {
