@@ -101,7 +101,7 @@ if ($button == "button1") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | </title>
+    <title><?php echo $sitename; ?> | Line Utilization By Date</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -237,7 +237,7 @@ if ($button == "button1") {
 <body class="alt-menu sidebar-noneoverflow">
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Form Submit View Count";
+$cust_cam_page_header = "Line Utilization Data By Date";
 include("../header_folder.php");
 
 include("../admin_menu.php");
