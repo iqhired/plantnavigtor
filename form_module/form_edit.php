@@ -1877,6 +1877,7 @@ include("../heading_banner.php");
     $(document).on("click",".add_option_btn",function() {
         var op_val = this.parentElement.children.add_option_id.value;
         var index1 = this.id.split("_")[2];
+
         if (op_val == '0') {
             op_val = 1;
             index = op_val;
@@ -1889,7 +1890,7 @@ include("../heading_banner.php");
 
         //add_other_options
         // document.getElementById("add_other_options").innerHTML;
-        this.parentNode.parentNode.parentNode.getElementsByClassName('add_other_options')[0].innerHTML += ('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
+        $('.add_other_options').append('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra_' + index1 + '[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
 
     });
     function removeDiv(btn) {
