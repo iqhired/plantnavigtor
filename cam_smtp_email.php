@@ -17,7 +17,7 @@ $mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->SMTPAuth = true;
 $mail->Username = 'admin@plantnavigator.com';
-$mail->Password = 'S@@rgummi_2021';
+$mail->Password = 'S@@rgummi_2022';
 $mail->setFrom('admin@plantnavigator.com', 'First Last');
 for ($i = 0; $i < $cnt;) {
     $u_name = $name[$i];

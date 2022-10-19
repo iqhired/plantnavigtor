@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', false);
 include("../config.php");
-$chicagotime = date('m-d-Y', strtotime('-5 days'));
+$chicagotime = date('m-d-Y', strtotime('-1 days'));
 $subject = "Daily Mail Report";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -14,9 +14,9 @@ $mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->SMTPAuth = true;
 $mail->Username = 'admin@plantnavigator.com';
-$mail->Password = 'S@@rgummi_2021';
+$mail->Password = 'S@@rgummi_2022';
 $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
-$query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'Daily Efficiency GBP Report'");
+$query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'Daily Efficiency Report'");
 $qur = mysqli_query($db, $query);
 while ($rowc = mysqli_fetch_array($qur)) {
     $group = explode(',', $rowc["teams"]);
@@ -73,7 +73,7 @@ if($mail_box == '1') {
         echo "Mailer Error: " . $mail->ErrorInfo;
     }
     else{
-
+        echo "success";
     }
 }
 function save_mail($mail)
