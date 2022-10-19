@@ -387,7 +387,7 @@ if(count($_POST)>0) {
                 $list_enabled_array = $_POST['list_enabled_'.$bansi_row];
                 $list_enabled = $list_enabled_array[0];
 
-                $radio_enabled_array1 = $_POST['radio_list_extra'];
+                $radio_enabled_array1 = $_POST['radio_list_extra_'.$bansi_row];
                 $radio_enabled_array = implode (", ", $radio_enabled_array1);
 
                 if($list_enabled == ""){
