@@ -225,7 +225,8 @@ while ($row = mysqli_fetch_array($result0)) {
             $sql_result2 = mysqli_query($db,$sql_result1);
         }
     }else if(!empty($total_time)) {
-
+		$sql_result1 = "Update sg_station_event_log SET is_incomplete = '0' where station_event_log_id = '$station_event_log_id'";
+		$sql_result2 = mysqli_query($db,$sql_result1);
         $s_arr_1 = explode(' ', $time);
         $s_arr = explode(':', $s_arr_1[1]);
         $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
