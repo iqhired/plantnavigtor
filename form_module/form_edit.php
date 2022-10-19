@@ -1443,8 +1443,8 @@ include("../heading_banner.php");
                                                                                 echo 'checked';
                                                                             } ?>>
                                                                             <input type="search" name="radio_list_no[]" id="radio_list_no" value="<?php echo $rowcitem['list_name3']; ?>" class="radio_input">
-
-                                                                            <div class="list_none" id="listnone_<?php echo $rowcount; ?>">
+                                                                            <?php if (empty($rowcitem['list_name1'])){ ?>
+                                                                            <div class="list_none" id="listnone_<?php echo $rowcount; ?>" style="display: none">
                                                                                 <input type="radio" id="none"
                                                                                        name="default_list_<?php echo $rowcount; ?>[]"
                                                                                        value="none"
@@ -1453,6 +1453,17 @@ include("../heading_banner.php");
                                                                                 } ?>>
                                                                                 <input type="search" name="radio_list_none[]" id="radio_list_none" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
                                                                             </div>
+                                                                            <?php } else { ?>
+                                                                            <div class="list_none" id="listnone_<?php echo $rowcount; ?>" style="display: block">
+                                                                                <input type="radio" id="none"
+                                                                                       name="default_list_<?php echo $rowcount; ?>[]"
+                                                                                       value="none"
+                                                                                       class="form-check-input" <?php if ($defaultlist == "none") {
+                                                                                    echo 'checked';
+                                                                                } ?>>
+                                                                                <input type="search" name="radio_list_none[]" id="radio_list_none" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
+                                                                            </div>
+                                                                            <?php } ?>
 
                                                                             <?php $list_extra =  $rowcitem['list_name_extra'];
                                                                             $arrteam = explode(',', $list_extra);
