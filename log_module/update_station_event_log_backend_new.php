@@ -45,7 +45,7 @@ while ($row = mysqli_fetch_array($result0)) {
 
     if (empty($total_time)) {
 
-        $is_sql = "update sg_station_event_log set is_incomplete = '1' where station_event_id = '$station_event_id'";
+        $is_sql = "update sg_station_event_log set is_incomplete = '1'  where station_event_log_id = '$station_event_log_id'";
         $is_result = mysqli_query($db,$is_sql);
 
         $datetime1 = strtotime($current_time);
