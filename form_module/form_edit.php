@@ -1468,6 +1468,7 @@ include("../heading_banner.php");
                                                                                         echo 'checked';
                                                                                     } ?>>
                                                                                     <input type="search" name="radio_list_extra_<?php echo $rowcount; ?>[]" id="radio_list_extra[]" value="<?php echo $arr; ?>" class="radio_input">
+                                                                                  <button class="remove" onclick="removeDiv(this);">X</button>
                                                                                 </div>
 
                                                                        <?php $radiocount++;  }
