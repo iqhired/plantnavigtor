@@ -20,7 +20,7 @@ if(empty($dateto)){
 }
 
 if(empty($datefrom)){
-    $yesdate = date('Y-m-d',strtotime("-2 days"));
+    $yesdate = date('Y-m-d',strtotime("-1 days"));
     $datefrom = $yesdate;
 }
 

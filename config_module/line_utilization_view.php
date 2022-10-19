@@ -101,7 +101,7 @@ if ($button == "button1") {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | </title>
+    <title><?php echo $sitename; ?> | Line Utilization By Date</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -237,7 +237,7 @@ if ($button == "button1") {
 <body class="alt-menu sidebar-noneoverflow">
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Form Submit View Count";
+$cust_cam_page_header = "Line Utilization Data By Date";
 include("../header_folder.php");
 
 include("../admin_menu.php");
@@ -367,6 +367,9 @@ include("../heading_banner.php");
                 var dt = data.posts.map(function (elem) {
                     return elem.dt;
                 });
+                var h = data.posts.map(function (elem) {
+                    return elem.h;
+                });
 
                 var data = [
                     {x: 'Line-Up', value: line_up, fill: '#12AD2B'},
@@ -388,7 +391,8 @@ include("../heading_banner.php");
 
                 // set the chart title
                 chart.title(
-                    '<div style=\'color:#333; font-size: 14px;\'>Line Utilization Data From : <span style="color:#009900; font-size: 12px;"><strong> ' +df+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +dt+' </strong></span></div>'
+                    '<div style=\'color:#333; font-size: 14px;\'>Line Utilization Data From : <span style="color:#009900; font-size: 12px;"><strong> ' +df+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +dt+' </strong></span></div><br>' +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total : <span style="color:#009900; font-size: 12px;"><strong> ' +h+' </strong></span>Hrs</div>'
                 );
                 chart
                     .title()
