@@ -1,6 +1,9 @@
 <?php include("../config.php");
 $button_event = "button3";
 $curdate = date('Y-m-d');
+$h1 = 24;
+$h2 = date('H');
+$h3 = $h1 + $h2;
 $dateto = $curdate;
 $datefrom = $curdate;
 $button = "";
@@ -111,7 +114,7 @@ while ($row3=$result3->fetch_assoc()){
         $d3 = $t3;
     }
     if($st != ""){
-        $posts[] = array('line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> $datefrom,'dt'=> $dateto);
+        $posts[] = array('line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> $datefrom,'dt'=> $dateto,'h'=> $h3);
     }
 }
 $response['posts'] = $posts;

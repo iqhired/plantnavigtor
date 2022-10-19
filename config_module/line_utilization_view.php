@@ -367,6 +367,9 @@ include("../heading_banner.php");
                 var dt = data.posts.map(function (elem) {
                     return elem.dt;
                 });
+                var h = data.posts.map(function (elem) {
+                    return elem.h;
+                });
 
                 var data = [
                     {x: 'Line-Up', value: line_up, fill: '#12AD2B'},
@@ -388,7 +391,8 @@ include("../heading_banner.php");
 
                 // set the chart title
                 chart.title(
-                    '<div style=\'color:#333; font-size: 14px;\'>Line Utilization Data From : <span style="color:#009900; font-size: 12px;"><strong> ' +df+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +dt+' </strong></span></div>'
+                    '<div style=\'color:#333; font-size: 14px;\'>Line Utilization Data From : <span style="color:#009900; font-size: 12px;"><strong> ' +df+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +dt+' </strong></span></div><br>' +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total : <span style="color:#009900; font-size: 12px;"><strong> ' +h+' </strong></span>Hrs</div>'
                 );
                 chart
                     .title()
