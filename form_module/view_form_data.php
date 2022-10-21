@@ -728,11 +728,24 @@ include("../hp_header.php");
                                             <u><b><?php echo $rowc['discription']; ?> </b></u></div>
 
                                     </div><br/>
-									<?php
-									$aray_item_cnt++;
+                                    <?php
+                                    $aray_item_cnt++;
 
-								}
-							}
+                                }
+                            }
+                            ?>
+
+                            <br/>
+                            <?php
+                            $qur05 = mysqli_query($db, "SELECT * FROM  form_approval where form_user_data_id = '$id' ");
+                            $rowc05 = mysqli_fetch_array($qur05);
+                            $app_in = $rowc05["approval_initials"];
+                            $passcd = $rowc05["passcode"];
+                            $datetime = $rowc05["created_at"];
+                            $date_time = strtotime($datetime);
+
+                            $approval_status = $rowc05["approval_status"];
+                            $reject_status = $rowc05["reject_status"];
 
                             if (empty($approval_status) && empty($reject_status)){ ?>
                             <b><h4 class="panel-title form_panel_title" style="background-color: #4caf507a;"> Auto Approved by System</h4></b>
