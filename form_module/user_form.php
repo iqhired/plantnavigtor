@@ -585,8 +585,6 @@ include("../heading_banner.php");
                                             <input type="hidden" name="form_item_array[]"
                                                    value="<?php echo $rowc['form_item_id']; ?>"/>
                                             <div class="form-check form-check-inline form_col_option">
-
-
                                                 <input type="radio" id="yes"
                                                        name="<?php echo $rowc['form_item_id']; ?>"
                                                        value="yes"
@@ -613,7 +611,7 @@ include("../heading_banner.php");
                                                        class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
 													echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
-                                                <?php if ($list_enabled == 1) {?>
+                                                <?php if ($list_enabled == 1) { ?>
                                                     <input type="radio" id="none"
                                                            name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="none"
@@ -627,10 +625,30 @@ include("../heading_banner.php");
                                                            class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
                                                         echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+
+
                                                 <?php } ?>
+                                                 <?php $list_extra =  $rowc['list_name_extra'];
+                                                 $arrteam = explode(',', $list_extra);
+                                                 $radiocount = 1;
+                                                 foreach ($arrteam as $arr) { ?>
+                                                <input type="radio" id="extra"
+                                                       name="<?php echo $rowc['form_item_id']; ?>"
+                                                       value="extra_<?php echo $radiocount; ?>"
+                                                       class="form-check-input" <?php if ($list_def == "extra_$radiocount") {
+                                                    echo 'checked';
+                                                }
+                                                if ($rowc['optional'] != '1') {
+                                                    echo 'required';
+                                                } ?> />
+                                                <label for="extra"
+                                                       class="item_label <?php echo $rowc['form_item_id']; ?>"
+                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = "$arr";
+                                                    echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
 												<?php if ($rowc['optional'] == '1') {
 													echo '<span style="color: #a1a1a1; font-size: small;">(Optional)</span>';
-												} ?>
+
+                                                }   $radiocount++; } ?>
                                             </div>
                                         </div>
 

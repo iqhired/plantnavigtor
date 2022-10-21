@@ -111,15 +111,28 @@ include("../hp_header1.php");
                             </tr>
                             </thead>
                             <tbody>
-
                             <?php
                             $i1 = 00;
-                            if($i1 == $time){
-                                $randomcolor1 = "lightgreen";
+                            $sql2 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 00";
+                            $res2 = mysqli_query($db, $sql2);
+                            $r2 = $res2->fetch_assoc();
+                            $tp2 = $r2['t'];
+                            if($tp2 == null){
+                                $r = 111;
                             }else{
-                                $randomcolor1 = "white";
+                                $r = $tp2;
                             }
-
+                            $p2 = 00;
+                            if($r == $p2){
+                                $randomcolor1 = "#FF3131";
+                            }else if($i1 == $time){
+                                $randomcolor1 = "#90EE90";
+                            }else{
+                                $randomcolor1 = "#FFFFFF";
+                            }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor1 ?>;">
                                 <?php
@@ -172,10 +185,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i = 01;
-                            if($i == $time){
-                                $randomcolor = "lightgreen";
+                            $sql21 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t1 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 1";
+                            $res21 = mysqli_query($db, $sql21);
+                            $r21 = $res21->fetch_assoc();
+                            $tp21 = $r21['t1'];
+                            $p21 = 1;
+                            if($tp21 == $p21){
+                                $randomcolor = "#FF3131";
+                            }else if($i == $time){
+                                $randomcolor = "#90EE90";
                             }else{
-                                $randomcolor = "white";
+                                $randomcolor = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor ?>;">
@@ -230,12 +253,21 @@ include("../hp_header1.php");
 
                             <?php
                             $i2 = 02;
-                            if($i2 == $time){
-                                $randomcolor2 = "lightgreen";
+                            $sql22 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t2 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 2";
+                            $res22 = mysqli_query($db, $sql22);
+                            $r22 = $res22->fetch_assoc();
+                            $tp22 = $r22['t2'];
+                            $p22 = 2;
+                            if($tp22 == $p22){
+                                $randomcolor2 = "#FF3131";
+                            }else if($i2 == $time){
+                                $randomcolor2 = "#90EE90";
                             }else{
-                                $randomcolor2 = "white";
+                                $randomcolor2 = "#FFFFFF";
                             }
-
                             ?>
                             <tr style="background-color: <?php echo $randomcolor2 ?>;">
                                 <?php
@@ -288,10 +320,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i3 = 03;
-                            if($i3 == $time){
-                                $randomcolor3 = "lightgreen";
+                            $sql32 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t3 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 3";
+                            $res32 = mysqli_query($db, $sql32);
+                            $r32 = $res32->fetch_assoc();
+                            $tp32 = $r32['t3'];
+                            $p32 = 3;
+                            if($tp32 == $p32){
+                                $randomcolor3 = "#FF3131";
+                            }else if($i3 == $time){
+                                $randomcolor3 = "#90EE90";
                             }else{
-                                $randomcolor3 = "white";
+                                $randomcolor3 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor3 ?>;">
@@ -346,10 +388,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i4 = 04;
-                            if($i4 == $time){
-                                $randomcolor4 = "lightgreen";
+                            $sql42 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t4 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 4";
+                            $res42 = mysqli_query($db, $sql42);
+                            $r42 = $res42->fetch_assoc();
+                            $tp42 = $r42['t4'];
+                            $p42 = 4;
+                            if($tp42 == $p42){
+                                $randomcolor4 = "#FF3131";
+                            }else if($i4 == $time){
+                                $randomcolor4 = "#90EE90";
                             }else{
-                                $randomcolor4 = "white";
+                                $randomcolor4 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor4 ?>;">
@@ -403,10 +455,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i5 = 05;
-                            if($i5 == $time){
-                                $randomcolor5 = "lightgreen";
+                            $sql52 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t5 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 5";
+                            $res52 = mysqli_query($db, $sql52);
+                            $r52 = $res52->fetch_assoc();
+                            $tp52 = $r52['t5'];
+                            $p52 = 5;
+                            if($tp52 == $p52){
+                                $randomcolor5 = "#FF3131";
+                            }else if($i5 == $time){
+                                $randomcolor5 = "#90EE90";
                             }else{
-                                $randomcolor5 = "white";
+                                $randomcolor5 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor5 ?>;">
@@ -460,10 +522,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i6 = 06;
-                            if($i6 == $time){
-                                $randomcolor6 = "lightgreen";
+                            $sql62 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t6 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 6";
+                            $res62 = mysqli_query($db, $sql62);
+                            $r62 = $res62->fetch_assoc();
+                            $tp62 = $r62['t6'];
+                            $p62 = 6;
+                            if($tp62 == $p62){
+                                $randomcolor6 = "#FF3131";
+                            }else if($i6 == $time){
+                                $randomcolor6 = "#90EE90";
                             }else{
-                                $randomcolor6 = "white";
+                                $randomcolor6 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor6 ?>;">
@@ -517,10 +589,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i7 = 07;
-                            if($i7 == $time){
-                                $randomcolor7 = "lightgreen";
+                            $sql72 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t7 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 7";
+                            $res72 = mysqli_query($db, $sql72);
+                            $r72 = $res72->fetch_assoc();
+                            $tp72 = $r72['t7'];
+                            $p72 = 7;
+                            if($tp72 == $p72){
+                                $randomcolor7 = "#FF3131";
+                            }else if($i7 == $time){
+                                $randomcolor7 = "#90EE90";
                             }else{
-                                $randomcolor7 = "white";
+                                $randomcolor7 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor7 ?>;">
@@ -574,10 +656,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i8 = 8;
-                            if($i8 == $time){
-                                $randomcolor8 = "lightgreen";
+                            $sql82 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t8 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 8";
+                            $res82 = mysqli_query($db, $sql82);
+                            $r82 = $res82->fetch_assoc();
+                            $tp82 = $r82['t8'];
+                            $p82 = 8;
+                            if($tp82 == $p82){
+                                $randomcolor8 = "#FF3131";
+                            }else if($i8 == $time){
+                                $randomcolor8 = "#90EE90";
                             }else{
-                                $randomcolor8 = "white";
+                                $randomcolor8 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor8 ?>;">
@@ -631,10 +723,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i9 = 9;
-                            if($i9 == $time){
-                                $randomcolor9 = "lightgreen";
+                            $sql92 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t9 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 9";
+                            $res92 = mysqli_query($db, $sql92);
+                            $r92 = $res92->fetch_assoc();
+                            $tp92 = $r92['t9'];
+                            $p92 = 9;
+                            if($tp92 == $p92){
+                                $randomcolor9 = "#FF3131";
+                            }else if($i9 == $time){
+                                $randomcolor9 = "#90EE90";
                             }else{
-                                $randomcolor9 = "white";
+                                $randomcolor9 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor9 ?>;">
@@ -688,10 +790,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i10 = 10;
-                            if($i10 == $time){
-                                $randomcolor10 = "lightgreen";
+                            $sql102 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t10 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 10";
+                            $res102 = mysqli_query($db, $sql102);
+                            $r102 = $res102->fetch_assoc();
+                            $tp102 = $r102['t10'];
+                            $p102 = 10;
+                            if($tp102 == $p102){
+                                $randomcolor10 = "#FF3131";
+                            }else if($i10 == $time){
+                                $randomcolor10 = "#90EE90";
                             }else{
-                                $randomcolor10 = "white";
+                                $randomcolor10 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor10 ?>;">
@@ -745,10 +857,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i11 = 11;
-                            if($i11 == $time){
-                                $randomcolor11 = "lightgreen";
+                            $sql112 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t11 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 11";
+                            $res112 = mysqli_query($db, $sql112);
+                            $r112 = $res112->fetch_assoc();
+                            $tp112 = $r112['t11'];
+                            $p112 = 11;
+                            if($tp112 == $p112){
+                                $randomcolor11 = "#FF3131";
+                            }else if($i11 == $time){
+                                $randomcolor11 = "#90EE90";
                             }else{
-                                $randomcolor11 = "white";
+                                $randomcolor11 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor11 ?>;">
@@ -825,10 +947,20 @@ include("../hp_header1.php");
                             <tbody>
                             <?php
                             $i12 = 12;
-                            if($i12 == $time){
-                                $randomcolor12 = "lightgreen";
+                            $sql122 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t12 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 12";
+                            $res122 = mysqli_query($db, $sql122);
+                            $r122 = $res122->fetch_assoc();
+                            $tp122 = $r122['t12'];
+                            $p122 = 12;
+                            if($tp122 == $p122){
+                                $randomcolor12 = "#FF3131";
+                            }else if($i12 == $time){
+                                $randomcolor12 = "#90EE90";
                             }else{
-                                $randomcolor12 = "white";
+                                $randomcolor12 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor12 ?>;">
@@ -882,10 +1014,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i13 = 13;
-                            if($i13 == $time){
-                                $randomcolor13 = "lightgreen";
+                            $sql132 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t13 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 13";
+                            $res132 = mysqli_query($db, $sql132);
+                            $r132 = $res132->fetch_assoc();
+                            $tp132 = $r132['t13'];
+                            $p132 = 13;
+                            if($tp132 == $p132){
+                                $randomcolor13 = "#FF3131";
+                            }else if($i13 == $time){
+                                $randomcolor13 = "#90EE90";
                             }else{
-                                $randomcolor13 = "white";
+                                $randomcolor13 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;">
@@ -939,10 +1081,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i14 = 14;
-                            if($i14 == $time){
-                                $randomcolor14 = "lightgreen";
+                            $sql142 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t14 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 14";
+                            $res142 = mysqli_query($db, $sql142);
+                            $r142 = $res142->fetch_assoc();
+                            $tp142 = $r142['t14'];
+                            $p142 = 14;
+                            if($tp142 == $p142){
+                                $randomcolor14 = "#FF3131";
+                            }else if($i14 == $time){
+                                $randomcolor14 = "#90EE90";
                             }else{
-                                $randomcolor14 = "white";
+                                $randomcolor14 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor14 ?>;">
@@ -996,10 +1148,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i15 = 15;
-                            if($i15 == $time){
-                                $randomcolor15 = "lightgreen";
+                            $sql152 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t15 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 15";
+                            $res152 = mysqli_query($db, $sql152);
+                            $r152 = $res152->fetch_assoc();
+                            $tp152 = $r152['t15'];
+                            $p152 = 15;
+                            if($tp152 == $p152){
+                                $randomcolor15 = "#FF3131";
+                            }else if($i15 == $time){
+                                $randomcolor15 = "#90EE90";
                             }else{
-                                $randomcolor15 = "white";
+                                $randomcolor15 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor15 ?>;">
@@ -1053,10 +1215,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i16 = 16;
-                            if($i16 == $time){
-                                $randomcolor16 = "lightgreen";
+                            $sql162 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t16 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 16";
+                            $res162 = mysqli_query($db, $sql162);
+                            $r162 = $res162->fetch_assoc();
+                            $tp162 = $r162['t16'];
+                            $p162 = 16;
+                            if($tp162 == $p162){
+                                $randomcolor16 = "#FF3131";
+                            }else if($i16 == $time){
+                                $randomcolor16 = "#90EE90";
                             }else{
-                                $randomcolor16 = "white";
+                                $randomcolor16 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor16 ?>;">
@@ -1111,10 +1283,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i17 = 17;
-                            if($i17 == $time){
-                                $randomcolor17 = "lightgreen";
+                            $sql172 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t17 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 17";
+                            $res172 = mysqli_query($db, $sql172);
+                            $r172 = $res172->fetch_assoc();
+                            $tp172 = $r172['t16'];
+                            $p172 = 17;
+                            if($tp172 == $p172){
+                                $randomcolor17 = "#FF3131";
+                            }else if($i17 == $time){
+                                $randomcolor17 = "#90EE90";
                             }else{
-                                $randomcolor17 = "white";
+                                $randomcolor17 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor17 ?>;">
@@ -1168,10 +1350,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i18 = 18;
-                            if($i18 == $time){
-                                $randomcolor18 = "lightgreen";
+                            $sql182 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t18 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 18";
+                            $res182 = mysqli_query($db, $sql182);
+                            $r182 = $res182->fetch_assoc();
+                            $tp182 = $r182['t18'];
+                            $p182 = 18;
+                            if($tp182 == $p182){
+                                $randomcolor18 = "#FF3131";
+                            }else if($i18 == $time){
+                                $randomcolor18 = "#90EE90";
                             }else{
-                                $randomcolor18 = "white";
+                                $randomcolor18 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor18 ?>;">
@@ -1225,10 +1417,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i19 = 19;
-                            if($i19 == $time){
-                                $randomcolor19 = "lightgreen";
+                            $sql192 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t19 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 19";
+                            $res192 = mysqli_query($db, $sql192);
+                            $r192 = $res192->fetch_assoc();
+                            $tp192 = $r192['t19'];
+                            $p192 = 19;
+                            if($tp192 == $p192){
+                                $randomcolor19 = "#FF3131";
+                            }else if($i19 == $time){
+                                $randomcolor19 = "#90EE90";
                             }else{
-                                $randomcolor19 = "white";
+                                $randomcolor19 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor19 ?>;">
@@ -1282,10 +1484,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i20 = 20;
-                            if($i20 == $time){
-                                $randomcolor20 = "lightgreen";
+                            $sql202 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t20 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 20";
+                            $res202 = mysqli_query($db, $sql202);
+                            $r202 = $res202->fetch_assoc();
+                            $tp202 = $r202['t20'];
+                            $p202 = 20;
+                            if($tp202 == $p202){
+                                $randomcolor20 = "#FF3131";
+                            }else if($i20 == $time){
+                                $randomcolor20 = "#90EE90";
                             }else{
-                                $randomcolor20 = "white";
+                                $randomcolor20 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor20 ?>;">
@@ -1339,10 +1551,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i21 = 21;
-                            if($i21 == $time){
-                                $randomcolor21 = "lightgreen";
+                            $sql212 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t21 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 21";
+                            $res212 = mysqli_query($db, $sql212);
+                            $r212 = $res212->fetch_assoc();
+                            $tp212 = $r212['t21'];
+                            $p212 = 21;
+                            if($tp212 == $p212){
+                                $randomcolor21 = "#FF3131";
+                            }else if($i21 == $time){
+                                $randomcolor21 = "#90EE90";
                             }else{
-                                $randomcolor21 = "white";
+                                $randomcolor21 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor21 ?>;">
@@ -1396,10 +1618,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i22 = 22;
-                            if($i22 == $time){
-                                $randomcolor22 = "lightgreen";
+                            $sql222 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t22 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 22";
+                            $res222 = mysqli_query($db, $sql222);
+                            $r222 = $res222->fetch_assoc();
+                            $tp222 = $r222['t22'];
+                            $p222 = 22;
+                            if($tp222 == $p222){
+                                $randomcolor22 = "#FF3131";
+                            }else if($i22 == $time){
+                                $randomcolor22 = "#90EE90";
                             }else{
-                                $randomcolor22 = "white";
+                                $randomcolor22 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor22 ?>;">
@@ -1453,10 +1685,20 @@ include("../hp_header1.php");
                             </tr>
                             <?php
                             $i23 = 23;
-                            if($i23 == $time){
-                                $randomcolor23 = "lightgreen";
+                            $sql232 = "SELECT sg_station_event.station_event_id,sg_station_event_log.event_cat_id,sg_station_event.line_id,sg_station_event_log.`created_on`,hour(sg_station_event_log.`created_on`) as t23 FROM `sg_station_event` 
+                                      INNER JOIN sg_station_event_log ON sg_station_event.station_event_id = sg_station_event_log.station_event_id 
+                                      WHERE sg_station_event.line_id = '$station' and date(sg_station_event_log.`created_on`) = '$chicagotime' and date(sg_station_event.`modified_on`) = '$chicagotime' and sg_station_event_log.event_cat_id = 4 
+                                      and hour(sg_station_event_log.`created_on`) = 23";
+                            $res232 = mysqli_query($db, $sql232);
+                            $r232 = $res232->fetch_assoc();
+                            $tp232 = $r232['t23'];
+                            $p232 = 23;
+                            if($tp232 == $p232){
+                                $randomcolor23 = "#FF3131";
+                            }else if($i23 == $time){
+                                $randomcolor23 = "#90EE90";
                             }else{
-                                $randomcolor23 = "white";
+                                $randomcolor23 = "#FFFFFF";
                             }
                             ?>
                             <tr style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;">
