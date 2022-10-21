@@ -1876,7 +1876,8 @@ include("../heading_banner.php");
         var index = this.id.split("_")[1];
         var checkBox = document.getElementById("listenabled_" + index);
         var text = document.getElementById("listnone_" + index);
-        if (checkBox.checked == true) {
+        var extraCount = this.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[3].childNodes[1].querySelectorAll('#extra').length;
+        if (checkBox.checked == true && extraCount == 0) {
             text.style.display = "block";
         } else {
             text.style.display = "none";
