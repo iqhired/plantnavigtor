@@ -129,7 +129,7 @@ include("../hp_header1.php");
                             if($r == $p2){
                                 $randomcolor1 = "#FF3131";
                             }else if($i1 == $time){
-                                $randomcolor1 = "#90EE90";
+                                $randomcolor1 = "#dadada";
                             }else{
                                 $randomcolor1 = "#FFFFFF";
                             }
@@ -156,6 +156,7 @@ include("../hp_header1.php");
                                     $s = $html;
                                 }else{
                                     $s = $html1;
+                                    $randomcolor1 = "#90EE90";
                                 }
                                 if($time < '00'){
                                     $s = $html2;
@@ -165,22 +166,22 @@ include("../hp_header1.php");
                                 $actual_eff = $npr_gr;
                                 $eff = round(100 * ($actual_eff/$target_eff));
                                 if($npr_h == '00'){
-                                    ?>
-                                    <td><?php echo '00-01'; ?></td>
-                                    <td><?php echo $npr_gr; ?></td>
-                                    <td><?php echo $n1; ?></td>
-                                    <td><?php echo $target_npr; ?></td>
-                                    <td><?php echo $actual_npr; ?></td>
-                                    <td><?php echo $eff; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '00-01'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $npr_gr; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $n1; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $target_npr; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $actual_npr; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $eff; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '<span style="font-size: 22pt">' . $s . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '00-01'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '00-01'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo $target_npr; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor1 ?>;"><?php echo '<span style="font-size: 22pt">' . $s . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -196,10 +197,11 @@ include("../hp_header1.php");
                             if($tp21 == $p21){
                                 $randomcolor = "#FF3131";
                             }else if($i == $time){
-                                $randomcolor = "#90EE90";
+                                $randomcolor = "#dadada";
                             }else{
                                 $randomcolor = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor ?>;">
                                 <?php
@@ -223,6 +225,7 @@ include("../hp_header1.php");
                                     $s2 = $html;
                                 }else{
                                     $s2 = $html1;
+                                    $randomcolor = "#90EE90";
                                 }
                                 if($time < '01'){
                                     $s2 = $html2;
@@ -232,22 +235,22 @@ include("../hp_header1.php");
                                 $actual_eff2 = $npr_gr2;
                                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                                 if($npr_h2 == '01'){
-                                    ?>
-                                    <td><?php echo '01-02'; ?></td>
-                                    <td><?php echo $npr_gr2; ?></td>
-                                    <td><?php echo $n2; ?></td>
-                                    <td><?php echo $target_npr2; ?></td>
-                                    <td><?php echo $actual_npr2; ?></td>
-                                    <td><?php echo $eff2; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '01-02'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $npr_gr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $n2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $target_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $actual_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $eff2; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '01-02'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr2; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '01-02'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo $target_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor ?>;"><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php }?>
                             </tr>
 
@@ -264,10 +267,11 @@ include("../hp_header1.php");
                             if($tp22 == $p22){
                                 $randomcolor2 = "#FF3131";
                             }else if($i2 == $time){
-                                $randomcolor2 = "#90EE90";
+                                $randomcolor2 = "#dadada";
                             }else{
                                 $randomcolor2 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor2 ?>;">
                                 <?php
@@ -291,6 +295,7 @@ include("../hp_header1.php");
                                     $s33 = $html;
                                 }else{
                                     $s33 = $html1;
+                                    $randomcolor2 = "#90EE90";
                                 }
                                 if($time < '02'){
                                     $s33 = $html2;
@@ -300,22 +305,22 @@ include("../hp_header1.php");
                                 $actual_eff33 = $npr_gr33;
                                 $eff3 = round(100 * ($actual_eff33/$target_eff33));
                                 if($npr_h3 == '02'){
-                                    ?>
-                                    <td><?php echo '02-03'; ?></td>
-                                    <td><?php echo $npr_gr33; ?></td>
-                                    <td><?php echo $n3; ?></td>
-                                    <td><?php echo $target_npr33; ?></td>
-                                    <td><?php echo $actual_npr33; ?></td>
-                                    <td><?php echo $eff3; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s33 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '02-03'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $npr_gr33; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $n3; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $target_npr33; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $actual_npr33; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $eff3; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '<span style="font-size: 22pt">' . $s33 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '02-03'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr33; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s33 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '02-03'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo $target_npr33; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor2 ?>;"><?php echo '<span style="font-size: 22pt">' . $s33 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -331,10 +336,11 @@ include("../hp_header1.php");
                             if($tp32 == $p32){
                                 $randomcolor3 = "#FF3131";
                             }else if($i3 == $time){
-                                $randomcolor3 = "#90EE90";
+                                $randomcolor3 = "#dadada";
                             }else{
                                 $randomcolor3 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor3 ?>;">
                                 <?php
@@ -358,6 +364,7 @@ include("../hp_header1.php");
                                     $s4 = $html;
                                 }else{
                                     $s4 = $html1;
+                                    $randomcolor3 = "#90EE90";
                                 }
                                 if($time < '03'){
                                     $s4 = $html2;
@@ -368,22 +375,22 @@ include("../hp_header1.php");
                                 $eff4 = round(100 * ($actual_eff4/$target_eff4));
 
                                 if($npr_h3 == '03'){
-                                    ?>
-                                    <td><?php echo '03-04'; ?></td>
-                                    <td><?php echo $npr_gr4; ?></td>
-                                    <td><?php echo $n4; ?></td>
-                                    <td><?php echo $target_npr4; ?></td>
-                                    <td><?php echo $actual_npr4; ?></td>
-                                    <td><?php echo $eff4; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s4 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '03-04'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $npr_gr4; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $n4; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $target_npr4; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $actual_npr4; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $eff4; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '<span style="font-size: 22pt">' . $s4 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '03-04'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr4; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s4 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '03-04'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo $target_npr4; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor3 ?>;"><?php echo '<span style="font-size: 22pt">' . $s4 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -399,10 +406,11 @@ include("../hp_header1.php");
                             if($tp42 == $p42){
                                 $randomcolor4 = "#FF3131";
                             }else if($i4 == $time){
-                                $randomcolor4 = "#90EE90";
+                                $randomcolor4 = "#dadada";
                             }else{
                                 $randomcolor4 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor4 ?>;">
                                 <?php
@@ -426,6 +434,7 @@ include("../hp_header1.php");
                                     $s55 = $html;
                                 }else{
                                     $s55 = $html1;
+                                    $randomcolor4 = "#90EE90";
                                 }
                                 if($time < '04'){
                                     $s55 = $html2;
@@ -435,22 +444,22 @@ include("../hp_header1.php");
                                 $actual_eff55 = $npr_gr55;
                                 $eff55 = round(100 * ($actual_eff55/$target_eff55));
                                 if($npr_h55 == '04'){
-                                    ?>
-                                    <td><?php echo '04-05'; ?></td>
-                                    <td><?php echo $npr_gr55; ?></td>
-                                    <td><?php echo $n5; ?></td>
-                                    <td><?php echo $target_npr55; ?></td>
-                                    <td><?php echo $actual_npr55; ?></td>
-                                    <td><?php echo $eff55; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s55 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '04-05'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $npr_gr55; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $n5; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $target_npr55; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $actual_npr55; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $eff55; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '<span style="font-size: 22pt">' . $s55 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '04-05'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr55; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s55 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '04-05'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo $target_npr55; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"<?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor4 ?>;"><?php echo '<span style="font-size: 22pt">' . $s55 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -466,7 +475,7 @@ include("../hp_header1.php");
                             if($tp52 == $p52){
                                 $randomcolor5 = "#FF3131";
                             }else if($i5 == $time){
-                                $randomcolor5 = "#90EE90";
+                                $randomcolor5 = "#dadada";
                             }else{
                                 $randomcolor5 = "#FFFFFF";
                             }
@@ -493,6 +502,7 @@ include("../hp_header1.php");
                                     $s2 = $html;
                                 }else{
                                     $s2 = $html1;
+                                    $randomcolor5 = "#90EE90";
                                 }
                                 if($time < '05'){
                                     $s2 = $html2;
@@ -502,22 +512,22 @@ include("../hp_header1.php");
                                 $actual_eff2 = $npr_gr2;
                                 $eff2 = round(100 * ($actual_eff2/$target_eff2));
                                 if($npr_h2 == '05'){
-                                    ?>
-                                    <td><?php echo '05-06'; ?></td>
-                                    <td><?php echo $npr_gr2; ?></td>
-                                    <td><?php echo $n6; ?></td>
-                                    <td><?php echo $target_npr2; ?></td>
-                                    <td><?php echo $actual_npr2; ?></td>
-                                    <td><?php echo $eff2; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '05-06'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $npr_gr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $n6; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $target_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $actual_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $eff2; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '05-06'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr2; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '05-06'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo $target_npr2; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor5 ?>;"><?php echo '<span style="font-size: 22pt">' . $s2 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -533,10 +543,11 @@ include("../hp_header1.php");
                             if($tp62 == $p62){
                                 $randomcolor6 = "#FF3131";
                             }else if($i6 == $time){
-                                $randomcolor6 = "#90EE90";
+                                $randomcolor6 = "#dadada";
                             }else{
                                 $randomcolor6 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor6 ?>;">
                                 <?php
@@ -560,6 +571,7 @@ include("../hp_header1.php");
                                     $s3 = $html;
                                 }else{
                                     $s3 = $html1;
+                                    $randomcolor6 = "#90EE90";
                                 }
                                 if($time < '06'){
                                     $s3 = $html2;
@@ -569,22 +581,22 @@ include("../hp_header1.php");
                                 $actual_eff3 = $npr_gr3;
                                 $eff3 = round(100 * ($actual_eff3/$target_eff3));
                                 if($npr_h3 == '06'){
-                                    ?>
-                                    <td><?php echo '06-07'; ?></td>
-                                    <td><?php echo $npr_gr3; ?></td>
-                                    <td><?php echo $n7; ?></td>
-                                    <td><?php echo $target_npr3; ?></td>
-                                    <td><?php echo $actual_npr3; ?></td>
-                                    <td><?php echo $eff3; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s3 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '06-07'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $npr_gr3; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $n7; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $target_npr3; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $actual_npr3; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $eff3; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '<span style="font-size: 22pt">' . $s3 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '06-07'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr3; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s3 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '06-07'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo $target_npr3; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor6 ?>;"><?php echo '<span style="font-size: 22pt">' . $s3 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -600,10 +612,11 @@ include("../hp_header1.php");
                             if($tp72 == $p72){
                                 $randomcolor7 = "#FF3131";
                             }else if($i7 == $time){
-                                $randomcolor7 = "#90EE90";
+                                $randomcolor7 = "#dadada";
                             }else{
                                 $randomcolor7 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor7 ?>;">
                                 <?php
@@ -627,6 +640,7 @@ include("../hp_header1.php");
                                     $s41 = $html;
                                 }else{
                                     $s41 = $html1;
+                                    $randomcolor7 = "#90EE90";
                                 }
                                 if($time < '07'){
                                     $s41 = $html2;
@@ -636,22 +650,22 @@ include("../hp_header1.php");
                                 $actual_eff41 = $npr_gr41;
                                 $eff41 = round(100 * ($actual_eff41/$target_eff41));
                                 if($npr_h41 == '07'){
-                                    ?>
-                                    <td><?php echo '07-08'; ?></td>
-                                    <td><?php echo $npr_gr41; ?></td>
-                                    <td><?php echo $n8; ?></td>
-                                    <td><?php echo $target_npr41; ?></td>
-                                    <td><?php echo $actual_npr41; ?></td>
-                                    <td><?php echo $eff41; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s41 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '07-08'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $npr_gr41; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $n8; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $target_npr41; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $actual_npr41; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $eff41; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '<span style="font-size: 22pt">' . $s41 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '07-08'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr41; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s41 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '07-08'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo $target_npr41; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor7 ?>;"><?php echo '<span style="font-size: 22pt">' . $s41 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -667,10 +681,11 @@ include("../hp_header1.php");
                             if($tp82 == $p82){
                                 $randomcolor8 = "#FF3131";
                             }else if($i8 == $time){
-                                $randomcolor8 = "#90EE90";
+                                $randomcolor8 = "#dadada";
                             }else{
                                 $randomcolor8 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor8 ?>;">
                                 <?php
@@ -694,6 +709,7 @@ include("../hp_header1.php");
                                     $s51 = $html;
                                 }else{
                                     $s51 = $html1;
+                                    $randomcolor8 = "#90EE90";
                                 }
                                 if($time < '08'){
                                     $s51 = $html2;
@@ -703,22 +719,22 @@ include("../hp_header1.php");
                                 $actual_eff51 = $npr_gr51;
                                 $eff51 = round(100 * ($actual_eff51/$target_eff51));
                                 if($npr_h51 == '08'){
-                                    ?>
-                                    <td><?php echo '08-09'; ?></td>
-                                    <td><?php echo $npr_gr51; ?></td>
-                                    <td><?php echo $n9; ?></td>
-                                    <td><?php echo $target_npr51; ?></td>
-                                    <td><?php echo $actual_npr51; ?></td>
-                                    <td><?php echo $eff51; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s51 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '08-09'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $npr_gr51; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $n9; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $target_npr51; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $actual_npr51; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $eff51; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '<span style="font-size: 22pt">' . $s51 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '08-09'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr41; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s51 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '08-09'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo $target_npr41; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor8 ?>;"><?php echo '<span style="font-size: 22pt">' . $s51 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -734,10 +750,11 @@ include("../hp_header1.php");
                             if($tp92 == $p92){
                                 $randomcolor9 = "#FF3131";
                             }else if($i9 == $time){
-                                $randomcolor9 = "#90EE90";
+                                $randomcolor9 = "#dadada";
                             }else{
                                 $randomcolor9 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor9 ?>;">
                                 <?php
@@ -761,6 +778,7 @@ include("../hp_header1.php");
                                     $s61 = $html;
                                 }else{
                                     $s61 = $html1;
+                                    $randomcolor9 = "#90EE90";
                                 }
                                 if($time < '09'){
                                     $s61 = $html2;
@@ -770,22 +788,22 @@ include("../hp_header1.php");
                                 $actual_eff61 = $npr_gr61;
                                 $eff61 = round(100 * ($actual_eff61/$target_eff61));
                                 if($npr_h61 == '09'){
-                                    ?>
-                                    <td><?php echo '09-10'; ?></td>
-                                    <td><?php echo $npr_gr61; ?></td>
-                                    <td><?php echo $n; ?></td>
-                                    <td><?php echo $target_npr61; ?></td>
-                                    <td><?php echo $actual_npr61; ?></td>
-                                    <td><?php echo $eff61; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s61 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '09-10'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $npr_gr61; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $n; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $target_npr61; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $actual_npr61; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $eff61; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '<span style="font-size: 22pt">' . $s61 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '09-10'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr61; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s61 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '09-10'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo $target_npr61; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor9 ?>;"><?php echo '<span style="font-size: 22pt">' . $s61 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -801,10 +819,11 @@ include("../hp_header1.php");
                             if($tp102 == $p102){
                                 $randomcolor10 = "#FF3131";
                             }else if($i10 == $time){
-                                $randomcolor10 = "#90EE90";
+                                $randomcolor10 = "#dadada";
                             }else{
                                 $randomcolor10 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor10 ?>;">
                                 <?php
@@ -828,6 +847,7 @@ include("../hp_header1.php");
                                     $s71 = $html;
                                 }else{
                                     $s71 = $html1;
+                                    $randomcolor10 = "#90EE90";
                                 }
                                 if($time < '10'){
                                     $s71 = $html2;
@@ -837,22 +857,22 @@ include("../hp_header1.php");
                                 $actual_eff71 = $npr_gr71;
                                 $eff71 = round(100 * ($actual_eff71/$target_eff71));
                                 if($npr_h71 == '10'){
-                                    ?>
-                                    <td><?php echo '10-11'; ?></td>
-                                    <td><?php echo $npr_gr71; ?></td>
-                                    <td><?php echo $n10; ?></td>
-                                    <td><?php echo $target_npr71; ?></td>
-                                    <td><?php echo $actual_npr71; ?></td>
-                                    <td><?php echo $eff71; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s71 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '10-11'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $npr_gr71; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $n10; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $target_npr71; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $actual_npr71; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $eff71; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '<span style="font-size: 22pt">' . $s71 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '10-11'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr71; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s71 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '10-11'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo $target_npr71; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor10 ?>;"><?php echo '<span style="font-size: 22pt">' . $s71 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -868,10 +888,11 @@ include("../hp_header1.php");
                             if($tp112 == $p112){
                                 $randomcolor11 = "#FF3131";
                             }else if($i11 == $time){
-                                $randomcolor11 = "#90EE90";
+                                $randomcolor11 = "#dadada";
                             }else{
                                 $randomcolor11 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor11 ?>;">
                                 <?php
@@ -895,6 +916,7 @@ include("../hp_header1.php");
                                     $s81 = $html;
                                 }else{
                                     $s81 = $html1;
+                                    $randomcolor11 = "#90EE90";
                                 }
                                 if($time < '11'){
                                     $s81 = $html2;
@@ -904,22 +926,22 @@ include("../hp_header1.php");
                                 $actual_eff81 = $npr_gr81;
                                 $eff81 = round(100 * ($actual_eff81/$target_eff81));
                                 if($npr_h81 == '11'){
-                                    ?>
-                                    <td><?php echo '11-12'; ?></td>
-                                    <td><?php echo $npr_gr81; ?></td>
-                                    <td><?php echo $n11; ?></td>
-                                    <td><?php echo $target_npr81; ?></td>
-                                    <td><?php echo $actual_npr81; ?></td>
-                                    <td><?php echo $eff81; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '11-12'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $npr_gr81; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $n11; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $target_npr81; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $actual_npr81; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $eff81; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '11-12'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr81; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '11-12'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo $target_npr81; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor11 ?>;"><?php echo '<span style="font-size: 22pt">' . $s81 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             </tbody>
@@ -958,10 +980,11 @@ include("../hp_header1.php");
                             if($tp122 == $p122){
                                 $randomcolor12 = "#FF3131";
                             }else if($i12 == $time){
-                                $randomcolor12 = "#90EE90";
+                                $randomcolor12 = "#dadada";
                             }else{
                                 $randomcolor12 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor12 ?>;">
                                 <?php
@@ -985,6 +1008,7 @@ include("../hp_header1.php");
                                     $s91 = $html;
                                 }else{
                                     $s91 = $html1;
+                                    $randomcolor12 = "#90EE90";
                                 }
                                 if($time < '12'){
                                     $s91 = $html2;
@@ -994,22 +1018,22 @@ include("../hp_header1.php");
                                 $actual_eff91 = $npr_gr91;
                                 $eff91 = round(100 * ($actual_eff91/$target_eff91));
                                 if($npr_h91 == '12'){
-                                    ?>
-                                    <td><?php echo '00-01'; ?></td>
-                                    <td><?php echo $npr_gr91; ?></td>
-                                    <td><?php echo $n12; ?></td>
-                                    <td><?php echo $target_npr91; ?></td>
-                                    <td><?php echo $actual_npr91; ?></td>
-                                    <td><?php echo $eff91; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '00-01'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $npr_gr91; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $n12; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $target_npr91; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $actual_npr91; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $eff91; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '00-01'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr91; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '00-01'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo $target_npr91; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor12 ?>;"><?php echo '<span style="font-size: 22pt">' . $s91 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1025,10 +1049,11 @@ include("../hp_header1.php");
                             if($tp132 == $p132){
                                 $randomcolor13 = "#FF3131";
                             }else if($i13 == $time){
-                                $randomcolor13 = "#90EE90";
+                                $randomcolor13 = "#dadada";
                             }else{
                                 $randomcolor13 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;">
                                 <?php
@@ -1052,6 +1077,7 @@ include("../hp_header1.php");
                                     $s911 = $html;
                                 }else{
                                     $s911 = $html1;
+                                    $randomcolor13 = "#90EE90";
                                 }
                                 if($time < '13'){
                                     $s911 = $html2;
@@ -1061,22 +1087,22 @@ include("../hp_header1.php");
                                 $actual_eff911 = $npr_gr911;
                                 $eff911 = round(100 * ($actual_eff911/$target_eff911));
                                 if($npr_h911 == '13'){
-                                    ?>
-                                    <td><?php echo '01-02'; ?></td>
-                                    <td><?php echo $npr_gr911; ?></td>
-                                    <td><?php echo $n13; ?></td>
-                                    <td><?php echo $target_npr911; ?></td>
-                                    <td><?php echo $actual_npr911; ?></td>
-                                    <td><?php echo $eff911; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s911 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '01-02'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $npr_gr911; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $n13; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $target_npr911; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $actual_npr911; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $eff911; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '<span style="font-size: 22pt">' . $s911 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '01-02'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr911; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s911 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '01-02'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo $target_npr911; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor13 ?>;height: fit-content;"><?php echo '<span style="font-size: 22pt">' . $s911 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1092,10 +1118,11 @@ include("../hp_header1.php");
                             if($tp142 == $p142){
                                 $randomcolor14 = "#FF3131";
                             }else if($i14 == $time){
-                                $randomcolor14 = "#90EE90";
+                                $randomcolor14 = "#dadada";
                             }else{
                                 $randomcolor14 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor14 ?>;">
                                 <?php
@@ -1119,6 +1146,7 @@ include("../hp_header1.php");
                                     $s921 = $html;
                                 }else{
                                     $s921 = $html1;
+                                    $randomcolor14 = "#90EE90";
                                 }
                                 if($time < '14'){
                                     $s921 = $html2;
@@ -1128,22 +1156,22 @@ include("../hp_header1.php");
                                 $actual_eff921 = $npr_gr921;
                                 $eff921 = round(100 * ($actual_eff921/$target_eff921));
                                 if($npr_h921 == '14'){
-                                    ?>
-                                    <td><?php echo '02-03'; ?></td>
-                                    <td><?php echo $npr_gr921; ?></td>
-                                    <td><?php echo $n14; ?></td>
-                                    <td><?php echo $target_npr921; ?></td>
-                                    <td><?php echo $actual_npr921; ?></td>
-                                    <td><?php echo $eff921; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s921 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '02-03'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $npr_gr921; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $n14; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $target_npr921; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $actual_npr921; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $eff921; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '<span style="font-size: 22pt">' . $s921 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '02-03'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr921; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s921 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '02-03'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo $target_npr921; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor14 ?>;"><?php echo '<span style="font-size: 22pt">' . $s921 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1159,10 +1187,11 @@ include("../hp_header1.php");
                             if($tp152 == $p152){
                                 $randomcolor15 = "#FF3131";
                             }else if($i15 == $time){
-                                $randomcolor15 = "#90EE90";
+                                $randomcolor15 = "#dadada";
                             }else{
                                 $randomcolor15 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor15 ?>;">
                                 <?php
@@ -1186,6 +1215,7 @@ include("../hp_header1.php");
                                     $s931 = $html;
                                 }else{
                                     $s931 = $html1;
+                                    $randomcolor15 = "#90EE90";
                                 }
                                 if($time < '15'){
                                     $s931 = $html2;
@@ -1195,22 +1225,22 @@ include("../hp_header1.php");
                                 $actual_eff931 = $npr_gr931;
                                 $eff931 = round(100 * ($actual_eff931/$target_eff931));
                                 if($npr_h931 == '15'){
-                                    ?>
-                                    <td><?php echo '03-04'; ?></td>
-                                    <td><?php echo $npr_gr931; ?></td>
-                                    <td><?php echo $n15; ?></td>
-                                    <td><?php echo $target_npr931; ?></td>
-                                    <td><?php echo $actual_npr931; ?></td>
-                                    <td><?php echo $eff931; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s931 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '03-04'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $npr_gr931; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $n15; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $target_npr931; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $actual_npr931; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $eff931; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '<span style="font-size: 22pt">' . $s931 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '03-04'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr931; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s931 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '03-04'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo $target_npr931; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor15 ?>;"><?php echo '<span style="font-size: 22pt">' . $s931 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1226,10 +1256,11 @@ include("../hp_header1.php");
                             if($tp162 == $p162){
                                 $randomcolor16 = "#FF3131";
                             }else if($i16 == $time){
-                                $randomcolor16 = "#90EE90";
+                                $randomcolor16 = "#dadada";
                             }else{
                                 $randomcolor16 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor16 ?>;">
                                 <?php
@@ -1253,6 +1284,7 @@ include("../hp_header1.php");
                                     $s941 = $html;
                                 }else{
                                     $s941 = $html1;
+                                    $randomcolor16 = "#90EE90";
                                 }
                                 if($time < '16'){
                                     $s941 = $html2;
@@ -1263,22 +1295,22 @@ include("../hp_header1.php");
                                 $actual_eff941 = $npr_gr941;
                                 $eff941 = round(100 * ($actual_eff941/$target_eff941));
                                 if($npr_h941 == '16'){
-                                    ?>
-                                    <td><?php echo '04-05'; ?></td>
-                                    <td><?php echo $npr_gr941; ?></td>
-                                    <td><?php echo $n16; ?></td>
-                                    <td><?php echo $target_npr941; ?></td>
-                                    <td><?php echo $actual_npr941; ?></td>
-                                    <td><?php echo $eff941; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s941 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '04-05'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $npr_gr941; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $n16; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $target_npr941; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $actual_npr941; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $eff941; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '<span style="font-size: 22pt">' . $s941 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '04-05'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr941; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s941 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '04-05'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo $target_npr941; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor16 ?>;"><?php echo '<span style="font-size: 22pt">' . $s941 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1294,10 +1326,11 @@ include("../hp_header1.php");
                             if($tp172 == $p172){
                                 $randomcolor17 = "#FF3131";
                             }else if($i17 == $time){
-                                $randomcolor17 = "#90EE90";
+                                $randomcolor17 = "#dadada";
                             }else{
                                 $randomcolor17 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor17 ?>;">
                                 <?php
@@ -1321,6 +1354,7 @@ include("../hp_header1.php");
                                     $s951 = $html;
                                 }else{
                                     $s951 = $html1;
+                                    $randomcolor17 = "#90EE90";
                                 }
                                 if($time < '17'){
                                     $s951 = $html2;
@@ -1330,22 +1364,22 @@ include("../hp_header1.php");
                                 $actual_eff951 = $npr_gr951;
                                 $eff951 = round(100 * ($actual_eff951/$target_eff951));
                                 if($npr_h951 == '17'){
-                                    ?>
-                                    <td><?php echo '05-06'; ?></td>
-                                    <td><?php echo $npr_gr951; ?></td>
-                                    <td><?php echo $n17; ?></td>
-                                    <td><?php echo $target_npr951; ?></td>
-                                    <td><?php echo $actual_npr951; ?></td>
-                                    <td><?php echo $eff951; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s951 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '05-06'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $npr_gr951; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $n17; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $target_npr951; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $actual_npr951; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $eff951; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '<span style="font-size: 22pt">' . $s951 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '05-06'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr951; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s951 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '05-06'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo $target_npr951; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor17 ?>;"><?php echo '<span style="font-size: 22pt">' . $s951 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1361,10 +1395,11 @@ include("../hp_header1.php");
                             if($tp182 == $p182){
                                 $randomcolor18 = "#FF3131";
                             }else if($i18 == $time){
-                                $randomcolor18 = "#90EE90";
+                                $randomcolor18 = "#dadada";
                             }else{
                                 $randomcolor18 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor18 ?>;">
                                 <?php
@@ -1388,6 +1423,7 @@ include("../hp_header1.php");
                                     $s961 = $html;
                                 }else{
                                     $s961 = $html1;
+                                    $randomcolor18 = "#90EE90";
                                 }
                                 if($time < '18'){
                                     $s961 = $html2;
@@ -1397,22 +1433,22 @@ include("../hp_header1.php");
                                 $actual_eff961 = $npr_gr961;
                                 $eff961 = round(100 * ($actual_eff961/$target_eff961));
                                 if($npr_h961 == '18'){
-                                    ?>
-                                    <td><?php echo '06-07'; ?></td>
-                                    <td><?php echo $npr_gr961; ?></td>
-                                    <td><?php echo $n18; ?></td>
-                                    <td><?php echo $target_npr961; ?></td>
-                                    <td><?php echo $actual_npr961; ?></td>
-                                    <td><?php echo $eff961; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s961 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '06-07'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $npr_gr961; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $n18; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $target_npr961; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $actual_npr961; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $eff961; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '<span style="font-size: 22pt">' . $s961 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '06-07'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr961; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s961 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '06-07'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo $target_npr961; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor18 ?>;"><?php echo '<span style="font-size: 22pt">' . $s961 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1428,10 +1464,11 @@ include("../hp_header1.php");
                             if($tp192 == $p192){
                                 $randomcolor19 = "#FF3131";
                             }else if($i19 == $time){
-                                $randomcolor19 = "#90EE90";
+                                $randomcolor19 = "#dadada";
                             }else{
                                 $randomcolor19 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor19 ?>;">
                                 <?php
@@ -1455,6 +1492,7 @@ include("../hp_header1.php");
                                     $s971 = $html;
                                 }else{
                                     $s971 = $html1;
+                                    $randomcolor19 = "#90EE90";
                                 }
                                 if($time < '19'){
                                     $s971 = $html2;
@@ -1464,22 +1502,22 @@ include("../hp_header1.php");
                                 $actual_eff971 = $npr_gr971;
                                 $eff971 = round(100 * ($actual_eff971/$target_eff971));
                                 if($npr_h971 == '19'){
-                                    ?>
-                                    <td><?php echo '07-08'; ?></td>
-                                    <td><?php echo $npr_gr971; ?></td>
-                                    <td><?php echo $n19; ?></td>
-                                    <td><?php echo $target_npr971; ?></td>
-                                    <td><?php echo $actual_npr971; ?></td>
-                                    <td><?php echo $eff971; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s971 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '07-08'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $npr_gr971; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $n19; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $target_npr971; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $actual_npr971; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $eff971; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '<span style="font-size: 22pt">' . $s971 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '07-08'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr971; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s971 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '07-08'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo $target_npr971; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor19 ?>;"><?php echo '<span style="font-size: 22pt">' . $s971 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1495,10 +1533,11 @@ include("../hp_header1.php");
                             if($tp202 == $p202){
                                 $randomcolor20 = "#FF3131";
                             }else if($i20 == $time){
-                                $randomcolor20 = "#90EE90";
+                                $randomcolor20 = "#dadada";
                             }else{
                                 $randomcolor20 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor20 ?>;">
                                 <?php
@@ -1522,6 +1561,7 @@ include("../hp_header1.php");
                                     $s981 = $html;
                                 }else{
                                     $s981 = $html1;
+                                    $randomcolor20 = "#90EE90";
                                 }
                                 if($time < '20'){
                                     $s981 = $html2;
@@ -1531,22 +1571,22 @@ include("../hp_header1.php");
                                 $actual_eff981 = $npr_gr981;
                                 $eff981 = round(100 * ($actual_eff981/$target_eff981));
                                 if($npr_h981 == '20'){
-                                    ?>
-                                    <td><?php echo '08-09'; ?></td>
-                                    <td><?php echo $npr_gr981; ?></td>
-                                    <td><?php echo $n20; ?></td>
-                                    <td><?php echo $target_npr981; ?></td>
-                                    <td><?php echo $actual_npr981; ?></td>
-                                    <td><?php echo $eff981; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s981 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '08-09'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $npr_gr981; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $n20; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $target_npr981; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $actual_npr981; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $eff981; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '<span style="font-size: 22pt">' . $s981 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '08-09'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr981; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s981 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '08-09'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo $target_npr981; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor20 ?>;"><?php echo '<span style="font-size: 22pt">' . $s981 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1562,10 +1602,11 @@ include("../hp_header1.php");
                             if($tp212 == $p212){
                                 $randomcolor21 = "#FF3131";
                             }else if($i21 == $time){
-                                $randomcolor21 = "#90EE90";
+                                $randomcolor21 = "#dadada";
                             }else{
                                 $randomcolor21 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor21 ?>;">
                                 <?php
@@ -1589,6 +1630,7 @@ include("../hp_header1.php");
                                     $s991 = $html;
                                 }else{
                                     $s991 = $html1;
+                                    $randomcolor21 = "#90EE90";
                                 }
                                 if($time < '21'){
                                     $s991 = $html2;
@@ -1598,22 +1640,22 @@ include("../hp_header1.php");
                                 $actual_eff991 = $npr_gr991;
                                 $eff991 = round(100 * ($actual_eff991/$target_eff991));
                                 if($npr_h991 == '21'){
-                                    ?>
-                                    <td><?php echo '09-10'; ?></td>
-                                    <td><?php echo $npr_gr991; ?></td>
-                                    <td><?php echo $n21; ?></td>
-                                    <td><?php echo $target_npr991; ?></td>
-                                    <td><?php echo $actual_npr991; ?></td>
-                                    <td><?php echo $eff991; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s991 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '09-10'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $npr_gr991; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $n21; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $target_npr991; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $actual_npr991; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $eff991; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '<span style="font-size: 22pt">' . $s991 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '09-10'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr991; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s991 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '09-10'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo $target_npr991; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor21 ?>;"><?php echo '<span style="font-size: 22pt">' . $s991 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1629,10 +1671,11 @@ include("../hp_header1.php");
                             if($tp222 == $p222){
                                 $randomcolor22 = "#FF3131";
                             }else if($i22 == $time){
-                                $randomcolor22 = "#90EE90";
+                                $randomcolor22 = "#dadada";
                             }else{
                                 $randomcolor22 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor22 ?>;">
                                 <?php
@@ -1656,6 +1699,7 @@ include("../hp_header1.php");
                                     $s191 = $html;
                                 }else{
                                     $s191 = $html1;
+                                    $randomcolor22 = "#90EE90";
                                 }
                                 if($time < '22'){
                                     $s191 = $html2;
@@ -1665,22 +1709,22 @@ include("../hp_header1.php");
                                 $actual_eff191 = $npr_gr191;
                                 $eff191 = round(100 * ($actual_eff191/$target_eff191));
                                 if($npr_h191 == '22'){
-                                    ?>
-                                    <td><?php echo '10-11'; ?></td>
-                                    <td><?php echo $npr_gr191; ?></td>
-                                    <td><?php echo $n22; ?></td>
-                                    <td><?php echo $target_npr191; ?></td>
-                                    <td><?php echo $actual_npr191; ?></td>
-                                    <td><?php echo $eff191; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s191 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '10-11'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $npr_gr191; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $n22; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $target_npr191; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $actual_npr191; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $eff191; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '<span style="font-size: 22pt">' . $s191 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '10-11'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr191; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s191 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '10-11'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo $target_npr191; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor22 ?>;"><?php echo '<span style="font-size: 22pt">' . $s191 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             <?php
@@ -1696,10 +1740,11 @@ include("../hp_header1.php");
                             if($tp232 == $p232){
                                 $randomcolor23 = "#FF3131";
                             }else if($i23 == $time){
-                                $randomcolor23 = "#90EE90";
+                                $randomcolor23 = "#dadada";
                             }else{
                                 $randomcolor23 = "#FFFFFF";
                             }
+
                             ?>
                             <tr style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;">
                                 <?php
@@ -1723,6 +1768,7 @@ include("../hp_header1.php");
                                     $s291 = $html;
                                 }else{
                                     $s291 = $html1;
+                                    $randomcolor23 = "#90EE90";
                                 }
                                 if($time < '23'){
                                     $s291 = $html2;
@@ -1733,22 +1779,22 @@ include("../hp_header1.php");
                                 $eff291 = round(100 * ($actual_eff291/$target_eff291));
                                 //
                                 if($npr_h291 == '23'){
-                                    ?>
-                                    <td><?php echo '11-12'; ?></td>
-                                    <td><?php echo $npr_gr291; ?></td>
-                                    <td><?php echo $n23; ?></td>
-                                    <td><?php echo $target_npr291; ?></td>
-                                    <td><?php echo $actual_npr291; ?></td>
-                                    <td><?php echo $eff291; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s291 . '</span>'; ?></td>
+                                ?>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '11-12'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $npr_gr291; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $n23; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $target_npr291; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $actual_npr291; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $eff291; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '<span style="font-size: 22pt">' . $s291 . '</span>'; ?></td>
                                 <?php }else{ ?>
-                                    <td><?php echo '11-12'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo $target_npr291; ?></td>
-                                    <td><?php echo '0'; ?></td>
-                                    <td><?php echo '0'; ?>%</td>
-                                    <td><?php echo '<span style="font-size: 22pt">' . $s291 . '</span>'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '11-12'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo $target_npr291; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '0'; ?></td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '0'; ?>%</td>
+                                    <td style="background-color: <?php echo $randomcolor23 ?>;padding-top: 0px;"><?php echo '<span style="font-size: 22pt">' . $s291 . '</span>'; ?></td>
                                 <?php } ?>
                             </tr>
                             </tbody>
