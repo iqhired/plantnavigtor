@@ -229,6 +229,12 @@ include("../heading_banner.php");
                 var eof = data.posts.map(function (elem) {
                     return elem.eof;
                 });
+                var d = data.posts.map(function (elem) {
+                    return elem.d;
+                });
+                var dh = data.posts.map(function (elem) {
+                    return elem.dh;
+                });
 
                 var data = [
                     {x: 'Line-Up', value: line_up, fill: '#177b09'},
@@ -249,7 +255,16 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Daily Utilization Data");
+                chart.title("Daily Utilization Data " + '<div style=\'color:#333; font-size: 14px;\'>Date : <span style="color:#009900; font-size: 12px;"><strong> ' +d+' </strong></span></div><br>'  +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total Hours: <span style="color:#009900; font-size: 12px;"><strong> ' +dh+' </strong></span>Hrs</div>');
+
+                chart
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
 
                 // add the data
                 chart.data(data);
@@ -285,6 +300,16 @@ include("../heading_banner.php");
                 var eof1 = data.posts.map(function (elem) {
                     return elem.eof1;
                 });
+                var wf = data.posts.map(function (elem) {
+                    return elem.wf;
+                });
+                var wt = data.posts.map(function (elem) {
+                    return elem.wt;
+                });
+                var wh = data.posts.map(function (elem) {
+                    return elem.wh;
+                });
+
 
                 var data = [
                     {x: 'Line-Up', value: line_up1, fill: '#177b09'},
@@ -305,7 +330,16 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Weekly Utilization Data");
+                chart.title("Weekly Utilization Data " + '<div style=\'color:#333; font-size: 14px;\'>From : <span style="color:#009900; font-size: 12px;"><strong> ' +wf+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +wt+' </strong></span></div><br>' +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total Hours: <span style="color:#009900; font-size: 12px;"><strong> ' +wh+' </strong></span>Hrs</div>');
+
+                chart
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
 
                 // add the data
                 chart.data(data);
@@ -341,6 +375,15 @@ include("../heading_banner.php");
                 var eof2 = data.posts.map(function (elem) {
                     return elem.eof2;
                 });
+                var mf = data.posts.map(function (elem) {
+                    return elem.mf;
+                });
+                var mt = data.posts.map(function (elem) {
+                    return elem.mt;
+                });
+                var mh = data.posts.map(function (elem) {
+                    return elem.mh;
+                });
 
                 var data = [
                     {x: 'Line-Up', value: line_up2, fill: '#177b09'},
@@ -361,7 +404,16 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Monthly Utilization Data");
+                chart.title("Monthly Utilization Data " + '<div style=\'color:#333; font-size: 14px;\'>From : <span style="color:#009900; font-size: 12px;"><strong> ' +mf+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +mt+' </strong></span></div><br>' +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total Hours: <span style="color:#009900; font-size: 12px;"><strong> ' +mh+' </strong></span>Hrs</div>');
+
+                chart
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
 
                 // add the data
                 chart.data(data);
@@ -397,7 +449,15 @@ include("../heading_banner.php");
                 var eof3 = data.posts.map(function (elem) {
                     return elem.eof3;
                 });
-
+                var yf = data.posts.map(function (elem) {
+                    return elem.yf;
+                });
+                var yt = data.posts.map(function (elem) {
+                    return elem.yt;
+                });
+                var yh = data.posts.map(function (elem) {
+                    return elem.yh;
+                });
                 var data = [
                     {x: 'Line-Up', value: line_up3, fill: '#177b09'},
                     {x: 'Line-Down', value: line_down3, fill: '#FF0000'},
@@ -417,7 +477,16 @@ include("../heading_banner.php");
                 );
 
                 // set the chart title
-                chart.title("Yearly Utilization Data");
+                chart.title("Yearly Utilization Data " + '<div style=\'color:#333; font-size: 14px;\'>From : <span style="color:#009900; font-size: 12px;"><strong> ' +yf+' </strong></span>To: <span style="color:#009900; font-size: 12px;"><strong> ' +yt+' </strong></span></div><br>' +
+                    '<div style=\'color:#333; font-size: 14px;\'>Total Hours: <span style="color:#009900; font-size: 12px;"><strong> ' +yh+' </strong></span>Hrs</div>');
+
+                chart
+                    .title()
+                    .useHtml(true)
+                    .padding(0)
+                    .fontColor('#212121')
+                    .hAlign('center')
+                    .margin([0, 0, 10, 0]);
 
                 // add the data
                 chart.data(data);
