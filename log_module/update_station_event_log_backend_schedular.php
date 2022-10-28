@@ -6,7 +6,7 @@ $button = "";
 $temp = "";
 
 //$sql_st = "SELECT * FROM `sg_station_event_log_update` where line_id = 3 ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
-$sql_st = "SELECT MAX(sg_station_event_old_id) as s_id ,(line_id) FROM `sg_station_event_log_update` where line_id != 0 group by line_id;";
+$sql_st = "SELECT MAX(sg_station_event_old_id) as s_id ,(line_id) FROM `sg_station_event_log_update` where line_id != 0 group by line_id  ORDER by line_id";
 
 $result_st = mysqli_query($db,$sql_st);
 //$row_st =  mysqli_fetch_array($result_st);
@@ -27,13 +27,14 @@ while ($row_st = mysqli_fetch_array($result_st)){
 		$station_event_log_id = $row['station_event_log_id'];
 		$event_seq = $row['event_seq'];
 		$station_event_id = $row['station_event_id'];
-		$sql_seid = "select `line_id` from `sg_station_event` where station_event_id = '$station_event_id'";
+		$sql_seid = "select `line_id` from `sg_station_event` where station_event_id = '$station_event_id' order by line_id";
 		$result_seid = mysqli_query($db,$sql_seid);
 		$row_see = mysqli_fetch_array($result_seid);
 		$line_id = $row_see['line_id'];
 		if ($line_id != $l_id) {
 			continue;
 		}
+		$i = 0;
 		$station_cat_id = $row['event_cat_id'];
 		$station_type_id = $row['event_type_id'];
 		$event_status = $row['event_status'];
@@ -155,14 +156,14 @@ while ($row_st = mysqli_fetch_array($result_st)){
 				$end_date_se ='';
 				$start_date21 ='';
 				$start_time21='';
-				$z++;
+
 
 				$end_time_se_tt = explode(' ', $et_time);
 				$et_tt = $end_time_se_tt[0];
 
 				while($tt_time_2 > 0){
 					if(($tt_time_1 == null) &&  ( $z>$k)){
-						$n = $z-1;
+						$n = $z;
 						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$n' AND station_event_id = '$station_event_id' ";
 						$result_se = mysqli_query($db,$sql_se);
 						$row_se = mysqli_fetch_array($result_se);
@@ -174,6 +175,19 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$end_se = $end_date_se . ' ' . '23:59:59';
 
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$j' AND station_event_id = '$station_event_id'";
+						$result_up = mysqli_query($db,$sql_up);
+					} else if($i == $j){
+						$z++;
+						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$z' AND station_event_id = '$station_event_id' ";
+						$result_se = mysqli_query($db,$sql_se);
+						$row_se = mysqli_fetch_array($result_se);
+						$end_time_se = $row_se['end_time'];
+
+						$end_time_se = explode(' ', $end_time_se);
+						$end_date_se = $end_time_se[0];
+
+						$end_se = $end_date_se . ' ' . '23:59:59';
+						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$z' AND station_event_id = '$station_event_id'";
 						$result_up = mysqli_query($db,$sql_up);
 					} else if(($i == $j) && ( $z<$k)){
 						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$z' AND station_event_id = '$station_event_id' ";
@@ -206,7 +220,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 							$start_date21 = date('Y-m-d', strtotime($start_date21 . " +1 days"));
 							$start_time21 = $start_date21 . ' ' . '00:00:00';
 						}
-
+						$z++;
 						if ($tt_time_2 < 24) {
 							$tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
 							$end_time2 = $start_date21 . ' ' . $tt;
@@ -222,6 +236,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 					}else if(empty($j)){
 						$start_date2 = date('Y-m-d', strtotime($start_date2 . " +1 days"));
 						$start_time2 = $start_date2 . ' ' . '00:00:00';
+						$z++;
 						if ($tt_time_2 < 24) {
 							$tt = sprintf('%02d:%02d', (int)$tt_time_2, fmod($tt_time_2, 1) * 60);
 							$end_time2 = $start_date2 . ' ' . $tt;
@@ -234,10 +249,11 @@ while ($row_st = mysqli_fetch_array($result_st)){
 				values ('$line_id','$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time2','$end_time2','24','$created_by')";
 							$result1 = mysqli_query($db, $page);
 						}
+					}else{
+						$z--;
 					}
 					$tt_time_2 = ($tt_time_2 - 24);
 					$i++;
-					$z++;
 				}
 				$sql_result1 = "Update sg_station_event_log SET is_incomplete = '1' where station_event_log_id = '$station_event_log_id'";
 				$sql_result2 = mysqli_query($db,$sql_result1);
