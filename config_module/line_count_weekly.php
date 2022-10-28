@@ -2,6 +2,9 @@
 include("../config.php");
 $station = $_POST['station'];
 $chicagotime = date("Y-m-d");
+$date = date("Y-m-d", strtotime('-7 days'));
+$diff = abs(strtotime($date) - strtotime($chicagotime));
+$w = ($diff/3600);
 //select line down data
 $sql2 = sprintf("SELECT round(sum(sg_station_event_log_update.total_time), 2) as t1 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 2 and sg_station_event.`created_on` > '$chicagotime' - interval 7 day and sg_station_event_log_update.`created_on` > '$chicagotime' - interval 7 day");
 $result2 = mysqli_query($db,$sql2);
@@ -37,7 +40,7 @@ while ($rowv=$resultv->fetch_assoc()){
     }else{
         $d3 = $t;
     }
-    $posts[] = array('line_up1'=> $d1,'line_down1'=> $d2,'eof1'=> $d3);
+    $posts[] = array('line_up1'=> $d1,'line_down1'=> $d2,'eof1'=> $d3,'wf'=> $date,'wt'=> $chicagotime,'wh'=> $w);
 }
 $response['posts'] = $posts;
 echo json_encode($response);

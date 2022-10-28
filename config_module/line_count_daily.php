@@ -1,6 +1,7 @@
 <?php
 include("../config.php");
 $chicagotime = date("Y-m-d");
+$dh = date("H");
 $station = $_POST['station'];
 //select line down data
 $sql2 = sprintf("SELECT round(IFNULL(SEC_TO_TIME( SUM( TIME_TO_SEC( sg_station_event_log.`total_time` ) ) ),'00:00:00')) as t1 FROM `sg_station_event` INNER JOIN sg_station_event_log on sg_station_event.station_event_id = sg_station_event_log.station_event_id WHERE date(sg_station_event.`created_on`) = '$chicagotime' and sg_station_event.line_id = '$station' and sg_station_event_log.event_cat_id = 3");
@@ -28,7 +29,7 @@ while ($rowv=$resultv->fetch_assoc()){
     }else{
         $t = $time;
     }
-    $posts[] = array('line_up'=> $t,'line_down'=> $t1,'eof'=> $t2);
+    $posts[] = array('line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
 }
 $response['posts'] = $posts;
 echo json_encode($response);
