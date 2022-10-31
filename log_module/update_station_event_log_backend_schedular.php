@@ -177,7 +177,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$j' AND station_event_id = '$station_event_id'";
 						$result_up = mysqli_query($db,$sql_up);
 					} else if($i == $j){
-						$z++;
+
 						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$z' AND station_event_id = '$station_event_id' ";
 						$result_se = mysqli_query($db,$sql_se);
 						$row_se = mysqli_fetch_array($result_se);
@@ -187,6 +187,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$end_date_se = $end_time_se[0];
 
 						$end_se = $end_date_se . ' ' . '23:59:59';
+						//$z++;
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$z' AND station_event_id = '$station_event_id'";
 						$result_up = mysqli_query($db,$sql_up);
 					} else if(($i == $j) && ( $z<$k)){
