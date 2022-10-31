@@ -566,6 +566,7 @@ include("../heading_banner.php");
 									$lnf1 = $rowc['list_name2'];
 									$lnf2 = $rowc['list_name2'];
 									$list_enabled =  $rowc['list_enabled'];
+									$extra_enabled =  $rowc['radio_extra'];
 									?>
                                     <div class="row form_row_item">
                                         <div class="col-md-7 form_col_item">
@@ -611,7 +612,7 @@ include("../heading_banner.php");
                                                        class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
 													echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
-                                                <?php if ($list_enabled == 1) { ?>
+                                                <?php if ($list_enabled == 1 && !empty($extra_enabled)) { ?>
                                                     <input type="radio" id="none"
                                                            name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="none"
