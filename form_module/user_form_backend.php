@@ -77,7 +77,7 @@ if(count($_POST)>0) {
 
             $out_of_tolerance_mail_list1 = $rowc0003["out_of_tolerance_mail_list"];
             if(!empty($out_of_tolerance_mail_list1)) {
-                $query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
+                $query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' order by form_item_seq+0 ASC  ");
                 $qur0006 = mysqli_query($db, $query0006);
                 //$rowc0006 = mysqli_fetch_array($qur0006);
                 while ($rowc0006 = mysqli_fetch_array($qur0006)) {
@@ -289,7 +289,7 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
             $rowc04 = mysqli_fetch_array($qur04);
             $form_user_data_id = $rowc04["form_user_data_id"];
             $temp_i = 0;
-            $query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' ");
+            $query0006 = sprintf("SELECT * FROM  form_item where form_create_id = '$formcreateid' order by form_item_seq+0 ASC  ");
             $qur0006 = mysqli_query($db, $query0006);
             //$rowc0006 = mysqli_fetch_array($qur0006);
             while ($rowc0006 = mysqli_fetch_array($qur0006)) {
