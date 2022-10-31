@@ -252,8 +252,8 @@ for($i = 1; $i <= $click_id; )
         $radio_array1 = $_POST['extra_'.$bansi_row];
         $radio_array = $radio_array1[0];
 
-        $none_alias_array = $_POST['radio_list_none_'.$bansi_row];
-        $none_alias = $none_alias_array[$j];
+		$none_alias_array = $_POST['radio_list_none_'.$bansi_row];
+        $none_alias = $none_alias_array[0];
 
         $yes_alias_array = $_POST['radio_list_yes'];
         $yes_alias = $yes_alias_array[$j];
