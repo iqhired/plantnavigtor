@@ -1072,7 +1072,7 @@ include("../heading_banner.php");
                 // document.getElementById("listnone_" + index).attr('disabled', 'disabled');
                 // document.getElementById("listnone_" + index).disabled = true;
                 // document.getElementById("radio_list_extra[]").disabled = true;
-                document.getElementById("radio_list_none" + index + "[]").disabled = true;
+                document.getElementById("radio_list_none_" + index + "[]").disabled = true;
                 text.style.display = "none";
             }
 
@@ -1107,7 +1107,7 @@ include("../heading_banner.php");
 
         //add_other_options
         // document.getElementById("add_other_options").innerHTML;
-        $('.add_other_options_' + index1 + '').append('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra[]" id="radio_list_extra[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
+        $('.add_other_options_' + index1 + '').append('<div id="add_other_' + op_val + '">' + '<input type="radio" class="custom-control-input" id="extra" name="default_list_' + index1 + '[]" value="extra_' + op_val + '" class="form-check-input">' + '<input type="search" name="radio_list_extra_' + index1 + '[]" id="radio_list_extra_' + index1 + '[]" value="" class="radio_input">' + '<button class="remove" onclick="removeDiv(this);">X</button>' + "</div>");
 
     });
     function removeDiv(btn) {
