@@ -251,7 +251,7 @@ for($i = 1; $i <= $click_id; )
         $radio_array1 = $_POST['extra_'.$bansi_row];
         $radio_array = $radio_array1[0];
 
-        $none_alias_array = $_POST['radio_list_none'];
+        $none_alias_array = $_POST['radio_list_none_'.$bansi_row];
         $none_alias = $none_alias_array[$j];
 
         $yes_alias_array = $_POST['radio_list_yes'];
@@ -260,8 +260,8 @@ for($i = 1; $i <= $click_id; )
         $no_alias_array = $_POST['radio_list_no'];
         $no_alias = $no_alias_array[$j];
 
-            $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_name_extra`,`list_enabled`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$radio_enabled_array' ,'$list_enabled','$notes' ,'$disc', '$created_by' , '$updated_by')";
+            $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`list_normal`,`list_name1`,`list_name2`,`list_name3`,`list_name_extra`,`list_enabled`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$j','$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_list' , '$none_alias' , '$yes_alias' , '$no_alias' , '$radio_enabled_array' ,'$list_enabled','$notes' ,'$disc', '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
@@ -275,8 +275,8 @@ for($i = 1; $i <= $click_id; )
 	else if($item != "")
 	{
 
-       $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
+       $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$j','$form_create_id' ,'$checked', '$item_desc' , '$item' , '$notes' ,'$disc' , '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
