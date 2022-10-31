@@ -16,7 +16,7 @@ $mail->SMTPAuth = true;
 $mail->Username = 'admin@plantnavigator.com';
 $mail->Password = 'S@@rgummi_2022';
 $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
-$query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'crew assignment report'");
+$query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'Crew assignment report'");
 $qur = mysqli_query($db, $query);
 while ($rowc = mysqli_fetch_array($qur)) {
     $group = explode(',', $rowc["teams"]);
@@ -68,13 +68,14 @@ while ($rowc = mysqli_fetch_array($qur)) {
     $mail->Body = $structure;
 //$mail->addAttachment('./daily_report/'.$chicagotime.'/Communicator_Log_'.$chicagotime.'.xls', 'Communicator_Log_'.$chicagotime.'.xls');
     $mail->addAttachment('../daily_report/' . $chicagotime . '/Assignment_Log_' . $chicagotime . '.xls', 'Assignment_Log_' . $chicagotime . '.xls');
-if($mail_box == '1') {
+//$mail->addAttachment("../daily_report/" . $chicagotime . "/Assignment_Log_" . $chicagotime . ".xls");
+ if($mail_box == '1') {
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
 
     }
-}
+ }
     function save_mail($mail)
     {
         $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
