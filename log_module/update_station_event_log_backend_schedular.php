@@ -20,7 +20,7 @@ $curdate1 = date('Y-m-d', strtotime('-1 days'));
 while ($row_st = mysqli_fetch_array($result_st)){
 	$station_event_old_id = $row_st['s_id'];
 	$l_id = $row_st['line_id'];
-	$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id'  AND  created_on < '$curdate1%'   OR is_incomplete = 1";
+	$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id'  AND  created_on < '$curdate%'   OR is_incomplete = 1";
 	$result0 = mysqli_query($db, $sql0);
 
 	while ($row = mysqli_fetch_array($result0)) {
@@ -122,6 +122,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 					$z = 1;
 				}
 
+				$i = $z;
 //
 //			$co_sql = "SELECT sg_station_event_update_id, end_time FROM sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1;";
 //			$result_sql = mysqli_query($db, $co_sql);
@@ -152,7 +153,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 				$start_date2 = $s_arr_1[0];
 				$tt_time_2 = $end_hrs - $tt_time_1;
 
-				$i++;
+				//$i++;
 				$end_date_se ='';
 				$start_date21 ='';
 				$start_time21='';
@@ -178,7 +179,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$result_up = mysqli_query($db,$sql_up);
 					} else if($i == $j){
 
-						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$z' AND station_event_id = '$station_event_id' ";
+						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$j' AND station_event_id = '$station_event_id' ";
 						$result_se = mysqli_query($db,$sql_se);
 						$row_se = mysqli_fetch_array($result_se);
 						$end_time_se = $row_se['end_time'];
@@ -197,7 +198,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$z' AND station_event_id = '$station_event_id'";
 						$result_up = mysqli_query($db,$sql_up);
 					} else if(($i == $j) && ( $z<$k)){
-						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$z' AND station_event_id = '$station_event_id' ";
+						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$j' AND station_event_id = '$station_event_id' ";
 						$result_se = mysqli_query($db,$sql_se);
 						$row_se = mysqli_fetch_array($result_se);
 						$end_time_se = $row_se['end_time'];
