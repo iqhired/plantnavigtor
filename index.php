@@ -107,8 +107,10 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 	if(!empty($email)) {
 		if ($status == '1') {
 			header("Location:change_password.php");
+			exit;
 		} else {
 			header("Location:line_status_grp_dashboard.php");
+			exit;
 		}
 	}else{
 		header("Location:line_status_grp_dashboard.php");
