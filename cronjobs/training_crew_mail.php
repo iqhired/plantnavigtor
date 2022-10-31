@@ -19,7 +19,7 @@ $temp = "0";
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->SMTPAuth = true;
     $mail->Username = 'admin@plantnavigator.com';
-    $mail->Password = 'S@@rgummi@2022';
+    $mail->Password = 'S@@rgummi_2022';
     $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 
 
@@ -126,7 +126,7 @@ $temp = "0";
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         }else{
-
+            echo 'success';
         }
         }
 
