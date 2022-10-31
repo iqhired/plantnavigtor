@@ -77,7 +77,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$host=$_SERVER['HTTP_HOST'];
 		$time = date("H:i:s");
 		$date = date("Y-m-d");
-        $email = $row['email'];
+        $email = $row->email;
 
 		//mysqli_query($db, "INSERT INTO `cam_session_log`(`users_id`,`created_at`) VALUES ('$logid','$chicagotime')");
 		mysqli_query($db, "INSERT INTO `cam_session_log_p`(`users_id`,`created_at`,`uip`,`host`,`username`,`logoutdate`,`logouttime`) VALUES ('$logid','$chicagotime','$uip','$host','$user','$date','$time')");
@@ -104,6 +104,15 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		$message_stauts_class = $_SESSION["alert_danger_class"];
 		$import_status_message = $_SESSION["error_1"];
 	}
+	if(!empty($email)) {
+		if ($status == '1') {
+			header("Location:change_password.php");
+		} else {
+			header("Location:line_status_grp_dashboard.php");
+		}
+	}else{
+		header("Location:line_status_grp_dashboard.php");
+	}
 	if ($pin_flag == "1") {
 		if ($pin == "0") {
 			$_SESSION['message_stauts_class'] = 'alert-danger';
@@ -118,15 +127,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) ){
 		header("Location:line_status_grp_dashboard.php");
 		exit;
 	}
-    if(!empty($email)) {
-        if ($status == '1') {
-            header("Location:change_password.php");
-        } else {
-            header("Location:line_status_grp_dashboard.php");
-        }
-    }else{
-        header("Location:line_status_grp_dashboard.php");
-    }
+
 }
 $tmp = $_SESSION['temp'];
 $_SESSION['temp'] = "";
