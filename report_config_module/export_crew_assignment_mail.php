@@ -69,13 +69,13 @@ while ($rowc = mysqli_fetch_array($qur)) {
 //$mail->addAttachment('./daily_report/'.$chicagotime.'/Communicator_Log_'.$chicagotime.'.xls', 'Communicator_Log_'.$chicagotime.'.xls');
     $mail->addAttachment('../daily_report/' . $chicagotime . '/Assignment_Log_' . $chicagotime . '.xls', 'Assignment_Log_' . $chicagotime . '.xls');
 //$mail->addAttachment("../daily_report/" . $chicagotime . "/Assignment_Log_" . $chicagotime . ".xls");
-if($mail_box == '1') {
+ if($mail_box == '1') {
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
 
     }
-}
+ }
     function save_mail($mail)
     {
         $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';

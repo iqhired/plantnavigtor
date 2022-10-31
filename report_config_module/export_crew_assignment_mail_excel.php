@@ -11,7 +11,7 @@ if (!file_exists("../daily_report/" . $chicagotime)) {
 $exportData = mysqli_query($db, "SELECT `user_id`,`station_id`,`position_id`,`assign_time`,`total_time`  as time FROM `cam_assign_crew_log` WHERE DATE_FORMAT(`assign_time`,'%m-%d-%Y') >= '$chicagotime1' and DATE_FORMAT(`assign_time`,'%m-%d-%Y') <= '$chicagotime1' ");
 //$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
 $header = "User Name" . "\t" . "Station" . "\t" . "Position" . "\t" . "Assign Time" . "\t" . "Total Assign Time" . "\t";
-$result = '';
+//$result = '';
 /*$fields = mysqli_num_fields($db, $exportData);
 for ($i = 0; $i < $fields; $i++) {
     $header .= mysqli_field_name($db, $exportData, $i) . "\t";
