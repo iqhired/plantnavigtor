@@ -710,6 +710,7 @@ include("../heading_banner.php");
                                                             echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                     <?php } ?>
                                                     <?php $list_extra =  $rowc['list_name_extra'];
+													if(!empty($list_extra)){
                                                     $arrteam_list = explode(',', $list_extra);
                                                     $radiocount = 1;
                                                     foreach ($arrteam_list as $arr_list) { ?>
@@ -721,7 +722,7 @@ include("../heading_banner.php");
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
                                                             echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                        <?php  $radiocount++; } ?>
+                                                        <?php  $radiocount++; } }?>
 
                                                     <?php
                                                 }  else if (($checked == "no") ) { ?>
@@ -755,6 +756,7 @@ include("../heading_banner.php");
                                                             echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                     <?php } ?>
                                                     <?php $list_extra =  $rowc['list_name_extra'];
+													if(!empty($list_extra)){
                                                     $arrteam_list = explode(',', $list_extra);
                                                     $radiocount = 1;
                                                     foreach ($arrteam_list as $arr_list) { ?>
@@ -766,7 +768,7 @@ include("../heading_banner.php");
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>" style="background-color: #ffadad;"><?php $extra_alias = $arr_list;
                                                             echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                        <?php  $radiocount++; } ?>
+                                                        <?php  $radiocount++; }} ?>
 
                                                 <?php }  else if (($checked == "none") ){ ?>
 
@@ -805,6 +807,7 @@ include("../heading_banner.php");
                                                     <?php } ?>
 
                                                     <?php $list_extra =  $rowc['list_name_extra'];
+													if(!empty($list_extra)){
                                                     $arrteam_list = explode(',', $list_extra);
                                                     $radiocount = 1;
                                                     foreach ($arrteam_list as $arr_list) { ?>
@@ -816,7 +819,7 @@ include("../heading_banner.php");
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
                                                             echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                        <?php  $radiocount++; } ?>
+                                                        <?php  $radiocount++; }} ?>
 
                                                 <?php } else { ?>
 
@@ -848,6 +851,7 @@ include("../heading_banner.php");
                                                             echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                     <?php } ?>
                                                     <?php $list_extra =  $rowc['list_name_extra'];
+													if(!empty($list_extra)){
                                                     $arrteam_list = explode(',', $list_extra);
                                                     $radiocount = 1;
                                                     foreach ($arrteam_list as $arr_list) { ?>
@@ -859,7 +863,7 @@ include("../heading_banner.php");
                                                                class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
                                                                id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
                                                             echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                        <?php  $radiocount++; } ?>
+                                                        <?php  $radiocount++; } }?>
                                                 <?php } ?>
                                                 <?php if ($rowc['optional'] == '1') {
                                                     echo '<span style="color: #a1a1a1; font-size: small;padding-top: 15px;padding-left:15px;">(Optional)</span>';

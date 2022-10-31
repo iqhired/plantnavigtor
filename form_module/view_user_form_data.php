@@ -571,18 +571,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                     echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                             <?php } ?>
                                                             <?php $list_extra =  $rowc['list_name_extra'];
-                                                            $arrteam_list = explode(',', $list_extra);
-                                                            $radiocount = 1;
-                                                            foreach ($arrteam_list as $arr_list) { ?>
+                                                            if(!empty($list_extra)){
+																$arrteam_list = explode(',', $list_extra);
+																$radiocount = 1;
+																foreach ($arrteam_list as $arr_list) { ?>
 
-                                                            <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                   value="<?php echo $arr_list; ?>"
-                                                                   class="form-check-input pn_none" disabled >
-                                                            <label for="none"
-                                                                   class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                   id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
-                                                                echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                              <?php  $radiocount++; } ?>
+                                                                    <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
+                                                                           value="<?php echo $arr_list; ?>"
+                                                                           class="form-check-input pn_none" disabled >
+                                                                    <label for="none"
+                                                                           class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
+																		echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
+																	<?php  $radiocount++; }
+															}
+                                                            ?>
 
                                                             <?php
                                                         }  else if (($checked == "no") ) { ?>
@@ -615,18 +618,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                     echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                             <?php } ?>
                                                             <?php $list_extra =  $rowc['list_name_extra'];
-                                                            $arrteam_list = explode(',', $list_extra);
-                                                            $radiocount = 1;
-                                                            foreach ($arrteam_list as $arr_list) { ?>
+                                                            if(!empty($list_extra)){
+																$arrteam_list = explode(',', $list_extra);
+																$radiocount = 1;
+																foreach ($arrteam_list as $arr_list) { ?>
 
-                                                                <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                       value="<?php echo $arr_list; ?>"
-                                                                       class="form-check-input pn_none" disabled>
-                                                                <label for="none"
-                                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                       id="<?php echo $rowc['form_item_id']; ?>" <?php if($rowc['list_enabled'] ==1 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php $extra_alias = $arr_list;
-                                                                    echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                                <?php  $radiocount++; } ?>
+                                                                    <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
+                                                                           value="<?php echo $arr_list; ?>"
+                                                                           class="form-check-input pn_none" disabled>
+                                                                    <label for="none"
+                                                                           class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                                           id="<?php echo $rowc['form_item_id']; ?>" <?php if($rowc['list_enabled'] ==1 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php $extra_alias = $arr_list;
+																		echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
+																	<?php  $radiocount++; }
+                                                            }
+                                                             ?>
 
                                                         <?php }  else if (($checked == "none") ){ ?>
 
@@ -662,18 +668,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                             <?php } ?>
 
                                                             <?php $list_extra =  $rowc['list_name_extra'];
-                                                            $arrteam_list = explode(',', $list_extra);
-                                                            $radiocount = 1;
-                                                            foreach ($arrteam_list as $arr_list) { ?>
+															if(!empty($list_extra)){
+																$arrteam_list = explode(',', $list_extra);
+																$radiocount = 1;
+																foreach ($arrteam_list as $arr_list) { ?>
 
-                                                                <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                       value="extra_<?php echo $radiocount; ?>"
-                                                                       class="form-check-input pn_none" disabled >
-                                                                <label for="none"
-                                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                       id="<?php echo $rowc['form_item_id']; ?>" <?php if($rowc['list_enabled'] == 1 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php $extra_alias = $arr_list;
-                                                                    echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                                <?php  $radiocount++; } ?>
+                                                                    <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
+                                                                           value="extra_<?php echo $radiocount; ?>"
+                                                                           class="form-check-input pn_none" disabled >
+                                                                    <label for="none"
+                                                                           class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                                           id="<?php echo $rowc['form_item_id']; ?>" <?php if($rowc['list_enabled'] == 1 ){ echo 'style="background-color: #ffadad;"';}else{echo 'style="background-color: #fff;"';}?>><?php $extra_alias = $arr_list;
+																		echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
+																	<?php  $radiocount++; }
+															}
+                                                             ?>
 
                                                         <?php } else { ?>
 
@@ -705,18 +714,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                                                     echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "None" ?></label>
                                                             <?php } ?>
                                                             <?php $list_extra =  $rowc['list_name_extra'];
-                                                            $arrteam_list = explode(',', $list_extra);
-                                                            $radiocount = 1;
-                                                            foreach ($arrteam_list as $arr_list) { ?>
+															if(!empty($list_extra)){
+																$arrteam_list = explode(',', $list_extra);
+																$radiocount = 1;
+																foreach ($arrteam_list as $arr_list) { ?>
 
-                                                                <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
-                                                                       value="<?php echo $arr_list;?>"
-                                                                       class="form-check-input pn_none" <?php if($checked == "extra_$radiocount"){echo 'checked'; }?>  disabled >
-                                                                <label for="none"
-                                                                       class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
-                                                                       id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
-                                                                    echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
-                                                                <?php  $radiocount++; } ?>
+                                                                    <input type="radio" id="extra" name="<?php echo $rowc['form_item_id']; ?>"
+                                                                           value="<?php echo $arr_list;?>"
+                                                                           class="form-check-input pn_none" <?php if($checked == "extra_$radiocount"){echo 'checked'; }?>  disabled >
+                                                                    <label for="none"
+                                                                           class="pn_none item_label <?php echo $rowc['form_item_id']; ?>"
+                                                                           id="<?php echo $rowc['form_item_id']; ?>"><?php $extra_alias = $arr_list;
+																		echo (($extra_alias != null) || ($extra_alias != '')) ? $extra_alias : "Extra" ?></label>
+																	<?php  $radiocount++; }
+															}
+                                                            ?>
                                                         <?php } ?>
                                                         <?php if ($rowc['optional'] == '1') {
                                                             echo '<span style="color: #a1a1a1; font-size: small;padding-top: 15px;padding-left:15px;">(Optional)</span>';
