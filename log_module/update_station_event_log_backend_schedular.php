@@ -185,6 +185,12 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
+						$end_date_se_tm = $end_time_se[1];
+
+						$en_arr = explode(':', $end_time_se[1]);
+						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+						$end_date_se_tm = round($end_date_se_t, 2);
+						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
 
 						$end_se = $end_date_se . ' ' . '23:59:59';
 						//$z++;
@@ -198,6 +204,11 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
+
+						$en_arr = explode(':', $end_time_se[1]);
+						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+						$end_date_se_tm = round($end_date_se_t, 2);
+						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
 
 						$end_se = $end_date_se . ' ' . '23:59:59';
 
