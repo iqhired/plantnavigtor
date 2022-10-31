@@ -8,7 +8,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-
 //main query
 $mainquery = sprintf("SELECT * FROM  tm_task_log_config ");
 $mainqur = mysqli_query($db, $mainquery);

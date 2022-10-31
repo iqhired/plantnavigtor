@@ -16,11 +16,11 @@ while ($rowc05 = mysqli_fetch_array($qur05)) {
     $exportData = mysqli_query($db, "SELECT `taskboard`,`assign_to`,`equipment`,`property`,`building`,`assigned_time`,`finished_time`,`duration`, SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(`finished_time` ,`assigned_time`))) as total_time  FROM `tm_task` WHERE DATE_FORMAT(`assigned_time`,'%Y-%m-%d') >= '$chicagotime1' and DATE_FORMAT(`assigned_time`,'%Y-%m-%d') <= '$chicagotime1' and taskboard = '$taskboard_id' ");
 //$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
     $header = "Taskboard" . "\t" . "Assign To" . "\t" . "Equipment" . "\t" . "Property" . "\t" . "Building" . "\t". "Task Assign Time" . "\t" . "Task Completion Time" . "\t"  . "Estimated Duration" . "\t" . "Total Duration" . "\t";
-    $result = '';
+  /*  $result = '';
     $fields = mysqli_num_fields($db, $exportData);
     for ($i = 0; $i < $fields; $i++) {
         $header .= mysqli_field_name($db, $exportData, $i) . "\t";
-    }
+    }*/
     while ($row = mysqli_fetch_row($exportData)) {
         $line = '';
         $j = 1;
