@@ -188,9 +188,9 @@ for($i = 1; $i <= $click_id; )
         $graph_numeric_array = $_POST['graph_numeric_'.$bansi_row];
         $graph_numeric = $graph_numeric_array[0];
 
-
-       $sql1 = "INSERT INTO `form_item`(`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`numeric_graph`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$unit' , '$checked','$form_create_id' ,'$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '1','$notes' ,'$disc' , '$created_by' , '$updated_by')";
+		$jj = $j+1;
+       $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`unit_of_measurement`,`optional`,`form_create_id`,`item_desc`,`item_val`,`numeric_normal`,`numeric_lower_tol`,`numeric_upper_tol`,`numeric_graph`,`notes` ,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$jj','$unit' , '$checked','$form_create_id' ,'$item_desc' , '$item' , '$normal' , '$lower_tolerance' , '$upper_tolerance' , '1','$notes' ,'$disc' , '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
@@ -217,9 +217,10 @@ for($i = 1; $i <= $click_id; )
 		
 		$no_alias_array = $_POST['no_alias'];
 		$no_alias = $no_alias_array[$j];
-		
-       $sql1 = "INSERT INTO `form_item`(`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`binary_graph`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
-		('$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias','1','$notes' ,'$disc', '$created_by' , '$updated_by')";
+
+		$jj = $j+1;
+       $sql1 = "INSERT INTO `form_item`(`form_item_seq`,`form_create_id`,`optional`,`item_desc`,`item_val`,`binary_default`,`binary_normal`,`binary_yes_alias`,`binary_no_alias`,`binary_graph`,`notes`,`discription` ,`created_at` , `updated_at`) VALUES 
+		('$jj','$form_create_id' ,'$checked', '$item_desc' , '$item' , '$default_binary' , '$normal_binary' , '$yes_alias' , '$no_alias','1','$notes' ,'$disc', '$created_by' , '$updated_by')";
         $result1 = mysqli_query($db, $sql1);
         if ($result1) {
             $message_stauts_class = 'alert-success';
