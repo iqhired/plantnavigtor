@@ -190,8 +190,8 @@ while ($row_st = mysqli_fetch_array($result_st)){
 							$result_up = mysqli_query($db,$sql_up);
 							$tt_updated = 1;
 						}else if((($end_date_se_tm < 24 ) && ($tt_time_2 < 24))){
-							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
-							if($tt_time_2 >= 24){
+							$tt_time_3 = $tt_time_2 + $end_date_se_tm;
+							if($tt_time_3 >= 24){
 								$n++;
 								if(!empty($end_date_se)){
 									$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
@@ -201,7 +201,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 								$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','24','$created_by')";
 								$result1 = mysqli_query($db, $page);
-
+								$tt_time_2 = $tt_time_2 + $end_date_se_tm;
 							}else{
 								$end_se = $end_date_se . ' ' . $c_arr_1[1];
 								$sql_up = "update sg_station_event_log_update set total_time = '$tt_time_2' , end_time = '$end_se' where day_seq = '$n' AND station_event_id = '$station_event_id'";
@@ -228,7 +228,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 								$e_time21 = $start_date21 . ' ' . $c_arr_1[1];
 							}
 							$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
-				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','$end_hrs','$created_by')";
+				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','$tt_time_2','$created_by')";
 							$result1 = mysqli_query($db, $page);
 						}
 
