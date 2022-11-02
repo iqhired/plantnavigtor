@@ -5,34 +5,38 @@ $curdate = date('Y-m-d');
 $button = "";
 $temp = "";
 
+$sql_st_22 = "SELECT MAX(station_event_id) as m_ev, line_id FROM `sg_station_event` where line_id != 0 group by line_id ORDER by line_id;";
+$result_st_22 = mysqli_query($db,$sql_st_22);
+while ($row_st_22 = mysqli_fetch_array($result_st_22)){
+	$mev = $row_st_22['m_ev'];
+	$sq_update = "update `sg_station_event_log` set is_incomplete = 1 , total_time = null where station_event_id = '$mev' ORDER BY `sg_station_event_log`.`event_seq` DESC limit 1;";
+	mysqli_query($db,$sq_update);
+}
 //$sql_st = "SELECT * FROM `sg_station_event_log_update` where line_id = 3 ORDER BY `sg_station_event_old_id` DESC LIMIT 1";
 $sql_st = "SELECT MAX(sg_station_event_old_id) as s_id ,(line_id) FROM `sg_station_event_log_update` where line_id != 0 group by line_id  ORDER by line_id";
-
 $result_st = mysqli_query($db,$sql_st);
-//$row_st =  mysqli_fetch_array($result_st);
-//$station_event_old_id = $row_st['sg_station_event_old_id'];
-//
-//if (empty($station_event_old_id)){
-//    $station_event_old_id = 0;
-//}
 
-$curdate1 = date('Y-m-d', strtotime('-1 days'));
+$curdate1 = date('Y-m-d', strtotime('+1 days'));
 while ($row_st = mysqli_fetch_array($result_st)){
 	$station_event_old_id = $row_st['s_id'];
 	$l_id = $row_st['line_id'];
-	$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id'  AND  created_on < '$curdate%'   OR is_incomplete = 1";
+	$sql0 = "SELECT * FROM sg_station_event_log where  ignore_id != '1' AND station_event_log_id > '$station_event_old_id' AND  created_on < '$curdate1%'  OR  is_incomplete = 1";
 	$result0 = mysqli_query($db, $sql0);
-
 	while ($row = mysqli_fetch_array($result0)) {
 		$station_event_log_id = $row['station_event_log_id'];
 		$event_seq = $row['event_seq'];
+		$is_incomplete = $row['is_incomplete'];
 		$station_event_id = $row['station_event_id'];
 		$sql_seid = "select `line_id` from `sg_station_event` where station_event_id = '$station_event_id' order by line_id";
 		$result_seid = mysqli_query($db,$sql_seid);
 		$row_see = mysqli_fetch_array($result_seid);
 		$line_id = $row_see['line_id'];
+
 		if ($line_id != $l_id) {
 			continue;
+		}
+		if($line_id == 48){
+			$reerfge = 1;
 		}
 		$i = 0;
 		$station_cat_id = $row['event_cat_id'];
@@ -48,7 +52,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 //    $yesdate = date('Y-m-d H:i:s',strtotime("+2 days"));
 //    $current_time = $yesdate;
 
-		if (empty($total_time)) {
+		if (empty($total_time) || ($is_incomplete == 1)) {
 			$datetime1 = strtotime($current_time);
 			$datetime2 = strtotime($time);
 
@@ -122,7 +126,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 					$z = 1;
 				}
 
-				$i = $z;
+
 //
 //			$co_sql = "SELECT sg_station_event_update_id, end_time FROM sg_station_event_log_new ORDER BY sg_station_event_update_id DESC LIMIT 1;";
 //			$result_sql = mysqli_query($db, $co_sql);
@@ -149,6 +153,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
                 values ('$line_id','$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$endtime_1','$tt_time_1','$created_by')";
 					$result1 = mysqli_query($db, $page);
 				}
+				$i = $z;
 
 				$start_date2 = $s_arr_1[0];
 				$tt_time_2 = $end_hrs - $tt_time_1;
@@ -172,6 +177,12 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
+						$end_date_se_tm = $end_time_se[1];
+
+						$en_arr = explode(':', $end_time_se[1]);
+						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+						$end_date_se_tm = round($end_date_se_t, 2);
+						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
 
 						$end_se = $end_date_se . ' ' . '23:59:59';
 
@@ -187,6 +198,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
 						$end_date_se_tm = $end_time_se[1];
+
 
 						$en_arr = explode(':', $end_time_se[1]);
 						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
@@ -326,16 +338,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 			}
 		}
 	}
-}
 
-
-if ($result0) {
-
-	$_SESSION['message_stauts_class'] = 'alert-success';
-	$_SESSION['import_status_message'] = 'Form Created Sucessfully.';
-} else {
-	$_SESSION['message_stauts_class'] = 'alert-danger';
-	$_SESSION['import_status_message'] = 'Please retry';
 }
 
 $url = "update_station_event_log_backend_page.php";
