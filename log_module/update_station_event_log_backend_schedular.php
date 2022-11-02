@@ -61,6 +61,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 			$k = $end_hrs/24;
 //        $end_hrs = ($current_time - $time) / 60;
 			// $tt = sprintf('%02d:%02d', (int)$current_time, fmod($current_time, 1) * 60);
+			$tt_time_1 = 0;
 			if ($end_hrs < 24) {
 				$tt = sprintf('%02d:%02d', (int)$end_hrs, fmod($end_hrs, 1) * 60);
 				$end_time2 = $curdate . ' ' . $tt;
