@@ -3,6 +3,8 @@
         "firebase/php-jwt": "^6.0",
         "phpmailer/phpmailer": "^6.6",
         "phpseclib/phpseclib": "^3.0",
-        "paragonie/sodium_compat": "^1.17"
+        "paragonie/sodium_compat": "^1.17",
+        "khanamiryan/qrcode-detector-decoder": "^2.0",
+        "libern/qr-code-reader": "^1.0"
     }
 }

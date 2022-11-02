@@ -1,12 +1,11 @@
-<?php
-include("../config.php");
+<?php include("../config.php");
 $chicagotime = date("Y-m-d");
 $monthdate = date("Y-m-d", strtotime('-1 month'));
 $diff = abs(strtotime($monthdate) - strtotime($chicagotime));
 $m = ($diff/3600);
 $station = $_POST['station'];
 //select line down data
-$sql2 = sprintf("SELECT round(sum(sg_station_event_log_update.total_time), 2) as t1 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 2 and sg_station_event.`created_on` > '$chicagotime' - interval 1 month and sg_station_event_log_update.`created_on` > '$chicagotime' - interval 1 month");
+$sql2 = sprintf("SELECT round(sum(total_time), 2) as t1 FROM sg_station_event_log_update  WHERE `line_id` = '$station' and event_cat_id = 2 and `created_on` > '$chicagotime' - interval 1 month ");
 $result2 = mysqli_query($db,$sql2);
 $row2 = $result2->fetch_assoc();
 $t1 = $row2['t1'];
@@ -16,7 +15,7 @@ if(empty($t1)){
     $d1 = $t1;
 }
 
-$sql3 = sprintf("SELECT round(sum(sg_station_event_log_update.total_time), 2) as t2 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 3 and sg_station_event.`created_on` > '$chicagotime' - interval 1 month and sg_station_event_log_update.`created_on` > now() - interval 1 month");
+$sql3 = sprintf("SELECT round(sum(total_time), 2) as t2 FROM sg_station_event_log_update  WHERE `line_id` = '$station' and event_cat_id = 3 and `created_on` > '$chicagotime' - interval 1 month ");
 $result3 = mysqli_query($db,$sql3);
 $row3 = $result3->fetch_assoc();
 $t2 = $row3['t2'];
@@ -26,7 +25,7 @@ if(empty($t2)){
     $d2 = $t2;
 }
 
-$sqlv = sprintf("SELECT round(sum(sg_station_event_log_update.total_time), 2) as t3 FROM `sg_station_event` INNER JOIN sg_station_event_log_update ON sg_station_event.`station_event_id` = sg_station_event_log_update.`station_event_id` WHERE sg_station_event.`line_id` = '$station' and sg_station_event_log_update.event_cat_id = 4 and sg_station_event.`created_on` > '$chicagotime' - interval 1 month and sg_station_event_log_update.`created_on` > '$chicagotime' - interval 1 month");
+$sqlv = sprintf("SELECT round(sum(total_time), 2) as t3 FROM sg_station_event_log_update  WHERE `line_id` = '$station' and event_cat_id = 4 and `created_on` > '$chicagotime' - interval 1 month ");
 $response = array();
 $posts = array();
 $resultv = mysqli_query($db,$sqlv);
