@@ -1,5 +1,5 @@
 <?php include("../config.php");
-$chicagotime = date("Y-m-d" , strtotime('-4 days'));
+$chicagotime = date("Y-m-d");
 $dh = date("H");
 $station = $_POST['station'];
 //select line down data
