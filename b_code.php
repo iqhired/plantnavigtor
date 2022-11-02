@@ -78,7 +78,7 @@
 			<label>EAN 13</label>
 			<br />
 			<input type="radio" name="barcodeType"
-				   value="datamatrix">
+				   value="datamatrix" >
 			<label>Data Matrix (2D barcode)</label>
 			<br />
 			<input type="radio" name="barcodeType"

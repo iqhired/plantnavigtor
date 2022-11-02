@@ -35,7 +35,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 		if ($line_id != $l_id) {
 			continue;
 		}
-		if(($line_id == 48) || ($line_id == 36)){
+		if(($line_id == 48) ){
 			$reerfge = 1;
 		}
 		$i = 0;
@@ -166,10 +166,10 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 				$end_time_se_tt = explode(' ', $et_time);
 				$et_tt = $end_time_se_tt[0];
-
+				$n = $z;
 				while($tt_time_2 > 0){
 					if(($tt_time_1 == null) &&  ( $z>$k)){
-						$n = $z;
+
 						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$n' AND station_event_id = '$station_event_id' ";
 						$result_se = mysqli_query($db,$sql_se);
 						$row_se = mysqli_fetch_array($result_se);
@@ -177,18 +177,61 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
-						if($tt_time_2 > 24 ) {
-							$end_date_se_tm = $end_time_se[1];
+						$end_date_se_tm = $end_time_se[1];
+						$en_arr = explode(':', $end_time_se[1]);
+						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+						$end_date_se_tm = round($end_date_se_t, 2);
 
-							$en_arr = explode(':', $end_time_se[1]);
-							$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
-							$end_date_se_tm = round($end_date_se_t, 2);
+						if((($end_date_se_tm < 24 ) && ($tt_time_2 > 24))) {
+
 							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
-						}
-						$end_se = $end_date_se . ' ' . '23:59:59';
+							$end_se = $end_date_se . ' ' . '23:59:59';
+							$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$n' AND station_event_id = '$station_event_id'";
+							$result_up = mysqli_query($db,$sql_up);
+							$tt_updated = 1;
+						}else if((($end_date_se_tm < 24 ) && ($tt_time_2 < 24))){
+							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
+							if($tt_time_2 >= 24){
+								$n++;
+								if(!empty($end_date_se)){
+									$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
+									$start_time21 = $start_date21 . ' ' . '00:00:00';
+									$e_time21 = $start_date21 . ' ' . '23:59:59';
+								}
+								$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','24','$created_by')";
+								$result1 = mysqli_query($db, $page);
 
-						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$j' AND station_event_id = '$station_event_id'";
-						$result_up = mysqli_query($db,$sql_up);
+							}else{
+								$end_se = $end_date_se . ' ' . $c_arr_1[1];
+								$sql_up = "update sg_station_event_log_update set total_time = '$tt_time_2' , end_time = '$end_se' where day_seq = '$n' AND station_event_id = '$station_event_id'";
+								$result_up = mysqli_query($db,$sql_up);
+							}
+						}else if((($end_date_se_tm >= 24 ) && ($tt_time_2 > 24))){
+							$n++;
+							$start_date21 = '';
+							if(!empty($end_date_se)){
+								$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
+								$start_time21 = $start_date21 . ' ' . '00:00:00';
+								$e_time21 = $start_date21 . ' ' . '23:59:59';
+							}
+							$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','24','$created_by')";
+							$result1 = mysqli_query($db, $page);
+
+						}else if((($end_date_se_tm >= 24 ) && ($tt_time_2 < 24)) ){
+							$n++;
+							$start_date21 = '';
+							if(!empty($end_date_se)){
+								$start_date21 = date('Y-m-d', strtotime($end_date_se . " +1 days"));
+								$start_time21 = $start_date21 . ' ' . '00:00:00';
+								$e_time21 = $start_date21 . ' ' . $c_arr_1[1];
+							}
+							$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
+				values ('$line_id','$station_event_log_id','$n','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$start_time21','$e_time21','$end_hrs','$created_by')";
+							$result1 = mysqli_query($db, $page);
+						}
+
 					} else if($i == $j){
 
 						$sql_se = "select end_time from sg_station_event_log_update where day_seq = '$j' AND station_event_id = '$station_event_id' ";
