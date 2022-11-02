@@ -35,7 +35,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 		if ($line_id != $l_id) {
 			continue;
 		}
-		if($line_id == 48){
+		if(($line_id == 48) || ($line_id == 36)){
 			$reerfge = 1;
 		}
 		$i = 0;
@@ -177,13 +177,14 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
-						$end_date_se_tm = $end_time_se[1];
+						if($tt_time_2 > 24 ) {
+							$end_date_se_tm = $end_time_se[1];
 
-						$en_arr = explode(':', $end_time_se[1]);
-						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
-						$end_date_se_tm = round($end_date_se_t, 2);
-						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
-
+							$en_arr = explode(':', $end_time_se[1]);
+							$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+							$end_date_se_tm = round($end_date_se_t, 2);
+							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
+						}
 						$end_se = $end_date_se . ' ' . '23:59:59';
 
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$j' AND station_event_id = '$station_event_id'";
@@ -197,14 +198,15 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
-						$end_date_se_tm = $end_time_se[1];
+						if($tt_time_2 > 24 ) {
+							$end_date_se_tm = $end_time_se[1];
 
 
-						$en_arr = explode(':', $end_time_se[1]);
-						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
-						$end_date_se_tm = round($end_date_se_t, 2);
-						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
-
+							$en_arr = explode(':', $end_time_se[1]);
+							$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+							$end_date_se_tm = round($end_date_se_t, 2);
+							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
+						}
 						$end_se = $end_date_se . ' ' . '23:59:59';
 						//$z++;
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$z' AND station_event_id = '$station_event_id'";
@@ -217,12 +219,13 @@ while ($row_st = mysqli_fetch_array($result_st)){
 
 						$end_time_se = explode(' ', $end_time_se);
 						$end_date_se = $end_time_se[0];
-
-						$en_arr = explode(':', $end_time_se[1]);
-						$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
-						$end_date_se_tm = round($end_date_se_t, 2);
-						$tt_time_2 = $tt_time_2 + $end_date_se_tm ;
-
+						if($tt_time_2 > 24 ) {
+							$end_date_se_tm = $end_time_se[1];
+							$en_arr = explode(':', $end_time_se[1]);
+							$end_date_se_t = $en_arr[0] + ($en_arr[1] / 60) + ($en_arr[2] / 3600);
+							$end_date_se_tm = round($end_date_se_t, 2);
+							$tt_time_2 = $tt_time_2 + $end_date_se_tm;
+						}
 						$end_se = $end_date_se . ' ' . '23:59:59';
 
 						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_se' where day_seq = '$z' AND station_event_id = '$station_event_id'";
