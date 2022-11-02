@@ -1,7 +1,7 @@
 <?php
 // Include the qrlib file
-include 'phpqrcode/qrlib.php';
-$text = "Line1_BMW";
+include './assets/lib/phpqrcode/qrlib.php';
+$text = "Linexfxf_BMW";
 
 // $path variable store the location where to
 // store image and $file creates directory name

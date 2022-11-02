@@ -1,5 +1,4 @@
 <html>
-
 <head>
 	<title>Barcode Generator</title>
 	<style>
