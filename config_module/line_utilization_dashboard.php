@@ -208,6 +208,15 @@ include("../heading_banner.php");
 <!-- /page content -->
 <script>
     $('#station').on('change', function (e) {
+        $.ajax({
+            type: 'POST',
+            url: './../log_module/se_log_schedular.php',
+            async: true,
+            success: function (data) {
+                event.preventDefault()
+                window.scrollTo(0, 300);
+            }
+        });
         $("#line_data").submit();
     });
     //daily data
