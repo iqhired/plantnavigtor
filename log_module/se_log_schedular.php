@@ -34,6 +34,9 @@ while ($row_st = mysqli_fetch_array($result_st)){
 		if ($line_id != $l_id) {
 			continue;
 		}
+		if ($line_id == 8) {
+			$dhtr =1 ;
+		}
 		$i = 0;
 		$station_cat_id = $row['event_cat_id'];
 		$station_type_id = $row['event_type_id'];
@@ -79,7 +82,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 			$end_hrs_insecs = $datetime1 - $datetime2;
 			$end_hrs = $end_hrs_insecs/3600;
 			$k = $end_hrs/24;
-
+			$end_hrs = round($end_hrs, 2);
 			$tot_fu_time = $start_time + $end_hrs ;
 
 			if ($tot_fu_time < 24) {
@@ -94,19 +97,36 @@ while ($row_st = mysqli_fetch_array($result_st)){
 				if(($z == 1) && ($no_rec == 1)){
 					$tt_time_1 = $rem_day_time;
 					$end_time2 = $create_date . ' ' . '23:59:59';
+					$next_date = $create_date;
 					$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$line_id','$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$tt_time_1','$created_by')";
 					$result1 = mysqli_query($db, $page);
 					$z++;
 					$loop_tot_time = $loop_tot_time - $rem_day_time;
 				}else{
-					$end_time2 = $create_date . ' ' . '23:59:59';
-					$sql_up = "update sg_station_event_log_update set total_time = '$rem_day_time' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
-					$result_up = mysqli_query($db,$sql_up);
-					$z++;
-					$loop_tot_time = $loop_tot_time - $rem_day_time;
+
+					$co_sql = "SELECT created_on , end_time FROM sg_station_event_log_update where day_seq = '$z' AND line_id = '$line_id' and station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id';";
+					$result_sql = mysqli_query($db, $co_sql);
+					$d_sql = mysqli_fetch_array($result_sql);
+					$crea_date = explode(' ', $d_sql['created_on']);
+					$etime_date = explode(' ', $d_sql['end_time']);
+					$next_date = $crea_date[0];
+					$loop_tot_time = $loop_tot_time - $rem_day_time - (24*($z-2));
+					if($loop_tot_time > 24){
+						$end_time2 = $crea_date[0] . ' ' . '23:59:59';
+						$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
+						$result_up = mysqli_query($db,$sql_up);
+						$z++;
+						$loop_tot_time = $loop_tot_time - 24;
+					}else{
+						$end_time2 = $current_time;
+						$sql_up = "update sg_station_event_log_update set total_time = '$loop_tot_time' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
+						$result_up = mysqli_query($db,$sql_up);
+						$z++;
+						$loop_tot_time = 0;
+					}
 				}
-				$next_date = $create_date;
+
 				while($loop_tot_time > 0){
 					$next_date = date('Y-m-d', strtotime($next_date . " +1 days"));
 					if($loop_tot_time > 24){
@@ -121,7 +141,7 @@ while ($row_st = mysqli_fetch_array($result_st)){
 					}else{
 						$created_on = $next_date . ' ' . '00:00:00';
 						$end_time2 = $current_time;
-						$tt_time_1 = $loop_tot_time;
+						$tt_time_1 = round($loop_tot_time, 2);
 						$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$line_id','$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$tt_time_1','$created_by')";
 						$result1 = mysqli_query($db, $page);

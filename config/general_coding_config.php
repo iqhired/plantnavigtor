@@ -2,7 +2,7 @@
 
 // to check whether pin is updated or not 
 $actual_link = "$_SERVER[REQUEST_URI]";
-$rest_api_uri = "https://api.plantworkx.com/api/v1/";
+$rest_api_uri = "http://restapi:8888/api/v1/";
 if($actual_link != "/profile.php")
 {
 $pin = $_SESSION["pin"];
