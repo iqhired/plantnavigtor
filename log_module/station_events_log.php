@@ -383,6 +383,9 @@ include("../heading_banner.php");
                             </div>
                             </form>
                             <div class="col-md-2">
+                                <button type="button" class="btn btn-primary" id="update_btn" style="background-color:#1e73be;margin-right: 20px;width:120px;">Update</button>
+                            </div>
+                            <div class="col-md-2">
                             <form action="export_se_log_new.php" method="post" name="export_excel">
                                 <button type="submit" class="btn btn-primary"
                                             style="background-color:#1e73be;width:120px;"
@@ -540,5 +543,22 @@ where 1 ";
 </div>
 <!-- /page container -->
 <?php include('../footer.php') ?>
+<script>
+    $("#update_btn").click(function (e) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: 'se_log_schedular.php',
+            async: true,
+            success: function (data) {
+                event.preventDefault()
+                window.scrollTo(0, 300);
+            }
+        });
+
+        // e.preventDefault();
+    });
+
+</script>
 </body>
 </html>
