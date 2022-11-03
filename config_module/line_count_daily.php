@@ -2,6 +2,18 @@
 $chicagotime = date("Y-m-d");
 $dh = date("H");
 $station = $_POST['station'];
+
+//select other data
+$sql1 = sprintf("SELECT round(sum(total_time), 2) as t1 FROM sg_station_event_log_update  WHERE `line_id` = '$station' and event_cat_id not in ('2','3','4') and date(`created_on`) = '$chicagotime' ");
+$result1 = mysqli_query($db,$sql1);
+$row1 = $result1->fetch_assoc();
+$t1 = $row1['t1'];
+if(empty($t1)){
+	$d0 = 0;
+}else{
+	$d0 = $t1;
+}
+
 //select line down data
 //$sql2 = sprintf("SELECT round(IFNULL(SEC_TO_TIME( SUM( TIME_TO_SEC( sg_station_event_log.`total_time` ) ) ),'00:00:00')) as t1 FROM `sg_station_event` INNER JOIN sg_station_event_log on sg_station_event.station_event_id = sg_station_event_log.station_event_id WHERE date(sg_station_event.`created_on`) = '$chicagotime' and sg_station_event.line_id = '$station' and sg_station_event_log.event_cat_id = 3");
 $sql2 = sprintf("SELECT ( SUM( `total_time` )) as t1 FROM sg_station_event_log_update WHERE date(`created_on`) = '$chicagotime' and line_id = '$station' and event_cat_id = 3");
@@ -28,7 +40,7 @@ while ($rowv=$resultv->fetch_assoc()){
 		$t = $time;
 	}
 	$dh = $t1 + $t2 + $t;
-	$posts[] = array('line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
+	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
 }
 $response['posts'] = $posts;
 echo json_encode($response);
