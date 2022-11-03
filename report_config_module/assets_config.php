@@ -1,6 +1,7 @@
 <?php include("../config.php");
 include('./../assets/lib/phpqrcode/qrlib.php');
-$chicagotime = date("Y-m-d H:i:s");
+$chicagodate = date("Y-m-d");
+$chicagotime = date("H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
     header('location: ../logout.php');
@@ -30,10 +31,8 @@ if ($i != "super" && $i != "admin") {
 $created_by = $_SESSION['id'];
 if (count($_POST) > 0) {
     $station = $_POST['station'];
-    $part_family = $_POST['part_family'];
-    $part_number = $_POST['part_number'];
     $asset_name = $_POST['asset_name'];
-    $assets_id = uniqid() . '~' . $station . '~' . $part_family . '~' . $part_number . '~' . $asset_name;
+    $assets_id = uniqid() . '~' . $station . '~' . $asset_name;
 
     //store the qr code to directory and database
     $text = "sample";
@@ -43,7 +42,7 @@ if (count($_POST) > 0) {
     // of the QR code file by using 'uniqid'
     // uniqid creates unique id based on microtime
     $path = '../assets/images/qrCode/';
-    $file = $path.uniqid() . '~' . $station . '~' . $part_family . '~' . $part_number . '~' . $asset_name.".png";
+    $file = $path.uniqid() . '~' . $station . '~' . $asset_name.".png";
 
     // $ecc stores error correction capability('L')
     $ecc = 'L';
@@ -58,83 +57,20 @@ if (count($_POST) > 0) {
 // Encode the image string data into base64
     $data = base64_encode($img);
 
-    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `part_family`, `part_number`, `asset_name`, `image`, `qrcode`, `created_on`, `created_by`) VALUES ('$assets_id','$station','$part_family','$part_number','$asset_name','','$data','$chicagotime','$created_by')";
+    //upload the image
+    $data1 = file_get_contents($_FILES['image']['tmp_name']);
+    $data1 = base64_encode($data1);
+
+    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$data1','$data','$chicagodate','$chicagotime','$created_by', '1')";
     $result2 = mysqli_query($db, $sql2);
     if ($result2) {
-        $message_stauts_class = 'alert-success';
-        $import_status_message = 'Assets create successfully.';
+        $message_status_class = 'alert-success';
+        $import_status_message = 'Assets create successfully!';
+        header("Location:assets_config.php");
     }else {
-            $message_stauts_class = 'alert-danger';
+            $message_status_class = 'alert-danger';
             $import_status_message = 'Error: Please Retry...';
     }
-    if(isset($_FILES['image'])){
-        $filename = $_FILES['image']['name'];
-        $file_size = $_FILES['image']['size'];
-        $file_tmp = $_FILES['image']['tmp_name'];
-        $file_type = $_FILES['image']['type'];
-        $location = "../assets/images/qrCode/";
-
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            $uploadOk = 0;
-        }
-        if ($uploadOk == 0) {
-            echo 0;
-        } else {
-            /* Upload file */
-            $filename = pathinfo($_FILES["image"]["name"])['filename']. '_' . time(). '.' .  pathinfo($_FILES["image"]["name"])['extension'];
-            $destination = $location .  $filename;
-            if (move_uploaded_file($file_tmp, $destination)) {
-
-                $sql31 = "update `station_assests` set image = '$filename' where asset_id = '$assets_id'";
-                $result31 = mysqli_query($db, $sql31);
-            }
-        }
-    }
-    /* $file_path = $filename;
-          $img_data = file_get_contents($_FILES['image']['name']);
-          $data_image = base64_encode($filename);*/
-   /* if (isset($_FILES['image'])) {
-        $errors = array();
-        $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
-        $file_name = $_FILES['image']['name'];
-        $file_ext = strtolower(end(explode('.', $file_name)));
-        $file_size = $_FILES['image']['size'];
-        $file_tmp = $_FILES['image']['tmp_name'];
-        echo $file_tmp;
-        echo "<br>";
-        $file_path = '../assets/images/assets_images/';
-        $type = pathinfo($file_tmp, PATHINFO_EXTENSION);
-        $data1 = file_get_contents($file_ext);
-        // $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-       // Encode the image string data into base64
-        $data1 = base64_encode($file_name);
-
-
-        if (in_array($file_ext, $allowed_ext) === false) {
-            $errors[] = 'Extension not allowed';
-        }
-
-        if ($file_size > 2097152) {
-            $errors[] = 'File size must be under 2mb';
-
-        }
-        if (empty($errors)) {
-            if( move_uploaded_file($file_path,$file_name));
-            {
-
-            }
-
-        } else {
-            foreach ($errors as $error) {
-
-            }
-        }
-    }*/
-
 }
 
 ?>
@@ -261,6 +197,18 @@ include("../heading_banner.php");
         <!-- Basic datatable -->
         <div class="panel panel-flat">
             <div class="panel-heading">
+                <?php
+                if (!empty($import_status_message)) {
+                    echo '<br/><div class="alert ' . $message_status_class . '">' . $import_status_message . '</div>';
+                }
+                ?>
+                <?php
+                if (!empty($_SESSION['import_status_message'])) {
+                    echo '<br/><div class="alert ' . $_SESSION['message_status_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    $_SESSION['message_status_class'] = '';
+                    $_SESSION['import_status_message'] = '';
+                }
+                ?>
                 <h5 class="panel-title">Station Assets Config</h5><br/>
                     <div class="row">
                         <div class="col-md-12">
@@ -294,62 +242,6 @@ include("../heading_banner.php");
                                             </select>
                                         </div>
                                     </div>
-                                        <label class="col-sm-2 control-label" style="margin-left: 10px;">Part family : </label>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <select name="part_family" id="part_family" class="select form-control"  data-style="bg-slate">
-                                                    <option value="" selected disabled>--- Select Part Family ---</option>
-                                                    <?php
-                                                    $part_family_name = $_POST['part_family_name'];
-                                                    $sql2 = "SELECT * FROM `pm_part_family` where is_deleted != 1 order by part_family_name asc";
-                                                    $result2 = $mysqli->query($sql2);
-                                                    //                                            $entry = 'selected';
-                                                    while ($row2 = $result2->fetch_assoc()) {
-                                                        if($st_dashboard == $row2['pm_part_family_id'])
-                                                        {
-                                                            $entry = 'selected';
-                                                        }
-                                                        else
-                                                        {
-                                                            $entry = '';
-
-                                                        }
-                                                        echo "<option value='" . $row2['pm_part_family_id'] . "' $entry >" . $row2['part_family_name'] . "</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label">Part Number : </label>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <select name="part_number" id="part_number" class="select form-control" data-style="bg-slate">
-                                                <option value="" selected disabled>--- Select Part Number ---</option>
-                                                <?php
-                                                $st_dashboard = $_POST['part_number'];
-                                                $part_family = $_POST['part_family'];
-
-                                                $sql3 = "SELECT * FROM `pm_part_number` where is_deleted != 1 order by part_name asc";
-                                                $result3 = $mysqli->query($sql3);
-                                                //                                            $entry = 'selected';
-                                                while ($row3 = $result3->fetch_assoc()) {
-                                                    if($st_dashboard == $row3['pm_part_number_id'])
-                                                    {
-                                                        $entry = 'selected';
-                                                    }
-                                                    else
-                                                    {
-                                                        $entry = '';
-
-                                                    }
-                                                    echo "<option value='" . $row3['pm_part_number_id'] . "' $entry >" . $row3['part_number'] ." - ".$row1['part_name']  . "</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
                                     <div class="col-md-3">
                                         <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
@@ -358,118 +250,126 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-sm-2 control-label">Image : </label>
                                     <div class="col-md-4">
-                                        <input type="file" name="image" id="image"/>
+                                        <input type="file" name="image" id="image" multiple="multiple"/>
                                     </div>
                                 </div>
-                                <br/>
-                             <!--   <div class="row">
-                                    <label class="col-lg-2 control-label">QR Code : </label>
-                                    <div class="col-md-6">
-                                        <?php
-/*                                        $query2 = sprintf("SELECT * FROM  station_assests where asset_id = '$assets_id'");
-                                        $qurimage = mysqli_query($db, $query2);
-                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                        $qrcode = $rowcimage['qrcode'];
-                                        */?>
-                                        <img src="<?php /*echo $qrcode; */?>"
-                                             alt="">
-
-                                    </div>
-                                    <?php
-/*                                    } */?>
-                                </div>
-                                <br/>-->
                     </div>
             </div>
                 <div class="panel-footer p_footer">
-                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Update</button>
+                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create</button>
                 </div>
 
                 </form>
         </div>
-        <!-- /main charts -->
-        <!-- edit modal -->
-        <!-- Dashboard content -->
-        <!-- /dashboard content -->
 
     </div>
-    </div>
-</div>
-
-
-               <!-- <table class="table datatable-basic">
-                    <thead>
-                    <tr>
-                        <th>Asset Id</th>
-                        <th>Station</th>
-                        <th>Part Family</th>
-                        <th>Part Number</th>
-
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-/*                    $query4  = mysqli_query($db, "SELECT * FROM `station_assests`");
-                    while ($rowc08 = mysqli_fetch_array($query4)) {
+        <div class="panel panel-flat" >
+            <table class="table datatable-basic">
+                <thead>
+                <tr>
+                    <th>Slno</th>
+                    <th>Asset Name</th>
+                    <th>Station</th>
+                    <th>Created Date</th>
+                    <th>Image</th>
+                    <th>QR Code</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $query4  = mysqli_query($db, "SELECT * FROM `station_assests` where is_deleted != 0");
+                while ($rowc08 = mysqli_fetch_array($query4)) {
                     //$rowc4 = mysqli_fetch_assoc($query4);
                     $asset_id = $rowc08["asset_id"];
                     $line_id = $rowc08["line_id"];
-                    $part_family = $rowc08["part_family"];
-                    $part_number = $rowc08["part_number"];
                     $asset_name = $rowc08["asset_name"];
+                    $created_date = $rowc08["created_date"];
+                    $qrcode = $rowc08["qrcode"];
+                    $image = $rowc08["image"];
 
-                        $qur1 = mysqli_query($db, "SELECT line_name  FROM `cam_line` where line_id = '$line_id'");
-                        $rowc1 = mysqli_fetch_array($qur1);
-                        $line_name = $rowc1['line_name'];
+                    $mime_type = "image/gif";
+                    $file_content = file_get_contents("$image");
 
-                        $qur2 = mysqli_query($db, "SELECT part_family_name  FROM `pm_part_family` where pm_part_family_id = '$part_family'");
-                        $rowc2= mysqli_fetch_array($qur2);
-                        $part_family_name = $rowc2['part_family_name'];
-
-                        $qur3 = mysqli_query($db, "SELECT part_number,part_name  FROM `pm_part_number` where pm_part_number_id = '$part_number'");
-                        $rowc3= mysqli_fetch_array($qur3);
-                        $part_no = $rowc3['part_number'];
-                        $part_name = $rowc3['part_name'];
-                    */?>
-                       <tr>
-                           <td><?php /*echo $asset_id; */?></td>
-                           <td><?php /*echo $line_name; */?></td>
-                           <td><?php /*echo $part_family_name; */?></td>
-                           <td><?php /*echo $part_no .'-'. $part_name; */?></td>
-                        </tr>
-                    <?php /*} */?>
-                    </tbody>
-                </table>
-              -->
-
-
+                    $qur1 = mysqli_query($db, "SELECT line_name  FROM `cam_line` where line_id = '$line_id'");
+                    $rowc1 = mysqli_fetch_array($qur1);
+                    $line_name = $rowc1['line_name'];
+                    ?>
+                    <tr>
+                        <td><?php echo ++$counter;; ?></td>
+                        <td><?php echo $asset_name; ?></td>
+                        <td><?php echo $line_name; ?></td>
+                        <td><?php echo $created_date; ?></td>
+                        <td><?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:50px;" />'; ?></td>
+                        <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?></td>
+                       <!-- <td>
+                            <button type="button" name="remove_btn"
+                                    class="btn btn-danger btn-xs remove_btn"
+                                    id="btn_id<?php /*echo $asset_id; */?>"
+                                    data-id="<?php /*echo $asset_id; */?>">-
+                            </button>
+                        </td>-->
+                        <td>
+                            <input type="hidden" name="asset_id" id="asset_id" value="<?php echo $asset_id; ?>">
+                            <a href="edit_assets_config.php?id=<?php echo $rowc08["asset_id"]; ?>&optional=<?php echo $asset_id; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                        </td>
+                       <td>
+                           <ul class="icons-list">
+                               <li class="text-primary-600"><button type="button" data-popup="tooltip" title="Edit" id="edit1" data-id1="<?php echo $rowc['tm_equipment_id']; ?>" data-name1="<?php echo $rowc['tm_equipment_name']; ?>" data-toggle="modal"  data-target="#edit_modal_theme_primary1"><i class="icon-pencil7"></i></button>
+                               </li>&nbsp; <li class="text-danger-600"><button type="button" id="delete" data-name="equipment" data-id="<?php echo $asset_id; ?>"><i class="icon-trash"></i></button></li>
+                           </ul>
+                       </td>
+                    </tr>
+                <?php }
+                 ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- /page container -->
+<script> $(document).on('click', '#delete', function () {
+        var element = $(this);
+        var seq_id = element.attr("data-id");
+
+        $.ajax({type: "POST",
+            url: "del_assets.php",
+            data:{
+                info:seq_id,
+            },
+            success: function (data) {
+                //alert(data);
+
+            }});
+        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+
+    });</script>
+<!--<script>
+    $(document).on("click", ".remove_btn", function () {
+        var row_id = $(this).attr("data-id");
+        var info = 'seq_id=' + row_id;
+        $.ajax({
+            type: "POST", url: "del_assets.php", data: info, success: function (data) {
+            }
+        });
+        window.location.reload();
+    });
+</script>-->
 <script>
-   /* $('#station').on('change', function (e) {
-        $("#asset_create").submit();
-    });*/
-  /*  $('#part_family').on('change', function (e) {
-        $("#asset_create").submit();
-    });*/
+    $(document).on("click", ".edi_btn", function () {
+        var row_id1 = $(this).attr("data-id");
+        var info = 'seq_id1=' + row_id1;
+        $.ajax({
+            type: "POST", url: "edit_assets_config.php", data: info, success: function (data) {
+            }
+        });
+        window.location.reload();
+    });
 </script>
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/assets_config.php");
-    }
-</script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-    function group1()
-    {
-        $("#teams").select2("open");
-    }
-    function group2()
-    {
-        $("#users").select2("open");
     }
 </script>
 <?php include ('../footer.php') ?>
