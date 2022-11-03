@@ -229,6 +229,9 @@ include("../heading_banner.php");
                 var eof = data.posts.map(function (elem) {
                     return elem.eof;
                 });
+                var others = data.posts.map(function (elem) {
+                    return elem.others;
+                });
                 var d = data.posts.map(function (elem) {
                     return elem.d;
                 });
@@ -240,6 +243,7 @@ include("../heading_banner.php");
                     {x: 'Line-Up', value: line_up, fill: '#177b09'},
                     {x: 'Line-Down', value: line_down, fill: '#FF0000'},
                     {x: 'Eop', value: eof, fill: '#000000'},
+                    {x: 'Others', value: others, fill: '#E7BF23'},
                 ];
                 // create pareto chart with data
                 var chart = anychart.pie();
@@ -300,6 +304,9 @@ include("../heading_banner.php");
                 var eof1 = data.posts.map(function (elem) {
                     return elem.eof1;
                 });
+                var others1 = data.posts.map(function (elem) {
+                    return elem.others1;
+                });
                 var wf = data.posts.map(function (elem) {
                     return elem.wf;
                 });
@@ -315,6 +322,7 @@ include("../heading_banner.php");
                     {x: 'Line-Up', value: line_up1, fill: '#177b09'},
                     {x: 'Line-Down', value: line_down1, fill: '#FF0000'},
                     {x: 'Eop', value: eof1, fill: '#000000'},
+                    {x: 'Others', value: others1, fill: '#E7BF23'},
                 ];
                 // create pareto chart with data
                 var chart = anychart.pie();
@@ -375,6 +383,9 @@ include("../heading_banner.php");
                 var eof2 = data.posts.map(function (elem) {
                     return elem.eof2;
                 });
+                var others2 = data.posts.map(function (elem) {
+                    return elem.others2;
+                });
                 var mf = data.posts.map(function (elem) {
                     return elem.mf;
                 });
@@ -389,6 +400,7 @@ include("../heading_banner.php");
                     {x: 'Line-Up', value: line_up2, fill: '#177b09'},
                     {x: 'Line-Down', value: line_down2, fill: '#FF0000'},
                     {x: 'Eop', value: eof2, fill: '#000000'},
+                    {x: 'Others', value: others2, fill: '#E7BF23'},
                 ];
                 // create pareto chart with data
                 var chart = anychart.pie();
@@ -449,6 +461,9 @@ include("../heading_banner.php");
                 var eof3 = data.posts.map(function (elem) {
                     return elem.eof3;
                 });
+                var others3 = data.posts.map(function (elem) {
+                    return elem.others3;
+                });
                 var yf = data.posts.map(function (elem) {
                     return elem.yf;
                 });
@@ -462,6 +477,7 @@ include("../heading_banner.php");
                     {x: 'Line-Up', value: line_up3, fill: '#177b09'},
                     {x: 'Line-Down', value: line_down3, fill: '#FF0000'},
                     {x: 'Eop', value: eof3, fill: '#000000'},
+                    {x: 'Others', value: others3, fill: '#E7BF23'},
                 ];
                 // create pareto chart with data
                 var chart = anychart.pie();

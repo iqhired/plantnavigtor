@@ -52,7 +52,7 @@ while ($rowv=mysqli_fetch_array($resultv)){
     }else{
         $d3 = $t;
     }
-    $posts[] = array('others'=> $d0,'line_up1'=> $d1,'line_down1'=> $d2,'eof1'=> $d3,'wf'=> $date,'wt'=> $chicagotime1,'wh'=> $w);
+    $posts[] = array('others1'=> $d0,'line_up1'=> $d1,'line_down1'=> $d2,'eof1'=> $d3,'wf'=> $date,'wt'=> $chicagotime1,'wh'=> $w);
 }
 $response['posts'] = $posts;
 echo json_encode($response);
