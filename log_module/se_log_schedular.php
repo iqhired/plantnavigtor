@@ -37,17 +37,17 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 			$event_seq = $row['event_seq'];
 			$is_incomplete = $row['is_incomplete'];
 			$station_event_id = $row['station_event_id'];
-			$sql_seid = "select `line_id` from `sg_station_event` where station_event_id = '$station_event_id' order by line_id";
-			$result_seid = mysqli_query($db, $sql_seid);
-			$row_see = mysqli_fetch_array($result_seid);
-			$line_id = $row_see['line_id'];
-
-			if ($line_id != $l_id) {
-				continue;
-			}
-			if ($line_id == 47) {
-				$sgerg = 1;
-			}
+//			$sql_seid = "select `line_id` from `sg_station_event` where station_event_id = '$station_event_id' order by line_id";
+//			$result_seid = mysqli_query($db, $sql_seid);
+//			$row_see = mysqli_fetch_array($result_seid);
+//			$line_id = $row_see['line_id'];
+//
+//			if ($line_id != $l_id) {
+//				continue;
+//			}
+//			if ($line_id == 47) {
+//				$sgerg = 1;
+//			}
 			$i = 0;
 			$station_cat_id = $row['event_cat_id'];
 			$station_type_id = $row['event_type_id'];
