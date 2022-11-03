@@ -40,6 +40,7 @@ while ($rowv=$resultv->fetch_assoc()){
 		$t = $time;
 	}
 	$dh = $t1 + $t2 + $t;
+	$dh = round($dh, 2);
 	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
 }
 $response['posts'] = $posts;
