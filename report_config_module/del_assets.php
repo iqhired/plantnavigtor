@@ -2,12 +2,12 @@
 
 include("../config.php");
 
-$seq_id = $_POST['seq_id'];
+$id = $_GET['id'];
 
-$sql1 = "DELETE FROM `station_assests` WHERE asset_id = '$seq_id'";
+$sql1 = "DELETE FROM `station_assests` WHERE asset_id = '$id'";
 mysqli_query($db, $sql1);
 
 
-$page = "assets_config.php?id=$seq_id";
+$page = "assets_config.php?id=$id";
 header('Location: '.$page, true, 303);
 exit;
