@@ -170,6 +170,10 @@ include("../heading_banner.php");
                                     style="background-color:#1e73be;">Reset
                             </button>
                         </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="update_btn" style="background-color:#1e73be;margin-right: 20px;width:120px;">Update</button>
+                        </div>
+                        <div class="col-md-2">
                     </div>
                     <div class="row">
                         <div class="row " style="margin: 20px;">
@@ -208,15 +212,6 @@ include("../heading_banner.php");
 <!-- /page content -->
 <script>
     $('#station').on('change', function (e) {
-        $.ajax({
-            type: 'POST',
-            url: './../log_module/se_log_schedular.php',
-            async: true,
-            success: function (data) {
-                event.preventDefault()
-                window.scrollTo(0, 300);
-            }
-        });
         $("#line_data").submit();
     });
     //daily data
@@ -528,6 +523,23 @@ include("../heading_banner.php");
             });
 
         });
+
+</script>
+<script>
+    $("#update_btn").click(function (e) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: 'se_log_schedular.php',
+            async: true,
+            success: function (data) {
+                event.preventDefault()
+                window.scrollTo(0, 300);
+            }
+        });
+
+        // e.preventDefault();
+    });
 
 </script>
 <?php include('../footer.php') ?>
