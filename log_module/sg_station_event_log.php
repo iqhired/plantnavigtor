@@ -533,7 +533,8 @@ inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_
         $.ajax({
             type: 'POST',
             url: 'se_log_schedular.php',
-            async: true,
+            async: false,
+            cache:false,
             success: function (data) {
                 event.preventDefault()
                 window.scrollTo(0, 300);
@@ -542,7 +543,6 @@ inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_
 
         // e.preventDefault();
     });
-
 </script>
 </body>
 </html>
