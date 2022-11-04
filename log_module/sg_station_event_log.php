@@ -159,7 +159,7 @@ if(empty($datefrom)){
 	</style>
 	<script>
         window.onload = function () {
-            history.replaceState("", "", "<?php echo $siteURL; ?>log_module/station_events_log.php");
+            history.replaceState("", "", "<?php echo $siteURL; ?>log_module/sg_station_event_log.php");
         }
 	</script>
 
@@ -217,7 +217,6 @@ if(empty($datefrom)){
 <?php
 $cust_cam_page_header = "Station Events Log";
 include("../header.php");
-
 include("../admin_menu.php");
 include("../heading_banner.php");
 ?>
@@ -327,7 +326,7 @@ include("../heading_banner.php");
 										style="float: left;width: initial;">
 									<option value="" selected disabled>--- Select Station ---</option>
 									<?php
-									$sql1 = "SELECT * FROM `cam_line` where is_deleted != 1 ";
+									$sql1 = "SELECT * FROM `cam_line` where  enabled = 1 and is_deleted != 1 ORDER BY `cam_line`.`line_id` ASC;";
 									$result1 = $mysqli->query($sql1);
 									//                                            $entry = 'selected';
 									while ($row1 = $result1->fetch_assoc()) {
