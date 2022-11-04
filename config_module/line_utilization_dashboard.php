@@ -144,7 +144,7 @@ include("../heading_banner.php");
                                             if (!isset($st_dashboard)) {
                                                 $st_dashboard = $_REQUEST['station'];
                                             }
-                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
+                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_id` ASC ";
                                             $result1 = $mysqli->query($sql1);
                                             //                                            $entry = 'selected';
                                             while ($row1 = $result1->fetch_assoc()) {
