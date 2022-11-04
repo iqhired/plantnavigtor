@@ -862,7 +862,7 @@ $msg = explode(',', $msg); ?>
 						<?php }
 						if (in_array('51', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>log_module/station_events_log.php"
+                                <a href="<?php echo $siteURL; ?>log_module/sg_station_event_log.php"
                                    class="text-muted mobile">
                                     <span class="ms-2 ">Station Events Log</span>
                                 </a>
@@ -1276,7 +1276,7 @@ $msg = explode(',', $msg); ?>
                                     </li>
 								<?php }
 								if (in_array('51', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/station_events_log.php">Station
+                                    <li><a href="<?php echo $siteURL; ?>log_module/sg_station_event_log.php">Station
                                             Events Log</a></li>
 								<?php }
 								if (in_array('59', $msg)) { ?>

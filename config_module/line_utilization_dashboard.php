@@ -5,6 +5,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,7 +138,7 @@ include("../heading_banner.php");
                                 <label class="col-lg-3 control-label">Station : </label>
                                 <div class="col-lg-7">
                                     <select name="station" id="station" class="select form-control" data-style="bg-slate">
-                                        <option value="" selected disabled>--- Select Station --- </option>
+<!--                                        <option value="" selected disabled>--- Select Station --- </option>-->
                                         <?php
                                             $st_dashboard = $_POST['station'];
                                             if (!isset($st_dashboard)) {
@@ -529,7 +533,7 @@ include("../heading_banner.php");
         //          $(':input[type="button"]').prop('disabled', true);
         $.ajax({
             type: 'POST',
-            url: 'se_log_schedular.php',
+            url: './../log_module/se_log_schedular.php',
             async: true,
             success: function (data) {
                 event.preventDefault()
