@@ -171,9 +171,9 @@ include("../heading_banner.php");
                                     style="background-color:#1e73be;">Reset
                             </button>
                         </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" id="update_btn">Update</button>
-                        </div>
+<!--                        <div class="col-md-2">-->
+<!--                            <button type="button" class="btn btn-primary" id="update_btn">Update</button>-->
+<!--                        </div>-->
                     </div>
                     <div class="row">
                         <div class="row " style="margin: 20px;">
@@ -212,6 +212,17 @@ include("../heading_banner.php");
 <!-- /page content -->
 <script>
     $('#station').on('change', function (e) {
+        var data = $("#line_data").serialize();
+        $.ajax({
+            type: 'POST',
+            url: './../log_module/sg_station_event_log_update_by_line_id.php',
+            async: false,
+            data: data,
+            success: function (data) {
+                event.preventDefault()
+                window.scrollTo(0, 300);
+            }
+        });
         $("#line_data").submit();
     });
     //daily data
@@ -528,15 +539,7 @@ include("../heading_banner.php");
 <script>
     $("#update_btn").click(function (e) {
         //          $(':input[type="button"]').prop('disabled', true);
-        $.ajax({
-            type: 'POST',
-            url: './../log_module/se_log_schedular.php',
-            async: false,
-            success: function (data) {
-                event.preventDefault()
-                window.scrollTo(0, 300);
-            }
-        });
+
 
         // e.preventDefault();
     });
