@@ -45,7 +45,7 @@ while ($rowv=$resultv->fetch_assoc()){
 	}else{
 		$t = $time;
 	}
-	$dh = $t1 + $t2 + $t;
+	$dh = $t1 + $t2 + $t + $d0;
 	$dh = round($dh, 2);
 	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
 }
