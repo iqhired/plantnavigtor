@@ -1,10 +1,11 @@
-<?php include("../config.php");
-
-?>
-
+<?php include("../config.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,13 +135,13 @@ include("../heading_banner.php");
                                 <label class="col-lg-3 control-label">Station : </label>
                                 <div class="col-lg-7">
                                     <select name="station" id="station" class="select form-control" data-style="bg-slate">
-                                        <option value="" selected disabled>--- Select Station --- </option>
+<!--                                        <option value="" selected disabled>--- Select Station --- </option>-->
                                         <?php
                                             $st_dashboard = $_POST['station'];
                                             if (!isset($st_dashboard)) {
                                                 $st_dashboard = $_REQUEST['station'];
                                             }
-                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
+                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_id` ASC ";
                                             $result1 = $mysqli->query($sql1);
                                             //                                            $entry = 'selected';
                                             while ($row1 = $result1->fetch_assoc()) {
@@ -169,6 +170,9 @@ include("../heading_banner.php");
                             <button type="button" class="btn btn-primary" onclick='window.location.reload();'
                                     style="background-color:#1e73be;">Reset
                             </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="update_btn">Update</button>
                         </div>
                     </div>
                     <div class="row">
@@ -208,15 +212,6 @@ include("../heading_banner.php");
 <!-- /page content -->
 <script>
     $('#station').on('change', function (e) {
-        $.ajax({
-            type: 'POST',
-            url: './../log_module/se_log_schedular.php',
-            async: true,
-            success: function (data) {
-                event.preventDefault()
-                window.scrollTo(0, 300);
-            }
-        });
         $("#line_data").submit();
     });
     //daily data
@@ -528,6 +523,23 @@ include("../heading_banner.php");
             });
 
         });
+
+</script>
+<script>
+    $("#update_btn").click(function (e) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: './../log_module/se_log_schedular.php',
+            async: false,
+            success: function (data) {
+                event.preventDefault()
+                window.scrollTo(0, 300);
+            }
+        });
+
+        // e.preventDefault();
+    });
 
 </script>
 <?php include('../footer.php') ?>

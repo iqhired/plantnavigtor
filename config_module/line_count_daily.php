@@ -1,6 +1,12 @@
 <?php include("../config.php");
 $chicagotime = date("Y-m-d");
-$dh = date("H");
+$chicagotime1 = date("Y-m-d H:i:s");
+//$dh = date("H");
+$s_arr_1 = explode(' ', $chicagotime1);
+$s_arr = explode(':', $s_arr_1[1]);
+$create_date = $s_arr_1[0];
+$st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
+$dh = round($st_time, 2);
 $station = $_POST['station'];
 
 //select other data
@@ -39,8 +45,8 @@ while ($rowv=$resultv->fetch_assoc()){
 	}else{
 		$t = $time;
 	}
-	$dh = $t1 + $t2 + $t;
-	$dh = round($dh, 2);
+//	$dh = $t1 + $t2 + $t + $d0;
+//	$dh = round($dh, 2);
 	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
 }
 $response['posts'] = $posts;

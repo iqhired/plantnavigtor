@@ -1,6 +1,4 @@
-<?php
-ini_set('display_errors', 'off');
-include '../config.php';
+<?php include '../config.php';
 $taskboard = $_SESSION['taskboard'];
 $user = $_SESSION['user'];
 $date = $_SESSION['assign_date'];
@@ -24,7 +22,25 @@ if(empty($datefrom)){
     $datefrom = $yesdate;
 }
 
-$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,cast(e_log.created_on AS date),cast(e_log.created_on AS Time), cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id inner join event_type as et on e_log.event_type_id = et.event_type_id inner join cam_line as cl on sg_events.line_id = cl.line_id ";
+//$q = "SELECT cl.line_name as station,et.event_type_name as e_type,pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,
+//cast(e_log.created_on AS date),cast(e_log.created_on AS Time),
+//cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log
+//left join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id
+//INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id
+//inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id
+//inner join event_type as et on e_log.event_type_id = et.event_type_id
+//inner join cam_line as cl on sg_events.line_id = cl.line_id ";
+
+
+
+$q = "SELECT cl.line_name as station, ( select event_type_name from event_type where event_type_id = e_log.event_type_id) as e_type,
+pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,
+cast(e_log.created_on AS date),cast(e_log.created_on AS Time), 
+cast(e_log.end_time AS Time),e_log.total_time as total_time from sg_station_event_log_update as e_log 
+inner join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id 
+INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
+inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
+inner join cam_line as cl on e_log.line_id = cl.line_id where 1  ";
 
 /* If Line is selected. */
 if ($line_id != null) {
@@ -35,7 +51,7 @@ if ($line_id != null) {
         $date_t = date('F j, Y',strtotime($dateto));
 		$print_data .= $date_f . '-' . $date_t . "\n";
 	}
-	$q = $q . " and sg_events.line_id = '$line_id' ";
+	$q = $q . " and e_log.line_id = '$line_id' ";
 
 }
 
@@ -58,7 +74,7 @@ if ($event_category != "") {
 }
 
 if (empty($line_id)){
-    $q = $q . " ORDER BY sg_events.line_id,e_log.created_on";
+    $q = $q . " ORDER BY e_log.line_id,e_log.created_on";
 }else{
     $q = $q . " ORDER BY e_log.created_on  ASC";
 }

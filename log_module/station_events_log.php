@@ -549,7 +549,7 @@ where 1 ";
         $.ajax({
             type: 'POST',
             url: 'se_log_schedular.php',
-            async: true,
+            async: false,
             success: function (data) {
                 event.preventDefault()
                 window.scrollTo(0, 300);
