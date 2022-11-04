@@ -171,9 +171,8 @@ include("../heading_banner.php");
                             </button>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" id="update_btn" style="background-color:#1e73be;margin-right: 20px;width:120px;">Update</button>
+                            <button type="button" class="btn btn-primary" id="update_btn">Update</button>
                         </div>
-                        <div class="col-md-2">
                     </div>
                     <div class="row">
                         <div class="row " style="margin: 20px;">
