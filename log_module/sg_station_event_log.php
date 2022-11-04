@@ -381,9 +381,9 @@ include("../heading_banner.php");
 						</button>
 					</div>
 					</form>
-					<div class="col-md-2">
-						<button type="button" class="btn btn-primary" id="update_btn" style="background-color:#1e73be;margin-right: 20px;width:120px;">Update</button>
-					</div>
+<!--					<div class="col-md-2">-->
+<!--						<button type="button" class="btn btn-primary" id="update_btn" style="background-color:#1e73be;margin-right: 20px;width:120px;">Update</button>-->
+<!--					</div>-->
 					<div class="col-md-2">
 						<form action="export_se_log_new.php" method="post" name="export_excel">
 							<button type="submit" class="btn btn-primary"
