@@ -534,7 +534,7 @@ include("../heading_banner.php");
         $.ajax({
             type: 'POST',
             url: './../log_module/se_log_schedular.php',
-            async: true,
+            async: false,
             success: function (data) {
                 event.preventDefault()
                 window.scrollTo(0, 300);
