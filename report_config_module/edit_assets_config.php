@@ -28,8 +28,16 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
 }
+$asset_ide = $_GET['asset_id'];
 
-$id = $_SESSION['asset_id'];
+if(empty($_SESSION['$asset_id'])){
+    $_SESSION['timestamp_id'] = time();
+}
+
+$x_timestamp = time();
+$idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+    , $_SERVER["HTTP_USER_AGENT"]);
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +75,9 @@ $id = $_SESSION['asset_id'];
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script type="text/javascript" src="instascan.min.js"></script>
+
+
     <style>
         .sidebar-default .navigation li>a{color:#f5f5f5};
         a:hover {
@@ -132,7 +143,7 @@ $id = $_SESSION['asset_id'];
         .content_img span:hover {
             cursor: pointer;
         }
-
+        #results { padding:20px; border:1px solid; background:#ccc; }
     </style>
 </head>
 <body>
@@ -158,90 +169,187 @@ include("../heading_banner.php");
                 <div class="row">
                     <div class="col-md-12">
                         <form action="" id="asset_update" enctype="multipart/form-data"
-                              class="form-horizontal" method="post" autocomplete="off" style="padding-top: 30px;">
-                            <?php
-
+                              class="form-horizontal" method="post">
+                            <?php $id = $_GET['id'];
                             $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
                             $qurmain = mysqli_query($db, $querymain);
-
                             while ($rowcmain = mysqli_fetch_array($qurmain)) {
                             $asset_name = $rowcmain['asset_name'];
+                            $line_id = $rowcmain['line_id'];
+                            $created_date = $rowcmain['created_date'];
+                            $created_time = $rowcmain['created_time'];
+                            $created_by = $rowcmain['created_by'];
                             $qrcode = $rowcmain['qrcode'];
                             ?>
-                            <div class="row">
-                                <label class="col-sm-2 control-label">Station : </label>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <?php
-                                        $station = $rowcmain['line_id'];
-                                        if ($station != '') {
-                                            $disabled = 'disabled';
-                                        } else {
-                                            $disabled = '';
-                                        }
-                                        ?>
-
-                                        <input type="hidden" name="station" id="station"
-                                               value="<?php echo $station; ?>">
-                                        <select name="station" id="station"
-                                                class="select-border-color form-control" <?php echo $disabled; ?>>
-                                            <option value="" selected disabled>--- Select Station ---</option>
-                                            <?php
-                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' ORDER BY `line_name` ASC ";
-                                            $result1 = $mysqli->query($sql1);
-                                            //                                            $entry = 'selected';
-                                            while ($row1 = $result1->fetch_assoc()) {
-                                                if ($station == $row1['line_id']) {
-                                                    $entry = 'selected';
-                                                } else {
-                                                    $entry = '';
-                                                }
-                                                echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                                 <div class="row">
-                                <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
+                                    <label class="col-lg-2 control-label">Asset Name : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="asset_name" id="asset_name" class="form-control"
+                                               value="<?php echo $asset_name; ?>"
+                                               disabled></div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Station Name : </label>
+                                    <div class="col-md-6">
+                                        <?php
+                                        $qurtemp = mysqli_query($db, "SELECT * FROM cam_line where line_id = '$line_id' ");
+                                        $rowctemp = mysqli_fetch_array($qurtemp);
+                                        $line_name = $rowctemp["line_name"];
+                                        ?>
+                                        <input type="text" name="station" id="station" class="form-control"
+                                               value="<?php echo $line_name; ?>"
+                                               disabled></div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Created Date : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="c_date" id="c_date" class="form-control"
+                                               value="<?php echo $created_date .' - '. $created_time; ?>"
+                                               disabled></div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Created By : </label>
+                                    <div class="col-md-6">
+                                        <?php
+                                        $qurtemp1 = mysqli_query($db, "SELECT * FROM cam_users where users_id = '$created_by' ");
+                                        $rowctemp1 = mysqli_fetch_array($qurtemp1);
+                                        $user_name = $rowctemp1["firstname"] .' - '. $rowctemp1["lastname"];
+                                        ?>
+                                        <input type="text" name="c_by" id="c_by" class="form-control"
+                                               value="<?php echo $user_name; ?>"
+                                               disabled></div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">QR Code : </label>
+                                    <div class="col-md-6">
+                                        <?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:150px;width:150px;" />'; ?>
+                                    </div>
+                                </div>
+                                <br/>
+                            <?php } ?>
+                                    <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="asset_name" id="asset_name"
-                                               value="<?php echo $asset_name; ?>" disabled/>
-                                    </div>
+                                    <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
                                 </div>
                             </div>
+                            <br/>
                             <div class="row">
-                                <label class="col-sm-2 control-label">QR Code : </label>
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <label class="col-lg-2 control-label">Image : </label>
+                                <div class="col-md-6">
+                                    <?php if(($idd == 0)){?>
+                                        <div id="my_camera"></div>
+                                        <br/>
+                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
+                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                    <?php } ?>
+                                    <?php if(($idd != 0)){?>
+                                        <div style="display:none;" id="my_camera"></div>
+                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>
+                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
+                                        <div class="container"></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="row" style="display: none">
+                                <label class="col-lg-2 control-label">Captured Image : </label>
+                                <div class="col-md-6">
+                                    <div id="results"></div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Previous Image : </label>
+                                <div class="col-md-6">
+                                    <?php
+                                    $time_stamp = $_SESSION['timestamp_id'];
+                                    if(!empty($time_stamp)){
+                                        $query2 = sprintf("SELECT * FROM assets_images order by created_at desc limit 1");
 
-                                        <input type="text" name="qrcode" id="qrcode"
-                                               value="<?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?>" disabled/>
-                                    </div>
+                                        $qurimage = mysqli_query($db, $query2);
+                                        $i =0 ;
+                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                            $image = $rowcimage['image_name'];
+                                            $d_tag = "delete_image_" . $i;
+                                            $r_tag = "remove_image_" . $i;
+                                            ?>
+
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
+                                                    <div class="thumb">
+                                                        <img src="../assets/images/assets_images/<?php echo $image; ?>"
+                                                             alt="">
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['image_name']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $i++;}
+                                    }
+                                    ?>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-sm-2 control-label">Image : </label>
-                                <div class="col-md-4">
-                                    <input type="file" name="image" id="image"/>
-                                </div>
-                            </div>
+                            <hr/>
+
                     </div>
                 </div>
-                <div class="panel-footer p_footer">
-                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Update</button>
-                </div>
-                <?php
-                } ?>
-                </form>
+            </div>
+
+
+            <div class="panel-footer p_footer">
+
+                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
+                        style="background-color:#1e73be;">Submit
+                </button>
+
+            </div>
+                        </form>
             </div>
         </div>
 
     </div>
-    <!-- /page container -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script>
+    Webcam.set({
+        width: 290,
+        height: 190,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    var camera = document.getElementById("my_camera");
+    Webcam.attach( camera );
+</script>
+<script>
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            var formData =  $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "assets_cam_backend.php",
+                type: "POST",
+                data: formData,
+                success: function (msg) {
+                    window.location.reload()
+                },
 
+            });
+        } );
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.select').select2();
+    });
+
+
+</script>
     <script>
         window.onload = function() {
             history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/edit_assets_config.php");

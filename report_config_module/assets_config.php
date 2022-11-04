@@ -35,7 +35,7 @@ if (count($_POST) > 0) {
     $assets_id = uniqid() . '~' . $station . '~' . $asset_name;
 
     //store the qr code to directory and database
-    $text = "sample";
+    $text = $assets_id;
 
     // $path variable store the location where to
     // store image and $file creates directory name
@@ -58,23 +58,66 @@ if (count($_POST) > 0) {
     $data = base64_encode($img);
 
     //upload the image
-    $data1 = file_get_contents($_FILES['image']['tmp_name']);
-    $data1 = base64_encode($data1);
+  /*  $totalfiles = count($_FILES['image']['name']);
+    if($totalfiles > 0 && $_FILES['image']['name'][0] !='' && $_FILES['image']['name'][0] != null){
+        for($i=0;$i<$totalfiles;$i++) {
+            $errors = array();
+            $file_name = $_FILES['image']['name'][$i];
+            $file_size = $_FILES['image']['size'][$i];
+            $file_tmp = $_FILES['image']['tmp_name'][$i];
+            $file_type = $_FILES['image']['type'][$i];
+            $data1 = file_get_contents($_FILES['image']['tmp_name']);
+            $data1 = base64_encode($data1);
+                }
+    }*/
+    /*$data1 = file_get_contents($_FILES['image']['tmp_name']);
+    $data1 = base64_encode($data1);*/
+  /* $countfiles = count($_FILES['s_o_img']['name']);
+   for($i=0;$i<$countfiles;$i++) {
+       $filename = $_FILES['s_o_img']['tmp_name'][$i];
+       $bin = file_get_contents($_FILES["s_o_img"]["tmp_name"][$i]);  // add [$i] for valid index image
+       $hex_string = base64_encode($bin);
+                $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','1')";
+                $result2 = mysqli_query($db, $sql2);
+                if ($result2) {
+                    $message_status_class = 'alert-success';
+                    $import_status_message = 'Assets create successfully!';
+                    header("Location:assets_config.php");
+                }else {
+                    $message_status_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Retry...';
+                    header("Location:assets_config.php");
+                }
+   }*/
 
-    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$data1','$data','$chicagodate','$chicagotime','$created_by', '1')";
-    $result2 = mysqli_query($db, $sql2);
-    if ($result2) {
-        $message_status_class = 'alert-success';
-        $import_status_message = 'Assets create successfully!';
-        header("Location:assets_config.php");
-    }else {
-            $message_status_class = 'alert-danger';
-            $import_status_message = 'Error: Please Retry...';
-    }
+       $uploadDir = '../assets/images/qrCode/';
+        $allowTypes = array('jpg','png','jpeg','gif');
+        if(!empty(array_filter($_FILES['s_o_img']['name']))) {
+            foreach ($_FILES['s_o_img']['name'] as $key => $val) {
+                $filename = basename($_FILES['s_o_img']['name'][$key]);
+                $bin = file_get_contents($_FILES["s_o_img"]["tmp_name"][$key]);  // add [$i] for valid index image
+                $hex_string = base64_encode($bin);
+                $targetFile = $uploadDir . $filename;
+                if (move_uploaded_file($_FILES["s_o_img"]["tmp_name"][$key], $targetFile)) {
+                    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','1')";
+                    $result2 = mysqli_query($db, $sql2);
+                    if ($result2) {
+                        $message_status_class = 'alert-success';
+                        $import_status_message = 'Assets create successfully!';
+                        header("Location:assets_config.php");
+                    } else {
+                        $message_status_class = 'alert-danger';
+                        $import_status_message = 'Error: Please Retry...';
+                        header("Location:assets_config.php");
+                    }
+                } else {
+                    $errors[] = "Something went wrong- File - $filename";
+                }
+            }
+        }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -250,16 +293,18 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-sm-2 control-label">Image : </label>
                                     <div class="col-md-4">
-                                        <input type="file" name="image" id="image" multiple="multiple"/>
+                                        <!--<input type="file" name="image[]" id="image" class="form-control" multiple="multiple">-->
+                                        <input type="file" name="s_o_img[]" class="form-control" multiple="multiple" accept="image/*">
                                     </div>
                                 </div>
+                                <div class="panel-footer p_footer">
+                                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create</button>
+                                </div>
+
+                            </form>
                     </div>
             </div>
-                <div class="panel-footer p_footer">
-                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create</button>
-                </div>
 
-                </form>
         </div>
 
     </div>
@@ -302,23 +347,18 @@ include("../heading_banner.php");
                         <td><?php echo $created_date; ?></td>
                         <td><?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:50px;" />'; ?></td>
                         <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?></td>
-                       <!-- <td>
-                            <button type="button" name="remove_btn"
-                                    class="btn btn-danger btn-xs remove_btn"
-                                    id="btn_id<?php /*echo $asset_id; */?>"
-                                    data-id="<?php /*echo $asset_id; */?>">-
-                            </button>
-                        </td>-->
                         <td>
-                            <input type="hidden" name="asset_id" id="asset_id" value="<?php echo $asset_id; ?>">
-                            <a href="edit_assets_config.php?id=<?php echo $rowc08["asset_id"]; ?>&optional=<?php echo $asset_id; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            <a href="edit_assets_config.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;">Edit</a>
+                            <a href="del_assets.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;">Del</a>
+
                         </td>
-                       <td>
+
+                       <!--<td>
                            <ul class="icons-list">
-                               <li class="text-primary-600"><button type="button" data-popup="tooltip" title="Edit" id="edit1" data-id1="<?php echo $rowc['tm_equipment_id']; ?>" data-name1="<?php echo $rowc['tm_equipment_name']; ?>" data-toggle="modal"  data-target="#edit_modal_theme_primary1"><i class="icon-pencil7"></i></button>
-                               </li>&nbsp; <li class="text-danger-600"><button type="button" id="delete" data-name="equipment" data-id="<?php echo $asset_id; ?>"><i class="icon-trash"></i></button></li>
+                               <li class="text-primary-600"><button type="button" data-popup="tooltip" title="Edit" id="edit1" data-id1="<?php /*echo $rowc['tm_equipment_id']; */?>" data-name1="<?php /*echo $rowc['tm_equipment_name']; */?>" data-toggle="modal"  data-target="#edit_modal_theme_primary1"><i class="icon-pencil7"></i></button>
+                               </li>&nbsp;
                            </ul>
-                       </td>
+                       </td>-->
                     </tr>
                 <?php }
                  ?>
@@ -329,44 +369,20 @@ include("../heading_banner.php");
 </div>
 
 <!-- /page container -->
-<script> $(document).on('click', '#delete', function () {
+<!--<script> $(document).on('click', '#delete', function () {
         var element = $(this);
         var seq_id = element.attr("data-id");
-
-        $.ajax({type: "POST",
+        $.ajax({
+            type: "POST",
             url: "del_assets.php",
             data:{
                 info:seq_id,
             },
             success: function (data) {
-                //alert(data);
-
             }});
         $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
 
-    });</script>
-<!--<script>
-    $(document).on("click", ".remove_btn", function () {
-        var row_id = $(this).attr("data-id");
-        var info = 'seq_id=' + row_id;
-        $.ajax({
-            type: "POST", url: "del_assets.php", data: info, success: function (data) {
-            }
-        });
-        window.location.reload();
-    });
-</script>-->
-<script>
-    $(document).on("click", ".edi_btn", function () {
-        var row_id1 = $(this).attr("data-id");
-        var info = 'seq_id1=' + row_id1;
-        $.ajax({
-            type: "POST", url: "edit_assets_config.php", data: info, success: function (data) {
-            }
-        });
-        window.location.reload();
-    });
-</script>
+    });</script>-->
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/assets_config.php");
