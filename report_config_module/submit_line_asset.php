@@ -1,6 +1,5 @@
 <?php
 include("../config.php");
-include('./../assets/lib/phpqrcode/qrlib.php');
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -43,6 +42,10 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,8 +77,8 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
+	<script type="text/javascript" src="../assets/js/html5-qrcode.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-	<script type="text/javascript" src="instascan.min.js"></script>
 	<!--scan the qrcode -->
 
 	<style>
@@ -171,15 +174,7 @@ include("../heading_banner.php");
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
 							<div id="qr-reader" style="width: 600px"></div>
-							<script src="./../assets/js/html5-qrcode.min.js"></script>
-							<script>
-                                function onScanSuccess(decodedText, decodedResult) {
-                                    console.log(`Code scanned = ${decodedText}`, decodedResult);
-                                }
-                                var html5QrcodeScanner = new Html5QrcodeScanner(
-                                    "qr-reader", { fps: 10, qrbox: 250 });
-                                html5QrcodeScanner.render(onScanSuccess);
-							</script>
+
 
 							<?php $id = $_GET['qr-reader'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
@@ -325,6 +320,14 @@ include("../heading_banner.php");
 	</div>
 
 </div>
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+    }
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "qr-reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
     Webcam.set({
