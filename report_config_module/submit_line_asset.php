@@ -77,7 +77,6 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-	<script type="text/javascript" src="../assets/js/html5-qrcode.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 	<!--scan the qrcode -->
 
@@ -173,6 +172,7 @@ include("../heading_banner.php");
 					<div class="col-md-12">
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
+                            <iframe height="100" id="resultFrame" style="" src="./../qr.php"></iframe>
 							<div id="qr-reader" style="width: 600px"></div>
 
 
@@ -320,14 +320,7 @@ include("../heading_banner.php");
 	</div>
 
 </div>
-<script>
-    function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader", { fps: 10, qrbox: 250 });
-    html5QrcodeScanner.render(onScanSuccess);
-</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
     Webcam.set({
