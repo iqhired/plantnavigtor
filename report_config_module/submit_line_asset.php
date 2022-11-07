@@ -77,8 +77,9 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-	<script type="text/javascript" src="../assets/js/html5-qrcode.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 	<!--scan the qrcode -->
 
 	<style>
@@ -149,10 +150,10 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 		#results { padding:20px; border:1px solid; background:#ccc; }
 	</style>
 </head>
-<body>
+<body onload="openScanner()">
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Edit Station Assets Config";
+$cust_cam_page_header = "Submit Station Asset";
 include("../header_folder.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -168,15 +169,12 @@ include("../heading_banner.php");
 		<!-- Basic datatable -->
 		<div class="panel panel-flat">
 			<div class="panel-heading">
-				<h5 class="panel-title">Edit Station Assets Config</h5><br/>
+				<h5 class="panel-title">Submit Station Asset</h5><br/>
 				<div class="row">
 					<div class="col-md-12">
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
-							<div id="qr-reader" style="width: 600px"></div>
-
-
-							<?php $id = $_GET['qr-reader'];
+							<?php $id = $_GET['container'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
 							$qurmain = mysqli_query($db, $querymain);
 							while ($rowcmain = mysqli_fetch_array($qurmain)) {
@@ -320,14 +318,6 @@ include("../heading_banner.php");
 	</div>
 
 </div>
-<script>
-    function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader", { fps: 10, qrbox: 250 });
-    html5QrcodeScanner.render(onScanSuccess);
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
     Webcam.set({
