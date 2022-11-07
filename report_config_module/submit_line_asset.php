@@ -1,6 +1,5 @@
 <?php
 include("../config.php");
-include('./../assets/lib/phpqrcode/qrlib.php');
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -75,7 +74,6 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-	<script type="text/javascript" src="instascan.min.js"></script>
 	<!--scan the qrcode -->
 
 	<style>
@@ -171,7 +169,7 @@ include("../heading_banner.php");
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
 							<div id="qr-reader" style="width: 600px"></div>
-							<script src="./../assets/js/html5-qrcode.min.js"></script>
+							<script src="<?php $siteURL?>/assets/js/html5-qrcode.min.js"></script>
 							<script>
                                 function onScanSuccess(decodedText, decodedResult) {
                                     console.log(`Code scanned = ${decodedText}`, decodedResult);
