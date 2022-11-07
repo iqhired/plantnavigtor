@@ -175,7 +175,7 @@ include("../heading_banner.php");
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
 							<div id="qr-reader" style="width: 600px"></div>
-
+                            <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
                             <div id="reader" style="width: 500px"></div>
                             <div id="container" style="width: 600px"></div>
 							<?php $id = $_GET['container'];
