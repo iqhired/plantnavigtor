@@ -78,6 +78,8 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 	<!--scan the qrcode -->
 
 	<style>
@@ -148,10 +150,10 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 		#results { padding:20px; border:1px solid; background:#ccc; }
 	</style>
 </head>
-<body>
+<body onload="openScanner()">
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Edit Station Assets Config";
+$cust_cam_page_header = "Submit Station Asset";
 include("../header_folder.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
@@ -167,7 +169,7 @@ include("../heading_banner.php");
 		<!-- Basic datatable -->
 		<div class="panel panel-flat">
 			<div class="panel-heading">
-				<h5 class="panel-title">Edit Station Assets Config</h5><br/>
+				<h5 class="panel-title">Submit Station Asset</h5><br/>
 				<div class="row">
 					<div class="col-md-12">
 						<form action="" id="asset_update" enctype="multipart/form-data"
@@ -320,18 +322,19 @@ include("../heading_banner.php");
 	</div>
 
 </div>
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 <script>
-    const html5QrCode = new Html5Qrcode("reader");
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        document.getElementById('container').textContent = decodedText;
-        /* handle success */
-    };
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } ,supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]};
+    function openScanner() {
+        const html5QrCode = new Html5Qrcode("reader");
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+            document.getElementById('container').textContent = decodedText;
+            /* handle success */
+        };
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } ,supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]};
 
-    // If you want to prefer back camera
-    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
-
+        // If you want to prefer back camera
+        html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
