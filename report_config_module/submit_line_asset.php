@@ -321,34 +321,34 @@ include("../heading_banner.php");
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script>
-    Webcam.set({
-        width: 290,
-        height: 190,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
-    var camera = document.getElementById("my_camera");
-    Webcam.attach( camera );
-</script>
-<script>
-    function take_snapshot() {
-        Webcam.snap( function(data_uri) {
-            var formData =  $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            $.ajax({
-                url: "assets_cam_backend.php",
-                type: "POST",
-                data: formData,
-                success: function (msg) {
-                    window.location.reload()
-                },
-
-            });
-        } );
-    }
-</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>-->
+<!--<script>-->
+<!--    Webcam.set({-->
+<!--        width: 290,-->
+<!--        height: 190,-->
+<!--        image_format: 'jpeg',-->
+<!--        jpeg_quality: 90-->
+<!--    });-->
+<!--    var camera = document.getElementById("my_camera");-->
+<!--    Webcam.attach( camera );-->
+<!--</script>-->
+<!--<script>-->
+<!--    function take_snapshot() {-->
+<!--        Webcam.snap( function(data_uri) {-->
+<!--            var formData =  $(".image-tag").val(data_uri);-->
+<!--            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';-->
+<!--            $.ajax({-->
+<!--                url: "assets_cam_backend.php",-->
+<!--                type: "POST",-->
+<!--                data: formData,-->
+<!--                success: function (msg) {-->
+<!--                    window.location.reload()-->
+<!--                },-->
+<!---->
+<!--            });-->
+<!--        } );-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     $(document).ready(function () {
