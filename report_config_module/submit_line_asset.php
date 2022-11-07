@@ -77,6 +77,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
 	<script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 	<script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
+	<script type="text/javascript" src="../assets/js/html5-qrcode.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 	<!--scan the qrcode -->
 
@@ -173,7 +174,7 @@ include("../heading_banner.php");
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
 							<div id="qr-reader" style="width: 600px"></div>
-							<script src="<?php $siteURL?>/assets/js/html5-qrcode.min.js"></script>
+
 
 							<?php $id = $_GET['qr-reader'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
