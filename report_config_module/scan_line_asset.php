@@ -214,7 +214,7 @@ include("../heading_banner.php");
         const html5QrCode = new Html5Qrcode("reader");
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             document.getElementById("container_input").value = decodedText;
-            document.getElementById("qr-reader").textContent = decodedText;
+            // document.getElementById("qr-reader").textContent = decodedText;
             window.location.replace("./submit_line_asset.php?assets_id=" + decodedText);
             /* handle success */
         };
