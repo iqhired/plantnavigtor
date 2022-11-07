@@ -197,7 +197,7 @@ include("../heading_banner.php");
                             <div id="reader" style=""></div>
                             <input id="container_input" value=""
                                    onchange="alert(this.value)"
-                                   type="text">
+                                   type="text" hidden>
                             <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
 
                         </form>
