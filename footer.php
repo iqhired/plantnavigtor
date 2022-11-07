@@ -7,7 +7,7 @@
         return nd;
     }
     function getCurrentTime() {
-        return calcTime('Chicago', '-5');
+        return calcTime('Chicago', '-6');
     }
 </script>
 
