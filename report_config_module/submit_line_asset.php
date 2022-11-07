@@ -177,10 +177,7 @@ include("../heading_banner.php");
 							<div id="qr-reader" style="width: 600px"></div>
                             <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
                             <div id="reader" style="width: 500px"></div>
-                            <input id="container" value=""
-                                   onchange="alert(this.value)"
-                                   type="text">
-<!--                            <div id="container" style="width: 600px"></div>-->
+                            <div id="container" onchange="alert(this.value)" style="width: 600px"></div>
 							<?php $id = $_GET['container'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
 							$qurmain = mysqli_query($db, $querymain);
