@@ -76,7 +76,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <script type="text/javascript" src="instascan.min.js"></script>
-
+    <!--scan the qrcode -->
 
     <style>
         .sidebar-default .navigation li>a{color:#f5f5f5};
@@ -170,7 +170,18 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <form action="" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
-                            <?php $id = $_GET['id'];
+                            <div id="qr-reader" style="width: 600px"></div>
+                            <script src="./../assets/js/html5-qrcode.min.js"></script>
+                            <script>
+                                function onScanSuccess(decodedText, decodedResult) {
+                                    console.log(`Code scanned = ${decodedText}`, decodedResult);
+                                }
+                                var html5QrcodeScanner = new Html5QrcodeScanner(
+                                    "qr-reader", { fps: 10, qrbox: 250 });
+                                html5QrcodeScanner.render(onScanSuccess);
+                            </script>
+
+                            <?php $id = $_GET['qr-reader'];
                             $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
                             $qurmain = mysqli_query($db, $querymain);
                             while ($rowcmain = mysqli_fetch_array($qurmain)) {
