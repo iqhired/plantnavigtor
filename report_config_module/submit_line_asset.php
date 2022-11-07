@@ -172,9 +172,9 @@ include("../heading_banner.php");
 				<h5 class="panel-title">Submit Station Asset</h5><br/>
 				<div class="row">
 					<div class="col-md-12">
-						<form action="" id="asset_update" enctype="multipart/form-data"
+						<form action="submit_image_backend.php" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
-							<?php $id = $_GET['container'];
+							<?php $id = $_GET['assets_id'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
 							$qurmain = mysqli_query($db, $querymain);
 							while ($rowcmain = mysqli_fetch_array($qurmain)) {
@@ -185,6 +185,8 @@ include("../heading_banner.php");
 								$created_by = $rowcmain['created_by'];
 								$qrcode = $rowcmain['qrcode'];
 								?>
+                                <input type="hidden" name="asset_id" id="asset_id" class="form-control"
+                                       value="<?php echo $id; ?>" >
 								<div class="row">
 									<label class="col-lg-2 control-label">Asset Name : </label>
 									<div class="col-md-6">
@@ -201,41 +203,39 @@ include("../heading_banner.php");
 										$rowctemp = mysqli_fetch_array($qurtemp);
 										$line_name = $rowctemp["line_name"];
 										?>
-										<input type="text" name="station" id="station" class="form-control"
-											   value="<?php echo $line_name; ?>"
-											   disabled></div>
+                                        <select name="station" id="station" class="select form-control" data-style="bg-slate">
+                                            <option value="" selected disabled>--- Select Station ---</option>
+                                            <?php
+                                            $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
+                                            $qurmain = mysqli_query($db, $querymain);
+                                            while ($rowcmain = mysqli_fetch_array($qurmain)) {
+                                                $line_id = $rowcmain['line_id'];
+
+                                            }
+                                            $sql1 = "SELECT * FROM `cam_line`  where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if($line_id == $row1['line_id'])
+                                                {
+                                                    $entry = 'selected';
+                                                }
+                                                else
+                                                {
+                                                    $entry = '';
+                                                }
+                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+
+                                            }
+
+                                            ?>
+                                        </select>
+                                    </div>
 								</div>
 								<br/>
-								<div class="row">
-									<label class="col-lg-2 control-label">Created Date : </label>
-									<div class="col-md-6">
-										<input type="text" name="c_date" id="c_date" class="form-control"
-											   value="<?php echo $created_date .' - '. $created_time; ?>"
-											   disabled></div>
-								</div>
-								<br/>
-								<div class="row">
-									<label class="col-lg-2 control-label">Created By : </label>
-									<div class="col-md-6">
-										<?php
-										$qurtemp1 = mysqli_query($db, "SELECT * FROM cam_users where users_id = '$created_by' ");
-										$rowctemp1 = mysqli_fetch_array($qurtemp1);
-										$user_name = $rowctemp1["firstname"] .' - '. $rowctemp1["lastname"];
-										?>
-										<input type="text" name="c_by" id="c_by" class="form-control"
-											   value="<?php echo $user_name; ?>"
-											   disabled></div>
-								</div>
-								<br/>
-								<div class="row">
-									<label class="col-lg-2 control-label">QR Code : </label>
-									<div class="col-md-6">
-										<?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:150px;width:150px;" />'; ?>
-									</div>
-								</div>
-								<br/>
+
 							<?php } ?>
 							<br/>
+
 							<div class="row">
 								<label class="col-lg-2 control-label">Notes : </label>
 								<div class="col-md-6">
@@ -273,7 +273,7 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM assets_images order by created_at desc limit 1");
+										$query2 = sprintf("SELECT * FROM assets_images order by created_at desc");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
