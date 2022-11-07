@@ -177,6 +177,9 @@ include("../heading_banner.php");
 							<div id="qr-reader" style="width: 600px"></div>
                             <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
                             <div id="reader" style="width: 500px"></div>
+                            <input id="container_input" value=""
+                                   onchange="alert(this.value)"
+                                   type="text">
                             <div id="container" onchange="alert(this.value)" style="width: 600px"></div>
 							<?php $id = $_GET['container'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
@@ -328,6 +331,7 @@ include("../heading_banner.php");
         const html5QrCode = new Html5Qrcode("reader");
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             document.getElementById('container').textContent = decodedText;
+            document.getElementById("container_input").value = decodedText;
             /* handle success */
         };
         const config = { fps: 10, qrbox: { width: 250, height: 250 } ,supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]};
