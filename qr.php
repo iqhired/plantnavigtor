@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <script src="https://testing.plantnavigator.com/assets/js/html5-qrcode.min.js"></script>
-</head>
-<body>
-<div id="qr-reader" style="width: 600px"></div>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<div id="reader" style="width: 500px"></div>
+<div id="container" style="width: 600px"></div>
 <script>
-    function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader", { fps: 10, qrbox: 250 });
-    html5QrcodeScanner.render(onScanSuccess);
+    const html5QrCode = new Html5Qrcode("reader");
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        document.getElementById('container').textContent = decodedText;
+        /* handle success */
+    };
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } ,supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]};
+
+    // If you want to prefer back camera
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
 </script>
-</body>
-</html>

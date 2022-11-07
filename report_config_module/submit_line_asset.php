@@ -172,11 +172,11 @@ include("../heading_banner.php");
 					<div class="col-md-12">
 						<form action="" id="asset_update" enctype="multipart/form-data"
 							  class="form-horizontal" method="post">
-                            <iframe height="100" id="resultFrame" style="" src="./../qr.php"></iframe>
 							<div id="qr-reader" style="width: 600px"></div>
 
-
-							<?php $id = $_GET['qr-reader'];
+                            <div id="reader" style="width: 500px"></div>
+                            <div id="container" style="width: 600px"></div>
+							<?php $id = $_GET['container'];
 							$querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
 							$qurmain = mysqli_query($db, $querymain);
 							while ($rowcmain = mysqli_fetch_array($qurmain)) {
@@ -320,35 +320,47 @@ include("../heading_banner.php");
 	</div>
 
 </div>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+    const html5QrCode = new Html5Qrcode("reader");
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        document.getElementById('container').textContent = decodedText;
+        /* handle success */
+    };
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } ,supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]};
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>-->
-<!--<script>-->
-<!--    Webcam.set({-->
-<!--        width: 290,-->
-<!--        height: 190,-->
-<!--        image_format: 'jpeg',-->
-<!--        jpeg_quality: 90-->
-<!--    });-->
-<!--    var camera = document.getElementById("my_camera");-->
-<!--    Webcam.attach( camera );-->
-<!--</script>-->
-<!--<script>-->
-<!--    function take_snapshot() {-->
-<!--        Webcam.snap( function(data_uri) {-->
-<!--            var formData =  $(".image-tag").val(data_uri);-->
-<!--            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';-->
-<!--            $.ajax({-->
-<!--                url: "assets_cam_backend.php",-->
-<!--                type: "POST",-->
-<!--                data: formData,-->
-<!--                success: function (msg) {-->
-<!--                    window.location.reload()-->
-<!--                },-->
-<!---->
-<!--            });-->
-<!--        } );-->
-<!--    }-->
-<!--</script>-->
+    // If you want to prefer back camera
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script>
+    Webcam.set({
+        width: 290,
+        height: 190,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    var camera = document.getElementById("my_camera");
+    Webcam.attach( camera );
+</script>
+<script>
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            var formData =  $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "assets_cam_backend.php",
+                type: "POST",
+                data: formData,
+                success: function (msg) {
+                    window.location.reload()
+                },
+
+            });
+        } );
+    }
+</script>
 
 <script>
     $(document).ready(function () {
