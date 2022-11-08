@@ -331,7 +331,7 @@ include("../heading_banner.php");
                         <td><?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:50px;" />'; ?></td>
                         <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?>
                            <!-- <a href="../assets/images/qrCode/636a22b33568e~8~sample.png" class="btn btn-success">Download</a>-->
-                            <a href="#" class="btn btn-primary btn-xs" style="background-color:#1e73be;"><i class="fa fa-download"></i></a>
+                            <a class="btn btn-primary btn-xs" style="background-color:#1e73be;" href= data:image/png;base64,<?php echo $qrcode ?> download><i class="fa fa-download"></i></a>
                         </td>
                         <td>
                             <a href="edit_assets_config.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;"><i class="fa fa-edit"></i></a>
