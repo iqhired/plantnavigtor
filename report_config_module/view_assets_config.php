@@ -248,7 +248,7 @@ include("../heading_banner.php");
                                 $rowc1 = mysqli_fetch_array($qur1);
                                 $item_id = $rowc1['submit_id'];
 
-                                $query2 = sprintf("SELECT * FROM  assets_images where id = '$item_id'");
+                                $query2 = sprintf("SELECT * FROM  station_assets_images where id = '$item_id'");
 
                                 $qurimage = mysqli_query($db, $query2);
                                 while ($rowcimage = mysqli_fetch_array($qurimage)) {

@@ -33,6 +33,7 @@ if(empty($_SESSION['$asset_id'])){
 	$_SESSION['timestamp_id'] = time();
 }
 
+
 $x_timestamp = time();
 $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
@@ -265,7 +266,7 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['assets_timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM assets_images where id = '$time_stamp'");
+										$query2 = sprintf("SELECT * FROM station_assets_images where id = '$time_stamp'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
