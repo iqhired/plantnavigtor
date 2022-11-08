@@ -236,13 +236,6 @@ include("../heading_banner.php");
 							<br/>
 
 							<div class="row">
-								<label class="col-lg-2 control-label">Notes : </label>
-								<div class="col-md-6">
-									<textarea id="notes"  name="notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
-								</div>
-							</div>
-							<br/>
-							<div class="row">
 								<label class="col-lg-2 control-label">Image : </label>
 								<div class="col-md-6">
 									<?php if(($idd == 0)){?>
@@ -298,6 +291,14 @@ include("../heading_banner.php");
 									?>
 								</div>
 							</div>
+                            <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Notes : </label>
+                                <div class="col-md-6">
+                                    <textarea id="notes"  name="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
+                                </div>
+                            </div>
+
 							<hr/>
 
 					</div>
