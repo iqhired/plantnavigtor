@@ -1451,7 +1451,7 @@ include("../heading_banner.php");
                                                                                        class="form-check-input" <?php if ($defaultlist == "none") {
                                                                                     echo 'checked';
                                                                                 } ?>>
-                                                                                <input type="search" name="radio_list_none_<?php echo $rowcount; ?>[]" id="radio_list_none_<?php echo $rowcount; ?>" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
+                                                                                <input type="search" name="radio_list_none_<?php echo $rowcount; ?>[]" id="radio_list_none_<?php echo $rowcount; ?>[]" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
                                                                             </div>
                                                                             <?php } else { ?>
                                                                             <div class="list_none" id="listnone_<?php echo $rowcount; ?>" style="display: block">
@@ -1461,7 +1461,7 @@ include("../heading_banner.php");
                                                                                        class="form-check-input" <?php if ($defaultlist == "none") {
                                                                                     echo 'checked';
                                                                                 } ?>>
-                                                                                <input type="search" name="radio_list_none_<?php echo $rowcount; ?>[]" id="radio_list_none_<?php echo $rowcount; ?>" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
+                                                                                <input type="search" name="radio_list_none_<?php echo $rowcount; ?>[]" id="radio_list_none_<?php echo $rowcount; ?>[]" value="<?php echo $rowcitem['list_name1']; ?>" class="radio_input">
                                                                             </div>
                                                                             <?php } ?>
 
