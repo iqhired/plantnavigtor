@@ -191,8 +191,7 @@ include("../heading_banner.php");
 									<label class="col-lg-2 control-label">Asset Name : </label>
 									<div class="col-md-6">
 										<input type="text" name="asset_name" id="asset_name" class="form-control"
-											   value="<?php echo $asset_name; ?>"
-											   disabled></div>
+											   value="<?php echo $asset_name; ?>"></div>
 								</div>
 								<br/>
 								<div class="row">
@@ -204,7 +203,7 @@ include("../heading_banner.php");
 										$line_name = $rowctemp["line_name"];
 										?>
                                         <select name="station" id="station" class="select form-control" data-style="bg-slate">
-                                            <option value="" selected disabled>--- Select Station ---</option>
+                                            <option value="" selected>--- Select Station ---</option>
                                             <?php
                                             $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
                                             $qurmain = mysqli_query($db, $querymain);
@@ -237,13 +236,6 @@ include("../heading_banner.php");
 							<br/>
 
 							<div class="row">
-								<label class="col-lg-2 control-label">Notes : </label>
-								<div class="col-md-6">
-									<textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
-								</div>
-							</div>
-							<br/>
-							<div class="row">
 								<label class="col-lg-2 control-label">Image : </label>
 								<div class="col-md-6">
 									<?php if(($idd == 0)){?>
@@ -271,9 +263,9 @@ include("../heading_banner.php");
 								<label class="col-lg-2 control-label">Previous Image : </label>
 								<div class="col-md-6">
 									<?php
-									$time_stamp = $_SESSION['timestamp_id'];
+									$time_stamp = $_SESSION['assets_timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM assets_images order by created_at desc");
+										$query2 = sprintf("SELECT * FROM assets_images where id = '$time_stamp'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
@@ -286,9 +278,9 @@ include("../heading_banner.php");
 											<div class="col-lg-3 col-sm-6">
 												<div class="thumbnail">
 													<div class="thumb">
-														<img src="../assets/images/assets_images/<?php echo $image; ?>"
+														<img src="../assets/images/assets_images/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
 															 alt="">
-														<input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['image_name']; ?>">
+														<input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['asset_images_id']; ?>">
 														<span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 													</div>
 												</div>
@@ -299,6 +291,14 @@ include("../heading_banner.php");
 									?>
 								</div>
 							</div>
+                            <br/>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Notes : </label>
+                                <div class="col-md-6">
+                                    <textarea id="notes"  name="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
+                                </div>
+                            </div>
+
 							<hr/>
 
 					</div>
@@ -348,6 +348,93 @@ include("../heading_banner.php");
 </script>
 
 <script>
+    // Upload
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_assets_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
+    });
+
+
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_assets_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+
+<script>
+    $(document).on('click', '.remove_image', function () {
+        var del_id = this.id.split("_")[2];
+        var x_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("delete_image"+del_id);
+        var info =  "id="+del_id+"&asset_id="+ x_img_id;
+        $.ajax({
+            type: "POST",
+            url: "delete_assets_image.php",
+            data: info,
+            success: function (data) {
+            }
+        });
+        location.reload(true);
+    });
+</script>
+
+<script>
     $(document).ready(function () {
         $('.select').select2();
     });
@@ -356,7 +443,7 @@ include("../heading_banner.php");
 </script>
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/submit_line_asset.php");
+        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/submit_line_asset.php?assets_id=<?php echo $id; ?>");
     }
 </script>
 <?php include ('../footer.php') ?>
