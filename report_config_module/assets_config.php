@@ -29,6 +29,7 @@ if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
 }
 $created_by = $_SESSION['id'];
+
 if (count($_POST) > 0) {
     $station = $_POST['station'];
     $asset_name = $_POST['asset_name'];
@@ -58,39 +59,11 @@ if (count($_POST) > 0) {
     $data = base64_encode($img);
 
     //upload the image
-  /*  $totalfiles = count($_FILES['image']['name']);
-    if($totalfiles > 0 && $_FILES['image']['name'][0] !='' && $_FILES['image']['name'][0] != null){
-        for($i=0;$i<$totalfiles;$i++) {
-            $errors = array();
-            $file_name = $_FILES['image']['name'][$i];
-            $file_size = $_FILES['image']['size'][$i];
-            $file_tmp = $_FILES['image']['tmp_name'][$i];
-            $file_type = $_FILES['image']['type'][$i];
-            $data1 = file_get_contents($_FILES['image']['tmp_name']);
-            $data1 = base64_encode($data1);
-                }
-    }*/
     /*$data1 = file_get_contents($_FILES['image']['tmp_name']);
     $data1 = base64_encode($data1);*/
-  /* $countfiles = count($_FILES['s_o_img']['name']);
-   for($i=0;$i<$countfiles;$i++) {
-       $filename = $_FILES['s_o_img']['tmp_name'][$i];
-       $bin = file_get_contents($_FILES["s_o_img"]["tmp_name"][$i]);  // add [$i] for valid index image
-       $hex_string = base64_encode($bin);
-                $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','1')";
-                $result2 = mysqli_query($db, $sql2);
-                if ($result2) {
-                    $message_status_class = 'alert-success';
-                    $import_status_message = 'Assets create successfully!';
-                    header("Location:assets_config.php");
-                }else {
-                    $message_status_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Retry...';
-                    header("Location:assets_config.php");
-                }
-   }*/
 
-       $uploadDir = '../assets/images/qrCode/';
+
+    $uploadDir = '../assets/images/qrCode/';
         $allowTypes = array('jpg','png','jpeg','gif');
         if(!empty(array_filter($_FILES['s_o_img']['name']))) {
             foreach ($_FILES['s_o_img']['name'] as $key => $val) {
@@ -99,14 +72,14 @@ if (count($_POST) > 0) {
                 $hex_string = base64_encode($bin);
                 $targetFile = $uploadDir . $filename;
                 if (move_uploaded_file($_FILES["s_o_img"]["tmp_name"][$key], $targetFile)) {
-                    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`, `is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','1')";
+                    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`,`notes`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','','1')";
                     $result2 = mysqli_query($db, $sql2);
                     if ($result2) {
-                        $message_status_class = 'alert-success';
+                        $message_stauts_class = 'alert-success';
                         $import_status_message = 'Assets create successfully!';
                         header("Location:assets_config.php");
                     } else {
-                        $message_status_class = 'alert-danger';
+                        $message_stauts_class = 'alert-danger';
                         $import_status_message = 'Error: Please Retry...';
                         header("Location:assets_config.php");
                     }
@@ -116,7 +89,17 @@ if (count($_POST) > 0) {
             }
         }
 }
-
+if(isset($_GET['image'])){
+    $file=$_GET['image'];
+    if(file_exists($file))
+    {
+        header('Content-Description:File Transfer');
+        header('Content-Type:application/image');
+        header('Content-Disposition:attachment;filename="'.basename($file).'"');
+        header('Content-Length:'.filesize($file));
+        readfile($file);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -242,13 +225,13 @@ include("../heading_banner.php");
             <div class="panel-heading">
                 <?php
                 if (!empty($import_status_message)) {
-                    echo '<br/><div class="alert ' . $message_status_class . '">' . $import_status_message . '</div>';
+                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
                 }
                 ?>
                 <?php
                 if (!empty($_SESSION['import_status_message'])) {
-                    echo '<br/><div class="alert ' . $_SESSION['message_status_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                    $_SESSION['message_status_class'] = '';
+                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    $_SESSION['message_stauts_class'] = '';
                     $_SESSION['import_status_message'] = '';
                 }
                 ?>
@@ -293,8 +276,7 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-sm-2 control-label">Image : </label>
                                     <div class="col-md-4">
-                                        <!--<input type="file" name="image[]" id="image" class="form-control" multiple="multiple">-->
-                                        <input type="file" name="s_o_img[]" class="form-control" multiple="multiple" accept="image/*">
+                                      <input type="file" name="s_o_img[]" class="form-control" multiple accept="image/*">
                                     </div>
                                 </div>
                                 <div class="panel-footer p_footer">
@@ -340,25 +322,21 @@ include("../heading_banner.php");
                     $rowc1 = mysqli_fetch_array($qur1);
                     $line_name = $rowc1['line_name'];
                     ?>
+
                     <tr>
                         <td><?php echo ++$counter;; ?></td>
                         <td><?php echo $asset_name; ?></td>
                         <td><?php echo $line_name; ?></td>
                         <td><?php echo $created_date; ?></td>
                         <td><?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:50px;" />'; ?></td>
-                        <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?></td>
-                        <td>
-                            <a href="edit_assets_config.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;">Edit</a>
-                            <a href="del_assets.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;">Del</a>
-
+                        <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?>
+                           <!-- <a href="../assets/images/qrCode/636a22b33568e~8~sample.png" class="btn btn-success">Download</a>-->
+                            <a href="#" class="btn btn-primary btn-xs" style="background-color:#1e73be;"><i class="fa fa-download"></i></a>
                         </td>
-
-                       <!--<td>
-                           <ul class="icons-list">
-                               <li class="text-primary-600"><button type="button" data-popup="tooltip" title="Edit" id="edit1" data-id1="<?php /*echo $rowc['tm_equipment_id']; */?>" data-name1="<?php /*echo $rowc['tm_equipment_name']; */?>" data-toggle="modal"  data-target="#edit_modal_theme_primary1"><i class="icon-pencil7"></i></button>
-                               </li>&nbsp;
-                           </ul>
-                       </td>-->
+                        <td>
+                            <a href="edit_assets_config.php?id=<?php echo $asset_id ?>" class="btn btn-primary btn-xs" style="background-color:#1e73be;"><i class="fa fa-edit"></i></a>
+                            <a href="del_assets.php?id=<?php echo $asset_id ?>"  class="btn btn-danger btn-xs remove_btn"><i class="glyphicon">-</i></a>
+                        </td>
                     </tr>
                 <?php }
                  ?>
@@ -367,22 +345,6 @@ include("../heading_banner.php");
         </div>
     </div>
 </div>
-
-<!-- /page container -->
-<!--<script> $(document).on('click', '#delete', function () {
-        var element = $(this);
-        var seq_id = element.attr("data-id");
-        $.ajax({
-            type: "POST",
-            url: "del_assets.php",
-            data:{
-                info:seq_id,
-            },
-            success: function (data) {
-            }});
-        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-
-    });</script>-->
 <script>
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/assets_config.php");
