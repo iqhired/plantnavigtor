@@ -4,7 +4,7 @@ include("../config.php");
 
 $id = $_GET['id'];
 
-$sql1 = "DELETE FROM `station_assests` WHERE asset_id = '$id'";
+$sql1 = "update `station_assests` set is_deleted = '0' WHERE asset_id = '$id'";
 mysqli_query($db, $sql1);
 
 
