@@ -211,23 +211,18 @@ include("../heading_banner.php");
 <!-- Page container -->
 <div class="page-container">
     <?php
-    $id = $_GET['assets_id'];
-    $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
+    $id = $_GET['id'];
+    $querymain = sprintf("SELECT * FROM `submit_assets` where submit_id = '$id' ");
     $qurmain = mysqli_query($db, $querymain);
     while ($rowcmain = mysqli_fetch_array($qurmain)) {
     $asset_name = $rowcmain['asset_name'];
     $line_id = $rowcmain['line_id'];
     $created_date = $rowcmain['created_date'];
-    $created_time = $rowcmain['created_time'];
     $created_by = $rowcmain['created_by'];
-    $qrcode = $rowcmain['qrcode'];
-
-
+    $notes = $rowcmain["notes"];
     ?>
 
     <div class="content" style="padding: 70px 30px !important;">
-
-
         <div class="panel panel-flat">
             <!--  <h5 style="text-align: left;margin-right: 120px;"> <b>Submitted on : </b>--><?php //echo date('d-M-Y h:m'); ?><!--</h5>-->
             <div class="panel-heading">
@@ -236,7 +231,7 @@ include("../heading_banner.php");
                 $rowctemp = mysqli_fetch_array($qurtemp);
                 $line_name = $rowctemp["line_name"];
                 ?>
-                <h5 class="panel-title form_panel_title"><?php echo $line_name; ?>  </h5>
+                <h5 class="panel-title form_panel_title"><?php echo $line_name; ?> - <?php echo $asset_name; ?>  </h5>
                 <div class="row ">
                     <div class="col-md-12">
                         <form action="" id="form_settings" enctype="multipart/form-data"
@@ -246,69 +241,14 @@ include("../heading_banner.php");
                                    value="<?php echo $id; ?>">
 
                             <div class="form_row row">
-                                <label class="col-lg-2 control-label">Assets Name : </label>
-                                <div class="col-md-6">
-                                    <input type="text" name="assets_name" class="form-control pn_none" id="assets_name"
-                                           value="<?php echo $asset_name; ?>">
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Notes : </label>
-                                <div class="col-md-6">
-                                    <?php
-
-                                    $submain = sprintf("SELECT * FROM `submit_assets` where asset_id = '$id' ");
-                                    $subres = mysqli_query($db, $submain);
-                                    while ($rowcsub = mysqli_fetch_array($subres)) {
-
-                                        $notes = $rowcsub["notes"];
-                                    }
-                                    ?>
-
-                                    <input type="text" name="notes" class="form-control pn_none" id="notes"
-                                           value="<?php echo $notes; ?>">
-                                </div>
-                            </div>
-
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">QR Code : </label>
-                                <div class="col-md-6">
-                                    <?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:150px;width:150px;" />'; ?>
-
-                                </div>
-                            </div>
-
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Submitted Time : </label>
-                                <div class="col-md-6">
-                                    <?php $create_date = $rowcmain['created_date'];?>
-                                    <input type="text" name="createdby" class="form-control" id="createdby"
-                                           value="<?php echo $create_date; ?>" disabled>
-                                </div>
-                            </div>
-                            <div class="form_row row">
-                                <label class="col-lg-2 control-label">Submitted User : </label>
-                                <div class="col-md-6">
-                                    <?php $create_user = $rowcmain['created_by'];
-                                    $user = "select firstname,lastname from cam_users where users_id = '$create_user' ";
-                                    $row_user = mysqli_query($db,$user);
-                                    $user_q = mysqli_fetch_array($row_user);
-                                    $fname = $user_q['firstname'];
-                                    $lname = $user_q['lastname'];
-                                    ?>
-                                    <input type="text" name="createdby" class="form-control" id="createdby"
-                                           value="<?php echo $fname." ".$lname; ?>" disabled>
-                                </div>
-                            </div>
-                            <div class="form_row row">
 
                                 <?php
-                                $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where asset_id = '$id'");
+                                $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where submit_id = '$id'");
                                 $qur1 = mysqli_query($db, $query1);
                                 $rowc1 = mysqli_fetch_array($qur1);
                                 $item_id = $rowc1['submit_id'];
 
-                                $query2 = sprintf("SELECT * FROM  assets_images where id = '$item_id'");
+                                $query2 = sprintf("SELECT * FROM  station_assets_images where id = '$item_id'");
 
                                 $qurimage = mysqli_query($db, $query2);
                                 while ($rowcimage = mysqli_fetch_array($qurimage)) {
@@ -332,6 +272,38 @@ include("../heading_banner.php");
                                 <?php } ?>
                             </div>
                             <br/>
+
+                            <div class="form_row row">
+                                <label class="col-lg-2 control-label">Notes : </label>
+                                <div class="col-md-6">
+                                    <input type="text" name="notes" class="form-control pn_none" id="notes"
+                                           value="<?php echo $notes; ?>">
+                                </div>
+                            </div>
+
+                            <div class="form_row row">
+                                <label class="col-lg-2 control-label">Submitted Time : </label>
+                                <div class="col-md-6">
+
+                                    <input type="text" name="createdby" class="form-control" id="createdby"
+                                           value="<?php echo $created_date; ?>" disabled>
+                                </div>
+                            </div>
+                            <div class="form_row row">
+                                <label class="col-lg-2 control-label">Submitted User : </label>
+                                <div class="col-md-6">
+                                    <?php
+                                    $user = "select firstname,lastname from cam_users where users_id = '$created_by' ";
+                                    $row_user = mysqli_query($db,$user);
+                                    $user_q = mysqli_fetch_array($row_user);
+                                    $fname = $user_q['firstname'];
+                                    $lname = $user_q['lastname'];
+                                    ?>
+                                    <input type="text" name="createdby" class="form-control" id="createdby"
+                                           value="<?php echo $fname." ".$lname; ?>" disabled>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>

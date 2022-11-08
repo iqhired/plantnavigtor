@@ -265,7 +265,7 @@ if(count($_POST)>0) {
                     $list_enabled = '1';
                 }
 
-                $none_alias_array = $_POST['radio_list_none'];
+                $none_alias_array = $_POST['radio_list_none_'.$bansi_row];
                 $none_alias = $none_alias_array[($z)];
 
                 $yes_alias_array = $_POST['radio_list_yes'];

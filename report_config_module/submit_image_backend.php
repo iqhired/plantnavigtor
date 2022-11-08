@@ -1,6 +1,6 @@
 <?php include("../config.php");
-$chicagodate = date("Y-m-d");
-$chicagotime = date("H:i:s");
+$chicagodate = date("Y-m-d H:i:s");
+
 $temp = "";
 if (!isset($_SESSION['user'])) {
     header('location: ../logout.php');
@@ -32,8 +32,9 @@ if ($i != "super" && $i != "admin") {
     $station = $_POST['station'];
     $asset_name = $_POST['asset_name'];
     $notes = $_POST['notes'];
+    $created_by_user = $_SESSION['id'];
 
-    $sql2 = "INSERT INTO `submit_assets`(`asset_id`, `line_id`, `asset_name`,`notes`, `created_date`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$notes','$chicagodate','1')";
+    $sql2 = "INSERT INTO `submit_assets`(`asset_id`, `line_id`, `asset_name`,`notes`, `created_date`,`created_by`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$notes','$chicagodate','$created_by_user','1')";
     $result2 = mysqli_query($db, $sql2);
 
     $sql1 = "SELECT submit_id as a_id FROM  submit_assets where line_id = '$station' ORDER BY `submit_id` DESC LIMIT 1";
@@ -45,7 +46,7 @@ if ($i != "super" && $i != "admin") {
     $newfolder = "../assets/images/assets_images/".$a_trace_id;
     if ($result1) {
         rename( $folderPath, $newfolder) ;
-        $sql = "update `assets_images` SET id = '$a_trace_id' where id = '$ts'";
+        $sql = "update `station_assets_images` SET id = '$a_trace_id' where id = '$ts'";
         $result1 = mysqli_query($db, $sql);
         $_SESSION['timestamp_id'] = "";
         $_SESSION['message_stauts_class'] = 'alert-success';
@@ -56,7 +57,7 @@ if ($i != "super" && $i != "admin") {
 
     }
 
-$page = "view_assets_config.php?assets_id=$assets_id";
+$page = "view_assets_config.php?id=$a_trace_id";
 header('Location: ' . $page, true, 303);
 
 
