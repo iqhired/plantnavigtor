@@ -194,8 +194,12 @@ include("../heading_banner.php");
                         <form action="" id="asset_scan" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
                             <div id="qr-reader" style="width: 600px"></div>
-                            <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
                             <div id="reader" style=""></div>
+                            <input id="container_input" value=""
+                                   onchange="alert(this.value)"
+                                   type="text" hidden>
+                            <input type=button class="btn btn-primary" value="Open Scanner" onClick="openScanner()">
+
                         </form>
                     </div>
                 </div>
@@ -210,7 +214,8 @@ include("../heading_banner.php");
         const html5QrCode = new Html5Qrcode("reader");
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             document.getElementById("container_input").value = decodedText;
-            window.location.replace("./submit_line_asset.php?container=" + decodedText);
+            // document.getElementById("qr-reader").textContent = decodedText;
+            window.location.replace("./submit_line_asset.php?assets_id=" + decodedText);
             /* handle success */
         };
         const config = {
