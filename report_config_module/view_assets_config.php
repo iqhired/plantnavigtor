@@ -248,7 +248,7 @@ include("../heading_banner.php");
                                 $rowc1 = mysqli_fetch_array($qur1);
                                 $item_id = $rowc1['submit_id'];
 
-                                $query2 = sprintf("SELECT * FROM  station_assets_images where id = '$item_id'");
+                                $query2 = sprintf("SELECT * FROM  station_assets_images where station_asset_id = '$item_id'");
 
                                 $qurimage = mysqli_query($db, $query2);
                                 while ($rowcimage = mysqli_fetch_array($qurimage)) {
@@ -257,11 +257,11 @@ include("../heading_banner.php");
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="thumbnail">
                                             <div class="thumb">
-                                                <img src="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
+                                                <img src="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['station_asset_image']; ?>"
                                                      alt="">
                                                 <div class="caption-overflow">
                                                         <span>
-															<a href="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['image_name']; ?>"
+															<a href="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['station_asset_image']; ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>
