@@ -164,7 +164,7 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 						} else {
 							$created_on = $next_date . ' ' . '00:00:00';
 							$end_time2 = $current_time;
-							$tt_time_1 = round($loop_tot_time, 2);
+							$tt_time_1 = $c_time;
 							$page = "INSERT INTO `sg_station_event_log_update`(`line_id`,`sg_station_event_old_id`,`day_seq`,`event_seq`,`station_event_id`,`event_cat_id`,`event_type_id`,`event_status`,`reason`,`created_on` ,`end_time`,`total_time`,`created_by`)                 
 				values ('$line_id','$station_event_log_id','$z','$event_seq','$station_event_id','$station_cat_id','$station_type_id','$event_status','$reason','$created_on','$end_time2','$tt_time_1','$created_by')";
 							$result1 = mysqli_query($db, $page);
