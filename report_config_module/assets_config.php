@@ -58,47 +58,30 @@ if (count($_POST) > 0) {
 // Encode the image string data into base64
     $data = base64_encode($img);
 
-    //upload the image
-    /*$data1 = file_get_contents($_FILES['image']['tmp_name']);
-    $data1 = base64_encode($data1);*/
 
+    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `qrcode`, `created_date`, `created_time`, `created_by`,`notes`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$data','$chicagodate','$chicagotime','$created_by','','1')";
+    $result2 = mysqli_query($db, $sql2);
 
-    $uploadDir = '../assets/images/qrCode/';
-        $allowTypes = array('jpg','png','jpeg','gif');
-        if(!empty(array_filter($_FILES['s_o_img']['name']))) {
-            foreach ($_FILES['s_o_img']['name'] as $key => $val) {
-                $filename = basename($_FILES['s_o_img']['name'][$key]);
-                $bin = file_get_contents($_FILES["s_o_img"]["tmp_name"][$key]);  // add [$i] for valid index image
-                $hex_string = base64_encode($bin);
-                $targetFile = $uploadDir . $filename;
-                if (move_uploaded_file($_FILES["s_o_img"]["tmp_name"][$key], $targetFile)) {
-                    $sql2 = "INSERT INTO `station_assests`(`asset_id`, `line_id`, `asset_name`, `image`, `qrcode`, `created_date`, `created_time`, `created_by`,`notes`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$hex_string','$data','$chicagodate','$chicagotime','$created_by','','1')";
-                    $result2 = mysqli_query($db, $sql2);
-                    if ($result2) {
-                        $message_stauts_class = 'alert-success';
-                        $import_status_message = 'Assets create successfully!';
-                        header("Location:assets_config.php");
-                    } else {
-                        $message_stauts_class = 'alert-danger';
-                        $import_status_message = 'Error: Please Retry...';
-                        header("Location:assets_config.php");
-                    }
-                } else {
-                    $errors[] = "Something went wrong- File - $filename";
-                }
-            }
-        }
-}
-if(isset($_GET['image'])){
-    $file=$_GET['image'];
-    if(file_exists($file))
-    {
-        header('Content-Description:File Transfer');
-        header('Content-Type:application/image');
-        header('Content-Disposition:attachment;filename="'.basename($file).'"');
-        header('Content-Length:'.filesize($file));
-        readfile($file);
+    $sql1 = "SELECT slno as a_id FROM  station_assests where line_id = '$station' ORDER BY `slno` DESC LIMIT 1";
+    $result1 = mysqli_query($db, $sql1);
+    $rowc04 = mysqli_fetch_array($result1);
+    $a_trace_id = $rowc04["a_id"];
+    $ts = $_SESSION['assets_timestamp_id'];
+    $folderPath =  "../assets/images/assets_images/".$ts;
+    $newfolder = "../assets/images/assets_images/".$a_trace_id;
+    if ($result1) {
+        rename( $folderPath, $newfolder) ;
+        $sql = "update `station_assets_images` SET station_asset_id = '$a_trace_id' where station_asset_id = '$ts'";
+        $result1 = mysqli_query($db, $sql);
+        $_SESSION['timestamp_id'] = "";
+        $_SESSION['message_stauts_class'] = 'alert-success';
+        $_SESSION['import_status_message'] = 'Assets Created Sucessfully.';
+    } else {
+        $_SESSION['message_stauts_class'] = 'alert-danger';
+        $_SESSION['import_status_message'] = 'Please retry';
+
     }
+
 }
 ?>
 <!DOCTYPE html>
@@ -136,6 +119,7 @@ if(isset($_GET['image'])){
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
     <style>
         .sidebar-default .navigation li>a{color:#f5f5f5};
         a:hover {
@@ -236,60 +220,131 @@ include("../heading_banner.php");
                 }
                 ?>
                 <h5 class="panel-title">Station Assets Config</h5><br/>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form action="" id="asset_create" enctype="multipart/form-data"  class="form-horizontal" method="post">
-                                <?php $id = $_GET['id']; ?>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label">Station : </label>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <select name="station" id="station" class="select form-control" data-style="bg-slate">
-                                                <option value="" selected disabled>--- Select Station ---</option>
-                                                <?php
-                                                    $st_dashboard = $_POST['station'];
-                                                    $station22 = $st_dashboard;
-                                                    $sql1 = "SELECT * FROM `cam_line`  where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        if($st_dashboard == $row1['line_id'])
-                                                        {
-                                                            $entry = 'selected';
-                                                        }
-                                                        else
-                                                        {
-                                                            $entry = '';
-                                                        }
-                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" id="asset_create" enctype="multipart/form-data"  class="form-horizontal" method="post">
+                            <?php $id = $_GET['id']; ?>
+                            <div class="row">
+                                <label class="col-sm-2 control-label">Station : </label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select name="station" id="station" class="select form-control" data-style="bg-slate">
+                                            <option value="" selected disabled>--- Select Station ---</option>
+                                            <?php
+                                            $st_dashboard = $_POST['station'];
+                                            $station22 = $st_dashboard;
+                                            $sql1 = "SELECT * FROM `cam_line`  where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC";
+                                            $result1 = $mysqli->query($sql1);
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if($st_dashboard == $row1['line_id'])
+                                                {
+                                                    $entry = 'selected';
+                                                }
+                                                else
+                                                {
+                                                    $entry = '';
+                                                }
+                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
 
-                                                    }
+                                            }
 
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
-                                    <div class="col-md-3">
-                                        <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label">Image : </label>
-                                    <div class="col-md-4">
-                                      <input type="file" name="s_o_img[]" class="form-control" multiple accept="image/*">
-                                    </div>
+                                <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
+                                <div class="col-md-3">
+                                    <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
                                 </div>
-                                <div class="panel-footer p_footer">
-                                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create</button>
+                            </div>
+                            <div class="row">
+                                <label class="col-lg-2 control-label">Image : </label>
+                                <div class="col-md-6">
+                                    <input type="file" name="image[]" id="image-input" class="form-control" multiple>
+                                    <div class="container"></div>
                                 </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="panel-footer p_footer">
+                                <button type="submit" class="btn btn-primary" style="background-color:#1e73be;">Create</button>
+                            </div>
+                        </form>
+                        <script>
+                            $("#image-input").on("change", function () {
+                                var fd = new FormData();
+                                var files = $('#image-input')[0].files[0];
+                                fd.append('file', files);
+                                //  fd.append('a', counter++);
+                                fd.append('request', 1);
 
-                            </form>
+                                // AJAX request
+                                $.ajax({
+                                    url: 'create_delete_asset_image.php',
+                                    type: 'post',
+                                    data: fd,
+                                    contentType: false,
+                                    processData: false,
+                                    success: function (response) {
+
+                                        if (response != 0) {
+                                            var count = $('.container .content_img').length;
+                                            count = Number(count) + 1;
+
+                                            // Show image preview with Delete button
+                                            $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                                        }
+                                    }
+                                });
+                            });
+
+
+                            // Remove file
+                            $('.container').on('click', '.content_img .delete', function () {
+
+                                var id = this.id;
+                                var split_id = id.split('_');
+                                var num = split_id[1];
+                                // Get image source
+                                var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+                                //var deleteFile = confirm("Do you really want to Delete?");
+                                console.log(imgElement_src);
+                                var succ = false;
+                                // AJAX request
+                                $.ajax({
+                                    url: 'create_delete_asset_image.php',
+                                    type: 'post',
+                                    data: {path: imgElement_src, request: 2},
+                                    async: false,
+                                    success: function (response) {
+                                        // Remove <div >
+                                        if (response == 1) {
+                                            succ = true;
+                                        }
+                                    }, complete: function (data) {
+                                        if (succ) {
+                                            var id = 'content_img_' + num;
+                                            // $('#content_img_'+num)[0].remove();
+                                            var elem = document.getElementById(id);
+                                            document.getElementById(id).style.display = 'none';
+                                            var nodes = $(".container")[2].childNodes;
+                                            for (var i = 0; i < nodes.length; i++) {
+                                                var node = nodes[i];
+                                                if (node.id == id) {
+                                                    node.style.display = 'none';
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
+                </div>
+
             </div>
 
         </div>
-
-    </div>
         <div class="panel panel-flat" >
             <table class="table datatable-basic">
                 <thead>
@@ -307,16 +362,12 @@ include("../heading_banner.php");
                 <?php
                 $query4  = mysqli_query($db, "SELECT * FROM `station_assests` where is_deleted != 0");
                 while ($rowc08 = mysqli_fetch_array($query4)) {
-                    //$rowc4 = mysqli_fetch_assoc($query4);
+                    $slno = $rowc08["slno"];
                     $asset_id = $rowc08["asset_id"];
                     $line_id = $rowc08["line_id"];
                     $asset_name = $rowc08["asset_name"];
                     $created_date = $rowc08["created_date"];
                     $qrcode = $rowc08["qrcode"];
-                    $image = $rowc08["image"];
-
-                    $mime_type = "image/gif";
-                    $file_content = file_get_contents("$image");
 
                     $qur1 = mysqli_query($db, "SELECT line_name  FROM `cam_line` where line_id = '$line_id'");
                     $rowc1 = mysqli_fetch_array($qur1);
@@ -328,9 +379,22 @@ include("../heading_banner.php");
                         <td><?php echo $asset_name; ?></td>
                         <td><?php echo $line_name; ?></td>
                         <td><?php echo $created_date; ?></td>
-                        <td><?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:50px;" />'; ?></td>
+                        <td>
+                            <?php
+                            $query2 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$slno'");
+                            $qurimage = mysqli_query($db, $query2);
+                            $i =0 ;
+                            while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                $station_asset_image = $rowcimage['station_asset_image'];
+                                $mime_type = "image/gif";
+                                $file_content = file_get_contents("$station_asset_image");
+                                ?>
+                                <?php echo '<img src="data:image/gif;base64,' . $station_asset_image . '" style="height:50px;width:50px;" />'; ?>
+                                <?php
+                                $i++;}
+                            ?>
+                        </td>
                         <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?>
-                           <!-- <a href="../assets/images/qrCode/636a22b33568e~8~sample.png" class="btn btn-success">Download</a>-->
                             <a class="btn btn-primary btn-xs" style="background-color:#1e73be;" href= data:image/png;base64,<?php echo $qrcode ?> download><i class="fa fa-download"></i></a>
                         </td>
                         <td>
@@ -339,17 +403,12 @@ include("../heading_banner.php");
                         </td>
                     </tr>
                 <?php }
-                 ?>
+                ?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/assets_config.php");
-    }
-</script>
 <?php include ('../footer.php') ?>
 </body>
 </html>

@@ -36,17 +36,28 @@ if(empty($_SESSION['$asset_id'])){
 $id = $_GET['id'];
 if(isset($_POST['submit'])){
     $notes = $_POST['notes'];
-                $sql = "update `station_assests` set notes = '$notes' where asset_id = '$id'";
-                $result = mysqli_query($db, $sql);
-                if ($result) {
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'Assets update successfully!';
-                    header("Location:assets_config.php");
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Retry...';
-                    header("Location:edit_assets_config.php");
-                }
+    $sql = "update `station_assests` set notes = '$notes' where asset_id = '$id'";
+    $result = mysqli_query($db, $sql);
+
+    $sql1 = "SELECT slno as a_id FROM  station_assests where asset_id = '$id' ORDER BY `slno` DESC LIMIT 1";
+    $result1 = mysqli_query($db, $sql1);
+    $rowc04 = mysqli_fetch_array($result1);
+    $a_trace_id = $rowc04["a_id"];
+    $ts = $_SESSION['assets_timestamp_id'];
+    $folderPath =  "../assets/images/assets_images/".$ts;
+    $newfolder = "../assets/images/assets_images/".$a_trace_id;
+    if ($result1) {
+        rename( $folderPath, $newfolder) ;
+        $sql = "update `station_assets_images` SET station_asset_id = '$a_trace_id' where station_asset_id = '$ts'";
+        $result1 = mysqli_query($db, $sql);
+        $_SESSION['timestamp_id'] = "";
+        $_SESSION['message_stauts_class'] = 'alert-success';
+        $_SESSION['import_status_message'] = 'Assets Created Sucessfully.';
+    } else {
+        $_SESSION['message_stauts_class'] = 'alert-danger';
+        $_SESSION['import_status_message'] = 'Please retry';
+
+    }
 
 }
 ?>
@@ -193,7 +204,7 @@ include("../heading_banner.php");
                             $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
                             $qurmain = mysqli_query($db, $querymain);
                             while ($rowcmain = mysqli_fetch_array($qurmain)) {
-                            $slno = $rowcmain['asset_name'];
+                            $slno = $rowcmain['slno'];
                             $asset_name = $rowcmain['asset_name'];
                             $line_id = $rowcmain['line_id'];
                             $created_date = $rowcmain['created_date'];
@@ -251,9 +262,40 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
                                 <div class="row">
+                                    <label class="col-lg-2 control-label">Previous Image : </label>
+                                    <div class="col-md-6">
+                                        <?php
+                                        $query1 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$slno'");
+                                        $qurimage = mysqli_query($db, $query1);
+                                        $i =0 ;
+                                        while ($rowcimage1 = mysqli_fetch_array($qurimage)) {
+                                            $station_asset_id = $rowcimage1['station_asset_id'];
+                                            $station_asset_image = $rowcimage1['station_asset_image'];
+                                            $mime_type = "image/gif";
+                                            $file_content = file_get_contents("$station_asset_image");
+                                            $d_tag = "delete_image_" . $i;
+                                            $r_tag = "remove_image_" . $i;
+                                            ?>
+
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="thumbnail">
+                                                    <div class="thumb">
+                                                        <?php echo '<img src="data:image/gif;base64,' . $station_asset_image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
+                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage1['station_asset_id']; ?>">
+                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $i++;}
+                                        ?>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
                                     <label class="col-lg-2 control-label">Image : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="image[]" id="image-input" class="form-control" multiple>
+                                        <input type="file" name="image[]" id="update-input" class="form-control" multiple>
                                         <div class="container"></div>
                                     </div>
 
@@ -286,16 +328,16 @@ include("../heading_banner.php");
 
     </div>
 <script>
-    $("#image-input").on("change", function () {
+    $("#update-input").on("change", function () {
         var fd = new FormData();
-        var files = $('#image-input')[0].files[0];
+        var files = $('#update-input')[0].files[0];
         fd.append('file', files);
 
         fd.append('request', 1);
 
         // AJAX request
         $.ajax({
-            url: 'create_delete_asset_image.php',
+            url: 'edit_delete_asset_image.php',
             type: 'post',
             data: fd,
             contentType: false,
@@ -327,7 +369,7 @@ include("../heading_banner.php");
         var succ = false;
         // AJAX request
         $.ajax({
-            url: 'create_delete_asset_image.php',
+            url: 'edit_delete_asset_image.php',
             type: 'post',
             data: {path: imgElement_src, request: 2},
             async: false,
@@ -354,6 +396,27 @@ include("../heading_banner.php");
         });
     });
 
+</script>
+<script>
+    $(document).on('click', '.remove_image', function () {
+        var del_id = this.id.split("_")[2];
+        var x_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("delete_image"+del_id);
+        var info =  "id="+del_id+"&station_asset_id="+ x_img_id;
+        $.ajax({
+            type: "POST",
+            url: "delete_create_asset_image.php",
+            data: info,
+            success: function (data) {
+            }
+        });
+        location.reload(true);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.select').select2();
+    });
 </script>
     <?php include ('../footer.php') ?>
 </body>

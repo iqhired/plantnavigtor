@@ -1491,7 +1491,7 @@ include("../heading_banner.php");
                                                                             <input type="hidden" name="add_option_id"  id="add_option_id" value="0">
 
                                                                             <br/>
-                                                                            <button type="button" class="add_option_btn" id="add_other_<?php echo $rowcount; ?>" class="btn btn-primary legitRipple"
+                                                                            <button type="button" class="add_option_btn btn btn-primary legitRipple" id="add_other_<?php echo $rowcount; ?>" class="btn btn-primary legitRipple"
                                                                                     style="background-color:#1e73be;">Add More
                                                                             </button>
                                                                             <!--                                                                            <div class="custom-control copy-radio"> <label class="add_option" id="add_other_--><?php //echo $rowcount; ?><!--" value ="--><?php //echo $rowcount; ?><!--" >Add More</label>-->
