@@ -212,7 +212,7 @@ include("../heading_banner.php");
 <div class="page-container">
     <?php
     $id = $_GET['id'];
-    $querymain = sprintf("SELECT * FROM `submit_assets` where submit_id = '$id' ");
+    $querymain = sprintf("SELECT * FROM `submit_assets` where submit_id = '$id'");
     $qurmain = mysqli_query($db, $querymain);
     while ($rowcmain = mysqli_fetch_array($qurmain)) {
     $asset_name = $rowcmain['asset_name'];
@@ -242,7 +242,7 @@ include("../heading_banner.php");
 
                             <div class="form_row row">
                                 <?php
-                                $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where submit_id = '$id' and image_type = 'C'");
+                                $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where submit_id = '$id'");
                                 $qur1 = mysqli_query($db, $query1);
                                 $rowc1 = mysqli_fetch_array($qur1);
                                 $item_id = $rowc1['submit_id'];
