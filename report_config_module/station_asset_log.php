@@ -145,7 +145,7 @@ while ($rowctemp = mysqli_fetch_array($qurtemp)) {
 
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "Asset Log";
+$cust_cam_page_header = "Station Asset Log";
 include("../header_folder.php");
 
 include("../admin_menu.php");

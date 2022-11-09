@@ -51,7 +51,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $sitename; ?> | View 10x</title>
+        <?php echo $sitename; ?> | View Asset Config</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -241,7 +241,6 @@ include("../heading_banner.php");
                                    value="<?php echo $id; ?>">
 
                             <div class="form_row row">
-
                                 <?php
                                 $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where submit_id = '$id' and image_type = 'C'");
                                 $qur1 = mysqli_query($db, $query1);
