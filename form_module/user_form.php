@@ -598,6 +598,7 @@ include("../heading_banner.php");
                                                 <label for="yes"
                                                        class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $yes_alias = $rowc['list_name2'];
+													$none_alias = $rowc['list_name1'];
 													echo (($yes_alias != null) || ($yes_alias != '')) ? $yes_alias : "Yes" ?></label>
                                                 <input type="radio" id="no"
                                                        name="<?php echo $rowc['form_item_id']; ?>"
@@ -612,23 +613,25 @@ include("../heading_banner.php");
                                                        class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                        id="<?php echo $rowc['form_item_id']; ?>"><?php $no_alias = $rowc['list_name3'];
 													echo (($no_alias != null) || ($no_alias != '')) ? $no_alias : "No" ?></label>
-                                                <?php if ($list_enabled == 1 && !empty($extra_enabled)) { ?>
+
+												<?php if ($list_enabled == 1 && !empty($none_alias)) { ?>
                                                     <input type="radio" id="none"
                                                            name="<?php echo $rowc['form_item_id']; ?>"
                                                            value="none"
                                                            class="form-check-input" <?php if ($list_def == 'none') {
-                                                        echo 'checked';
-                                                    }
-                                                    if ($rowc['optional'] != '1') {
-                                                        echo 'required';
-                                                    } ?> />
+														echo 'checked';
+													}
+													if ($rowc['optional'] != '1') {
+														echo 'required';
+													} ?> />
                                                     <label for="none"
                                                            class="item_label <?php echo $rowc['form_item_id']; ?>"
                                                            id="<?php echo $rowc['form_item_id']; ?>"><?php $none_alias = $rowc['list_name1'];
-                                                        echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
+														echo (($none_alias != null) || ($none_alias != '')) ? $none_alias : "None" ?></label>
 
 
-                                                <?php } ?>
+												<?php } ?>
+
                                                  <?php $list_extra =  $rowc['list_name_extra'];
                                                  if(!empty($list_extra)){
 													 $arrteam = explode(',', $list_extra);

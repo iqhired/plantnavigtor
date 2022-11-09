@@ -241,7 +241,6 @@ include("../heading_banner.php");
                                    value="<?php echo $id; ?>">
 
                             <div class="form_row row">
-
                                 <?php
                                 $query1 = sprintf("SELECT asset_id,submit_id FROM  submit_assets where submit_id = '$id'");
                                 $qur1 = mysqli_query($db, $query1);
