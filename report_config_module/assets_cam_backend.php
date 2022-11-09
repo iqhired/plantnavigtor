@@ -30,7 +30,7 @@ if(!empty($a_id)) {
     $file_name = $a_timestamp . '_' . $fileName;
     file_put_contents($file, $image_base64);
     if(file_put_contents($file, $image_base64)){
-        $sql = "INSERT INTO `station_assets_images`(`id`,`image_name`,`created_at`) VALUES ('$a_id','$file_name' , '$created_by' )";
+        $sql = "INSERT INTO `station_assets_images`(`station_asset_id`,`station_asset_image`,`created_at`) VALUES ('$a_id','$file_name' , '$created_by' )";
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
             echo $file;
@@ -46,7 +46,7 @@ if(!empty($a_id)) {
     file_put_contents($file, $image_base64);
     if(file_put_contents($file, $image_base64)){
 
-        $sql = "INSERT INTO `station_assets_images`(`id`,`image_name`,`created_at`) VALUES ('$timestamp','$file_name' ,'$created_by' )";
+        $sql = "INSERT INTO `station_assets_images`(`station_asset_id`,`station_asset_image`,`created_at`) VALUES ('$timestamp','$file_name' ,'$created_by' )";
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
             echo $file;

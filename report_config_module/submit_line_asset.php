@@ -266,12 +266,12 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['assets_timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM station_assets_images where id = '$time_stamp'");
+										$query2 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$time_stamp'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
 										while ($rowcimage = mysqli_fetch_array($qurimage)) {
-											$image = $rowcimage['image_name'];
+											$image = $rowcimage['station_asset_image'];
 											$d_tag = "delete_image_" . $i;
 											$r_tag = "remove_image_" . $i;
 											?>

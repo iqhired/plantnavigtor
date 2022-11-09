@@ -33,11 +33,22 @@ $asset_ide = $_GET['asset_id'];
 if(empty($_SESSION['$asset_id'])){
     $_SESSION['timestamp_id'] = time();
 }
+$id = $_GET['id'];
+if(isset($_POST['submit'])){
+    $notes = $_POST['notes'];
+                $sql = "update `station_assests` set notes = '$notes' where asset_id = '$id'";
+                $result = mysqli_query($db, $sql);
+                if ($result) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Assets update successfully!';
+                    header("Location:assets_config.php");
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Retry...';
+                    header("Location:edit_assets_config.php");
+                }
 
-$x_timestamp = time();
-$idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
-|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +88,15 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <script type="text/javascript" src="instascan.min.js"></script>
     <!--scan the qrcode -->
-
+    <script>
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
     <style>
         .sidebar-default .navigation li>a{color:#f5f5f5};
         a:hover {
@@ -170,21 +189,11 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <form action="" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
-                            <div id="qr-reader" style="width: 600px"></div>
-                            <script src="./../assets/js/html5-qrcode.min.js"></script>
-                            <script>
-                                function onScanSuccess(decodedText, decodedResult) {
-                                    console.log(`Code scanned = ${decodedText}`, decodedResult);
-                                }
-                                var html5QrcodeScanner = new Html5QrcodeScanner(
-                                    "qr-reader", { fps: 10, qrbox: 250 });
-                                html5QrcodeScanner.render(onScanSuccess);
-                            </script>
-
-                            <?php $id = $_GET['qr-reader'];
+                            <?php
                             $querymain = sprintf("SELECT * FROM `station_assests` where asset_id = '$id' ");
                             $qurmain = mysqli_query($db, $querymain);
                             while ($rowcmain = mysqli_fetch_array($qurmain)) {
+                            $slno = $rowcmain['asset_name'];
                             $asset_name = $rowcmain['asset_name'];
                             $line_id = $rowcmain['line_id'];
                             $created_date = $rowcmain['created_date'];
@@ -241,73 +250,24 @@ include("../heading_banner.php");
                                     </div>
                                 </div>
                                 <br/>
-                            <?php } ?>
-                                    <br/>
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Image : </label>
+                                    <div class="col-md-6">
+                                        <input type="file" name="image[]" id="image-input" class="form-control" multiple>
+                                        <div class="container"></div>
+                                    </div>
+
+                                </div>
+                                <br/>
                             <div class="row">
                                 <label class="col-lg-2 control-label">Notes : </label>
                                 <div class="col-md-6">
-                                    <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
+                                    <textarea id="notes"   name="notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
                                 </div>
                             </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <?php if(($idd == 0)){?>
-                                        <div id="my_camera"></div>
-                                        <br/>
-                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
-                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                    <?php } ?>
-                                    <?php if(($idd != 0)){?>
-                                        <div style="display:none;" id="my_camera"></div>
-                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>
-                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                        <div class="container"></div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div class="row" style="display: none">
-                                <label class="col-lg-2 control-label">Captured Image : </label>
-                                <div class="col-md-6">
-                                    <div id="results"></div>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Previous Image : </label>
-                                <div class="col-md-6">
-                                    <?php
-                                    $time_stamp = $_SESSION['timestamp_id'];
-                                    if(!empty($time_stamp)){
-                                        $query2 = sprintf("SELECT * FROM assets_images order by created_at desc limit 1");
 
-                                        $qurimage = mysqli_query($db, $query2);
-                                        $i =0 ;
-                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                            $image = $rowcimage['image_name'];
-                                            $d_tag = "delete_image_" . $i;
-                                            $r_tag = "remove_image_" . $i;
-                                            ?>
 
-                                            <div class="col-lg-3 col-sm-6">
-                                                <div class="thumbnail">
-                                                    <div class="thumb">
-                                                        <img src="../assets/images/assets_images/<?php echo $image; ?>"
-                                                             alt="">
-                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['image_name']; ?>">
-                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php
-                                            $i++;}
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <hr/>
-
+                            <?php } ?>
                     </div>
                 </div>
             </div>
@@ -315,8 +275,8 @@ include("../heading_banner.php");
 
             <div class="panel-footer p_footer">
 
-                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
-                        style="background-color:#1e73be;">Submit
+                <button type="submit" name="submit" id="submit" class="btn btn-primary submit_btn"
+                        style="background-color:#1e73be;">Update
                 </button>
 
             </div>
@@ -325,47 +285,76 @@ include("../heading_banner.php");
         </div>
 
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script>
-    Webcam.set({
-        width: 290,
-        height: 190,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
-    var camera = document.getElementById("my_camera");
-    Webcam.attach( camera );
-</script>
-<script>
-    function take_snapshot() {
-        Webcam.snap( function(data_uri) {
-            var formData =  $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            $.ajax({
-                url: "assets_cam_backend.php",
-                type: "POST",
-                data: formData,
-                success: function (msg) {
-                    window.location.reload()
-                },
+    $("#image-input").on("change", function () {
+        var fd = new FormData();
+        var files = $('#image-input')[0].files[0];
+        fd.append('file', files);
 
-            });
-        } );
-    }
-</script>
+        fd.append('request', 1);
 
-<script>
-    $(document).ready(function () {
-        $('.select').select2();
+        // AJAX request
+        $.ajax({
+            url: 'create_delete_asset_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
     });
 
 
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        console.log(imgElement_src);
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'create_delete_asset_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
 </script>
-    <script>
-        window.onload = function() {
-            history.replaceState("", "", "<?php echo $scriptName; ?>report_config_module/edit_assets_config.php");
-        }
-    </script>
     <?php include ('../footer.php') ?>
 </body>
 </html>

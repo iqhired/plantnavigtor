@@ -51,7 +51,7 @@ if($request == 1){
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
 
         if( move_uploaded_file($file_tmp, $destination)){
-            $sql = "INSERT INTO `station_assets_images`(`id`,`image_name`,`created_at`) VALUES ('$a_timestamp','$f_name' , '$created_by' )";
+            $sql = "INSERT INTO `station_assets_images`(`station_asset_id`,`station_asset_image`,`created_at`) VALUES ('$a_timestamp','$f_name' , '$created_by' )";
             $result1 = mysqli_query($db, $sql);
             if ($result1) {
                 echo $destination;
