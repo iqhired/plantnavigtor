@@ -1,7 +1,7 @@
 <?php include("../config.php");
 $request = $_POST['request'];
 $created_by = date("Y-m-d H:i:s");
-$data = $_POST['data'];
+
 if ($request == 1) {
     $filename = $_FILES['file']['name'];
     $fname = str_replace(" ", "", $filename);
@@ -32,7 +32,7 @@ if ($request == 1) {
         /*$img = file_get_contents();
         $hex_string = ;*/
         if (move_uploaded_file($file_tmp, $destination)) {
-            $sql = "INSERT INTO `station_assets_images`(`station_asset_image`,`station_asset_id`,`created_at`,`image_type`) VALUES ('$data1','$a_timestamp','$created_by','C')";
+            $sql = "INSERT INTO `station_assets_images`(`station_asset_image`,`station_asset_id`,`created_at`,`image_type`) VALUES ('$data1','$a_timestamp','$created_by','U')";
             $result1 = mysqli_query($db, $sql);
             if ($result1) {
                 echo $destination;
@@ -47,6 +47,7 @@ if ($request == 1) {
 if($request == 2){
 
     $path = $_POST['path'];
+
     $file1 = basename($path);
     $path = str_replace($siteURL,"../",$path);
     $return_text = 0;
