@@ -75,7 +75,7 @@ if($request == 2){
 //	$mid_arr = explode ( ',' , $temp_mid);
     // Check file exist or not
     if( file_exists($path) ){
-        $sql = "DELETE FROM `assets_images` where image_name ='$file1'";
+        $sql = "DELETE FROM `station_assets_images` where station_asset_image ='$file1'";
         $result1 = mysqli_query($db, $sql);
         // Remove file
         unlink($path);
