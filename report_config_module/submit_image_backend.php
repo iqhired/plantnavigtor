@@ -46,7 +46,7 @@ if ($i != "super" && $i != "admin") {
     $newfolder = "../assets/images/assets_images/".$a_trace_id;
     if ($result1) {
         rename( $folderPath, $newfolder) ;
-        $sql = "update `station_assets_images` SET id = '$a_trace_id' where id = '$ts'";
+        $sql = "update `station_assets_images` SET station_asset_id = '$a_trace_id' where station_asset_id = '$ts'";
         $result1 = mysqli_query($db, $sql);
         $_SESSION['timestamp_id'] = "";
         $_SESSION['message_stauts_class'] = 'alert-success';
