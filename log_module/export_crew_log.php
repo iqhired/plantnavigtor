@@ -10,7 +10,7 @@ $button = $_SESSION['button_event'];
 $timezone = $_SESSION['timezone'];
 $print_data='';
 
-$q = "SELECT cam_u.user_name as User,cam_l.line_name as Station,cam_p.position_name as Position,cam_ass.assign_time,cam_ass.unassign_time,cam_ass.total_time as time FROM cam_assign_crew_log_update as cam_ass INNER JOIN cam_users as cam_u on cam_ass.user_id = cam_u.users_id INNER JOIN cam_line as cam_l on cam_ass.station_id = cam_l.line_id INNER JOIN cam_position as cam_p on cam_ass.position_id = cam_p.position_id";
+$q = "SELECT cam_u.user_name as User,cam_l.line_name as Station,cam_p.position_name as Position,cam_ass.assign_time,cam_ass.unassign_time,cam_ass.total_time as time FROM cam_assign_crew_log as cam_ass INNER JOIN cam_users as cam_u on cam_ass.user_id = cam_u.users_id INNER JOIN cam_line as cam_l on cam_ass.station_id = cam_l.line_id INNER JOIN cam_position as cam_p on cam_ass.position_id = cam_p.position_id";
 
 /* If User is selected. */
 if ($user != null) {
