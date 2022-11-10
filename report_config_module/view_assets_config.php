@@ -251,16 +251,18 @@ include("../heading_banner.php");
 
                                 $qurimage = mysqli_query($db, $query2);
                                 while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                    $image = $rowcimage['station_asset_image'];
+                                    $mime_type = "image/gif";
+                                    $file_content = file_get_contents("$image");
                                     ?>
 
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="thumbnail">
                                             <div class="thumb">
-                                                <img src="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['station_asset_image']; ?>"
-                                                     alt="">
+                                                <?php echo '<img src="' . $image . '" style="height:200px;width:200px;" />'; ?>
                                                 <div class="caption-overflow">
                                                         <span>
-															<a href="../assets/images/assets_images/<?php echo $item_id; ?>/<?php echo $rowcimage['station_asset_image']; ?>"
+															<a href="<?php echo $image ?>"
                                                                data-popup="lightbox" rel="gallery"
                                                                class="btn border-white text-white btn-flat btn-icon btn-rounded">view</a>
 														</span>

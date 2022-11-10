@@ -272,15 +272,16 @@ include("../heading_banner.php");
 										$i =0 ;
 										while ($rowcimage = mysqli_fetch_array($qurimage)) {
 											$image = $rowcimage['station_asset_image'];
-											$d_tag = "delete_image_" . $i;
-											$r_tag = "remove_image_" . $i;
+                                            $mime_type = "image/gif";
+                                            $file_content = file_get_contents("$image");
+                                            $d_tag = "delete_image_" . $i;
+                                            $r_tag = "remove_image_" . $i;
 											?>
 
 											<div class="col-lg-3 col-sm-6">
 												<div class="thumbnail">
 													<div class="thumb">
-														<img src="../assets/images/assets_images/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
-															 alt="">
+                                                        <?php echo '<img src="' . $image . '" style="height:150px;width:150px;" />'; ?>
 														<input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['asset_images_id']; ?>">
 														<span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 													</div>
@@ -423,7 +424,7 @@ include("../heading_banner.php");
         var del_id = this.id.split("_")[2];
         var x_img_id = this.parentElement.childNodes[3].value;
         var info =  document.getElementById("delete_image"+del_id);
-        var info =  "id="+del_id+"&asset_id="+ x_img_id;
+        var info =  "id="+del_id+"&station_asset_id="+ x_img_id;
         $.ajax({
             type: "POST",
             url: "delete_assets_image.php",

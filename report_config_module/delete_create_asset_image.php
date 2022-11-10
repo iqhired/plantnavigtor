@@ -6,7 +6,7 @@ $a_id = $_POST['station_asset_id'];
 $sql = "select * from `station_assets_images` where station_asset_id = '$a_id'";
 $sql1 = mysqli_query($db,$sql);
 $row = mysqli_fetch_array($sql1);
-$id = $row['station_asset_id'];
+$id = $row['asset_images_id'];
 $file_name = $row['station_asset_image'];
 unlink("../assets/images/assets_images/".$time_stamp.'/'.$file_name);
 if(!is_dir($time_stamp)){

@@ -21,24 +21,8 @@ if($request == 1){
     }
     $a_timestamp = $_SESSION['assets_timestamp_id'] ;
 
-    // Check image format
-    // if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    //     && $imageFileType != "gif" ) {
-    //     $uploadOk = 0;
-    //     compressImage($file_tmp,$location,60);
-    // }
-
-    // Compress image
-    // function compressImage($source, $destination, $quality) {
-    //     $info = getimagesize($source);
-    //     if ($info['mime'] == 'image/jpeg')
-    //         $image = imagecreatefromjpeg($source);
-    //     elseif ($info['mime'] == 'image/gif')
-    //         $image = imagecreatefromgif($source);
-    //     elseif ($info['mime'] == 'image/png')
-    //         $image = imagecreatefrompng($source);
-    //     imagejpeg($image, $destination, $quality);
-    // }
+    $data1 = file_get_contents($_FILES['file']['tmp_name']);
+    $data1 = base64_encode($data1);
 
     if($uploadOk == 0){
         echo 0;
@@ -51,7 +35,7 @@ if($request == 1){
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
 
         if( move_uploaded_file($file_tmp, $destination)){
-            $sql = "INSERT INTO `station_assets_images`(`station_asset_id`,`station_asset_image`,`created_at`,`image_type`) VALUES ('$a_timestamp','$f_name' , '$created_by','S')";
+            $sql = "INSERT INTO `station_assets_images`(`station_asset_id`,`station_asset_image`,`created_at`,`image_type`) VALUES ('$a_timestamp','$data1','$created_by','S')";
             $result1 = mysqli_query($db, $sql);
             if ($result1) {
                 echo $destination;
@@ -67,15 +51,16 @@ if($request == 1){
 if($request == 2){
 
     $path = $_POST['path'];
-
     $file1 = basename($path);
+    $img = file_get_contents($path);
+    $data = base64_encode($img);
     $path = str_replace($siteURL,"../",$path);
     $return_text = 0;
 //    $temp_mid = $_SESSION['temp_mt_id'];
 //	$mid_arr = explode ( ',' , $temp_mid);
     // Check file exist or not
     if( file_exists($path) ){
-        $sql = "DELETE FROM `station_assets_images` where station_asset_image ='$file1'";
+        $sql = "DELETE FROM `station_assets_images` where station_asset_image ='$data'";
         $result1 = mysqli_query($db, $sql);
         // Remove file
         unlink($path);
