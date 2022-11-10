@@ -52,10 +52,12 @@ if(isset($_POST['submit'])){
         $result1 = mysqli_query($db, $sql);
         $_SESSION['timestamp_id'] = "";
         $_SESSION['message_stauts_class'] = 'alert-success';
-        $_SESSION['import_status_message'] = 'Assets Created Sucessfully.';
+        $_SESSION['import_status_message'] = 'Assets Updated Sucessfully.';
+        header('Location:assets_config.php');
     } else {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
+        header('Location:edit_assets_config.php');
 
     }
 
