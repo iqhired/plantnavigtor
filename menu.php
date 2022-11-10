@@ -12,11 +12,6 @@ $temp = "";
     <h3><?php echo $siteURL ?>report_config_module/assets_config.php</h3>
 </a>
 <br>
-<h3>Edit Assets Station Config</h3>
-<a href="<?php echo $siteURL ?>report_config_module/edit_assets_config.php" target="_blank">
-    <h3><?php echo $siteURL ?>report_config_module/edit_assets_config.php</h3>
-</a>
-<br>
 <h3>Daily Efficiency Report Excel Generate</h3>
 <a href="<?php echo $siteURL ?>report_config_module/export_daily_report_gbp_excel.php" target="_blank">
     <h3><?php echo $siteURL ?>report_config_module/export_daily_report_gbp_excel.php</h3>
