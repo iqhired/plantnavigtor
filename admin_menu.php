@@ -604,8 +604,15 @@ $msg = explode(',', $msg); ?>
                                                    class="text-muted mobile">
                                                     Station Position Config
                                                 </a>
+                                            </div><?php }
+                                        if (in_array('85', $msg)) { ?>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>report_config_module/assets_config.php"
+                                                   class="text-muted mobile">
+                                                    Station Position Config
+                                                </a>
                                             </div>
-										<?php }
+                                        <?php }
 										if (in_array('25', $msg)) { ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>config_module/position.php"
@@ -1447,13 +1454,20 @@ $msg = explode(',', $msg); ?>
                                                                 position Config</h3></a>
                                                     </div>
 												<?php }
-												if (in_array('25', $msg)) { ?>
+												if (in_array('85', $msg)) { ?>
+                                                    <div class="mb-3">
+                                                        <a href="<?php echo $siteURL; ?>report_config_module/assets_config.php"
+                                                           class="mega-link"><h3 class="text-muted fs-6">Station Assets Config</h3>
+                                                        </a>
+                                                    </div>
+                                                <?php }
+                                                if (in_array('25', $msg)) { ?>
                                                     <div class="mb-3">
                                                         <a href="<?php echo $siteURL; ?>config_module/position.php"
                                                            class="mega-link"><h3 class="text-muted fs-6">Position</h3>
                                                         </a>
                                                     </div>
-												<?php }
+                                                <?php }
 												if (in_array('72', $msg)) { ?>
                                                 <div class="mb-3">
                                                     <a href="<?php echo $siteURL; ?>material_tracability/material_config.php"

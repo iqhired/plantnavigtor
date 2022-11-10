@@ -276,6 +276,10 @@ include("heading_banner.php");
                                         <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                             <i class="fa fa-file"></i> View Document </a>
                                     </li>
+                                    <li>
+                                        <a href="report_config_module/scan_line_asset.php" target="_BLANK">
+                                            <i class="fa fa-file"></i> Submit Station Assets </a>
+                                    </li>
                                 </ul>
 
                             </li>
@@ -450,9 +454,10 @@ include("heading_banner.php");
                                     <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                         <i class="fa fa-file"></i> View Document </a>
                                 </li>
-
-
-
+                                <li>
+                                    <a href="report_config_module/scan_line_asset.php" target="_BLANK">
+                                        <i class="fa fa-file"></i> Submit Station Assets </a>
+                                </li>
                             </ul>
 
                         </li>
@@ -664,6 +669,10 @@ include("heading_banner.php");
                                                 <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                                     <i class="fa fa-file"></i> View Document </a>
                                             </li>
+                                            <li>
+                                                <a href="report_config_module/scan_line_asset.php" target="_BLANK">
+                                                    <i class="fa fa-file"></i> Submit Station Assets </a>
+                                            </li>
 
                                         </ul>
                                     </li>
@@ -839,7 +848,10 @@ include("heading_banner.php");
                                             <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
                                                 <i class="fa fa-file"></i> View Document </a>
                                         </li>
-
+                                        <li>
+                                            <a href="report_config_module/scan_line_asset.php" target="_BLANK">
+                                                <i class="fa fa-file"></i> Submit Station Assets </a>
+                                        </li>
                                     </ul>
 
                                 </li>
