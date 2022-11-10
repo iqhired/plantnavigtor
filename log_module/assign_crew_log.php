@@ -195,7 +195,7 @@ if(empty($datefrom)){
                                             <select  name="usr" id="usr" class="select"  style="float: left;width: initial;" >
                                                 <option value="" selected disabled>--- Select User ---</option>
                                                 <?php
-                                                $sql1 = "SELECT DISTINCT `user_id` FROM `cam_assign_crew_log_update` order by user_id ";
+                                                $sql1 = "SELECT DISTINCT `user_id` FROM `cam_assign_crew_log` order by user_id ";
                                                 $result1 = $mysqli->query($sql1);
                                                 //$entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
@@ -226,7 +226,7 @@ if(empty($datefrom)){
                                             <select  name="station" id="station" class="select" style="float: left;width: initial;" >
                                                 <option value="" selected disabled>--- Select Station ---</option>
                                                 <?php
-                                                $sql1 = "SELECT DISTINCT `station_id` FROM `cam_assign_crew_log_update`";
+                                                $sql1 = "SELECT DISTINCT `station_id` FROM `cam_assign_crew_log`";
                                                 $result1 = $mysqli->query($sql1);
                                                 //$entry = 'selected';
                                                 while ($row1 = $result1->fetch_assoc()) {
