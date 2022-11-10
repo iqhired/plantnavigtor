@@ -131,7 +131,7 @@ while ($row = mysqli_fetch_array($result0)) {
 				} else {
 					$end_time2 = $start_date2 . ' ' . '23:59:59';
 					$page = "INSERT INTO `cam_assign_crew_log_update`(`assign_crew_log_old_id`,`day_seq`,`station`,`station_id`,`position`,`position_id`,`user`,`user_id`,`assign_crew_transaction_id` ,`status`,`email_notification`,`assign_time`,`unassign_time`,`resource_type`,`total_time`,`first_assign_log_id`,`last_assigned_by`,`last_unassigned_by`)                 
-				values ('$assign_crew_log_id','$i','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$start_time2','$end_time2','$resource_type','24',$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
+				values ('$assign_crew_log_id','$i','$station','$station_id','$position','$position_id','$user','$user_id','$assign_crew_transaction_id','$status','$email_notification','$start_time2','$end_time2','$resource_type','24','$first_assign_log_id','$last_assigned_by','$last_unassigned_by')";
 					$result1 = mysqli_query($db, $page);
 				}
 				$tt_time_2 = ($tt_time_2 - 24);

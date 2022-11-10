@@ -259,7 +259,7 @@ include("../heading_banner.php");
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="thumbnail">
                                             <div class="thumb">
-                                                <?php echo '<img src="' . $image . '" style="height:200px;width:200px;" />'; ?>
+                                                <?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:200px;width:200px;" />'; ?>
                                                 <div class="caption-overflow">
                                                         <span>
 															<a href="<?php echo $image ?>"
