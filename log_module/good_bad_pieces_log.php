@@ -525,42 +525,39 @@ include("../heading_banner.php");
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="gf_container" style="height: 500px; width: 100%;"></div>
                     </div>
-                    <div class="col-md-8">
-                        <div id="gf_container1" style="height: 500px; width: 100%;"></div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                             <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-                                class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
                             <div id="bsr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                             <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-                                class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
                             <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                             <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-                                class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
                             <div id="eff_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
 
                         </div>
                     </div>
-                </div>
+                <div class="row">
 
-              
+                    <div class="col-md-12">
+                        <div id="gf_container1" style="height: 800px; width: 100%;"></div>
+                    </div>
+                </div>
 
 
                 <!-- /content area -->
