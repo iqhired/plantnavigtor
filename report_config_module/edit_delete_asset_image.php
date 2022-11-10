@@ -47,15 +47,16 @@ if ($request == 1) {
 if($request == 2){
 
     $path = $_POST['path'];
-
     $file1 = basename($path);
+    $img = file_get_contents($path);
+    $data = base64_encode($img);
     $path = str_replace($siteURL,"../",$path);
     $return_text = 0;
 //    $temp_mid = $_SESSION['temp_mt_id'];
 //	$mid_arr = explode ( ',' , $temp_mid);
     // Check file exist or not
     if( file_exists($path) ){
-        $sql = "DELETE FROM `station_assets_images` where station_asset_image ='$file1'";
+        $sql = "DELETE FROM `station_assets_images` where station_asset_image ='$data'";
         $result1 = mysqli_query($db, $sql);
         // Remove file
         unlink($path);
