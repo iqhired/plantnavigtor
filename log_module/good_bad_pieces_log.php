@@ -26,14 +26,14 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $button_event = "button3";
-if(empty($dateto)){
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
+if (empty($dateto)) {
+	$curdate = date('Y-m-d');
+	$dateto = $curdate;
 }
 
-if(empty($datefrom)){
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
+if (empty($datefrom)) {
+	$yesdate = date('Y-m-d', strtotime("-1 days"));
+	$datefrom = $yesdate;
 }
 $button = "";
 $temp = "";
@@ -74,55 +74,55 @@ if (count($_POST) > 0) {
 	$sta = $_POST['station'];
 	$pf = $_POST['part_family'];
 	$pn = $_POST['part_number'];
-	if($station1 == "all"){
+	if ($station1 == "all") {
 		$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where enabled = '1' and is_deleted != 1 ");
 		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
 			$station1 = $rowctemp["line_name"];
 		}
-    }else{
+	} else {
 		$qurtemp = mysqli_query($db, "SELECT * FROM  cam_line where line_id = '$station1' ");
 		while ($rowctemp = mysqli_fetch_array($qurtemp)) {
 			$station1 = $rowctemp["line_name"];
 		}
-    }
+	}
 
 }
 
-if(empty($dateto)){
+if (empty($dateto)) {
 	$curdate = date('Y-m-d');
 	$dateto = $curdate;
 }
 
-if(empty($datefrom)){
-	$yesdate = date('Y-m-d',strtotime("-1 days"));
+if (empty($datefrom)) {
+	$yesdate = date('Y-m-d', strtotime("-1 days"));
 	$datefrom = $yesdate;
 }
 
 $wc = '';
 
-if(isset($station)){
-    if($station != 'all'){
+if (isset($station)) {
+	if ($station != 'all') {
 		$wc = $wc . " and sg_station_event.line_id = '$station'";
-    }
+	}
 }
-if(isset($pf)){
+if (isset($pf)) {
 	$_SESSION['pf'] = $pf;
 	$wc = $wc . " and sg_station_event.part_family_id = '$pf'";
 }
-if(isset($pn)){
+if (isset($pn)) {
 	$_SESSION['pn'] = $pn;
 	$wc = $wc . " and sg_station_event.part_number_id = '$pn'";
 }
 
 /* If Data Range is selected */
 if ($button == "button1") {
-	if(isset($datefrom)){
+	if (isset($datefrom)) {
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' ";
 	}
-	if(isset($dateto)){
+	if (isset($dateto)) {
 		$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 	}
-} else if ($button == "button2"){
+} else if ($button == "button2") {
 	/* If Date Period is Selected */
 	$curdate = date('Y-m-d');
 	if ($timezone == "7") {
@@ -138,22 +138,22 @@ if ($button == "button1") {
 	} else if ($timezone == "365") {
 		$countdate = date('Y-m-d', strtotime('-365 days'));
 	}
-	if(isset($countdate)){
+	if (isset($countdate)) {
 		$wc = $wc . " AND DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(created_at,'%Y-%m-%d') <= '$curdate' ";
 	}
-} else{
+} else {
 	$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 }
 
 $sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
 $response = array();
 $posts = array();
-$result = mysqli_query($db,$sql);
+$result = mysqli_query($db, $sql);
 //$result = $mysqli->query($sql);
-$data =array();
-if( null != $result){
-	while ($row=$result->fetch_assoc()){
-		$posts[] = array('good_pieces'=> $row['good_pieces'], 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework']);
+$data = array();
+if (null != $result) {
+	while ($row = $result->fetch_assoc()) {
+		$posts[] = array('good_pieces' => $row['good_pieces'], 'bad_pieces' => $row['bad_pieces'], 'rework' => $row['rework']);
 	}
 }
 
@@ -161,7 +161,7 @@ $response['posts'] = $posts;
 //$fp = fopen('./results.json', 'w');
 //fwrite($fp, json_encode($response));
 //fclose($fp);
-if(null == $sta){
+if (null == $sta) {
 	$sta = '';
 }
 $fp = fopen('results.json', 'w');
@@ -172,13 +172,13 @@ fclose($fp);
 $sql1 = "SELECT good_bad_pieces_details.defect_name,SUM(good_bad_pieces_details.rework) AS rework,SUM(good_bad_pieces_details.bad_pieces) AS bad_pieces FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " GROUP BY defect_name";
 $response1 = array();
 $posts1 = array();
-$result1 = mysqli_query($db,$sql1);
+$result1 = mysqli_query($db, $sql1);
 //$result = $mysqli->query($sql);
-$data =array();
-if( null != $result1){
-	while ($row=$result1->fetch_assoc()){
+$data = array();
+if (null != $result1) {
+	while ($row = $result1->fetch_assoc()) {
 //	$posts1[] = array( 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework'],'defect_name'=> $row['defect_name']);
-		$posts1[] = array(  $row['defect_name'] , $row['bad_pieces'], $row['rework']);
+		$posts1[] = array($row['defect_name'], $row['bad_pieces'], $row['rework']);
 	}
 }
 
@@ -205,7 +205,8 @@ fclose($fp);
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
     <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
-    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css"
+          rel="stylesheet">
     <link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/core.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css">
@@ -213,7 +214,7 @@ fclose($fp);
     <link href="../assets/css/style_main.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     <!-- Core JS files -->
-    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
@@ -230,43 +231,51 @@ fclose($fp);
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 
     <style>
-        .anychart-credits{
+        .anychart-credits {
             display: none !important;
         }
+
         .datatable-scroll {
             width: 100%;
             overflow-x: scroll;
         }
+
         .col-md-6.date {
             width: 25%;
         }
+
         .col-md-2 {
-            width: 8.666667%!important;
+            width: 8.666667% !important;
         }
-        @media
-        only screen and (max-width: 760px),
+
+        @media only screen and (max-width: 760px),
         (min-device-width: 768px) and (max-device-width: 1024px) {
             .col-md-3 {
                 width: 30%;
                 float: left;
             }
+
             .col-md-2 {
                 width: 20%;
                 float: left;
             }
+
             .col-lg-8 {
                 float: right;
                 width: 58%;
             }
+
             label.col-lg-3.control-label {
                 width: 42%;
             }
+
             .col-md-6.date {
                 width: 100%;
                 float: left;
             }
+
             .col-md-2 {
-                width: 30%!important;
+                width: 30% !important;
                 float: left;
             }
         }
@@ -341,433 +350,428 @@ include("../heading_banner.php");
 <!-- Page container -->
 <div class="page-container">
 
-            <!-- Content area -->
-            <div class="content">
-                <!-- Main charts -->
-                <!-- Basic datatable -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <!--							<h5 class="panel-title">Stations</h5>-->
-                        <!--							<hr/>-->
-                        <form action="" id="good_bad_piece_form" class="form-horizontal" method="post">
-                            <div class="row">
-                                <div class="col-md-6 mobile">
+    <!-- Content area -->
+    <div class="content">
+        <!-- Main charts -->
+        <!-- Basic datatable -->
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <!--							<h5 class="panel-title">Stations</h5>-->
+                <!--							<hr/>-->
+                <form action="" id="good_bad_piece_form" class="form-horizontal" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mobile">
 
 
-                                    <label class="col-lg-2 control-label">Station :</label>
+                            <label class="col-lg-2 control-label">Station :</label>
 
-                                <div class="col-lg-8">
-                                    <select name="station" id="station" class="select"
-                                            style="float: left;width: initial;">
-                                        <option value="" selected disabled>--- Select Station ---</option>
+                            <div class="col-lg-8">
+                                <select name="station" id="station" class="select"
+                                        style="float: left;width: initial;">
+                                    <option value="" selected disabled>--- Select Station ---</option>
 
-										<?php
-										$entry = '';
-										$st_dashboard = $_POST['station'];
-										$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
-										$result1 = $mysqli->query($sql1);
-										if($st_dashboard == 'all'){
+									<?php
+									$entry = '';
+									$st_dashboard = $_POST['station'];
+									$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
+									$result1 = $mysqli->query($sql1);
+									if ($st_dashboard == 'all') {
+										$entry = 'selected';
+									}
+									echo "<option value='all'  $entry>" . '--- All Stations ---' . "</option>";
+
+									//                                            $entry = 'selected';
+									while ($row1 = $result1->fetch_assoc()) {
+										if ($st_dashboard == $row1['line_id']) {
 											$entry = 'selected';
-                                        }
-										echo "<option value='all'  $entry>" . '--- All Stations ---' . "</option>";
+										} else {
+											$entry = '';
 
-										//                                            $entry = 'selected';
-										while ($row1 = $result1->fetch_assoc()) {
-											if($st_dashboard == $row1['line_id'])
-											{
-												$entry = 'selected';
-											}
-											else
-											{
-												$entry = '';
-
-											}
-											echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
 										}
-										?>
+										echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+									}
+									?>
 
-                                    </select>
-                                </div>
-                                <!--
-                                                             <div class="col-md-1"></div>-->
-                                </div>
-                                 <div class="col-md-6 mobile">
+                                </select>
+                            </div>
+                            <!--
+														 <div class="col-md-1"></div>-->
+                        </div>
+                        <div class="col-md-6 mobile">
 
-                                    <label class="col-lg-3 control-label" >Part Family *  :</label>
+                            <label class="col-lg-3 control-label">Part Family * :</label>
 
-                                <div class="col-lg-8">
-                                    <select name="part_family" id="part_family" class="select" data-style="bg-slate" >
-                                        <option value="" selected disabled>--- Select Part Family ---</option>
-										<?php
-										$st_dashboard = $_POST['part_family'];
-										$station = $_POST['station'];
-										$ss = ((isset($station) && ($station != 'all'))?' and station = ' . $station : '');
-										$sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1" . $ss;
-										$result1 = $mysqli->query($sql1);
-										while ($row1 = $result1->fetch_assoc()) {
-											if($st_dashboard == $row1['pm_part_family_id'])
-											{
-												$entry = 'selected';
-											}
-											else
-											{
-												$entry = '';
+                            <div class="col-lg-8">
+                                <select name="part_family" id="part_family" class="select" data-style="bg-slate">
+                                    <option value="" selected disabled>--- Select Part Family ---</option>
+									<?php
+									$st_dashboard = $_POST['part_family'];
+									$station = $_POST['station'];
+									$ss = ((isset($station) && ($station != 'all')) ? ' and station = ' . $station : '');
+									$sql1 = "SELECT * FROM `pm_part_family` where is_deleted != 1" . $ss;
+									$result1 = $mysqli->query($sql1);
+									while ($row1 = $result1->fetch_assoc()) {
+										if ($st_dashboard == $row1['pm_part_family_id']) {
+											$entry = 'selected';
+										} else {
+											$entry = '';
 
-											}
-											echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
 										}
-										?>
-                                    </select>
-                                </div>
-                                </div>
+										echo "<option value='" . $row1['pm_part_family_id'] . "' $entry >" . $row1['part_family_name'] . "</option>";
+									}
+									?>
+                                </select>
                             </div>
-                            <br>
-                            <div class="row">
-                            <div class="col-md-6 mobile">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6 mobile">
 
 
-                                    <label class="col-lg-3 control-label">Part Number *  :</label>
+                            <label class="col-lg-3 control-label">Part Number * :</label>
 
-                                <div class="col-lg-8">
-                                    <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
-                                        <option value="" selected disabled>--- Select Part Number ---</option>
-										<?php
-										$st_dashboard = $_POST['part_number'];
-										$part_family = $_POST['part_family'];
-										$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1 ";
-										$result1 = $mysqli->query($sql1);
-										while ($row1 = $result1->fetch_assoc()) {
-											if($st_dashboard == $row1['pm_part_number_id'])
-											{
-												$entry = 'selected';
-											}
-											else
-											{
-												$entry = '';
+                            <div class="col-lg-8">
+                                <select name="part_number" id="part_number" class="select" data-style="bg-slate">
+                                    <option value="" selected disabled>--- Select Part Number ---</option>
+									<?php
+									$st_dashboard = $_POST['part_number'];
+									$part_family = $_POST['part_family'];
+									$sql1 = "SELECT * FROM `pm_part_number` where part_family = '$part_family' and is_deleted != 1 ";
+									$result1 = $mysqli->query($sql1);
+									while ($row1 = $result1->fetch_assoc()) {
+										if ($st_dashboard == $row1['pm_part_number_id']) {
+											$entry = 'selected';
+										} else {
+											$entry = '';
 
-											}
-											echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
 										}
-										?>
-                                    </select>
-                                </div>
+										echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
+									}
+									?>
+                                </select>
                             </div>
-                             <div class="col-md-6 date">
+                        </div>
+                        <div class="col-md-6 date">
 
 
-<!--                                    <label class="col-lg-3  control-label" >Date Range  :</label>-->
-<!--                                 	--><?php
-//									if ($button = "button1") {
-//										$checked = "checked";
-//									} else {
-//										$checked == "";
-//									}
-//									?>
-<!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"-->
-<!--                                           style="float: left;width: initial;"--><?php //echo $checked; ?><!---->
-                                    <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                        From : &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_from" id="date_from" class="form-control"
-                                           value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
-                                           required>
-                             </div>
-                                <div class="col-md-6 date">
-                                    <label class="control-label"
-                                           style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                        To: &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_to" id="date_to" class="form-control"
-                                           value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
+                            <!--                                    <label class="col-lg-3  control-label" >Date Range  :</label>-->
+                            <!--                                 	--><?php
+							//									if ($button = "button1") {
+							//										$checked = "checked";
+							//									} else {
+							//										$checked == "";
+							//									}
+							//									?>
+                            <!--                                    <input type="radio" name="button" id="button1" class="form-control" value="button1"-->
+                            <!--                                           style="float: left;width: initial;"-->
+							<?php //echo $checked; ?><!---->
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                From : &nbsp;&nbsp;</label>
+                            <input type="date" name="date_from" id="date_from" class="form-control"
+                                   value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
+                                   required>
+                        </div>
+                        <div class="col-md-6 date">
+                            <label class="control-label"
+                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
+                                To: &nbsp;&nbsp;</label>
+                            <input type="date" name="date_to" id="date_to" class="form-control"
+                                   value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
 
-                            </div>
+                        </div>
 
-                            </div>
-                            <br/>
-							<?php
-							if (!empty($import_status_message)) {
-								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-							}
-							?>
-							<?php
-							if (!empty($_SESSION['import_status_message'])) {
-								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-								$_SESSION['message_stauts_class'] = '';
-								$_SESSION['import_status_message'] = '';
-							}
-							?>
+                    </div>
+                    <br/>
+					<?php
+					if (!empty($import_status_message)) {
+						echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+					}
+					?>
+					<?php
+					if (!empty($_SESSION['import_status_message'])) {
+						echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+						$_SESSION['message_stauts_class'] = '';
+						$_SESSION['import_status_message'] = '';
+					}
+					?>
 
                     <div class="panel-footer p_footer">
                         <div class="row">
                             <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary"
-                                    style="background-color:#1e73be;">
-                                Submit
-                            </button>
+                                <button type="submit" class="btn btn-primary"
+                                        style="background-color:#1e73be;">
+                                    Submit
+                                </button>
                             </div>
                             <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" onclick='window.location.reload();'
-                                    style="background-color:#1e73be;">Reset
-                            </button>
+                                <button type="button" class="btn btn-primary" onclick='window.location.reload();'
+                                        style="background-color:#1e73be;">Reset
+                                </button>
                             </div>
-                        </form>
+                </form>
 
-                        <div class="col-md-2">
-                                                        <form action="export_good_bad_piece.php" method="post" name="export_excel">
-                                                            <button type="submit" class="btn btn-primary"
-                                                                    style="background-color:#1e73be;width:120px;"
-                                                                    id="export" name="export" data-loading-text="Loading...">Export Data
-                                                            </button>
-                                                        </form>
-                        </div>
-                    </div>
-
-                    </div>
+                <div class="col-md-2">
+                    <form action="export_good_bad_piece.php" method="post" name="export_excel">
+                        <button type="submit" class="btn btn-primary"
+                                style="background-color:#1e73be;width:120px;"
+                                id="export" name="export" data-loading-text="Loading...">Export Data
+                        </button>
+                    </form>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div id="gf_container" style="height: 500px; width: 100%;"></div>
-                    </div>
-                    <div class="col-md-3">
-                        <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
-                            <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
-                            <div id="bsr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
-                            <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
-                            <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
-                            <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-								class="text-semibold no-margin">Budget Scrap Rate</h8>-->
-                            <div id="eff_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; width: 400px"></div>
-
-                        </div>
-                    </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div id="gf_container1" style="height: 800px; width: 100%;"></div>
-                    </div>
-                </div>
-
-
-                <!-- /content area -->
-
             </div>
-            <!-- /main content -->
-            </br>
 
         </div>
-        <!-- /page content -->
+    </div>
 
-    <script>
-        $('#station').on('change', function (e) {
-            $("#good_bad_piece_form").submit();
-        });
+    <div class="row">
+        <div class="col-md-6">
+            <div id="gf_container" style="height: 500px; width: 100%;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
+                <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
+					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+                <div id="bsr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px; "></div>
 
-        //$('#export').on('click', function (e) {
-        //    var data = $("#good_bad_piece_form").serialize();
-        //    var main_url = "<?php //echo $siteURL . "log_module/export_good_bad_piece.php"; ?>//";
-        //    $.ajax({
-        //        type: 'POST',
-        //        url: main_url,
-        //        data: data,
-        //        success: function (data) {
-        //            // window.location.href = window.location.href + "?aa=Line 1";
-        //            // $(':input[type="button"]').prop('disabled', false);
-        //            // location.reload();
-        //        }
-        //    });
-        //});
-        $('#part_family').on('change', function (e) {
-            $("#good_bad_piece_form").submit();
-        });
-        anychart.onDocumentReady(function () {
-            var data = $("#good_bad_piece_form").serialize();
-            $.ajax({
-                type: 'POST',
-                url: 'good_bad_piece_fa.php',
-                // dataType: 'good_bad_piece_fa.php',
-                data: data + "&fa_op=1",
-                success: function(data1) {
-                    var data = JSON.parse(data1);
-                    // console.log(data);
-                    var good_pieces = data.posts .map(function(elem){
-                        return elem.good_pieces;
-                    });
-                    // console.log(goodpiece);
-                    var bad_pieces = data.posts .map(function(elem){
-                        return elem.bad_pieces;
-                    });
-                    var rework = data.posts .map(function(elem){
-                        return elem.rework;
-                    });
-                    var data = [
-                        {x: 'Good Pieces', value: good_pieces , fill : '#177b09'},
-                        {x: 'Bad Pieces', value: bad_pieces ,  fill : '#BE0E31'},
-                        {x: 'Rework', value: rework ,  fill : '#2643B9'},
+            </div>
+        </div>
+    </div>
 
-                    ];
-                    // create pareto chart with data
-                    var chart = anychart.pareto(data);
-                    // set chart title text settings
-                    // chart.title('Good Pieces & Bad Pieces');
-                    var title = chart.title();
-                    title.enabled(true);
-//enables HTML tags
-                    title.useHtml(true);
-                    title.text(
-                        "<br><br>"+"Good Pieces & Bad Pieces"+
-                        "<br><br><br>"
-                    );
+    <div class="row">
+        <div class="col-md-6">
+            <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
+                <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
+					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+                <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px;"></div>
 
-                    // set measure y axis title
-                    chart.yAxis(0).title('Numbers');
-                    // cumulative percentage y axis title
-                    chart.yAxis(1).title(' Percentage');
-                    // set interval
-                    chart.yAxis(1).scale().ticks().interval(10);
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
+                <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
+					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+                <div id="eff_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px;"></div>
 
-                    // get pareto column series and set settings
-                    var column = chart.getSeriesAt(0);
-
-                    column.labels().enabled(true).format('{%Value}');
-                    column.tooltip().format('Value: {%Value}');
-
-                    // background border color
-                    // column.labels().background().stroke("#663399");
-                    column.labels().background().enabled(true).stroke("Green");
-
-                    // get pareto line series and set settings
-                    var line = chart.getSeriesAt(1);
-                    line
-                        .tooltip()
-                        // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                        .format('Percent : {%RF}%');
-
-                    // turn on the crosshair and set settings
-                    chart.crosshair().enabled(true).xLabel(false);
-                    chart.xAxis().labels().rotation(-90);
-
-                    // set container id for the chart
-                    chart.container('gf_container');
-                    // initiate chart drawing
-                    chart.draw();
-                }
-            });
-        });
-
-    </script>
-    <script>
-
-        anychart.onDocumentReady(function () {
-            var data = $("#good_bad_piece_form").serialize();
-            $.ajax({
-                type: 'POST',
-                url: 'good_bad_piece_fa.php',
-                // dataType: 'good_bad_piece_fa.php',
-                data: data+ "&fa_op=0",
-                success: function(data1) {
-                    var data = JSON.parse(data1);
-                    //var data = JSON.parse(this.responseText);
-                    // console.log(data);
-                    // create a data set
-                    var data = anychart.data.set(data.posts1);
-
-                    // map the data
-                    var seriesData_1 = data.mapAs({x: 0, value: 1 });
-                    // var seriesData_2 = data.mapAs({x: 0, value: 2 });
-
-                    // create a chart
-                    var chart = anychart.column();
-                    // turn on X Scroller
-                    chart.xScroller(true);
-                    chart.xZoom().setToPointsCount(5, false);
-
-                    // enable HTML for tooltips
-                    chart.tooltip().useHtml(true);
-
-// tooltip settings
-                    var tooltip = chart.tooltip();
-                    tooltip.positionMode("point");
-                    tooltip.format("Defect Count: <b>{%value}</b>\nPercent: <b>{%RF}%</b>\n");
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="gf_container1" style="height: 800px; width: 100%;"></div>
+        </div>
+    </div>
 
 
-                    // create the first series, set the data and name
-                    var series1 = chart.column(seriesData_1);
-                    series1.name("Defect");
+    <!-- /content area -->
 
-                    // configure the visual settings of the first series
-                    series1.normal().fill("#BE0E31", 1);
-                    series1.hovered().fill("#BE0E31", 0.8);
-                    series1.selected().fill("#BE0E31", 0.5);
-                    series1.normal().stroke("#BE0E31");
-                    series1.hovered().stroke("#BE0E31", 2);
-                    series1.selected().stroke("#BE0E31", 4);
-                    series1.labels().enabled(true);
-                    // background settings
-                    var background = series1.labels().background();
-                    background.enabled(true);
-                    background.fill("#ffffff");
-                    background.stroke("green");
-                    background.cornerType("round");
-                    background.corners(5);
+</div>
+<!-- /main content -->
+</br>
 
-                    //var chart = anychart.pareto(data);
-                    // set the chart title
-                    //chart.title("'Good Piece Bad Piece'");
-                    // enable title
-                    var title = chart.title();
-                    title.enabled(true);
-//enables HTML tags
-                    title.useHtml(true);
-                    title.text(
-                        "<br><br>"+"Bad Piece(s) - Defects"+
-                        "<br><br><br>"
-                    );
+</div>
+<!-- /page content -->
 
-                    // set the titles of the axes
-                    chart.xAxis().title("Defect(s)");
-                    chart.yAxis(0).title("Numbers");
-                    // cumulative percentage y axis title
-                    // chart.yAxis(1).title(' Percentage');
-                    // set interval
-                    // chart.yAxis(1).scale().ticks().interval(10);
-                    // cumulative percentage y axis title
-                    // chart.yAxis(1).title(' Percentage');
-                    // set interval
-                    // chart.yAxis(1).scale().ticks().interval(10);
-                    chart.xGrid().enabled(true);
-                    chart.yGrid().enabled(true);
-                    chart.xAxis().labels().rotation(-90);
-                    // set the container id
-                    chart.container("gf_container1");
-
-                    // initiate drawing the chart
-                    chart.draw();
-                }
-            });
-        });
-
-    </script>
 <script>
- //BSR
+    $('#station').on('change', function (e) {
+        $("#good_bad_piece_form").submit();
+    });
+
+    //$('#export').on('click', function (e) {
+    //    var data = $("#good_bad_piece_form").serialize();
+    //    var main_url = "<?php //echo $siteURL . "log_module/export_good_bad_piece.php"; ?>//";
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: main_url,
+    //        data: data,
+    //        success: function (data) {
+    //            // window.location.href = window.location.href + "?aa=Line 1";
+    //            // $(':input[type="button"]').prop('disabled', false);
+    //            // location.reload();
+    //        }
+    //    });
+    //});
+    $('#part_family').on('change', function (e) {
+        $("#good_bad_piece_form").submit();
+    });
     anychart.onDocumentReady(function () {
         var data = $("#good_bad_piece_form").serialize();
         $.ajax({
             type: 'POST',
             url: 'good_bad_piece_fa.php',
             // dataType: 'good_bad_piece_fa.php',
-            data: data+ "&fa_op=2",
+            data: data + "&fa_op=1",
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var good_pieces = data.posts.map(function (elem) {
+                    return elem.good_pieces;
+                });
+                // console.log(goodpiece);
+                var bad_pieces = data.posts.map(function (elem) {
+                    return elem.bad_pieces;
+                });
+                var rework = data.posts.map(function (elem) {
+                    return elem.rework;
+                });
+                var data = [
+                    {x: 'Good Pieces', value: good_pieces, fill: '#177b09'},
+                    {x: 'Bad Pieces', value: bad_pieces, fill: '#BE0E31'},
+                    {x: 'Rework', value: rework, fill: '#2643B9'},
+
+                ];
+                // create pareto chart with data
+                var chart = anychart.pareto(data);
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>" + "Good Pieces & Bad Pieces" +
+                    "<br><br><br>"
+                );
+
+                // set measure y axis title
+                chart.yAxis(0).title('Numbers');
+                // cumulative percentage y axis title
+                chart.yAxis(1).title(' Percentage');
+                // set interval
+                chart.yAxis(1).scale().ticks().interval(10);
+
+                // get pareto column series and set settings
+                var column = chart.getSeriesAt(0);
+
+                column.labels().enabled(true).format('{%Value}');
+                column.tooltip().format('Value: {%Value}');
+
+                // background border color
+                // column.labels().background().stroke("#663399");
+                column.labels().background().enabled(true).stroke("Green");
+
+                // get pareto line series and set settings
+                var line = chart.getSeriesAt(1);
+                line
+                    .tooltip()
+                    // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                    .format('Percent : {%RF}%');
+
+                // turn on the crosshair and set settings
+                chart.crosshair().enabled(true).xLabel(false);
+                chart.xAxis().labels().rotation(-90);
+
+                // set container id for the chart
+                chart.container('gf_container');
+                // initiate chart drawing
+                chart.draw();
+            }
+        });
+    });
+
+</script>
+<script>
+
+    anychart.onDocumentReady(function () {
+        var data = $("#good_bad_piece_form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'good_bad_piece_fa.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data + "&fa_op=0",
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                //var data = JSON.parse(this.responseText);
+                // console.log(data);
+                // create a data set
+                var data = anychart.data.set(data.posts1);
+
+                // map the data
+                var seriesData_1 = data.mapAs({x: 0, value: 1});
+                // var seriesData_2 = data.mapAs({x: 0, value: 2 });
+
+                // create a chart
+                var chart = anychart.column();
+                // turn on X Scroller
+                chart.xScroller(true);
+                chart.xZoom().setToPointsCount(5, false);
+
+                // enable HTML for tooltips
+                chart.tooltip().useHtml(true);
+
+// tooltip settings
+                var tooltip = chart.tooltip();
+                tooltip.positionMode("point");
+                tooltip.format("Defect Count: <b>{%value}</b>\nPercent: <b>{%RF}%</b>\n");
+
+
+                // create the first series, set the data and name
+                var series1 = chart.column(seriesData_1);
+                series1.name("Defect");
+
+                // configure the visual settings of the first series
+                series1.normal().fill("#BE0E31", 1);
+                series1.hovered().fill("#BE0E31", 0.8);
+                series1.selected().fill("#BE0E31", 0.5);
+                series1.normal().stroke("#BE0E31");
+                series1.hovered().stroke("#BE0E31", 2);
+                series1.selected().stroke("#BE0E31", 4);
+                series1.labels().enabled(true);
+                // background settings
+                var background = series1.labels().background();
+                background.enabled(true);
+                background.fill("#ffffff");
+                background.stroke("green");
+                background.cornerType("round");
+                background.corners(5);
+
+                //var chart = anychart.pareto(data);
+                // set the chart title
+                //chart.title("'Good Piece Bad Piece'");
+                // enable title
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>" + "Bad Piece(s) - Defects" +
+                    "<br><br><br>"
+                );
+
+                // set the titles of the axes
+                chart.xAxis().title("Defect(s)");
+                chart.yAxis(0).title("Numbers");
+                // cumulative percentage y axis title
+                // chart.yAxis(1).title(' Percentage');
+                // set interval
+                // chart.yAxis(1).scale().ticks().interval(10);
+                // cumulative percentage y axis title
+                // chart.yAxis(1).title(' Percentage');
+                // set interval
+                // chart.yAxis(1).scale().ticks().interval(10);
+                chart.xGrid().enabled(true);
+                chart.yGrid().enabled(true);
+                chart.xAxis().labels().rotation(-90);
+                // set the container id
+                chart.container("gf_container1");
+
+                // initiate drawing the chart
+                chart.draw();
+            }
+        });
+    });
+
+</script>
+<script>
+    //BSR
+    anychart.onDocumentReady(function () {
+        var data = $("#good_bad_piece_form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'good_bad_piece_fa.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data + "&fa_op=2",
             success: function (data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
@@ -805,18 +809,18 @@ include("../heading_banner.php");
                     .scale()
                     .minimum(0)
                     .maximum(20)
-                    .ticks({ interval: 1 })
-                    .minorTicks({ interval: 1 });
+                    .ticks({interval: 1})
+                    .minorTicks({interval: 1});
 
                 gauge
                     .axis()
                     .fill('#545f69')
                     .width(1)
-                    .ticks({ type: 'line', fill: 'white', length: 2 });
+                    .ticks({type: 'line', fill: 'white', length: 2});
 
                 gauge.title(
-                    '<div style=\'color:#333; font-size: 18px;\'>Budget Scrap Rate - <span style="color:#009900; font-size: 20px;"><strong> ' +bsr+' </strong>%</span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 18px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 20px;"><strong> ' +actual_bsr +' </strong>% </span></div><br/><br/>'
+                    '<div style=\'color:#333; font-size: 18px;\'>Budget Scrap Rate - <span style="color:#009900; font-size: 20px;"><strong> ' + bsr + ' </strong>%</span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 18px;\'>Actual Scrap Rate <span style="color:#009900; font-size: 20px;"><strong> ' + actual_bsr + ' </strong>% </span></div><br/><br/>'
                 );
 
                 gauge
@@ -912,7 +916,7 @@ include("../heading_banner.php");
             type: 'POST',
             url: 'good_bad_piece_fa.php',
             // dataType: 'good_bad_piece_fa.php',
-            data: data+ "&fa_op=3",
+            data: data + "&fa_op=3",
             success: function (data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
@@ -934,17 +938,17 @@ include("../heading_banner.php");
                 var fill2 = '#B31B1B 0.8';
                 var fill1 = '#B31B1B 0.8';
 
-                var maxr3 =  parseFloat(range2) + parseFloat(range2 * .2)
+                var maxr3 = parseFloat(range2) + parseFloat(range2 * .2)
 
 
-                if((actual_npr >= npr)){
+                if ((actual_npr >= npr)) {
                     range1 = npr;
                     // range2 = avg_npr;
                     range2 = actual_npr;
                     fill1 = '#009900 0.8';
                     fill2 = '#009900 0.8';
                     fill3 = '#B31B1B 0.8';
-                    maxr3 =  parseFloat(actual_npr) + parseFloat(actual_npr * .2)
+                    maxr3 = parseFloat(actual_npr) + parseFloat(actual_npr * .2)
                 }
 
                 var gauge = anychart.gauges.circular();
@@ -970,18 +974,18 @@ include("../heading_banner.php");
                     .scale()
                     .minimum(0)
                     .maximum(maxr3)
-                    .ticks({ interval: 1 })
-                    .minorTicks({ interval: 1 });
+                    .ticks({interval: 1})
+                    .minorTicks({interval: 1});
 
                 gauge
                     .axis()
                     .fill('#545f69')
                     .width(1)
-                    .ticks({ type: 'line', fill: 'white', length: 2 });
+                    .ticks({type: 'line', fill: 'white', length: 2});
 
                 gauge.title(
-                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Target Net Pack Rate - <span style="color:#009900; font-size: 22px;"><strong> ' +npr+' </strong> per hour </span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' +actual_npr +' </strong> per hour </span></div><br/><br/>'
+                    '<div style=\'font-weight: 900;font-size:24px;margin-bottom:50px\'>Target Net Pack Rate - <span style="color:#009900; font-size: 22px;"><strong> ' + npr + ' </strong> per hour </span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 24px;\'>Actual NPR <span style="color:#009900; font-size: 22px;"><strong> ' + actual_npr + ' </strong> per hour </span></div><br/><br/>'
                 );
 
                 gauge
@@ -1076,7 +1080,7 @@ include("../heading_banner.php");
             type: 'POST',
             url: 'good_bad_piece_fa.php',
             // dataType: 'good_bad_piece_fa.php',
-            data: data+ "&fa_op=4",
+            data: data + "&fa_op=4",
             success: function (data1) {
                 var data = JSON.parse(data1);
                 // console.log(data);
@@ -1103,17 +1107,17 @@ include("../heading_banner.php");
                 var fill2 = '#B31B1B 0.8';
                 var fill1 = '#B31B1B 0.8';
 
-                var maxr3 =  parseFloat(range2) + parseFloat(range2 * .2)
+                var maxr3 = parseFloat(range2) + parseFloat(range2 * .2)
 
 
-                if((actual_eff >= target_eff)){
+                if ((actual_eff >= target_eff)) {
                     range1 = target_eff;
                     // range2 = avg_npr;
                     range2 = actual_eff;
                     fill1 = '#009900 0.8';
                     fill2 = '#009900 0.8';
                     fill3 = '#B31B1B 0.8';
-                    maxr3 =  parseFloat(target_eff) + parseFloat(target_eff * .2)
+                    maxr3 = parseFloat(target_eff) + parseFloat(target_eff * .2)
                 }
 
                 var gauge = anychart.gauges.circular();
@@ -1139,19 +1143,19 @@ include("../heading_banner.php");
                     .scale()
                     .minimum(0)
                     .maximum(maxr3)
-                    .ticks({ interval: 1 })
-                    .minorTicks({ interval: 1 });
+                    .ticks({interval: 1})
+                    .minorTicks({interval: 1});
 
                 gauge
                     .axis()
                     .fill('#545f69')
                     .width(1)
-                    .ticks({ type: 'line', fill: 'white', length: 2 });
+                    .ticks({type: 'line', fill: 'white', length: 2});
 
                 gauge.title(
-                    '<div style=\'color:#333; font-size: 20px;\'>Target Pieces: <span style="color:#009900; font-size: 22px;"><strong> ' +target_eff+' </strong><l/span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 20px;\'>Actual Pieces: <span style="color:#009900; font-size: 22px;"><strong> ' +actual_eff+' </strong></span></div><br/><br/>' +
-                    '<div style=\'color:#333; font-size: 20px;\'>Efficiency: <span style="color:#009900; font-size: 22px;"><strong> ' +eff+' </strong>%</span></div><br/><br/>'
+                    '<div style=\'color:#333; font-size: 20px;\'>Target Pieces: <span style="color:#009900; font-size: 22px;"><strong> ' + target_eff + ' </strong><l/span></div>' +
+                    '<br/><br/><div style=\'color:#333; font-size: 20px;\'>Actual Pieces: <span style="color:#009900; font-size: 22px;"><strong> ' + actual_eff + ' </strong></span></div><br/><br/>' +
+                    '<div style=\'color:#333; font-size: 20px;\'>Efficiency: <span style="color:#009900; font-size: 22px;"><strong> ' + eff + ' </strong>%</span></div><br/><br/>'
                 );
                 gauge
                     .title()
@@ -1238,32 +1242,32 @@ include("../heading_banner.php");
         });
     });
 </script>
-  <!-- /dashboard content -->
-    <script>
-        $(function () {
-            $('input:radio').change(function () {
-                var abc = $(this).val()
-                //  alert(abc);
-                if (abc == "button1") {
-                    $('#date_from').prop('disabled', false);
-                    $('#date_to').prop('disabled', false);
-                    $('#timezone').prop('disabled', true);
-                } else if (abc == "button2") {
-                    $('#period').prop('disabled', false);
-                    $('#timezone').prop('disabled', true);
-                } else if (abc == "button3") {
-                    $('#event_category').prop('disabled', true);
-                    $('#event_type').prop('disabled', false);
-                } else if (abc == "button4") {
-                    $('#event_type').prop('disabled', true);
-                    $('#event_category').prop('disabled', false);
-                }
+<!-- /dashboard content -->
+<script>
+    $(function () {
+        $('input:radio').change(function () {
+            var abc = $(this).val()
+            //  alert(abc);
+            if (abc == "button1") {
+                $('#date_from').prop('disabled', false);
+                $('#date_to').prop('disabled', false);
+                $('#timezone').prop('disabled', true);
+            } else if (abc == "button2") {
+                $('#period').prop('disabled', false);
+                $('#timezone').prop('disabled', true);
+            } else if (abc == "button3") {
+                $('#event_category').prop('disabled', true);
+                $('#event_type').prop('disabled', false);
+            } else if (abc == "button4") {
+                $('#event_type').prop('disabled', true);
+                $('#event_category').prop('disabled', false);
+            }
 
 
-            });
         });
-    </script>
-    <?php include('../footer.php') ?>
+    });
+</script>
+<?php include('../footer.php') ?>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 </html>
