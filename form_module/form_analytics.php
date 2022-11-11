@@ -47,7 +47,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title><?php echo $sitename; ?>
-        | Good & Bad Pieces</title>
+        | Analytics Graph Representation</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -129,7 +129,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
 <body>
 <!-- Main navbar -->
 <?php
-$cam_page_header = "Good & Bad Pieces";
+$cam_page_header = "Analytics Graph Representation";
 include("../header_folder.php");
 if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
     include("../tab_menu.php");
@@ -141,21 +141,20 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 <?php
 $form_create_id = $_GET['id'];
 
-$query = "select fc.form_create_id,fc.name,fi.form_create_id,fc.station,fc.part_family,part_account.account_id,c_acc.c_name,c_acc.logo,pm_family.part_family_name,part_num.part_number,
-part_num.part_name from form_create AS fc INNER Join form_item AS fi ON fc.form_create_id = fi.form_create_id 
-INNER JOIN pm_part_family AS pm_family ON fc.part_family = pm_family.pm_part_family_id
-INNER JOIN pm_part_number AS part_num ON pm_family.pm_part_family_id = part_num.part_family
-INNER JOIN part_family_account_relation AS part_account ON fc.part_family = part_account.part_family_id
-INNER JOIN cus_account AS c_acc ON part_account.account_id = c_acc.c_id WHERE fc.form_create_id = '$form_create_id'";
+$query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_number.part_number as part_number,pm_part_number.part_name as part_name,cus_account.c_name as c_name,cus_account.logo as logo FROM `form_create` 
+          INNER JOIN pm_part_family ON pm_part_family.pm_part_family_id = form_create.`part_family` 
+          INNER JOIN pm_part_number ON pm_part_number.pm_part_number_id = form_create.part_number 
+          INNER JOIN part_family_account_relation ON part_family_account_relation.part_family_id = form_create.part_family 
+          INNER JOIN cus_account ON cus_account.c_id = part_family_account_relation.account_id 
+          WHERE form_create.`form_create_id` = '$form_create_id'";
 
  $result = mysqli_query($db,$query);
  while ($row = mysqli_fetch_array($result)){
-     $pm_part_family_name = $row['part_family_name'];
-     $pm_part_number = $row['part_number'];
-     $pm_part_name = $row['part_name'];
+     $part_family_name = $row['part_family_name'];
+     $part_number = $row['part_number'];
+     $part_name = $row['part_name'];
      $logo = $row['logo'];
      $cus_name = $row['c_name'];
-     $form_name = $row['name'];
  }
 ?>
 <!-- Content area -->
@@ -171,9 +170,9 @@ INNER JOIN cus_account AS c_acc ON part_account.account_id = c_acc.c_id WHERE fc
                 <div class="media-body">
                     <input type="hidden" value="<?php echo $form_create_id; ?>" name="form_create" id="form_create">
                     <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
-                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
-                    <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
+                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $part_family_name; ?></small>
+                    <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $part_number; ?></small>
+                    <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $part_name; ?></small>
 
                 </div>
             </div>
