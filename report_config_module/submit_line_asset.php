@@ -261,20 +261,21 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 										<div style="display:none;" id="my_camera"></div>
 										<label for="file" class="btn btn-primary ">Take Snapshot</label>
 										<input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-										<div class="container"></div>
+
 									<?php } ?>
 								</div>
 							</div>
-							<div class="row" style="display: none">
-								<label class="col-lg-2 control-label">Captured Image : </label>
-								<div class="col-md-6">
-									<div id="results"></div>
-								</div>
-							</div>
+                            <div class="row" style="display: none">
+                                <label class="col-lg-2 control-label">Captured Image : </label>
+                                <div class="col-md-6">
+                                    <div id="results"></div>
+                                </div>
+                            </div>
 							<br/>
 							<div class="row">
-								<label class="col-lg-2 control-label">Previous Image : </label>
+                                <label class="col-lg-2 control-label">Previous Image : </label>
 								<div class="col-md-6">
+                                    <div class="container"></div>
 									<?php
 									$time_stamp = $_SESSION['assets_timestamp_id'];
 									if(!empty($time_stamp)){

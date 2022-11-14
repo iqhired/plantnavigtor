@@ -225,9 +225,10 @@ include("../heading_banner.php");
                         <form action="" id="asset_create" enctype="multipart/form-data"  class="form-horizontal" method="post">
                             <?php $id = $_GET['id']; ?>
                             <div class="row">
-                                <label class="col-sm-2 control-label">Station : </label>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mob_user_rating">
                                     <div class="form-group">
+                                        <label class="col-lg-3 mob_user_rating control-label">Station : </label>
+                                        <div class="col-lg-9 mob_user_rating">
                                         <select name="station" id="station" class="select form-control" data-style="bg-slate">
                                             <option value="" selected disabled>--- Select Station ---</option>
                                             <?php
@@ -250,18 +251,29 @@ include("../heading_banner.php");
 
                                             ?>
                                         </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
-                                <div class="col-md-3">
-                                    <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="image[]" id="image-input" class="form-control" multiple>
-                                    <div class="container"></div>
+                                <div class="col-md-4 mob_user_rating">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 mob_user_rating control-label">Asset Name : </label>
+                                        <div class="col-lg-9 mob_user_rating">
+                                        <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mob_user_rating">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 mob_user_rating control-label">Image : </label>
+                                        <div class="col-lg-9 mob_user_rating">
+                                        <input type="file" name="image[]" id="image-input" class="form-control" multiple>
+                                        <div class="container"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <br/>
