@@ -101,7 +101,7 @@ include("../hp_header.php");
 
 	while ($rowcmain = mysqli_fetch_array($qurmain)) {
 		$formname = $rowcmain['form_name'];
-
+		$form_create_id = $rowcmain['form_create_id'];
 		?>
         <div class="panel panel-flat">
             <div class="panel-heading">
@@ -296,10 +296,10 @@ include("../hp_header.php");
 								<?php
 
 
-								$query1 = sprintf("SELECT form_create_id FROM  form_create where form_type = '$get_form_type' and station = '$get_station' and part_family = '$get_part_family' and part_number = '$get_part_number' and name = '$formname'");
-								$qur1 = mysqli_query($db, $query1);
-								$rowc1 = mysqli_fetch_array($qur1);
-								$item_id = $rowc1['form_create_id'];
+//								$query1 = sprintf("SELECT form_create_id FROM  form_create where form_type = '$get_form_type' and station = '$get_station' and part_family = '$get_part_family' and part_number = '$get_part_number' and name = '$formname'");
+//								$qur1 = mysqli_query($db, $query1);
+//								$rowc1 = mysqli_fetch_array($qur1);
+								$item_id = $form_create_id;
 
 								$qurimage = mysqli_query($db, "SELECT * FROM  form_images where form_create_id = '$item_id'");
 								while ($rowcimage = mysqli_fetch_array($qurimage)) {
