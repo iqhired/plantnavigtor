@@ -609,7 +609,7 @@ $msg = explode(',', $msg); ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>report_config_module/assets_config.php"
                                                    class="text-muted mobile">
-                                                    Station Position Config
+                                                    Station Assets Config
                                                 </a>
                                             </div>
                                         <?php }
