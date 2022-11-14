@@ -278,6 +278,18 @@ fclose($fp);
                 width: 30% !important;
                 float: left;
             }
+            .media{
+                width: 100% !important;
+            }
+            .media_gf{
+                width: 100% !important;
+            }
+            .media_eff{
+                width: 100% !important;
+            }
+            .media_bsr{
+                width: 100% !important;
+            }
         }
     </style>
     <script>
@@ -526,10 +538,10 @@ include("../heading_banner.php");
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-8 media_gf">
             <div id="gf_container" style="height: 500px; width: 100%;"></div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-8 media_bsr">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
 					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
@@ -540,15 +552,18 @@ include("../heading_banner.php");
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-8 media">
+            <div class="media">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
+
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
 					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
                 <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px;"></div>
 
             </div>
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-8 media_eff">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
 					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
