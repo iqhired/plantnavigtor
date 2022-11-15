@@ -319,52 +319,38 @@ include("../heading_banner.php");
                     $button = $_POST['button'];
 
                     if ($button == "button1") {
-                        if ($form_createid != "" && $datefrom != "" && $dateto != "") {
-                            $result = "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC";
+                        if ($form_createid != "") {
+                            $result = "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC";
                             $qur = mysqli_query($db,$result);
-                        } else if ($form_createid != "" && $user != "" && $datefrom == "" && $dateto == "") {
+                        } else if ($form_createid != "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC ");
-                        } else if ($form_createid != "" && $user == "" && $datefrom == "" && $dateto == "") {
+                        } else if ($form_createid != "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC ");
+                        } else if ($form_createid != "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid == "" && $user != "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC");
-                        } else if ($form_createid == "" && $user != "" && $datefrom == "" && $dateto == "") {
+                        } else if ($form_createid == "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
+                        } else if ($form_createid == "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid == "" && $user == "" && $datefrom != "" && $dateto != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ");
+                        } else if ($form_createid == "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item`");
                         }
 
                     }else {
-                        $curdate = date('Y-m-d');
-                        if ($timezone == "7") {
-                            $countdate = date('Y-m-d', strtotime('-7 days'));
-                        } else if ($timezone == "1") {
-                            $countdate = date('Y-m-d', strtotime('-1 days'));
-                        } else if ($timezone == "30") {
-                            $countdate = date('Y-m-d', strtotime('-30 days'));
-                        } else if ($timezone == "90") {
-                            $countdate = date('Y-m-d', strtotime('-90 days'));
-                        } else if ($timezone == "180") {
-                            $countdate = date('Y-m-d', strtotime('-180 days'));
-                        } else if ($timezone == "365") {
-                            $countdate = date('Y-m-d', strtotime('-365 days'));
-                        }
-                        if ($form_createid != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "" && $timezone == "") {
+                        if ($form_createid != "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
+                        } else if ($form_createid != "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "" && $timezone == "") {
+                        } else if ($form_createid != "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
+                        } else if ($form_createid != "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' and form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')" . $q_str . "ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "" && $timezone == "") {
+                        } else if ($form_createid != "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
+                        } else if ($form_createid != "") {
                             $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "" && $timezone != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$countdate' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$curdate' ");
+                        } else if ($form_createid != "") {
+                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item`");
                         }
                     }
 
@@ -395,25 +381,6 @@ include("../heading_banner.php");
 </div>
 <!-- Dashboard content -->
 <!-- /dashboard content -->
-<script> $(document).on('click', '#delete', function () {
-        var element = $(this);
-        var del_id = element.attr("data-id");
-        var info = 'id=' + del_id;
-        $.ajax({type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) { }});
-        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-    });</script>
-<script>
-    jQuery(document).ready(function ($) {
-        $(document).on('click', '#edit', function () {
-            var element = $(this);
-            var edit_id = element.attr("data-id");
-            var name = $(this).data("name");
-            $("#edit_name").val(name);
-            $("#edit_id").val(edit_id);
-            //alert(role);
-        });
-    });
-</script>
 <script>
     $(function () {
         $('input:radio').change(function () {
@@ -429,63 +396,6 @@ include("../heading_banner.php");
     });
 </script>
 </div>
-<!-- /content area -->
-
-
-
-<script>
-
-    $('#station').on('change', function (e) {
-        $("#user_form").submit();
-    });
-    $('#part_family').on('change', function (e) {
-        $("#user_form").submit();
-    });
-</script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-
-    $(document).on("click","#submit_btn",function() {
-
-        var station = $("#station").val();
-        var part_family = $("#part_family").val();
-        var part_number = $("#part_number").val();
-        var form_type = $("#form_type").val();
-        $("#user_form").submit();
-        // var flag= 0;
-        // if(station == null){
-        //     $("#error1").show();
-        //     var flag= 1;
-        // }
-        // if(part_family == null){
-        //     $("#error2").show();
-        //     var flag= 1;
-        // }
-        // if(part_number == null){
-        //     $("#error3").show();
-        //     var flag= 1;
-        // }
-        // if(form_type == null){
-        //     $("#error4").show();
-        //     var flag= 1;
-        // }
-        // if (flag == 1) {
-        //     return false;
-        // }
-
-    });
-
-</script>
-
-<!-- <script>
-	function clearForm()
-{
-document.getElementById("user_form").reset();
-
-}
-	</script> -->
 <script type="text/javascript">
     $(function () {
         $("#btn").bind("click", function () {
