@@ -41,7 +41,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     $notes = $_POST['notes'];
     $created_by_user = $_SESSION['id'];
 
-    $sql2 = "INSERT INTO `submit_assets`(`asset_id`, `line_id`, `asset_name`,`notes`, `created_date`,`created_by`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$notes','$chicagodate','$created_by_user','1')";
+    $sql2 = "INSERT INTO `submit_assets`(`asset_id`, `line_id`, `asset_name`,`notes`, `created_date`,`created_by`,`is_deleted`) VALUES ('$assets_id','$station','$asset_name','$notes','$chicagotime','$created_by_user','1')";
     $result2 = mysqli_query($db, $sql2);
 
     $sql1 = "SELECT submit_id as a_id FROM  submit_assets where line_id = '$station' ORDER BY `submit_id` DESC LIMIT 1";
