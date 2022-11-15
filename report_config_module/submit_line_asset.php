@@ -3,13 +3,12 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
 }
-
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -20,20 +19,22 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 	session_unset();
 	//Destroy the session
 	session_destroy();
-	header($redirect_logout_path);
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
+
+//	header('location: ../logout.php');
 	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
-    header('location: ../dashboard.php');
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1) {
+	header('location: ../dashboard.php');
 }
+
 $asset_ide = $_GET['asset_id'];
 
 if(empty($_SESSION['$asset_id'])){
@@ -57,7 +58,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo $sitename; ?> |Edit Station Assets Config</title>
+	<title><?php echo $sitename; ?> |Submit Line Asset</title>
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 	<link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">

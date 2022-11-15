@@ -538,10 +538,17 @@ include("../heading_banner.php");
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-md-8 media_gf">
+        <div class="col-md-4 col-md-8 media_gf">
             <div id="gf_container" style="height: 500px; width: 100%;"></div>
         </div>
-        <div class="col-md-6 col-md-8 media_bsr">
+        <div class="col-md-8">
+            <div id="gf_container1" style="height: 500px; width: 100%;"></div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-8 media_bsr">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
 					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
@@ -549,10 +556,7 @@ include("../heading_banner.php");
 
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 col-md-8 media">
+        <div class="col-md-4 col-md-8 media">
             <div class="media">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
 
@@ -563,7 +567,7 @@ include("../heading_banner.php");
             </div>
             </div>
         </div>
-        <div class="col-md-6 col-md-8 media_eff">
+        <div class="col-md-4 col-md-8 media_eff">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
 					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
@@ -573,9 +577,7 @@ include("../heading_banner.php");
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div id="gf_container1" style="height: 800px; width: 100%;"></div>
-        </div>
+
     </div>
 
 
@@ -639,6 +641,7 @@ include("../heading_banner.php");
                 // create pareto chart with data
                 var chart = anychart.pareto(data);
                 // set chart title text settings
+                chart.labels().fontSize(14);
                 // chart.title('Good Pieces & Bad Pieces');
                 var title = chart.title();
                 title.enabled(true);
@@ -665,6 +668,13 @@ include("../heading_banner.php");
                 // background border color
                 // column.labels().background().stroke("#663399");
                 column.labels().background().enabled(true).stroke("Green");
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
 
                 // get pareto line series and set settings
                 var line = chart.getSeriesAt(1);
@@ -711,7 +721,7 @@ include("../heading_banner.php");
                 // turn on X Scroller
                 chart.xScroller(true);
                 chart.xZoom().setToPointsCount(5, false);
-
+                chart.labels().fontSize(14);
                 // enable HTML for tooltips
                 chart.tooltip().useHtml(true);
 
@@ -740,6 +750,8 @@ include("../heading_banner.php");
                 background.stroke("green");
                 background.cornerType("round");
                 background.corners(5);
+                // series1.labels().fontsize(14);
+
 
                 //var chart = anychart.pareto(data);
                 // set the chart title
@@ -768,6 +780,19 @@ include("../heading_banner.php");
                 chart.xGrid().enabled(true);
                 chart.yGrid().enabled(true);
                 chart.xAxis().labels().rotation(-90);
+
+                var xLabels = chart.xAxis().labels();
+                xLabels.width(150);
+                xLabels.wordWrap("break-word");
+                // xLabels.wordBreak("break-all");
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+
                 // set the container id
                 chart.container("gf_container1");
 
