@@ -7,6 +7,16 @@ $temp = "";
     <h3><?php echo $siteURL ?>log_module/se_log_schedular.php</h3>
 </a>
 <br>
+<h3>Line Utilization Data By Live</h3>
+<a href="<?php echo $siteURL ?>config_module/line_utilization_dashboard.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/line_utilization_dashboard.php</h3>
+</a>
+<br>
+<h3>Line Utilization Data By Date Range</h3>
+<a href="<?php echo $siteURL ?>config_module/line_utilization_view.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/line_utilization_view.php</h3>
+</a>
+<br>
 <h3>Daily Efficiency Report Excel Generate</h3>
 <a href="<?php echo $siteURL ?>report_config_module/export_daily_report_gbp_excel.php" target="_blank">
     <h3><?php echo $siteURL ?>report_config_module/export_daily_report_gbp_excel.php</h3>
