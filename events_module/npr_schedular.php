@@ -15,7 +15,7 @@ $result_st_202 = mysqli_query($db, $sql_st_202);
 
 while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 	$ll_id = $row_st_202['line_id'];
-	$sql = "SELECT SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework , good_bad_pieces.station_event_id as sei FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1  and sg_station_event.line_id = '$ll_id' and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime_from_date' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime_to_date' and hour(good_bad_pieces.created_at) >= '$time'  and hour(good_bad_pieces.created_at) < '$oneHourLater'";
+	$sql = "SELECT SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework , good_bad_pieces_details.station_event_id as sei FROM `good_bad_pieces_details`  INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id where 1  and sg_station_event.line_id = '$ll_id' and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$chicagotime_from_date' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$chicagotime_to_date' and hour(good_bad_pieces_details.created_at) >= '$time'  and hour(good_bad_pieces_details.created_at) < '$oneHourLater'";
 	$result1 = mysqli_query($db, $sql);
 	$rowc = mysqli_fetch_array($result1);
 	$gp = $rowc['good_pieces'];
