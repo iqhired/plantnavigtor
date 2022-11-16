@@ -47,7 +47,7 @@ if (count($_POST) > 0) {
 $wc = '';
 /*if(isset($station)){
     $_SESSION['station'] = $station;
-    $wc = $wc . " and sg_station_event_log_update.line_id = '$station'";
+    $wc = $wc . " and sg_station_event_log_update.line_id = '$st'";
 }*/
 
 /* If Data Range is selected */
@@ -81,7 +81,7 @@ if ($button == "button1") {
     $wc = $wc . " and DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' ";
 }
 
-$sql1 = "SELECT round(sum(total_time),2) as t1 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 2". $wc;
+$sql1 = "SELECT round(sum(total_time),2) as t1 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 2 and `created_on` < '$dateto' and `created_on` >  '$datefrom'";
 $result1 = mysqli_query($db,$sql1);
 $row1 = $result1->fetch_assoc();
 $t1 = $row1['t1'];
@@ -91,7 +91,7 @@ if(empty($t1)){
     $d1 = $t1;
 }
 
-$sql2 = "SELECT round(sum(total_time),2) as t2 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 3". $wc;
+$sql2 = "SELECT round(sum(total_time),2) as t2 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 3 and `created_on` < '$dateto' and `created_on` >  '$datefrom'";
 $result2 = mysqli_query($db,$sql2);
 $row2 = $result2->fetch_assoc();
 $t2 = $row2['t2'];
@@ -101,7 +101,7 @@ if(empty($t2)){
     $d2 = $t2;
 }
 
-$sql3 = "SELECT round(sum(total_time),2) as t3 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 4". $wc;
+$sql3 = "SELECT round(sum(total_time),2) as t3 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 4 and `created_on` < '$dateto' and `created_on` >  '$datefrom'";
 $response = array();
 $posts = array();
 $result3 = mysqli_query($db,$sql3);

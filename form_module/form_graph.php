@@ -179,7 +179,7 @@ include("../heading_banner.php");
         <!-- Basic datatable -->
         <div class="panel panel-flat">
             <div class="panel-heading">
-                <form action="" id="user_form" class="form-horizontal" method="post">
+                <form action="" id="form_graph" class="form-horizontal" method="post">
 
                     <div class="row">
                         <div class="col-md-12">
@@ -454,39 +454,17 @@ include("../heading_banner.php");
 </div>
 <!-- Dashboard content -->
 <!-- /dashboard content -->
-<script> $(document).on('click', '#delete', function () {
-        var element = $(this);
-        var del_id = element.attr("data-id");
-        var info = 'id=' + del_id;
-        $.ajax({
-            type: "POST", url: "ajax_job_title_delete.php", data: info, success: function (data) {
-            }
-        });
-        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
-    });</script>
 <script>
-    jQuery(document).ready(function ($) {
-        $(document).on('click', '#edit', function () {
-            var element = $(this);
-            var edit_id = element.attr("data-id");
-            var name = $(this).data("name");
-            $("#edit_name").val(name);
-            $("#edit_id").val(edit_id);
-            //alert(role);
-        });
-    });
-</script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-
-
     $('#station').on('change', function (e) {
         $("#form_graph").submit();
     });
     $('#part_family').on('change', function (e) {
         $("#form_graph").submit();
+    });
+</script>
+<script>
+    $("#checkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
     });
     $(document).on("click", ".submit_btn", function () {
 
