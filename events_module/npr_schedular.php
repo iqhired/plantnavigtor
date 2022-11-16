@@ -27,7 +27,8 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 
 	$sql_st_202 = "SELECT count(*) as r_count FROM npr_station_data  where line_id = '$ll_id' and npr_h = '$time' and date(created_on) = '$chicagotime_to_date'";
 	$result_st_202 = mysqli_query($db, $sql_st_202);
-	$r_count  = $result_st_202['r_count'];
+	$rowc_202 = mysqli_fetch_array($result_st_202);
+	$r_count  = $rowc_202['r_count'];
 	if($r_count == 0){
 		$sqlt = "INSERT INTO `npr_station_data`(`line_id`,`npr_data`,`npr_h`, `npr_gr`, `npr_b`,`created_on`) VALUES ('$ll_id','$npr_data','$time','$gr','$bp','$chicagotime')";
 		$resultt = mysqli_query($db, $sqlt);
