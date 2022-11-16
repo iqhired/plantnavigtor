@@ -127,7 +127,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor1 ?>;">
 								<?php
 								$pm_npr= 30;
-								$qur04 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1' and npr_h = '00' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur04 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1' and ( npr_h = '00' or npr_h = '0') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result333 = mysqli_query($db,$qur04);
 								$rowc04 = $result333->fetch_assoc();
 								$h = 1;
@@ -196,7 +196,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor ?>;">
 								<?php
 								$pm_npr2= 30;
-								$qur042 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '01' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur042 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and ( npr_h = '01' or npr_h = '1') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result332 = mysqli_query($db,$qur042);
 								$rowc042 = $result332->fetch_assoc();
 								$h2 = 1;
@@ -266,7 +266,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor2 ?>;">
 								<?php
 								$pm_npr311= 30;
-								$qur043 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '02' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur043 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '02' or npr_h = '2') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result33 = mysqli_query($db,$qur043);
 								$rowc043 = $result33->fetch_assoc();
 								$h3 = 1;
@@ -335,7 +335,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor3 ?>;">
 								<?php
 								$pm_npr4= 30;
-								$qur31 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '03' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur31 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '03' or npr_h = '3') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result34 = mysqli_query($db,$qur31);
 								$rowc044 = $result34->fetch_assoc();
 								$h4 = 1;
@@ -405,7 +405,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor4 ?>;">
 								<?php
 								$pm_npr55= 30;
-								$qur55 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '04' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur55 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '04' or npr_h = '4') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result55 = mysqli_query($db,$qur55);
 								$row55 = $result55->fetch_assoc();
 								$h55 = 1;
@@ -473,7 +473,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor5 ?>;">
 								<?php
 								$pm_npr2= 30;
-								$qur21 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '05' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur21 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '05' or npr_h = '5') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result211 = mysqli_query($db,$qur21);
 								$row211 = $result211->fetch_assoc();
 								$h2 = 1;
@@ -542,7 +542,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor6 ?>;">
 								<?php
 								$pm_npr3= 30;
-								$qur31 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '06' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur31 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '06' or npr_h = '6') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result311 = mysqli_query($db,$qur31);
 								$row311 = $result311->fetch_assoc();
 								$h3 = 1;
@@ -611,7 +611,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor7 ?>;">
 								<?php
 								$pm_npr41= 30;
-								$qur41 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '07' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur41 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '07' or npr_h = '7') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result411 = mysqli_query($db,$qur41);
 								$row411 = $result411->fetch_assoc();
 								$h41 = 1;
@@ -680,7 +680,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor8 ?>;">
 								<?php
 								$pm_npr51= 30;
-								$qur51 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '08' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur51 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '08' or npr_h = '8') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result511 = mysqli_query($db,$qur51);
 								$row511 = $result511->fetch_assoc();
 								$h51 = 1;
@@ -749,7 +749,7 @@ include("../hp_header1.php");
 							<tr style="background-color: <?php echo $randomcolor9 ?>;">
 								<?php
 								$pm_npr61= 30;
-								$qur61 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'  and npr_h = '09' and date(`created_on`) = '$chicagotime' group by npr_h";
+								$qur61 = "SELECT  npr_h,(`npr_b`) as npr_b,(`npr_gr`) as npr_gr,created_on FROM `npr_station_data` where line_id = '$station1'   and ( npr_h = '09' or npr_h = '9') and date(`created_on`) = '$chicagotime' group by npr_h";
 								$result611 = mysqli_query($db,$qur61);
 								$row611 = $result611->fetch_assoc();
 								$h61 = 1;
