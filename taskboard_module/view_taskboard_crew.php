@@ -43,6 +43,7 @@ $curdate = date('Y-m-d H:i:s');
         <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
         <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
         <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+        <script type="text/javascript" src="assets/js/time_display.js"></script>
     </head>
     <?php
     $cam_page_header = "Crew Members for&nbsp".$taskboard_name;
@@ -172,12 +173,6 @@ $curdate = date('Y-m-d H:i:s');
                                         </div>
                                     </div>
                                     <script>
-                                        function calcTime(city, offset) {
-                                            d = new Date();
-                                            utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-                                            nd = new Date(utc + (3600000 * offset));
-                                            return nd;
-                                        }
                                         // Set the date we're counting down to
                                         var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                                        
@@ -192,7 +187,6 @@ $curdate = date('Y-m-d H:i:s');
                                         var x = setInterval(function () {
                                             // Get today's date and time
                                             // var now = new Date().getTime();
-                                            var now = calcTime('Chicago', '-5');
                                             // Find the distance between now and the count down date
                                             //aaya change karvano che	
                                             var distance = countDownDate<?php echo $countervariable; ?> - now;

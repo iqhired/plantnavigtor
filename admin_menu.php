@@ -609,7 +609,7 @@ $msg = explode(',', $msg); ?>
                                             <div class="mt-3">
                                                 <a href="<?php echo $siteURL; ?>report_config_module/assets_config.php"
                                                    class="text-muted mobile">
-                                                    Station Position Config
+                                                    Station Assets Config
                                                 </a>
                                             </div>
                                         <?php }
@@ -905,7 +905,13 @@ $msg = explode(',', $msg); ?>
                                     <span class="ms-2 ">Training Matrix</span>
                                 </a>
                             </div>
-						<?php } ?>
+						<?php } if (in_array('86', $msg)) { ?>
+                        <div class="mt-3">
+                            <a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php" class="text-muted mobile">
+                                <span class="ms-2 ">Station Assets Log</span>
+                            </a>
+                        </div>
+                        <?php } ?> ?>
 
                     </div>
                 </div>
@@ -1298,7 +1304,9 @@ $msg = explode(',', $msg); ?>
 								<?php }
 								if (in_array('21', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
-								<?php } ?>
+								<?php } if (in_array('86', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php"> Station Assets Log</a></li>
+                                <?php } ?>?>
                             </ul>
                         </div>
                     </li>

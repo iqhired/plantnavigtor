@@ -40,7 +40,7 @@ $assign_line = htmlspecialchars($_GET["station"]);
     <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="assets/js/pages/form_layouts.js"></script>
-
+    <script type="text/javascript" src="assets/js/time_display.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -617,7 +617,7 @@ if ($seq != "") {
                                         // Update the count down every 1 second
                                         var x = setInterval(function () {
                                             // Get today's date and time
-                                            var now = getCurrentTime();
+                                            //var now = getCurrentTime();
                                             //new Date().getTime();
                                             // Find the distance between now and the count down date
                                             var distance = now - countDownDate<?php echo $countervariable; ?>;
@@ -717,7 +717,6 @@ if ($seq != "") {
                                         // Update the count down every 1 second
                                         var x = setInterval(function () {
                                             // Get today's date and time
-                                            var now = getCurrentTime();
                                             //new Date().getTime();
                                             // Find the distance between now and the count down date
                                             var distance = now - countDownDate<?php echo $countervariable; ?>;

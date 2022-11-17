@@ -225,10 +225,11 @@ include("../heading_banner.php");
                         <form action="" id="asset_create" enctype="multipart/form-data"  class="form-horizontal" method="post">
                             <?php $id = $_GET['id']; ?>
                             <div class="row">
-                                <label class="col-sm-2 control-label">Station : </label>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mob_user_rating">
                                     <div class="form-group">
-                                        <select name="station" id="station" class="select form-control" data-style="bg-slate">
+                                        <label class="col-lg-3 mob_user_rating control-label">Station* : </label>
+                                        <div class="col-lg-9 mob_user_rating">
+                                        <select name="station" id="station" class="select form-control" data-style="bg-slate" required>
                                             <option value="" selected disabled>--- Select Station ---</option>
                                             <?php
                                             $st_dashboard = $_POST['station'];
@@ -250,18 +251,29 @@ include("../heading_banner.php");
 
                                             ?>
                                         </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <label class="col-sm-2 control-label" style="margin-left: 10px;">Asset Name : </label>
-                                <div class="col-md-3">
-                                    <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <input type="file" name="image[]" id="image-input" class="form-control" multiple>
-                                    <div class="container"></div>
+                                <div class="col-md-4 mob_user_rating">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 mob_user_rating control-label">Asset Name : </label>
+                                        <div class="col-lg-9 mob_user_rating">
+                                        <input type="text" name="asset_name" id="asset_name" class="form-control" placeholder="Enter Asset Name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mob_user_rating">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 mob_user_rating control-label">Image : </label>
+                                        <div class="col-lg-9 mob_user_rating">
+                                        <input type="file" name="image[]" id="image-input" class="form-control" multiple>
+                                        <div class="container"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <br/>
@@ -353,7 +365,7 @@ include("../heading_banner.php");
                     <th>Asset Name</th>
                     <th>Station</th>
                     <th>Created Date</th>
-                    <th>Image</th>
+                    <!--<th>Image</th>-->
                     <th>QR Code</th>
                     <th>Action</th>
                 </tr>
@@ -379,21 +391,21 @@ include("../heading_banner.php");
                         <td><?php echo $asset_name; ?></td>
                         <td><?php echo $line_name; ?></td>
                         <td><?php echo $created_date; ?></td>
-                        <td>
+                        <!--<td>
                             <?php
-                            $query2 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$slno'");
+/*                            $query2 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$slno'");
                             $qurimage = mysqli_query($db, $query2);
                             $i =0 ;
                             while ($rowcimage = mysqli_fetch_array($qurimage)) {
                                 $station_asset_image = $rowcimage['station_asset_image'];
                                 $mime_type = "image/gif";
                                 $file_content = file_get_contents("$station_asset_image");
-                                ?>
-                                <?php echo '<img src="data:image/gif;base64,' . $station_asset_image . '" style="height:50px;width:50px;" />'; ?>
+                                */?>
+                                <?php /*echo '<img src="data:image/gif;base64,' . $station_asset_image . '" style="height:50px;width:50px;" />'; */?>
                                 <?php
-                                $i++;}
-                            ?>
-                        </td>
+/*                                $i++;}
+                            */?>
+                        </td>-->
                         <td><?php echo '<img src="data:image/gif;base64,' . $qrcode . '" style="height:50px;width:50px;" />'; ?>
                             <a class="btn btn-primary btn-xs" style="background-color:#1e73be;" href= data:image/png;base64,<?php echo $qrcode ?> download><i class="fa fa-download"></i></a>
                         </td>

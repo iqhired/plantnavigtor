@@ -3,11 +3,11 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
 }
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
@@ -15,31 +15,29 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
-        header($redirect_tab_logout_path);
-    }else{
-        header($redirect_logout_path);
-    }
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
 
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
-    header('location: ../dashboard.php');
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1) {
+	header('location: ../dashboard.php');
 }
-
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
     , $_SERVER["HTTP_USER_AGENT"]);
-
 
 ?>
 
@@ -47,11 +45,15 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 <html lang="en">
 
 <head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $sitename; ?> | View Asset Config</title>
+        <?php echo $sitename; ?> | View Line Asset</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
@@ -202,7 +204,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 <body>
 <!-- Main navbar -->
 <?php
-$cust_cam_page_header = "View Assets Config";
+$cust_cam_page_header = "View Line Asset";
 include("../header.php");
 include("../admin_menu.php");
 include("../heading_banner.php");

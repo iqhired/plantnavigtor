@@ -3,9 +3,12 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-	header('location: ../logout.php');
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
 }
-
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -16,17 +19,22 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 	session_unset();
 	//Destroy the session
 	session_destroy();
-	header($redirect_logout_path);
+	if ($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']) {
+		header($redirect_tab_logout_path);
+	} else {
+		header($redirect_logout_path);
+	}
+
 //	header('location: ../logout.php');
 	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
-
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin") {
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1) {
 	header('location: ../dashboard.php');
 }
+
 $asset_ide = $_GET['asset_id'];
 
 if(empty($_SESSION['$asset_id'])){
@@ -50,7 +58,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo $sitename; ?> |Edit Station Assets Config</title>
+	<title><?php echo $sitename; ?> |Submit Line Asset</title>
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 	<link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -158,6 +166,11 @@ $cust_cam_page_header = "Submit Station Asset";
 include("../header_folder.php");
 include("../admin_menu.php");
 include("../heading_banner.php");
+if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
+    include("../tab_menu.php");
+} else {
+    include("../admin_menu.php");
+}
 ?>
 <!-- /main navbar -->
 <!-- Page container -->
@@ -249,20 +262,21 @@ include("../heading_banner.php");
 										<div style="display:none;" id="my_camera"></div>
 										<label for="file" class="btn btn-primary ">Take Snapshot</label>
 										<input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-										<div class="container"></div>
+
 									<?php } ?>
 								</div>
 							</div>
-							<div class="row" style="display: none">
-								<label class="col-lg-2 control-label">Captured Image : </label>
-								<div class="col-md-6">
-									<div id="results"></div>
-								</div>
-							</div>
+                            <div class="row" style="display: none">
+                                <label class="col-lg-2 control-label">Captured Image : </label>
+                                <div class="col-md-6">
+                                    <div id="results"></div>
+                                </div>
+                            </div>
 							<br/>
 							<div class="row">
-								<label class="col-lg-2 control-label">Previous Image : </label>
+                                <label class="col-lg-2 control-label">Previous Image : </label>
 								<div class="col-md-6">
+                                    <div class="container"></div>
 									<?php
 									$time_stamp = $_SESSION['assets_timestamp_id'];
 									if(!empty($time_stamp)){
@@ -281,7 +295,7 @@ include("../heading_banner.php");
 											<div class="col-lg-3 col-sm-6">
 												<div class="thumbnail">
 													<div class="thumb">
-                                                        <?php echo '<img src="' . $image . '" style="height:150px;width:150px;" />'; ?>
+                                                        <?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:150px;width:150px;" />'; ?>
 														<input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['asset_images_id']; ?>">
 														<span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
 													</div>

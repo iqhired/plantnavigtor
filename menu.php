@@ -7,9 +7,9 @@ $temp = "";
     <h3><?php echo $siteURL ?>log_module/se_log_schedular.php</h3>
 </a>
 <br>
-<h3>Assets Station Config</h3>
-<a href="<?php echo $siteURL ?>report_config_module/assets_config.php" target="_blank">
-    <h3><?php echo $siteURL ?>report_config_module/assets_config.php</h3>
+<h3>Line Utilization Data By Live and Date Range</h3>
+<a href="<?php echo $siteURL ?>config_module/line_utilization.php" target="_blank">
+    <h3><?php echo $siteURL ?>config_module/line_utilization.php</h3>
 </a>
 <br>
 <h3>Daily Efficiency Report Excel Generate</h3>
