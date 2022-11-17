@@ -30,10 +30,10 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 	$rowc_2021 = mysqli_fetch_array($result_st_2021);
 	$r_count  = $rowc_2021['r_count'];
 	if(($r_count == 0) && ((!empty($gr) && ($gr > 0) ) || (!empty($bp) && ($bp >0)))){
-		$sqlt = "INSERT INTO `npr_station_data`(`line_id`,`npr_data`,`npr_h`, `npr_gr`, `npr_b`,`created_on`) VALUES ('$ll_id','$npr_data','$time','$gr','$bp','$chicagotime')";
+		$sqlt = "INSERT INTO `npr_station_data`(`line_id`,`npr_data`,`npr_h`, `npr_gr`, `npr_b`,`npr_rework`,`created_on`) VALUES ('$ll_id','$npr_data','$time','$gr','$bp','$rwp','$chicagotime')";
 		$resultt = mysqli_query($db, $sqlt);
 	}else{
-		$sqlt = "update `npr_station_data` set npr_data = '$npr_data' , `npr_gr` = '$gr', `npr_b` = '$bp' ,`created_on` = '$chicagotime'  where line_id = '$ll_id' and npr_h = '$time' and date(created_on) = '$chicagotime_to_date' ";
+		$sqlt = "update `npr_station_data` set npr_data = '$npr_data' , `npr_gr` = '$gr', `npr_b` = '$bp' ,`npr_rework` = '$rwp' ,`created_on` = '$chicagotime'  where line_id = '$ll_id' and npr_h = '$time' and date(created_on) = '$chicagotime_to_date' ";
 		$resultt = mysqli_query($db, $sqlt);
 	}
 
