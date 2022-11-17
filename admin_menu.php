@@ -163,7 +163,7 @@ $msg = explode(',', $msg); ?>
                                                 </a>
                                             </div>
                                             <div class="mt-3">
-                                                <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
+                                                <a href="<?php echo $siteURL; ?>config_module/line_utilization.php"
                                                    class="text-muted mobile">
                                                     Line Utilisation Dashboard
                                                 </a>
@@ -985,7 +985,7 @@ $msg = explode(',', $msg); ?>
                                                        class="mega-link"><h3 class="text-muted fs-6">First Piece View Dashboard</h3></a>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <a href="<?php echo $siteURL; ?>config_module/line_utilization_dashboard.php"
+                                                    <a href="<?php echo $siteURL; ?>config_module/line_utilization.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">Line Utilization Dashboard</h3></a>
                                                 </div>
 
