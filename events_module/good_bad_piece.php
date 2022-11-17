@@ -447,8 +447,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
 					<?php }?>
-<!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary" ></button>-->
-                    <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
+                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>
+<!--                    <a href="--><?php //echo $siteURL; ?><!--events_module/add_good_piece.php?station_event_id=--><?php //echo $station_event_id; ?><!--"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>-->
                 </div>
             </div>
             <div class="row">
@@ -567,19 +567,19 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         $image_name = $rowc1['good_image_name'];
                         ?>
                         <td>
-<!--                            <button type="button" id="edit" class="btn btn-info btn-xs"-->
-<!--                                    data-id="--><?php //echo $rowc['good_bad_pieces_id']; ?><!--"-->
-<!--                                    data-gbid="--><?php //echo $rowc['bad_pieces_id']; ?><!--"-->
-<!--                                    data-seid="--><?php //echo $station_event_id; ?><!--"-->
-<!--                                    data-good_pieces="--><?php //echo $rowc['good_pieces']; ?><!--"-->
-<!--                                    data-defect_name="--><?php //echo $rowc['defect_name']; ?><!--"-->
-<!--                                    data-bad_pieces="--><?php //echo $rowc['bad_pieces']; ?><!--"-->
-<!--                                    data-re_work="--><?php //echo $rowc['rework']; ?><!--"-->
-<!--                                    data-image="--><?php //echo $item_id; ?><!--"-->
-<!--                                    data-image_name="--><?php //echo $image_name; ?><!--"-->
-<!--                                    data-toggle="modal" style="background-color:#1e73be;"-->
-<!--                                    data-target="#edit_modal_theme_primary">Edit </button>-->
-                         <a href="edit_good_piece.php?station_event_id=<?php echo $station_event_id ; ?>"  class="btn btn-info btn-xs">Edit</a>
+                            <button type="button" id="edit" class="btn btn-info btn-xs"
+                                    data-id="<?php echo $rowc['good_bad_pieces_id']; ?>"
+                                    data-gbid="<?php echo $rowc['bad_pieces_id']; ?>"
+                                    data-seid="<?php echo $station_event_id; ?>"
+                                    data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                                    data-defect_name="<?php echo $rowc['defect_name']; ?>"
+                                    data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>"
+                                    data-re_work="<?php echo $rowc['rework']; ?>"
+                                    data-image="<?php echo $item_id; ?>"
+                                    data-image_name="<?php echo $image_name; ?>"
+                                    data-toggle="modal" style="background-color:#1e73be;"
+                                    data-target="#edit_modal_theme_primary">Edit </button>
+<!--                         <a href="edit_good_piece.php?station_event_id=--><?php //echo $station_event_id ; ?><!--"  class="btn btn-info btn-xs">Edit</a>-->
                         </td>
                     </tr>
 				<?php } ?>
@@ -783,58 +783,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Image * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="file" id="file-input" name="edit_file[]" class="form-control" onchange="preview_image();" multiple="multiple"/>
-                                        <div class="container"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                  <label class="col-lg-4 control-label">Previous Image : </label>
-                                  <div class="col-lg-8">
-                                <?php
-                                $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
-                                $rowc04 = mysqli_fetch_array($qur04);
-                                $good_trace_id = $rowc04["good_bad_pieces_id"];
 
-                                $query1 = sprintf("SELECT good_bad_pieces_id FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
-                                $qur1 = mysqli_query($db, $query1);
-                                $rowc1 = mysqli_fetch_array($qur1);
-                                $item_id = $rowc1['good_bad_pieces_id'];
-
-                                $query2 = sprintf("SELECT * FROM  good_piece_images where good_bad_pieces_id = '$item_id'");
-
-                                $qurimage = mysqli_query($db, $query2);
-                                $i =0 ;
-                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                    $image = $rowcimage['good_image_name'];
-                                    $d_tag = "delete_image_" . $i;
-                                    $r_tag = "remove_image_" . $i;
-                                    ?>
-
-                                    <div class="col-lg-3 col-sm-6">
-                                        <div class="thumbnail">
-                                            <div class="thumb">
-                                                <img src="../assets/images/good_piece_image/<?php echo $image; ?>"
-                                                     alt="">
-                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['good_image_id']; ?>">
-                                                <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    $i++;} ?>
-                            </div>
-                                </div>
-                            </div>
-                        </div>
                         <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_trace_id; ?>">
                         <input type="hidden" name="edit_gbid" id="edit_gbid" >
                         <input type="hidden" name="edit_seid" id="edit_seid" >
