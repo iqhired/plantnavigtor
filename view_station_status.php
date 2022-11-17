@@ -717,7 +717,6 @@ if ($seq != "") {
                                         // Update the count down every 1 second
                                         var x = setInterval(function () {
                                             // Get today's date and time
-                                            var now = getCurrentTime();
                                             //new Date().getTime();
                                             // Find the distance between now and the count down date
                                             var distance = now - countDownDate<?php echo $countervariable; ?>;
