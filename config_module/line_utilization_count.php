@@ -80,6 +80,16 @@ if ($button == "button1") {
 } else{
     $wc = $wc . " and DATE_FORMAT(`created_on`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_on`,'%Y-%m-%d') <= '$dateto' ";
 }
+//select other data
+$sql11 = sprintf("SELECT round(sum(total_time), 2) as t0 FROM sg_station_event_log_update  WHERE `line_id` = '$st' and event_cat_id not in ('2','3','4') and `created_on` < '$dateto' and `created_on` >  '$datefrom'");
+$result11 = mysqli_query($db,$sql11);
+$row11 = $result11->fetch_assoc();
+$t0 = $row11['t0'];
+if(empty($t0)){
+    $d0 = 0;
+}else{
+    $d0 = $t0;
+}
 
 $sql1 = "SELECT round(sum(total_time),2) as t1 FROM `sg_station_event_log_update` WHERE `line_id` = '$st' and event_cat_id = 2 and `created_on` < '$dateto' and `created_on` >  '$datefrom'";
 $result1 = mysqli_query($db,$sql1);
@@ -115,7 +125,7 @@ while ($row3=$result3->fetch_assoc()){
         $d3 = $t3;
     }
     if($st != ""){
-        $posts[] = array('line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> $datefrom,'dt'=> $dateto,'h'=> $t);
+        $posts[] = array('others0'=> $d0,'line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> $datefrom,'dt'=> $dateto,'h'=> $t);
     }
 }
 $response['posts'] = $posts;
