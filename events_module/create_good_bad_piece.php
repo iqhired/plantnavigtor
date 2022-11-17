@@ -14,6 +14,7 @@ $edit_seid = $_POST['edit_seid'];
 $station_event_id = $_POST['station_event_id'];
 $f_postfix = $_POST['time'];
 $label_quantity = 0;
+$g_timestamp = time();
 $query1 = sprintf("SELECT line_id , part_number_id FROM sg_station_event where  station_event_id = '$station_event_id'");
 $qur1 = mysqli_query($db, $query1);
 while ($rowc = mysqli_fetch_array($qur1)) {
@@ -207,8 +208,6 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                     }
 
                     if ($good_bad_pieces_id) {
-
-
                         $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
                         $resultnumber = $mysqli->query($sqlnumber);
                         $rowcnumber = $resultnumber->fetch_assoc();
@@ -237,6 +236,30 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                     }
                     $_SESSION['message_stauts_class'] = 'alert-success';
                     $_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+
+                    $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                    $rowc04 = mysqli_fetch_array($qur04);
+                    $good_trace_id = $rowc04["good_bad_pieces_id"];
+
+                    if ($good_trace_id > 0) {
+                        $temp_gid = $_SESSION['temp_gp_id'];
+                        $gid_arr = explode(',', $temp_gid);
+                        $g_str = '';
+                        $i = 0;
+                        foreach ($gid_arr as $gid) {
+                            if (($i == 0) && ($gid != "")) {
+                                $g_str = '\'' . $gid . '\'';
+                                $i++;
+                            } else if ($gid != "") {
+                                $g_str .= ',' . '\'' . $gid . '\'';
+                            }
+                        }
+                        $sql = "update `good_piece_images` SET good_bad_pieces_id = '$good_trace_id' where good_bad_pieces_id in ($g_str)";
+                        $result1 = mysqli_query($db, $sql);
+                        if ($result1) {
+                            $_SESSION['temp_gp_id'] = '';
+                        }
+                    }
                 }
             } else {
                 $good_pieces = $g + $good_name;
@@ -297,6 +320,35 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                 } else {
                     $_SESSION['message_stauts_class'] = 'alert-danger';
                     $_SESSION['import_status_message'] = 'Error: Please Retry';
+                }
+                $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                $rowc04 = mysqli_fetch_array($qur04);
+                $good_trace_id = $rowc04["good_bad_pieces_id"];
+                $station_event_id = $rowc04["station_event_id"];
+
+                $gs = $_SESSION['good_timestamp_id'];
+                $folderPath =  "../assets/images/good_piece_image/".$gs;
+                $newfolder = "../assets/images/good_piece_image/".$station_event_id;
+
+                if ($good_trace_id > 0) {
+                    $temp_gid = $_SESSION['temp_gp_id'];
+                    $gid_arr = explode(',', $temp_gid);
+                    $g_str = '';
+                    $i = 0;
+                    foreach ($gid_arr as $gid) {
+                        if (($i == 0) && ($gid != "")) {
+                            $g_str = '\'' . $gid . '\'';
+                            $i++;
+                        } else if ($gid != "") {
+                            $g_str .= ',' . '\'' . $gid . '\'';
+                        }
+                    }
+                    rename( $folderPath, $newfolder) ;
+                    $sql = "update `good_piece_images` SET good_bad_pieces_id = '$station_event_id' where good_bad_pieces_id = '$gs'";
+                    $result1 = mysqli_query($db, $sql);
+                    if ($result1) {
+                        $_SESSION['temp_gp_id'] = '';
+                    }
                 }
             }
         }
@@ -589,12 +641,16 @@ else if($good_bad_piece_name != "")
 
 	}
 }
-else if($edit_id != "")
-{
-	$editgood_name = $_POST['editgood_name'];
+    $editgood_name = $_POST['editgood_name'];
 	$editdefect_name = $_POST['editdefect_name'];
 	$editbad_name = $_POST['editbad_name'];
 	$editre_work = $_POST['editre_work'];
+    $good_bad_pieces_id = $_GET['good_bad_piece_id'];
+    if(empty($good_bad_pieces_id)) {
+        $good_bad_pieces_id = $_POST['good_bad_piece_id'];
+    }
+    $edit_file = $_POST['edit_image'];
+
 	if($editgood_name != "")
 	{
 
@@ -616,7 +672,46 @@ else if($edit_id != "")
 			}
 		}
 
+        if($edit_file != "") {
+
+            if (isset($_FILES['edit_image'])) {
+                $totalfiles = count($_FILES['edit_image']['name']);
+                if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
+                    for($i=0;$i<$totalfiles;$i++){
+                        $errors = array();
+                        $file_name = $_FILES['edit_image']['name'][$i];
+                        $file_rename = $g_timestamp.'_'.$file_name;
+                        $file_size = $_FILES['edit_image']['size'][$i];
+                        $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
+                        $file_type = $_FILES['edit_image']['type'][$i];
+                        $file_ext = strtolower(end(explode('.', $file_name)));
+                        $extensions = array("jpeg", "jpg", "png", "pdf");
+
+                        if (empty($errors) == true) {
+                            move_uploaded_file($file_tmp, "../assets/images/good_piece_image/" .$good_bad_pieces_id. '/'.$file_rename);
+
+                            $sql = "INSERT INTO `good_piece_images`(`good_bad_pieces_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
+                            $result1 = mysqli_query($db, $sql);
+                            if ($result1) {
+                                $message_stauts_class = 'alert-success';
+                                $import_status_message = 'Image Added Successfully.';
+                                $_SESSION['good_timestamp_id'] = '';
+                            } else {
+                                $message_stauts_class = 'alert-danger';
+                                $import_status_message = 'Error: Please Try Again.';
+                            }
+
+
+                        }
+
+                    }
+                }
+
+            }
+        }
+
 	}
+
 	else
 	{
 		$query = sprintf("SELECT ('$editbad_name' - bad_pieces) as b_total , ('$editre_work' - rework) as r_total from good_bad_pieces_details where `station_event_id` = '$edit_seid' and bad_pieces_id = '$edit_gbid'");
@@ -638,10 +733,11 @@ else if($edit_id != "")
 		}
 
 	}
-}
 
 
 
-//header("Location:good_bad_piece.php");
-//header("Location:good_bad_piece.php");
+
+$page = "good_bad_piece.php?station_event_id=$station_event_id";
+header('Location: ' . $page, true, 303);
+
 ?>

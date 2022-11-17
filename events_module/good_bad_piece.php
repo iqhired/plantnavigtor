@@ -262,6 +262,57 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
             width: 100%;
             overflow-x: scroll;
         }
+
+        .container {
+            margin: 0 auto;
+        }
+        .content_img {
+            width: 113px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .content_img span {
+            border: 2px solid red;
+            display: inline-block;
+            width: 99%;
+            text-align: center;
+            color: red;
+        }
+
+        .content_img span:hover {
+            cursor: pointer;
+        }
+        input[type="file"] {
+            display: block;
+        }
+        .imageThumb {
+            max-height: 100px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+        }
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -390,14 +441,14 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         " >
                 </div>
             </div>
-            <!--                            </br>-->
             </br>
             <div class="row">
                 <div class="col-md-12">
                     <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
 					<?php }?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view_good_modal_theme_primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 1vh; font-size: large; text-align: center;">IN-SPEC</button>
+<!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary" ></button>-->
+                    <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                 </div>
             </div>
             <div class="row">
@@ -504,20 +555,31 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
                         <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
                         <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
+                        <?php
+                        $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                        $rowc04 = mysqli_fetch_array($qur04);
+                        $good_trace_id = $rowc04["good_bad_pieces_id"];
+
+                        $query1 = sprintf("SELECT good_bad_pieces_id,good_image_name FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
+                        $qur1 = mysqli_query($db, $query1);
+                        $rowc1 = mysqli_fetch_array($qur1);
+                        $item_id = $rowc1['good_bad_pieces_id'];
+                        $image_name = $rowc1['good_image_name'];
+                        ?>
                         <td>
-                            <button type="button" id="edit" class="btn btn-info btn-xs"
-                                    data-id="<?php echo $rowc['good_bad_pieces_id']; ?>"
-                                    data-gbid="<?php echo $rowc['bad_pieces_id']; ?>"
-                                    data-seid="<?php echo $station_event_id; ?>"
-                                    data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                    data-defect_name="<?php echo $rowc['defect_name']; ?>"
-                                    data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>"
-                                    data-re_work="<?php echo $rowc['rework']; ?>"
-                                    data-toggle="modal" style="background-color:#1e73be;"
-                                    data-target="#edit_modal_theme_primary">Edit </button>
-                            <!--									&nbsp;
-                                                                                                                                <button type="button" id="delete" class="btn btn-danger btn-xs" data-id="<?php echo $rowc['user_rating_id']; ?>">Delete </button>
-                                                        -->
+<!--                            <button type="button" id="edit" class="btn btn-info btn-xs"-->
+<!--                                    data-id="--><?php //echo $rowc['good_bad_pieces_id']; ?><!--"-->
+<!--                                    data-gbid="--><?php //echo $rowc['bad_pieces_id']; ?><!--"-->
+<!--                                    data-seid="--><?php //echo $station_event_id; ?><!--"-->
+<!--                                    data-good_pieces="--><?php //echo $rowc['good_pieces']; ?><!--"-->
+<!--                                    data-defect_name="--><?php //echo $rowc['defect_name']; ?><!--"-->
+<!--                                    data-bad_pieces="--><?php //echo $rowc['bad_pieces']; ?><!--"-->
+<!--                                    data-re_work="--><?php //echo $rowc['rework']; ?><!--"-->
+<!--                                    data-image="--><?php //echo $item_id; ?><!--"-->
+<!--                                    data-image_name="--><?php //echo $image_name; ?><!--"-->
+<!--                                    data-toggle="modal" style="background-color:#1e73be;"-->
+<!--                                    data-target="#edit_modal_theme_primary">Edit </button>-->
+                         <a href="edit_good_piece.php?station_event_id=<?php echo $station_event_id ; ?>"  class="btn btn-info btn-xs">Edit</a>
                         </td>
                     </tr>
 				<?php } ?>
@@ -721,10 +783,62 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Image * : </label>
+                                    <div class="col-lg-8">
+                                        <input type="file" id="file-input" name="edit_file[]" class="form-control" onchange="preview_image();" multiple="multiple"/>
+                                        <div class="container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <label class="col-lg-4 control-label">Previous Image : </label>
+                                  <div class="col-lg-8">
+                                <?php
+                                $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                                $rowc04 = mysqli_fetch_array($qur04);
+                                $good_trace_id = $rowc04["good_bad_pieces_id"];
 
-                        <input type="hidden" name="edit_id" id="edit_id" >
+                                $query1 = sprintf("SELECT good_bad_pieces_id FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
+                                $qur1 = mysqli_query($db, $query1);
+                                $rowc1 = mysqli_fetch_array($qur1);
+                                $item_id = $rowc1['good_bad_pieces_id'];
+
+                                $query2 = sprintf("SELECT * FROM  good_piece_images where good_bad_pieces_id = '$item_id'");
+
+                                $qurimage = mysqli_query($db, $query2);
+                                $i =0 ;
+                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                    $image = $rowcimage['good_image_name'];
+                                    $d_tag = "delete_image_" . $i;
+                                    $r_tag = "remove_image_" . $i;
+                                    ?>
+
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="thumbnail">
+                                            <div class="thumb">
+                                                <img src="../assets/images/good_piece_image/<?php echo $image; ?>"
+                                                     alt="">
+                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['good_image_id']; ?>">
+                                                <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    $i++;} ?>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_trace_id; ?>">
                         <input type="hidden" name="edit_gbid" id="edit_gbid" >
                         <input type="hidden" name="edit_seid" id="edit_seid" >
+                        <input type="hidden" name="good_bad_piece_id" id="good_bad_piece_id" value="<?php echo $good_trace_id; ?>">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -1008,10 +1122,12 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         var editdefect_name = $(this).data("defect_name");
         var editbad_name = $(this).data("bad_pieces");
         var editre_work = $(this).data("re_work");
+        var edit_image = $(this).data("data-image");
         $("#editgood_name").val(editgood_name);
         $("#editdefect_name").val(editdefect_name);
         $("#editbad_name").val(editbad_name);
         $("#editre_work").val(editre_work);
+        $("#editimage").val(edit_image);
         $("#edit_id").val(edit_id);
         $("#edit_gbid").val(edit_gbid);
         $("#edit_seid").val(edit_seid);
@@ -1107,6 +1223,133 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         });
     }
 </script>
+<script>
+    // Upload
+
+    $("#file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_good_bad_piece_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.container .content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
+    });
+
+
+    // Remove file
+    $('.container').on('click', '.content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_good_bad_piece_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = 'content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+<script>
+
+    $("#file-input").on("change", function(e) {
+        var files = e.target.files,
+            filesLength = files.length;
+        for (var i = 0; i < filesLength; i++) {
+            var f = files[i]
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+                var file = e.target;
+                $("<span class=\"pip\">" +
+                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<br/><span class=\"remove\">Remove image</span>" +
+                    "</span>").insertAfter("#file-input");
+                $(".remove").click(function(){
+                    $(this).parent(".pip").remove();
+                });
+
+            });
+            fileReader.readAsDataURL(f);
+        }
+    });
+
+    function previewImages() {
+        $("#preview").html(" ");
+        var preview = document.querySelector('#preview');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+
+            // Make sure `file.name` matches our extensions criteria
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                return alert(file.name + " is not an image");
+            } // else...
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function() {
+                var image = new Image();
+                image.height = 100;
+                image.title  = file.name;
+                image.src    = this.result;
+                preview.appendChild(image);
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+
+    }
+
+    document.querySelector('#file-input').addEventListener("change", previewImages);
+</script>
+
 <?php include('../footer.php') ?>
 <!--<script type="text/javascript" src="../assets/js/core/app.js">-->
 </body>
