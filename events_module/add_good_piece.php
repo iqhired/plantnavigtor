@@ -78,7 +78,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>-->
 
 
     <!--scan the qrcode -->
@@ -186,64 +186,64 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
 
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Image : </label>
-                                <div class="col-md-6">
-                                    <?php if(($idd == 0)){?>
-                                        <div id="my_camera"></div>
-                                        <br/>
-                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
-                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                    <?php } ?>
-                                    <?php if(($idd != 0)){?>
-                                        <div style="display:none;" id="my_camera"></div>
-                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>
-                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                        <div class="container"></div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div class="row" style="display: none">
-                                <label class="col-lg-2 control-label">Captured Image : </label>
-                                <div class="col-md-6">
-                                    <div id="results"></div>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <label class="col-lg-2 control-label">Previous Image : </label>
-                                <div class="col-md-6">
-                                    <?php
-                                    $time_stamp = $_SESSION['good_timestamp_id'];
-                                    if(!empty($time_stamp)){
-                                        $query2 = sprintf("SELECT * FROM good_piece_images where good_bad_pieces_id = '$time_stamp'");
-
-                                        $qurimage = mysqli_query($db, $query2);
-                                        $i =0 ;
-                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                            $image = $rowcimage['good_image_name'];
-                                            $mime_type = "image/gif";
-                                            $file_content = file_get_contents("$image");
-                                            $d_tag = "delete_image_" . $i;
-                                            $r_tag = "remove_image_" . $i;
-                                            ?>
-
-                                            <div class="col-lg-3 col-sm-6">
-                                                <div class="thumbnail">
-                                                    <div class="thumb">
-                                                        <?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
-
-                                                        <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['good_image_id']; ?>">
-                                                        <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php
-                                            $i++;}
-                                    }
-                                    ?>
-                                </div>
-                            </div>
+<!--                            <div class="row">-->
+<!--                                <label class="col-lg-2 control-label">Image : </label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    --><?php //if(($idd == 0)){?>
+<!--                                        <div id="my_camera"></div>-->
+<!--                                        <br/>-->
+<!--                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">-->
+<!--                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>-->
+<!--                                    --><?php //} ?>
+<!--                                    --><?php //if(($idd != 0)){?>
+<!--                                        <div style="display:none;" id="my_camera"></div>-->
+<!--                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>-->
+<!--                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>-->
+<!--                                        <div class="container"></div>-->
+<!--                                    --><?php //} ?>
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row" style="display: none">-->
+<!--                                <label class="col-lg-2 control-label">Captured Image : </label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    <div id="results"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                            <div class="row">-->
+<!--                                <label class="col-lg-2 control-label">Previous Image : </label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    --><?php
+//                                    $time_stamp = $_SESSION['good_timestamp_id'];
+//                                    if(!empty($time_stamp)){
+//                                        $query2 = sprintf("SELECT * FROM good_piece_images where good_bad_pieces_id = '$time_stamp'");
+//
+//                                        $qurimage = mysqli_query($db, $query2);
+//                                        $i =0 ;
+//                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
+//                                            $image = $rowcimage['good_image_name'];
+//                                            $mime_type = "image/gif";
+//                                            $file_content = file_get_contents("$image");
+//                                            $d_tag = "delete_image_" . $i;
+//                                            $r_tag = "remove_image_" . $i;
+//                                            ?>
+<!---->
+<!--                                            <div class="col-lg-3 col-sm-6">-->
+<!--                                                <div class="thumbnail">-->
+<!--                                                    <div class="thumb">-->
+<!--                                                        --><?php //echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
+<!---->
+<!--                                                        <input type="hidden"  id="--><?php //echo $d_tag; ?><!--" name="--><?php //echo $d_tag; ?><!--" class="--><?php //echo $d_tag; ?><!-- >"--> <!--value="--><?php //echo $rowcimage['good_image_id']; ?><!--">-->
+<!--                                                        <span class="remove remove_image" id="--><?php //echo $r_tag; ?><!--">Remove Image </span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            --><?php
+//                                            $i++;}
+//                                    }
+//                                    ?>
+<!--                                </div>-->
+<!--                            </div>-->
                             <br/>
                             <hr/>
 
@@ -265,33 +265,33 @@ include("../heading_banner.php");
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script>
-    Webcam.set({
-        width: 290,
-        height: 190,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
-    var camera = document.getElementById("my_camera");
-    Webcam.attach( camera );
-</script>
-<script>
-    function take_snapshot() {
-        Webcam.snap( function(data_uri) {
-            var formData =  $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            $.ajax({
-                url: "good_piece_cam_backend.php",
-                type: "POST",
-                data: formData,
-                success: function (msg) {
-                    window.location.reload()
-                },
-
-            });
-        });
-    }
-</script>
+<!--<script>-->
+<!--    Webcam.set({-->
+<!--        width: 290,-->
+<!--        height: 190,-->
+<!--        image_format: 'jpeg',-->
+<!--        jpeg_quality: 90-->
+<!--    });-->
+<!--    var camera = document.getElementById("my_camera");-->
+<!--    Webcam.attach( camera );-->
+<!--</script>-->
+<!--<script>-->
+<!--    function take_snapshot() {-->
+<!--        Webcam.snap( function(data_uri) {-->
+<!--            var formData =  $(".image-tag").val(data_uri);-->
+<!--            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';-->
+<!--            $.ajax({-->
+<!--                url: "good_piece_cam_backend.php",-->
+<!--                type: "POST",-->
+<!--                data: formData,-->
+<!--                success: function (msg) {-->
+<!--                    window.location.reload()-->
+<!--                },-->
+<!---->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     // Upload
