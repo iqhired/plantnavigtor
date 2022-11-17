@@ -22,6 +22,7 @@ $html2 = preg_replace("/\\\\u([0-9A-F]{2,5})/i", "&#x$1;", $text2);
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="5" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo $sitename; ?> | NPR Dashboard</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
