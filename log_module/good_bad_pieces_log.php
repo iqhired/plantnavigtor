@@ -1353,8 +1353,8 @@ include("../heading_banner.php");
 
                 var series1 = chart.column([
                     {x: 'Shift-1', value: good_pieces, fill: '#177b09'},
-                    {x: 'Shift-2', value: good_pieces1, fill: '#FFA500'},
-                    {x: 'Shift-3', value: good_pieces2, fill: '#A020F0'}
+                    {x: 'Shift-2', value: good_pieces1, fill: '#177b09'},
+                    {x: 'Shift-3', value: good_pieces2, fill: '#177b09'}
                 ]);
                 series1.name('Good Pieces');
 
@@ -1363,8 +1363,8 @@ include("../heading_banner.php");
 
                 var series2 = chart.column([
                     {x: 'Shift-1', value: bad_pieces, fill: '#BE0E31'},
-                    {x: 'Shift-2', value: bad_pieces1, fill: '#87CEEB'},
-                    {x: 'Shift-3', value: bad_pieces2, fill: '#FF1493'}
+                    {x: 'Shift-2', value: bad_pieces1, fill: '#BE0E31'},
+                    {x: 'Shift-3', value: bad_pieces2, fill: '#BE0E31'}
                 ]);
                 series2.name('Bad Pieces');
 
@@ -1373,8 +1373,8 @@ include("../heading_banner.php");
 
                 var series3 = chart.column([
                     {x: 'Shift-1', value: rework, fill: '#2643B9'},
-                    {x: 'Shift-2', value: rework1, fill: '#12AD2B'},
-                    {x: 'Shift-3', value: rework2, fill: '#808080'}
+                    {x: 'Shift-2', value: rework1, fill: '#2643B9'},
+                    {x: 'Shift-3', value: rework2, fill: '#2643B9'}
                 ]);
 
                 series3.name('Rework');
