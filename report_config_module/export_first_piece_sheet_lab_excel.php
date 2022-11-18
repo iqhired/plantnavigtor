@@ -3,9 +3,9 @@ ob_start();
 //ini_set('display_errors', 'off');
 //session_start();
 include '../config.php';
-$chicagotime = date('m-d-Y', strtotime('-2 days'));
+$chicagotime = date('m-d-Y', strtotime('-1 days'));
 //$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$chicagotime2 = date('m-d-Y', strtotime('-2 days'));
+$chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
