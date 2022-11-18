@@ -451,7 +451,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                 </div>
             </div>
-            <div class="row"  style="padding-top: 10px;">
+            <div class="row"  >
 				<?php
 				$i = 1;
 				$def_list_arr = array();
@@ -476,7 +476,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 				$result1 = $mysqli->query($sql1);
 				while ($row1 = $result1->fetch_assoc()) {
 					?>
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="padding-top: 10px;">
                         <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
                                 data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
                             <?php echo $row1['defect_list_name']; ?></a>
