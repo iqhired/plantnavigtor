@@ -94,20 +94,20 @@ if ($button == "button1") {
 	$wc = $wc . " and DATE_FORMAT(`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(`created_at`,'%Y-%m-%d') <= '$dateto' ";
 }
 if($_POST['fa_op'] == 1){
-	$sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
-	$response = array();
-	$posts = array();
-	$result = mysqli_query($db,$sql);
+    $sql = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
+    $response = array();
+    $posts = array();
+    $result = mysqli_query($db,$sql);
 //$result = $mysqli->query($sql);
-	$data =array();
-	if( null != $result){
-		while ($row=$result->fetch_assoc()){
-			$posts[] = array('good_pieces'=> $row['good_pieces'], 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework']);
-		}
-	}
+    $data =array();
+    if( null != $result){
+        while ($row=$result->fetch_assoc()){
+            $posts[] = array('good_pieces'=> $row['good_pieces'], 'bad_pieces'=> $row['bad_pieces'], 'rework'=> $row['rework']);
+        }
+    }
 
-	$response['posts'] = $posts;
-	echo json_encode($response);
+    $response['posts'] = $posts;
+    echo json_encode($response);
 }else if($_POST['fa_op'] == 0){
 	$sql1 = "SELECT good_bad_pieces_details.defect_name,SUM(good_bad_pieces_details.bad_pieces) AS bad_pieces FROM `good_bad_pieces_details` INNER JOIN sg_station_event ON good_bad_pieces_details.station_event_id = sg_station_event.station_event_id WHERE defect_name IS NOT NULL " . $wc . " group by good_bad_pieces_details.defect_name order by bad_pieces desc";
 	$response1 = array();
@@ -264,5 +264,41 @@ if($_POST['fa_op'] == 1){
 
     $response['posts'] = $posts;
     echo json_encode($response);
+}else if($_POST['fa_op'] == 5) {
+    $sql11 = "SELECT SUM(`npr_g`) AS good_pieces,SUM(`npr_b`)AS bad_pieces,SUM(`npr_rework`) AS rework FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 00 and npr_h < 08 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $result11 = mysqli_query($db,$sql11);
+    while ($row11=$result11->fetch_assoc()){
+        $good_pieces = $row11['good_pieces'];
+        $bad_pieces = $row11['bad_pieces'];
+        $rework = $row11['rework'];
+    }
+    $sql21 = "SELECT SUM(`npr_g`) AS good_pieces1,SUM(`npr_b`)AS bad_pieces1,SUM(`npr_rework`) AS rework1 FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 08 and npr_h < 16 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $result21 = mysqli_query($db,$sql21);
+    while ($row21=$result21->fetch_assoc()){
+        $good_pieces1 = $row21['good_pieces1'];
+        $bad_pieces1 = $row21['bad_pieces1'];
+        $rework1 = $row21['rework1'];
+    }
+
+    $sql31 = "SELECT SUM(`npr_g`) AS good_pieces2,SUM(`npr_b`)AS bad_pieces2,SUM(`npr_rework`) AS rework2 FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 16 and npr_h <= 23 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $response = array();
+    $posts = array();
+    $result31 = mysqli_query($db,$sql31);
+//$result = $mysqli->query($sql);
+    $data =array();
+    if( null != $result31){
+        while ($row31=$result31->fetch_assoc()){
+            $good_pieces2 = $row31['good_pieces2'];
+            $bad_pieces2 = $row31['bad_pieces2'];
+            $rework2 = $row31['rework2'];
+            $posts[] = array('good_pieces'=> $good_pieces, 'bad_pieces'=> $bad_pieces, 'rework'=> $rework,
+                'good_pieces1'=> $good_pieces1, 'bad_pieces1'=> $bad_pieces1, 'rework1'=> $rework1,
+                'good_pieces2'=> $good_pieces2, 'bad_pieces2'=> $bad_pieces2, 'rework2'=> $rework2);
+        }
+    }
+
+    $response['posts'] = $posts;
+    echo json_encode($response);
+
 }
 
