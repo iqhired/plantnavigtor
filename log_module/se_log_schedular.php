@@ -130,16 +130,24 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 						$crea_date = explode(' ', $d_sql['created_on']);
 						$etime_date = explode(' ', $d_sql['end_time']);
 						$next_date = $crea_date[0];
-						if($z > 2){
+						if($z > 1){
 							$loop_tot_time = $loop_tot_time - $rem_day_time - (24 * ($z - 2));
-						}
-						$cr_time = $start_time + $loop_tot_time;
-						if ($cr_time > 24) {
-							$end_time2 = $crea_date[0] . ' ' . '23:59:59';
-							$sql_up = "update sg_station_event_log_update set total_time = '$rem_day_time' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
-							$result_up = mysqli_query($db, $sql_up);
-							$z++;
+						}else{
 							$loop_tot_time = $loop_tot_time - $rem_day_time;
+						}
+						if ($loop_tot_time > 24) {
+							$end_time2 = $crea_date[0] . ' ' . '23:59:59';
+							if($rem_day_time != 0 ){
+								$sql_up = "update sg_station_event_log_update set total_time = '$rem_day_time' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
+								$result_up = mysqli_query($db, $sql_up);
+								$loop_tot_time = $loop_tot_time - $rem_day_time;
+								$rem_day_time = 0;
+							}else{
+								$sql_up = "update sg_station_event_log_update set total_time = '24' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
+								$result_up = mysqli_query($db, $sql_up);
+								$loop_tot_time = $loop_tot_time - 24;
+							}
+							$z++;
 						} else {
 							$end_time2 = $current_time;
 							$loop_tot_time = round($loop_tot_time, 2);
