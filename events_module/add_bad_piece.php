@@ -266,8 +266,8 @@ include("../heading_banner.php");
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                        <div class="container"></div>
-                                    <?php } ?>
+                                        <!--                                        <div class="container"></div>-->
+									<?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -280,10 +280,11 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Previous Image : </label>
                                 <div class="col-md-6">
-                                    <?php
-                                    $time_stamp = $_SESSION['good_timestamp_id'];
-                                    if(!empty($time_stamp)){
-                                        $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+                                    <div class="container"></div>
+									<?php
+									$time_stamp = $_SESSION['good_timestamp_id'];
+									if(!empty($time_stamp)){
+										$query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
 
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;
