@@ -11,7 +11,7 @@ if($request == 1){
     $file_tmp = $_FILES['file']['tmp_name'];
     $file_type = $_FILES['file']['type'];
     /* Location */
-    $location = "../assets/images/good_piece_image/";
+    $location = "../assets/images/bad_piece_image/";
     $uploadOk = 1;
     $imageFileType = pathinfo($filename,PATHINFO_EXTENSION);
     $gp_timestamp = time();

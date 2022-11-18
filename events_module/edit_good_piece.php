@@ -78,7 +78,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>-->
+
 
 
     <!--scan the qrcode -->
@@ -150,31 +150,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
         }
         #results { padding:20px; border:1px solid; background:#ccc; }
 
-        input[type="file"] {
-            display: block;
-        }
-        .imageThumb {
-            max-height: 100px;
-            border: 2px solid;
-            padding: 1px;
-            cursor: pointer;
-        }
-        .pip {
-            display: inline-block;
-            margin: 10px 10px 0 0;
-        }
-        .remove {
-            display: block;
-            background: #444;
-            border: 1px solid black;
-            color: white;
-            text-align: center;
-            cursor: pointer;
-        }
-        .remove:hover {
-            background: white;
-            color: black;
-        }
+
     </style>
 </head>
 <body onload="openScanner()">
@@ -189,224 +165,61 @@ include("../heading_banner.php");
 <!-- Page container -->
 <div class="page-container">
     <!-- Page content -->
-    <?php $station_event_id = $_GET['station_event_id'];
-    $sql_query = "select * from good_bad_pieces where station_event_id = '$station_event_id'";
-    $row_good = mysqli_query($db,$sql_query);
-    while($result_good = mysqli_fetch_array($row_good)){
+    <?php
+    $station_event_id = $_GET['station_event_id'];
+    $bad_pieces_id = $_GET['bad_pieces_id'];
+    $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' AND gbpd.bad_pieces_id = '$bad_pieces_id' order by gbpd.bad_pieces_id DESC");
+    $qur = mysqli_query($db, $query);
+    while ($result_good = mysqli_fetch_array($qur)) {
         $good_pieces = $result_good['good_pieces'];
         $good_bad_pieces_id = $result_good['good_bad_pieces_id'];
-        $station_event_id = $result_good['station_event_id'];
+        $bad_pieces_id = $result_good['bad_pieces_id'];
 
-    ?>
-    <!-- Content area -->
-    <div class="content">
-        <!-- Main charts -->
-        <!-- Basic datatable -->
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-                <h5 class="panel-title">Update Good Piece</h5><br/>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
-                              class="form-horizontal" method="post">
+        ?>
+        <!-- Content area -->
+        <div class="content">
+            <!-- Main charts -->
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Update Good Piece</h5><br/>
+                    <div class="row">
+                        <div class="col-md-12" id="goodpiece">
+                            <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
+                                  class="form-horizontal" method="post">
 
-                            <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
-                                   value="<?php echo $station_event_id; ?>" >
-                            <div class="row">
-                                <label class="col-lg-2 control-label">No of Pieces : </label>
-                                <div class="col-md-6">
-                                    <input type="number" name="editgood_name" id="editgood_name" class="form-control" placeholder="Enter Pieces..." value="<?php echo $good_pieces; ?>" required>
+                                <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
+                                       value="<?php echo $station_event_id; ?>" >
+                                <div class="row">
+                                    <label class="col-lg-2 control-label">Good Pieces * : : </label>
+                                    <div class="col-md-6">
+                                        <input type="number" name="editgood_name" min="1" id="editgood_name" class="form-control" placeholder="Enter Pieces..." value="<?php echo $good_pieces; ?>" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <br/>
+                                <br/>
 
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    --><?php //if(($idd == 0)){?>
-<!--                                        <div id="my_camera"></div>-->
-<!--                                        <br/>-->
-<!--                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot(--><?php //echo $station_event_id; ?><!--)">-->
-<!--                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>-->
-<!--                                    --><?php //} ?>
-<!--                                    --><?php //if(($idd != 0)){?>
-<!--                                        <div style="display:none;" id="my_camera"></div>-->
-<!--                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>-->
-<!--                                        <input type="file" name="edit_image[]" id="file-input" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>-->
-<!--                                        <div class="container"></div>-->
-<!--                                    --><?php //} ?>
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row" style="display: none">-->
-<!--                                <label class="col-lg-2 control-label">Captured Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div id="results"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <br/>-->
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">Previous Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    --><?php
-//                                    $time_stamp = $_SESSION['good_timestamp_id'];
-//                                    if(!empty($time_stamp)){
-//                                        $query2 = sprintf("SELECT * FROM good_piece_images where good_bad_pieces_id = '$station_event_id'");
-//
-//                                        $qurimage = mysqli_query($db, $query2);
-//                                        $i =0 ;
-//                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-//                                            $image = $rowcimage['good_image_name'];
-//                                            $mime_type = "image/gif";
-//                                            $file_content = file_get_contents("$image");
-//                                            $d_tag = "delete_image_" . $i;
-//                                            $r_tag = "remove_image_" . $i;
-//                                            ?>
-<!---->
-<!--                                            <div class="col-lg-3 col-sm-6">-->
-<!--                                                <div class="thumbnail">-->
-<!--                                                    <div class="thumb">-->
-<!--                                                        --><?php //echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
-<!--                                                        <input type="hidden"  id="--><?php //echo $d_tag; ?><!--" name="--><?php //echo $d_tag; ?><!--" class="--><?php //echo $d_tag; ?><!-- >" value="--><?php //echo $rowcimage['good_image_id']; ?><!--">-->
-<!--                                                        <span class="remove remove_image" id="--><?php //echo $r_tag; ?><!--">Remove Image </span>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            --><?php
-//                                            $i++;}
-//                                    }
-//                                    ?>
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <br/>-->
-                           <?php $station_event_id = $_GET['station_event_id'];
-                            $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
-                            $qur = mysqli_query($db, $query);
-                            while ($rowc = mysqli_fetch_array($qur)) {
-                            $style = "";
-                            if($rowc['good_pieces'] != ""){
-                            $style = "style='background-color:#a8d8a8;'";
-                            }
-                            if($rowc['bad_pieces'] != ""){
-                            $style = "style='background-color:#eca9a9;'";
-                            }
-                            if($rowc['rework'] != ""){
-                            $style = "style='background-color:#b1cdff;'";
-                            }
-                            ?>
-                            <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_bad_pieces_id; ?>">
-                            <input type="hidden" name="edit_gbid" id="edit_gbid" value="<?php echo $rowc['bad_pieces_id']; ?>">
-                            <input type="hidden" name="edit_seid" id="edit_seid" value="<?php echo $station_event_id; ?>">
-                            <input type="hidden" name="good_bad_piece_id" id="good_bad_piece_id" value="<?php echo $good_bad_pieces_id; ?>">
-                            <?php } ?>
-                            <hr/>
+                                <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_bad_pieces_id; ?>">
+                                <input type="hidden" name="edit_gbid" id="edit_gbid" value="<?php echo $result_good['bad_pieces_id']; ?>">
+                                <input type="hidden" name="edit_seid" id="edit_seid" value="<?php echo $station_event_id; ?>">
+                                <input type="hidden" name="good_bad_piece_id" id="good_bad_piece_id" value="<?php echo $good_bad_pieces_id; ?>">
 
+                                <hr/>
+
+                        </div>
                     </div>
                 </div>
+
+
+                <div class="panel-footer p_footer">
+                    <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
+                            style="background-color:#1e73be;">Submit
+                    </button>
+                </div>
+                </form>
             </div>
-
-
-            <div class="panel-footer p_footer">
-
-                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
-                        style="background-color:#1e73be;">Submit
-                </button>
-
-            </div>
-            </form>
         </div>
-    </div>
-   <?php } ?>
+    <?php } ?>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<!--<script>-->
-<!--    Webcam.set({-->
-<!--        width: 290,-->
-<!--        height: 190,-->
-<!--        image_format: 'jpeg',-->
-<!--        jpeg_quality: 90-->
-<!--    });-->
-<!--    var camera = document.getElementById("my_camera");-->
-<!--    Webcam.attach( camera );-->
-<!--</script>-->
-<!--<script>-->
-<!--    function take_snapshot(id) {-->
-<!--        Webcam.snap( function(data_uri) {-->
-<!--            var formData =  $(".image-tag").val(data_uri);-->
-<!--            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';-->
-<!--            $.ajax({-->
-<!--                url: "good_piece_cam_backend.php?station_event_id="+id,-->
-<!--                type: "POST",-->
-<!--                data: formData,-->
-<!--                success: function () {-->
-<!--                    window.location.reload()-->
-<!--                },-->
-<!---->
-<!--            });-->
-<!---->
-<!--        } );-->
-<!--    }-->
-<!--</script>-->
-
-
-<script>
-    $(document).on('click', '.remove_image', function () {
-        var del_id = this.id.split("_")[2];
-        var x_img_id = this.parentElement.childNodes[3].value;
-        var info =  document.getElementById("delete_image"+del_id);
-        var info =  "id="+del_id+"&10x_id="+ x_img_id;
-        $.ajax({
-            type: "POST",
-            url: "delete_good_piece_image.php",
-            data: info,
-            success: function (data) {
-            }
-        });
-        window.location.reload()
-    });
-</script>
-<script>
-
-    $("#file-input").on("change", function(e) {
-        var files = e.target.files,
-            filesLength = files.length;
-        for (var i = 0; i < filesLength; i++) {
-            var f = files[i]
-            var fileReader = new FileReader();
-            fileReader.onload = (function(e) {
-                var file = e.target;
-                $("<span class=\"pip\">" +
-                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                    "<br/><span class=\"remove\">Remove image</span>" +
-                    "</span>").insertAfter("#file-input");
-                $(".remove").click(function(){
-                    $(this).parent(".pip").remove();
-                });
-
-
-
-            });
-            fileReader.readAsDataURL(f);
-        }
-    });
-
-</script>
-
-<script>
-    $(document).on('click', '.remove_image', function () {
-        var del_id = this.id.split("_")[2];
-        var x_img_id = this.parentElement.childNodes[3].value;
-        var info =  document.getElementById("delete_image"+del_id);
-        var info =  "id="+del_id+"&station_event_id="+ x_img_id;
-        $.ajax({
-            type: "POST",
-            url: "delete_good_piece_image.php",
-            data: info,
-            success: function (data) {
-            }
-        });
-        location.reload(true);
-    });
-</script>
 
 <script>
     $(document).ready(function () {
@@ -417,7 +230,7 @@ include("../heading_banner.php");
 </script>
 <script>
     window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>");
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id; ?>");
     }
 </script>
 <?php include ('../footer.php') ?>

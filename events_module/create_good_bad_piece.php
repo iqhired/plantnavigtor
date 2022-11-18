@@ -237,29 +237,7 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                     $_SESSION['message_stauts_class'] = 'alert-success';
                     $_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 
-                    $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
-                    $rowc04 = mysqli_fetch_array($qur04);
-                    $good_trace_id = $rowc04["good_bad_pieces_id"];
 
-                    if ($good_trace_id > 0) {
-                        $temp_gid = $_SESSION['temp_gp_id'];
-                        $gid_arr = explode(',', $temp_gid);
-                        $g_str = '';
-                        $i = 0;
-                        foreach ($gid_arr as $gid) {
-                            if (($i == 0) && ($gid != "")) {
-                                $g_str = '\'' . $gid . '\'';
-                                $i++;
-                            } else if ($gid != "") {
-                                $g_str .= ',' . '\'' . $gid . '\'';
-                            }
-                        }
-                        $sql = "update `good_piece_images` SET good_bad_pieces_id = '$good_trace_id' where good_bad_pieces_id in ($g_str)";
-                        $result1 = mysqli_query($db, $sql);
-                        if ($result1) {
-                            $_SESSION['temp_gp_id'] = '';
-                        }
-                    }
                 }
             } else {
                 $good_pieces = $g + $good_name;
@@ -321,35 +299,7 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                     $_SESSION['message_stauts_class'] = 'alert-danger';
                     $_SESSION['import_status_message'] = 'Error: Please Retry';
                 }
-                $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
-                $rowc04 = mysqli_fetch_array($qur04);
-                $good_trace_id = $rowc04["good_bad_pieces_id"];
-                $station_event_id = $rowc04["station_event_id"];
 
-                $gs = $_SESSION['good_timestamp_id'];
-                $folderPath =  "../assets/images/good_piece_image/".$gs;
-                $newfolder = "../assets/images/good_piece_image/".$station_event_id;
-
-                if ($good_trace_id > 0) {
-                    $temp_gid = $_SESSION['temp_gp_id'];
-                    $gid_arr = explode(',', $temp_gid);
-                    $g_str = '';
-                    $i = 0;
-                    foreach ($gid_arr as $gid) {
-                        if (($i == 0) && ($gid != "")) {
-                            $g_str = '\'' . $gid . '\'';
-                            $i++;
-                        } else if ($gid != "") {
-                            $g_str .= ',' . '\'' . $gid . '\'';
-                        }
-                    }
-                    rename( $folderPath, $newfolder) ;
-                    $sql = "update `good_piece_images` SET station_event_id = '$station_event_id' where station_event_id = '$gs'";
-                    $result1 = mysqli_query($db, $sql);
-                    if ($result1) {
-                        $_SESSION['temp_gp_id'] = '';
-                    }
-                }
             }
         }
 }
@@ -565,6 +515,37 @@ else if($good_bad_piece_name != "")
 				$_SESSION['message_stauts_class'] = 'alert-danger';
 				$_SESSION['import_status_message'] = 'Error: Please Retry';
 			}
+
+            $qur04 = mysqli_query($db, "SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC LIMIT 1");
+            $rowc04 = mysqli_fetch_array($qur04);
+            $bad_trace_id = $rowc04["bad_pieces_id"];
+
+
+            $gs = $_SESSION['good_timestamp_id'];
+            $folderPath =  "../assets/images/bad_piece_image/".$gs;
+            $newfolder = "../assets/images/bad_piece_image/".$bad_trace_id;
+
+            if ($bad_trace_id > 0) {
+                $temp_gid = $_SESSION['temp_gp_id'];
+                $gid_arr = explode(',', $temp_gid);
+                $g_str = '';
+                $i = 0;
+                foreach ($gid_arr as $gid) {
+                    if (($i == 0) && ($gid != "")) {
+                        $g_str = '\'' . $gid . '\'';
+                        $i++;
+                    } else if ($gid != "") {
+                        $g_str .= ',' . '\'' . $gid . '\'';
+                    }
+                }
+                rename( $folderPath, $newfolder) ;
+                $sql = "update `good_piece_images` SET station_event_id = '$bad_trace_id' where station_event_id = '$gs'";
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+                    $_SESSION['temp_gp_id'] = '';
+                }
+            }
+
 		}
 		else
 		{
@@ -578,6 +559,36 @@ else if($good_bad_piece_name != "")
 				$_SESSION['message_stauts_class'] = 'alert-success';
 				$_SESSION['import_status_message'] = 'Bad Pieces Added Sucessfully.';
 			}
+
+            $qur04 = mysqli_query($db, "SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC LIMIT 1");
+            $rowc04 = mysqli_fetch_array($qur04);
+            $bad_trace_id = $rowc04["bad_pieces_id"];
+
+
+            $gs = $_SESSION['good_timestamp_id'];
+            $folderPath =  "../assets/images/bad_piece_image/".$gs;
+            $newfolder = "../assets/images/bad_piece_image/".$bad_trace_id;
+
+            if ($bad_trace_id > 0) {
+                $temp_gid = $_SESSION['temp_gp_id'];
+                $gid_arr = explode(',', $temp_gid);
+                $g_str = '';
+                $i = 0;
+                foreach ($gid_arr as $gid) {
+                    if (($i == 0) && ($gid != "")) {
+                        $g_str = '\'' . $gid . '\'';
+                        $i++;
+                    } else if ($gid != "") {
+                        $g_str .= ',' . '\'' . $gid . '\'';
+                    }
+                }
+                rename( $folderPath, $newfolder) ;
+                $sql = "update `good_piece_images` SET station_event_id = '$bad_trace_id' where station_event_id = '$gs'";
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+                    $_SESSION['temp_gp_id'] = '';
+                }
+            }
 		}
 	}
 	else
@@ -672,43 +683,7 @@ else if($good_bad_piece_name != "")
 			}
 		}
 
-        if($edit_file != "") {
 
-            if (isset($_FILES['edit_image'])) {
-                $totalfiles = count($_FILES['edit_image']['name']);
-                if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
-                    for($i=0;$i<$totalfiles;$i++){
-                        $errors = array();
-                        $file_name = $_FILES['edit_image']['name'][$i];
-                        $file_rename = $g_timestamp.'_'.$file_name;
-                        $file_size = $_FILES['edit_image']['size'][$i];
-                        $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
-                        $file_type = $_FILES['edit_image']['type'][$i];
-                        $file_ext = strtolower(end(explode('.', $file_name)));
-                        $extensions = array("jpeg", "jpg", "png", "pdf");
-
-                        if (empty($errors) == true) {
-                            move_uploaded_file($file_tmp, "../assets/images/good_piece_image/" .$good_bad_pieces_id. '/'.$file_rename);
-
-                            $sql = "INSERT INTO `good_piece_images`(`good_bad_pieces_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
-                            $result1 = mysqli_query($db, $sql);
-                            if ($result1) {
-                                $message_stauts_class = 'alert-success';
-                                $import_status_message = 'Image Added Successfully.';
-                                $_SESSION['good_timestamp_id'] = '';
-                            } else {
-                                $message_stauts_class = 'alert-danger';
-                                $import_status_message = 'Error: Please Try Again.';
-                            }
-
-
-                        }
-
-                    }
-                }
-
-            }
-        }
 
 	}
 
@@ -730,12 +705,47 @@ else if($good_bad_piece_name != "")
 				$_SESSION['message_stauts_class'] = 'alert-danger';
 				$_SESSION['import_status_message'] = 'Error: Please Retry';
 			}
+            if($edit_file != "") {
+
+                if (isset($_FILES['edit_image'])) {
+                    $totalfiles = count($_FILES['edit_image']['name']);
+                    if($totalfiles > 0 && $_FILES['edit_image']['name'][0] !='' && $_FILES['edit_image']['name'][0] != null){
+                        for($i=0;$i<$totalfiles;$i++){
+                            $errors = array();
+                            $file_name = $_FILES['edit_image']['name'][$i];
+                            $file_rename = $g_timestamp.'_'.$file_name;
+                            $file_size = $_FILES['edit_image']['size'][$i];
+                            $file_tmp = $_FILES['edit_image']['tmp_name'][$i];
+                            $file_type = $_FILES['edit_image']['type'][$i];
+                            $file_ext = strtolower(end(explode('.', $file_name)));
+                            $extensions = array("jpeg", "jpg", "png", "pdf");
+
+                            if (empty($errors) == true) {
+                                move_uploaded_file($file_tmp, "../assets/images/bad_piece_image/" .$good_bad_pieces_id. '/'.$file_rename);
+
+                                $sql = "INSERT INTO `good_piece_images`(`good_bad_pieces_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
+                                $result1 = mysqli_query($db, $sql);
+                                if ($result1) {
+                                    $message_stauts_class = 'alert-success';
+                                    $import_status_message = 'Image Added Successfully.';
+                                    $_SESSION['good_timestamp_id'] = '';
+                                } else {
+                                    $message_stauts_class = 'alert-danger';
+                                    $import_status_message = 'Error: Please Try Again.';
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
 		}
 
 	}
-
-
-
 
 $page = "good_bad_piece.php?station_event_id=$station_event_id";
 header('Location: ' . $page, true, 303);

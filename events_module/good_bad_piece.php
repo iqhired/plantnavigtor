@@ -447,11 +447,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
 					<?php }?>
-                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>
-<!--                    <a href="--><?php //echo $siteURL; ?><!--events_module/add_good_piece.php?station_event_id=--><?php //echo $station_event_id; ?><!--"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>-->
+<!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
+                    <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row"  style="padding-top: 10px;">
 				<?php
 				$i = 1;
 				$def_list_arr = array();
@@ -477,8 +477,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 				while ($row1 = $result1->fetch_assoc()) {
 					?>
                     <div class="col-md-3">
-                        <button type="button" id="view" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>" data-toggle="modal"
-                                data-target="#view_modal_theme_primary"  data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 10vh; width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $row1['defect_list_name']; ?></button>
+                        <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
+                                data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
+                            <?php echo $row1['defect_list_name']; ?></a>
 
                     </div>
 					<?php
@@ -537,6 +538,10 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 				$query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
 				$qur = mysqli_query($db, $query);
 				while ($rowc = mysqli_fetch_array($qur)) {
+                    $bad_pieces_id = $rowc['bad_pieces_id'];
+                    $good_pieces = $rowc['good_pieces'];
+                    $bad_pieces = $rowc['bad_pieces'];
+                    $rework = $rowc['rework'];
 					$style = "";
 					if($rowc['good_pieces'] != ""){
 						$style = "style='background-color:#a8d8a8;'";
@@ -565,21 +570,36 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         $rowc1 = mysqli_fetch_array($qur1);
                         $item_id = $rowc1['good_bad_pieces_id'];
                         $image_name = $rowc1['good_image_name'];
+
                         ?>
                         <td>
-                            <button type="button" id="edit" class="btn btn-info btn-xs"
-                                    data-id="<?php echo $rowc['good_bad_pieces_id']; ?>"
-                                    data-gbid="<?php echo $rowc['bad_pieces_id']; ?>"
-                                    data-seid="<?php echo $station_event_id; ?>"
-                                    data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                    data-defect_name="<?php echo $rowc['defect_name']; ?>"
-                                    data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>"
-                                    data-re_work="<?php echo $rowc['rework']; ?>"
-                                    data-image="<?php echo $item_id; ?>"
-                                    data-image_name="<?php echo $image_name; ?>"
-                                    data-toggle="modal" style="background-color:#1e73be;"
-                                    data-target="#edit_modal_theme_primary">Edit </button>
-<!--                         <a href="edit_good_piece.php?station_event_id=--><?php //echo $station_event_id ; ?><!--"  class="btn btn-info btn-xs">Edit</a>-->
+<!--                            <button type="button" id="edit" class="btn btn-info btn-xs"-->
+<!--                                    data-id="--><?php //echo $rowc['good_bad_pieces_id']; ?><!--"-->
+<!--                                    data-gbid="--><?php //echo $rowc['bad_pieces_id']; ?><!--"-->
+<!--                                    data-seid="--><?php //echo $station_event_id; ?><!--"-->
+<!--                                    data-good_pieces="--><?php //echo $rowc['good_pieces']; ?><!--"-->
+<!--                                    data-defect_name="--><?php //echo $rowc['defect_name']; ?><!--"-->
+<!--                                    data-bad_pieces="--><?php //echo $rowc['bad_pieces']; ?><!--"-->
+<!--                                    data-re_work="--><?php //echo $rowc['rework']; ?><!--"-->
+<!--                                    data-image="--><?php //echo $item_id; ?><!--"-->
+<!--                                    data-image_name="--><?php //echo $image_name; ?><!--"-->
+<!--                                    data-toggle="modal" style="background-color:#1e73be;"-->
+<!--                                    data-target="#edit_modal_theme_primary">Edit </button>-->
+                         <?php   if($rowc['good_pieces'] != ""){ ?>
+                         <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                         </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
+                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                                data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                                data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                            </a>
+                            <?php } else{ ?>
+                            <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                            </a>
+                            <?php } ?>
                         </td>
                     </tr>
 				<?php } ?>
@@ -735,7 +755,6 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 </div>
                 <form action="" id="edit_form" class="form-horizontal" method="post">
                     <div class="modal-body">
-
                         <div class="row" id="goodpiece">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -1083,46 +1102,54 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
         if(editgood_name != "")
         {
-            $("#badpiece").hide();
-            $("#badpiece1").hide();
-            $("#badpiece2").hide();
-            $("#goodpiece").show();
+            // $("#badpiece").hide();
+            // $("#badpiece1").hide();
+            // $("#badpiece2").hide();
+            // $("#goodpiece").show();
+
+            window.location = "<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>";
+
+
         }else if(editbad_name != ""){
-            $("#badpiece").show();
-            $("#badpiece1").show();
-            $("#badpiece2").hide();
-            $("#goodpiece").hide();
+            // $("#badpiece").show();
+            // $("#badpiece1").show();
+            // $("#badpiece2").hide();
+            // $("#goodpiece").hide();
+            window.location = "<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
+
         }
         else if(editre_work != "")
         {
-            $("#badpiece").show();
-            $("#badpiece1").hide();
-            $("#badpiece2").show();
+            // $("#badpiece").show();
+            // $("#badpiece1").hide();
+            // $("#badpiece2").show();
+            //
+            // $("#goodpiece").hide();
+            window.location = "<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
 
-            $("#goodpiece").hide();
         }
     });
 </script>
-<script>
-    $("#checkAll").click(function () {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-    $('#generate').click(function () {
-        let r = Math.random().toString(36).substring(7);
-        $('#newpass').val(r);
-    })
+    <script>
+        $("#checkAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+        $('#generate').click(function () {
+            let r = Math.random().toString(36).substring(7);
+            $('#newpass').val(r);
+        })
 
-    $('#choose').on('change', function () {
-        var selected_val = this.value;
-        if (selected_val == 1 || selected_val == 2) {
-            $(".group_div").show();
-        } else {
-            $(".group_div").hide();
-        }
-    });
+        $('#choose').on('change', function () {
+            var selected_val = this.value;
+            if (selected_val == 1 || selected_val == 2) {
+                $(".group_div").show();
+            } else {
+                $(".group_div").hide();
+            }
+        });
 
 
-</script>
+    </script>
 <script>
     function submitForm_good(url) {
         $(':input[type="button"]').prop('disabled', true);

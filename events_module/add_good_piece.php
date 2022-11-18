@@ -78,7 +78,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
     <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>-->
+
 
 
     <!--scan the qrcode -->
@@ -118,37 +118,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                 float: right;
             }
         }
-        input[type="file"] {
-            display: block;
-        }
 
-        .container {
-            margin: 0 auto;
-        }
-
-        .content_img {
-            width: 113px;
-            float: left;
-            margin-right: 5px;
-            border: 1px solid gray;
-            border-radius: 3px;
-            padding: 5px;
-            margin-top: 10px;
-        }
-
-        /* Delete */
-        .content_img span {
-            border: 2px solid red;
-            display: inline-block;
-            width: 99%;
-            text-align: center;
-            color: red;
-        }
-
-        .content_img span:hover {
-            cursor: pointer;
-        }
-        #results { padding:20px; border:1px solid; background:#ccc; }
     </style>
 </head>
 <body onload="openScanner()">
@@ -186,65 +156,6 @@ include("../heading_banner.php");
                                 </div>
                                 <br/>
 
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    --><?php //if(($idd == 0)){?>
-<!--                                        <div id="my_camera"></div>-->
-<!--                                        <br/>-->
-<!--                                        <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">-->
-<!--                                        <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>-->
-<!--                                    --><?php //} ?>
-<!--                                    --><?php //if(($idd != 0)){?>
-<!--                                        <div style="display:none;" id="my_camera"></div>-->
-<!--                                        <label for="file" class="btn btn-primary ">Take Snapshot</label>-->
-<!--                                        <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>-->
-<!--                                        <div class="container"></div>-->
-<!--                                    --><?php //} ?>
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row" style="display: none">-->
-<!--                                <label class="col-lg-2 control-label">Captured Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div id="results"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <br/>-->
-<!--                            <div class="row">-->
-<!--                                <label class="col-lg-2 control-label">Previous Image : </label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    --><?php
-//                                    $time_stamp = $_SESSION['good_timestamp_id'];
-//                                    if(!empty($time_stamp)){
-//                                        $query2 = sprintf("SELECT * FROM good_piece_images where good_bad_pieces_id = '$time_stamp'");
-//
-//                                        $qurimage = mysqli_query($db, $query2);
-//                                        $i =0 ;
-//                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-//                                            $image = $rowcimage['good_image_name'];
-//                                            $mime_type = "image/gif";
-//                                            $file_content = file_get_contents("$image");
-//                                            $d_tag = "delete_image_" . $i;
-//                                            $r_tag = "remove_image_" . $i;
-//                                            ?>
-<!---->
-<!--                                            <div class="col-lg-3 col-sm-6">-->
-<!--                                                <div class="thumbnail">-->
-<!--                                                    <div class="thumb">-->
-<!--                                                        --><?php //echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
-<!---->
-<!--                                                        <input type="hidden"  id="--><?php //echo $d_tag; ?><!--" name="--><?php //echo $d_tag; ?><!--" class="--><?php //echo $d_tag; ?><!-- >"--> <!--value="--><?php //echo $rowcimage['good_image_id']; ?><!--">-->
-<!--                                                        <span class="remove remove_image" id="--><?php //echo $r_tag; ?><!--">Remove Image </span>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            --><?php
-//                                            $i++;}
-//                                    }
-//                                    ?>
-<!--                                </div>-->
-<!--                            </div>-->
-                            <br/>
                             <hr/>
 
                     </div>
@@ -264,121 +175,7 @@ include("../heading_banner.php");
     </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<!--<script>-->
-<!--    Webcam.set({-->
-<!--        width: 290,-->
-<!--        height: 190,-->
-<!--        image_format: 'jpeg',-->
-<!--        jpeg_quality: 90-->
-<!--    });-->
-<!--    var camera = document.getElementById("my_camera");-->
-<!--    Webcam.attach( camera );-->
-<!--</script>-->
-<!--<script>-->
-<!--    function take_snapshot() {-->
-<!--        Webcam.snap( function(data_uri) {-->
-<!--            var formData =  $(".image-tag").val(data_uri);-->
-<!--            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';-->
-<!--            $.ajax({-->
-<!--                url: "good_piece_cam_backend.php",-->
-<!--                type: "POST",-->
-<!--                data: formData,-->
-<!--                success: function (msg) {-->
-<!--                    window.location.reload()-->
-<!--                },-->
-<!---->
-<!--            });-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
 
-<script>
-    // Upload
-    $("#file").on("change", function () {
-        var fd = new FormData();
-        var files = $('#file')[0].files[0];
-        fd.append('file', files);
-        fd.append('request', 1);
-
-        // AJAX request
-        $.ajax({
-            url: 'add_delete_good_piece_image.php',
-            type: 'post',
-            data: fd,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-
-                if (response != 0) {
-                    var count = $('.container .content_img').length;
-                    count = Number(count) + 1;
-
-                    // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
-                }
-            }
-        });
-    });
-
-
-    // Remove file
-    $('.container').on('click', '.content_img .delete', function () {
-
-        var id = this.id;
-        var split_id = id.split('_');
-        var num = split_id[1];
-        // Get image source
-        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
-        //var deleteFile = confirm("Do you really want to Delete?");
-        var succ = false;
-        // AJAX request
-        $.ajax({
-            url: 'add_delete_good_piece_image.php',
-            type: 'post',
-            data: {path: imgElement_src, request: 2},
-            async: false,
-            success: function (response) {
-                // Remove <div >
-                if (response == 1) {
-                    succ = true;
-                }
-            }, complete: function (data) {
-                if (succ) {
-                    var id = 'content_img_' + num;
-                    // $('#content_img_'+num)[0].remove();
-                    var elem = document.getElementById(id);
-                    document.getElementById(id).style.display = 'none';
-                    var nodes = $(".container")[2].childNodes;
-                    for (var i = 0; i < nodes.length; i++) {
-                        var node = nodes[i];
-                        if (node.id == id) {
-                            node.style.display = 'none';
-                        }
-                    }
-                }
-            }
-        });
-    });
-
-</script>
-
-<script>
-    $(document).on('click', '.remove_image', function () {
-        var del_id = this.id.split("_")[2];
-        var x_img_id = this.parentElement.childNodes[3].value;
-        var info =  document.getElementById("delete_image"+del_id);
-        var info =  "id="+del_id+"&station_event_id="+ x_img_id;
-        $.ajax({
-            type: "POST",
-            url: "delete_good_piece_image.php",
-            data: info,
-            success: function (data) {
-            }
-        });
-        location.reload(true);
-    });
-</script>
 
 <script>
     $(document).ready(function () {
