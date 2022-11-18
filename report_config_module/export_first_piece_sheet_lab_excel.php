@@ -3,22 +3,15 @@ ob_start();
 //ini_set('display_errors', 'off');
 //session_start();
 include '../config.php';
-$chicagotime = date('m-d-Y', strtotime('-1 days'));
+$chicagotime = date('m-d-Y', strtotime('-2 days'));
 //$chicagotime1 = date('Y-m-d', strtotime('-1 days'));
-$chicagotime2 = date('m-d-Y', strtotime('-1 days'));
+$chicagotime2 = date('m-d-Y', strtotime('-2 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
 //$sql2 = sprintf("SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE `form_type` = '4' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') >= '%d' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') <= '%d'" , $chicagotime1, $chicagotime1);
-$exportData = mysqli_query($db, "SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 4");
-//$exportData = mysqli_query($db,$sql2);
-//$exportData = mysqli_query($db, "SELECT user_name,firstname,lastname,email,role,hiring_date,job_title_description,shift_location FROM users where users_id !='1' ");
+$exportData = mysqli_query($db, "SELECT `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 4 group by station");
 $header = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
-$result = '';
-/*$fields = mysqli_num_fields($exportData);
-for ($i = 0; $i < $fields; $i++) {
-    $header .= mysqli_field_name($db, $exportData, $i) . "\t";
-}*/
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
@@ -56,7 +49,6 @@ if ($result == "") {
 }
 $exportData1 = mysqli_query($db, "SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 5");
 $header1 = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
-$result1 = '';
 while ($row1 = mysqli_fetch_row($exportData1)) {
     $line1 = '';
     $j1 = 1;
