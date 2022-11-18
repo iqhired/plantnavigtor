@@ -344,7 +344,7 @@ while ($rowc = mysqli_fetch_array($qur1)) {
                         }
                     }
                     rename( $folderPath, $newfolder) ;
-                    $sql = "update `good_piece_images` SET good_bad_pieces_id = '$station_event_id' where good_bad_pieces_id = '$gs'";
+                    $sql = "update `good_piece_images` SET station_event_id = '$station_event_id' where station_event_id = '$gs'";
                     $result1 = mysqli_query($db, $sql);
                     if ($result1) {
                         $_SESSION['temp_gp_id'] = '';
