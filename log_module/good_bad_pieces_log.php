@@ -577,7 +577,9 @@ include("../heading_banner.php");
         </div>
     </div>
     <div class="row">
-
+            <div class="col-md-4 col-md-8 media_ex">
+                <div id="container" style="height: 500px; width: 100%;"></div>
+            </div>
     </div>
 
 
@@ -636,7 +638,6 @@ include("../heading_banner.php");
                     {x: 'Good Pieces', value: good_pieces, fill: '#177b09'},
                     {x: 'Bad Pieces', value: bad_pieces, fill: '#BE0E31'},
                     {x: 'Rework', value: rework, fill: '#2643B9'},
-
                 ];
                 // create pareto chart with data
                 var chart = anychart.pareto(data);
@@ -1307,7 +1308,127 @@ include("../heading_banner.php");
         });
     });
 </script>
+<script>
+    anychart.onDocumentReady(function () {
+        var data = $("#good_bad_piece_form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'good_bad_piece_fa.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data + "&fa_op=5",
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var good_pieces = data.posts.map(function (elem) {
+                    return elem.good_pieces;
+                });
+                // console.log(goodpiece);
+                var bad_pieces = data.posts.map(function (elem) {
+                    return elem.bad_pieces;
+                });
+                var rework = data.posts.map(function (elem) {
+                    return elem.rework;
+                });
+                var good_pieces1 = data.posts.map(function (elem) {
+                    return elem.good_pieces1;
+                });
+                // console.log(goodpiece);
+                var bad_pieces1 = data.posts.map(function (elem) {
+                    return elem.bad_pieces1;
+                });
+                var rework1 = data.posts.map(function (elem) {
+                    return elem.rework1;
+                });
+                var good_pieces2 = data.posts.map(function (elem) {
+                    return elem.good_pieces2;
+                });
+                // console.log(goodpiece);
+                var bad_pieces2 = data.posts.map(function (elem) {
+                    return elem.bad_pieces2;
+                });
+                var rework2 = data.posts.map(function (elem) {
+                    return elem.rework2;
+                });
+                var chart = anychart.column();
+
+                var series1 = chart.column([
+                    {x: 'Shift-1', value: good_pieces, fill: '#177b09'},
+                    {x: 'Shift-2', value: good_pieces1, fill: '#177b09'},
+                    {x: 'Shift-3', value: good_pieces2, fill: '#177b09'}
+                ]);
+                series1.name('Good Pieces');
+
+                // Set point position.
+                series1.xPointPosition(0.3);
+
+                var series2 = chart.column([
+                    {x: 'Shift-1', value: bad_pieces, fill: '#BE0E31'},
+                    {x: 'Shift-2', value: bad_pieces1, fill: '#BE0E31'},
+                    {x: 'Shift-3', value: bad_pieces2, fill: '#BE0E31'}
+                ]);
+                series2.name('Bad Pieces');
+
+                // Set point position.
+                series2.xPointPosition(0.5);
+
+                var series3 = chart.column([
+                    {x: 'Shift-1', value: rework, fill: '#2643B9'},
+                    {x: 'Shift-2', value: rework1, fill: '#2643B9'},
+                    {x: 'Shift-3', value: rework2, fill: '#2643B9'}
+                ]);
+
+                series3.name('Rework');
+
+                // Set point position.
+                series3.xPointPosition(0.7);
+
+                series1
+                    .fill("#6698FF .6")
+                    .hovered().stroke("#0000A0", 4)
+                    .stroke("#56561a", 4)
+                    .hatchFill("diagonal-brick", "#348781")
+                    .hovered().hatchFill("diagonal-brick", "#0000A0")
+
+                series1.tooltip().enabled(true).title().enabled(true).text("Information:");
+                series1.labels().enabled(true).anchor("top").position("top").fontSize(14);
+
+                series2
+                    .fill("#6698FF .6")
+                    .hovered().stroke("#0000A0", 4)
+                    .stroke("#56561a", 4)
+                    .hatchFill("diagonal-brick", "#348781")
+                    .hovered().hatchFill("diagonal-brick", "#0000A0")
+
+                series2.tooltip().enabled(true).title().enabled(true).text("Information:");
+                series2.labels().enabled(true).anchor("top").position("top").fontSize(14);
+
+                series3
+                    .fill("#6698FF .6")
+                    .hovered().stroke("#0000A0", 4)
+                    .stroke("#56561a", 4)
+                    .hatchFill("diagonal-brick", "#348781")
+                    .hovered().hatchFill("diagonal-brick", "#0000A0")
+
+                series3.tooltip().enabled(true).title().enabled(true).text("Information:");
+                series3.labels().enabled(true).anchor("top").position("top").fontSize(14);
+
+// set container id for the chart
+                chart.container("container");
+
+                // set scale minimum
+                chart.yScale().minimum(0);
+
+                chart.title('Shift Wise Good Pieces,Bad Pieces & Rework');
+
+
+                chart.container('container');
+                chart.draw();
+
+            }
+        });
+    });
+
+</script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
 </body>
 </html>
