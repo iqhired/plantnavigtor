@@ -280,7 +280,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div class="thumbnail">
                                                             <div class="thumb">
-                                                                <?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
+                                                                <?php echo '<img src="' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
                                                                 <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?> >" value="<?php echo $rowcimage['good_image_id']; ?>">
                                                                 <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                             </div>
@@ -355,7 +355,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
             var del_id = this.id.split("_")[2];
             var x_img_id = this.parentElement.childNodes[3].value;
             var info =  document.getElementById("delete_image"+del_id);
-            var info =  "id="+del_id+"&10x_id="+ x_img_id;
+            var info =  "id="+del_id+"&bad_image_id="+ x_img_id;
             $.ajax({
                 type: "POST",
                 url: "delete_bad_piece_image.php",
