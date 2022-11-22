@@ -22,23 +22,8 @@ $_SESSION['timestamp_id'] = '';
 $_SESSION['f_type'] = '';
 $timestamp = date('H:i:s');
 $message = date("Y-m-d H:i:s");
-$is_cust_dash = $_SESSION['is_cust_dash'];
-$line_cust_dash = $_SESSION['line_cust_dash'];
-$cellID = $_GET['cell_id'];
-$c_name = $_GET['c_name'];
-if (isset($cellID)) {
-    $sql = "select stations from `cell_grp` where c_id = '$cellID'";
-    $result1 = mysqli_query($db, $sql);
-    $ass_line_array = array();
-    while ($rowc = mysqli_fetch_array($result1)) {
-        $arr_stations = explode(',', $rowc['stations']);
-        foreach ($arr_stations as $station) {
-            if (isset($station) && $station != '') {
-                array_push($ass_line_array, $station);
-            }
-        }
-    }
-}
+
+$station = $_GET['station'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -153,7 +138,11 @@ include("heading_banner.php");
     <div class="row">
 
         <?php
-        $qur1 = mysqli_query($db, "SELECT DISTINCT  `form_type` FROM `form_user_data`");
+
+        $countervariable = 0;
+
+        $time = '';
+        $qur1 = mysqli_query($db, "SELECT DISTINCT `form_type` FROM `form_user_data` where station = '$station'");
         while ($row1 = mysqli_fetch_array($qur1)) {
         $form_type = $row1["form_type"];
 
@@ -162,7 +151,6 @@ include("heading_banner.php");
         $rowc0 = $result0->fetch_assoc();
         $form_type_name = $rowc0['form_type_name'];
 
-
         $sql1 = "SELECT * FROM `form_user_data` where `form_type` = '$form_type'";
         $result1 = $mysqli->query($sql1);
         $rowc1 = $result1->fetch_assoc();
@@ -170,6 +158,7 @@ include("heading_banner.php");
         $p_number = $rowc1['part_number'];
         $part_family = $rowc1['part_family'];
         $station = $rowc1['station'];
+        $time = $rowc1['created_at'];
 
         $sql2 = "SELECT * FROM `cam_line` where `line_id` = '$station'";
         $result2 = $mysqli->query($sql2);
@@ -187,6 +176,7 @@ include("heading_banner.php");
         $part_number = $rowc4['part_number'];
         $part_name = $rowc4['part_name'];
 
+        $countervariable++;
 
         ?>
 
@@ -207,8 +197,6 @@ include("heading_banner.php");
                             <td>
                                 <div><?php echo $part_family_name;
                                     $pf_name = ''; ?> </div>
-                                <input type="hidden" id="id<?php echo $countervariable; ?>"
-                                       value="<?php echo $time; ?>">
                             </td>
                         </tr>
                         <tr>
@@ -236,50 +224,83 @@ include("heading_banner.php");
                 </div>
 
                 <?php
-                $variable123 = $time;
-                if ($variable123 != "") {
-                    ?>
+
+
+
+                $time_sql = "select * from form_user_data where form_type = '$form_type' and station = '$station' order by created_at DESC LIMIT 1";
+                $result_time = mysqli_query($db,$time_sql);
+                while ($row_time = mysqli_fetch_array($result_time)){
+                    $form_create_id = $row_time['form_create_id'];
+                    $created_time  =   $row_time['created_at'];
+                   $create_t = explode(" ",$created_time);
+
+                    $s_arr_1 = explode(' ', $created_time);
+                    $s_arr = explode(':', $s_arr_1[1]);
+                    $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
+                    $start_time = round($st_time, 2);
+
+                    $time_freq = "select * from form_create where form_create_id = '$form_create_id' and station = '$station' order by created_by  DESC LIMIT 1";
+                    $freq_res = mysqli_query($db,$time_freq);
+                    while ($row_freq = mysqli_fetch_array($freq_res)){
+                        $t11 =   $row_freq['frequency'];
+                        $arrteam1 = explode(':', $t11);
+                        $hours = $arrteam1[0];
+                        $minutes = $arrteam1[1];
+                        $hours1 = $hours * 60;
+                        $minutes1 = $minutes + $hours1;
+                        $date = $row_time["created_at"];
+                        $date = strtotime($date);
+                        $date = strtotime("+" . $minutes1 . " minute", $date);
+                        $date = date('Y-m-d H:i:s', $date);
+
+
+                ?>
+
                     <script>
-                        // Set the date we're counting down to
                         var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
-                        console.log(iddd<?php echo $countervariable; ?>);
+
+                        var freq_time<?php echo $countervariable; ?> = $("#freq_time<?php echo $countervariable; ?>").val();
                         var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
+                        var countDownfreq_time<?php echo $countervariable; ?> = new Date(freq_time<?php echo $countervariable; ?>).getTime();
                         // Update the count down every 1 second
-                        var x = setInterval(function () {
-                            // Get today's date and time
-                            //var now = calcTime('Chicago', '-6');
-                            //new Date().getTime();
-                            // Find the distance between now and the count down date
-                            var distance = now - countDownDate<?php echo $countervariable; ?>;
-                            // Time calculations for days, hours, minutes and seconds
+                        var x = setInterval(function() {
+                            // now = now + 1000;
+// Find the distance between now an the count down date
+                            var distance = countDownDate<?php echo $countervariable; ?> - countDownDate<?php echo $countervariable; ?>;
+// Time calculations for days, hours, minutes and seconds
                             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                            //console.log(days + "d " + hours + "h "+ minutes + "m " + seconds + "s ");
-                            //console.log("------------------------");
-                            // Output the result in an element with id="demo"
-                            document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = days + "d " + hours + "h "
-                                + minutes + "m " + seconds + "s ";
-                            // If the count down is over, write some text
+// Output the result in an element with id="demo"
+                            document.getElementById("demo<?php echo $countervariable; ?>").innerHTML =  hours + "h " +
+                                minutes + "m " ;
+// If the count down is over, write some text
                             if (distance < 0) {
-                                clearInterval(x);
-                                document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = "EXPIRED";
+                             //   clearInterval(x);
+                                var workingdistance = countDownDate<?php echo $countervariable; ?> - countDownworkingDate<?php echo $countervariable; ?>;
+                                var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
+                                var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
+                                document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = "EXPIRED"+ workinghours + "h "
+                                    + workingminutes + "m ";;
                             }
+
                         }, 1000);
+
                     </script>
-                <?php } ?>
-                <div style="height: 100%;">
-                    <h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;color: #fff;">
-                        <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> -
-                            <span style="padding: 0px 0px 10px 0px;"
-                                  id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
+
+                    <div style="height: 100%;">
+                        <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
+                        <input type="hidden" id="freq_time<?php echo $countervariable; ?>" value="<?php echo $created_time; ?>">
+                    <h4 style="height:inherit;text-align: center;background-color:green;color: #fff;">
+                        <div style="padding: 10px 0px 5px 0px;"> Next fill form in -
+                            <span style="padding: 0px 0px 10px 0px;" id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
                                 id="server-load"></span></div>
-                        <!--                                        <div style="padding: 0px 0px 10px 0px;" id="demo-->
-                        <?php //echo $countervariable;
-                        ?><!--" >&nbsp;</div>-->
+
                     </h4>
                 </div>
+                <?php } }?>
             </div>
         </div>
         <?php } }?>
