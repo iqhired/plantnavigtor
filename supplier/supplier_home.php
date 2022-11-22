@@ -450,6 +450,20 @@ include("./sup_header.php");
             <!-- Dashboard content -->
             <!-- /dashboard content -->
             <script>
+                $(document).on('click', '#edit', function () {
+                    var element = $(this);
+                    var edit_id = $(this).data("id");
+                    var order_status_id = $(this).data("order_status_id");
+                    var ship_det = $(this).data("ship_det");
+                    var up_order_status_id = $("#edit_order_status").val();
+                    $("#edit_order_status_id").val(order_status_id);
+                    $("#edit_up_order_status_id").val(up_order_status_id);
+                    $("#edit_ship_details").val(ship_det);
+                    $("#edit_id").val(edit_id);
+                    if (up_order_status_id == 4) {
+                        $('#edit_modal_theme_primary').modal('show');
+                    }
+                });
                 function update_order_status() {
                     var updatedVal = $("#edit_order_status").val();
                     $("input#e_order_status").val($("#edit_order_status").val());
@@ -460,25 +474,7 @@ include("./sup_header.php");
                     }
                 }
             </script>
-            <script>
-                jQuery(document).ready(function ($) {
-                    $(document).on('click', '#edit', function () {
-                        var element = $(this);
-                        var edit_id = $(this).data("id");
-                        var order_status_id = $(this).data("order_status_id");
-                        var ship_det = $(this).data("ship_det");
-                        var up_order_status_id = $("#edit_order_status").val();
-                        $("#edit_order_status_id").val(order_status_id);
-                        $("#edit_up_order_status_id").val(up_order_status_id);
-                        $("#edit_ship_details").val(ship_det);
-                        $("#edit_id").val(edit_id);
-                        if (up_order_status_id == 4) {
-                            $('#edit_modal_theme_primary').modal({"backdrop": "static"},'show');
-                        }
-                    });
 
-                });
-            </script>
         </div>
         <!-- /main content -->
     </div>
@@ -504,10 +500,10 @@ if ($i == "") {
             data: data,
             async:false,
             success: function(data) {
-                $('#edit_modal_theme_primary').modal({"backdrop": "static"},'show');
+                $('#edit_modal_theme_primary').modal('show');
             }
         }).done(function( data ) {
-            $('#edit_modal_theme_primary').modal({"backdrop": "static"},'show');
+            $('#edit_modal_theme_primary').modal('show');
         });
     });
 
