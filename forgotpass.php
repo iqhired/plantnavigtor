@@ -2,12 +2,12 @@
 @ob_start();
 ini_set('display_errors', FALSE);
 $message = "";
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+
 require './vendor/autoload.php';
+include 'email_config.php';
 include("config.php");
 if (count($_POST) > 0) {
+
     $email = $_POST['email'];
     $result = mysqli_query($db, "SELECT * FROM cam_users WHERE email='" . $_POST["email"] . "'");
     $row = mysqli_fetch_array($result);
@@ -26,7 +26,7 @@ if (count($_POST) > 0) {
         mysqli_query($db, $sql);
         $sql1 = "update `cam_users` set u_status = '1' where `users_id`='$id'";
         mysqli_query($db, $sql1);
-        $mail = new PHPMailer();
+       /* $mail = new PHPMailer();
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->Host = 'smtp.gmail.com';
@@ -35,7 +35,7 @@ if (count($_POST) > 0) {
         $mail->SMTPAuth = true;
         $mail->Username = 'admin@plantnavigator.com';
         $mail->Password = 'S@@rgummi_2022';
-        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');*/
         $email = $row["email"];
         $lasname = $row["lastname"];
         $firstname = $row["firstname"];
