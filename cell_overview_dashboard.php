@@ -332,6 +332,12 @@ include("heading_banner.php");
 				if ($variable123 != "") {
 					?>
                     <script>
+                        function calcTime(city, offset) {
+                            d = new Date();
+                            utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                            nd = new Date(utc + (3600000 * offset));
+                            return nd;
+                        }
                         // Set the date we're counting down to
                         var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                         console.log(iddd<?php echo $countervariable; ?>);
@@ -339,7 +345,7 @@ include("heading_banner.php");
                         // Update the count down every 1 second
                         var x = setInterval(function () {
                             // Get today's date and time
-                            //var now = calcTime('Chicago', '-6');
+                            var now = calcTime('Chicago', '-6');
                             //new Date().getTime();
                             // Find the distance between now and the count down date
                             var distance = now - countDownDate<?php echo $countervariable; ?>;
@@ -503,6 +509,12 @@ include("heading_banner.php");
 			if ($variable123 != "") {
 				?>
                 <script>
+                    function calcTime(city, offset) {
+                        d = new Date();
+                        utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                        nd = new Date(utc + (3600000 * offset));
+                        return nd;
+                    }
                     // Set the date we're counting down to
                     var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                     console.log(iddd<?php echo $countervariable; ?>);
@@ -510,7 +522,7 @@ include("heading_banner.php");
                     // Update the count down every 1 second
                     var x = setInterval(function () {
                         // Get today's date and time
-                        //var now = calcTime('Chicago', '-6');
+                        var now = calcTime('Chicago', '-6');
                         //new Date().getTime();
                         // Find the distance between now and the count down date
                         var distance = now - countDownDate<?php echo $countervariable; ?>;
@@ -712,8 +724,12 @@ include("heading_banner.php");
 						if ($variable123 != "") {
 							?>
                             <script>
-
-
+                                function calcTime(city, offset) {
+                                    d = new Date();
+                                    utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                                    nd = new Date(utc + (3600000 * offset));
+                                    return nd;
+                                }
                                 // Set the date we're counting down to
                                 var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                                 console.log(iddd<?php echo $countervariable; ?>);
@@ -721,6 +737,7 @@ include("heading_banner.php");
                                 // Update the count down every 1 second
                                 var x = setInterval(function () {
                                     // Get today's date and time
+                                    var now = calcTime('Chicago', '-6');
                                     // Find the distance between now and the count down date
                                     var distance = now - countDownDate<?php echo $countervariable; ?>;
                                     // Time calculations for days, hours, minutes and seconds
@@ -883,7 +900,12 @@ include("heading_banner.php");
 					if ($variable123 != "") {
 						?>
                         <script>
-
+                            function calcTime(city, offset) {
+                                d = new Date();
+                                utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                                nd = new Date(utc + (3600000 * offset));
+                                return nd;
+                            }
                             // Set the date we're counting down to
                             var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                             console.log(iddd<?php echo $countervariable; ?>);
@@ -891,6 +913,7 @@ include("heading_banner.php");
                             // Update the count down every 1 second
                             var x = setInterval(function () {
                                 // Get today's date and time
+                                var now = calcTime('Chicago', '-6');
                                 // Find the distance between now and the count down date
                                 var distance = now - countDownDate<?php echo $countervariable; ?>;
                                 // Time calculations for days, hours, minutes and seconds
