@@ -1,5 +1,6 @@
 <?php
 include("../config.php");
+include ("../email_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -26,9 +27,6 @@ $_SESSION['LAST_ACTIVITY'] = $time;
 //if($_SESSION['user'] != "admin"){
 //	header('location: dashboard.php');
 //}
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
@@ -48,16 +46,6 @@ if (count($_POST) > 0) {
 	
     $name = $_POST['name'];
     require '../vendor/autoload.php';
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->SMTPAuth = true;
-    $mail->Username = 'admin@plantnavigator.com';
-    $mail->Password = 'S@@rgummi_2022';
-    $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
     if ($name != "") {
         $name = $_POST['name'];
         $email = $_POST['email'];

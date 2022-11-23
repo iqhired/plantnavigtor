@@ -1,9 +1,5 @@
-<?php
-include("../config.php");
+<?php include("../config.php");
 include("../email_config.php");
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 //$conn = new mysqli($servername, $username, $password, '');
 if (!$conn) {
@@ -79,16 +75,6 @@ if (count($_POST) > 0){
                             if ($final_usr_ratings < $final_assign_ratings) {
                                 //mail code start
                                 require '../vendor/autoload.php';
-                                $mail = new PHPMailer();
-                                $mail->isSMTP();
-//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                                $mail->Host = 'smtp.gmail.com';
-                                $mail->Port = 587;
-                                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                                $mail->SMTPAuth = true;
-                                $mail->Username = 'admin@plantnavigator.com';
-                                $mail->Password = 'S@@rgummi_2022';
-                                $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
                                 $message = '<html><body>';
                                 $message .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $emailgreeting . "</span><br/><br/>";

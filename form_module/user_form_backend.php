@@ -1,8 +1,6 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 include("../config.php");
+include ("../email_config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 $temp_j =  0;
@@ -136,17 +134,6 @@ if(count($_POST)>0) {
 //	$subject = "Out of Tolerence Mail Report";
                     require '../vendor/autoload.php';
                     $subject = "Out of Tolerence Mail Report";
-                    //mail code start
-                    $mail = new PHPMailer();
-                    $mail->isSMTP();
-//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->Port = 587;
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'admin@plantnavigator.com';
-                    $mail->Password = 'S@@rgummi_2022';
-                    $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
                     $del_query = sprintf("SELECT part_name ,pn.part_number, line_name ,part_family_name , name as form_name   FROM  form_create as fc inner join cam_line as cl on fc.station = cl.line_id inner join pm_part_family as pf on fc.part_family= pf.pm_part_family_id 
