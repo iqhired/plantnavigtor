@@ -173,6 +173,12 @@ $curdate = date('Y-m-d H:i:s');
                                         </div>
                                     </div>
                                     <script>
+                                        function calcTime(city, offset) {
+                                            d = new Date();
+                                            utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                                            nd = new Date(utc + (3600000 * offset));
+                                            return nd;
+                                        }
                                         // Set the date we're counting down to
                                         var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                                        
@@ -187,6 +193,7 @@ $curdate = date('Y-m-d H:i:s');
                                         var x = setInterval(function () {
                                             // Get today's date and time
                                             // var now = new Date().getTime();
+                                            var now = calcTime('Chicago', '-6');
                                             // Find the distance between now and the count down date
                                             //aaya change karvano che	
                                             var distance = countDownDate<?php echo $countervariable; ?> - now;
