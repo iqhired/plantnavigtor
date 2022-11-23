@@ -1,8 +1,8 @@
 <?php
 include("./../sup_config.php");
-$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
+/*$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
 		"https" : "http") . "://" . $_SERVER['HTTP_HOST'];
-$iid = $_SESSION["id"];
+$iid = $_SESSION["id"];*/
 
 ?>
 <script type="text/javascript" src = "<?php echo $link . "/assets/js/plugins/forms/styling/uniform.min.js"?>"></script>

@@ -207,20 +207,26 @@ if (count($_POST) > 0) {
 <?php
 $cam_page_header = "Active Orders";
 include("./../sup_header.php");
+include("./../sup_admin_menu.php");
 ?>
 <!-- Page container -->
 <div class="page-container">
 	<!-- Page content -->
 	<div class="page-content">
-		<!-- Main sidebar -->
-		<!-- User menu -->
-		<!-- /user menu -->
-		<!-- Main navigation -->
-		<?php include("./../sup_admin_menu.php"); ?>
-		<!-- /main navigation -->
-		<!-- /main sidebar -->
 		<!-- Main content -->
 		<div class="content-wrapper">
+                <?php
+                if (!empty($import_status_message)) {
+                    echo '<div class="alert-dismissible fade show alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                }
+                ?>
+                <?php
+                if (!empty($_SESSION['import_status_message'])) {
+                    echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                    $_SESSION['message_stauts_class'] = '';
+                    $_SESSION['import_status_message'] = '';
+                }
+                ?>
 			<!-- Content area -->
 			<div class="content" id="order_det_table">
 				<div class="panel panel-flat">
@@ -237,9 +243,9 @@ include("./../sup_header.php");
 						</thead>
 						<tbody>
 						<?php
-						$query = sprintf("SELECT * FROM  sup_order  where order_active = 0 order by created_on DESC ;  ");
+						$query = sprintf("SELECT * FROM  sup_order  where order_active = 0 order by created_on DESC");
 						$qur = mysqli_query($sup_db, $query);
-						while ($rowc = mysqli_fetch_array($qur)) {
+						while ($rowc     = mysqli_fetch_array($qur)) {
 							?>
 							<tr>
 								<td><?php echo ++$counter; ?></td>
@@ -253,7 +259,7 @@ include("./../sup_header.php");
 								<td><?php echo $rowc['order_desc']; ?></td>
 								<?php
 
-								$qurtemp = mysqli_query($sup_db, "SELECT * FROM  sup_order_status where sup_order_status_id  = '$order_status_id' ");
+								$qurtemp = mysqli_query($sup_db, "SELECT * FROM  sup_order_status where sup_order_status_id  = '$order_status_id'");
 								while ($rowctemp = mysqli_fetch_array($qurtemp)) {
 									$order_status = $rowctemp["sup_order_status"];
 								}

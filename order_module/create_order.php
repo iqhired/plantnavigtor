@@ -4,15 +4,38 @@ include("../sup_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-	header('location: ../logout.php');
+    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+        header($redirect_tab_logout_path);
+    }else{
+        header($redirect_logout_path);
+    }
 }
+//Set the session duration for 10800 seconds - 3 hours
+$duration = $auto_logout_duration;
+//Read the request time of the user
+$time = $_SERVER['REQUEST_TIME'];
+//Check the user's session exist or not
+if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
+    //Unset the session variables
+    session_unset();
+    //Destroy the session
+    session_destroy();
+    if($_SESSION['is_tab_user'] || $_SESSION['is_cell_login']){
+        header($redirect_tab_logout_path);
+    }else{
+        header($redirect_logout_path);
+    }
+
+//	header('location: ../logout.php');
+    exit;
+}
+//Set the time of the user's last activity
+$_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin") {
-	header('location: ../dashboard.php');
+if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
+    header('location: ../dashboard.php');
 }
-
 if (count($_POST) > 0) {
-
 	$order_name = $_POST['order_name'];
 //create
   	if ($order_name != "") {
@@ -21,7 +44,7 @@ if (count($_POST) > 0) {
 		$order_desc = $_POST['order_desc'];
 		$created_by = $_SESSION['id'];
             
-		$sql = "INSERT INTO `sup_order`( `c_id`, `order_name`, `order_desc`, `order_status_id`, `order_active`, `created_on`, `created_by`) VALUES ('$c_id','$order_name','$order_desc','1','1','$created_by','$chicagotime')";
+		$sql = "INSERT INTO `sup_order`( `c_id`, `order_name`, `order_desc`, `order_status_id`, `order_active`, `created_on`, `created_by`) VALUES ('$c_id','$order_name','$order_desc','1','1','$chicagotime','$created_by')";
 		
 		$result1 = mysqli_query($sup_db, $sql);
 		if (!$result1) {
@@ -92,28 +115,23 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="../assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="../assets/js/pages/components_modals.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
-        <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
-        <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
-        <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
 </head>
 <body>
 <!-- Main navbar -->
-<?php $cam_page_header = "Create Order";
+<?php
+$cust_cam_page_header = "Create Order";
 include("../header_folder.php");
+include("../admin_menu.php");
+include("../heading_banner.php");
 ?>
-<!-- /main navbar -->
 <!-- Page container -->
 <div class="page-container">
     <!-- Page content -->
     <div class="page-content">
-        <!-- Main sidebar -->
-        <!-- User menu -->
-        <!-- /user menu -->
-        <!-- Main navigation -->
-		<?php include("../admin_menu.php"); ?>
-        <!-- /main navigation -->
-        <!-- /main sidebar -->
-        <!-- Main content -->
+        <!-- content wrapper-->
         <div class="content-wrapper">
             <!-- Content area -->
             <div class="content">
@@ -157,9 +175,7 @@ include("../header_folder.php");
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="row">
-                                <!--Address -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label">Order Description : </label>
@@ -172,21 +188,7 @@ include("../header_folder.php");
                                         </div>
                                     </div>
                                 </div>
-								
                             </div>
-
-							<?php
-							if (!empty($import_status_message)) {
-								echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-							}
-							?>
-							<?php
-							if (!empty($_SESSION[import_status_message])) {
-								echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-								$_SESSION['message_stauts_class'] = '';
-								$_SESSION['import_status_message'] = '';
-							}
-							?>
                         </div>
                         <div class="panel-footer p_footer">
                             <div class="col-md-4">
@@ -196,12 +198,19 @@ include("../header_folder.php");
                         </div>
                     </form>
                 </div>
-            </div>
 
-            <div class="content">
-                    
-                    <!-- Main charts -->
-                    <!-- Basic datatable -->
+            <?php
+            if (!empty($import_status_message)) {
+                echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+            }
+            ?>
+            <?php
+            if (!empty($_SESSION['import_status_message'])) {
+                echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                $_SESSION['message_stauts_class'] = '';
+                $_SESSION['import_status_message'] = '';
+            }
+            ?>
                     <div class="panel panel-flat">
                         <table class="table datatable-basic">
                             <thead>
@@ -216,7 +225,7 @@ include("../header_folder.php");
                             </thead>
                             <tbody>
 							<?php
-							$query = sprintf("SELECT * FROM  sup_order ;  ");
+							$query = sprintf("SELECT * FROM sup_order");
 							$qur = mysqli_query($sup_db, $query);
 
 							while ($rowc = mysqli_fetch_array($qur)) {
@@ -275,6 +284,8 @@ include("../header_folder.php");
                         </table>
                
             </div>
+            </div>
+        </div>
             <!-- view modal -->
             <div id="view_modal_theme_primary" class="modal fade">
                 <div class="modal-dialog">

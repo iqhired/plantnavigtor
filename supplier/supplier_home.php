@@ -42,7 +42,7 @@ if (count($_POST) > 0) {
 			if (null != $order_id) {
 				$ship_det = $_POST['edit_ship_details'];
 				if (null != $ship_det) {
-					$sql = "update sup_order set order_status_id='$order_up_status_id',shipment_details = '$ship_det' ,  modified_on='$chicagotime', modified_by='$user_id' where  order_id = '$order_id'";
+					$sql = "update sup_order set order_status_id='$order_up_status_id',shipment_details = '$ship_det' , modified_on = '$message', modified_by='$user_id' where  order_id = '$order_id'";
 					$result1 = mysqli_query($sup_db, $sql);
 					if (!$result1) {
 						$is_updated = false;
@@ -140,15 +140,12 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/loaders/blockui.min.js" ?>"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
-    <script type="text/javascript"
-            src="<?php echo $link . "/assets/js/plugins/tables/datatables/datatables.min.js" ?>"></script>
-    <script type="text/javascript"
-            src="<?php echo $link . "/assets/js/plugins/forms/selects/select2.min.js" ?>"></script>
+    <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/tables/datatables/datatables.min.js" ?>"></script>
+    <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/forms/selects/select2.min.js" ?>"></script>
     <script type="text/javascript" src="<?php echo $link . "/assets/js/core/app.js" ?>"></script>
     <script type="text/javascript" src="<?php echo $link . "/assets/js/pages/datatables_basic.js" ?>"></script>
     <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/ui/ripple.min.js" ?>"></script>
-    <script type="text/javascript"
-            src="<?php echo $link . "/assets/js/plugins/notifications/sweet_alert.min.js" ?>"></script>
+    <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/notifications/sweet_alert.min.js" ?>"></script>
     <script type="text/javascript" src="<?php echo $link . "/assets/js/pages/components_modals.js" ?>"></script>
     <!--chart -->
     <style>
@@ -211,25 +208,16 @@ if (count($_POST) > 0) {
         }
     </style>    <!-- /theme JS files -->
 </head>
-<body>
-<!-- Main navbar -->
-<!-- /main navbar -->
 <?php
 $cam_page_header = "Active Orders";
 include("./sup_header.php");
+include("./sup_admin_menu.php");
 ?>
+<body>
 <!-- Page container -->
 <div class="page-container">
     <!-- Page content -->
     <div class="page-content">
-        <!-- Main sidebar -->
-        <!-- User menu -->
-        <!-- /user menu -->
-        <!-- Main navigation -->
-		<?php include("./sup_admin_menu.php"); ?>
-        <!-- /main navigation -->
-        <!-- /main sidebar -->
-        <!-- Main content -->
         <div class="content-wrapper">
             <!-- Content area -->
             <div>
@@ -239,7 +227,7 @@ include("./sup_header.php");
 				}
 				?>
 				<?php
-				if (!empty($_SESSION[import_status_message])) {
+				if (!empty($_SESSION['import_status_message'])) {
 					echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 					$_SESSION['message_stauts_class'] = '';
 					$_SESSION['import_status_message'] = '';
