@@ -224,15 +224,13 @@ include("heading_banner.php");
                 </div>
 
                 <?php
-
-
-
                 $time_sql = "select * from form_user_data where form_type = '$form_type' and station = '$station' order by created_at DESC LIMIT 1";
                 $result_time = mysqli_query($db,$time_sql);
                 while ($row_time = mysqli_fetch_array($result_time)){
                     $form_create_id = $row_time['form_create_id'];
                     $created_time  =   $row_time['created_at'];
-                   $create_t = explode(" ",$created_time);
+                    $create_t = explode(" ",$created_time);
+                    $freq_time  =   $row_time['created_at'];
 
                     $s_arr_1 = explode(' ', $created_time);
                     $s_arr = explode(':', $s_arr_1[1]);
@@ -252,54 +250,57 @@ include("heading_banner.php");
                         $date = strtotime($date);
                         $date = strtotime("+" . $minutes1 . " minute", $date);
                         $date = date('Y-m-d H:i:s', $date);
+                      //  var_dump($t11);
+                        $total_time = $start_time + $t11;
+                      //  var_dump($total_time);
 
 
                 ?>
-
+                        <div style="height: 100%;">
+                            <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
+                            <input type="hidden" id="freq_time<?php echo $countervariable; ?>" value="<?php echo $freq_time; ?>">
+                            <h4 style="height:inherit;text-align: center;background-color:green;color: #fff;">
+                                <div style="padding: 10px 0px 5px 0px;">
+                                    <span style="padding: 0px 0px 10px 0px;" id="demo<?php echo $countervariable; ?>">&nbsp;</span>
+                                    <span id="server-load"></span>
+                                </div>
+                            </h4>
+                        </div>
                     <script>
-                        var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
 
+                        var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                         var freq_time<?php echo $countervariable; ?> = $("#freq_time<?php echo $countervariable; ?>").val();
                         var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
                         var countDownfreq_time<?php echo $countervariable; ?> = new Date(freq_time<?php echo $countervariable; ?>).getTime();
                         // Update the count down every 1 second
                         var x = setInterval(function() {
-                            // now = now + 1000;
-// Find the distance between now an the count down date
-                            var distance = countDownDate<?php echo $countervariable; ?> - countDownDate<?php echo $countervariable; ?>;
-// Time calculations for days, hours, minutes and seconds
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                           var now = countDownfreq_time<?php echo $countervariable; ?>;
+                           // Find the distance between now an the count down date
+                            var distance = countDownDate<?php echo $countervariable; ?> - now ;
+                          // Time calculations for days, hours, minutes and seconds
+                           // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-// Output the result in an element with id="demo"
-                            document.getElementById("demo<?php echo $countervariable; ?>").innerHTML =  hours + "h " +
-                                minutes + "m " ;
-// If the count down is over, write some text
+                          // Output the result in an element with id="demo"
+                            document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = " Next fill form in - " + hours + "h " +
+                                minutes + "m " +   seconds + "s ";
+                          // If the count down is over, write some text
                             if (distance < 0) {
-                             //   clearInterval(x);
-                                var workingdistance = countDownDate<?php echo $countervariable; ?> - countDownworkingDate<?php echo $countervariable; ?>;
+                                clearInterval(x);
+                                var workingdistance = countDownDate<?php echo $countervariable; ?> - now ;
                                 var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                 var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
                                 var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
-                                document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = "EXPIRED"+ workinghours + "h "
-                                    + workingminutes + "m ";;
+                                document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = "EXPIRED - "+ workinghours + "h "
+                                    + workingminutes + "m ";
                             }
 
                         }, 1000);
 
                     </script>
 
-                    <div style="height: 100%;">
-                        <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
-                        <input type="hidden" id="freq_time<?php echo $countervariable; ?>" value="<?php echo $created_time; ?>">
-                    <h4 style="height:inherit;text-align: center;background-color:green;color: #fff;">
-                        <div style="padding: 10px 0px 5px 0px;"> Next fill form in -
-                            <span style="padding: 0px 0px 10px 0px;" id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
-                                id="server-load"></span></div>
 
-                    </h4>
-                </div>
                 <?php } }?>
             </div>
         </div>
