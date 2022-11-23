@@ -177,7 +177,7 @@ $assign_line = htmlspecialchars($_GET["station"]);
                                     var x = setInterval(function () {
                                         // Get today's date and time
                                         // var now = new Date().getTime();
-                                        //var now = getCurrentTime();
+                                        var now = getCurrentTime();
                                         // Find the distance between now and the count down date
                                         var distance = now - countDownDate<?php echo $countervariable; ?>;
                                         // Time calculations for days, hours, minutes and seconds

@@ -55,7 +55,6 @@ $message = date("Y-m-d H:i:s");
         <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
         <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
         <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
-        <script type="text/javascript" src="assets/js/time_display.js"></script>
        <!--chart -->
         <style>
             .heading-elements {
@@ -184,6 +183,12 @@ $message = date("Y-m-d H:i:s");
                                         if ($variable123 != "") {
                                             ?>
                                             <script>
+                                                function calcTime(city, offset) {
+                                                    d = new Date();
+                                                    utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                                                    nd = new Date(utc + (3600000 * offset));
+                                                    return nd;
+                                                }
                                                 // Set the date we're counting down to
                                                 var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                                                 console.log(iddd<?php echo $countervariable; ?>);
@@ -191,6 +196,7 @@ $message = date("Y-m-d H:i:s");
                                                 // Update the count down every 1 second
                                                 var x = setInterval(function () {
                                                     // Get today's date and time
+                                                    var now = calcTime('Chicago', '-6');
                                                     //new Date().getTime();
                                                     // Find the distance between now and the count down date
                                                     var distance = now - countDownDate<?php echo $countervariable; ?>;

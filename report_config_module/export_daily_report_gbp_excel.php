@@ -8,17 +8,14 @@ $chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
-$exportData = mysqli_query($db,"SELECT sg_station_event.`line_id` as line_id,good_bad_pieces_details.good_pieces as good_pieces,good_bad_pieces_details.bad_pieces,good_bad_pieces_details.rework as rework,sg_station_event_log.event_cat_id,good_bad_pieces_details.created_at as created_at FROM `sg_station_event` INNER JOIN good_bad_pieces_details ON good_bad_pieces_details.`station_event_id` = sg_station_event.`station_event_id` INNER JOIN sg_station_event_log ON sg_station_event_log.`station_event_id` = sg_station_event.`station_event_id` where DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2'");
+$exportData = mysqli_query($db,"SELECT distinct sg_station_event_log_update.`line_id` as line_id,good_bad_pieces_details.good_pieces as good_pieces,good_bad_pieces_details.bad_pieces,good_bad_pieces_details.rework as rework, sg_station_event_log_update.event_cat_id,good_bad_pieces_details.created_at as created_at FROM `sg_station_event_log_update` 
+    INNER JOIN good_bad_pieces_details ON good_bad_pieces_details.`station_event_id` = sg_station_event_log_update.`station_event_id` 
+    where DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' ORDER BY line_id ASC");
 $header = "Station" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Category" . "\t" . "Efficiency" . "\t";
 $result = '';
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
-    $h = 1;
-    /*$g = $row['good_pieces'];
-    $r = $row['rework'];
-    $p = $g + $r;
-    $line_id = $row['line_id'];*/
     foreach ($row as $value) {
         if ((!isset($value) ) || ( $value == "" )) {
             $value = "\t";
@@ -29,6 +26,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 $qur04 = mysqli_query($db, "SELECT line_name FROM cam_line where line_id = '$un' ");
                 while ($rowc04 = mysqli_fetch_array($qur04)) {
                     $lnn = $rowc04["line_name"];
+                    $ln = $rowc04["line_id"];
                 }
                 $value = $lnn;
             }
@@ -41,27 +39,39 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $lnn1;
             }
-          /*  if ($j == 6) {
+            if ($j == 6) {
                 $un = $value;
-                $q2 = mysqli_query($db, "SELECT * FROM `sg_station_event` where `line_id` = '$un'");
-                while ($r2 = mysqli_fetch_array($q2)) {
+                $q1 = mysqli_query($db, "SELECT * FROM `good_bad_pieces_details` where `created_at` = '$un'");
+                while ($row2 = mysqli_fetch_array($q1)) {
+                    $station_event_id = $row2["station_event_id"];
+                    $good_pieces = $row2["good_pieces"];
+                    $rework = $row2["rework"];
+                    $gpr = $good_pieces + $rework;
+                    $q3 = mysqli_query($db, "SELECT * FROM `sg_station_event_log_update` where `station_event_id` = '$station_event_id'");
+                    $r3 = $q3->fetch_assoc();
+                    $total_time = $r3["total_time"];
+                    $q2 = mysqli_query($db, "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'");
+                    $r2 = $q2->fetch_assoc();
                     $part_number = $r2["part_number_id"];
-                    $sqlpnum= "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-                    $resultpnum = mysqli_query($db,$sqlpnum);
+                    $sqlpnum = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+                    $resultpnum = mysqli_query($db, $sqlpnum);
                     $rowcpnum = $resultpnum->fetch_assoc();
-                    $pm_npr= $rowcpnum['npr'];
-                    if(empty($pm_npr))
-                    {
+                    $pm_npr = $rowcpnum['npr'];
+                    if (empty($pm_npr)) {
                         $npr = 0;
-                    }else{
+                    } else {
                         $npr = $pm_npr;
                     }
-                    $target_eff = round($npr * $h);
-                    $actual_eff = 30;
-                    $eff = round(100 * ($actual_eff/$target_eff));
+                    $target_eff = round($npr * $total_time);
+                    $actual_eff = $gpr;
+                    if ($actual_eff === 0 || $target_eff === 0 || $target_eff === 0.0 || $actual_eff === 0.0) {
+                        $eff = 0;
+                    } else {
+                        $eff = round(100 * ($actual_eff / $target_eff));
+                    }
                 }
                 $value = $eff;
-            }*/
+            }
             $value = '"' . $value . '"' . "\t";
         }
         $line .= $value;
