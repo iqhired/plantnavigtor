@@ -309,7 +309,7 @@ include("heading_banner.php");
                 <?php } }?>
             </div>
         </div>
-        <?php } elseif($form_type_name == 'First Piece Sheet Op'){ ?>
+        <?php }elseif($form_type_name == 'First Piece Sheet Op'){ ?>
 
                 <div class="col-lg-3">
                     <div class="panel bg-blue-400">
