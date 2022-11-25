@@ -263,7 +263,7 @@ include("../heading_banner.php");
                                                 data-order_desc="<?php echo $rowc['order_desc']; ?>"
                                                 data-order_status_id ="<?php echo $rowc['order_status_id']; ?>"
                                                 data-toggle="modal" style="background-color:#1e73be;"
-                                                data-target="#view_modal_theme_primary"><i class="glyphicon glyphicon-eye-open"></i> 
+                                                data-target="#view_modal_theme_primary"><i class="fa fa-eye"></i>
                                         </button>
 								&nbsp;	
 									   <button type="button" id="edit" class="btn btn-info btn-xs" title="Edit"
@@ -273,9 +273,9 @@ include("../heading_banner.php");
                                                 data-order_desc="<?php echo $rowc['order_desc']; ?>"
                                                 data-order_status_id ="<?php echo $rowc['order_status_id']; ?>"
                                                 data-toggle="modal" style="background-color:#1e73be;"
-                                                data-target="#edit_modal_theme_primary"><i class="glyphicon glyphicon-edit"></i> 
+                                                data-target="#edit_modal_theme_primary"><i class="fa fa-edit"></i>
                                         </button>
-								&nbsp;	<button type="button" id="delete" class="btn btn-danger btn-xs" title="Delete" data-id="<?php echo $rowc['order_id']; ?>"><i class="icon-cancel-circle2"></i> </button>
+								&nbsp;	<button type="button" id="delete" class="btn btn-danger btn-xs" title="Delete" data-id="<?php echo $rowc['order_id']; ?>"><i class="fa fa-delete">-</i> </button>
                                                    							
                                     </td>
                                 </tr>
