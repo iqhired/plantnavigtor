@@ -139,8 +139,6 @@ include("heading_banner.php");
 
         <?php
 
-        $countervariable = 0;
-
         $time = '';
         $qur1 = mysqli_query($db, "SELECT DISTINCT `form_type` FROM `form_user_data` where station = '$station'");
         while ($row1 = mysqli_fetch_array($qur1)) {
@@ -176,11 +174,9 @@ include("heading_banner.php");
         $part_number = $rowc4['part_number'];
         $part_name = $rowc4['part_name'];
 
-        $countervariable++;
-
         ?>
 
-         <?php if($form_type_name == 'First Piece Sheet Lab' ||  $form_type_name == 'First Piece Sheet Op' || $form_type_name == 'Parameter Sheet'){ ?>
+         <?php if($form_type_name == 'First Piece Sheet Lab'){ ?>
         <div class="col-lg-3">
             <div class="panel bg-blue-400">
                 <div class="panel-body">
@@ -257,54 +253,197 @@ include("heading_banner.php");
 
                 ?>
                         <div style="height: 100%;">
-                            <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
-                            <input type="hidden" id="freq_time<?php echo $countervariable; ?>" value="<?php echo $freq_time; ?>">
+                            <input type="hidden" id="id" value="<?php echo $date; ?>">
+                            <input type="hidden" id="freq_time" value="<?php echo $freq_time; ?>">
                             <h4 style="height:inherit;text-align: center;background-color:green;color: #fff;">
                                 <div style="padding: 10px 0px 5px 0px;">
-                                    <span style="padding: 0px 0px 10px 0px;" id="demo<?php echo $countervariable; ?>">&nbsp;</span>
+                                    <span style="padding: 0px 0px 10px 0px;" id="demo">&nbsp;</span>
+<!--                                    <span id="timer--><?php //echo $countervariable; ?><!--"></span>-->
                                     <span id="server-load"></span>
                                 </div>
                             </h4>
                         </div>
-                    <script>
+                       <script>
+                           (function(){
+                               $(document).ready(function() {
+                                   var iddd = $("#id").val();
+                                   var freq_time = $("#freq_time").val();
+                                   var countDownDate = new Date(iddd).getTime();
+                                   var countDownfreq_time = new Date(freq_time).getTime();
+                                   var distance =  countDownDate - countDownfreq_time;
+                                   var diffHrs = Math.floor((distance % 86400000) / 3600000); // hours
+                                   var diffMins = Math.round(((distance % 86400000) % 3600000) / 60000); // minutes
+                                   var diffSec = Math.floor((distance % (1000 * 60)) / 1000); //seconds
+                                     //  parts = distance.split(':'),
+                                       hours = diffHrs,
+                                       minutes = diffMins,
+                                       seconds = diffSec,
+                                       span = $('#demo');
 
-                        var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
-                        var freq_time<?php echo $countervariable; ?> = $("#freq_time<?php echo $countervariable; ?>").val();
-                        var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
-                        var countDownfreq_time<?php echo $countervariable; ?> = new Date(freq_time<?php echo $countervariable; ?>).getTime();
-                        // Update the count down every 1 second
-                        var x = setInterval(function() {
-                           var now = countDownfreq_time<?php echo $countervariable; ?>;
-                           // Find the distance between now an the count down date
-                            var distance = countDownDate<?php echo $countervariable; ?> - now ;
-                          // Time calculations for days, hours, minutes and seconds
-                           // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                          // Output the result in an element with id="demo"
-                            document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = " Next fill form in - " + hours + "h " +
-                                minutes + "m " +   seconds + "s ";
-                          // If the count down is over, write some text
-                            if (distance < 0) {
-                                clearInterval(x);
-                                var workingdistance = countDownDate<?php echo $countervariable; ?> - now ;
-                                var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
-                                var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
-                                document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = "EXPIRED - "+ workinghours + "h "
-                                    + workingminutes + "m ";
-                            }
+                                   function correctNum(num) {
+                                       return (num<10)? ("0"+num):num;
+                                   }
 
-                        }, 1000);
+                                   var timer = setInterval(function(){
+                                       seconds--;
+                                       if(seconds == -1) {
+                                           seconds = 59;
+                                           minutes--;
 
-                    </script>
+                                           if(minutes == -1) {
+                                               minutes = 59;
+                                               hours--;
 
-
+                                               if(hours==-1) {
+                                               //    alert("timer finished");
+                                                   clearInterval(timer);
+                                                   return;
+                                               }
+                                           }
+                                       }
+                                       span.text(correctNum(hours) + ":" + correctNum(minutes) + ":" + correctNum(seconds));
+                                   }, 1000);
+                               });
+                           })()
+                        </script>
                 <?php } }?>
             </div>
         </div>
-        <?php } }?>
+        <?php } elseif($form_type_name == 'First Piece Sheet Op'){ ?>
+
+                <div class="col-lg-3">
+                    <div class="panel bg-blue-400">
+                        <div class="panel-body">
+
+                            <h3 class="no-margin dashboard_line_heading"><?php echo $form_type_name; ?></h3>
+                            <hr/>
+
+                            <table style="width:100%" id="t01">
+                                <tr>
+                                    <td>
+                                        <div style="padding-top: 5px;font-size: initial; wi">Part Family :
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div><?php echo $part_family_name;
+                                            $pf_name = ''; ?> </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding-top: 5px;font-size: initial;">Part Number :
+                                        </div>
+                                    </td>
+                                    <td><span><?php echo $part_number;
+                                            $p_num = ''; ?></span></td>
+                                </tr>
+                                <!--                                        <tr>-->
+                                <!--                                            <td><div style="padding-top: 5px;font-size: initial;">Event Type :  </div></td>-->
+                                <!--                                            <td><span>-->
+                                <?php //echo $last_assignedby;	$last_assignedby = "";
+                                ?><!--</span></span></td>-->
+                                <!--                                        </tr>-->
+                                <tr>
+                                    <td>
+                                        <div style="padding-top: 5px;font-size: initial;">Part Name :</div>
+                                    </td>
+                                    <td><span><?php echo $part_name;
+                                            $p_name = ''; ?></span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <?php
+                        $time_sql = "select * from form_user_data where form_type = '$form_type' and station = '$station' order by created_at DESC LIMIT 1";
+                        $result_time = mysqli_query($db,$time_sql);
+                        while ($row_time = mysqli_fetch_array($result_time)){
+                            $form_create_id = $row_time['form_create_id'];
+                            $created_time  =   $row_time['created_at'];
+                            $create_t = explode(" ",$created_time);
+                            $freq_time  =   $row_time['created_at'];
+
+                            $s_arr_1 = explode(' ', $created_time);
+                            $s_arr = explode(':', $s_arr_1[1]);
+                            $st_time = $s_arr[0] + ($s_arr[1] / 60) + ($s_arr[2] / 3600);
+                            $start_time = round($st_time, 2);
+
+                            $time_freq = "select * from form_create where form_create_id = '$form_create_id' and station = '$station' order by created_by  DESC LIMIT 1";
+                            $freq_res = mysqli_query($db,$time_freq);
+                            while ($row_freq = mysqli_fetch_array($freq_res)){
+                                $t11 =   $row_freq['frequency'];
+                                $arrteam1 = explode(':', $t11);
+                                $hours = $arrteam1[0];
+                                $minutes = $arrteam1[1];
+                                $hours1 = $hours * 60;
+                                $minutes1 = $minutes + $hours1;
+                                $date = $row_time["created_at"];
+                                $date = strtotime($date);
+                                $date = strtotime("+" . $minutes1 . " minute", $date);
+                                $date = date('Y-m-d H:i:s', $date);
+                                //  var_dump($t11);
+                                $total_time = $start_time + $t11;
+                                //  var_dump($total_time);
+
+
+                                ?>
+                                <div style="height: 100%;">
+                                    <input type="hidden" id="id_op" value="<?php echo $date; ?>">
+                                    <input type="hidden" id="freq_time_op" value="<?php echo $freq_time; ?>">
+                                    <h4 style="height:inherit;text-align: center;background-color:green;color: #fff;">
+                                        <div style="padding: 10px 0px 5px 0px;">
+                                            <span style="padding: 0px 0px 10px 0px;" id="demp_op">&nbsp;</span>
+                                            <!--                                    <span id="timer--><?php //echo $countervariable; ?><!--"></span>-->
+                                            <span id="server-load"></span>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <script>
+                                    (function(){
+                                        $(document).ready(function() {
+                                            var iddd = $("#id_op").val();
+                                            var freq_time = $("#freq_time_op").val();
+                                            var countDownDate = new Date(iddd).getTime();
+                                            var countDownfreq_time = new Date(freq_time).getTime();
+                                            var distance =  countDownDate - countDownfreq_time;
+                                            var diffHrs = Math.floor((distance % 86400000) / 3600000); // hours
+                                            var diffMins = Math.round(((distance % 86400000) % 3600000) / 60000); // minutes
+                                            var diffSec = Math.floor((distance % (1000 * 60)) / 1000); //seconds
+                                            //  parts = distance.split(':'),
+                                            hours = diffHrs,
+                                                minutes = diffMins,
+                                                seconds = diffSec,
+                                                span = $('#demo_op');
+
+                                            function correctNum(num) {
+                                                return (num<10)? ("0"+num):num;
+                                            }
+
+                                            var timer = setInterval(function(){
+                                                seconds--;
+                                                if(seconds == -1) {
+                                                    seconds = 59;
+                                                    minutes--;
+
+                                                    if(minutes == -1) {
+                                                        minutes = 59;
+                                                        hours--;
+
+                                                        if(hours==-1) {
+                                                            //    alert("timer finished");
+                                                            clearInterval(timer);
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                span.text(correctNum(hours) + ":" + correctNum(minutes) + ":" + correctNum(seconds));
+                                            }, 1000);
+                                        });
+                                    })()
+                                </script>
+                            <?php } }?>
+                    </div>
+                </div>
+            <?php }}?>
     </div>
 </div>
 </body>
