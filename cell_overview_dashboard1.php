@@ -25,7 +25,7 @@ $message = date("Y-m-d H:i:s");
 $is_cust_dash = $_SESSION['is_cust_dash'];
 $line_cust_dash = $_SESSION['line_cust_dash'];
 $cellID = $_GET['cell_id'];
-$c_name = $_GET['c_name'];
+$cell_name = $_GET['c_name'];
 if (isset($cellID)) {
     $sql = "select stations from `cell_grp` where c_id = '$cellID'";
     $result1 = mysqli_query($db, $sql);
@@ -51,6 +51,16 @@ if (isset($cellID)) {
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
           type="text/css">
     <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css"
+          rel="stylesheet">
     <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="assets/css/core.css" rel="stylesheet" type="text/css">
     <link href="assets/css/components.css" rel="stylesheet" type="text/css">
@@ -66,14 +76,19 @@ if (isset($cellID)) {
     <!-- Theme JS files -->
     <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
-    <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="assets/js/pages/datatables_basic.js"></script>
     <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
     <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src = "./assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery-1.3.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+    <script>
+        $('#eff_container').load('../gbp_dashboard.php #eff_container');
+    </script>
     <!--chart -->
     <style>
         .panel[class*=bg-]>.panel-body {
@@ -92,7 +107,7 @@ if (isset($cellID)) {
         }
 
         td {
-            width: 50% !important;
+            /*width: 50% !important;*/
         }
 
         .heading-elements {
@@ -155,7 +170,7 @@ if (isset($cellID)) {
 
         .overlay-content {
             position: relative;
-            top: 6%;
+            /*top: 25%;*/
             width: 100%;
             text-align: center;
             margin-top: 30px;
@@ -185,8 +200,8 @@ if (isset($cellID)) {
             .overlay a {font-size: 14px}
             .overlay .closebtn {
                 font-size: 40px;
-                top: 15px;
-                right: 35px;
+                top: 0px;
+                right: 30px;
             }
         }
     </style>    <!-- /theme JS files -->
@@ -266,6 +281,7 @@ if (isset($cellID)) {
             -webkit-transition-duration: 0.5s;
             -moz-transition-duration: 0.5s;
             transition-duration: 0.5s;
+            overflow: scroll;
         }
         .cd-popup-container p {
             padding: 0px;
@@ -457,7 +473,7 @@ include("heading_banner.php");
                             </li>
                         </ul>
                     </div>
-                    <h3 class="no-margin dashboard_line_heading"><?php echo $rowc["line_name"]; ?></h3>
+                    <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                     <hr/>
 
                     <table style="width:100%" id="t01">
@@ -635,13 +651,13 @@ include("heading_banner.php");
                         </li>
                     </ul>
                 </div>
-                <h3 class="no-margin dashboard_line_heading"><?php echo $rowc["line_name"]; ?></h3>
+                <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                 <hr/>
 
                 <table style="width:100%" id="t01">
                     <tr>
                         <td>
-                            <div style="padding-top: 5px;font-size: initial; wi">Part Family :</div>
+                            <div style="padding-top: 5px;font-size: initial; ">Part Family :</div>
                         </td>
                         <td>
                             <div><?php echo $pf_name;
@@ -738,9 +754,7 @@ include("heading_banner.php");
         $countervariable = 0;
         asort($ass_line_array);
         foreach ($ass_line_array as $line) {
-            $query = sprintf("SELECT line_name FROM  cam_line where line_id = '$line'");
-            $qur = mysqli_query($db, $query);
-            $rowc = mysqli_fetch_array($qur);
+
             $event_status = '';
             $line_status_text = '';
             $buttonclass = '#000';
@@ -749,9 +763,10 @@ include("heading_banner.php");
             $pf_name = '';
             $time = '';
             $countervariable++;
-            $qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.pm_part_number_id as p_no, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
+            $qur01 = mysqli_query($db, "SELECT sg_events.line_id,pn.part_number as p_num, pn.pm_part_number_id as p_no, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
             $rowc01 = mysqli_fetch_array($qur01);
             if ($rowc01 != null) {
+                $station_id = $rowc01['line_id'];
                 $time = $rowc01['updated_time'];
                 $station_event_id = $rowc01['station_event_id'];
                 $line_status_text = $rowc01['e_name'];
@@ -765,6 +780,11 @@ include("heading_banner.php");
             } else {
 
             }
+            $query_new = sprintf("SELECT line_name FROM  cam_line where line_id = '$station_id'");
+            $qur_new = mysqli_query($db, $query_new);
+            $rowc_new = mysqli_fetch_array($qur_new);
+
+
 
             if ($countervariable % 4 == 0) {
                 ?>
@@ -851,7 +871,7 @@ include("heading_banner.php");
                                 </ul>
 
                             </div>
-                            <h3 class="no-margin dashboard_line_heading"><?php echo $rowc["line_name"]; ?></h3>
+                            <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                             <hr/>
 
                             <table style="width:100%" id="t01">
@@ -959,10 +979,10 @@ include("heading_banner.php");
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop2')">Material Tracability</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop3')">View Material Tracabilty </a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop4')">View Assigned Crew</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop5')">View Document</a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Material Tracability</a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Material Tracabilty </a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Assigned Crew</a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Document</a>
                                         </div>
                                         <div class="col-sm-4">
                                             <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Submit 10X</a>
@@ -984,6 +1004,7 @@ include("heading_banner.php");
 
                                 <div id="pop1" class="cd-popup" role="alert">
                                     <div class="cd-popup-container">
+                                        <div class="content">
                                         <?php
                                         $user_id = $_SESSION["id"];
                                         $def_ch = $_POST['def_ch'];
@@ -1079,7 +1100,7 @@ include("heading_banner.php");
                                         }
 
                                         ?>
-                                        <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;" class="row">
+                                        <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;padding-top: 32px;" class="row">
                                             <div class="col-lg-6 col-md-8 graph_media">
                                                 <div class="media">
                                                     <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
@@ -1105,11 +1126,11 @@ include("heading_banner.php");
                                                         <div id="eff_container" class="img-circle"></div>                                                        <!--                                    </a>-->
                                                     </div>
                                                     <div class="media_details">
-                                                    <div class="media-body">
-                                                        <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                                                        <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                                                        <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
-                                                    </div>
+                                                        <div class="media-body">
+                                                            <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                                                            <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
+                                                            <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1120,13 +1141,14 @@ include("heading_banner.php");
                                         }
                                         ?>
                                         <?php
-		                                if (!empty($_SESSION['import_status_message'])) {
-			                            echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-			                            $_SESSION['message_stauts_class'] = '';
-			                            $_SESSION['import_status_message'] = '';
-		                                 } ?>
+                                        if (!empty($_SESSION['import_status_message'])) {
+                                            echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                            $_SESSION['message_stauts_class'] = '';
+                                            $_SESSION['import_status_message'] = '';
+                                        } ?>
                                         <div class="panel panel-flat">
                                             <?php
+                                            $station_event_id = $rowc01['station_event_id'];
                                             $sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
                                             $result1 = mysqli_query($db, $sql);
                                             $rowc = mysqli_fetch_array($result1);
@@ -1172,15 +1194,7 @@ include("heading_banner.php");
                                             <div class="panel-heading" style="padding: 50px;">
                                                 <div class="row">
                                                     <div class="search_container"  style="margin-right:10px;">
-                                                        <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;
-        background-size: 18px 18px;
-        background-position: 95% center;
-        border-radius: 50px;
-        border: 1px solid #575756;
-        transition: all 250ms ease-in-out;
-        backface-visibility: hidden;
-        transform-style: preserve-3d;
-        " >
+                                                        <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;background-size: 18px 18px;background-position: 95% center;border-radius: 50px;border: 1px solid #575756;transition: all 250ms ease-in-out;backface-visibility: hidden;transform-style: preserve-3d;">
                                                     </div>
                                                 </div>
                                                 </br>
@@ -1219,6 +1233,7 @@ include("heading_banner.php");
                                                     while ($row1 = $result1->fetch_assoc()) {
                                                         ?>
                                                         <div class="col-md-3" style="padding-top: 10px;">
+
                                                             <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
                                                                 data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
                                                                 <?php echo $row1['defect_list_name']; ?></a>
@@ -1239,11 +1254,11 @@ include("heading_banner.php");
 
                                                 </div>
                                             </div>
-
-
                                         </div>
-                                        <form action="delete_good_bad_piece.php" method="post" class="form-horizontal">
-                                            <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+                                        <form action="<?php echo $siteURL; ?>events_module/delete_good_bad_piece.php" method="post" class="form-horizontal">
+                                            <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>">
+                                            <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
+                                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
@@ -1339,210 +1354,13 @@ include("heading_banner.php");
                                             </div>
                                         </form>
                                         <a href="#0" class="cd-popup-close"></a>
+                                        </div>
                                     </div> <!-- cd-popup-container -->
                                 </div> <!-- cd-popup -->
 
                                 <div id="pop2" class="cd-popup" role="alert">
                                     <div class="cd-popup-container">
-                                        <?php
-                                        $st = $_REQUEST['station'];
-                                        //$st_dashboard = base64_decode(urldecode($st));
-                                        $sql1 = "SELECT * FROM `cam_line` where line_id = '$st'";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            $line_name = $row1['line_name'];
-                                            $line_no = $row1['line_id'];
-
-
-                                        }
-                                        ?>
-                                        <div class="panel panel-flat">
-                                            <div class="panel-heading">
-
-                                                <?php if ($temp == "one") { ?>
-                                                    <br/>
-                                                    <div class="alert alert-success no-border">
-                                                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
-                                                                    class="sr-only">Close</span></button>
-                                                        <span class="text-semibold">Material Tracability.</span> Created Successfully.
-                                                    </div>
-                                                <?php } ?>
-                                                <?php if ($temp == "two") { ?>
-                                                    <br/>
-                                                    <div class="alert alert-success no-border">
-                                                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
-                                                                    class="sr-only">Close</span></button>
-                                                        <span class="text-semibold">Material Tracability.</span> Updated Successfully.
-                                                    </div>
-                                                <?php } ?>
-                                                <?php
-                                                if (!empty($import_status_message)) {
-                                                    echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                                }
-                                                ?>
-                                                <?php
-                                                if (!empty($_SESSION[import_status_message])) {
-                                                    echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                                    $_SESSION['message_stauts_class'] = '';
-                                                    $_SESSION['import_status_message'] = '';
-                                                }
-                                                ?>
-
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <form action="material_backend.php" id="material_setting" enctype="multipart/form-data"
-                                                              class="form-horizontal" method="post">
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                                                <div class="col-md-6">
-                                                                    <?php $form_id = $_GET['id'];
-                                                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                                                    <input type="hidden" name="station_event_id"
-                                                                           value="<?php echo $station_event_id ?>">
-                                                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                                                    <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
-                                                                    <input type="text" name="line_number1" id="line_number"
-                                                                           value="<?php echo $line_name ?>" class="form-control"
-                                                                           placeholder="Enter Line Number">
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
-                                                                    <input type="text" name="part_number1" id="part_number"
-                                                                           value="<?php echo $pm_part_number; ?>" class="form-control"
-                                                                           placeholder="Enter Part Number">
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
-                                                                    <input type="text" name="part_family1" id="part_family"
-                                                                           value="<?php echo $pm_part_family_name; ?>" class="form-control"
-                                                                           placeholder="Enter Part Family">
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                                                <div class="col-md-6">
-                                                                    <!--                                    <input type="hidden" name="part_name" value="-->
-                                                                    <?php //echo $part_family; ?><!--">-->
-                                                                    <input type="text" name="part_name" id="part_name"
-                                                                           value="<?php echo $pm_part_name; ?>" class="form-control"
-                                                                           placeholder="Enter Part Name">
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-
-
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Material type : </label>
-                                                                <div class="col-md-6">
-                                                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" required >
-                                                                        <option value="" selected disabled>--- Select material Type ---</option>
-                                                                        <?php
-                                                                        $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
-                                                                        $result1 = mysqli_query($db, $sql1);
-                                                                        while ($row1 = $result1->fetch_assoc()) {
-
-                                                                            echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
-
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div id="error6" class="red">Please Enter Material Type</div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Image : </label>
-
-                                                                <div class="col-md-6">
-                                                                    <input type="file" id="file" name="file" class="form-control"/>
-                                                                    <div class="container"></div>
-                                                                </div>
-
-
-                                                            </div>
-                                                            <br/>
-                                                            <?php
-
-
-                                                            $m_type = $_POST['material_type'];
-
-                                                            $sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
-                                                            $row = mysqli_query($db, $sql);
-                                                            $se_row = mysqli_fetch_assoc($row);
-
-                                                            $serial = $se_row['serial_num_required'];
-
-                                                            ?>
-                                                            <div class="row" id = "serial_num">
-
-                                                            </div>
-                                                            <br/>
-
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Material Status : </label>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input type="radio" id="pass" name="material_status" value="1"
-                                                                               class="form-check-input" checked required>
-                                                                        <label for="pass" class="item_label">Pass</label>
-
-                                                                        <input type="radio" id="fail" name="material_status" value="0"
-                                                                               class="form-check-input reject" required>
-                                                                        <label for="fail" class="item_label">Fail</label>
-
-
-                                                                    </div>
-
-                                                                </div>
-                                                                <div id="error7" class="red">Please Enter material Status</div>
-
-                                                            </div>
-                                                            <br/>
-                                                            <div id="rej_fail" style="display: none;">
-
-                                                            </div>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Notes : </label>
-                                                                <div class="col-md-6">
-                                                                                                                                                                                                                                                                                    <textarea
-                                                                                                                                                                                                                                                                                            id="notes"
-                                                                                                                                                                                                                                                                                            name="material_notes"
-                                                                                                                                                                                                                                                                                            rows="4"
-                                                                                                                                                                                                                                                                                            placeholder="Enter Notes..."
-                                                                                                                                                                                                                                                                                            class="form-control"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <hr/>
-                                                            <br/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="panel-footer p_footer">
-
-                                                <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
-                                                        style="background-color:#1e73be;">Submit
-                                                </button>
-
-                                            </div>
-                                            </form>
-
-
-                                        </div>
+                                        <p>Are you sure you want to delete this element 2 ?</p>
                                         <a href="#0" class="cd-popup-close"></a>
                                     </div> <!-- cd-popup-container -->
                                 </div> <!-- cd-popup -->
@@ -1550,7 +1368,7 @@ include("heading_banner.php");
 
                             <span style="font-size:30px;cursor:pointer;float: right;margin-top: -10px;" onclick="openNav()">&#9776;</span>
 
-                            <h3 class="no-margin dashboard_line_heading"><?php echo $rowc["line_name"]; ?></h3>
+                            <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new['line_name']; ?></h3>
                             <hr/>
 
                             <table style="width:100%" id="t01">
@@ -1840,7 +1658,6 @@ if ($i == "") {
         }
     });
 </script>
-
 <?php include("footer.php"); ?> <!-- /page container -->
 <!-- new footer here -->
 </body>
