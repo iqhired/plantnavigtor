@@ -8,6 +8,149 @@ $iid = $_SESSION["id"];*/
 <script type="text/javascript" src = "<?php echo $link . "/assets/js/plugins/forms/styling/uniform.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo $link . "/assets/js/plugins/forms/styling/switchery.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo $link . "/assets/js/pages/components_dropdowns.js"?>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+    .header {
+        overflow: hidden;
+        background-color: #060818;
+        padding: 8px 25px;
+    }
+
+    .header a {
+        /*float: left;*/
+        color: #fff5f5;
+        /*text-align: center;*/
+        padding: 2px;
+        text-decoration: none;
+        font-size: 14px;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+    .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    /*.header a:hover {*/
+    /*    background-color: #ddd;*/
+    /*    color: black;*/
+    /*}*/
+
+    .header a.active {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    .header-right {
+        float: right;
+        margin-top: 5.5px;
+    }
+
+    @media screen and (max-width: 500px) {
+        .header a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+
+        .header-right {
+            float: right;
+            margin-top: -28px;
+        }
+        .logo_img {
+            height: auto;
+            width: 80px!important;
+        }
+        img.dropbtn_img {
+            height: auto;
+            width: 25px!important;
+            border-radius: 4px;
+
+        }
+        .dropbtn{
+            font-size: 12px!important;
+        }
+        svg.arrow.dropbtn {
+            margin-left: 94px!important;
+            margin-top: -18px!important;
+        }
+
+    }
+    .dropbtn {
+        background-color: #060818;
+        color: white;
+        /*padding: 16px;*/
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /*.dropbtn:hover, .dropbtn:focus {*/
+    /*    background-color: #2980B9;*/
+    /*}*/
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #191e3a;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 9999;
+        border-radius: 6px;
+    }
+
+    .dropdown-content a {
+        color: #fff5f5;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid #524d4d;
+    }
+    .logo_img{
+        height: auto;
+        width: 150px;
+    }
+    img.dropbtn_img {
+        height: auto;
+        width: 28px!important;
+        border-radius: 4px;
+    }
+
+
+    /*.dropdown a:hover {background-color: #ddd;}*/
+
+    .show {display: block;}
+</style>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
 
 <style>
 	.sidebar-default .navigation li>a{color:#f5f5f5};
@@ -135,7 +278,7 @@ $iid = $_SESSION["id"];*/
 	}
 
 </style>
-<div class="navbar navbar-inverse " style="background-color:#1a4a73;">
+<div class="navbar navbar-inverse " style="background-color:#191e3a;">
 	<div class="navbar-header" style="background-color:#f7f7f7;">
 		<a href="./supplier_home.php" class="logo_a">  <img src="<?php echo $link . "/assets/images/SGG_logo.png"?>" alt="" id="site_logo"/></a>
 		<ul class="nav navbar-nav visible-xs-block">
@@ -153,7 +296,6 @@ $iid = $_SESSION["id"];*/
 			<h3 id="screen_header" style=""><span class="text-semibold"><?php echo $cam_page_header; ?></span></h3>
 		</div>
 		<div class="navbar-right">
-
 			<ul class="nav navbar-nav">
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
@@ -164,7 +306,7 @@ $iid = $_SESSION["id"];*/
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a href="javascript:void(0)"><i class="icon-user-plus"></i> My profile</a></li>
 						<li><a href="javascript:void(0)"><i class="icon-cog5"></i> Change Password</a></li>
-						<li><a href="./../logout.php"><i class="icon-switch2"></i> Logout</a></li>
+						<li><a href="../logout.php"><i class="icon-switch2"></i> Logout</a></li>
 					</ul>
 				</li>
 			</ul>

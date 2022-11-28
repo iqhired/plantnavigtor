@@ -1,15 +1,5 @@
-<script>
-
-    function calcTime(city, offset) {
-        const d = new Date();
-        const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-        const nd = new Date(utc + (3600000 * offset));
-        return nd;
-    }
-    function getCurrentTime() {
-        return calcTime('Chicago', '-6');
-    }
-</script>
+<?php  //include the timing configuration file
+include("timings_config.php"); ?>
 <script type="text/javascript" src="assets/js/time_display.js"></script>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/push.min.js"></script>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/serviceWorker.min.js"></script>
