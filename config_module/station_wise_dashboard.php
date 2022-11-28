@@ -160,7 +160,7 @@ include("../hp_header.php");
     ?>
 
     <div class="col-md-4">
-        <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>CELL STATUS OVERVIEW</center></span>
+        <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CELL STATUS OVERVIEW</center></span>
         <div class="panel bg-blue-400">
             <div class="panel-body">
                 <h3 class="no-margin dashboard_line_heading"><?php echo $station2; ?></h3>
@@ -284,7 +284,7 @@ include("../hp_header.php");
         ?>
 
         <div class="col-md-4">
-            <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>CREW STATUS OVERVIEW</center></span>
+            <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CREW STATUS OVERVIEW</center></span>
             <div class="panel bg-blue-400">
                 <div class="panel-body">
                     <h3 class="no-margin dashboard_line_heading"><?php echo $station2; ?></h3>
@@ -348,7 +348,7 @@ include("../hp_header.php");
             </div>
         </div>
        <div class="col-md-4">
-           <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>STATION FORM SUBMIT STATUS</center></span>
+           <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>STATION FORM SUBMIT STATUS</center></span>
            <div class="panel bg-blue-400">
                <div class="panel-body" style="height: 700px">
                </div>
@@ -359,21 +359,21 @@ include("../hp_header.php");
     <div class="col-md-4">
         <div class="media">
             <div id="container" style="height: 350px; margin-top: 15px ;">
-                <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>LINE UTILIZATION STATUS</center></span>
+                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>LINE UTILIZATION STATUS</center></span>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="media">
             <div id="sgf_container" style="height: 350px; margin-top: 15px;">
-                <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>GOOD PIECES , BAD PIECES & REWORK</center></span>
+                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>GOOD PIECES , BAD PIECES & REWORK</center></span>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="media">
             <div id="eff_container" style="height: 350px; margin-top: 15px;">
-                <span class="label label-info" style="width:440px;height: 25px;text-align: center;font-size: 14px;"><center>CURRENT STAFF EFFICIENCY</center></span>
+                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CURRENT STAFF EFFICIENCY</center></span>
                 <!--<div id="eff_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px"></div>-->
 
                </div>

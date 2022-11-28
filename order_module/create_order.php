@@ -32,7 +32,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $i != "user" ) {
     header('location: ../dashboard.php');
 }
 if (count($_POST) > 0) {
