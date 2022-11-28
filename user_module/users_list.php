@@ -1,6 +1,5 @@
 <?php
 include("../config.php");
-include ("../email_config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
@@ -46,6 +45,7 @@ if (count($_POST) > 0) {
 	
     $name = $_POST['name'];
     require '../vendor/autoload.php';
+    include ("../email_config.php");
     if ($name != "") {
         $name = $_POST['name'];
         $email = $_POST['email'];
