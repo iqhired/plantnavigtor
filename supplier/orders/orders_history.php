@@ -142,6 +142,11 @@ if (count($_POST) > 0) {
 	<script type="text/javascript" src="<?php echo $link . "/assets/js/pages/components_modals.js" ?>"></script>
 	<!--chart -->
 	<style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow: hidden;
+        }
 		td {
 			/*width:50% !important;*/
 		}
@@ -205,7 +210,7 @@ if (count($_POST) > 0) {
 <!-- Main navbar -->
 <!-- /main navbar -->
 <?php
-$cam_page_header = "Active Orders";
+$cam_page_header = "Historical Orders";
 include("./../sup_header.php");
 include("./../sup_admin_menu.php");
 ?>

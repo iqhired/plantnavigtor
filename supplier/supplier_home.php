@@ -149,6 +149,11 @@ if (count($_POST) > 0) {
     <script type="text/javascript" src="<?php echo $link . "/assets/js/pages/components_modals.js" ?>"></script>
     <!--chart -->
     <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow: hidden;
+        }
         td {
             /*width:50% !important;*/
         }
@@ -502,10 +507,10 @@ if ($i == "") {
     }, 2000);
 
 
-    setTimeout(function () {
+  /*  setTimeout(function () {
         $( "#update-form" ).load(window.location.href + " #order_det_table" );
         // location.reload();
-    }, 20000);
+    }, 20000);*/
     $(document).ready(function() {
         $('#order_details_wrapper').DataTable( {
             "paging":   false,
