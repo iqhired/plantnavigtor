@@ -29,10 +29,12 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 //	header('location: ../logout.php');
     exit;
 }
+$is_tab_login = $_SESSION['is_tab_user'];
+$is_cell_login = $_SESSION['is_cell_login'];
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin" && $i != "pn_user" && $i != "user" ) {
+if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
 }
 if (count($_POST) > 0) {
@@ -65,7 +67,7 @@ if (count($_POST) > 0) {
 	
 		$id = $_POST['edit_id'];
 //eidt logo
-				$sql = "update sup_order set c_id='$_POST[edit_c_id]',order_desc='$_POST[edit_order_desc]',order_name='$_POST[edit_order_name]' where order_id='$id'";
+				$sql = "update sup_order set c_id='$_POST[edit_c_id]',order_desc='$_POST[edit_order_desc]',order_status_id='$_POST[order_status]',order_name='$_POST[edit_order_name]' where order_id='$id'";
 		
 			$result1 = mysqli_query($sup_db, $sql);
             if ($result1) {
@@ -124,7 +126,11 @@ if (count($_POST) > 0) {
 <?php
 $cust_cam_page_header = "Create Order";
 include("../header_folder.php");
-include("../admin_menu.php");
+if (($is_tab_login || $is_cell_login)) {
+    include("../tab_menu.php");
+} else {
+    include("../admin_menu.php");
+}
 include("../heading_banner.php");
 ?>
 <!-- Page container -->
@@ -408,7 +414,37 @@ include("../heading_banner.php");
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Order Status * : </label>
+                                        <div class="col-lg-8">
+                                            <select required name="order_status" id="order_status"
+                                                    class="form-control">
+                                                <option value="" selected disabled>--- Select Order Status ---
+                                                </option>
+                                                <?php
+                                                $sql11 = mysqli_query($sup_db, "SELECT * FROM `sup_order_status`  ORDER BY `sup_order_status_id` ASC ");
+                                                $selected = "";
+                                                while ($row11 = mysqli_fetch_array($sql11)) {
+                                                    if ($row11['sup_order_status_id'] == $order_status_id) {
+                                                        $selected = "selected";
+                                                    } else {
+                                                        $selected = "";
+                                                    }
+                                                    if ($row11['sup_os_access'] == 1) {
+                                                        echo "<option " . $selected . " disabled=\"disabled\" value='" . $row11['sup_order_status_id'] . "' >" . $row11['sup_order_status'] . "</option>";
+                                                    } else {
+                                                        echo "<option " . $selected . " value='" . $row11['sup_order_status_id'] . "'  >" . $row11['sup_order_status'] . "</option>";
+                                                    }
+
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
 								<div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
