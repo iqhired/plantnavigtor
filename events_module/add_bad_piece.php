@@ -24,9 +24,9 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 $_SESSION['LAST_ACTIVITY'] = $time;
 
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin") {
-    header('location: ../dashboard.php');
-}
+//if ($i != "super" && $i != "admin") {
+//    header('location: ../dashboard.php');
+//}
 $station_event_id = $_GET['station_event_id'];
 $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
 $resultmain = $mysqli->query($sqlmain);
