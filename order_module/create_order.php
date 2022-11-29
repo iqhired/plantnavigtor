@@ -33,10 +33,10 @@ $is_tab_login = $_SESSION['is_tab_user'];
 $is_cell_login = $_SESSION['is_cell_login'];
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
-$i = $_SESSION["role_id"];
+/*$i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
-}
+}*/
 if (count($_POST) > 0) {
 	$order_name = $_POST['order_name'];
 //create
@@ -62,14 +62,27 @@ if (count($_POST) > 0) {
 	}
 
 //edit
- 	$edit_order_name = $_POST['edit_order_name'];
-	if ($edit_order_name != "") {
-	
-		$id = $_POST['edit_id'];
+    $edit_order_status = $_POST['order_status'];
+	if ($edit_order_status != "") {
+        $id = $_POST['edit_id'];
+	if($edit_order_status == 6){
+        $sql111 = "update sup_order set order_active = 0,order_status_id='$_POST[order_status]' where order_id='$id'";
+        $result111 = mysqli_query($sup_db, $sql111);
+        if ($result111) {
+            $_SESSION['message_stauts_class'] = 'alert-success';
+            $_SESSION['import_status_message'] = 'Order Updated Successfully.';
+        } else {
+            $_SESSION['message_stauts_class'] = 'alert-danger';
+            if($_SESSION['import_status_message'] == "")
+            {
+                $_SESSION['import_status_message'] = 'Error: Please Try Again.';
+            }
+        }
+
+    }else{
 //eidt logo
-				$sql = "update sup_order set c_id='$_POST[edit_c_id]',order_desc='$_POST[edit_order_desc]',order_status_id='$_POST[order_status]',order_name='$_POST[edit_order_name]' where order_id='$id'";
-		
-			$result1 = mysqli_query($sup_db, $sql);
+        $sql = "update sup_order set order_status_id='$_POST[order_status]' where order_id='$id'";
+        $result1 = mysqli_query($sup_db, $sql);
             if ($result1) {
 				$_SESSION['message_stauts_class'] = 'alert-success';
 				$_SESSION['import_status_message'] = 'Order Updated Successfully.';
@@ -80,7 +93,8 @@ if (count($_POST) > 0) {
 					$_SESSION['import_status_message'] = 'Error: Please Try Again.';
 				} 
 			}
-	}
+	    }
+    }
 
 }
 
@@ -231,7 +245,7 @@ include("../heading_banner.php");
                             </thead>
                             <tbody>
 							<?php
-							$query = sprintf("SELECT * FROM sup_order");
+							$query = sprintf("SELECT * FROM sup_order order by order_status_id asc");
 							$qur = mysqli_query($sup_db, $query);
 
 							while ($rowc = mysqli_fetch_array($qur)) {
@@ -262,27 +276,19 @@ include("../heading_banner.php");
                                     </td>
 									
 									<td>
-										<button type="button" id="view" class="btn btn-info btn-xs" title="View"
-                                                data-id="<?php echo $rowc['order_id']; ?>"
-                                                data-c_id ="<?php echo $rowc['c_id']; ?>"
-                                                data-order_name="<?php echo $rowc['order_name']; ?>"
-                                                data-order_desc="<?php echo $rowc['order_desc']; ?>"
-                                                data-order_status_id ="<?php echo $rowc['order_status_id']; ?>"
-                                                data-toggle="modal" style="background-color:#1e73be;"
-                                                data-target="#view_modal_theme_primary"><i class="fa fa-eye"></i>
-                                        </button>
-								&nbsp;	
+								      <a href="view_order_data.php?id=<?php echo $rowc['order_id']; ?>" class="btn btn-info btn-xs" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye"></i></a>
 									   <button type="button" id="edit" class="btn btn-info btn-xs" title="Edit"
                                                 data-id="<?php echo $rowc['order_id']; ?>"
                                                 data-c_id ="<?php echo $rowc['c_id']; ?>"
                                                 data-order_name="<?php echo $rowc['order_name']; ?>"
                                                 data-order_desc="<?php echo $rowc['order_desc']; ?>"
                                                 data-order_status_id ="<?php echo $rowc['order_status_id']; ?>"
-                                                data-toggle="modal" style="background-color:#1e73be;"
+                                                data-toggle="modal" style="background-color:#1e73be;margin-top: 0px!important;"
                                                 data-target="#edit_modal_theme_primary"><i class="fa fa-edit"></i>
                                         </button>
-								&nbsp;	<button type="button" id="delete" class="btn btn-danger btn-xs" title="Delete" data-id="<?php echo $rowc['order_id']; ?>"><i class="fa fa-delete">-</i> </button>
-                                                   							
+                                        <?php if($order_status_id == 1){ ?>
+									<button type="button" id="delete" class="btn btn-danger btn-xs" title="Delete" style="margin-top: 0px!important;" data-id="<?php echo $rowc['order_id']; ?>"><i class="fa fa-delete">-</i> </button>
+                                        <?php } else { }?>
                                     </td>
                                 </tr>
 							<?php } ?>
@@ -292,79 +298,7 @@ include("../heading_banner.php");
             </div>
             </div>
         </div>
-            <!-- view modal -->
-            <div id="view_modal_theme_primary" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h6 class="modal-title">
-                                View Order
-                            </h6>
-                        </div>
-                        <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
-                              method="post">
-                            <div class="modal-body">
-                                <!--Part Number-->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Supplier Name * : </label>
-                                            <div class="col-lg-8">
-                                                <select required name="view_c_id" disabled id="view_c_id"
-                                                        class="form-control">
-                                                    <option value="" selected disabled>--- Select Supplier ---
-                                                    </option>
-													<?php
-													$sql1 = "SELECT * FROM `sup_account` ORDER BY `c_name` ASC";
-													$result1 = $sup_mysqli->query($sql1);
-													//                                            $entry = 'selected';
-													while ($row1 = $result1->fetch_assoc()) {
-														echo "<option value='" . $row1['c_id'] . "'  >" . $row1['c_name'] . "</option>";
-													}
-													?>
-                                                </select>
-                                                <input type="hidden" name="view_id" id="view_id">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Order Name * : </label>
-                                            <div class="col-lg-8">
-                                                <input type="text" name="view_order_name" disabled id="view_order_name"
-                                                       class="form-control" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-								<div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 control-label">Order Description : </label>
-                                            <div class="col-lg-8">
-											<textarea id="view_order_desc" disabled name="view_order_desc" rows="3"
-                                                      class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               
 
-<div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </div>                            
-							</div>
-                            </div>
-                            
-                        </form>
-                    </div>
-                </div>
-
-            <!--/ view modal -->
 
             <!-- edit modal -->
             <div id="edit_modal_theme_primary" class="modal fade">
@@ -373,7 +307,7 @@ include("../heading_banner.php");
                         <div class="modal-header bg-primary">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h6 class="modal-title">
-                                Update Order
+                                Update Order Status
                             </h6>
                         </div>
                         <form action="" id="user_form" enctype="multipart/form-data" class="form-horizontal"
@@ -383,10 +317,10 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Supplier Name * : </label>
+                                            <label class="col-lg-4 control-label" style="color: #90A4AE">Supplier Name * : </label>
                                             <div class="col-lg-8">
                                                 <select required name="edit_c_id" id="edit_c_id"
-                                                        class="form-control">
+                                                        class="form-control" disabled>
                                                     <option value="" selected disabled>--- Select Supplier ---
                                                     </option>
 													<?php
@@ -406,10 +340,10 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Order Name * : </label>
+                                            <label class="col-lg-4 control-label" style="color: #90A4AE">Order Name * : </label>
                                             <div class="col-lg-8">
                                                 <input type="text" name="edit_order_name" id="edit_order_name"
-                                                       class="form-control" required>
+                                                       class="form-control" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -424,7 +358,7 @@ include("../heading_banner.php");
                                                 <option value="" selected disabled>--- Select Order Status ---
                                                 </option>
                                                 <?php
-                                                $sql11 = mysqli_query($sup_db, "SELECT * FROM `sup_order_status`  ORDER BY `sup_order_status_id` ASC ");
+                                                $sql11 = mysqli_query($sup_db, "SELECT * FROM `sup_order_status` where sup_sa_os_access = 1 ORDER BY `sup_order_status_id` ASC ");
                                                 $selected = "";
                                                 while ($row11 = mysqli_fetch_array($sql11)) {
                                                     if ($row11['sup_order_status_id'] == $order_status_id) {
@@ -432,12 +366,7 @@ include("../heading_banner.php");
                                                     } else {
                                                         $selected = "";
                                                     }
-                                                    if ($row11['sup_os_access'] == 1) {
-                                                        echo "<option " . $selected . " disabled=\"disabled\" value='" . $row11['sup_order_status_id'] . "' >" . $row11['sup_order_status'] . "</option>";
-                                                    } else {
                                                         echo "<option " . $selected . " value='" . $row11['sup_order_status_id'] . "'  >" . $row11['sup_order_status'] . "</option>";
-                                                    }
-
                                                 }
                                                 ?>
                                             </select>
@@ -448,10 +377,10 @@ include("../heading_banner.php");
 								<div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-4 control-label">Order Description : </label>
+                                            <label class="col-lg-4 control-label" style="color: #90A4AE">Order Description : </label>
                                             <div class="col-lg-8">
 											<textarea id="edit_order_desc" name="edit_order_desc" rows="3"
-                                                      class="form-control"></textarea>
+                                                      class="form-control" disabled></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -471,26 +400,6 @@ include("../heading_banner.php");
  
 
  </div>
-            <!-- Dashboard content -->
-<script>
-                jQuery(document).ready(function ($) {
-                    $(document).on('click', '#view', function () {
-                        var element = $(this);
-                        var edit_id = element.attr("data-id");
-                        var c_id = $(this).data("c_id");
-                        var order_name = $(this).data("order_name");
-                        var order_desc = $(this).data("order_desc");
-                        var cust_address = $(this).data("cust_address");
-                       
-                        $("#view_c_id").val(c_id);
-                        $("#view_order_name").val(order_name);
-                        $("#view_order_desc").val(order_desc);
-                        $("#view_id").val(edit_id);
-                    });
-                });
-				
-	        </script>
-			
             <!-- /dashboard content -->
             <script>
                 $(document).on('click', '#delete', function () {

@@ -154,40 +154,10 @@ if (count($_POST) > 0) {
             overflow-x: hidden;
             overflow: hidden;
         }
-        td {
-            /*width:50% !important;*/
+        .content {
+            padding: 0px 15px !important;
+            background-color: #060818;
         }
-
-        .heading-elements {
-            background-color: transparent;
-        }
-
-        .line_card {
-            background-color: #181d50;
-        }
-
-        .bg-blue-400 {
-            background-color: #181d50;
-        }
-
-        .bg-orange-400 {
-            background-color: #dc6805;
-        }
-
-        .bg-teal-400 {
-            background-color: #218838;
-        }
-
-        .bg-pink-400 {
-            background-color: #c9302c;
-        }
-
-        .dashboard_line_heading {
-
-            padding-top: 5px;
-            font-size: 15px !important;
-        }
-
         #close_bt{
             color: #cc0000;
         }
