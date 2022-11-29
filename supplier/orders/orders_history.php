@@ -147,49 +147,10 @@ if (count($_POST) > 0) {
             overflow-x: hidden;
             overflow: hidden;
         }
-		td {
-			/*width:50% !important;*/
-		}
-
-		.heading-elements {
-			background-color: transparent;
-		}
-
-		.line_card {
-			background-color: #181d50;
-		}
-
-		.bg-blue-400 {
-			background-color: #181d50;
-		}
-
-		.bg-orange-400 {
-			background-color: #dc6805;
-		}
-
-		.bg-teal-400 {
-			background-color: #218838;
-		}
-
-		.bg-pink-400 {
-			background-color: #c9302c;
-		}
-
-		.dashboard_line_heading {
-
-			padding-top: 5px;
-			font-size: 15px !important;
-		}
-
-		#close_bt{
-			color: #cc0000;
-		}
-
-		#file_del{
-			background-color: #fff;
-			border: navajowhite;
-		}
-
+        .content {
+            padding: 0px 15px !important;
+            background-color: #060818;
+        }
 		#order_details{
 			margin-top: 20px;
 		}
@@ -270,34 +231,23 @@ include("./../sup_admin_menu.php");
 								}
 								?>
 								<td><?php echo $rowc['created_on']; ?></td>
-								<td><select name="edit_order_status" id="edit_order_status" class="form-control">
-										<?php
-										$os_access = 0;
-										$os_sa_access = 0;
-										$sql1 = "SELECT * FROM `sup_order_status`  ORDER BY `sup_order_status_id` ASC ";
-										$result1 = $mysqli->query($sql1);
-										$selected = "";
-										while ($row1 = $result1->fetch_assoc()) {
-											if ($row1['sup_order_status_id'] == $order_status_id) {
-												$selected = "selected";
-											} else {
-												$selected = "";
-											}
-											echo "<option " . $selected . " disabled=\"disabled\" value='" . $row1['sup_order_status_id'] . "' >" . $row1['sup_order_status'] . "</option>";
-										}
-
-										?>
-									</select></td>
+                                <td>
+                                    <?php
+                                    $query34 = sprintf("SELECT sup_order_status FROM  sup_order_status where sup_order_status_id = '$order_status_id'");
+                                    $qur34 = mysqli_query($sup_db, $query34);
+                                    $rowc34 = mysqli_fetch_array($qur34);
+                                    echo $rowc34["sup_order_status"]; ?>
+                                </td>
 								<td>
-									<!--                                        <button type="submit" id="edit" class="btn btn-info btn">Update</button>-->
-									<button type="button" id="edit" class="btn btn-info btn-xs"
-											data-id="<?php echo $order_id ?>"
-											data-order_status_id="<?php echo $order_status_id ?>"
-											data-ship_det="<?php echo $ship_det ?>"
+                                    <a href="view_historical_data.php?id=<?php echo $order_id; ?>" class="btn btn-info btn-xs" style="background-color:#1e73be;" target="_blank"><i class="fa fa-eye"></i></a>
+									<!--<button type="button" id="edit" class="btn btn-info btn-xs"
+											data-id="<?php /*echo $order_id */?>"
+											data-order_status_id="<?php /*echo $order_status_id */?>"
+											data-ship_det="<?php /*echo $ship_det */?>"
 											style="background-color:#1e73be;"
 											data-toggle="modal" style="background-color:#1e73be;"
 											data-target="#edit_modal_theme_primary">View
-									</button>
+									</button>-->
 								</td>
 							</tr>
 						<?php } ?>
@@ -446,11 +396,6 @@ if ($i == "") {
         $('.alert-success').delay(100).fadeOut(500);
     }, 2000);
 
-
-    setTimeout(function () {
-        $( "#update-form" ).load(window.location.href + " #order_det_table" );
-        // location.reload();
-    }, 20000);
     $(document).ready(function() {
         $('#order_details_wrapper').DataTable( {
             "paging":   false,

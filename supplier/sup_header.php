@@ -276,11 +276,16 @@ $iid = $_SESSION["id"];*/
 	a.logo_a:hover {
 		background-color: unset;
 	}
-
+    .logo_img{
+        height: auto;
+        width: 195px!important;
+    }
 </style>
 <div class="navbar navbar-inverse " style="background-color:#191e3a;">
 	<div class="navbar-header" style="background-color:#f7f7f7;">
-		<a href="./supplier_home.php" class="logo_a">  <img src="<?php echo $link . "/assets/images/SGG_logo.png"?>" alt="" id="site_logo"/></a>
+        <a href="#" class="logo">
+            <img src="<?php echo $link; ?>/assets/images/SGG_logo.png"  class = "logo_img" alt="logo">
+        </a>
 		<ul class="nav navbar-nav visible-xs-block">
 			<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
 			<li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
