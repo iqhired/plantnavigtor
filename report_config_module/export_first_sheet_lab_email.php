@@ -1,20 +1,19 @@
 <?php
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 include("../config.php");
 $chicagotime = date('m-d-Y', strtotime('-1 days'));
 $subject = "Daily Mail Report";
-require '../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+require '../vendor/autoload.php';
 $mail = new PHPMailer();
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
-$mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-$mail->SMTPAuth = true;
-$mail->Username = EMAIL_USER;
-$mail->Password = EMAIL_PASSWORD;
+$mail->Port = 587;
+$mail->Username = 'admin@plantnavigator.com';
+$mail->Password = 'S@@rgummi_2022';
 $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 $query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'First Piece Sheet Report'");
 $qur = mysqli_query($db, $query);
