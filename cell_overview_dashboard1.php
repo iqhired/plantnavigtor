@@ -69,7 +69,7 @@ if (isset($cellID)) {
     <!-- /global stylesheets -->
     <!-- Core JS files -->
     <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
@@ -80,11 +80,10 @@ if (isset($cellID)) {
     <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
     <script type="text/javascript" src = "./assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jquery/jquery-1.3.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+
 </head>
     <script>
         $('#eff_container').load('../gbp_dashboard.php #eff_container');
@@ -103,7 +102,7 @@ if (isset($cellID)) {
             font-size: 14px;
         }
         .col-lg-3 {
-            font-size: 12px!important;
+            /*font-size: 12px!important;*/
         }
         .open > .dropdown-menu {
             min-width: 210px !important;
@@ -168,7 +167,7 @@ if (isset($cellID)) {
             top: 0;
             left: 0;
             background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0, 0.9);
+            /*background-color: rgba(0,0,0, 0.9);*/
         }
 
         .overlay-content {
@@ -194,7 +193,7 @@ if (isset($cellID)) {
 
         .overlay .closebtn {
             position: absolute;
-            top: 20px;
+            top: -20px;
             right: 45px;
             font-size: 60px;
         }
@@ -234,7 +233,7 @@ if (isset($cellID)) {
             font-weight: bold;
             text-transform: uppercase;
             border-radius: 50em;
-            background: #35a785;
+            background: #191e3a;
             box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
         }
         /* --------------------------------
@@ -784,7 +783,7 @@ include("heading_banner.php");
             } else {
 
             }
-            $query_new = sprintf("SELECT line_name FROM  cam_line where line_id = '$station_id'");
+            $query_new = sprintf("SELECT line_id,line_name FROM  cam_line where line_id = '$station_id'");
             $qur_new = mysqli_query($db, $query_new);
             $rowc_new = mysqli_fetch_array($qur_new);
 
@@ -984,7 +983,7 @@ include("heading_banner.php");
                                         <div class="col-sm-4">
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop2')">Material Tracability</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Material Tracabilty </a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop3')">View Material Tracabilty </a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Assigned Crew</a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Document</a>
                                         </div>
@@ -1371,7 +1370,7 @@ include("heading_banner.php");
                                                     }
                                                     ?>
                                                     <div class="row">
-                                                        <form action="material_backend.php" id="material_setting" enctype="multipart/form-data"
+                                                        <form action="" id="material_tracability" enctype="multipart/form-data"
                                                               class="form-horizontal" method="post">
                                                         <div class="col-md-12">
                                                             <div class="row">
@@ -1382,13 +1381,15 @@ include("heading_banner.php");
                                                                     <input type="hidden" name="station_event_id"
                                                                            value="<?php echo $station_event_id ?>">
                                                                     <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                                                    <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
+                                                                    <input type="hidden" name="station" value="<?php echo $station_id; ?>">
+                                                                    <input type="hidden" name="line_number" value="<?php echo $station_id; ?>">
+                                                                    <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
+                                                                    <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
                                                                     <input type="text" name="line_number1" id="line_number"
-                                                                           value="<?php echo $line_name ?>" class="form-control"
+                                                                           value="<?php echo $rowc_new['line_name']; ?>" class="form-control"
                                                                            placeholder="Enter Line Number">
                                                                 </div>
-                                                                <div id="error1" class="red">Line Number</div>
+
                                                             </div>
                                                             <br/>
                                                             <div class="row">
@@ -1399,7 +1400,7 @@ include("heading_banner.php");
                                                                            value="<?php echo $pm_part_number; ?>" class="form-control"
                                                                            placeholder="Enter Part Number">
                                                                 </div>
-                                                                <div id="error1" class="red">Part Number</div>
+
                                                             </div>
                                                             <br/>
                                                             <div class="row">
@@ -1410,7 +1411,7 @@ include("heading_banner.php");
                                                                            value="<?php echo $pm_part_family_name; ?>" class="form-control"
                                                                            placeholder="Enter Part Family">
                                                                 </div>
-                                                                <div id="error1" class="red">Part family</div>
+
                                                             </div>
                                                             <br/>
                                                             <div class="row">
@@ -1422,13 +1423,13 @@ include("heading_banner.php");
                                                                            value="<?php echo $pm_part_name; ?>" class="form-control"
                                                                            placeholder="Enter Part Name">
                                                                 </div>
-                                                                <div id="error1" class="red">Part Name</div>
+
                                                             </div>
                                                             <br/>
                                                             <div class="row">
                                                                 <label class="col-lg-2 control-label">Material type : </label>
                                                                 <div class="col-md-6">
-                                                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" required >
+                                                                    <select name="material_type" id="material_type" class="select form-control" data-style="bg-slate" required>
                                                                         <option value="" selected disabled>--- Select material Type ---</option>
                                                                         <?php
                                                                         $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
@@ -1442,7 +1443,7 @@ include("heading_banner.php");
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div id="error6" class="red">Please Enter Material Type</div>
+
                                                             <br/>
                                                             <div class="row">
                                                                 <label class="col-lg-2 control-label">Image : </label>
@@ -1472,7 +1473,7 @@ include("heading_banner.php");
                                                             <div class="row">
                                                                 <label class="col-lg-2 control-label">Material Status : </label>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-check form-check-inline">
+                                                                    <div class="form-check form-check-inline" style="float: left;">
                                                                         <input type="radio" id="pass" name="material_status" value="1"
                                                                                class="form-check-input" checked required>
                                                                         <label for="pass" class="item_label">Pass</label>
@@ -1485,20 +1486,44 @@ include("heading_banner.php");
                                                                     </div>
 
                                                                 </div>
-                                                                <div id="error7" class="red">Please Enter material Status</div>
-
                                                             </div>
                                                             <br/>
-                                                        </div>
+                                                            <div id="rej_fail" style="display: none;">
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label">Notes : </label>
+                                                                <div class="col-md-6">
+                                                                    <textarea id="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                            <hr/>
+                                                            <br/>
                                                         </form>
                                                     </div>
-
+                                                 </div>
                                                 </div>
                                             </div>
+                                            <div class="panel-footer p_footer">
 
+                                                <button type="submit" id="material_btn" class="btn btn-primary submit_btn"
+                                                        style="background-color:#1e73be;">Submit
+                                                </button>
+
+                                            </div>
                                         </div>
                                         <a href="#0" class="cd-popup-close"></a>
                                     </div> <!-- cd-popup-container -->
+
+                                <div id="pop3" class="cd-popup" role="alert">
+                                    <div class="cd-popup-container">
+                                        <div class="content">
+                                            hello
+                                        </div>
+                                    </div> <!-- cd-popup-container -->
+                                </div> <!-- cd-popup -->
                                 </div> <!-- cd-popup -->
                             </div>
 
@@ -1658,13 +1683,7 @@ if ($i == "") {
         $("#"+id+"").addClass('is-visible');
     }
 </script>
-<script>
-    $(document).ready(function () {
-        $('.select').select2();
-    });
 
-
-</script>
 
 
 <script>
@@ -1682,16 +1701,53 @@ if ($i == "") {
                 "                                <div class=\"col-md-6\">\n" +
                 "                                    <input type=\"text\" size=\"30\" name=\"serial_number\" id=\"serial_number\"\n" +
                 "                                           class=\"form-control\" required/>\n" +
-                "                                </div>\n" +
-                "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
+                "                                </div>\n" ;
+                // "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
             document.getElementById("serial_num").style.display = 'block';
             document.getElementById("file").required = true;
         }
 
     }
 </script>
+
+<script>
+    $("input[name$='material_status']").click(function () {
+        var test = $(this).val();
+        //    console.log(test);
+        var z = document.getElementById("rej_fail");
+        if ((test === "0") && (z.style.display === "none")) {
+            z.style.display = "block";
+            z.innerHTML = '<div class="row desc" id="Reason0">\n' +
+                '                                    <label class="col-lg-2 control-label">Reason : </label>\n' +
+                '                                    <div class="col-md-6">\n' +
+                '                                        <select name="reason" id="reason" required class="select form-control"\n' +
+                '                                                data-style="bg-slate">\n' +
+                '                                            <option value="Reject" selected >Reject</option>\n' +
+                '                                            <option value="Hold" >On Hold</option>\n' +
+                '                                        </select>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <br/>\n' +
+                '                                <div class="row desc" id="quantity0">\n' +
+                '                                    <label class="col-lg-2 control-label"> Quantity : </label>\n' +
+                '                                    <div class="col-md-6">\n' +
+                '                                        <input class="form-control" name="quantity" rows="1" id="quantity" required>\n' +
+                '                                    </div>\n' +
+                '\n' +
+                '                                </div>\n' +
+                '                                <br/>';
+        } else if (test === "1") {
+            z.style.display = "none";
+            z.innerHTML = '';
+        }
+    });
+</script>
+
+
+
 <script>
     // Upload
+
     $("#file").on("change", function () {
         var fd = new FormData();
         var files = $('#file')[0].files[0];
@@ -1700,12 +1756,13 @@ if ($i == "") {
 
         // AJAX request
         $.ajax({
-            url: 'add_delete_mat_image.php',
+            url: '<?php echo $siteURL; ?>material_tracability/add_delete_mat_image.php',
             type: 'post',
             data: fd,
             contentType: false,
             processData: false,
             success: function (response) {
+
                 if (response != 0) {
                     var count = $('.container .content_img').length;
                     count = Number(count) + 1;
@@ -1720,6 +1777,7 @@ if ($i == "") {
 
     // Remove file
     $('.container').on('click', '.content_img .delete', function () {
+
         var id = this.id;
         var split_id = id.split('_');
         var num = split_id[1];
@@ -1729,7 +1787,7 @@ if ($i == "") {
         var succ = false;
         // AJAX request
         $.ajax({
-            url: 'add_delete_mat_image.php',
+            url: '<?php echo $siteURL; ?>material_tracability/add_delete_mat_image.php',
             type: 'post',
             data: {path: imgElement_src, request: 2},
             async: false,
@@ -1763,35 +1821,16 @@ if ($i == "") {
 
 </script>
 <script>
-    $("input[name$='material_status']").click(function () {
-        var test = $(this).val();
-        //    console.log(test);
-        var z = document.getElementById("rej_fail");
-        if ((test === "0") && (z.style.display === "none")) {
-            z.style.display = "block";
-            z.innerHTML = '<div class="row desc" id="Reason0">\n' +
-                '                                    <label class="col-lg-2 control-label">Reason : </label>\n' +
-                '                                    <div class="col-md-6">\n' +
-                '                                        <select name="reason" id="reason" required class="select form-control"\n' +
-                '                                                data-style="bg-slate">\n' +
-                '                                            <option value="Reject" selected >Reject</option>\n' +
-                '                                            <option value="Hold" >On Hold</option>\n' +
-                '                                        </select>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <br/>\n' +
-                '                                <div class="row desc" id="quantity0">\n' +
-                '                                    <label class="col-lg-2 control-label"> Quantity : </label>\n' +
-                '                                    <div class="col-md-6">\n' +
-                '                                        <input class="form-control" name="quantity" rows="1" id="quantity" required>\n' +
-                '                                    </div>\n' +
-                '\n' +
-                '                                </div>\n' +
-                '                                <br/>';
-        } else if (test === "1") {
-            z.style.display = "none";
-            z.innerHTML = '';
-        }
+     $(document).on("click","#material_btn",function() {
+        var data = $("#material_tracability").serialize();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $siteURL; ?>material_tracability/material_backend.php',
+            data: data,
+            success: function(data) {
+
+            }
+        });
     });
 </script>
 <?php include("footer.php"); ?> <!-- /page container -->
