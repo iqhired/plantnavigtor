@@ -649,7 +649,7 @@ include("../heading_banner.php");
 							<?php   $datetime = $rowc["created_at"];
 							// $date_time = strtotime($datetime);
 							?>
-                            <td class="form_create"><?php echo $datetime; ?></td>
+                            <td class="form_create"><?php echo dateReadFormat($datetime); ?></td>
 
 
                         </tr>
