@@ -55,6 +55,10 @@ $pm_npr= $rowcnumber['npr'];
 $defect_list_id = $_GET['defect_list_id'];
 
 
+//if(empty($_SESSION['$station_event_id'])){
+//    $_SESSION['good_timestamp_id'] = time();
+//}
+
 
 $gp_timestamp = time();
 $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
@@ -198,15 +202,12 @@ include("../heading_banner.php");
                         <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
                             <?php
-                            $cell_id = $_GET['cell_id'];
-                            $cell_name = $_GET['c_name'];
-
                             $sql1 = "SELECT * FROM `defect_list` where  defect_list_id = '$defect_list_id'";
                             $result1 = $mysqli->query($sql1);
                             while ($row1 = $result1->fetch_assoc()) {
 
-                                $defect_list_name = $row1['defect_list_name'];
-                           ?>
+                            $defect_list_name = $row1['defect_list_name'];
+                            ?>
                             <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>" >
                             <input type="hidden" name="edit_seid" value="<?php echo $station_event_id; ?>">
                             <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
@@ -214,9 +215,6 @@ include("../heading_banner.php");
                             <input type="hidden" name="time" value="<?php echo time(); ?>">
                             <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
                             <input type="hidden" name="ipe" value="<?php echo $individualenabled; ?>">
-
-                            <input type="hidden" name="cell_id" value="<?php echo $cell_id; ?>">
-                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Select Type * : </label>
@@ -269,7 +267,7 @@ include("../heading_banner.php");
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
                                         <!--                                        <div class="container"></div>-->
-									<?php } ?>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -283,10 +281,10 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label">Previous Image : </label>
                                 <div class="col-md-6">
                                     <div class="container"></div>
-									<?php
-									$time_stamp = $_SESSION['good_timestamp_id'];
-									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+                                    <?php
+                                    $time_stamp = $_SESSION['good_timestamp_id'];
+                                    if(!empty($time_stamp)){
+                                        $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
 
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;
@@ -459,9 +457,9 @@ include("../heading_banner.php");
 
 </script>
 <script>
-    //window.onload = function() {
-    //    history.replaceState("", "", "<?php //echo $scriptName; ?>//events_module/add_bad_piece.php?station_event_id=<?php //echo $station_event_id; ?>//&defect_list_id=<?php //echo $defect_list_id; ?>//&cell_id=<?php //echo $cell_id?>//&c_name=<?php //echo $cell_name; ?>//");
-    //}
+    window.onload = function() {
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $defect_list_id; ?>");
+    }
 </script>
 <?php include ('../footer.php') ?>
 </body>

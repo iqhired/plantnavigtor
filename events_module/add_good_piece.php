@@ -145,21 +145,16 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
-                              <?php $station_event_id = $_GET['station_event_id'];
-                                    $cell_id = $_GET['cell_id'];
-                                    $cell_name = $_GET['c_name'];
-                              ?>
-                                <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
-                                       value="<?php echo $station_event_id; ?>" >
-                            <input type="hidden" name="cell_id" value="<?php echo $cell_id; ?>">
-                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
-                                <div class="row">
-                                    <label class="col-lg-2 control-label">No of Pieces : </label>
-                                    <div class="col-md-6">
-                                        <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
-                                    </div>
+                            <?php $station_event_id = $_GET['station_event_id']; ?>
+                            <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
+                                   value="<?php echo $station_event_id; ?>" >
+                            <div class="row">
+                                <label class="col-lg-2 control-label">No of Pieces : </label>
+                                <div class="col-md-6">
+                                    <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
                                 </div>
-                                <br/>
+                            </div>
+                            <br/>
 
                             <hr/>
 
@@ -190,9 +185,9 @@ include("../heading_banner.php");
 
 </script>
 <script>
-    //window.onload = function() {
-    //    history.replaceState("", "", "<?php //echo $scriptName; ?>//events_module/add_good_piece.php?station_event_id=<?php //echo $station_event_id; ?>//&cell_id=<?php //echo $cell_id?>//&c_name=<?php //echo $cell_name; ?>//");
-    //}
+    window.onload = function() {
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>");
+    }
 </script>
 <?php include ('../footer.php') ?>
 </body>

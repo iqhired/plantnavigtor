@@ -3,8 +3,6 @@
 include("../config.php");
 $station_event_id = $_POST['station_event_id'];
 $delete_check = $_POST['delete_check'];
-$cell_id = $_POST['cell_id'];
-$c_name = $_POST['c_name'];
 if ($delete_check != "") {
     $cnt = count($delete_check);
     for ($i = 0; $i < $cnt;) {
@@ -32,6 +30,6 @@ if ($delete_check != "") {
     $_SESSION['message_stauts_class'] = 'alert-danger';
     $_SESSION['import_status_message'] = 'Please Select Atleast one row.';
 }
-header("Location:$siteURL.cell_overview_dashboard1.php?cell_id=$cell_id&c_name=$c_name");
+header("Location:good_bad_piece.php?station_event_id=$station_event_id");
 
 ?>
