@@ -55,10 +55,6 @@ $pm_npr= $rowcnumber['npr'];
 $defect_list_id = $_GET['defect_list_id'];
 
 
-//if(empty($_SESSION['$station_event_id'])){
-//    $_SESSION['good_timestamp_id'] = time();
-//}
-
 
 $gp_timestamp = time();
 $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
@@ -202,6 +198,9 @@ include("../heading_banner.php");
                         <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
                             <?php
+                            $cell_id = $_GET['cell_id'];
+                            $cell_name = $_GET['c_name'];
+
                             $sql1 = "SELECT * FROM `defect_list` where  defect_list_id = '$defect_list_id'";
                             $result1 = $mysqli->query($sql1);
                             while ($row1 = $result1->fetch_assoc()) {
@@ -215,6 +214,9 @@ include("../heading_banner.php");
                             <input type="hidden" name="time" value="<?php echo time(); ?>">
                             <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
                             <input type="hidden" name="ipe" value="<?php echo $individualenabled; ?>">
+
+                            <input type="hidden" name="cell_id" value="<?php echo $cell_id; ?>">
+                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
 
                             <div class="row">
                                 <label class="col-lg-2 control-label">Select Type * : </label>
@@ -457,9 +459,9 @@ include("../heading_banner.php");
 
 </script>
 <script>
-    window.onload = function() {
-        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $defect_list_id; ?>");
-    }
+    //window.onload = function() {
+    //    history.replaceState("", "", "<?php //echo $scriptName; ?>//events_module/add_bad_piece.php?station_event_id=<?php //echo $station_event_id; ?>//&defect_list_id=<?php //echo $defect_list_id; ?>//&cell_id=<?php //echo $cell_id?>//&c_name=<?php //echo $cell_name; ?>//");
+    //}
 </script>
 <?php include ('../footer.php') ?>
 </body>

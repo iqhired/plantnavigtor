@@ -24,6 +24,8 @@ if (count($_POST) > 0) {
 	$notes = $_POST['material_notes'];
 	$created_by = date("Y-m-d H:i:s");
 	$created_by_user = $_SESSION['id'];
+    $cell_id = $_POST['cell_id'];
+    $c_name = $_POST['c_name'];
 
 
 	$sql0 = "INSERT INTO `material_tracability`(`station_event_id`,`customer_account_id`,`line_no`,`part_no`,`part_family_id`,`part_name`,`material_type`,`serial_number`,`material_status`,`fail_reason`,`reason_desc`,`quantity`,`notes`,`created_at`,`created_by`) VALUES 
@@ -195,7 +197,5 @@ inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.mate
 	}
 }
 
-
-$page = "material_tracability.php?station=$station&station_event_id=$station_event_id";
-header('Location: ' . $page, true, 303);
+header("Refresh:0; url=$siteURL.cell_overview_dashboard1.php?cell_id=$cell_id&c_name=$c_name");
 
