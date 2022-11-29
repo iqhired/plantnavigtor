@@ -7,5 +7,5 @@ include("config/error_config.php");
 
 $url = "../api/";
 require_once("helper/PNUtilHelper.php");
-require_once("helper/PN_Constants.php.php");
+require_once("helper/PN_Constants.php");
 ?>
