@@ -206,8 +206,8 @@ include("../heading_banner.php");
                             $result1 = $mysqli->query($sql1);
                             while ($row1 = $result1->fetch_assoc()) {
 
-                                $defect_list_name = $row1['defect_list_name'];
-                           ?>
+                            $defect_list_name = $row1['defect_list_name'];
+                            ?>
                             <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>" >
                             <input type="hidden" name="edit_seid" value="<?php echo $station_event_id; ?>">
                             <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
@@ -267,7 +267,7 @@ include("../heading_banner.php");
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
                                         <!--                                        <div class="container"></div>-->
-									<?php } ?>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -281,10 +281,10 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label">Previous Image : </label>
                                 <div class="col-md-6">
                                     <div class="container"></div>
-									<?php
-									$time_stamp = $_SESSION['good_timestamp_id'];
-									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+                                    <?php
+                                    $time_stamp = $_SESSION['good_timestamp_id'];
+                                    if(!empty($time_stamp)){
+                                        $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
 
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;

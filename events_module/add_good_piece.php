@@ -145,16 +145,16 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
-                              <?php $station_event_id = $_GET['station_event_id']; ?>
-                                <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
-                                       value="<?php echo $station_event_id; ?>" >
-                                <div class="row">
-                                    <label class="col-lg-2 control-label">No of Pieces : </label>
-                                    <div class="col-md-6">
-                                        <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
-                                    </div>
+                            <?php $station_event_id = $_GET['station_event_id']; ?>
+                            <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
+                                   value="<?php echo $station_event_id; ?>" >
+                            <div class="row">
+                                <label class="col-lg-2 control-label">No of Pieces : </label>
+                                <div class="col-md-6">
+                                    <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
                                 </div>
-                                <br/>
+                            </div>
+                            <br/>
 
                             <hr/>
 
