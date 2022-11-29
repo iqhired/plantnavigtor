@@ -146,7 +146,7 @@ include("../heading_banner.php");
                                                 <div class="form-group">
                                                     <label class="col-lg-2 control-label">Created On : </label>
                                                     <div class="col-lg-6">
-                                                        <input type="text" name="c_date" id="c_date" class="form-control" value="<?php echo $created_on; ?>" disabled>
+                                                        <input type="text" name="c_date" id="c_date" class="form-control" value="<?php echo dateReadFormat($created_on); ?>" disabled>
                                                     </div>
                                                 </div>
                                             </div>

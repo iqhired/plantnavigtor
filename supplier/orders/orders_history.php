@@ -200,7 +200,7 @@ include("./../sup_admin_menu.php");
 						<thead>
 						<tr>
 							<th>S.No</th>
-							<th>Order ID</th>
+							<!--<th>Order ID</th>-->
 							<th>Order Desc</th>
 							<th>Ordered On</th>
 							<th>Order Status</th>
@@ -218,10 +218,10 @@ include("./../sup_admin_menu.php");
 								<?php $order_id = $rowc['order_id'];
 								$order_status_id = $rowc['order_status_id'];
 								$ship_det = $rowc['shipment_details']; ?>
-								<td><?php echo $order_id; ?><input hidden id="edit_order_id" name="edit_order_id"
-																   value="<?php echo $order_id; ?>">
+								<!--<td><?php /*echo $order_id; */?><input hidden id="edit_order_id" name="edit_order_id"
+																   value="<?php /*echo $order_id; */?>">
 									<input hidden id="e_order_status" name="e_order_status"
-										   value="<?php echo $order_status_id; ?>"></td>
+										   value="<?php /*echo $order_status_id; */?>"></td>-->
 								<td><?php echo $rowc['order_desc']; ?></td>
 								<?php
 
