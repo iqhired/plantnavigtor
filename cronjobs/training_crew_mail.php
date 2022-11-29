@@ -2,13 +2,26 @@
 ini_set('display_errors', false);
 include("../config.php");
 $chicagotime = date('m-d-Y', strtotime('-1 days'));
-$tboardName =''; 
+$tboardName ='';
 $subject = "Daily Mail Report";
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-include ("../email_config.php");
+
 //main query
 $temp = "0";
+
+$mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->Port = 587;
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->SMTPAuth = true;
+$mail->Username = 'admin@plantnavigator.com';
+$mail->Password = 'S@@rgummi_2022';
+$mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
+
 //mail code starts from here
     $query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'Training Report'");
     $qur = mysqli_query($db, $query);

@@ -2,15 +2,27 @@
 ini_set('display_errors', false);
 include("../config.php");
 $chicagotime = date('d-m-Y', strtotime('-1 days'));
-$tboardName =''; 
+$tboardName ='';
 $subject = "Daily Mail Report";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-include ("../email_config.php");
 //main query
 $mainquery = sprintf("SELECT * FROM  tm_task_log_config ");
 $mainqur = mysqli_query($db, $mainquery);
 while ($mainrowc = mysqli_fetch_array($mainqur)) {
-    $taskboard_id = $mainrowc["taskboard"];
+	$mail = new PHPMailer();
+	$mail->isSMTP();
+	$mail->Host = 'smtp.gmail.com';
+	$mail->Port = 587;
+	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+	$mail->SMTPAuth = true;
+	$mail->Username = 'admin@plantnavigator.com';
+	$mail->Password = 'S@@rgummi_2022';
+	$mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
+
+	$taskboard_id = $mainrowc["taskboard"];
 // taskboard name
     $namequr = mysqli_query($db, "SELECT * FROM `sg_taskboard` where sg_taskboard_id = '$taskboard_id' ");
     $namerowc = mysqli_fetch_array($namequr);
