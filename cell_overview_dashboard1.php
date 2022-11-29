@@ -91,6 +91,9 @@ if (isset($cellID)) {
     </script>
     <!--chart -->
     <style>
+        .panel-body>.heading-elements{
+            z-index: 0;
+        }
         .panel[class*=bg-]>.panel-body {
             background-color: inherit;
             height: 230px!important;
@@ -333,6 +336,7 @@ if (isset($cellID)) {
 <!-- Main navbar -->
 <!-- /main navbar -->
 <?php
+$c_name = $_GET['c_name'];
 $cust_cam_page_header = $c_name . " - Cell Status Overview";
 include("header.php");
 include("admin_menu.php");
@@ -979,7 +983,7 @@ include("heading_banner.php");
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Material Tracability</a>
+                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop2')">Material Tracability</a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Material Tracabilty </a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Assigned Crew</a>
                                             <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Document</a>
@@ -1204,7 +1208,7 @@ include("heading_banner.php");
                                                             <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                                                         <?php }?>
                                                         <!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
-                                                        <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
+                                                        <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -1234,7 +1238,7 @@ include("heading_banner.php");
                                                         ?>
                                                         <div class="col-md-3" style="padding-top: 10px;">
 
-                                                            <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
+                                                            <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
                                                                 data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
                                                                 <?php echo $row1['defect_list_name']; ?></a>
 
@@ -1319,18 +1323,6 @@ include("heading_banner.php");
 
                                                             ?>
                                                             <td>
-                                                                <!--                            <button type="button" id="edit" class="btn btn-info btn-xs"-->
-                                                                <!--                                    data-id="--><?php //echo $rowc['good_bad_pieces_id']; ?><!--"-->
-                                                                <!--                                    data-gbid="--><?php //echo $rowc['bad_pieces_id']; ?><!--"-->
-                                                                <!--                                    data-seid="--><?php //echo $station_event_id; ?><!--"-->
-                                                                <!--                                    data-good_pieces="--><?php //echo $rowc['good_pieces']; ?><!--"-->
-                                                                <!--                                    data-defect_name="--><?php //echo $rowc['defect_name']; ?><!--"-->
-                                                                <!--                                    data-bad_pieces="--><?php //echo $rowc['bad_pieces']; ?><!--"-->
-                                                                <!--                                    data-re_work="--><?php //echo $rowc['rework']; ?><!--"-->
-                                                                <!--                                    data-image="--><?php //echo $item_id; ?><!--"-->
-                                                                <!--                                    data-image_name="--><?php //echo $image_name; ?><!--"-->
-                                                                <!--                                    data-toggle="modal" style="background-color:#1e73be;"-->
-                                                                <!--                                    data-target="#edit_modal_theme_primary">Edit </button>-->
                                                                 <?php   if($rowc['good_pieces'] != ""){ ?>
                                                                     <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
                                                                     data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
@@ -1360,7 +1352,151 @@ include("heading_banner.php");
 
                                 <div id="pop2" class="cd-popup" role="alert">
                                     <div class="cd-popup-container">
-                                        <p>Are you sure you want to delete this element 2 ?</p>
+                                        <div class="content">
+                                            <?php
+                                            $st = $rowc_new["line_name"];
+                                            ?>
+                                            <div class="panel panel-flat">
+                                                <div class="panel-heading">
+                                                    <?php
+                                                    if (!empty($import_status_message)) {
+                                                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    if (!empty($_SESSION[import_status_message])) {
+                                                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                                        $_SESSION['message_stauts_class'] = '';
+                                                        $_SESSION['import_status_message'] = '';
+                                                    }
+                                                    ?>
+                                                    <div class="row">
+                                                        <form action="material_backend.php" id="material_setting" enctype="multipart/form-data"
+                                                              class="form-horizontal" method="post">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+                                                                <div class="col-md-6">
+                                                                    <?php $form_id = $_GET['id'];
+                                                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
+                                                                    <input type="hidden" name="station_event_id"
+                                                                           value="<?php echo $station_event_id ?>">
+                                                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
+                                                                    <input type="hidden" name="station" value="<?php echo $st; ?>">
+                                                                    <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
+                                                                    <input type="text" name="line_number1" id="line_number"
+                                                                           value="<?php echo $line_name ?>" class="form-control"
+                                                                           placeholder="Enter Line Number">
+                                                                </div>
+                                                                <div id="error1" class="red">Line Number</div>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
+                                                                <div class="col-md-6">
+                                                                    <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
+                                                                    <input type="text" name="part_number1" id="part_number"
+                                                                           value="<?php echo $pm_part_number; ?>" class="form-control"
+                                                                           placeholder="Enter Part Number">
+                                                                </div>
+                                                                <div id="error1" class="red">Part Number</div>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
+                                                                <div class="col-md-6">
+                                                                    <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
+                                                                    <input type="text" name="part_family1" id="part_family"
+                                                                           value="<?php echo $pm_part_family_name; ?>" class="form-control"
+                                                                           placeholder="Enter Part Family">
+                                                                </div>
+                                                                <div id="error1" class="red">Part family</div>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
+                                                                <div class="col-md-6">
+                                                                    <!--                                    <input type="hidden" name="part_name" value="-->
+                                                                    <?php //echo $part_family; ?><!--">-->
+                                                                    <input type="text" name="part_name" id="part_name"
+                                                                           value="<?php echo $pm_part_name; ?>" class="form-control"
+                                                                           placeholder="Enter Part Name">
+                                                                </div>
+                                                                <div id="error1" class="red">Part Name</div>
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label">Material type : </label>
+                                                                <div class="col-md-6">
+                                                                    <select name="material_type" id="material_type" class="select" data-style="bg-slate" required >
+                                                                        <option value="" selected disabled>--- Select material Type ---</option>
+                                                                        <?php
+                                                                        $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
+                                                                        $result1 = mysqli_query($db, $sql1);
+                                                                        while ($row1 = $result1->fetch_assoc()) {
+
+                                                                            echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
+
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div id="error6" class="red">Please Enter Material Type</div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label">Image : </label>
+
+                                                                <div class="col-md-6">
+                                                                    <input type="file" id="file" name="file" class="form-control"/>
+                                                                    <div class="container"></div>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                            <?php
+
+
+                                                            $m_type = $_POST['material_type'];
+
+                                                            $sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
+                                                            $row = mysqli_query($db, $sql);
+                                                            $se_row = mysqli_fetch_assoc($row);
+
+                                                            $serial = $se_row['serial_num_required'];
+
+                                                            ?>
+                                                            <div class="row" id = "serial_num">
+
+                                                            </div>
+                                                            <br/>
+                                                            <div class="row">
+                                                                <label class="col-lg-2 control-label">Material Status : </label>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input type="radio" id="pass" name="material_status" value="1"
+                                                                               class="form-check-input" checked required>
+                                                                        <label for="pass" class="item_label">Pass</label>
+
+                                                                        <input type="radio" id="fail" name="material_status" value="0"
+                                                                               class="form-check-input reject" required>
+                                                                        <label for="fail" class="item_label">Fail</label>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div id="error7" class="red">Please Enter material Status</div>
+
+                                                            </div>
+                                                            <br/>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
                                         <a href="#0" class="cd-popup-close"></a>
                                     </div> <!-- cd-popup-container -->
                                 </div> <!-- cd-popup -->
