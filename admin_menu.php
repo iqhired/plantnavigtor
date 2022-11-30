@@ -174,6 +174,12 @@ $msg = explode(',', $msg); ?>
                                                     Line Utilisation Data By Date
                                                 </a>
                                             </div>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>form_submit_dashboard.php"
+                                                   class="text-muted mobile">
+                                                   Form Submit Dashboard
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 								<?php } ?>
@@ -426,7 +432,7 @@ $msg = explode(',', $msg); ?>
                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                            class="lazyload blur-up mobile" style="float: left;">
                                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                                    </svg></span><span class="ms-2 fw-light">Communicator</span>
+                                    </svg></span><span class="ms-2 fw-light">Supplier</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="arrow">
@@ -437,18 +443,12 @@ $msg = explode(',', $msg); ?>
                     <div class="ms-4">
 						<?php if (in_array('5', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>group_mail_module.php" class="text-muted mobile">
-                                    Mail
+                                <a href="<?php echo $siteURL; ?>order_module/create_order.php" class="text-muted mobile">
+                                    Create Order
                                 </a>
                             </div>
 						<?php }
-//						if (in_array('6', $msg)) { ?>
-<!--                            <div class="mt-3">-->
-<!--                                <a href="--><?php //echo $siteURL; ?><!--chatbot/chat.php" class="text-muted mobile">-->
-<!--                                    Chat-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--						--><?php //} ?>
+//						 ?>
                     </div>
                 </div>
             </div>
@@ -988,7 +988,10 @@ $msg = explode(',', $msg); ?>
                                                     <a href="<?php echo $siteURL; ?>config_module/line_utilization.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">Line Utilization Dashboard</h3></a>
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>form_submit_dashboard.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Form Submit Dashboard</h3></a>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1177,6 +1180,41 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
                             <?php } ?>
+                            <?php if (in_array('87', $msg)) { ?>
+                                <div class='tutorial_section'>
+
+                                    <div class="toggle" id="toggle-2">
+                                        <a href="<?php echo $siteURL; ?>config_module/station_dashboard.php">
+
+                                           <span>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                              stroke-linecap="round" stroke-linejoin="round" class="desktop_arrow">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                    </span>
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                            </svg> </span>
+                                            <span class="ms-2 fw-light">Station Wise Dashboard</span>
+                                            <span class="float-end" id="toggle-2-arrow">
+                                </span>
+                                        </a>
+                                    </div>
+                                    <div class="slidenew" id="slide-2">
+                                        <div class="row">
+                                            <div class="col-md-6 mt-2">
+                                                <div class="p-3">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </li>
@@ -1252,7 +1290,7 @@ $msg = explode(',', $msg); ?>
 				<?php } ?>
 				<?php if (in_array('65', $msg)) { ?>
                     <li class="nav-item" id="ic">
-                        <a class="nav-link">Communicator
+                        <a class="nav-link">Supplier
                             <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 20 20"
                                  style="margin-left: 115px;">
                                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
@@ -1261,11 +1299,9 @@ $msg = explode(',', $msg); ?>
                         <div class="menu">
                             <ul>
 								<?php if (in_array('5', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>group_mail_module.php">Mail</a></li>
+                                    <li><a href="<?php echo $siteURL; ?>order_module/create_order.php">Create Order</a></li>
 								<?php }
-//								if (in_array('6', $msg)) { ?>
-<!--                                    <li><a href="--><?php //echo $siteURL; ?><!--chatbot/chat.php">Chat</a></li>-->
-<!--								--><?php //} ?>
+//								 ?>
                             </ul>
                         </div>
                     </li>
