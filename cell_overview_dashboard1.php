@@ -61,28 +61,32 @@ if (isset($cellID)) {
     <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
     <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css"
           rel="stylesheet">
-    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/style_main.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <!-- Theme JS files -->
+    <link href="<?php echo $siteURL; ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/style_main.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     <!-- Core JS files -->
-    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
-    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
-    <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
-    <script type="text/javascript" src = "./assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/datatables_basic.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
+    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
 
 </head>
     <script>
@@ -206,6 +210,21 @@ if (isset($cellID)) {
                 right: 30px;
             }
         }
+
+        .dataTable {
+            width: 100%!important;
+        }
+        .datatable-footer>div:first-child, .datatable-header>div:first-child {
+            margin-left: 20px;
+        }
+        .dataTables_length {
+            margin: 0 30px 18px 37px!important;
+        }
+        .create {
+            float: right;
+            padding: 38px;
+            margin-top: 0px;
+        }
     </style>    <!-- /theme JS files -->
     <style>
         /* HTML5 display-role reset for older browsers */
@@ -328,6 +347,51 @@ if (isset($cellID)) {
             -o-transform: translateX(0);
             transform: translateX(0);
         }
+        .10x_content_img {
+            width: 113px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .10x_content_img span {
+            border: 2px solid red;
+            display: inline-block;
+            width: 99%;
+            text-align: center;
+            color: red;
+        }
+
+        .10x_content_img span:hover {
+            cursor: pointer;
+        }
+
+        .mat_content_img {
+               width: 113px;
+               float: left;
+               margin-right: 5px;
+               border: 1px solid gray;
+               border-radius: 3px;
+               padding: 5px;
+               margin-top: 10px;
+           }
+
+        /* Delete */
+        .mat_content_img span {
+               border: 2px solid red;
+               display: inline-block;
+               width: 99%;
+               text-align: center;
+               color: red;
+           }
+
+        .mat_content_img span:hover {
+               cursor: pointer;
+           }
     </style>
 
 </head>
@@ -981,550 +1045,846 @@ include("heading_banner.php");
                                 <div class="overlay-content">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop2')">Material Tracability</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop3')">View Material Tracabilty </a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Assigned Crew</a>
-                                            <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Document</a>
+                                        <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Pop-up 1</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >View Pop-up 2</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Pop-up 3</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >View Pop-up 4</a>
                                         </div>
                                         <div class="col-sm-4">
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Submit 10X</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >View 10X</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >View Station Status</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Assign / Unassign Crew</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Submit Station Assets</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View Pop-up 5</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Pop-up 6</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >View Pop-up 7</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >View Pop-up 8</a>
                                         </div>
                                         <div class="col-sm-4">
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >Add/Update Events</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >Create Form</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >Submit Form</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >Form Submit Dashboard</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >View Pop-up 9</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >View Pop-up 10</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Pop-up 11</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Pop-up 12</a>
                                         </div>
                                     </div>
+
+                                    <div id="pop1" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <div class="content">
+                                                <?php
+                                                $user_id = $_SESSION["id"];
+                                                $def_ch = $_POST['def_ch'];
+                                                $chicagotime = date("Y-m-d H:i:s");
+                                                //$line = "<b>-</b>";
+                                                $line = "";
+                                                $station_event_id = $rowc01['station_event_id'];
+                                                $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
+                                                $resultmain = $mysqli->query($sqlmain);
+                                                $rowcmain = $resultmain->fetch_assoc();
+                                                $part_family = $rowcmain['part_family_id'];
+                                                $part_number = $rowcmain['part_number_id'];
+                                                $p_line_id = $rowcmain['line_id'];
+
+                                                $sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
+                                                $resultnumber = $mysqli->query($sqlprint);
+                                                $rowcnumber = $resultnumber->fetch_assoc();
+                                                $printenabled = $rowcnumber['print_label'];
+                                                $p_line_name = $rowcnumber['line_name'];
+                                                $individualenabled = $rowcnumber['indivisual_label'];
+
+                                                $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+                                            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+                                                    , $_SERVER["HTTP_USER_AGENT"]);
+
+                                                $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+                                                $resultnumber = $mysqli->query($sqlnumber);
+                                                $rowcnumber = $resultnumber->fetch_assoc();
+                                                $pm_part_number = $rowcnumber['part_number'];
+                                                $pm_part_name = $rowcnumber['part_name'];
+                                                $pm_npr= $rowcnumber['npr'];
+                                                if(empty($pm_npr))
+                                                {
+                                                    $npr = 0;
+                                                    $pm_npr = 0;
+                                                }else{
+                                                    $npr = $pm_npr;
+                                                }
+                                                $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
+                                                $resultfamily = $mysqli->query($sqlfamily);
+                                                $rowcfamily = $resultfamily->fetch_assoc();
+                                                $pm_part_family_name = $rowcfamily['part_family_name'];
+
+                                                $sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
+                                                $resultaccount = $mysqli->query($sqlaccount);
+                                                $rowcaccount = $resultaccount->fetch_assoc();
+                                                $account_id = $rowcaccount['account_id'];
+
+                                                $sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
+                                                $resultcus = $mysqli->query($sqlcus);
+                                                $rowccus = $resultcus->fetch_assoc();
+                                                $cus_name = $rowccus['c_name'];
+                                                $logo = $rowccus['logo'];
+
+                                                $sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$p_line_id' and sg_station_event.event_status = 1" ;
+                                                $result2 = mysqli_query($db,$sql2);
+                                                $total_time = 0;
+                                                $row2=$result2->fetch_assoc();
+                                                $total_gp =  $row2['good_pieces'] + $row2['rework'];
+
+                                                $sql3 = "SELECT * FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
+                                                $result3 = mysqli_query($db,$sql3);
+                                                $ttot = null;
+                                                $tt = null;
+                                                while ($row3 = $result3->fetch_assoc()) {
+                                                    $ct = $row3['created_on'];
+                                                    $tot = $row3['total_time'];
+                                                    if(!empty($row3['total_time'])){
+                                                        $ttot = explode(':' , $row3['total_time']);
+                                                        $i = 0;
+                                                        foreach($ttot as $t_time) {
+                                                            if($i == 0){
+                                                                $total_time += ( $t_time * 60 * 60 );
+                                                            }else if( $i == 1){
+                                                                $total_time += ( $t_time * 60 );
+                                                            }else{
+                                                                $total_time += $t_time;
+                                                            }
+                                                            $i++;
+                                                        }
+                                                    }else{
+                                                        $total_time +=  strtotime($chicagotime) - strtotime($ct);
+                                                    }
+                                                }
+                                                $total_time = (($total_time/60)/60);
+                                                $b = round($total_time);
+                                                $target_eff = round($pm_npr * $b);
+                                                $actual_eff = $total_gp;
+                                                if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
+                                                    $eff = 0;
+                                                }else{
+                                                    $eff = round(100 * ($actual_eff/$target_eff));
+                                                }
+
+                                                ?>
+                                                <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;padding-top: 32px;" class="row">
+                                                    <div class="col-lg-6 col-md-8 graph_media">
+                                                        <div class="media">
+                                                            <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
+
+                                                            <div class="media-left">
+                                                                <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
+                                                                <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
+                                                                <!--                                    </a>-->
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <small style="font-size: 22px; margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
+                                                                <small style="font-size: 22px;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
+                                                                <small style="font-size: 22px;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-8 graph_media">
+                                                        <div class="media">
+                                                            <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
+                                                            <div class="media-left">
+                                                                <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
+                                                                <div id="eff_container" class="img-circle"></div>                                                        <!--                                    </a>-->
+                                                            </div>
+                                                            <div class="media_details">
+                                                                <div class="media-body">
+                                                                    <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
+                                                                    <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
+                                                                    <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                if (!empty($import_status_message)) {
+                                                    echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                                }
+                                                ?>
+                                                <?php
+                                                if (!empty($_SESSION['import_status_message'])) {
+                                                    echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                                    $_SESSION['message_stauts_class'] = '';
+                                                    $_SESSION['import_status_message'] = '';
+                                                } ?>
+                                                <div class="panel panel-flat">
+                                                    <?php
+                                                    $station_event_id = $rowc01['station_event_id'];
+                                                    $sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
+                                                    $result1 = mysqli_query($db, $sql);
+                                                    $rowc = mysqli_fetch_array($result1);
+                                                    $gp = $rowc['good_pieces'];
+                                                    if(empty($gp)){
+                                                        $g = 0;
+                                                    }else{
+                                                        $g = $gp;
+                                                    }
+                                                    $bp = $rowc['bad_pieces'];
+                                                    if(empty($bp)){
+                                                        $b = 0;
+                                                    }else{
+                                                        $b = $bp;
+                                                    }
+                                                    $rwp = $rowc['rework'];
+                                                    if(empty($rwp)){
+                                                        $r = 0;
+                                                    }else{
+                                                        $r = $rwp;
+                                                    }
+                                                    $tp = $gp + $bp+ $rwp;
+                                                    if(empty($tp)){
+                                                        $t = 0;
+                                                    }else{
+                                                        $t = $tp;
+                                                    }
+                                                    ?>
+                                                    <div class="row" style="background-color: #f3f3f3;margin: 0px">
+                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
+                                                            <span>Total Pieces : <?php echo $t ?></span>
+                                                        </div>
+                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
+                                                            <span>Total Good Pieces : <?php echo $g ?></span>
+                                                        </div>
+                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
+                                                            <span>Total Bad Pieces : <?php echo $b ?></span>
+                                                        </div>
+                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
+                                                            <span>Rework : <?php echo $r ?></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-heading" style="padding: 50px;">
+                                                        <div class="row">
+                                                            <div class="search_container"  style="margin-right:10px;">
+                                                                <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;background-size: 18px 18px;background-position: 95% center;border-radius: 50px;border: 1px solid #575756;transition: all 250ms ease-in-out;backface-visibility: hidden;transform-style: preserve-3d;">
+                                                            </div>
+                                                        </div>
+                                                        </br>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <?php if(($idddd != 0) && ($printenabled == 1)){?>
+                                                                    <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
+                                                                <?php }?>
+                                                                <!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
+                                                                <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <?php
+                                                            $i = 1;
+                                                            $def_list_arr = array();
+                                                            $sql1 = "SELECT * FROM `defect_list` ORDER BY `defect_list_name` ASC";
+                                                            $result1 = $mysqli->query($sql1);
+                                                            while ($row1 = $result1->fetch_assoc()) {
+                                                                $pnums = $row1['part_number_id'];
+                                                                $arr_pnums = explode(',', $pnums);
+                                                                if (in_array($part_number, $arr_pnums)) {
+                                                                    array_push($def_list_arr, $row1['defect_list_id']);
+                                                                }
+                                                            }
+
+                                                            $sql1 = "SELECT sdd.defect_list_id as dl_id FROM sg_defect_group as sdg inner join sg_def_defgroup as sdd on sdg.d_group_id = sdd.d_group_id WHERE FIND_IN_SET('$part_number',sdg.part_number_id) > 0";
+                                                            $result1 = $mysqli->query($sql1);
+                                                            while ($row1 = $result1->fetch_assoc()) {
+                                                                array_push($def_list_arr, $row1['dl_id']);
+                                                            }
+                                                            $def_list_arr = array_unique($def_list_arr);
+                                                            $def_lists = implode("', '", $def_list_arr);
+                                                            $sql1 = "SELECT * FROM `defect_list` where  defect_list_id IN ('$def_lists') ORDER BY `defect_list_name` ASC";
+                                                            $result1 = $mysqli->query($sql1);
+                                                            while ($row1 = $result1->fetch_assoc()) {
+                                                                ?>
+                                                                <div class="col-md-3" style="padding-top: 10px;">
+
+                                                                    <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
+                                                                        data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
+                                                                        <?php echo $row1['defect_list_name']; ?></a>
+
+                                                                </div>
+                                                                <?php
+                                                                if($i == 4)
+                                                                {
+                                                                    echo "<br/>";
+                                                                    echo "<br/>";
+                                                                    echo "<br/>";
+                                                                    $i = 0;
+                                                                }
+
+                                                                $i++;
+                                                            }
+                                                            ?>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <form action="<?php echo $siteURL; ?>events_module/delete_good_bad_piece.php" method="post" class="form-horizontal">
+                                                    <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>">
+                                                    <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
+                                                    <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="panel panel-flat">
+                                                        <table class="table datatable-basic">
+                                                            <thead>
+                                                            <tr>
+                                                                <th><input type="checkbox" id="checkAll" ></th>
+                                                                <th>S.No</th>
+                                                                <th>Good Pieces</th>
+                                                                <th>Defect Name</th>
+                                                                <th>Bad Pieces</th>
+                                                                <th>Re-Work</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php
+                                                            $station_event_id = $_GET['station_event_id'];
+                                                            $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+                                                            $qur = mysqli_query($db, $query);
+                                                            while ($rowc = mysqli_fetch_array($qur)) {
+                                                                $bad_pieces_id = $rowc['bad_pieces_id'];
+                                                                $good_pieces = $rowc['good_pieces'];
+                                                                $bad_pieces = $rowc['bad_pieces'];
+                                                                $rework = $rowc['rework'];
+                                                                $style = "";
+                                                                if($rowc['good_pieces'] != ""){
+                                                                    $style = "style='background-color:#a8d8a8;'";
+                                                                }
+                                                                if($rowc['bad_pieces'] != ""){
+                                                                    $style = "style='background-color:#eca9a9;'";
+                                                                }
+                                                                if($rowc['rework'] != ""){
+                                                                    $style = "style='background-color:#b1cdff;'";
+                                                                }
+                                                                ?>
+                                                                <tr <?php echo $style; ?>>
+                                                                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["bad_pieces_id"]; ?>"></td>
+                                                                    <td><?php echo ++$counter; ?></td>
+                                                                    <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
+                                                                    <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
+                                                                    <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
+                                                                    <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
+                                                                    <?php
+                                                                    $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                                                                    $rowc04 = mysqli_fetch_array($qur04);
+                                                                    $good_trace_id = $rowc04["good_bad_pieces_id"];
+
+                                                                    $query1 = sprintf("SELECT good_bad_pieces_id,good_image_name FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
+                                                                    $qur1 = mysqli_query($db, $query1);
+                                                                    $rowc1 = mysqli_fetch_array($qur1);
+                                                                    $item_id = $rowc1['good_bad_pieces_id'];
+                                                                    $image_name = $rowc1['good_image_name'];
+
+                                                                    ?>
+                                                                    <td>
+                                                                        <?php   if($rowc['good_pieces'] != ""){ ?>
+                                                                            <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                                                                            </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
+                                                                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                                                                            </a>
+                                                                        <?php } else{ ?>
+                                                                            <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                                                                            </a>
+                                                                        <?php } ?>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop2" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <div class="content">
+                                                <?php
+                                                $st = $rowc_new["line_name"];
+                                                ?>
+                                                <div class="panel panel-flat">
+                                                    <div class="panel-heading">
+
+                                                        <div class="row">
+                                                            <form action="" id="material_tracability" enctype="multipart/form-data"
+                                                                  class="form-horizontal" method="post">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+                                                                        <div class="col-md-6">
+                                                                            <?php $form_id = $_GET['id'];
+                                                                            //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
+                                                                            <input type="hidden" name="station_event_id"
+                                                                                   value="<?php echo $station_event_id ?>">
+                                                                            <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
+                                                                            <input type="hidden" name="station" value="<?php echo $station_id; ?>">
+                                                                            <input type="hidden" name="line_number" value="<?php echo $station_id; ?>">
+                                                                            <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
+                                                                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
+                                                                            <input type="text" name="line_number1" id="line_number"
+                                                                                   value="<?php echo $rowc_new['line_name']; ?>" class="form-control"
+                                                                                   placeholder="Enter Line Number">
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
+                                                                        <div class="col-md-6">
+                                                                            <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
+                                                                            <input type="text" name="part_number1" id="part_number"
+                                                                                   value="<?php echo $pm_part_number; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Number">
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
+                                                                        <div class="col-md-6">
+                                                                            <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
+                                                                            <input type="text" name="part_family1" id="part_family"
+                                                                                   value="<?php echo $pm_part_family_name; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Family">
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
+                                                                        <div class="col-md-6">
+                                                                            <!--                                    <input type="hidden" name="part_name" value="-->
+                                                                            <?php //echo $part_family; ?><!--">-->
+                                                                            <input type="text" name="part_name" id="part_name"
+                                                                                   value="<?php echo $pm_part_name; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Name">
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Material type : </label>
+                                                                        <div class="col-md-6">
+                                                                            <select name="material_type" id="material_type" class="select form-control" data-style="bg-slate" required>
+                                                                                <option value="" selected disabled>--- Select material Type ---</option>
+                                                                                <?php
+                                                                                $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
+                                                                                $result1 = mysqli_query($db, $sql1);
+                                                                                while ($row1 = $result1->fetch_assoc()) {
+
+                                                                                    echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
+
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Image : </label>
+
+                                                                        <div class="col-md-6">
+                                                                            <input type="file" id="material_file" name="file" class="form-control"/>
+                                                                            <div class="container"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <?php
+
+
+                                                                    $m_type = $_POST['material_type'];
+
+                                                                    $sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
+                                                                    $row = mysqli_query($db, $sql);
+                                                                    $se_row = mysqli_fetch_assoc($row);
+
+                                                                    $serial = $se_row['serial_num_required'];
+
+                                                                    ?>
+                                                                    <div class="row" id = "serial_num">
+
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Material Status : </label>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-check form-check-inline" style="float: left;">
+                                                                                <input type="radio" id="pass" name="material_status" value="1"
+                                                                                       class="form-check-input" checked required>
+                                                                                <label for="pass" class="item_label">Pass</label>
+
+                                                                                <input type="radio" id="fail" name="material_status" value="0"
+                                                                                       class="form-check-input reject" required>
+                                                                                <label for="fail" class="item_label">Fail</label>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div id="rej_fail" style="display: none;">
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Notes : </label>
+                                                                        <div class="col-md-6">
+                                                                            <textarea id="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <hr/>
+                                                                    <br/>
+                                                                    <div class="panel-footer p_footer">
+                                                                        <button type="submit" id="material_btn" class="btn btn-primary submit_btn"
+                                                                                style="background-color:#1e73be;">Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop3" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <div class="page-container">
+                                                <div class="col-md-2 create">
+                                                    <a href="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $station; ?>&station_event_id=<?php echo $station_event_id; ?>">
+                                                        <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">Add/Create New Material Form</button>
+                                                    </a>
+                                                </div>
+                                                <div class="content" style="padding: 114px 30px !important;">
+                                                    <?php  $result = "SELECT * FROM `material_tracability` where station_event_id = '$station_event_id' ORDER BY `material_id` DESC";
+                                                    $qur = mysqli_query($db,$result); ?>
+                                                    <div class="panel panel-flat" >
+                                                        <table class="table datatable-basic">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Sl. No</th>
+                                                                <th>Action</th>
+                                                                <th>Station</th>
+                                                                <th>Material Type</th>
+                                                                <th>Serial Number</th>
+                                                                <th class="form_create">Created At</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <?php
+                                                               while ($rowc = mysqli_fetch_array($qur)) {
+                                                                $line_name = $rowc["line_no"];
+                                                                $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
+                                                                $resultnumber = mysqli_query($db,$sqlnumber);
+                                                                $rowcnumber = mysqli_fetch_array($resultnumber);
+                                                                $station = $rowcnumber['line_name'];
+
+                                                                $material_type = $rowc["material_type"];
+                                                                $serial_number = $rowc["serial_number"];
+                                                               if($serial_number == 0){
+                                                                $serial =  '';
+                                                               }else{
+                                                                $serial =  $serial_number;
+                                                                }
+                                                               $material_status = $rowc["material_status"];
+                                                               $created_at= $rowc["created_at"];
+
+                                                               if($material_status == '1'){
+                                                                $style = "style='background-color:#a8d8a8;'";
+                                                               }else{
+                                                                 $style = "style='background-color:#eca9a9;'";
+                                                               }?>
+                                                                   <tr <?php echo $style; ?>>
+                                                                       <td> <?php echo ++$counter; ?></td>
+                                                                       <td >
+                                                                           <a href="view_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+
+                                                                           <a href="edit_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
+
+                                                                       </td>
+
+                                                                       <td> <?php echo $station ?></td>
+                                                                       <?php
+
+                                                                       $result1 = "SELECT * FROM `material_config` where material_id = '$material_type'";
+                                                                       $qur1 = mysqli_query($db,$result1);
+                                                                       while ($rowc1 = mysqli_fetch_array($qur1)) {
+
+                                                                           $material_type = $rowc1['material_type'];
+
+                                                                       } ?>
+                                                                       <td> <?php echo $material_type ?></td>
+                                                                       <td> <?php echo $serial ?></td>
+                                                                       <td> <?php echo $created_at ?></td>
+                                                                   </tr>
+                                                               <?php } ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop4" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <div class="content">
+                                                <div class="panel panel-flat">
+                                                    <div class="panel-heading">
+
+                                                        <?php if ($temp == "one") { ?>
+                                                            <br/>
+                                                            <div class="alert alert-success no-border">
+                                                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
+                                                                            class="sr-only">Close</span></button>
+                                                                <span class="text-semibold">10x</span> Created Successfully.
+                                                            </div>
+                                                        <?php } ?>
+                                                        <?php if ($temp == "two") { ?>
+                                                            <br/>
+                                                            <div class="alert alert-success no-border">
+                                                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
+                                                                            class="sr-only">Close</span></button>
+                                                                <span class="text-semibold">10x.</span> Updated Successfully.
+                                                            </div>
+                                                        <?php } ?>
+                                                        <?php
+                                                        if (!empty($import_status_message)) {
+                                                            echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                                                        }
+                                                        ?>
+                                                        <?php
+                                                        if (!empty($_SESSION['import_status_message'])) {
+                                                            echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+                                                            $_SESSION['message_stauts_class'] = '';
+                                                            $_SESSION['import_status_message'] = '';
+                                                        }
+                                                        ?>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <form action="10x_backend.php" id="10x_setting" enctype="multipart/form-data"
+                                                                      class="form-horizontal" method="post">
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+                                                                        <div class="col-md-6">
+                                                                            <?php //$form_id = $rowc_new["line_id"];
+                                                                                  $line_name = $rowc_new["line_name"];
+                                                                                  $line_no = $rowc_new["line_id"];
+                                                                            //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
+                                                                            <input type="hidden" name="station_event_id"
+                                                                                   value="<?php echo $station_event_id ?>">
+                                                                            <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
+                                                                            <input type="hidden" name="station" value="<?php echo $st; ?>">
+                                                                            <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
+                                                                            <input type="text" name="line_number1" id="line_number"
+                                                                                   value="<?php echo $line_name ?>" class="form-control"
+                                                                                   placeholder="Enter Line Number">
+                                                                        </div>
+                                                                        <div id="error1" class="red">Line Number</div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
+                                                                        <div class="col-md-6">
+                                                                            <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
+                                                                            <input type="text" name="part_number1" id="part_number"
+                                                                                   value="<?php echo $pm_part_number; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Number">
+                                                                        </div>
+                                                                        <div id="error1" class="red">Part Number</div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
+                                                                        <div class="col-md-6">
+                                                                            <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
+                                                                            <input type="text" name="part_family1" id="part_family"
+                                                                                   value="<?php echo $pm_part_family_name; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Family">
+                                                                        </div>
+                                                                        <div id="error1" class="red">Part family</div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
+                                                                        <div class="col-md-6">
+                                                                            <!--                                    <input type="hidden" name="part_name" value="-->
+                                                                            <?php //echo $part_family; ?><!--">-->
+                                                                            <input type="text" name="part_name" id="part_name"
+                                                                                   value="<?php echo $pm_part_name; ?>" class="form-control"
+                                                                                   placeholder="Enter Part Name">
+                                                                        </div>
+                                                                        <div id="error1" class="red">Part Name</div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Image : </label>
+                                                                        <div class="col-md-6">
+                                                                            <?php if(($idddd == 0)){?>
+                                                                                <div id="my_camera"></div>
+                                                                                <br/>
+                                                                                <input type=button class="btn btn-primary " value="Take Snapshot" onClick="take_snapshot()">
+                                                                                <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
+                                                                            <?php } ?>
+                                                                            <?php if(($idddd != 0)){?>
+                                                                                <div style="display:none;" id="my_camera"></div>
+                                                                                <label for="file" class="btn btn-primary ">Take Snapshot</label>
+                                                                                <input type="file" name="image" id="10x_file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
+                                                                                <div class="container"></div>
+                                                                            <?php } ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row" style="display: none">
+                                                                        <label class="col-lg-2 control-label">Captured Image : </label>
+                                                                        <div class="col-md-6">
+                                                                            <div id="results"></div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <br/>
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Previous Image : </label>
+                                                                        <div class="col-md-6">
+                                                                            <?php
+                                                                            $time_stamp = $_SESSION['timestamp_id'];
+                                                                            if(!empty($time_stamp)){
+                                                                                $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
+
+                                                                                $qurimage = mysqli_query($db, $query2);
+                                                                                $i =0 ;
+                                                                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
+                                                                                    $image = $rowcimage['image_name'];
+                                                                                    $d_tag = "10x_delete_image_" . $i;
+                                                                                    $r_tag = "10x_remove_image_" . $i;
+                                                                                    ?>
+
+                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                        <div class="thumbnail">
+                                                                                            <div class="thumb">
+                                                                                                <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
+                                                                                                     alt="">
+                                                                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
+                                                                                                <span class="10x_remove 10x_remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
+
+
+                                                                                                <!--                                                <div class="caption-overflow">-->
+                                                                                                <!--														<span>-->
+                                                                                                <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
+                                                                                                <!--                                                               data-popup="lightbox" rel="gallery"-->
+                                                                                                <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
+                                                                                                <!--                                                                        class="icon-plus3"></i></a>-->
+                                                                                                <!--														</span>-->
+                                                                                                <!---->
+                                                                                                <!--                                                </div>-->
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <?php
+                                                                                    $i++;}
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <label class="col-lg-2 control-label">Notes : </label>
+                                                                        <div class="col-md-6">
+                                                                            <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
+                                                                    <hr/>
+                                                                    <div class="panel-footer p_footer">
+
+                                                                        <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
+                                                                                style="background-color:#1e73be;">Submit
+                                                                        </button>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop5" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 5 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop6" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 6 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop7" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 7 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop8" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 8 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop9" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 9 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop10" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 10 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop11" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 11 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop12" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 12 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
 
 
                                 </div>
 
-                                <div id="pop1" class="cd-popup" role="alert">
-                                    <div class="cd-popup-container">
-                                        <div class="content">
-                                        <?php
-                                        $user_id = $_SESSION["id"];
-                                        $def_ch = $_POST['def_ch'];
-                                        $chicagotime = date("Y-m-d H:i:s");
-                                        //$line = "<b>-</b>";
-                                        $line = "";
-                                        $station_event_id = $rowc01['station_event_id'];
-                                        $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
-                                        $resultmain = $mysqli->query($sqlmain);
-                                        $rowcmain = $resultmain->fetch_assoc();
-                                        $part_family = $rowcmain['part_family_id'];
-                                        $part_number = $rowcmain['part_number_id'];
-                                        $p_line_id = $rowcmain['line_id'];
-
-                                        $sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
-                                        $resultnumber = $mysqli->query($sqlprint);
-                                        $rowcnumber = $resultnumber->fetch_assoc();
-                                        $printenabled = $rowcnumber['print_label'];
-                                        $p_line_name = $rowcnumber['line_name'];
-                                        $individualenabled = $rowcnumber['indivisual_label'];
-
-                                        $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
-                                            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-                                            , $_SERVER["HTTP_USER_AGENT"]);
-
-                                        $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-                                        $resultnumber = $mysqli->query($sqlnumber);
-                                        $rowcnumber = $resultnumber->fetch_assoc();
-                                        $pm_part_number = $rowcnumber['part_number'];
-                                        $pm_part_name = $rowcnumber['part_name'];
-                                        $pm_npr= $rowcnumber['npr'];
-                                        if(empty($pm_npr))
-                                        {
-                                            $npr = 0;
-                                            $pm_npr = 0;
-                                        }else{
-                                            $npr = $pm_npr;
-                                        }
-                                        $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-                                        $resultfamily = $mysqli->query($sqlfamily);
-                                        $rowcfamily = $resultfamily->fetch_assoc();
-                                        $pm_part_family_name = $rowcfamily['part_family_name'];
-
-                                        $sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-                                        $resultaccount = $mysqli->query($sqlaccount);
-                                        $rowcaccount = $resultaccount->fetch_assoc();
-                                        $account_id = $rowcaccount['account_id'];
-
-                                        $sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-                                        $resultcus = $mysqli->query($sqlcus);
-                                        $rowccus = $resultcus->fetch_assoc();
-                                        $cus_name = $rowccus['c_name'];
-                                        $logo = $rowccus['logo'];
-
-                                        $sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$p_line_id' and sg_station_event.event_status = 1" ;
-                                        $result2 = mysqli_query($db,$sql2);
-                                        $total_time = 0;
-                                        $row2=$result2->fetch_assoc();
-                                        $total_gp =  $row2['good_pieces'] + $row2['rework'];
-
-                                        $sql3 = "SELECT * FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
-                                        $result3 = mysqli_query($db,$sql3);
-                                        $ttot = null;
-                                        $tt = null;
-                                        while ($row3 = $result3->fetch_assoc()) {
-                                            $ct = $row3['created_on'];
-                                            $tot = $row3['total_time'];
-                                            if(!empty($row3['total_time'])){
-                                                $ttot = explode(':' , $row3['total_time']);
-                                                $i = 0;
-                                                foreach($ttot as $t_time) {
-                                                    if($i == 0){
-                                                        $total_time += ( $t_time * 60 * 60 );
-                                                    }else if( $i == 1){
-                                                        $total_time += ( $t_time * 60 );
-                                                    }else{
-                                                        $total_time += $t_time;
-                                                    }
-                                                    $i++;
-                                                }
-                                            }else{
-                                                $total_time +=  strtotime($chicagotime) - strtotime($ct);
-                                            }
-                                        }
-                                        $total_time = (($total_time/60)/60);
-                                        $b = round($total_time);
-                                        $target_eff = round($pm_npr * $b);
-                                        $actual_eff = $total_gp;
-                                        if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
-                                            $eff = 0;
-                                        }else{
-                                            $eff = round(100 * ($actual_eff/$target_eff));
-                                        }
-
-                                        ?>
-                                        <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;padding-top: 32px;" class="row">
-                                            <div class="col-lg-6 col-md-8 graph_media">
-                                                <div class="media">
-                                                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
-
-                                                    <div class="media-left">
-                                                        <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
-                                                        <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
-                                                        <!--                                    </a>-->
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <small style="font-size: 22px; margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
-                                                        <small style="font-size: 22px;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
-                                                        <small style="font-size: 22px;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-8 graph_media">
-                                                <div class="media">
-                                                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
-                                                    <div class="media-left">
-                                                        <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
-                                                        <div id="eff_container" class="img-circle"></div>                                                        <!--                                    </a>-->
-                                                    </div>
-                                                    <div class="media_details">
-                                                        <div class="media-body">
-                                                            <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                                                            <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                                                            <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php
-                                        if (!empty($import_status_message)) {
-                                            echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                        }
-                                        ?>
-                                        <?php
-                                        if (!empty($_SESSION['import_status_message'])) {
-                                            echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                            $_SESSION['message_stauts_class'] = '';
-                                            $_SESSION['import_status_message'] = '';
-                                        } ?>
-                                        <div class="panel panel-flat">
-                                            <?php
-                                            $station_event_id = $rowc01['station_event_id'];
-                                            $sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
-                                            $result1 = mysqli_query($db, $sql);
-                                            $rowc = mysqli_fetch_array($result1);
-                                            $gp = $rowc['good_pieces'];
-                                            if(empty($gp)){
-                                                $g = 0;
-                                            }else{
-                                                $g = $gp;
-                                            }
-                                            $bp = $rowc['bad_pieces'];
-                                            if(empty($bp)){
-                                                $b = 0;
-                                            }else{
-                                                $b = $bp;
-                                            }
-                                            $rwp = $rowc['rework'];
-                                            if(empty($rwp)){
-                                                $r = 0;
-                                            }else{
-                                                $r = $rwp;
-                                            }
-                                            $tp = $gp + $bp+ $rwp;
-                                            if(empty($tp)){
-                                                $t = 0;
-                                            }else{
-                                                $t = $tp;
-                                            }
-                                            ?>
-                                            <div class="row" style="background-color: #f3f3f3;margin: 0px">
-                                                <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
-                                                    <span>Total Pieces : <?php echo $t ?></span>
-                                                </div>
-                                                <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
-                                                    <span>Total Good Pieces : <?php echo $g ?></span>
-                                                </div>
-                                                <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
-                                                    <span>Total Bad Pieces : <?php echo $b ?></span>
-                                                </div>
-                                                <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
-                                                    <span>Rework : <?php echo $r ?></span>
-                                                </div>
-                                            </div>
-                                            <div class="panel-heading" style="padding: 50px;">
-                                                <div class="row">
-                                                    <div class="search_container"  style="margin-right:10px;">
-                                                        <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;background-size: 18px 18px;background-position: 95% center;border-radius: 50px;border: 1px solid #575756;transition: all 250ms ease-in-out;backface-visibility: hidden;transform-style: preserve-3d;">
-                                                    </div>
-                                                </div>
-                                                </br>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <?php if(($idddd != 0) && ($printenabled == 1)){?>
-                                                            <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
-                                                        <?php }?>
-                                                        <!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
-                                                        <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <?php
-                                                    $i = 1;
-                                                    $def_list_arr = array();
-                                                    $sql1 = "SELECT * FROM `defect_list` ORDER BY `defect_list_name` ASC";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        $pnums = $row1['part_number_id'];
-                                                        $arr_pnums = explode(',', $pnums);
-                                                        if (in_array($part_number, $arr_pnums)) {
-                                                            array_push($def_list_arr, $row1['defect_list_id']);
-                                                        }
-                                                    }
-
-                                                    $sql1 = "SELECT sdd.defect_list_id as dl_id FROM sg_defect_group as sdg inner join sg_def_defgroup as sdd on sdg.d_group_id = sdd.d_group_id WHERE FIND_IN_SET('$part_number',sdg.part_number_id) > 0";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        array_push($def_list_arr, $row1['dl_id']);
-                                                    }
-                                                    $def_list_arr = array_unique($def_list_arr);
-                                                    $def_lists = implode("', '", $def_list_arr);
-                                                    $sql1 = "SELECT * FROM `defect_list` where  defect_list_id IN ('$def_lists') ORDER BY `defect_list_name` ASC";
-                                                    $result1 = $mysqli->query($sql1);
-                                                    while ($row1 = $result1->fetch_assoc()) {
-                                                        ?>
-                                                        <div class="col-md-3" style="padding-top: 10px;">
-
-                                                            <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
-                                                                data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
-                                                                <?php echo $row1['defect_list_name']; ?></a>
-
-                                                        </div>
-                                                        <?php
-                                                        if($i == 4)
-                                                        {
-                                                            echo "<br/>";
-                                                            echo "<br/>";
-                                                            echo "<br/>";
-                                                            $i = 0;
-                                                        }
-
-                                                        $i++;
-                                                    }
-                                                    ?>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <form action="<?php echo $siteURL; ?>events_module/delete_good_bad_piece.php" method="post" class="form-horizontal">
-                                            <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>">
-                                            <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
-                                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                            <div class="panel panel-flat">
-                                                <table class="table datatable-basic">
-                                                    <thead>
-                                                    <tr>
-                                                        <th><input type="checkbox" id="checkAll" ></th>
-                                                        <th>S.No</th>
-                                                        <th>Good Pieces</th>
-                                                        <th>Defect Name</th>
-                                                        <th>Bad Pieces</th>
-                                                        <th>Re-Work</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php
-                                                    $station_event_id = $_GET['station_event_id'];
-                                                    $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
-                                                    $qur = mysqli_query($db, $query);
-                                                    while ($rowc = mysqli_fetch_array($qur)) {
-                                                        $bad_pieces_id = $rowc['bad_pieces_id'];
-                                                        $good_pieces = $rowc['good_pieces'];
-                                                        $bad_pieces = $rowc['bad_pieces'];
-                                                        $rework = $rowc['rework'];
-                                                        $style = "";
-                                                        if($rowc['good_pieces'] != ""){
-                                                            $style = "style='background-color:#a8d8a8;'";
-                                                        }
-                                                        if($rowc['bad_pieces'] != ""){
-                                                            $style = "style='background-color:#eca9a9;'";
-                                                        }
-                                                        if($rowc['rework'] != ""){
-                                                            $style = "style='background-color:#b1cdff;'";
-                                                        }
-                                                        ?>
-                                                        <tr <?php echo $style; ?>>
-                                                            <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["bad_pieces_id"]; ?>"></td>
-                                                            <td><?php echo ++$counter; ?></td>
-                                                            <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
-                                                            <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
-                                                            <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
-                                                            <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
-                                                            <?php
-                                                            $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
-                                                            $rowc04 = mysqli_fetch_array($qur04);
-                                                            $good_trace_id = $rowc04["good_bad_pieces_id"];
-
-                                                            $query1 = sprintf("SELECT good_bad_pieces_id,good_image_name FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
-                                                            $qur1 = mysqli_query($db, $query1);
-                                                            $rowc1 = mysqli_fetch_array($qur1);
-                                                            $item_id = $rowc1['good_bad_pieces_id'];
-                                                            $image_name = $rowc1['good_image_name'];
-
-                                                            ?>
-                                                            <td>
-                                                                <?php   if($rowc['good_pieces'] != ""){ ?>
-                                                                    <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                    data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                    data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                    </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
-                                                                    <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                    data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                    data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                    </a>
-                                                                <?php } else{ ?>
-                                                                    <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                    data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                    data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                    </a>
-                                                                <?php } ?>
-                                                            </td>
-                                                        </tr>
-                                                    <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </form>
-                                        <a href="#0" class="cd-popup-close"></a>
-                                        </div>
-                                    </div> <!-- cd-popup-container -->
-                                </div> <!-- cd-popup -->
-
-                                <div id="pop2" class="cd-popup" role="alert">
-                                    <div class="cd-popup-container">
-                                        <div class="content">
-                                            <?php
-                                            $st = $rowc_new["line_name"];
-                                            ?>
-                                            <div class="panel panel-flat">
-                                                <div class="panel-heading">
-                                                    <?php
-                                                    if (!empty($import_status_message)) {
-                                                        echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                                    }
-                                                    ?>
-                                                    <?php
-                                                    if (!empty($_SESSION[import_status_message])) {
-                                                        echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                                        $_SESSION['message_stauts_class'] = '';
-                                                        $_SESSION['import_status_message'] = '';
-                                                    }
-                                                    ?>
-                                                    <div class="row">
-                                                        <form action="" id="material_tracability" enctype="multipart/form-data"
-                                                              class="form-horizontal" method="post">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                                                <div class="col-md-6">
-                                                                    <?php $form_id = $_GET['id'];
-                                                                    //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                                                    <input type="hidden" name="station_event_id"
-                                                                           value="<?php echo $station_event_id ?>">
-                                                                    <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                                                    <input type="hidden" name="station" value="<?php echo $station_id; ?>">
-                                                                    <input type="hidden" name="line_number" value="<?php echo $station_id; ?>">
-                                                                    <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
-                                                                    <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
-                                                                    <input type="text" name="line_number1" id="line_number"
-                                                                           value="<?php echo $rowc_new['line_name']; ?>" class="form-control"
-                                                                           placeholder="Enter Line Number">
-                                                                </div>
-
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
-                                                                    <input type="text" name="part_number1" id="part_number"
-                                                                           value="<?php echo $pm_part_number; ?>" class="form-control"
-                                                                           placeholder="Enter Part Number">
-                                                                </div>
-
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
-                                                                    <input type="text" name="part_family1" id="part_family"
-                                                                           value="<?php echo $pm_part_family_name; ?>" class="form-control"
-                                                                           placeholder="Enter Part Family">
-                                                                </div>
-
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                                                <div class="col-md-6">
-                                                                    <!--                                    <input type="hidden" name="part_name" value="-->
-                                                                    <?php //echo $part_family; ?><!--">-->
-                                                                    <input type="text" name="part_name" id="part_name"
-                                                                           value="<?php echo $pm_part_name; ?>" class="form-control"
-                                                                           placeholder="Enter Part Name">
-                                                                </div>
-
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Material type : </label>
-                                                                <div class="col-md-6">
-                                                                    <select name="material_type" id="material_type" class="select form-control" data-style="bg-slate" required>
-                                                                        <option value="" selected disabled>--- Select material Type ---</option>
-                                                                        <?php
-                                                                        $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
-                                                                        $result1 = mysqli_query($db, $sql1);
-                                                                        while ($row1 = $result1->fetch_assoc()) {
-
-                                                                            echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
-
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Image : </label>
-
-                                                                <div class="col-md-6">
-                                                                    <input type="file" id="file" name="file" class="form-control"/>
-                                                                    <div class="container"></div>
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <?php
-
-
-                                                            $m_type = $_POST['material_type'];
-
-                                                            $sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
-                                                            $row = mysqli_query($db, $sql);
-                                                            $se_row = mysqli_fetch_assoc($row);
-
-                                                            $serial = $se_row['serial_num_required'];
-
-                                                            ?>
-                                                            <div class="row" id = "serial_num">
-
-                                                            </div>
-                                                            <br/>
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Material Status : </label>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-check form-check-inline" style="float: left;">
-                                                                        <input type="radio" id="pass" name="material_status" value="1"
-                                                                               class="form-check-input" checked required>
-                                                                        <label for="pass" class="item_label">Pass</label>
-
-                                                                        <input type="radio" id="fail" name="material_status" value="0"
-                                                                               class="form-check-input reject" required>
-                                                                        <label for="fail" class="item_label">Fail</label>
-
-
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <div id="rej_fail" style="display: none;">
-
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <label class="col-lg-2 control-label">Notes : </label>
-                                                                <div class="col-md-6">
-                                                                    <textarea id="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <br/>
-                                                            <hr/>
-                                                            <br/>
-                                                        </form>
-                                                    </div>
-                                                 </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel-footer p_footer">
-
-                                                <button type="submit" id="material_btn" class="btn btn-primary submit_btn"
-                                                        style="background-color:#1e73be;">Submit
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                        <a href="#0" class="cd-popup-close"></a>
-                                    </div> <!-- cd-popup-container -->
-
-                                <div id="pop3" class="cd-popup" role="alert">
-                                    <div class="cd-popup-container">
-                                        <div class="content">
-                                            hello
-                                        </div>
-                                    </div> <!-- cd-popup-container -->
-                                </div> <!-- cd-popup -->
-                                </div> <!-- cd-popup -->
                             </div>
 
                             <span style="font-size:30px;cursor:pointer;float: right;margin-top: -10px;" onclick="openNav()">&#9776;</span>
@@ -1565,11 +1925,7 @@ include("heading_banner.php");
                                             $p_name = ''; ?></span></td>
                                 </tr>
                             </table>
-
-
-                        </div>
-                        <!--                                <h4 style="text-align: center;background-color:#<?php echo $buttonclass; ?>;"><div id="txt" >&nbsp; </div></h4>
-                                        -->
+                         </div>
                         </main>
                         <?php
                         $variable123 = $time;
@@ -1582,7 +1938,6 @@ include("heading_banner.php");
                                     nd = new Date(utc + (3600000 * offset));
                                     return nd;
                                 }
-
                                 // Set the date we're counting down to
                                 var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
                                 console.log(iddd<?php echo $countervariable; ?>);
@@ -1623,8 +1978,6 @@ include("heading_banner.php");
                                 ?><!--" >&nbsp;</div>-->
                             </h4>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -1694,7 +2047,7 @@ if ($i == "") {
         if(isDis == 0){
             rr.innerHTML = "";
             document.getElementById("serial_num").style.display = 'none';
-            document.getElementById("file").required = false;
+            document.getElementById("material_file").required = false;
         }else{
             rr.innerHTML = "<label class=\"col-lg-2 control-label\" style=\"padding-top: 10px;\">Serial Number\n" +
                 "                                    : </label>\n" +
@@ -1704,7 +2057,7 @@ if ($i == "") {
                 "                                </div>\n" ;
                 // "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
             document.getElementById("serial_num").style.display = 'block';
-            document.getElementById("file").required = true;
+            document.getElementById("material_file").required = true;
         }
 
     }
@@ -1748,9 +2101,9 @@ if ($i == "") {
 <script>
     // Upload
 
-    $("#file").on("change", function () {
+    $("#material_file").on("change", function () {
         var fd = new FormData();
-        var files = $('#file')[0].files[0];
+        var files = $('#material_file')[0].files[0];
         fd.append('file', files);
         fd.append('request', 1);
 
@@ -1764,11 +2117,11 @@ if ($i == "") {
             success: function (response) {
 
                 if (response != 0) {
-                    var count = $('.container .content_img').length;
+                    var count = $('.mat_container .mat_content_img').length;
                     count = Number(count) + 1;
 
                     // Show image preview with Delete button
-                    $('.container').append("<div class='content_img' id='content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                    $('.container').append("<div class='mat_content_img' id='mat_content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
                 }
             }
         });
@@ -1776,13 +2129,13 @@ if ($i == "") {
 
 
     // Remove file
-    $('.container').on('click', '.content_img .delete', function () {
+    $('.mat_container').on('click', '.mat_content_img .mat_delete', function () {
 
         var id = this.id;
         var split_id = id.split('_');
         var num = split_id[1];
         // Get image source
-        var imgElement_src = $('#content_img_' + num)[0].children[0].src;
+        var imgElement_src = $('#mat_content_img_' + num)[0].children[0].src;
         //var deleteFile = confirm("Do you really want to Delete?");
         var succ = false;
         // AJAX request
@@ -1798,11 +2151,11 @@ if ($i == "") {
                 }
             }, complete: function (data) {
                 if (succ) {
-                    var id = 'content_img_' + num;
+                    var id = 'mat_content_img_' + num;
                     // $('#content_img_'+num)[0].remove();
                     var elem = document.getElementById(id);
                     document.getElementById(id).style.display = 'none';
-                    var nodes = $(".container")[2].childNodes;
+                    var nodes = $(".mat_container")[2].childNodes;
                     for (var i = 0; i < nodes.length; i++) {
                         var node = nodes[i];
                         if (node.id == id) {
@@ -1831,6 +2184,135 @@ if ($i == "") {
 
             }
         });
+    });
+</script>
+
+<!-- Configure a few settings and attach camera -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script language="JavaScript">
+    Webcam.set({
+        width: 290,
+        height: 190,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    var camera = document.getElementById("my_camera");
+    Webcam.attach( camera );
+</script>
+<script language="JavaScript">
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            var formData =  $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            $.ajax({
+                url: "webcam_backend.php",
+                type: "POST",
+                data: formData,
+                success: function (msg) {
+                    window.location.reload()
+                },
+
+            });
+        } );
+    }
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.select').select2();
+    });
+
+
+</script>
+<script>
+
+</script>
+<script>
+    // Upload
+
+    $("#10x_file").on("change", function () {
+        var fd = new FormData();
+        var files = $('#10x_file')[0].files[0];
+        fd.append('file', files);
+        fd.append('request', 1);
+
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_10x_image.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response != 0) {
+                    var count = $('.10x_container .10x_content_img').length;
+                    count = Number(count) + 1;
+
+                    // Show image preview with Delete button
+                    $('.container').append("<div class='10x_content_img' id='10x_content_img_" + count + "' ><img src='" + response + "' width='100' height='100'><span class='delete' id='delete_" + count + "'>Delete</span></div>");
+                }
+            }
+        });
+    });
+
+
+    // Remove file
+    $('.10x_container').on('click', '.10x_content_img .delete', function () {
+
+        var id = this.id;
+        var split_id = id.split('_');
+        var num = split_id[1];
+        // Get image source
+        var imgElement_src = $('#10x_content_img_' + num)[0].children[0].src;
+        //var deleteFile = confirm("Do you really want to Delete?");
+        var succ = false;
+        // AJAX request
+        $.ajax({
+            url: 'add_delete_10x_image.php',
+            type: 'post',
+            data: {path: imgElement_src, request: 2},
+            async: false,
+            success: function (response) {
+                // Remove <div >
+                if (response == 1) {
+                    succ = true;
+                }
+            }, complete: function (data) {
+                if (succ) {
+                    var id = '10x_content_img_' + num;
+                    // $('#content_img_'+num)[0].remove();
+                    var elem = document.getElementById(id);
+                    document.getElementById(id).style.display = 'none';
+                    var nodes = $(".10x_container")[2].childNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        if (node.id == id) {
+                            node.style.display = 'none';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+<script>
+    $(document).on('click', '.10x_remove_image', function () {
+        var del_id = this.id.split("_")[2];
+        var x_img_id = this.parentElement.childNodes[3].value;
+        var info =  document.getElementById("10x_delete_image"+del_id);
+        var info =  "id="+del_id+"&10x_id="+ x_img_id;
+        $.ajax({
+            type: "POST",
+            url: "delete_10x_image.php",
+            data: info,
+            success: function (data) {
+            }
+        });
+        location.reload(true);
     });
 </script>
 <?php include("footer.php"); ?> <!-- /page container -->
