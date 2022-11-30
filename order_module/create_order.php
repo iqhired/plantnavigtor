@@ -366,7 +366,7 @@ include("../heading_banner.php");
                                                     } else {
                                                         $selected = "";
                                                     }
-                                                        echo "<option " . $selected . " value='" . $row11['sup_order_status_id'] . "'  >" . $row11['sup_order_status'] . "</option>";
+                                                    echo "<option value='" . $row11['sup_order_status_id'] . "'  >" . $row11['sup_order_status'] . "</option>";
                                                 }
                                                 ?>
                                             </select>
