@@ -30,7 +30,7 @@ if(!empty($g_id)) {
     $file_name = $gp_timestamp . '_' . $fileName;
     file_put_contents($file, $image_base64);
     if (file_put_contents($file, $image_base64)) {
-        $sql = "INSERT INTO `good_piece_images`(`station_event_id`,`good_image_name`,`created_at`) VALUES ('$g_id','$img' , '$created_by')";
+        $sql = "INSERT INTO `good_piece_images`(`bad_piece_id`,`good_image_name`,`created_at`) VALUES ('$g_id','$img' , '$created_by')";
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
             echo $file;
@@ -44,7 +44,7 @@ if(!empty($g_id)) {
     mkdir($folderPath.'/'.$timestamp, 0777, true);
     file_put_contents($file, $image_base64);
     if(file_put_contents($file, $image_base64)){
-        $sql = "INSERT INTO `good_piece_images`(`station_event_id`,`good_image_name`,`created_at`) VALUES ('$timestamp','$img' ,'$created_by')";
+        $sql = "INSERT INTO `good_piece_images`(`bad_piece_id`,`good_image_name`,`created_at`) VALUES ('$timestamp','$img' ,'$created_by')";
         $result1 = mysqli_query($db, $sql);
         if ($result1) {
             echo $file;

@@ -539,7 +539,7 @@ else if($good_bad_piece_name != "")
                     }
                 }
                 rename( $folderPath, $newfolder) ;
-                $sql = "update `good_piece_images` SET station_event_id = '$bad_trace_id' where station_event_id = '$gs'";
+                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id = '$gs'";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $_SESSION['temp_gp_id'] = '';
@@ -583,7 +583,7 @@ else if($good_bad_piece_name != "")
                     }
                 }
                 rename( $folderPath, $newfolder) ;
-                $sql = "update `good_piece_images` SET station_event_id = '$bad_trace_id' where station_event_id = '$gs'";
+                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id = '$gs'";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $_SESSION['temp_gp_id'] = '';
@@ -723,7 +723,7 @@ else
                         if (empty($errors) == true) {
                             move_uploaded_file($file_tmp, "../assets/images/bad_piece_image/" .$good_bad_pieces_id. '/'.$file_rename);
 
-                            $sql = "INSERT INTO `good_piece_images`(`good_bad_pieces_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
+                            $sql = "INSERT INTO `good_piece_images`(`bad_piece_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
                             $result1 = mysqli_query($db, $sql);
                             if ($result1) {
                                 $message_stauts_class = 'alert-success';

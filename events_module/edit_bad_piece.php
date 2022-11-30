@@ -265,7 +265,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                             <?php
                                             $time_stamp = $_SESSION['good_timestamp_id'];
                                             if(!empty($time_stamp)){
-                                                $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$bad_pieces_id'");
+                                                $query2 = sprintf("SELECT * FROM good_piece_images where bad_piece_id = '$bad_pieces_id'");
 
                                                 $qurimage = mysqli_query($db, $query2);
                                                 $i =0 ;

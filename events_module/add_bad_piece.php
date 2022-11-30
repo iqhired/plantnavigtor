@@ -284,7 +284,7 @@ include("../heading_banner.php");
                                     <?php
                                     $time_stamp = $_SESSION['good_timestamp_id'];
                                     if(!empty($time_stamp)){
-                                        $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+                                        $query2 = sprintf("SELECT * FROM good_piece_images where bad_piece_id = '$time_stamp'");
 
                                         $qurimage = mysqli_query($db, $query2);
                                         $i =0 ;

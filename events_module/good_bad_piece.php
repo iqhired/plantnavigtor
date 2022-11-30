@@ -163,9 +163,9 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
     <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
     <!-- Theme JS files -->
-    <script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
-
+    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
     <script type="text/javascript" src="../assets/js/pages/datatables_basic.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
     <script type="text/javascript" src="../assets/js/plugins/notifications/sweet_alert.min.js"></script>
@@ -561,41 +561,29 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
                         <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
                         <?php
-                        $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
+                        $qur04 = mysqli_query($db, "SELECT * FROM good_bad_pieces_details where station_event_id= '$station_event_id' ORDER BY `bad_pieces_id` DESC LIMIT 1");
                         $rowc04 = mysqli_fetch_array($qur04);
-                        $good_trace_id = $rowc04["good_bad_pieces_id"];
+                        $bad_trace_id = $rowc04["bad_pieces_id"];
 
-                        $query1 = sprintf("SELECT good_bad_pieces_id,good_image_name FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
+                        $query1 = sprintf("SELECT bad_piece_id,good_image_name FROM  good_piece_images where bad_piece_id = '$bad_trace_id'");
                         $qur1 = mysqli_query($db, $query1);
                         $rowc1 = mysqli_fetch_array($qur1);
-                        $item_id = $rowc1['good_bad_pieces_id'];
+                        $item_id = $rowc1['bad_piece_id'];
                         $image_name = $rowc1['good_image_name'];
 
                         ?>
                         <td>
-<!--                            <button type="button" id="edit" class="btn btn-info btn-xs"-->
-<!--                                    data-id="--><?php //echo $rowc['good_bad_pieces_id']; ?><!--"-->
-<!--                                    data-gbid="--><?php //echo $rowc['bad_pieces_id']; ?><!--"-->
-<!--                                    data-seid="--><?php //echo $station_event_id; ?><!--"-->
-<!--                                    data-good_pieces="--><?php //echo $rowc['good_pieces']; ?><!--"-->
-<!--                                    data-defect_name="--><?php //echo $rowc['defect_name']; ?><!--"-->
-<!--                                    data-bad_pieces="--><?php //echo $rowc['bad_pieces']; ?><!--"-->
-<!--                                    data-re_work="--><?php //echo $rowc['rework']; ?><!--"-->
-<!--                                    data-image="--><?php //echo $item_id; ?><!--"-->
-<!--                                    data-image_name="--><?php //echo $image_name; ?><!--"-->
-<!--                                    data-toggle="modal" style="background-color:#1e73be;"-->
-<!--                                    data-target="#edit_modal_theme_primary">Edit </button>-->
                          <?php   if($rowc['good_pieces'] != ""){ ?>
-                         <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                         <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
                             data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
                             data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
                          </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
-                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
                                 data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
                                 data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
                             </a>
                             <?php } else{ ?>
-                            <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                            <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
                             data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
                             data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
                             </a>
