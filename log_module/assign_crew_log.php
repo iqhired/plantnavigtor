@@ -474,7 +474,7 @@ if(empty($datefrom)){
                                             }
                                             ?>
                                             <td><?php echo $pnn; ?></td>
-                                            <td><?php echo $rowc["assign_time"]; ?></td>
+                                            <td><?php echo dateReadFormat($rowc["assign_time"]); ?></td>
                                             <?php
                                             $unas = $rowc["unassign_time"];
                                             $as = $rowc["assign_time"];
@@ -484,7 +484,7 @@ if(empty($datefrom)){
                                                 $unasign = $unas;
                                             }
                                             ?>
-                                            <td><?php echo $unasign; ?></td>
+                                            <td><?php echo dateReadFormat($unasign); ?></td>
                                             <?php
                                             $zero_time = '00:00:00';
                                             $database_time = $rowc["time"];

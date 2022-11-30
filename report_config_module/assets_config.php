@@ -390,7 +390,7 @@ include("../heading_banner.php");
                         <td><?php echo ++$counter;; ?></td>
                         <td><?php echo $asset_name; ?></td>
                         <td><?php echo $line_name; ?></td>
-                        <td><?php echo $created_date; ?></td>
+                        <td><?php echo dateReadFormat($created_date); ?></td>
                         <!--<td>
                             <?php
 /*                            $query2 = sprintf("SELECT * FROM station_assets_images where station_asset_id = '$slno'");

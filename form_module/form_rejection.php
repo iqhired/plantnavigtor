@@ -618,7 +618,7 @@ include("../heading_banner.php");
                             <td><?php echo $rowc2["part_number"] .'-'. $rowc2["part_name"]; ?></td>
                             <td><?php echo $rowc4["part_family_name"]; ?></td>
                             <td><?php echo $rflag; ?></td>
-                            <td><?php echo $rowc["created_at"]; ?></td>
+                            <td><?php echo dateReadFormat($rowc["created_at"]); ?></td>
 
                         </tr>
                     <?php } ?>

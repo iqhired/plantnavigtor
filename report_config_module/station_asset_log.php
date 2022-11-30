@@ -284,7 +284,7 @@ include("../heading_banner.php");
                 </td>
                 <td><?php echo $lnn; ?></td>
                 <td><?php echo $rowc['asset_name']; ?></td>
-                <td><?php echo $rowc['created_date']; ?></td>
+                <td><?php echo  dateReadFormat($rowc['created_date']); ?></td>
 
             </tr>
         <?php } ?>

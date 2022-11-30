@@ -353,7 +353,7 @@ include("../heading_banner.php");
                 </td>
                 <td><?php echo $lnn; ?></td>
                 <td><?php echo $rowc['part_number']." - ".$rowc['part_name']; ?></td>
-                <td><?php echo $rowc['created_at']; ?></td>
+                <td><?php echo dateReadFormat($rowc['created_at']); ?></td>
 
             </tr>
         <?php } ?>

@@ -471,8 +471,8 @@ if(empty($datefrom)){
                                             <td><?php echo $pnn; ?></td>
                                             <td><?php echo $rowc['duration']; ?></td>
                                             
-										    <td><?php echo $rowc['assigned_time']; ?></td>
-                                            <td><?php echo $rowc['finished_time']; ?></td>
+										    <td><?php echo dateReadFormat($rowc['assigned_time']); ?></td>
+                                            <td><?php echo dateReadFormat($rowc['finished_time']); ?></td>
                                             <td><?php echo $rowc['total_time']; ?></td>
                                         	
 											</tr>

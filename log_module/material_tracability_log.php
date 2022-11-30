@@ -412,7 +412,7 @@ include("../heading_banner.php");
                         <td><?php echo $form_status; ?></td>
 
                         <td><?php echo $rowc['fail_reason']; ?></td>
-                        <td><?php echo $rowc['created_at']; ?></td>
+                        <td><?php echo dateReadFormat($rowc['created_at']); ?></td>
 
                     </tr>
                 <?php } ?>
