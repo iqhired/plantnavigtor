@@ -486,8 +486,8 @@ inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_
 						<td><?php echo $rowc['p_num']; ?></td>
 						<td><?php echo $rowc['p_name']; ?></td>
 						<td><?php echo $rowc['pf_name']; ?></td>
-						<td><?php echo $rowc['start_time']; ?></td>
-						<td><?php echo $rowc['end_time']; ?></td>
+						<td><?php echo dateReadFormat($rowc['start_time']); ?></td>
+						<td><?php echo dateReadFormat($rowc['end_time']); ?></td>
 						<td><?php echo $rowc['total_time']; ?></td>
 					</tr>
 				<?php } ?>

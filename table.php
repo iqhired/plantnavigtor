@@ -319,7 +319,7 @@ include("heading_banner.php");
                                 ?>
 								<td><?php echo $fulllname;?></td>
                                 
-                                <td><?php echo $hirin_date;?></td>
+                                <td><?php echo  dateReadFormat($hirin_date);?></td>
                                 <td><?php echo round($datediff / (60 * 60 * 24));?></td>
                                 
                                 <td><?php echo $jobtitledisc;?></td>
