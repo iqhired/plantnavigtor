@@ -79,7 +79,7 @@ while ($cam1 = mysqli_fetch_array($result1)) {
         }
 
         .bg-blue-400 {
-            border: 1px solid white;
+            /*border: 1px solid white;*/
             /*background-color: #181d50;*/
         }
 
@@ -103,6 +103,9 @@ while ($cam1 = mysqli_fetch_array($result1)) {
             color: #181d50;
             padding-top: 5px;
             font-size: 15px !important;
+        }
+        .heading{
+            margin-top: 0px !important;
         }
 
 
@@ -160,9 +163,17 @@ include("../hp_header.php");
     ?>
 
     <div class="col-md-4">
-        <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CELL STATUS OVERVIEW</center></span>
+
         <div class="panel bg-blue-400">
+            <div class="heading" style="height: 40px;">
+                <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                    <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                        <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;CELL STATUS OVERVIEW</span>
+                    </div>
+                </h4>
+            </div>
             <div class="panel-body">
+
                 <h3 class="no-margin dashboard_line_heading"><?php echo $station2; ?></h3>
                 <hr/>
                 <table style="width:100%" id="t01">
@@ -237,8 +248,8 @@ include("../hp_header.php");
             <?php } ?>
             <div style="height: 100%;">
                 <h4 style="height:inherit;text-align: center;background-color:<?php echo $buttonclass; ?>;color: #fff;">
-                    <div style="padding: 10px 0px 5px 0px;"><?php echo $line_status_text; ?> -
-                        <span style="padding: 0px 0px 10px 0px;"
+                    <div style="padding: 0px 0px 0px 0px;"><?php echo $line_status_text; ?> -
+                        <span style="padding: 0px 0px 0px 0px;"
                               id="demo<?php echo $countervariable; ?>">&nbsp;</span><span
                                 id="server-load"></span>
                     </div>
@@ -284,8 +295,15 @@ include("../hp_header.php");
         ?>
 
         <div class="col-md-4">
-            <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CREW STATUS OVERVIEW</center></span>
+            <!--<span class="label label-info"><center></center></span>-->
             <div class="panel bg-blue-400">
+                <div class="heading" style="height: 40px;">
+                    <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                        <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                            <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;CREW STATUS OVERVIEW</span>
+                        </div>
+                    </h4>
+                </div>
                 <div class="panel-body">
                     <h3 class="no-margin dashboard_line_heading"><?php echo $station2; ?></h3>
                     <hr/>
@@ -348,8 +366,14 @@ include("../hp_header.php");
             </div>
         </div>
        <div class="col-md-4">
-           <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>STATION FORM SUBMIT STATUS</center></span>
            <div class="panel bg-blue-400">
+               <div class="heading" style="height: 40px;">
+                   <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                       <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                           <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;STATION FORM SUBMIT STATUS</span>
+                       </div>
+                   </h4>
+               </div>
                <div class="panel-body" style="height: 700px">
                </div>
            </div>
@@ -357,27 +381,33 @@ include("../hp_header.php");
 </div>
 <div class="row">
     <div class="col-md-4">
-        <div class="media">
-            <div id="container" style="height: 350px; margin-top: 15px ;">
-                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>LINE UTILIZATION STATUS</center></span>
-            </div>
+        <div class="heading" style="height: 40px;">
+            <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                    <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;LINE UTILIZATION STATUS</span>
+                    <div id="container" style="height: 350px;" > </div>
+                </div>
+            </h4>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="media">
-            <div id="sgf_container" style="height: 350px; margin-top: 15px;">
-                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>GOOD PIECES , BAD PIECES & REWORK</center></span>
-            </div>
+        <div class="heading" style="height: 40px;">
+            <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                    <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;GOOD PIECES , BAD PIECES & REWORK</span>
+                    <div id="sgf_container" style="height: 350px;" > </div>
+                </div>
+            </h4>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="media">
-            <div id="eff_container" style="height: 350px; margin-top: 15px;">
-                <span class="label label-info" style="width:485px;height: 25px;text-align: center;font-size: 14px;"><center>CURRENT STAFF EFFICIENCY</center></span>
-                <!--<div id="eff_container" style="height: 350px;border:1px solid #efefef; margin-top: 10px"></div>-->
-
-               </div>
-            </div>
+        <div class="heading" style="height: 40px;">
+            <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
+                <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
+                    <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;CURRENT STAFF EFFICIENCY</span>
+                    <div id="eff_container" style="height: 350px;"> </div>
+                </div>
+            </h4>
         </div>
     </div>
 </div>
