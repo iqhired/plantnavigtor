@@ -46,13 +46,15 @@ while ($mainrowc = mysqli_fetch_array($mainqur)) {
     $structure .= "</body></html>";
     for ($i = 0; $i < $cnt;) {
         $u_name = $arrusrs[$i];
-        $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-        $qur0003 = mysqli_query($db, $query0003);
-        $rowc0003 = mysqli_fetch_array($qur0003);
-        $email = $rowc0003["email"];
-        $lasname = $rowc0003["lastname"];
-        $firstname = $rowc0003["firstname"];
-        $mail->addAddress($email, $firstname);
+        if(!empty($u_name)) {
+            $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+            $qur0003 = mysqli_query($db, $query0003);
+            $rowc0003 = mysqli_fetch_array($qur0003);
+            $email = $rowc0003["email"];
+            $lasname = $rowc0003["lastname"];
+            $firstname = $rowc0003["firstname"];
+            $mail->addAddress($email, $firstname);
+        }
         $i++;
     }
     if ($group != "") {
@@ -63,13 +65,15 @@ while ($mainrowc = mysqli_fetch_array($mainqur)) {
             $qur = mysqli_query($db, $query);
             while ($rowc = mysqli_fetch_array($qur)) {
                 $u_name = $rowc['user_id'];
-                $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-                $qur0003 = mysqli_query($db, $query0003);
-                $rowc0003 = mysqli_fetch_array($qur0003);
-                $email = $rowc0003["email"];
-                $lasname = $rowc0003["lastname"];
-                $firstname = $rowc0003["firstname"];
-                $mail->addAddress($email, $firstname);
+                if(!empty($u_name)) {
+                    $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                    $qur0003 = mysqli_query($db, $query0003);
+                    $rowc0003 = mysqli_fetch_array($qur0003);
+                    $email = $rowc0003["email"];
+                    $lasname = $rowc0003["lastname"];
+                    $firstname = $rowc0003["firstname"];
+                    $mail->addAddress($email, $firstname);
+                }
             }
             $i++;
         }

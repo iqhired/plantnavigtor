@@ -198,13 +198,15 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                             $qur0004 = mysqli_query($db, $query0004);
                             while ($rowc0004 = mysqli_fetch_array($qur0004)) {
                                 $u_name = $rowc0004['user_id'];
-                                $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-                                $qur0005 = mysqli_query($db, $query0005);
-                                $rowc0005 = mysqli_fetch_array($qur0005);
-                                $email = $rowc0005["email"];
-                                $lasname = $rowc0005["lastname"];
-                                $firstname = $rowc0005["firstname"];
-                                $mail->addAddress($email, $firstname);
+                                if(!empty($u_name)) {
+                                    $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                                    $qur0005 = mysqli_query($db, $query0005);
+                                    $rowc0005 = mysqli_fetch_array($qur0005);
+                                    $email = $rowc0005["email"];
+                                    $lasname = $rowc0005["lastname"];
+                                    $firstname = $rowc0005["firstname"];
+                                    $mail->addAddress($email, $firstname);
+                                }
                             }
                             if (!$mail->send()) {
                                 echo 'Mailer Error: ' . $mail->ErrorInfo;
