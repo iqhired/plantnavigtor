@@ -336,7 +336,7 @@ include("../heading_banner.php");
 					}
 					?>
 					<?php
-					if (!empty($_SESSION[import_status_message])) {
+					if (!empty($_SESSION['import_status_message'])) {
 						echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
 						$_SESSION['message_stauts_class'] = '';
 						$_SESSION['import_status_message'] = '';
@@ -394,7 +394,7 @@ include("../heading_banner.php");
                                             <input type="button" class="btn btn-primary " value="Take Snapshot" onClick="take_snapshot(<?php echo $x_id?>)">
                                             <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
 										<?php } ?>
-										<?php if($idddd != 0){?>
+									<?php if($idddd != 0){?>
                                             <div style ="display:none" id="my_camera"></div>
                                             <label for="file-input" class="btn btn-primary ">Take Snapshot</label>
                                             <input type="file" name="edit_image[]" id="file-input" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>

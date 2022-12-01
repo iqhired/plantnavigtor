@@ -240,20 +240,20 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                     <div class="row">
                                         <label class="col-lg-2 control-label">Image : </label>
                                         <div class="col-md-6">
-                                        <!--    <?php /*if(($idd == 0)){*/?>
+                                            <?php if(($idd == 0)){?>
                                                 <div id="my_camera"></div>
                                                 <br/>
                                                 <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot(<?php /*echo $bad_pieces_id; */?>)">
                                                 <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                            --><?php /*} */?>
-                                          <!--  --><?php /*if(($idd != 0)){*/?>
+                                            <?php } ?>
+                                         <?php if(($idd != 0)){?>
                                             <div style ="display:none" id="my_camera"></div>
                                             <label for="file-input" class="btn btn-primary ">Take Snapshot</label>
                                             <input type="file" name="edit_image[]" id="file-input" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
 
                                             <!--                                            <input type="file" name="edit_image[]" id="file-input" accept="image/*;capture=camera" capture="environment"  multiple="multiple" value="Take Snapshot" style="display: none">-->
                                             <div class="container"></div>
-                                          <!--  --><?php /*} */?>
+                                          <?php } ?>
                                         </div>
                                     </div>
                                     <div class="row" style="display: none">
