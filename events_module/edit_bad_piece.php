@@ -218,6 +218,8 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 
                                     <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
                                            value="<?php echo $station_event_id; ?>" >
+                                    <input type="hidden" name="bad_pieces_id" id="bad_pieces_id" class="form-control"
+                                           value="<?php echo $bad_pieces_id; ?>" >
 
                                     <div class="row" id="badpiece">
                                         <div class="form-group">
@@ -238,18 +240,20 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                     <div class="row">
                                         <label class="col-lg-2 control-label">Image : </label>
                                         <div class="col-md-6">
-                                            <?php if(($idd == 0)){?>
+                                        <!--    <?php /*if(($idd == 0)){*/?>
                                                 <div id="my_camera"></div>
                                                 <br/>
-                                                <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot(<?php echo $bad_pieces_id; ?>)">
+                                                <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot(<?php /*echo $bad_pieces_id; */?>)">
                                                 <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                            <?php } ?>
-                                            <?php if(($idd != 0)){?>
-                                                <div style="display:none;" id="my_camera"></div>
-                                                <label for="file" class="btn btn-primary ">Take Snapshot</label>
-                                                <input type="file" name="edit_image[]" id="file-input" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                                <div class="container"></div>
-                                            <?php } ?>
+                                            --><?php /*} */?>
+                                          <!--  --><?php /*if(($idd != 0)){*/?>
+                                            <div style ="display:none" id="my_camera"></div>
+                                            <label for="file-input" class="btn btn-primary ">Take Snapshot</label>
+                                            <input type="file" name="edit_image[]" id="file-input" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
+
+                                            <!--                                            <input type="file" name="edit_image[]" id="file-input" accept="image/*;capture=camera" capture="environment"  multiple="multiple" value="Take Snapshot" style="display: none">-->
+                                            <div class="container"></div>
+                                          <!--  --><?php /*} */?>
                                         </div>
                                     </div>
                                     <div class="row" style="display: none">
@@ -280,7 +284,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div class="thumbnail">
                                                             <div class="thumb">
-                                                                <?php echo '<img src="' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
+                                                                <?php echo '<img src="data:image/jpeg;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
                                                                 <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?> >" value="<?php echo $rowcimage['good_image_id']; ?>">
                                                                 <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                             </div>
@@ -367,7 +371,6 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
         });
     </script>
     <script>
-
         $("#file-input").on("change", function(e) {
             var files = e.target.files,
                 filesLength = files.length;
