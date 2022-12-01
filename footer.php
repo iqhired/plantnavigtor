@@ -6,7 +6,7 @@ include("timings_config.php"); ?>
  <script>
 	<?php
 
-    include ("email_config.php");
+	use PHPMailer\PHPMailer\Exception;use PHPMailer\PHPMailer\PHPMailer;use PHPMailer\PHPMailer\SMTP;
 
 	$loginid = $_SESSION["id"];
 	$chicagotime1 = date('Y-m-d');
@@ -84,6 +84,16 @@ include("timings_config.php"); ?>
 	{
 	if ($notification_mail_flag == '1') {
 		require './vendor/autoload.php';
+		$mail = new PHPMailer();
+		$mail->isSMTP();
+		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 587;
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		$mail->SMTPAuth = true;
+		$mail->Username = EMAIL_USER;
+		$mail->Password = EMAIL_PASSWORD;
+		$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 
 		$structure = '<html><body>';
 		$structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";
@@ -153,6 +163,16 @@ include("timings_config.php"); ?>
 	if ($notification_mail_flag == '1') {
 	    $url = $siteURL . 'vendor/autoload.php';
 		require $url;
+		$mail = new PHPMailer();
+		$mail->isSMTP();
+		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 587;
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		$mail->SMTPAuth = true;
+		$mail->Username = EMAIL_USER;
+		$mail->Password = EMAIL_PASSWORD;
+		$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 
 		$structure = '<html><body>';
 		$structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";

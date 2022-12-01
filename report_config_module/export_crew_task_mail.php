@@ -18,8 +18,8 @@ while ($mainrowc = mysqli_fetch_array($mainqur)) {
 	$mail->Port = 587;
 	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 	$mail->SMTPAuth = true;
-	$mail->Username = 'admin@plantnavigator.com';
-	$mail->Password = 'S@@rgummi_2022';
+	$mail->Username = EMAIL_USER;
+	$mail->Password = EMAIL_PASSWORD;
 	$mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 
 	$taskboard_id = $mainrowc["taskboard"];

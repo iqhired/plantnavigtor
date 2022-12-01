@@ -1,8 +1,6 @@
 <?php
 include("../config.php");
-
 use PHPMailer\PHPMailer\PHPMailer;
-
 require '../vendor/autoload.php';
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array)json_decode($array);
@@ -118,15 +116,14 @@ if ($material_status == '0') {
 
 
 	//mail code start
-	$mail = new PHPMailer();
-	$mail->isSMTP();
-//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-	$mail->Host = 'smtp.gmail.com';
-	$mail->Port = 587;
-	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-	$mail->SMTPAuth = true;
-	$mail->Username = 'admin@plantnavigator.com';
-	$mail->Password = 'S@@rgummi_2021';
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPAuth = true;
+    $mail->Username = EMAIL_USER;
+    $mail->Password = EMAIL_PASSWORD;
 	$mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
