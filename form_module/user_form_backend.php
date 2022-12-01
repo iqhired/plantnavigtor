@@ -1,6 +1,7 @@
-<?php
-include("../config.php");
-include ("../email_config.php");
+<?php include("../config.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 $temp_j =  0;
@@ -131,8 +132,16 @@ if(count($_POST)>0) {
                 if ($temp_j > 0) {
                     $r_flag = 1;
 
-//	$subject = "Out of Tolerence Mail Report";
+
                     require '../vendor/autoload.php';
+                    $mail = new PHPMailer();
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Port = 587;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'admin@plantnavigator.com';
+                    $mail->Password = 'S@@rgummi_2022';
                     $subject = "Out of Tolerence Mail Report";
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
