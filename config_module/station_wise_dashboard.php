@@ -130,9 +130,10 @@ include("../hp_header.php");
 ?>
 
 <body>
+<div class="container-fluid">
 <form action="" id="daily_data" class="form-horizontal" enctype="multipart/form-data" method="post">
     <input type="hidden" name="station" id="station" value="<?php echo $station; ?>">
-<div class="col-md-12">
+<div class="col-md-12" style="background-color: #e7e7e7;padding: 30px 10px;">
 <div class="row">
     <?php
     $countervariable = 0;
@@ -256,7 +257,6 @@ include("../hp_header.php");
                 </h4>
             </div>
         </div>
-    </div>
     <?php
         $countervariable = 0;
         $countervariable++;
@@ -293,7 +293,7 @@ include("../hp_header.php");
             $last_un_assignedby = $rowc05["last_unassigned_by"];
         }
         ?>
-
+        </div>
         <div class="col-md-4">
             <!--<span class="label label-info"><center></center></span>-->
             <div class="panel bg-blue-400">
@@ -385,36 +385,36 @@ include("../hp_header.php");
             <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
                 <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
                     <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;LINE UTILIZATION STATUS</span>
-                    <div id="container" style="height: 350px;" > </div>
                 </div>
             </h4>
         </div>
+        <div id="container" style="height: 350px;" > </div>
     </div>
     <div class="col-md-4">
         <div class="heading" style="height: 40px;">
             <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
                 <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
                     <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;GOOD PIECES , BAD PIECES & REWORK</span>
-                    <div id="sgf_container" style="height: 350px;" > </div>
                 </div>
             </h4>
         </div>
+        <div id="sgf_container" style="height: 350px;" > </div>
     </div>
     <div class="col-md-4">
         <div class="heading" style="height: 40px;">
             <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
                 <div style="margin-top: fill!important;padding: 0px 0px 0px 0px;">
                     <span style="padding: 0px 0px 0px 0px;text-align: center;">&nbsp;CURRENT STAFF EFFICIENCY</span>
-                    <div id="eff_container" style="height: 350px;"> </div>
+
                 </div>
             </h4>
         </div>
+        <div id="eff_container" style="height: 350px;"> </div>
     </div>
 </div>
 </div>
-    </div>
 </form>
-
+</div>
 <script>
     //daily data
     anychart.onDocumentReady(function () {
