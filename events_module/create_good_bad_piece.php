@@ -199,7 +199,7 @@ if ($good_name != "") {
 
                 $good_bad_piece_name = $_POST['good_bad_piece_name'];
 
-                $query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+                $query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbp.station_event_id as station_event_id,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
                 $qur = mysqli_query($db, $query);
                 while ($rowc = mysqli_fetch_array($qur)) {
 
