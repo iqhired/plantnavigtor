@@ -27,6 +27,7 @@ while ($cam1 = mysqli_fetch_array($result1)) {
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/colors.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/style_main.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $siteURL; ?>assets/css/menu.css" rel="stylesheet" type="text/css"/>
     <!-- /global stylesheets -->
     <!-- Core JS files -->
     <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
@@ -121,6 +122,9 @@ while ($cam1 = mysqli_fetch_array($result1)) {
         }
         .panel-flat>.panel-heading{
             background-color: #e7e7e7;
+        }
+        .caption text-center{
+            color: #FFFFFF;
         }
     </style>
 </head>
@@ -219,7 +223,7 @@ include("../hp_header.php");
                         $mail->Username = EMAIL_USER;
                         $mail->Password = EMAIL_PASSWORD;
                         $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
-                        $subject = "Not Fill Form Within Frequency Time Mail Report";
+                        $subject = "Station " .$station2. " form needs to be filled";
                         $query = sprintf("SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
                         $qur = mysqli_query($db, $query);
                         while ($rowc1 = mysqli_fetch_array($qur)) {
@@ -315,7 +319,7 @@ include("../hp_header.php");
                                 </table>
                             </div>
                             <div class="caption text-center">
-                                <h4 style="text-align: center;padding:5px;">
+                                <h4 style="text-align: center;padding:5px;color: #FFFFFF">
                                     <?php if ($date != "") { ?>
                                         <div id="demo<?php echo $countervariable; ?>">&nbsp;</div>
                                     <?php } else { ?>
@@ -491,7 +495,7 @@ include("../hp_header.php");
                                 </table>
                             </div>
                             <div class="caption text-center">
-                                <h4 style="text-align: center;padding:5px;text-color:#FFFFFF;">
+                                <h4 style="text-align: center;padding:5px;text-color:#FFFFFF;color: #FFFFFF"">
                                     <?php if ($date != "") { ?>
                                         <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div>
                                     <?php } else { ?>
@@ -670,7 +674,7 @@ include("../hp_header.php");
                                 </table>
                             </div>
                             <div class="caption text-center">
-                                <h4 style="text-align: center;padding:5px; ">
+                                <h4 style="text-align: center;padding:5px; color: #FFFFFF"">
                                     <?php if ($date != "") { ?>
                                         <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div>
                                     <?php } else { ?>
@@ -757,6 +761,7 @@ include("../hp_header.php");
         }, 5000);
     </script>
 <!-- /page container -->
+    <?php include('../footer.php') ?>
 </body>
-<?php include('../footer.php') ?>
+
 </html>
