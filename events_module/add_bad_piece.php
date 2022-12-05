@@ -266,7 +266,7 @@ include("../heading_banner.php");
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                        <!--                                        <div class="container"></div>-->
+                                        <div class="container"></div>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -318,10 +318,7 @@ include("../heading_banner.php");
                     </div>
                 </div>
             </div>
-
-
             <div class="panel-footer p_footer">
-
                 <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
                         style="background-color:#1e73be;">Submit
                 </button>

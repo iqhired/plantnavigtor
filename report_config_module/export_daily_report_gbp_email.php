@@ -13,8 +13,8 @@ $mail->Host = 'smtp.gmail.com';
 $mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->SMTPAuth = true;
-$mail->Username = 'admin@plantnavigator.com';
-$mail->Password = 'S@@rgummi_2022';
+$mail->Username = EMAIL_USER;
+$mail->Password = EMAIL_PASSWORD;
 $mail->setFrom('admin@plantnavigator.com', 'admin@plantnavigator.com');
 $query = sprintf("SELECT * FROM sg_email_report_config where sg_mail_report_name = 'Daily Efficiency Report'");
 $qur = mysqli_query($db, $query);
@@ -35,13 +35,15 @@ $structure .= "- " . $signature;
 $structure .= "</body></html>";
 for ($i = 0; $i < $cnt;) {
     $u_name = $arrusrs[$i];
-    $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-    $qur0003 = mysqli_query($db, $query0003);
-    $rowc0003 = mysqli_fetch_array($qur0003);
-    $email = $rowc0003["email"];
-    $lasname = $rowc0003["lastname"];
-    $firstname = $rowc0003["firstname"];
-    $mail->addAddress($email, $firstname);
+    if(!empty($u_name)) {
+        $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+        $qur0003 = mysqli_query($db, $query0003);
+        $rowc0003 = mysqli_fetch_array($qur0003);
+        $email = $rowc0003["email"];
+        $lasname = $rowc0003["lastname"];
+        $firstname = $rowc0003["firstname"];
+        $mail->addAddress($email, $firstname);
+    }
     $i++;
 }
 if ($group != "") {
@@ -52,13 +54,15 @@ if ($group != "") {
         $qur = mysqli_query($db, $query);
         while ($rowc = mysqli_fetch_array($qur)) {
             $u_name = $rowc['user_id'];
-            $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-            $qur0003 = mysqli_query($db, $query0003);
-            $rowc0003 = mysqli_fetch_array($qur0003);
-            $email = $rowc0003["email"];
-            $lasname = $rowc0003["lastname"];
-            $firstname = $rowc0003["firstname"];
-            $mail->addAddress($email, $firstname);
+            if(!empty($u_name)) {
+                $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                $qur0003 = mysqli_query($db, $query0003);
+                $rowc0003 = mysqli_fetch_array($qur0003);
+                $email = $rowc0003["email"];
+                $lasname = $rowc0003["lastname"];
+                $firstname = $rowc0003["firstname"];
+                $mail->addAddress($email, $firstname);
+            }
         }
         $i++;
     }

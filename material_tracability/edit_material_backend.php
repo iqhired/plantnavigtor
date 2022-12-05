@@ -1,7 +1,9 @@
 <?php
 include("../config.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-include ("../email_config.php");
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 //echo "<pre>";print_r($drag_drop_res);
@@ -100,6 +102,15 @@ if(count($_POST)>0) {
 		$out_of_tolerance_mail_list_users = $rowc05['users'];
 //	$subject = "Users Mail Report";
 // mail code over
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPAuth = true;
+        $mail->Username = EMAIL_USER;
+        $mail->Password = EMAIL_PASSWORD;
+        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
 		$del_query = sprintf("SELECT pn.part_name ,pn.part_number, cl.line_name ,part_family_name , mt.created_by as created_by   FROM  material_tracability as mt inner join cam_line as cl on mt.line_no = cl.line_id inner join pm_part_family as pf on mt.part_family_id= pf.pm_part_family_id 
 inner join pm_part_number as pn on mt.part_no=pn.pm_part_number_id where mt.material_id='$material_id'");

@@ -1,6 +1,7 @@
-<?php
-include("../config.php");
-include ("../email_config.php");
+<?php include("../config.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 $array = json_decode($_POST['info']);
 $drag_drop_res = (array) json_decode($array);
 $temp_j =  0;
@@ -131,8 +132,17 @@ if(count($_POST)>0) {
                 if ($temp_j > 0) {
                     $r_flag = 1;
 
-//	$subject = "Out of Tolerence Mail Report";
+
                     require '../vendor/autoload.php';
+                    $mail = new PHPMailer();
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Port = 587;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->SMTPAuth = true;
+                    $mail->Username = EMAIL_USER;
+                    $mail->Password = EMAIL_PASSWORD;
+                    $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
                     $subject = "Out of Tolerence Mail Report";
 // mail code over
 //	$message = "This is System generated Mail when out of telerance value added into the form. please go to below link to check the form.";
@@ -198,13 +208,15 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
                             $qur0004 = mysqli_query($db, $query0004);
                             while ($rowc0004 = mysqli_fetch_array($qur0004)) {
                                 $u_name = $rowc0004['user_id'];
-                                $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
-                                $qur0005 = mysqli_query($db, $query0005);
-                                $rowc0005 = mysqli_fetch_array($qur0005);
-                                $email = $rowc0005["email"];
-                                $lasname = $rowc0005["lastname"];
-                                $firstname = $rowc0005["firstname"];
-                                $mail->addAddress($email, $firstname);
+                                if(!empty($u_name)) {
+                                    $query0005 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                                    $qur0005 = mysqli_query($db, $query0005);
+                                    $rowc0005 = mysqli_fetch_array($qur0005);
+                                    $email = $rowc0005["email"];
+                                    $lasname = $rowc0005["lastname"];
+                                    $firstname = $rowc0005["firstname"];
+                                    $mail->addAddress($email, $firstname);
+                                }
                             }
                             if (!$mail->send()) {
                                 echo 'Mailer Error: ' . $mail->ErrorInfo;

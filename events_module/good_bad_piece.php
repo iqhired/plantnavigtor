@@ -385,7 +385,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
     </div>
     <div class="panel panel-flat">
 		<?php
-		$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
+		$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces_details where station_event_id ='$station_event_id' ";
 		$result1 = mysqli_query($db, $sql);
 		$rowc = mysqli_fetch_array($result1);
 		$gp = $rowc['good_pieces'];

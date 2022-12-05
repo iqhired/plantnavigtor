@@ -199,7 +199,7 @@ if ($good_name != "") {
 
                 $good_bad_piece_name = $_POST['good_bad_piece_name'];
 
-                $query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+                $query = sprintf("SELECT gbp.good_bad_pieces_id as good_bad_pieces_id ,gbp.station_event_id as station_event_id,gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces as gbp INNER JOIN good_bad_pieces_details as gbpd on gbp.station_event_id = gbpd.station_event_id where gbp.event_status = '1' and gbp.station_event_id = '$station_event_id' order by gbpd.bad_pieces_id DESC");
                 $qur = mysqli_query($db, $query);
                 while ($rowc = mysqli_fetch_array($qur)) {
 
@@ -656,11 +656,7 @@ $editgood_name = $_POST['editgood_name'];
 $editdefect_name = $_POST['editdefect_name'];
 $editbad_name = $_POST['editbad_name'];
 $editre_work = $_POST['editre_work'];
-$good_bad_pieces_id = $_GET['good_bad_piece_id'];
-if(empty($good_bad_pieces_id)) {
-    $good_bad_pieces_id = $_POST['good_bad_piece_id'];
-}
-$edit_file = $_POST['edit_image'];
+$edit_file = $_FILES['edit_image']['name'];
 
 if($editgood_name != "")
 {
@@ -689,6 +685,7 @@ if($editgood_name != "")
 
 else
 {
+    $bad_pieces_id = $_POST['bad_pieces_id'];
     $query = sprintf("SELECT ('$editbad_name' - bad_pieces) as b_total , ('$editre_work' - rework) as r_total from good_bad_pieces_details where `station_event_id` = '$edit_seid' and bad_pieces_id = '$edit_gbid'");
     $qur = mysqli_query($db, $query);
     while ($rowc = mysqli_fetch_array($qur)) {
@@ -719,11 +716,12 @@ else
                         $file_type = $_FILES['edit_image']['type'][$i];
                         $file_ext = strtolower(end(explode('.', $file_name)));
                         $extensions = array("jpeg", "jpg", "png", "pdf");
-
+                        $data1 = file_get_contents($_FILES['edit_image']['tmp_name'][$i]);
+                        $data1 = base64_encode($data1);
                         if (empty($errors) == true) {
-                            move_uploaded_file($file_tmp, "../assets/images/bad_piece_image/" .$good_bad_pieces_id. '/'.$file_rename);
+                            move_uploaded_file($file_tmp, "../assets/images/bad_piece_image/" .$bad_pieces_id. '/'.$file_rename);
 
-                            $sql = "INSERT INTO `good_piece_images`(`bad_piece_id`,`good_image_name`,`created_at`) VALUES ( '$good_bad_pieces_id' ,'$file_rename', '$chicagotime' )";
+                            $sql = "INSERT INTO `good_piece_images`(`bad_piece_id`,`good_image_name`,`created_at`) VALUES ( '$bad_pieces_id' ,'$data1', '$chicagotime' )";
                             $result1 = mysqli_query($db, $sql);
                             if ($result1) {
                                 $message_stauts_class = 'alert-success';
