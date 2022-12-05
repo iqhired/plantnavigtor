@@ -281,6 +281,12 @@ include("heading_banner.php");
                                         <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                             <i class="fa fa-file"></i> Submit Station Assets </a>
                                     </li>
+                                    <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                        <li>
+                                            <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                            <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
 
                             </li>
@@ -426,6 +432,12 @@ include("heading_banner.php");
                                     <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                         <i class="fa fa-file"></i> Submit Station Assets </a>
                                 </li>
+                                <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                    <li>
+                                        <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                        <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                    </li>
+                                <?php } ?>
                             </ul>
 
                         </li>
@@ -608,6 +620,12 @@ include("heading_banner.php");
                                                 <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                                     <i class="fa fa-file"></i> Submit Station Assets </a>
                                             </li>
+                                            <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                                <li>
+                                                    <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                    <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                                </li>
+                                            <?php } ?>
 
                                         </ul>
                                     </li>
@@ -754,6 +772,12 @@ include("heading_banner.php");
                                             <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                                 <i class="fa fa-file"></i> Submit Station Assets </a>
                                         </li>
+                                        <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                            <li>
+                                                <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
 
                                 </li>

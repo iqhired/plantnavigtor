@@ -115,6 +115,13 @@ while ($cam1 = mysqli_fetch_array($result1)) {
         .thumb img:not(.media-preview) {
             height: 150px !important;
         }
+
+        .padding_top_50px{
+            background-color: #e7e7e7;
+        }
+        .panel-flat>.panel-heading{
+            background-color: #e7e7e7;
+        }
     </style>
 </head>
 
