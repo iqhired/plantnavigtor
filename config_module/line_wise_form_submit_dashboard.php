@@ -136,6 +136,7 @@ include("../hp_header.php");
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
+                    $form_user_data_id = $rowc["form_user_data_id"];
                     $station = $rowc["station"];
                     $form_type = $rowc["form_type"];
                     $part_family = $rowc["part_family"];
@@ -176,7 +177,37 @@ include("../hp_header.php");
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
+
+                    if($date == $curdate){
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                        $res = mysqli_query($db, $sqlv);
+                        if (!$res) {
+                            $_SESSION['message_stauts_class'] = 'alert-danger';
+                            $_SESSION['import_status_message'] = 'Please Fill Pin';
+                        }
+                        else{
+                            $_SESSION['message_stauts_class'] = 'alert-success';
+                            $_SESSION['import_status_message'] = 'Form Frequency Updated Successfully.';
+                        }
+                    }
+
+                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $rowc0354 = mysqli_fetch_array($qur0354);
+                    $updated_at = $rowc0354['updated_at'];
+
+
                     $buttonclass = "218838";
+
+                    if($updated_at != "")
+                    {
+                        if ($date != "") {
+                            if ($updated_at < $curdate) {
+                                $buttonclass = "F44336";
+                            } else {
+                                $buttonclass = "218838";
+                            }
+                        }
+                    }
 
                             ?>
                     <div class="col-lg-3">
@@ -293,6 +324,7 @@ include("../hp_header.php");
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
+                    $form_user_data_id = $rowc["form_user_data_id"];
                     $station = $rowc["station"];
                     $form_type = $rowc["form_type"];
                     $part_family = $rowc["part_family"];
@@ -333,7 +365,37 @@ include("../hp_header.php");
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
+
+                    if($date == $curdate){
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                        $res = mysqli_query($db, $sqlv);
+                        if (!$res) {
+                            $_SESSION['message_stauts_class'] = 'alert-danger';
+                            $_SESSION['import_status_message'] = 'Please Fill Pin';
+                        }
+                        else{
+                            $_SESSION['message_stauts_class'] = 'alert-success';
+                            $_SESSION['import_status_message'] = 'Form Frequency Updated Successfully.';
+                        }
+                    }
+
+                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $rowc0354 = mysqli_fetch_array($qur0354);
+                    $updated_at = $rowc0354['updated_at'];
+
+
                     $buttonclass = "218838";
+
+                    if($updated_at != "")
+                    {
+                        if ($date != "") {
+                            if ($updated_at != $curdate) {
+                                $buttonclass = "F44336";
+                            } else {
+                                $buttonclass = "218838";
+                            }
+                        }
+                    }
 
                     ?>
                     <div class="col-lg-3">
@@ -450,6 +512,7 @@ include("../hp_header.php");
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
+                    $form_user_data_id = $rowc["form_user_data_id"];
                     $station = $rowc["station"];
                     $form_type = $rowc["form_type"];
                     $part_family = $rowc["part_family"];
@@ -490,7 +553,35 @@ include("../hp_header.php");
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
+
+                    if($date == $curdate){
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                        $res = mysqli_query($db, $sqlv);
+                        if (!$res) {
+                            $_SESSION['message_stauts_class'] = 'alert-danger';
+                            $_SESSION['import_status_message'] = 'Please Fill Pin';
+                        }
+                        else{
+                            $_SESSION['message_stauts_class'] = 'alert-success';
+                            $_SESSION['import_status_message'] = 'Form Frequency Updated Successfully.';
+                        }
+                    }
+                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $rowc0354 = mysqli_fetch_array($qur0354);
+                    $updated_at = $rowc0354['updated_at'];
+
+
                     $buttonclass = "218838";
+                    if($updated_at != "")
+                    {
+                    if ($date != "") {
+                        if ($updated_at != $curdate) {
+                            $buttonclass = "F44336";
+                        } else {
+                            $buttonclass = "218838";
+                        }
+                    }
+                    }
 
                     ?>
                     <div class="col-lg-3">
@@ -606,12 +697,14 @@ include("../hp_header.php");
     </div>
     <!-- /page content -->
 </div>
-    <!--<script>
+    <?php
+
+    ?>
+    <script>
         setTimeout(function () {
-            //alert("reload");
             location.reload();
-        }, 30000);
-    </script>-->
+        }, 5000);
+    </script>
 <!-- /page container -->
 </body>
 <?php include('../footer.php') ?>
