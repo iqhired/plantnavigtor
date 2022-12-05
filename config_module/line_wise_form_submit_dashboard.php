@@ -1,4 +1,8 @@
 <?php include("../config.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+$f_time  = date("H:i");
 $curdate  = date("Y-m-d H:i:s");
 $station = $_GET['id'];
 $sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$station'";
@@ -141,9 +145,11 @@ include("../hp_header.php");
                     $form_type = $rowc["form_type"];
                     $part_family = $rowc["part_family"];
                     $part_number = $rowc["part_number"];
+                    $form_submitted_by = $rowc['firstname'] . " " . $rowc['lastname'];
 
                     $qur = mysqli_query($db, "SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
                     $row1 = mysqli_fetch_array($qur);
+                    $estimateduration = $row1["frequency"];
                     $estimateduration = $row1["frequency"];
                     $time = $row1["frequency"];
                     $t11 = $row1["frequency"];
@@ -179,7 +185,7 @@ include("../hp_header.php");
                     $calccurrdate = strtotime($curdate);
 
                     if($date == $curdate){
-                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `time`,`updated_at`) VALUES ('$form_create_id','$form_user_data_id','$f_time','$curdate')";
                         $res = mysqli_query($db, $sqlv);
                         if (!$res) {
                             $_SESSION['message_stauts_class'] = 'alert-danger';
@@ -191,22 +197,77 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select date_add(updated_at,interval 30 minute) as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
-
-
-                    $buttonclass = "218838";
-
-                    if($updated_at != "")
+                    if($updated_at == $curdate)
                     {
-                        if ($date != "") {
-                            if ($updated_at < $curdate) {
-                                $buttonclass = "F44336";
-                            } else {
-                                $buttonclass = "218838";
-                            }
+                        require '../vendor/autoload.php';
+                        $mail = new PHPMailer();
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->Port = 587;
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->SMTPAuth = true;
+                        $mail->Username = EMAIL_USER;
+                        $mail->Password = EMAIL_PASSWORD;
+                        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+                        $subject = "Not Fill Form Within Frequency Time Mail Report";
+                        $query = sprintf("SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                        $qur = mysqli_query($db, $query);
+                        while ($rowc1 = mysqli_fetch_array($qur)) {
+                            $arrusrs = explode(',', $rowc1["notification_list"]);
                         }
+                        $message = '<br/><table rules=\"all\" style=\"border-color: #666;\" border=\"1\" cellpadding=\"10\">';
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_type_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Station : </strong> </td><td>" . $station2 . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $part_number . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $part_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $part_family_name . "</td></tr>";
+                        $message .= "</table>";
+                        $message .= "<br/>";
+                        $signature = "- Plantnavigator Admin";
+                        $cnt = count($arrusrs);
+                        $structure = '<html><body>';
+                        $structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";
+                        $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message . "</span><br/> ";
+                        $structure .= "<br/><br/>";
+                        $structure .= $signature;
+                        $structure .= "</body></html>";
+                        for ($i = 0; $i < $cnt;) {
+                            $u_name = $arrusrs[$i];
+                            if(!empty($u_name)){
+                                $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                                $qur0003 = mysqli_query($db, $query0003);
+                                $rowc0003 = mysqli_fetch_array($qur0003);
+                                $email = $rowc0003["email"];
+                                $lasname = $rowc0003["lastname"];
+                                $firstname = $rowc0003["firstname"];
+                                $mail->addAddress($email, $firstname);
+
+                            }
+                            $i++;
+                        }
+                        $mail->isHTML(true);
+                        $mail->Subject = $subject;
+                        $mail->Body = $structure;
+                            if(!$mail->Send()){
+                                echo "Mailer Error: " . $mail->ErrorInfo;
+                            }
+                            else{
+                                echo "  ";
+                            }
+
+                        function save_mail($mail)
+                        {
+                            $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+                            $imapStream = imap_open($path, $mail->Username, $mail->Password);
+                            $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+                            imap_close($imapStream);
+                            return $result;
+
+                        }
+
                     }
 
                             ?>
@@ -246,12 +307,12 @@ include("../hp_header.php");
                                     </tr>
                                 </table>
                             </div>
-                            <div class="caption text-center" style="background-color:#122c5a;">
-                                <h4 style="text-align: center;padding:5px; background-color:#<?php echo $buttonclass; ?>">
+                            <div class="caption text-center">
+                                <h4 style="text-align: center;padding:5px;">
                                     <?php if ($date != "") { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db;">&nbsp;</div>
+                                        <div id="demo<?php echo $countervariable; ?>">&nbsp;</div>
                                     <?php } else { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db">Available</div>
+                                        <div id="demo<?php echo $countervariable; ?>">Available</div>
                                     <?php } ?>
                                 </h4>
                             </div>
@@ -291,6 +352,7 @@ include("../hp_header.php");
                                     // Output the result in an element with id="demo"
                                     document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
                                         + minutes + "m " + seconds + "s ";
+                                    document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
                                     // If the count down is over, write some text
                                     if (distance <= 0) {
                                         // clearInterval(x);
@@ -301,6 +363,7 @@ include("../hp_header.php");
 
                                         document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
                                             + workingminutes + "m " + workingseconds + "s ";
+                                        document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
                                     }
                                 }, 1000);
                             </script>
@@ -384,19 +447,6 @@ include("../hp_header.php");
                     $updated_at = $rowc0354['updated_at'];
 
 
-                    $buttonclass = "218838";
-
-                    if($updated_at != "")
-                    {
-                        if ($date != "") {
-                            if ($updated_at != $curdate) {
-                                $buttonclass = "F44336";
-                            } else {
-                                $buttonclass = "218838";
-                            }
-                        }
-                    }
-
                     ?>
                     <div class="col-lg-3">
                         <div class="panel bg-blue-400">
@@ -433,12 +483,12 @@ include("../hp_header.php");
                                     </tr>
                                 </table>
                             </div>
-                            <div class="caption text-center" style="background-color:#122c5a;">
-                                <h4 style="text-align: center;padding:5px; background-color:#<?php echo $buttonclass; ?>">
+                            <div class="caption text-center">
+                                <h4 style="text-align: center;padding:5px;text-color:#FFFFFF;">
                                     <?php if ($date != "") { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db;">&nbsp;</div>
+                                        <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div>
                                     <?php } else { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db">Available</div>
+                                        <div id="demo<?php echo $countervariable; ?>" >Available</div>
                                     <?php } ?>
                                 </h4>
                             </div>
@@ -478,6 +528,7 @@ include("../hp_header.php");
                                 // Output the result in an element with id="demo"
                                 document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
                                     + minutes + "m " + seconds + "s ";
+                                document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
                                 // If the count down is over, write some text
                                 if (distance <= 0) {
                                     // clearInterval(x);
@@ -488,6 +539,7 @@ include("../hp_header.php");
 
                                     document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
                                         + workingminutes + "m " + workingseconds + "s ";
+                                    document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
 
                                 }
                             }, 1000);
@@ -571,17 +623,7 @@ include("../hp_header.php");
                     $updated_at = $rowc0354['updated_at'];
 
 
-                    $buttonclass = "218838";
-                    if($updated_at != "")
-                    {
-                    if ($date != "") {
-                        if ($updated_at != $curdate) {
-                            $buttonclass = "F44336";
-                        } else {
-                            $buttonclass = "218838";
-                        }
-                    }
-                    }
+
 
                     ?>
                     <div class="col-lg-3">
@@ -620,12 +662,12 @@ include("../hp_header.php");
                                     </tr>
                                 </table>
                             </div>
-                            <div class="caption text-center" style="background-color:#122c5a;">
-                                <h4 style="text-align: center;padding:5px; background-color:#<?php echo $buttonclass; ?>">
+                            <div class="caption text-center">
+                                <h4 style="text-align: center;padding:5px; ">
                                     <?php if ($date != "") { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db">&nbsp;</div>
+                                        <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div>
                                     <?php } else { ?>
-                                        <div id="demo<?php echo $countervariable; ?>" style="color: #d6d8db">Available</div>
+                                        <div id="demo<?php echo $countervariable; ?>" >Available</div>
                                     <?php } ?>
                                 </h4>
                             </div>
@@ -665,6 +707,7 @@ include("../hp_header.php");
                                 // Output the result in an element with id="demo"
                                 document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
                                     + minutes + "m " + seconds + "s ";
+                                document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
                                 // If the count down is over, write some text
                                 if (distance <= 0) {
                                     // clearInterval(x);
@@ -675,6 +718,7 @@ include("../hp_header.php");
 
                                     document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
                                         + workingminutes + "m " + workingseconds + "s ";
+                                    document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
                                 }
                             }, 1000);
                         </script>
