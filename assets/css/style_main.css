@@ -1,3 +1,7 @@
+.anychart-credits-text , .anychart-credits{
+    display: none !important;
+}
+
 .navbar-center{
     text-align: center;
 }
