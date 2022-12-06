@@ -731,18 +731,13 @@ else
                                 $import_status_message = 'Error: Please Try Again.';
                             }
 
-
                         }
-
                     }
                 }
-
             }
         }
-
     }
 }
-
 $page = "good_bad_piece.php?station_event_id=$station_event_id";
 header('Location: ' . $page, true, 303);
 
