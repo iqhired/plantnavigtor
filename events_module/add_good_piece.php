@@ -52,7 +52,7 @@ $individualenabled = $rowcnumber['indivisual_label'];
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
+	, $_SERVER["HTTP_USER_AGENT"]);
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +136,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 
     </style>
 </head>
-<body>
+<body onload="openScanner()">
 <!-- Main navbar -->
 <?php
 $cust_cam_page_header = "Add Good Piece";
@@ -206,8 +206,11 @@ include("../heading_banner.php");
 <script>
         $("#submitForm_good").on("click", function() {
         // function submitForm_good(url) {
-        // $(':input[type="button"]').prop('disabled', true);
+
+        $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
@@ -216,9 +219,9 @@ include("../heading_banner.php");
             // context: this,
             async: false,
             success: function (data) {
-
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
+
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff1 = this.data.split('&')[3].split("=")[1];
@@ -234,6 +237,11 @@ include("../heading_banner.php");
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
+                var url = <?php echo $siteURL; ?> + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
+
+                setTimeout(() => {   window.close();
+                    window.open(url,"_self"); }, 1000);
+
             }
         });
 
