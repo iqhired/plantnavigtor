@@ -192,7 +192,7 @@ include("../heading_banner.php");
                 <h5 class="panel-title">Add Bad Piece</h5><br/>
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="create_good_bad_piece.php" id="bad_form" enctype="multipart/form-data"
+                        <form action="" id="bad_form" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
 							<?php
 							$cell_id = $_GET['cell_id'];
