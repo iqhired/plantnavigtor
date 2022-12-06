@@ -217,6 +217,7 @@ include("../heading_banner.php");
             // dataType: "json",
             // context: this,
             cache: false,
+            async: false,
             success: function (data) {
 
                 // window.location.href = window.location.href + "?aa=Line 1";
@@ -238,6 +239,8 @@ include("../heading_banner.php");
                 }
             }
         });
+        console.log('wfe');
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
 
     });
 
