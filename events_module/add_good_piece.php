@@ -158,8 +158,7 @@ include("../heading_banner.php");
                 <h5 class="panel-title">Add Good Piece</h5><br/>
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
-                              class="form-horizontal" method="post">
+                        <form action="" id="asset_update" enctype="multipart/form-data"  class="form-horizontal">
                             <?php
                             $cell_id = $_GET['cell_id'];
                             $cell_name = $_GET['c_name'];
@@ -192,12 +191,14 @@ include("../heading_banner.php");
                 <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                 <?php }?>
-                <button type="submit" id="submitForm_good" class="btn btn-primary submit_btn"
+                <button type="submit" id="submitForm_good" class="btn btn-primary"
                         style="background-color:#1e73be;">Submit
                 </button>
 
             </div>
             </form>
+
+            </button>
         </div>
     </div>
 
@@ -205,13 +206,10 @@ include("../heading_banner.php");
 
 <script>
     $("#submitForm_good").click(function (e) {
-
         // function submitForm_good(url) {
-
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
-        //var main_url = "<?php //echo $url; ?>//";
-
+        //var main_url = "<?php //  echo $url; ?>//";
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
@@ -220,9 +218,9 @@ include("../heading_banner.php");
             // context: this,
             async: false,
             success: function (data) {
+
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
-
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff1 = this.data.split('&')[3].split("=")[1];
@@ -237,7 +235,10 @@ include("../heading_banner.php");
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
+                   history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
+
             }
+
         });
 
     });
