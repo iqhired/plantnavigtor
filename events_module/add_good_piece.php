@@ -222,9 +222,10 @@ include("../heading_banner.php");
                 var ipe = document.getElementById("ipe").value;
                 if(pe == '1'){
                     if(ipe == '1'){
-                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                        var nogp = document.getElementById("good_name").value;
+                        document.getElementById("resultFrame").contentWindow.ss1(file1, nogp);
                     }else{
-                        document.getElementById("resultFrame").contentWindow.ss1(file1);
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
                     }
                 }
 
