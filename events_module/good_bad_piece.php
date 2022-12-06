@@ -447,7 +447,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
 					<?php }?>
-<!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
+                    <button type="submit" data-toggle="modal" id="add_gp"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>
                     <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                 </div>
             </div>
@@ -976,6 +976,15 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         });
     });
 </script>
+<script> $(document).on('click', '#add_gp', function () {
+        var element = $(this);
+        var del_id = element.attr("data-id");
+        var info = 'station_event_id=' + <?php echo $station_event_id; ?>;
+        var url = window.location.origin + "/events_module/add_good_piece.php?" + info;
+        window.close();
+        window.open(url,"_blank");
+
+    });</script>
 
 <script>
     $("#submitForm_good").click(function (e) {
@@ -1106,16 +1115,16 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             window.location = "<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
 
         }
-        else if(editre_work != "")
-        {
-            // $("#badpiece").show();
-            // $("#badpiece1").hide();
-            // $("#badpiece2").show();
-            //
-            // $("#goodpiece").hide();
-            window.location = "<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
-
-        }
+        //else if(editre_work != "")
+        //{
+        //    // $("#badpiece").show();
+        //    // $("#badpiece1").hide();
+        //    // $("#badpiece2").show();
+        //    //
+        //    // $("#goodpiece").hide();
+        //    window.location = "<?php //echo $siteURL; ?>//events_module/add_bad_piece.php?station_event_id=<?php //echo $station_event_id; ?>//";
+        //
+        //}
     });
 </script>
     <script>
@@ -1139,37 +1148,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
     </script>
 <script>
-    function submitForm_good(url) {
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#good_form").serialize();
-        var main_url = "<?php echo $url; ?>";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
-                location.reload();
-            }
-        });
-    }
-    function submitForm_bad(url) {
 
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#bad_form").serialize();
-        var main_url = "<?php echo $url; ?>";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                $(':input[type="button"]').prop('disabled', false);
-                location.reload();
-            }
-        });
-    }
+
     function submitForm_edit(url) {
 
         $(':input[type="button"]').prop('disabled', true);
@@ -1185,6 +1165,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 location.reload();
             }
         });
+    }
+</script>
+<script>
+    window.onload = function() {
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
     }
 </script>
 <script>
