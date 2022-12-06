@@ -204,13 +204,11 @@ include("../heading_banner.php");
 </div>
 
 <script>
-        $("#submitForm_good").on("click", function() {
+    $("#submitForm_good").click(function (e) {
         // function submitForm_good(url) {
-
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
-        //var main_url = "<?php //echo $url; ?>//";
-
+        //var main_url = "<?php //  echo $url; ?>//";
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
@@ -219,6 +217,7 @@ include("../heading_banner.php");
             // context: this,
             async: false,
             success: function (data) {
+
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
 
@@ -237,12 +236,10 @@ include("../heading_banner.php");
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
-                var url = <?php echo $siteURL; ?> + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
-
-                setTimeout(() => {   window.close();
-                    window.open(url,"_self"); }, 1000);
+                   history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
 
             }
+
         });
 
     });
