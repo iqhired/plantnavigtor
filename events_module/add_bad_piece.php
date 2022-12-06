@@ -24,9 +24,9 @@ if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 
 $_SESSION['LAST_ACTIVITY'] = $time;
 
 $i = $_SESSION["role_id"];
-if ($i != "super" && $i != "admin") {
-    header('location: ../dashboard.php');
-}
+//if ($i != "super" && $i != "admin") {
+//    header('location: ../dashboard.php');
+//}
 $station_event_id = $_GET['station_event_id'];
 $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
 $resultmain = $mysqli->query($sqlmain);
@@ -56,7 +56,7 @@ $defect_list_id = $_GET['defect_list_id'];
 $gp_timestamp = time();
 $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
+	, $_SERVER["HTTP_USER_AGENT"]);
 ?>
 
 <!DOCTYPE html>
@@ -194,16 +194,16 @@ include("../heading_banner.php");
                     <div class="col-md-12">
                         <form action="create_good_bad_piece.php" id="bad_form" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
-                            <?php
-                            $cell_id = $_GET['cell_id'];
-                            $cell_name = $_GET['c_name'];
+							<?php
+							$cell_id = $_GET['cell_id'];
+							$cell_name = $_GET['c_name'];
 
-                            $sql1 = "SELECT * FROM `defect_list` where  defect_list_id = '$defect_list_id'";
-                            $result1 = $mysqli->query($sql1);
-                            while ($row1 = $result1->fetch_assoc()) {
+							$sql1 = "SELECT * FROM `defect_list` where  defect_list_id = '$defect_list_id'";
+							$result1 = $mysqli->query($sql1);
+							while ($row1 = $result1->fetch_assoc()) {
 
-                            $defect_list_name = $row1['defect_list_name'];
-                            ?>
+							$defect_list_name = $row1['defect_list_name'];
+							?>
                             <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>" >
                             <input type="hidden" name="edit_seid" value="<?php echo $station_event_id; ?>">
                             <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
@@ -255,18 +255,18 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-                                    <?php if(($idd == 0)){?>
+									<?php if(($idd == 0)){?>
                                         <div id="my_camera"></div>
                                         <br/>
                                         <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
                                         <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                    <?php } ?>
-                                    <?php if(($idd != 0)){?>
+									<?php } ?>
+									<?php if(($idd != 0)){?>
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
                                         <!--                                        <div class="container"></div>-->
-                                    <?php } ?>
+									<?php } ?>
                                 </div>
                             </div>
                             <div class="row" style="display: none">
@@ -280,35 +280,35 @@ include("../heading_banner.php");
                                 <label class="col-lg-2 control-label">Previous Image : </label>
                                 <div class="col-md-6">
                                     <div class="container"></div>
-                                    <?php
-                                    $time_stamp = $_SESSION['good_timestamp_id'];
-                                    if(!empty($time_stamp)){
-                                        $query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+									<?php
+									$time_stamp = $_SESSION['good_timestamp_id'];
+									if(!empty($time_stamp)){
+										$query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
 
-                                        $qurimage = mysqli_query($db, $query2);
-                                        $i =0 ;
-                                        while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                            $image = $rowcimage['good_image_name'];
-                                            $mime_type = "image/gif";
-                                            $file_content = file_get_contents("$image");
-                                            $d_tag = "delete_image_" . $i;
-                                            $r_tag = "remove_image_" . $i;
-                                            ?>
+										$qurimage = mysqli_query($db, $query2);
+										$i =0 ;
+										while ($rowcimage = mysqli_fetch_array($qurimage)) {
+											$image = $rowcimage['good_image_name'];
+											$mime_type = "image/gif";
+											$file_content = file_get_contents("$image");
+											$d_tag = "delete_image_" . $i;
+											$r_tag = "remove_image_" . $i;
+											?>
 
                                             <div class="col-lg-3 col-sm-6">
                                                 <div class="thumbnail">
                                                     <div class="thumb">
-                                                        <?php echo '<img src="' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
+														<?php echo '<img src="' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
 
                                                         <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?> >" value="<?php echo $rowcimage['good_image_id']; ?>">
                                                         <span class="remove remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php
-                                            $i++;}
-                                    }
-                                    ?>
+											<?php
+											$i++;}
+									}
+									?>
                                 </div>
                             </div>
                             <br/>
@@ -320,15 +320,15 @@ include("../heading_banner.php");
 
 
             <div class="panel-footer p_footer">
-                <?php if(($idd != 0) && ($printenabled == 1)){?>
+				<?php if(($idd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
-                <?php }?>
+				<?php }?>
                 <button type="submit" id="submitForm_bad" class="btn btn-primary submit_btn"
                         style="background-color:#1e73be;">Submit
                 </button>
 
             </div>
-            <?php } ?>
+			<?php } ?>
             </form>
         </div>
     </div>
@@ -462,16 +462,13 @@ include("../heading_banner.php");
     $("#submitForm_bad").click(function (e) {
 
         // function submitForm_good(url) {
-
+        // printing only rework not bad piece
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#bad_form").serialize();
-        //var main_url = "<?php //echo $url; ?>//";
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
-            data: data,
-            // dataType: "json",
-            // context: this,
+            data: data, this,
             async: false,
             success: function (data) {
                 var line_id = this.data.split('&')[2].split("=")[1];
@@ -479,11 +476,10 @@ include("../heading_banner.php");
                 var ff2 = this.data.split('&')[4].split("=")[1];
                 var deftype = this.data.split('&')[9].split("=")[1];
                 var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
-                if((pe == '1') && (deftype != 'bad_piece')){ // printing only rework not bad piece
+                if((pe == '1') && (deftype != 'bad_piece')){
+                    console.log(deftype);
                     document.getElementById("resultFrame").contentWindow.ss(file2);
                 }
-
-                // location.reload();
             }
         });
 
