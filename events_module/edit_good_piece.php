@@ -33,9 +33,25 @@ if(empty($_SESSION['$station_event_id'])){
     $_SESSION['good_timestamp_id'] = time();
 }
 
+$station_event_id = $_GET['station_event_id'];
+$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
+$resultmain = $mysqli->query($sqlmain);
+$rowcmain = $resultmain->fetch_assoc();
+$part_family = $rowcmain['part_family_id'];
+$part_number = $rowcmain['part_number_id'];
+$p_line_id = $rowcmain['line_id'];
+
+$sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
+$resultnumber = $mysqli->query($sqlprint);
+$rowcnumber = $resultnumber->fetch_assoc();
+$printenabled = $rowcnumber['print_label'];
+$p_line_name = $rowcnumber['line_name'];
+$individualenabled = $rowcnumber['indivisual_label'];
+
 
 $gp_timestamp = time();
-$idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
     , $_SERVER["HTTP_USER_AGENT"]);
 ?>
@@ -166,7 +182,6 @@ include("../heading_banner.php");
 <div class="page-container">
     <!-- Page content -->
     <?php
-    $station_event_id = $_GET['station_event_id'];
     $bad_pieces_id = $_GET['bad_pieces_id'];
     $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' AND gbpd.bad_pieces_id = '$bad_pieces_id' order by gbpd.bad_pieces_id DESC");
     $qur = mysqli_query($db, $query);
@@ -190,6 +205,12 @@ include("../heading_banner.php");
 
                                 <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
                                        value="<?php echo $station_event_id; ?>" >
+                                <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+                                <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                                <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
+                                <input type="hidden" name="time" value="<?php echo time(); ?>">
+                                <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
+                                <input type="hidden" name="ipe" id="ipe" value="<?php echo $individualenabled; ?>">
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Good Pieces * : : </label>
                                     <div class="col-md-6">
@@ -208,7 +229,9 @@ include("../heading_banner.php");
                         </div>
                     </div>
                 </div>
-
+                <?php if(($idddd != 0) && ($printenabled == 1)){?>
+                    <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
+                <?php }?>
 
                 <div class="panel-footer p_footer">
                     <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
@@ -232,6 +255,91 @@ include("../heading_banner.php");
     window.onload = function() {
         history.replaceState("", "", "<?php echo $scriptName; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id; ?>");
     }
+</script>
+<script>
+    $("#submitForm_good").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#good_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var ff1 = this.data.split('&')[3].split("=")[1];
+                var file1 = '../assets/label_files/' + line_id +'/g_'+ff1;
+                var file = '../assets/label_files/' + line_id +'/g_'+ff1;;
+                var ipe = document.getElementById("ipe").value;
+                if(pe == '1'){
+                    if(ipe == '1'){
+                        var i;
+                        var nogp = document.getElementById("good_name").value;
+                        //alert('no of good pieces are' +nogp);
+                        //for(var i = 1; i <= nogp; i++) {
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                        // alert('no of good pieces are' +nogp);
+                        //}
+                        // document.getElementById("resultFrame").contentWindow.ss(file , nogp);
+                    }else{
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                    }
+                }
+                //var ipe = this.data.split('&')[2].split("=")[1];
+                // location.reload();
+            }
+        });
+
+    });
+
+    $("#submitForm_bad").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#bad_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var ff2 = this.data.split('&')[3].split("=")[1];
+                var deftype = this.data.split('&')[6].split("=")[1];
+                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
+                if((pe == '1') && (deftype != 'bad_piece')){
+                    document.getElementById("resultFrame").contentWindow.ss(file2);
+                }
+
+                // location.reload();
+            }
+        });
+
+    });
+
+    $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".view_gpbp").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
 </script>
 <?php include ('../footer.php') ?>
 </body>
