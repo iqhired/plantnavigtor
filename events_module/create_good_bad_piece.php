@@ -741,7 +741,6 @@ else
         }
 
     }
-
 }
 
 $page = "good_bad_piece.php?station_event_id=$station_event_id";
