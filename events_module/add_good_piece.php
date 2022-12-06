@@ -136,7 +136,7 @@ $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 
     </style>
 </head>
-<body onload="openScanner()">
+<body>
 <!-- Main navbar -->
 <?php
 $cust_cam_page_header = "Add Good Piece";
@@ -238,7 +238,7 @@ include("../heading_banner.php");
                 }
             }
         });
-        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
+
     });
 
     $("#search").on("keyup", function() {
