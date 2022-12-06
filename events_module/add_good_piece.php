@@ -238,8 +238,10 @@ include("../heading_banner.php");
                     }
                 }
                 var url = <?php echo $siteURL; ?> + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
-                window.close();
-                window.open(url,"_blank");
+
+                setTimeout(() => {   window.close();
+                    window.open(url,"_blank"); }, 1000);
+
             }
         });
 
