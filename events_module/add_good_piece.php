@@ -191,7 +191,7 @@ include("../heading_banner.php");
                 <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                 <?php }?>
-                <button type="button" id="submitForm_good" class="btn btn-primary"
+                <button type="submit" id="submitForm_good" class="btn btn-primary"
                         style="background-color:#1e73be;">Submit
                 </button>
 
