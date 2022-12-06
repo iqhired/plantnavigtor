@@ -1,6 +1,6 @@
 <?php  //include the timing configuration file
 include("timings_config.php"); ?>
-<script type="text/javascript" src="assets/js/time_display.js"></script>
+<script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/time_display.js"></script>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/push.min.js"></script>
 <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/serviceWorker.min.js"></script>
  <script>

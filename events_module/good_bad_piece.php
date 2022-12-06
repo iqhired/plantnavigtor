@@ -1304,8 +1304,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 image.src    = this.result;
                 preview.appendChild(image);
             });
+
             reader.readAsDataURL(file);
+
         }
+
     }
 
     document.querySelector('#file-input').addEventListener("change", previewImages);

@@ -3,7 +3,7 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    header('location: ../logout.php');
+	header('location: ../logout.php');
 }
 
 //Set the session duration for 10800 seconds - 3 hours
@@ -209,8 +209,9 @@ include("../heading_banner.php");
         // function submitForm_good(url) {
 
         $(':input[type="button"]').prop('disabled', true);
-        var data = $("#good_form").serialize();
+        var data = $("#asset_update").serialize();
         //var main_url = "<?php //echo $url; ?>//";
+
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
@@ -221,6 +222,7 @@ include("../heading_banner.php");
             success: function (data) {
                 // window.location.href = window.location.href + "?aa=Line 1";
                 // $(':input[type="button"]').prop('disabled', false);
+
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff1 = this.data.split('&')[3].split("=")[1];
@@ -229,52 +231,12 @@ include("../heading_banner.php");
                 var ipe = document.getElementById("ipe").value;
                 if(pe == '1'){
                     if(ipe == '1'){
-                        var i;
-                        var nogp = document.getElementById("good_name").value;
-                        //alert('no of good pieces are' +nogp);
-                        //for(var i = 1; i <= nogp; i++) {
+                        console.log('wfe');
                         document.getElementById("resultFrame").contentWindow.ss(file1);
-                        // alert('no of good pieces are' +nogp);
-                        //}
-                        // document.getElementById("resultFrame").contentWindow.ss(file , nogp);
                     }else{
-                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                        document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
-                //var ipe = this.data.split('&')[2].split("=")[1];
-                // location.reload();
-            }
-        });
-
-    });
-
-    $("#submitForm_bad").click(function (e) {
-
-        // function submitForm_good(url) {
-
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#bad_form").serialize();
-        //var main_url = "<?php //echo $url; ?>//";
-        $.ajax({
-            type: 'POST',
-            url: 'create_good_bad_piece.php',
-            data: data,
-            // dataType: "json",
-            // context: this,
-            async: false,
-            success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                // $(':input[type="button"]').prop('disabled', false);
-                var line_id = this.data.split('&')[1].split("=")[1];
-                var pe = this.data.split('&')[2].split("=")[1];
-                var ff2 = this.data.split('&')[3].split("=")[1];
-                var deftype = this.data.split('&')[6].split("=")[1];
-                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
-                if((pe == '1') && (deftype != 'bad_piece')){
-                    document.getElementById("resultFrame").contentWindow.ss(file2);
-                }
-
-                // location.reload();
             }
         });
 
@@ -303,4 +265,3 @@ include("../heading_banner.php");
 <?php include ('../footer.php') ?>
 </body>
 </html>
-
