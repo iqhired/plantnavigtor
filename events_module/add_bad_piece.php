@@ -3,7 +3,7 @@ include("../config.php");
 $chicagotime = date("Y-m-d H:i:s");
 $temp = "";
 if (!isset($_SESSION['user'])) {
-    header('location: ../logout.php');
+	header('location: ../logout.php');
 }
 
 //Set the session duration for 10800 seconds - 3 hours
@@ -12,13 +12,13 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    header($redirect_logout_path);
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	header($redirect_logout_path);
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
@@ -54,7 +54,7 @@ $defect_list_id = $_GET['defect_list_id'];
 
 
 $gp_timestamp = time();
-$idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
 	, $_SERVER["HTTP_USER_AGENT"]);
 ?>
@@ -255,13 +255,13 @@ include("../heading_banner.php");
                             <div class="row">
                                 <label class="col-lg-2 control-label">Image : </label>
                                 <div class="col-md-6">
-									<?php if(($idd == 0)){?>
+									<?php if(($idddd == 0)){?>
                                         <div id="my_camera"></div>
                                         <br/>
                                         <input type=button class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
                                         <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
 									<?php } ?>
-									<?php if(($idd != 0)){?>
+									<?php if(($idddd != 0)){?>
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
@@ -320,7 +320,7 @@ include("../heading_banner.php");
 
 
             <div class="panel-footer p_footer">
-				<?php if(($idd != 0) && ($printenabled == 1)){?>
+				<?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
 				<?php }?>
                 <button type="submit" id="submitForm_bad" class="btn btn-primary submit_btn"
@@ -364,6 +364,32 @@ include("../heading_banner.php");
 </script>
 
 <script>
+    $("#submitForm_bad").click(function (e) {
+
+        // function submitForm_good(url) {
+        // printing only rework not bad piece
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#bad_form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            async: false,
+            success: function (data) {
+                var line_id = this.data.split('&')[2].split("=")[1];
+                var pe = this.data.split('&')[3].split("=")[1];
+                var ff2 = this.data.split('&')[4].split("=")[1];
+                var deftype = this.data.split('&')[9].split("=")[1];
+                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
+                if((pe == '1') && (deftype != 'bad_piece')){
+                    console.log('wfe');
+                    document.getElementById("resultFrame").contentWindow.ss(file2);
+                }
+            }
+        });
+
+    });
+
     // Upload
     $("#file").on("change", function () {
         var fd = new FormData();
@@ -459,31 +485,7 @@ include("../heading_banner.php");
 </script>
 <script>
 
-    $("#submitForm_bad").click(function (e) {
 
-        // function submitForm_good(url) {
-        // printing only rework not bad piece
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#bad_form").serialize();
-        $.ajax({
-            type: 'POST',
-            url: 'create_good_bad_piece.php',
-            data: data, this,
-            async: false,
-            success: function (data) {
-                var line_id = this.data.split('&')[2].split("=")[1];
-                var pe = this.data.split('&')[3].split("=")[1];
-                var ff2 = this.data.split('&')[4].split("=")[1];
-                var deftype = this.data.split('&')[9].split("=")[1];
-                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
-                if((pe == '1') && (deftype != 'bad_piece')){
-                    console.log(deftype);
-                    document.getElementById("resultFrame").contentWindow.ss(file2);
-                }
-            }
-        });
-
-    });
 
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
