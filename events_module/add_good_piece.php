@@ -237,6 +237,9 @@ include("../heading_banner.php");
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
+                var url = window.location.origin + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
+                window.close();
+                window.open(url,"_blank");
             }
         });
 
