@@ -51,8 +51,9 @@ $p_line_id = $rowcmain['line_id'];
 $sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
 $resultnumber = $mysqli->query($sqlprint);
 $rowcnumber = $resultnumber->fetch_assoc();
-
+$printenabled = $rowcnumber['print_label'];
 $p_line_name = $rowcnumber['line_name'];
+$individualenabled = $rowcnumber['indivisual_label'];
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
@@ -443,7 +444,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </br>
             <div class="row">
                 <div class="col-md-12">
-                  
+                    <?php if(($idddd != 0) && ($printenabled == 1)){?>
+                    <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
+					<?php }?>
 <!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
                     <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
                 </div>
@@ -699,9 +702,10 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                       method="post">
                     <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
                     <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
                     <input type="hidden" name="time" value="<?php echo time(); ?>">
                     <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
-
+                    <input type="hidden" name="ipe" id="ipe" value="<?php echo $individualenabled; ?>">
 
                     <div class="modal-body">
                         <!--Part Number-->
@@ -974,6 +978,82 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 </script>
 
 <script>
+    $("#submitForm_good").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#good_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var ff1 = this.data.split('&')[3].split("=")[1];
+                var file1 = '../assets/label_files/' + line_id +'/g_'+ff1;
+                var file = '../assets/label_files/' + line_id +'/g_'+ff1;;
+                var ipe = document.getElementById("ipe").value;
+                if(pe == '1'){
+                    if(ipe == '1'){
+                        var i;
+                        var nogp = document.getElementById("good_name").value;
+                        //alert('no of good pieces are' +nogp);
+                        //for(var i = 1; i <= nogp; i++) {
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                        // alert('no of good pieces are' +nogp);
+                        //}
+                        // document.getElementById("resultFrame").contentWindow.ss(file , nogp);
+                    }else{
+                        document.getElementById("resultFrame").contentWindow.ss(file1);
+                    }
+                }
+                //var ipe = this.data.split('&')[2].split("=")[1];
+                // location.reload();
+            }
+        });
+
+    });
+
+    $("#submitForm_bad").click(function (e) {
+
+        // function submitForm_good(url) {
+
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#bad_form").serialize();
+        //var main_url = "<?php //echo $url; ?>//";
+        $.ajax({
+            type: 'POST',
+            url: 'create_good_bad_piece.php',
+            data: data,
+            // dataType: "json",
+            // context: this,
+            async: false,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                // $(':input[type="button"]').prop('disabled', false);
+                var line_id = this.data.split('&')[1].split("=")[1];
+                var pe = this.data.split('&')[2].split("=")[1];
+                var ff2 = this.data.split('&')[3].split("=")[1];
+                var deftype = this.data.split('&')[6].split("=")[1];
+                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
+                if((pe == '1') && (deftype != 'bad_piece')){
+                    document.getElementById("resultFrame").contentWindow.ss(file2);
+                }
+
+                // location.reload();
+            }
+        });
+
+    });
+
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".view_gpbp").filter(function() {
@@ -1224,8 +1304,11 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 image.src    = this.result;
                 preview.appendChild(image);
             });
+
             reader.readAsDataURL(file);
+
         }
+
     }
 
     document.querySelector('#file-input').addEventListener("change", previewImages);

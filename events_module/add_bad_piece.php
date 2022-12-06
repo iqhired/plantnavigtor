@@ -42,9 +42,6 @@ $printenabled = $rowcnumber['print_label'];
 $p_line_name = $rowcnumber['line_name'];
 $individualenabled = $rowcnumber['indivisual_label'];
 
-$idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
-|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-    , $_SERVER["HTTP_USER_AGENT"]);
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
 $resultnumber = $mysqli->query($sqlnumber);
@@ -57,7 +54,9 @@ $defect_list_id = $_GET['defect_list_id'];
 
 
 $gp_timestamp = time();
-
+$idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+    , $_SERVER["HTTP_USER_AGENT"]);
 ?>
 
 <!DOCTYPE html>
@@ -321,7 +320,7 @@ include("../heading_banner.php");
 
 
             <div class="panel-footer p_footer">
-                <?php if(($idddd != 0) && ($printenabled == 1)){?>
+                <?php if(($idd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                 <?php }?>
                 <button type="submit" id="submitForm_bad" class="btn btn-primary submit_btn"
@@ -475,7 +474,6 @@ include("../heading_banner.php");
             // context: this,
             async: false,
             success: function (data) {
-               console.log('loop');
                 var line_id = this.data.split('&')[2].split("=")[1];
                 var pe = this.data.split('&')[3].split("=")[1];
                 var ff2 = this.data.split('&')[4].split("=")[1];
