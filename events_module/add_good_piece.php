@@ -158,7 +158,7 @@ include("../heading_banner.php");
                 <h5 class="panel-title">Add Good Piece</h5><br/>
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="create_good_bad_piece.php" id="asset_update" enctype="multipart/form-data"
+                        <form action="create_good_bad_piece.php" id="good_form" enctype="multipart/form-data"
                               class="form-horizontal" method="post">
                             <?php
                             $cell_id = $_GET['cell_id'];
@@ -206,7 +206,7 @@ include("../heading_banner.php");
 <script>
     $("#submitForm_good").click(function (e) {
 
-        // function submitForm_good(url) {
+        // function submitForm_good(url) {co
 
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#good_form").serialize();
@@ -248,37 +248,6 @@ include("../heading_banner.php");
 
     });
 
-    $("#submitForm_bad").click(function (e) {
-
-        // function submitForm_good(url) {
-
-        $(':input[type="button"]').prop('disabled', true);
-        var data = $("#bad_form").serialize();
-        //var main_url = "<?php //echo $url; ?>//";
-        $.ajax({
-            type: 'POST',
-            url: 'create_good_bad_piece.php',
-            data: data,
-            // dataType: "json",
-            // context: this,
-            async: false,
-            success: function (data) {
-                // window.location.href = window.location.href + "?aa=Line 1";
-                // $(':input[type="button"]').prop('disabled', false);
-                var line_id = this.data.split('&')[1].split("=")[1];
-                var pe = this.data.split('&')[2].split("=")[1];
-                var ff2 = this.data.split('&')[3].split("=")[1];
-                var deftype = this.data.split('&')[6].split("=")[1];
-                var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
-                if((pe == '1') && (deftype != 'bad_piece')){
-                    document.getElementById("resultFrame").contentWindow.ss(file2);
-                }
-
-                // location.reload();
-            }
-        });
-
-    });
 
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
