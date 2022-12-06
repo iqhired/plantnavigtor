@@ -252,6 +252,10 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
         $approval_dept_cnt = $_POST['tot_approval_dept'];
         $rejected_dept_cnt = $_POST['tot_rejected_dept'];
 
+        $qur05 = mysqli_query($db, "SELECT * FROM `sg_station_event` WHERE `line_id` = '$station' order by `created_on` DESC limit 1");
+        $rowc05 = mysqli_fetch_array($qur05);
+        $station_event_id = $rowc05['station_event_id'];
+
         foreach ($form_item_array1 as $form_item_array) {
             $form_user_data_item .= $form_item_array."~".$_POST[$form_item_array] . ",";
         }
@@ -275,8 +279,8 @@ inner join pm_part_number as pn on fc.part_number=pn.pm_part_number_id where for
         }
 
         //echo $approval_dept1;
-        $sql0 = "INSERT INTO `form_user_data`(`form_create_id`,`approval_status`,`form_name`,`form_type`,`station`,`part_family`,`part_number`,`form_user_data_item` ,`approval_dept_cnt` ,`notes`,`wol`,`rejected_dept_cnt` ,`created_at` , `updated_at`, `created_by`) VALUES 
-		('$formcreateid','0' ,'$name' , '$form_type' , '$station' , '$part_family' , '$part_number' , '$form_user_data_item' , '$approval_dept_cnt','$notes','$wol', '$rejected_dept_cnt','$created_at' , '$updated_at' , '$created_by')";
+        $sql0 = "INSERT INTO `form_user_data`(`form_create_id`,`approval_status`,`form_name`,`form_type`,`station`,`station_event_id`,`part_family`,`part_number`,`form_user_data_item` ,`approval_dept_cnt` ,`notes`,`wol`,`rejected_dept_cnt` ,`created_at` , `updated_at`, `created_by`) VALUES 
+		('$formcreateid','0' ,'$name' , '$form_type' , '$station' , '$station_event_id' , '$part_family' , '$part_number' , '$form_user_data_item' , '$approval_dept_cnt','$notes','$wol', '$rejected_dept_cnt','$created_at' , '$updated_at' , '$created_by')";
 
         //echo $sql0;
         $result0 = mysqli_query($db, $sql0);
