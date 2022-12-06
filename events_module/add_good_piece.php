@@ -198,14 +198,13 @@ include("../heading_banner.php");
             </div>
             </form>
 
-            </button>
         </div>
     </div>
 
 </div>
 
 <script>
-    $(document).on("click", "#submitForm_good", function () {
+        $("#submitForm_good").on("click", function() {
         // function submitForm_good(url) {
         // $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
