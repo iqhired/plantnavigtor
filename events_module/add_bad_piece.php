@@ -377,18 +377,18 @@ include("../heading_banner.php");
             cache: false,
             async: false,
             success: function (data) {
+                console.log('wfe');
                 var line_id = this.data.split('&')[2].split("=")[1];
                 var pe = this.data.split('&')[3].split("=")[1];
                 var ff2 = this.data.split('&')[4].split("=")[1];
                 var deftype = this.data.split('&')[9].split("=")[1];
                 var file2 = '../assets/label_files/' + line_id +'/b_'+ff2;
                 if((pe == '1') && (deftype != 'bad_piece')){
-                    console.log('wfe');
                     document.getElementById("resultFrame").contentWindow.ss(file2);
                 }
             }
         });
-
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
     });
 
     // Upload
