@@ -385,7 +385,7 @@ include("../heading_banner.php");
                     console.log('wfe');
                     document.getElementById("resultFrame").contentWindow.ss(file2);
                 }
-                var url = window.location.origin + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
+                var url = <?php echo $siteURL; ?> + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
                 window.close();
                 window.open(url,"_blank");
             }
