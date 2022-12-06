@@ -191,7 +191,7 @@ include("../heading_banner.php");
                 <?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
                 <?php }?>
-                <button type="submit" id="submitForm_good" class="btn btn-primary"
+                <button type="button" id="submitForm_good" class="btn btn-primary"
                         style="background-color:#1e73be;">Submit
                 </button>
 
@@ -205,18 +205,16 @@ include("../heading_banner.php");
 </div>
 
 <script>
-    $("#submitForm_good").click(function (e) {
+    $(document).on("click", "#submitForm_good", function () {
         // function submitForm_good(url) {
-        $(':input[type="button"]').prop('disabled', true);
+        // $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
-        //var main_url = "<?php //  echo $url; ?>//";
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
             data: data,
             // dataType: "json",
             // context: this,
-            cache: false,
             async: false,
             success: function (data) {
 
@@ -239,8 +237,6 @@ include("../heading_banner.php");
                 }
             }
         });
-        console.log('wfe');
-        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
 
     });
 
