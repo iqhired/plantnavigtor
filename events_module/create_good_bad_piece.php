@@ -237,7 +237,6 @@ if ($good_name != "") {
                 $_SESSION['message_stauts_class'] = 'alert-success';
                 $_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
 
-
             }
         } else {
             $good_pieces = $g + $good_name;
