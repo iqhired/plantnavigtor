@@ -385,12 +385,9 @@ include("../heading_banner.php");
                     console.log('wfe');
                     document.getElementById("resultFrame").contentWindow.ss(file2);
                 }
-                var url = <?php echo $siteURL; ?> + "/events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>";
-                setTimeout(() => {   window.close();
-                    window.open(url,"_self"); }, 1000);
             }
         });
-
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>
     });
 
     // Upload

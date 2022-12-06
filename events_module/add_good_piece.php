@@ -232,15 +232,13 @@ include("../heading_banner.php");
                         console.log('wfe');
                         document.getElementById("resultFrame").contentWindow.ss(file1);
                     }else{
+                        console.log('wfe');
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
-                   history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
-
             }
-
         });
-
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>
     });
 
     $("#search").on("keyup", function() {
