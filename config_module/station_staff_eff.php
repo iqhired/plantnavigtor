@@ -2,7 +2,7 @@
 $chicagotime = date("Y-m-d H:i:s");
 $station = $_POST['station'];
 $def_ch = $_POST['def_ch'];
-$sql1 = "SELECT * FROM `cam_line` WHERE gbd_id = '1' and line_id = '$station'";
+$sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$station'";
 $result1 = mysqli_query($db,$sql1);
 while ($cam1 = mysqli_fetch_array($result1)){
     $station1 = $cam1['line_id'];
@@ -64,7 +64,11 @@ if(!empty($resultmain)){
         $b = round($total_time);
         $target_eff = round($npr * $b);
         $actual_eff = $total_gp;
-        $eff = round(100 * ($actual_eff/$target_eff));
+        if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
+            $eff = 0;
+        }else{
+            $eff = round(100 * ($actual_eff/$target_eff));
+        }
         // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
         $posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
 
