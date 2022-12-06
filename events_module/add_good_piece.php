@@ -12,13 +12,13 @@ $duration = $auto_logout_duration;
 $time = $_SERVER['REQUEST_TIME'];
 //Check the user's session exist or not
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $duration) {
-    //Unset the session variables
-    session_unset();
-    //Destroy the session
-    session_destroy();
-    header($redirect_logout_path);
+	//Unset the session variables
+	session_unset();
+	//Destroy the session
+	session_destroy();
+	header($redirect_logout_path);
 //	header('location: ../logout.php');
-    exit;
+	exit;
 }
 //Set the time of the user's last activity
 $_SESSION['LAST_ACTIVITY'] = $time;
@@ -159,10 +159,10 @@ include("../heading_banner.php");
                 <div class="row">
                     <div class="col-md-12">
                         <form action="" id="asset_update" enctype="multipart/form-data"  class="form-horizontal">
-                            <?php
-                            $cell_id = $_GET['cell_id'];
-                            $cell_name = $_GET['c_name'];
-                            ?>
+							<?php
+							$cell_id = $_GET['cell_id'];
+							$cell_name = $_GET['c_name'];
+							?>
                             <input type="hidden" name="station_event_id" id="station_event_id" class="form-control"
                                    value="<?php echo $station_event_id; ?>" >
                             <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
@@ -188,9 +188,9 @@ include("../heading_banner.php");
 
 
             <div class="panel-footer p_footer">
-                <?php if(($idddd != 0) && ($printenabled == 1)){?>
+				<?php if(($idddd != 0) && ($printenabled == 1)){ ?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
-                <?php }?>
+				<?php }?>
                 <button type="submit" id="submitForm_good" class="btn btn-primary"
                         style="background-color:#1e73be;">Submit
                 </button>
@@ -205,22 +205,15 @@ include("../heading_banner.php");
 
 <script>
     $("#submitForm_good").click(function (e) {
-        // function submitForm_good(url) {
         $(':input[type="button"]').prop('disabled', true);
         var data = $("#asset_update").serialize();
-        //var main_url = "<?php //  echo $url; ?>//";
         $.ajax({
             type: 'POST',
             url: 'create_good_bad_piece.php',
-            data: data,
-            // dataType: "json",
-            // context: this,
             async: false,
+            data: data,
             success: function (data) {
-
-                // window.location.href = window.location.href + "?aa=Line 1";
-                // $(':input[type="button"]').prop('disabled', false);
-
+                console.log('wfe');
                 var line_id = this.data.split('&')[1].split("=")[1];
                 var pe = this.data.split('&')[2].split("=")[1];
                 var ff1 = this.data.split('&')[3].split("=")[1];
@@ -229,21 +222,16 @@ include("../heading_banner.php");
                 var ipe = document.getElementById("ipe").value;
                 if(pe == '1'){
                     if(ipe == '1'){
-                        console.log('wfe');
                         document.getElementById("resultFrame").contentWindow.ss(file1);
                     }else{
-                        console.log('wfe');
                         document.getElementById("resultFrame").contentWindow.ss1(file1);
                     }
                 }
-                   history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
 
             }
-
         });
-
+        history.replaceState("", "", "<?php echo $scriptName; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>");
     });
-
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".view_gpbp").filter(function() {

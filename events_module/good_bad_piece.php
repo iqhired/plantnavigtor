@@ -57,7 +57,7 @@ $individualenabled = $rowcnumber['indivisual_label'];
 
 $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
 |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-, $_SERVER["HTTP_USER_AGENT"]);
+	, $_SERVER["HTTP_USER_AGENT"]);
 
 $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
 $resultnumber = $mysqli->query($sqlnumber);
@@ -67,10 +67,10 @@ $pm_part_name = $rowcnumber['part_name'];
 $pm_npr= $rowcnumber['npr'];
 if(empty($pm_npr))
 {
-    $npr = 0;
+	$npr = 0;
 	$pm_npr = 0;
 }else{
-    $npr = $pm_npr;
+	$npr = $pm_npr;
 }
 $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
 $resultfamily = $mysqli->query($sqlfamily);
@@ -99,24 +99,24 @@ $result3 = mysqli_query($db,$sql3);
 $ttot = null;
 $tt = null;
 while ($row3 = $result3->fetch_assoc()) {
-    $ct = $row3['created_on'];
-    $tot = $row3['total_time'];
-    if(!empty($row3['total_time'])){
-        $ttot = explode(':' , $row3['total_time']);
-        $i = 0;
-        foreach($ttot as $t_time) {
-            if($i == 0){
-                $total_time += ( $t_time * 60 * 60 );
-            }else if( $i == 1){
-                $total_time += ( $t_time * 60 );
-            }else{
-                $total_time += $t_time;
-            }
-            $i++;
-        }
-    }else{
-        $total_time +=  strtotime($chicagotime) - strtotime($ct);
-    }
+	$ct = $row3['created_on'];
+	$tot = $row3['total_time'];
+	if(!empty($row3['total_time'])){
+		$ttot = explode(':' , $row3['total_time']);
+		$i = 0;
+		foreach($ttot as $t_time) {
+			if($i == 0){
+				$total_time += ( $t_time * 60 * 60 );
+			}else if( $i == 1){
+				$total_time += ( $t_time * 60 );
+			}else{
+				$total_time += $t_time;
+			}
+			$i++;
+		}
+	}else{
+		$total_time +=  strtotime($chicagotime) - strtotime($ct);
+	}
 }
 $total_time = (($total_time/60)/60);
 $b = round($total_time);
@@ -177,143 +177,143 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-    <script>
-        $('#eff_container').load('../gbp_dashboard.php #eff_container');
-    </script>
-    <script>
+<script>
+    $('#eff_container').load('../gbp_dashboard.php #eff_container');
+</script>
+<script>
 
-    </script>
-    <style> .sidebar-default .navigation li > a {
-            color: #f5f5f5
-        }
+</script>
+<style> .sidebar-default .navigation li > a {
+        color: #f5f5f5
+    }
 
-        ;
-        a:hover {
-            background-color: #20a9cc;
-        }
+    ;
+    a:hover {
+        background-color: #20a9cc;
+    }
 
-        .sidebar-default .navigation li > a:focus, .sidebar-default .navigation li > a:hover {
-            background-color: #20a9cc;
-        }
+    .sidebar-default .navigation li > a:focus, .sidebar-default .navigation li > a:hover {
+        background-color: #20a9cc;
+    }
 
-        .content-wrapper {
-            display: block !important;
-            vertical-align: top;
-            padding: 20px !important;
-        }
+    .content-wrapper {
+        display: block !important;
+        vertical-align: top;
+        padding: 20px !important;
+    }
 
 
 
-        .bg-primary {
-            background-color: #606060!important;
-        }
+    .bg-primary {
+        background-color: #606060!important;
+    }
 
-        .red {
-            color: red;
-            display: none;
+    .red {
+        color: red;
+        display: none;
+    }
+    .graph_media{
+        width: 47%;
+        border: 1px solid gray;
+        margin: 2% 0% 2% 2%;
+        height: 380px;
+    }
+    .img-circle {
+        border-radius: 50%;
+        height: 42vh;
+        width: 84vh;
+        background-color: #fff;
+    }
+    .media_details{
+        margin-top: -40px;
+    }
+    .media-left, .media>.pull-left {
+        padding-right: 0px;
+    }
+    @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 80px;
+            margin-top: 200px;
         }
         .graph_media{
-            width: 47%;
+            width: 96%;
             border: 1px solid gray;
             margin: 2% 0% 2% 2%;
-            height: 380px;
+            height: 442px;
         }
         .img-circle {
             border-radius: 50%;
-            height: 42vh;
-            width: 84vh;
+            height: 26vh;
+            width: 35vh;
             background-color: #fff;
         }
-        .media_details{
-            margin-top: -40px;
-        }
-        .media-left, .media>.pull-left {
-            padding-right: 0px;
-        }
-        @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-            .modal-dialog {
-                position: relative;
-                width: auto;
-                margin: 80px;
-                margin-top: 200px;
-            }
-            .graph_media{
-                width: 96%;
-                border: 1px solid gray;
-                margin: 2% 0% 2% 2%;
-                height: 442px;
-            }
-            .img-circle {
-                border-radius: 50%;
-                height: 26vh;
-                width: 35vh;
-                background-color: #fff;
-            }
-        }
-        body.alt-menu.sidebar-noneoverflow.pace-done {
-            background-color: #ccc !important;
-        }
+    }
+    body.alt-menu.sidebar-noneoverflow.pace-done {
+        background-color: #ccc !important;
+    }
 
-        .anychart-credits {
-            display: none !important;
-        }
+    .anychart-credits {
+        display: none !important;
+    }
 
-        .datatable-scroll {
-            width: 100%;
-            overflow-x: scroll;
-        }
+    .datatable-scroll {
+        width: 100%;
+        overflow-x: scroll;
+    }
 
-        .container {
-            margin: 0 auto;
-        }
-        .content_img {
-            width: 113px;
-            float: left;
-            margin-right: 5px;
-            border: 1px solid gray;
-            border-radius: 3px;
-            padding: 5px;
-            margin-top: 10px;
-        }
+    .container {
+        margin: 0 auto;
+    }
+    .content_img {
+        width: 113px;
+        float: left;
+        margin-right: 5px;
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding: 5px;
+        margin-top: 10px;
+    }
 
-        /* Delete */
-        .content_img span {
-            border: 2px solid red;
-            display: inline-block;
-            width: 99%;
-            text-align: center;
-            color: red;
-        }
+    /* Delete */
+    .content_img span {
+        border: 2px solid red;
+        display: inline-block;
+        width: 99%;
+        text-align: center;
+        color: red;
+    }
 
-        .content_img span:hover {
-            cursor: pointer;
-        }
-        input[type="file"] {
-            display: block;
-        }
-        .imageThumb {
-            max-height: 100px;
-            border: 2px solid;
-            padding: 1px;
-            cursor: pointer;
-        }
-        .pip {
-            display: inline-block;
-            margin: 10px 10px 0 0;
-        }
-        .remove {
-            display: block;
-            background: #444;
-            border: 1px solid black;
-            color: white;
-            text-align: center;
-            cursor: pointer;
-        }
-        .remove:hover {
-            background: white;
-            color: black;
-        }
-    </style>
+    .content_img span:hover {
+        cursor: pointer;
+    }
+    input[type="file"] {
+        display: block;
+    }
+    .imageThumb {
+        max-height: 100px;
+        border: 2px solid;
+        padding: 1px;
+        cursor: pointer;
+    }
+    .pip {
+        display: inline-block;
+        margin: 10px 10px 0 0;
+    }
+    .remove {
+        display: block;
+        background: #444;
+        border: 1px solid black;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+    }
+    .remove:hover {
+        background: white;
+        color: black;
+    }
+</style>
 </head>
 <body>
 <!-- Main navbar -->
@@ -357,7 +357,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <div class="media-left">
 
                     <div id="eff_container" class="img-circle"></div>
-            </div>
+                </div>
             </div>
             <div class="media_details">
                 <div class="media-body">
@@ -369,68 +369,68 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 
             </div>
         </div>
-        </div>
-		<?php
-		if (!empty($import_status_message)) {
-			echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-		}
-		?>
-		<?php
-		if (!empty($_SESSION['import_status_message'])) {
-			echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-			$_SESSION['message_stauts_class'] = '';
-			$_SESSION['import_status_message'] = '';
-		}
-		?>
     </div>
-    <div class="panel panel-flat">
-		<?php
-		$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces_details where station_event_id ='$station_event_id' ";
-		$result1 = mysqli_query($db, $sql);
-		$rowc = mysqli_fetch_array($result1);
-		$gp = $rowc['good_pieces'];
-        if(empty($gp)){
-            $g = 0;
-        }else{
-            $g = $gp;
-        }
-		$bp = $rowc['bad_pieces'];
-        if(empty($bp)){
-            $b = 0;
-        }else{
-            $b = $bp;
-        }
-		$rwp = $rowc['rework'];
-        if(empty($rwp)){
-            $r = 0;
-        }else{
-            $r = $rwp;
-        }
-		$tp = $gp + $bp+ $rwp;
-        if(empty($tp)){
-            $t = 0;
-        }else{
-            $t = $tp;
-        }
-		?>
-        <div class="row" style="background-color: #f3f3f3;margin: 0px">
-            <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
-                <span>Total Pieces : <?php echo $t ?></span>
-            </div>
-            <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
-                <span>Total Good Pieces : <?php echo $g ?></span>
-            </div>
-            <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
-                <span>Total Bad Pieces : <?php echo $b ?></span>
-            </div>
-            <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
-                <span>Rework : <?php echo $r ?></span>
-            </div>
+	<?php
+	if (!empty($import_status_message)) {
+		echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+	}
+	?>
+	<?php
+	if (!empty($_SESSION['import_status_message'])) {
+		echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
+		$_SESSION['message_stauts_class'] = '';
+		$_SESSION['import_status_message'] = '';
+	}
+	?>
+</div>
+<div class="panel panel-flat">
+	<?php
+	$sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces_details where station_event_id ='$station_event_id' ";
+	$result1 = mysqli_query($db, $sql);
+	$rowc = mysqli_fetch_array($result1);
+	$gp = $rowc['good_pieces'];
+	if(empty($gp)){
+		$g = 0;
+	}else{
+		$g = $gp;
+	}
+	$bp = $rowc['bad_pieces'];
+	if(empty($bp)){
+		$b = 0;
+	}else{
+		$b = $bp;
+	}
+	$rwp = $rowc['rework'];
+	if(empty($rwp)){
+		$r = 0;
+	}else{
+		$r = $rwp;
+	}
+	$tp = $gp + $bp+ $rwp;
+	if(empty($tp)){
+		$t = 0;
+	}else{
+		$t = $tp;
+	}
+	?>
+    <div class="row" style="background-color: #f3f3f3;margin: 0px">
+        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
+            <span>Total Pieces : <?php echo $t ?></span>
         </div>
-        <div class="panel-heading" style="padding: 50px;">
-            <div class="row">
-                <div class="search_container"  style="margin-right:10px;">
-                    <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;
+        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
+            <span>Total Good Pieces : <?php echo $g ?></span>
+        </div>
+        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
+            <span>Total Bad Pieces : <?php echo $b ?></span>
+        </div>
+        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
+            <span>Rework : <?php echo $r ?></span>
+        </div>
+    </div>
+    <div class="panel-heading" style="padding: 50px;">
+        <div class="row">
+            <div class="search_container"  style="margin-right:10px;">
+                <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;
         background-size: 18px 18px;
         background-position: 95% center;
         border-radius: 50px;
@@ -439,371 +439,370 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         backface-visibility: hidden;
         transform-style: preserve-3d;
         " >
-                </div>
             </div>
-            </br>
-            <div class="row">
-                <div class="col-md-12">
-                    <?php if(($idddd != 0) && ($printenabled == 1)){?>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-12">
+				<?php if(($idddd != 0) && ($printenabled == 1)){?>
                     <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
-					<?php }?>
-                    <button type="submit" data-toggle="modal" id="add_gp"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>
-                    <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
-                </div>
+				<?php }?>
+                <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
             </div>
-            <div class="row"  >
+        </div>
+        <div class="row"  >
+			<?php
+			$i = 1;
+			$def_list_arr = array();
+			$sql1 = "SELECT * FROM `defect_list` ORDER BY `defect_list_name` ASC";
+			$result1 = $mysqli->query($sql1);
+			while ($row1 = $result1->fetch_assoc()) {
+				$pnums = $row1['part_number_id'];
+				$arr_pnums = explode(',', $pnums);
+				if (in_array($part_number, $arr_pnums)) {
+					array_push($def_list_arr, $row1['defect_list_id']);
+				}
+			}
+
+			$sql1 = "SELECT sdd.defect_list_id as dl_id FROM sg_defect_group as sdg inner join sg_def_defgroup as sdd on sdg.d_group_id = sdd.d_group_id WHERE FIND_IN_SET('$part_number',sdg.part_number_id) > 0";
+			$result1 = $mysqli->query($sql1);
+			while ($row1 = $result1->fetch_assoc()) {
+				array_push($def_list_arr, $row1['dl_id']);
+			}
+			$def_list_arr = array_unique($def_list_arr);
+			$def_lists = implode("', '", $def_list_arr);
+			$sql1 = "SELECT * FROM `defect_list` where  defect_list_id IN ('$def_lists') ORDER BY `defect_list_name` ASC";
+			$result1 = $mysqli->query($sql1);
+			while ($row1 = $result1->fetch_assoc()) {
+				?>
+                <div class="col-md-3" style="padding-top: 10px;">
+                    <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
+                        data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
+						<?php echo $row1['defect_list_name']; ?></a>
+
+                </div>
 				<?php
-				$i = 1;
-				$def_list_arr = array();
-				$sql1 = "SELECT * FROM `defect_list` ORDER BY `defect_list_name` ASC";
-				$result1 = $mysqli->query($sql1);
-				while ($row1 = $result1->fetch_assoc()) {
-					$pnums = $row1['part_number_id'];
-					$arr_pnums = explode(',', $pnums);
-					if (in_array($part_number, $arr_pnums)) {
-						array_push($def_list_arr, $row1['defect_list_id']);
-					}
+				if($i == 4)
+				{
+					echo "<br/>";
+					echo "<br/>";
+					echo "<br/>";
+					$i = 0;
 				}
 
-				$sql1 = "SELECT sdd.defect_list_id as dl_id FROM sg_defect_group as sdg inner join sg_def_defgroup as sdd on sdg.d_group_id = sdd.d_group_id WHERE FIND_IN_SET('$part_number',sdg.part_number_id) > 0";
-				$result1 = $mysqli->query($sql1);
-				while ($row1 = $result1->fetch_assoc()) {
-					array_push($def_list_arr, $row1['dl_id']);
+				$i++;
+			}
+			?>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Basic datatable -->
+
+
+<form action="delete_good_bad_piece.php" method="post" class="form-horizontal">
+    <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+
+    <div class="row">
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
+        </div>
+    </div>
+    <br/>
+    <!-- Content area -->
+    <!-- Main charts -->
+    <!-- Basic datatable -->
+    <div class="panel panel-flat">
+        <!--						<div class="panel-heading">
+														</div>
+		-->
+        <table class="table datatable-basic">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="checkAll" ></th>
+                <th>S.No</th>
+                <th>Good Pieces</th>
+                <th>Defect Name</th>
+                <th>Bad Pieces</th>
+                <th>Re-Work</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+			<?php
+			$station_event_id = $_GET['station_event_id'];
+			$query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
+			$qur = mysqli_query($db, $query);
+			while ($rowc = mysqli_fetch_array($qur)) {
+				$bad_pieces_id = $rowc['bad_pieces_id'];
+				$good_pieces = $rowc['good_pieces'];
+				$bad_pieces = $rowc['bad_pieces'];
+				$rework = $rowc['rework'];
+				$style = "";
+				if($rowc['good_pieces'] != ""){
+					$style = "style='background-color:#a8d8a8;'";
 				}
-				$def_list_arr = array_unique($def_list_arr);
-				$def_lists = implode("', '", $def_list_arr);
-				$sql1 = "SELECT * FROM `defect_list` where  defect_list_id IN ('$def_lists') ORDER BY `defect_list_name` ASC";
-				$result1 = $mysqli->query($sql1);
-				while ($row1 = $result1->fetch_assoc()) {
-					?>
-                    <div class="col-md-3" style="padding-top: 10px;">
-                        <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
-                                data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
-                            <?php echo $row1['defect_list_name']; ?></a>
-
-                    </div>
-					<?php
-					if($i == 4)
-					{
-						echo "<br/>";
-						echo "<br/>";
-						echo "<br/>";
-						$i = 0;
-					}
-
-					$i++;
+				if($rowc['bad_pieces'] != ""){
+					$style = "style='background-color:#eca9a9;'";
+				}
+				if($rowc['rework'] != ""){
+					$style = "style='background-color:#b1cdff;'";
 				}
 				?>
+                <tr <?php echo $style; ?>>
+                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["bad_pieces_id"]; ?>"></td>
+                    <td><?php echo ++$counter; ?></td>
+                    <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
+                    <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
+                    <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
+                    <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
+					<?php
+					$qur04 = mysqli_query($db, "SELECT * FROM good_bad_pieces_details where station_event_id= '$station_event_id' ORDER BY `bad_pieces_id` DESC LIMIT 1");
+					$rowc04 = mysqli_fetch_array($qur04);
+					$bad_trace_id = $rowc04["bad_pieces_id"];
 
-            </div>
-        </div>
+					$query1 = sprintf("SELECT bad_piece_id,good_image_name FROM  good_piece_images where bad_piece_id = '$bad_trace_id'");
+					$qur1 = mysqli_query($db, $query1);
+					$rowc1 = mysqli_fetch_array($qur1);
+					$item_id = $rowc1['bad_piece_id'];
+					$image_name = $rowc1['good_image_name'];
 
-    </div>
-
-
-    <!-- Basic datatable -->
-
-
-    <form action="delete_good_bad_piece.php" method="post" class="form-horizontal">
-        <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
-
-        <div class="row">
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
-            </div>
-        </div>
-        <br/>
-        <!-- Content area -->
-        <!-- Main charts -->
-        <!-- Basic datatable -->
-        <div class="panel panel-flat">
-            <!--						<div class="panel-heading">
-															</div>
-			-->
-            <table class="table datatable-basic">
-                <thead>
-                <tr>
-                    <th><input type="checkbox" id="checkAll" ></th>
-                    <th>S.No</th>
-                    <th>Good Pieces</th>
-                    <th>Defect Name</th>
-                    <th>Bad Pieces</th>
-                    <th>Re-Work</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-				<?php
-				$station_event_id = $_GET['station_event_id'];
-				$query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
-				$qur = mysqli_query($db, $query);
-				while ($rowc = mysqli_fetch_array($qur)) {
-                    $bad_pieces_id = $rowc['bad_pieces_id'];
-                    $good_pieces = $rowc['good_pieces'];
-                    $bad_pieces = $rowc['bad_pieces'];
-                    $rework = $rowc['rework'];
-					$style = "";
-					if($rowc['good_pieces'] != ""){
-						$style = "style='background-color:#a8d8a8;'";
-					}
-					if($rowc['bad_pieces'] != ""){
-						$style = "style='background-color:#eca9a9;'";
-					}
-					if($rowc['rework'] != ""){
-						$style = "style='background-color:#b1cdff;'";
-					}
 					?>
-                    <tr <?php echo $style; ?>>
-                        <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["bad_pieces_id"]; ?>"></td>
-                        <td><?php echo ++$counter; ?></td>
-                        <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
-                        <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
-                        <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
-                        <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
-                        <?php
-                        $qur04 = mysqli_query($db, "SELECT * FROM good_bad_pieces_details where station_event_id= '$station_event_id' ORDER BY `bad_pieces_id` DESC LIMIT 1");
-                        $rowc04 = mysqli_fetch_array($qur04);
-                        $bad_trace_id = $rowc04["bad_pieces_id"];
-
-                        $query1 = sprintf("SELECT bad_piece_id,good_image_name FROM  good_piece_images where bad_piece_id = '$bad_trace_id'");
-                        $qur1 = mysqli_query($db, $query1);
-                        $rowc1 = mysqli_fetch_array($qur1);
-                        $item_id = $rowc1['bad_piece_id'];
-                        $image_name = $rowc1['good_image_name'];
-
-                        ?>
-                        <td>
-                         <?php   if($rowc['good_pieces'] != ""){ ?>
-                         <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                         </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
-                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                    <td>
+						<?php   if($rowc['good_pieces'] != ""){ ?>
+                            <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
                                 data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
                                 data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                            </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
+                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                               data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                               data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
                             </a>
-                            <?php } else{ ?>
+						<?php } else{ ?>
                             <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
+                               data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
+                               data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
                             </a>
-                            <?php } ?>
-                        </td>
-                    </tr>
-				<?php } ?>
-                </tbody>
-            </table>
-    </form>
+						<?php } ?>
+                    </td>
+                </tr>
+			<?php } ?>
+            </tbody>
+        </table>
+</form>
 
-    <!-- /basic datatable -->
-    <div id="view_modal_theme_primary" class="modal ">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">
-                        Add Bad Piece
-                    </h6>
-                </div>
-                <form action="" id="bad_form" enctype="multipart/form-data" class="form-horizontal"
-                      method="post">
-                    <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
-                    <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
-                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
-                    <input type="hidden" name="time" value="<?php echo time(); ?>">
-                    <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
-                    <input type="hidden" name="ipe" value="<?php echo $individualenabled; ?>">
-                    <div class="modal-body">
-                        <!--Part Number-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Select Type * : </label>
-                                    <div class="col-lg-8">
-                                        <div class="form-group">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="bad_type" value="bad_piece" class="styled" checked="checked">
-                                                Bad Piece
-                                            </label>
+<!-- /basic datatable -->
+<div id="view_modal_theme_primary" class="modal ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">
+                    Add Bad Piece
+                </h6>
+            </div>
+            <form action="" id="bad_form" enctype="multipart/form-data" class="form-horizontal"
+                  method="post">
+                <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+                <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
+                <input type="hidden" name="time" value="<?php echo time(); ?>">
+                <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
+                <input type="hidden" name="ipe" value="<?php echo $individualenabled; ?>">
+                <div class="modal-body">
+                    <!--Part Number-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Select Type * : </label>
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="bad_type" value="bad_piece" class="styled" checked="checked">
+                                            Bad Piece
+                                        </label>
 
-                                            <label class="radio-inline">
-                                                <input type="radio" name="bad_type" value="rework" class="styled">
-                                                Re-Work
-                                            </label>
-                                        </div>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="bad_type" value="rework" class="styled">
+                                            Re-Work
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Defect Name * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="text" name="add_defect_name" id="add_defect_name" class="form-control" readonly
-                                               required >
-                                        <!--                                                <select  name="add_defect_name" id="add_defect_name"-->
-                                        <!--                                                        class="form-control">-->
-                                        <!--                                                    <option value="" selected disabled>--- Select Defect Name ----->
-                                        <!--                                                    </option>-->
-                                        <!--													-->
-                                        <!--													--><?php
-										//                                                                $sql1 = "SELECT * FROM `defect_list` where part_family_id = '$part_family' ORDER BY `defect_list_name` ASC";
-										//                                                                $result1 = $mysqli->query($sql1);
-										//                                                                while ($row1 = $result1->fetch_assoc()) {
-										//                                                                    echo "<option value='" . $row1['defect_list_id'] . "'>" . $row1['defect_list_name'] . "</option>";
-										//                                                                }
-										//                                                    ?>
-                                        <!--                                                </select>-->
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">No of Pieces * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="number" name="good_bad_piece_name" id="good_bad_piece_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="submitForm_bad"  style="background-color:#1e73be;">Save</button>
-
                         </div>
                     </div>
-            </div>
 
-            </form>
-        </div>
-    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Defect Name * : </label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="add_defect_name" id="add_defect_name" class="form-control" readonly
+                                           required >
+                                    <!--                                                <select  name="add_defect_name" id="add_defect_name"-->
+                                    <!--                                                        class="form-control">-->
+                                    <!--                                                    <option value="" selected disabled>--- Select Defect Name ----->
+                                    <!--                                                    </option>-->
+                                    <!--													-->
+                                    <!--													--><?php
+									//                                                                $sql1 = "SELECT * FROM `defect_list` where part_family_id = '$part_family' ORDER BY `defect_list_name` ASC";
+									//                                                                $result1 = $mysqli->query($sql1);
+									//                                                                while ($row1 = $result1->fetch_assoc()) {
+									//                                                                    echo "<option value='" . $row1['defect_list_id'] . "'>" . $row1['defect_list_name'] . "</option>";
+									//                                                                }
+									//                                                    ?>
+                                    <!--                                                </select>-->
 
-    <!-- /IN-SPEC Modal -->
-
-    <div id="view_good_modal_theme_primary" class="modal ">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">
-                        Add Good Piece
-                    </h6>
-                </div>
-                <form action="" id="good_form" enctype="multipart/form-data" class="form-horizontal"
-                      method="post">
-                    <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
-                    <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
-                    <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
-                    <input type="hidden" name="time" value="<?php echo time(); ?>">
-                    <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
-                    <input type="hidden" name="ipe" id="ipe" value="<?php echo $individualenabled; ?>">
-
-                    <div class="modal-body">
-                        <!--Part Number-->
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">No of Pieces * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
-
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <!--                            <button type="submit" class="btn btn-primary" onclick="submitForm_good('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>-->
-                            <button type="submit" class="btn btn-primary" id="submitForm_good"  style="background-color:#1e73be;">Save</button>
                         </div>
                     </div>
-            </div>
 
-            </form>
-        </div>
-    </div>
-    <!-- /main charts -->
-    <!-- edit modal -->
-    <div id="edit_modal_theme_primary" class="modal ">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">Update Good & Bad Pieces</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">No of Pieces * : </label>
+                                <div class="col-lg-8">
+                                    <input type="number" name="good_bad_piece_name" id="good_bad_piece_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitForm_bad"  style="background-color:#1e73be;">Save</button>
+
+                    </div>
                 </div>
-                <form action="" id="edit_form" class="form-horizontal" method="post">
-                    <div class="modal-body">
-                        <div class="row" id="goodpiece">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Good Pieces * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="number" name="editgood_name" min="1" id="editgood_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
+        </div>
 
-                                    </div>
+        </form>
+    </div>
+</div>
+
+<!-- /IN-SPEC Modal -->
+
+<div id="view_good_modal_theme_primary" class="modal ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">
+                    Add Good Piece
+                </h6>
+            </div>
+            <form action="" id="good_form" enctype="multipart/form-data" class="form-horizontal"
+                  method="post">
+                <input type="hidden" name="station_event_id" value="<?php echo $_GET['station_event_id']; ?>">
+                <input type="hidden" name="line_id" value="<?php echo $p_line_id; ?>">
+                <input type="hidden" name="pe" value="<?php echo $printenabled; ?>">
+                <input type="hidden" name="time" value="<?php echo time(); ?>">
+                <input type="hidden" name="line_name" value="<?php echo $p_line_name; ?>">
+                <input type="hidden" name="ipe" id="ipe" value="<?php echo $individualenabled; ?>">
+
+                <div class="modal-body">
+                    <!--Part Number-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">No of Pieces * : </label>
+                                <div class="col-lg-8">
+                                    <input type="number" name="good_name" id="good_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
+
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row" id="badpiece">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Defect Name * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="text" name="editdefect_name" id="editdefect_name" class="form-control"  required readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" id="badpiece1">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Bad Pieces * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="number" name="editbad_name" min="1" id="editbad_name" class="form-control" placeholder="Enter Pieces..." value="1" >
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" id="badpiece2">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">Re-Work * : </label>
-                                    <div class="col-lg-8">
-                                        <input type="number" name="editre_work" min="1" id="editre_work" class="form-control" placeholder="Enter Pieces..." value="1" >
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_trace_id; ?>">
-                        <input type="hidden" name="edit_gbid" id="edit_gbid" >
-                        <input type="hidden" name="edit_seid" id="edit_seid" >
-                        <input type="hidden" name="good_bad_piece_id" id="good_bad_piece_id" value="<?php echo $good_trace_id; ?>">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" onclick="submitForm_edit('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                        <!--                            <button type="submit" class="btn btn-primary" onclick="submitForm_good('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>-->
+                        <button type="submit" class="btn btn-primary" id="submitForm_good"  style="background-color:#1e73be;">Save</button>
                     </div>
-                </form>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+<!-- /main charts -->
+<!-- edit modal -->
+<div id="edit_modal_theme_primary" class="modal ">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">Update Good & Bad Pieces</h6>
             </div>
+            <form action="" id="edit_form" class="form-horizontal" method="post">
+                <div class="modal-body">
+                    <div class="row" id="goodpiece">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Good Pieces * : </label>
+                                <div class="col-lg-8">
+                                    <input type="number" name="editgood_name" min="1" id="editgood_name" class="form-control" placeholder="Enter Pieces..." value="1" required>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="badpiece">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Defect Name * : </label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="editdefect_name" id="editdefect_name" class="form-control"  required readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="badpiece1">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Bad Pieces * : </label>
+                                <div class="col-lg-8">
+                                    <input type="number" name="editbad_name" min="1" id="editbad_name" class="form-control" placeholder="Enter Pieces..." value="1" >
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="badpiece2">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Re-Work * : </label>
+                                <div class="col-lg-8">
+                                    <input type="number" name="editre_work" min="1" id="editre_work" class="form-control" placeholder="Enter Pieces..." value="1" >
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" name="edit_id" id="edit_id" value="<?php echo $good_trace_id; ?>">
+                    <input type="hidden" name="edit_gbid" id="edit_gbid" >
+                    <input type="hidden" name="edit_seid" id="edit_seid" >
+                    <input type="hidden" name="good_bad_piece_id" id="good_bad_piece_id" value="<?php echo $good_trace_id; ?>">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="submitForm_edit('create_good_bad_piece.php')"  style="background-color:#1e73be;">Save</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 <script>
     //Efficiency
@@ -886,9 +885,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     .ticks({ type: 'line', fill: 'white', length: 2 });
 
                 gauge.title(
-                   /* '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +target_eff+' </strong><l/span></div>' +
-                    '<br/><br/><div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +actual_eff+' </strong></span></div><br/><br/>' +
-                    '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +eff+' </strong>%</span></div><br/><br/>'*/
+                    /* '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +target_eff+' </strong><l/span></div>' +
+					 '<br/><br/><div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +actual_eff+' </strong></span></div><br/><br/>' +
+					 '<div style=\'color:#333; font-size: 20px;\'> <span style="color:#009900; font-size: 22px;"><strong> ' +eff+' </strong>%</span></div><br/><br/>'*/
                 );
 
                 gauge
@@ -1127,26 +1126,26 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
         //}
     });
 </script>
-    <script>
-        $("#checkAll").click(function () {
-            $('input:checkbox').not(this).prop('checked', this.checked);
-        });
-        $('#generate').click(function () {
-            let r = Math.random().toString(36).substring(7);
-            $('#newpass').val(r);
-        })
+<script>
+    $("#checkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    $('#generate').click(function () {
+        let r = Math.random().toString(36).substring(7);
+        $('#newpass').val(r);
+    })
 
-        $('#choose').on('change', function () {
-            var selected_val = this.value;
-            if (selected_val == 1 || selected_val == 2) {
-                $(".group_div").show();
-            } else {
-                $(".group_div").hide();
-            }
-        });
+    $('#choose').on('change', function () {
+        var selected_val = this.value;
+        if (selected_val == 1 || selected_val == 2) {
+            $(".group_div").show();
+        } else {
+            $(".group_div").hide();
+        }
+    });
 
 
-    </script>
+</script>
 <script>
 
 
