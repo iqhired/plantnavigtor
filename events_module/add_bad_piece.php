@@ -374,7 +374,7 @@ include("../heading_banner.php");
             type: 'POST',
             url: 'create_good_bad_piece.php',
             data: data,
-            async: false,
+            cache: false,
             success: function (data) {
                 var line_id = this.data.split('&')[2].split("=")[1];
                 var pe = this.data.split('&')[3].split("=")[1];

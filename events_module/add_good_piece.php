@@ -216,7 +216,7 @@ include("../heading_banner.php");
             data: data,
             // dataType: "json",
             // context: this,
-            async: false,
+            cache: false,
             success: function (data) {
 
                 // window.location.href = window.location.href + "?aa=Line 1";
