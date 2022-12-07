@@ -101,13 +101,20 @@ while ($cam1 = mysqli_fetch_array($result1)) {
 
         .dashboard_line_heading {
             color: #181d50;
-            padding-top: 5px;
+           /* padding-top: 0px !important;*/
             font-size: 15px !important;
         }
         .heading{
             margin-top: 0px !important;
         }
-
+        hr {
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+            border-top: 1px solid #ddd;
+        }
+        .panel-body {
+            padding: 7px !important;;
+        }
 
         @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
             .dashboard_line_heading {
@@ -142,7 +149,7 @@ include("../hp_header.php");
     $p_name = '';
     $pf_name = '';
     $time = '';
-    $countervariable++;
+
 
     $qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$station1' ORDER by sg_events.created_on DESC LIMIT 1");
     $rowc01 = mysqli_fetch_array($qur01);
@@ -258,40 +265,43 @@ include("../hp_header.php");
             </div>
         </div>
     <?php
-        $countervariable = 0;
-        $countervariable++;
-        $buttonclass = "";
-        $qur01 = mysqli_query($db, "SELECT count(*) as star1 FROM  cam_station_pos_rel where line_id = '$station1'");
-        $rowc01 = mysqli_fetch_array($qur01);
-        $star1 = $rowc01["star1"];
-        $qur02 = mysqli_query($db, "SELECT count(*) as star2 FROM  cam_assign_crew where line_id = '$station1' and resource_type = 'regular'");
-        $rowc02 = mysqli_fetch_array($qur02);
-        $star2 = $rowc02["star2"];
-        if ($star1 > $star2) {
-            $buttonclass = "dc6805";
-        } else if ($star1 == $star2) {
-            $buttonclass = "218838";
+    $countervariable++;
+    $query = sprintf("SELECT * FROM  cam_line where enabled = '1' and line_id  = '$station1'");
+    $qur = mysqli_query($db, $query);
+    while ($rowc = mysqli_fetch_array($qur)) {
+    $line = $rowc["line_id"];
+    $buttonclass = "";
+    $qur01 = mysqli_query($db, "SELECT count(*) as star1 FROM  cam_station_pos_rel where line_id = '$line'");
+    $rowc01 = mysqli_fetch_array($qur01);
+    $star1 = $rowc01["star1"];
+    $qur02 = mysqli_query($db, "SELECT count(*) as star2 FROM  cam_assign_crew where line_id = '$line' and resource_type = 'regular'");
+    $rowc02 = mysqli_fetch_array($qur02);
+    $star2 = $rowc02["star2"];
+    if ($star1 > $star2) {
+        $buttonclass = "dc6805";
+    } else if ($star1 == $star2) {
+        $buttonclass = "218838";
+    }
+    if ($star2 == "0") {
+        $buttonclass = "1F449C";
+    }
+    $time = "";
+    $qur03 = mysqli_query($db, "SELECT * FROM  cam_log where line_id = '$line' and flag = '1'");
+    while ($rowc03 = mysqli_fetch_array($qur03)) {
+        $notific = $rowc03["email_notification"];
+        if ($notific == "1") {
+            $buttonclass = "c9302c";
         }
-        if ($star2 == "0") {
-            $buttonclass = "1F449C";
-        }
-        $time = "";
-        $qur03 = mysqli_query($db, "SELECT * FROM  cam_log where line_id = '$station1' and flag = '1'");
-        while ($rowc03 = mysqli_fetch_array($qur03)) {
-            $notific = $rowc03["email_notification"];
-            if ($notific == "1") {
-                $buttonclass = "c9302c";
-            }
-            $time = $rowc03["created_at"];
-        }
-        $qur04 = mysqli_query($db, "SELECT * FROM  cam_assign_crew_log where station_id = '$station1' and status = '1' ORDER BY `assign_time` ASC ");
-        while ($rowc04 = mysqli_fetch_array($qur04)) {
-            $last_assignedby = $rowc04["last_assigned_by"];
-        }
-        $qur05 = mysqli_query($db, "SELECT * FROM  cam_assign_crew_log where station_id = '$station1' and status = '0' ORDER BY `unassign_time` ASC ");
-        while ($rowc05 = mysqli_fetch_array($qur05)) {
-            $last_un_assignedby = $rowc05["last_unassigned_by"];
-        }
+        $time = $rowc03["created_at"];
+    }
+    $qur04 = mysqli_query($db, "SELECT * FROM  cam_assign_crew_log where station_id = '$line' and status = '1' ORDER BY `assign_time` ASC ");
+    while ($rowc04 = mysqli_fetch_array($qur04)) {
+        $last_assignedby = $rowc04["last_assigned_by"];
+    }
+    $qur05 = mysqli_query($db, "SELECT * FROM  cam_assign_crew_log where station_id = '$line' and status = '0' ORDER BY `unassign_time` ASC ");
+    while ($rowc05 = mysqli_fetch_array($qur05)) {
+        $last_un_assignedby = $rowc05["last_unassigned_by"];
+    }
         ?>
         </div>
         <div class="col-md-4">
@@ -365,7 +375,8 @@ include("../hp_header.php");
                 <div id="server-load"></div>
             </div>
         </div>
-       <div class="col-md-4">
+        <?php } ?>
+    <div class="col-md-4">
            <div class="panel bg-blue-400">
                <div class="heading" style="height: 40px;">
                    <h4 style="height:inherit;text-align: center;background-color:#181d50;color: #fff;padding-top: 5px;">
@@ -374,7 +385,381 @@ include("../hp_header.php");
                        </div>
                    </h4>
                </div>
-               <div class="panel-body" style="height: 700px">
+               <div class="panel-body" style="height: 269px!important;">
+                   <?php
+                   $countervariable++;
+                   $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 4 order by created_at desc limit 1";
+                   $result1 = $mysqli->query($sql1);
+                   while ($rowc = $result1->fetch_assoc()) {
+                   $form_create_id = $rowc["form_create_id"];
+                   $form_user_data_id = $rowc["form_user_data_id"];
+                   $station = $rowc["station"];
+                   $form_type = $rowc["form_type"];
+                   $part_family = $rowc["part_family"];
+                   $part_number = $rowc["part_number"];
+                   $form_submitted_by = $rowc['firstname'] . " " . $rowc['lastname'];
+
+                   $qur = mysqli_query($db, "SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                   $row1 = mysqli_fetch_array($qur);
+                   $estimateduration = $row1["frequency"];
+                   $estimateduration = $row1["frequency"];
+                   $time = $row1["frequency"];
+                   $t11 = $row1["frequency"];
+                   $color = "";
+
+                   //retrieve the form type name from the table
+                   $qur0351 = mysqli_query($db, "SELECT * FROM `form_type` where form_type_id = '$form_type'");
+                   $rowc0351 = mysqli_fetch_array($qur0351);
+                   $form_type_name = $rowc0351['form_type_name'];
+
+                   //retrieve the part family name from the table
+                   $qur0352 = mysqli_query($db, "SELECT * FROM `pm_part_family` where pm_part_family_id = '$part_family' ");
+                   $rowc0352 = mysqli_fetch_array($qur0352);
+                   $part_family_name = $rowc0352['part_family_name'];
+
+                   //retrieve the part number and part name from the table
+                   $qur0353 = mysqli_query($db, "SELECT * FROM `pm_part_number` where pm_part_number_id = '$part_number'  ");
+                   $rowc0353 = mysqli_fetch_array($qur0353);
+                   $part_number = $rowc0353['part_number'];
+                   $part_name = $rowc0353['part_name'];
+
+                   $arrteam1 = explode(':', $t11);
+                   $hours = $arrteam1[0];
+                   $minutes = $arrteam1[1];
+                   $hours1 = $hours * 60;
+                   $minutes1 = $minutes + $hours1;
+                   $date = $rowc["created_at"];
+                   $date = strtotime($date);
+                   $date = strtotime("+" . $minutes1 . " minute", $date);
+                   $date = date('Y-m-d H:i:s', $date);
+                   $working_from_time = $rowc["created_at"];
+                   $calcdatet = strtotime($date);
+                   $calccurrdate = strtotime($curdate);
+                   ?>
+                   <h3 class="no-margin dashboard_line_heading">First Piece Sheet Lab</h3>
+                       <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
+                       <input type="hidden" id="working_from_time<?php echo $countervariable; ?>" value="<?php echo $working_from_time; ?>">
+                   <div class="caption text-center">
+                       <h4 style="text-align: center;padding:5px;color: #FFFFFF">
+                           <?php if ($date != "") { ?>
+                               <div id="demo<?php echo $countervariable; ?>">&nbsp;</div>
+                           <?php } else { ?>
+                               <div id="demo<?php echo $countervariable; ?>">Available</div>
+                           <?php } ?>
+                       </h4>
+                   </div><hr/>
+                       <script>
+                           function calcTime(city, offset) {
+                               d = new Date();
+                               utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                               nd = new Date(utc + (3600000 * offset));
+                               return nd;
+                           }
+                           // Set the date we're counting down to
+                           var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
+
+                           var working_from_time<?php echo $countervariable; ?> = $("#working_from_time<?php echo $countervariable; ?>").val();
+
+                           //console.log(iddd<?php /* echo $countervariable;*/ ?>);
+                           var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
+
+                           var countDownworkingDate<?php echo $countervariable; ?> = new Date(working_from_time<?php echo $countervariable; ?>).getTime();
+
+                           // Update the count down every 1 second
+                           var x = setInterval(function () {
+                               // Get today's date and time
+                               // var now = new Date().getTime();
+                               var now = calcTime('Chicago', '-6');
+                               // Find the distance between now and the count down date
+                               //aaya change karvano che
+                               var distance = countDownDate<?php echo $countervariable; ?> - now;
+                               // Time calculations for days, hours, minutes and seconds
+                               var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                               var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                               var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                               var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                               // console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+                               //  console.log("------------------------");
+                               // Output the result in an element with id="demo"
+                               document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
+                                   + minutes + "m " + seconds + "s ";
+                               document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
+                               // If the count down is over, write some text
+                               if (distance <= 0) {
+                                   // clearInterval(x);
+                                   var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                   var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
+                                   var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                   var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
+                                   var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
+
+                                   document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
+                                       + workingminutes + "m " + workingseconds + "s ";
+                                   document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
+                               }
+                           }, 1000);
+                       </script>
+                       <?php
+                       $form_type_name = "";
+                       $part_family_name = "";
+                       $part_number = "";
+                       $part_name = "";
+                       $buttonclass = "218838";
+                       $date = "";
+                       ?>
+                       <?php
+                       $ratecheck = "";
+                   }
+                   ?>
+                   <?php
+                   $countervariable++;
+                   $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 order by created_at desc limit 1";
+                   $result1 = $mysqli->query($sql1);
+                   while ($rowc = $result1->fetch_assoc()) {
+                   $form_create_id = $rowc["form_create_id"];
+                   $form_user_data_id = $rowc["form_user_data_id"];
+                   $station = $rowc["station"];
+                   $form_type = $rowc["form_type"];
+                   $part_family = $rowc["part_family"];
+                   $part_number = $rowc["part_number"];
+                   $form_submitted_by = $rowc['firstname'] . " " . $rowc['lastname'];
+
+                   $qur = mysqli_query($db, "SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                   $row1 = mysqli_fetch_array($qur);
+                   $estimateduration = $row1["frequency"];
+                   $estimateduration = $row1["frequency"];
+                   $time = $row1["frequency"];
+                   $t11 = $row1["frequency"];
+                   $color = "";
+
+                   //retrieve the form type name from the table
+                   $qur0351 = mysqli_query($db, "SELECT * FROM `form_type` where form_type_id = '$form_type'");
+                   $rowc0351 = mysqli_fetch_array($qur0351);
+                   $form_type_name = $rowc0351['form_type_name'];
+
+                   //retrieve the part family name from the table
+                   $qur0352 = mysqli_query($db, "SELECT * FROM `pm_part_family` where pm_part_family_id = '$part_family' ");
+                   $rowc0352 = mysqli_fetch_array($qur0352);
+                   $part_family_name = $rowc0352['part_family_name'];
+
+                   //retrieve the part number and part name from the table
+                   $qur0353 = mysqli_query($db, "SELECT * FROM `pm_part_number` where pm_part_number_id = '$part_number'  ");
+                   $rowc0353 = mysqli_fetch_array($qur0353);
+                   $part_number = $rowc0353['part_number'];
+                   $part_name = $rowc0353['part_name'];
+
+                   $arrteam1 = explode(':', $t11);
+                   $hours = $arrteam1[0];
+                   $minutes = $arrteam1[1];
+                   $hours1 = $hours * 60;
+                   $minutes1 = $minutes + $hours1;
+                   $date = $rowc["created_at"];
+                   $date = strtotime($date);
+                   $date = strtotime("+" . $minutes1 . " minute", $date);
+                   $date = date('Y-m-d H:i:s', $date);
+                   $working_from_time = $rowc["created_at"];
+                   $calcdatet = strtotime($date);
+                   $calccurrdate = strtotime($curdate);
+                   ?>
+                   <h3 class="no-margin dashboard_line_heading">First Piece Sheet Op</h3>
+                       <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
+                       <input type="hidden" id="working_from_time<?php echo $countervariable; ?>" value="<?php echo $working_from_time; ?>">
+                       <div class="caption text-center">
+                           <h4 style="text-align: center;padding:5px;color: #FFFFFF">
+                               <?php if ($date != "") { ?>
+                                   <div id="demo<?php echo $countervariable; ?>">&nbsp;</div>
+                               <?php } else { ?>
+                                   <div id="demo<?php echo $countervariable; ?>">Available</div>
+                               <?php } ?>
+                           </h4>
+                       </div><hr/>
+                       <script>
+                           function calcTime(city, offset) {
+                               d = new Date();
+                               utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                               nd = new Date(utc + (3600000 * offset));
+                               return nd;
+                           }
+                           // Set the date we're counting down to
+                           var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
+
+                           var working_from_time<?php echo $countervariable; ?> = $("#working_from_time<?php echo $countervariable; ?>").val();
+
+                           //console.log(iddd<?php /* echo $countervariable;*/ ?>);
+                           var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
+
+                           var countDownworkingDate<?php echo $countervariable; ?> = new Date(working_from_time<?php echo $countervariable; ?>).getTime();
+
+                           // Update the count down every 1 second
+                           var x = setInterval(function () {
+                               // Get today's date and time
+                               // var now = new Date().getTime();
+                               var now = calcTime('Chicago', '-6');
+                               // Find the distance between now and the count down date
+                               //aaya change karvano che
+                               var distance = countDownDate<?php echo $countervariable; ?> - now;
+                               // Time calculations for days, hours, minutes and seconds
+                               var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                               var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                               var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                               var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                               // console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+                               //  console.log("------------------------");
+                               // Output the result in an element with id="demo"
+                               document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
+                                   + minutes + "m " + seconds + "s ";
+                               document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
+                               // If the count down is over, write some text
+                               if (distance <= 0) {
+                                   // clearInterval(x);
+                                   var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                   var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
+                                   var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                   var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
+                                   var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
+
+                                   document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
+                                       + workingminutes + "m " + workingseconds + "s ";
+                                   document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
+                               }
+                           }, 1000);
+                       </script>
+                       <?php
+                       $form_type_name = "";
+                       $part_family_name = "";
+                       $part_number = "";
+                       $part_name = "";
+                       $buttonclass = "218838";
+                       $date = "";
+                       ?>
+                       <?php
+                       $ratecheck = "";
+                   }
+                   ?>
+                   <?php
+                   $countervariable++;
+                   $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 order by created_at desc limit 1";
+                   $result1 = $mysqli->query($sql1);
+                   while ($rowc = $result1->fetch_assoc()) {
+                       $form_create_id = $rowc["form_create_id"];
+                       $form_user_data_id = $rowc["form_user_data_id"];
+                       $station = $rowc["station"];
+                       $form_type = $rowc["form_type"];
+                       $part_family = $rowc["part_family"];
+                       $part_number = $rowc["part_number"];
+
+                       $qur = mysqli_query($db, "SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                       $row1 = mysqli_fetch_array($qur);
+                       $estimateduration = $row1["frequency"];
+                       $time = $row1["frequency"];
+                       $t11 = $row1["frequency"];
+                       $color = "";
+
+                       //retrieve the form type name from the table
+                       $qur0351 = mysqli_query($db, "SELECT * FROM `form_type` where form_type_id = '$form_type'");
+                       $rowc0351 = mysqli_fetch_array($qur0351);
+                       $form_type_name = $rowc0351['form_type_name'];
+
+                       //retrieve the part family name from the table
+                       $qur0352 = mysqli_query($db, "SELECT * FROM `pm_part_family` where pm_part_family_id = '$part_family' ");
+                       $rowc0352 = mysqli_fetch_array($qur0352);
+                       $part_family_name = $rowc0352['part_family_name'];
+
+                       //retrieve the part number and part name from the table
+                       $qur0353 = mysqli_query($db, "SELECT * FROM `pm_part_number` where pm_part_number_id = '$part_number'  ");
+                       $rowc0353 = mysqli_fetch_array($qur0353);
+                       $part_number = $rowc0353['part_number'];
+                       $part_name = $rowc0353['part_name'];
+
+                       $arrteam1 = explode(':', $t11);
+                       $hours = $arrteam1[0];
+                       $minutes = $arrteam1[1];
+                       $hours1 = $hours * 60;
+                       $minutes1 = $minutes + $hours1;
+                       $date = $rowc["created_at"];
+                       $date = strtotime($date);
+                       $date = strtotime("+" . $minutes1 . " minute", $date);
+                       $date = date('Y-m-d H:i:s', $date);
+                       $working_from_time = $rowc["created_at"];
+                       $calcdatet = strtotime($date);
+                       $calccurrdate = strtotime($curdate);
+                   ?>
+                       <h3 class="no-margin dashboard_line_heading">Parameter Sheet</h3>
+                       <input type="hidden" id="id<?php echo $countervariable; ?>" value="<?php echo $date; ?>">
+                       <input type="hidden" id="working_from_time<?php echo $countervariable; ?>" value="<?php echo $working_from_time; ?>">
+                       <div class="caption text-center"><!--style="border: 1px solid lightgray;"-->
+
+                           <h4 style="text-align: center;padding:5px; color: #FFFFFF"">
+                           <?php if ($date != "") { ?>
+                               <div id="demo<?php echo $countervariable; ?>" >&nbsp;</div>
+                           <?php } else { ?>
+                               <div id="demo<?php echo $countervariable; ?>" >Available</div>
+                           <?php } ?>
+                           </h4>
+                       </div>
+                       <script>
+                           function calcTime(city, offset) {
+                               d = new Date();
+                               utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                               nd = new Date(utc + (3600000 * offset));
+                               return nd;
+                           }
+                           // Set the date we're counting down to
+                           var iddd<?php echo $countervariable; ?> = $("#id<?php echo $countervariable; ?>").val();
+
+                           var working_from_time<?php echo $countervariable; ?> = $("#working_from_time<?php echo $countervariable; ?>").val();
+
+                           //console.log(iddd<?php /* echo $countervariable;*/ ?>);
+                           var countDownDate<?php echo $countervariable; ?> = new Date(iddd<?php echo $countervariable; ?>).getTime();
+
+                           var countDownworkingDate<?php echo $countervariable; ?> = new Date(working_from_time<?php echo $countervariable; ?>).getTime();
+
+                           // Update the count down every 1 second
+                           var x = setInterval(function () {
+                               // Get today's date and time
+                               // var now = new Date().getTime();
+                               var now = calcTime('Chicago', '-6');
+                               // Find the distance between now and the count down date
+                               //aaya change karvano che
+                               var distance = countDownDate<?php echo $countervariable; ?> - now;
+                               // Time calculations for days, hours, minutes and seconds
+                               var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                               var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                               var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                               var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                               // console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+                               //  console.log("------------------------");
+                               // Output the result in an element with id="demo"
+                               document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Submit in: ' + hours + "h "
+                                   + minutes + "m " + seconds + "s ";
+                               document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'green';
+                               // If the count down is over, write some text
+                               if (distance <= 0) {
+                                   // clearInterval(x);
+                                   var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                   var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
+                                   var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                   var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
+                                   var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
+
+                                   document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
+                                       + workingminutes + "m " + workingseconds + "s ";
+                                   document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
+                               }
+                           }, 1000);
+                       </script>
+                       <?php
+                       $form_type_name = "";
+                       $part_family_name = "";
+                       $part_number = "";
+                       $part_name = "";
+                       $buttonclass = "218838";
+                       $date = "";
+                       ?>
+                       <?php
+                       $ratecheck = "";
+                   }
+                   ?>
                </div>
            </div>
        </div>

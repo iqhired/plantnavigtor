@@ -4,6 +4,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 $f_time  = date("H:i");
 $curdate  = date("Y-m-d H:i:s");
+$cur  = date("Y-m-d H:i");
 $station = $_GET['id'];
 $sql1 = "SELECT * FROM `cam_line` WHERE line_id = '$station'";
 $result1 = mysqli_query($db, $sql1);
@@ -18,7 +19,7 @@ while ($cam1 = mysqli_fetch_array($result1)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | Taskboard Crew</title>
+    <title><?php echo $sitename; ?> | Form Submit Dashboard</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -190,12 +191,12 @@ include("../hp_header.php");
                     $date = $rowc["created_at"];
                     $date = strtotime($date);
                     $date = strtotime("+" . $minutes1 . " minute", $date);
-                    $date = date('Y-m-d H:i:s', $date);
+                    $date = date('Y-m-d H:i', $date);
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
-
-                    if($date == $curdate){
+                    $date1 = $date;
+                    if($date1 == $cur){
                         $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `time`,`updated_at`) VALUES ('$form_create_id','$form_user_data_id','$f_time','$curdate')";
                         $res = mysqli_query($db, $sqlv);
                         if (!$res) {
@@ -208,10 +209,10 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "select date_add(updated_at,interval 30 minute) as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
-                    if($updated_at == $curdate)
+                    if($updated_at == $cur)
                     {
                         require '../vendor/autoload.php';
                         $mail = new PHPMailer();
@@ -262,12 +263,12 @@ include("../hp_header.php");
                         $mail->isHTML(true);
                         $mail->Subject = $subject;
                         $mail->Body = $structure;
-                            if(!$mail->Send()){
-                                echo "Mailer Error: " . $mail->ErrorInfo;
-                            }
-                            else{
-                                echo "  ";
-                            }
+                        if(!$mail->Send()){
+                            echo "Mailer Error: " . $mail->ErrorInfo;
+                        }
+                        else{
+                            echo "  ";
+                        }
 
                         function save_mail($mail)
                         {
@@ -368,17 +369,17 @@ include("../hp_header.php");
                                     if (distance <= 0) {
                                         // clearInterval(x);
                                         var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                        var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
                                         var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                         var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
                                         var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
 
-                                        document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
+                                        document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
                                             + workingminutes + "m " + workingseconds + "s ";
                                         document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
                                     }
                                 }, 1000);
                             </script>
-                            <?php  $countervariable++; ?>
                             <?php
                             $form_type_name = "";
                             $part_family_name = "";
@@ -393,19 +394,22 @@ include("../hp_header.php");
                     ?>
                 </div>
                     <?php
+                    $countervariable++;
                     //select the form based on station
                     $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
-                    $form_create_id = $rowc["form_create_id"];
                     $form_user_data_id = $rowc["form_user_data_id"];
+                    $form_create_id = $rowc["form_create_id"];
                     $station = $rowc["station"];
                     $form_type = $rowc["form_type"];
                     $part_family = $rowc["part_family"];
                     $part_number = $rowc["part_number"];
+                    $form_submitted_by = $rowc['firstname'] . " " . $rowc['lastname'];
 
                     $qur = mysqli_query($db, "SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
                     $row1 = mysqli_fetch_array($qur);
+                    $estimateduration = $row1["frequency"];
                     $estimateduration = $row1["frequency"];
                     $time = $row1["frequency"];
                     $t11 = $row1["frequency"];
@@ -435,13 +439,13 @@ include("../hp_header.php");
                     $date = $rowc["created_at"];
                     $date = strtotime($date);
                     $date = strtotime("+" . $minutes1 . " minute", $date);
-                    $date = date('Y-m-d H:i:s', $date);
+                    $date = date('Y-m-d H:i', $date);
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
-
-                    if($date == $curdate){
-                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                    $date1 = $date;
+                    if($date1 == $cur){
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `time`,`updated_at`) VALUES ('$form_create_id','$form_user_data_id','$f_time','$curdate')";
                         $res = mysqli_query($db, $sqlv);
                         if (!$res) {
                             $_SESSION['message_stauts_class'] = 'alert-danger';
@@ -453,11 +457,78 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
+                    if($updated_at == $cur)
+                    {
+                        require '../vendor/autoload.php';
+                        $mail = new PHPMailer();
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->Port = 587;
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->SMTPAuth = true;
+                        $mail->Username = EMAIL_USER;
+                        $mail->Password = EMAIL_PASSWORD;
+                        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+                        $subject = $station2.' - '.$form_type_name. " form needs to be filled";
+                        $query = sprintf("SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                        $qur = mysqli_query($db, $query);
+                        while ($rowc1 = mysqli_fetch_array($qur)) {
+                            $arrusrs = explode(',', $rowc1["notification_list"]);
+                        }
+                        $message = '<br/><table rules=\"all\" style=\"border-color: #666;\" border=\"1\" cellpadding=\"10\">';
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_type_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Station : </strong> </td><td>" . $station2 . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $part_number . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $part_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $part_family_name . "</td></tr>";
+                        $message .= "</table>";
+                        $message .= "<br/>";
+                        $signature = "- Plantnavigator Admin";
+                        $cnt = count($arrusrs);
+                        $structure = '<html><body>';
+                        $structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";
+                        $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message . "</span><br/> ";
+                        $structure .= "<br/><br/>";
+                        $structure .= $signature;
+                        $structure .= "</body></html>";
+                        for ($i = 0; $i < $cnt;) {
+                            $u_name = $arrusrs[$i];
+                            if(!empty($u_name)){
+                                $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                                $qur0003 = mysqli_query($db, $query0003);
+                                $rowc0003 = mysqli_fetch_array($qur0003);
+                                $email = $rowc0003["email"];
+                                $lasname = $rowc0003["lastname"];
+                                $firstname = $rowc0003["firstname"];
+                                $mail->addAddress($email, $firstname);
 
+                            }
+                            $i++;
+                        }
+                        $mail->isHTML(true);
+                        $mail->Subject = $subject;
+                        $mail->Body = $structure;
+                        if(!$mail->Send()){
+                            echo "Mailer Error: " . $mail->ErrorInfo;
+                        }
+                        else{
+                            echo "  ";
+                        }
 
+                        function save_mail($mail)
+                        {
+                            $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+                            $imapStream = imap_open($path, $mail->Username, $mail->Password);
+                            $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+                            imap_close($imapStream);
+                            return $result;
+
+                        }
+
+                    }
                     ?>
                     <div class="col-lg-3">
                         <div class="panel bg-blue-400">
@@ -544,18 +615,19 @@ include("../hp_header.php");
                                 if (distance <= 0) {
                                     // clearInterval(x);
                                     var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                    var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
                                     var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                     var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
                                     var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
 
-                                    document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
+                                    document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
                                         + workingminutes + "m " + workingseconds + "s ";
                                     document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
 
                                 }
                             }, 1000);
                         </script>
-                        <?php  $countervariable++; ?>
+                        <?php   ?>
                         <?php
                         $form_type_name = "";
                         $part_family_name = "";
@@ -570,6 +642,7 @@ include("../hp_header.php");
                         ?>
                     </div>
                     <?php
+                    $countervariable++;
                     //select the form based on station
                     $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
@@ -612,13 +685,13 @@ include("../hp_header.php");
                     $date = $rowc["created_at"];
                     $date = strtotime($date);
                     $date = strtotime("+" . $minutes1 . " minute", $date);
-                    $date = date('Y-m-d H:i:s', $date);
+                    $date = date('Y-m-d H:i', $date);
                     $working_from_time = $rowc["created_at"];
                     $calcdatet = strtotime($date);
                     $calccurrdate = strtotime($curdate);
-
-                    if($date == $curdate){
-                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `updated_at`) VALUES ('$form_create_id','$form_user_data_id','$curdate')";
+                    $date1 = $date;
+                    if($date1 == $cur){
+                        $sqlv = "INSERT INTO `form_frequency_data`(`form_create_id`, `form_user_data_id`, `time`,`updated_at`) VALUES ('$form_create_id','$form_user_data_id','$f_time','$curdate')";
                         $res = mysqli_query($db, $sqlv);
                         if (!$res) {
                             $_SESSION['message_stauts_class'] = 'alert-danger';
@@ -629,13 +702,78 @@ include("../hp_header.php");
                             $_SESSION['import_status_message'] = 'Form Frequency Updated Successfully.';
                         }
                     }
-                    $qur0354 = mysqli_query($db, "SELECT * FROM `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
+                    if($updated_at == $cur)
+                    {
+                        require '../vendor/autoload.php';
+                        $mail = new PHPMailer();
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->Port = 587;
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->SMTPAuth = true;
+                        $mail->Username = EMAIL_USER;
+                        $mail->Password = EMAIL_PASSWORD;
+                        $mail->setFrom('admin@plantnavigator.com', 'Admin Plantnavigator');
+                        $subject = "Station " .$station2. " form needs to be filled";
+                        $query = sprintf("SELECT * FROM `form_create` where form_create_id = '$form_create_id'");
+                        $qur = mysqli_query($db, $query);
+                        while ($rowc1 = mysqli_fetch_array($qur)) {
+                            $arrusrs = explode(',', $rowc1["notification_list"]);
+                        }
+                        $message = '<br/><table rules=\"all\" style=\"border-color: #666;\" border=\"1\" cellpadding=\"10\">';
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Form Name : </strong> </td><td>" . $form_type_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Station : </strong> </td><td>" . $station2 . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Number : </strong> </td><td>" . $part_number . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Name : </strong> </td><td>" . $part_name . "</td></tr>";
+                        $message .= "<tr><td style='background: #eee;padding: 5px 10px ;'><strong>Part Family : </strong> </td><td>" . $part_family_name . "</td></tr>";
+                        $message .= "</table>";
+                        $message .= "<br/>";
+                        $signature = "- Plantnavigator Admin";
+                        $cnt = count($arrusrs);
+                        $structure = '<html><body>';
+                        $structure .= "<br/><br/><span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > Hello,</span><br/><br/>";
+                        $structure .= "<span style='font-family: 'Source Sans Pro', sans-serif;color:#757575;font-weight:600;' > " . $message . "</span><br/> ";
+                        $structure .= "<br/><br/>";
+                        $structure .= $signature;
+                        $structure .= "</body></html>";
+                        for ($i = 0; $i < $cnt;) {
+                            $u_name = $arrusrs[$i];
+                            if(!empty($u_name)){
+                                $query0003 = sprintf("SELECT * FROM  cam_users where users_id = '$u_name' ");
+                                $qur0003 = mysqli_query($db, $query0003);
+                                $rowc0003 = mysqli_fetch_array($qur0003);
+                                $email = $rowc0003["email"];
+                                $lasname = $rowc0003["lastname"];
+                                $firstname = $rowc0003["firstname"];
+                                $mail->addAddress($email, $firstname);
 
+                            }
+                            $i++;
+                        }
+                        $mail->isHTML(true);
+                        $mail->Subject = $subject;
+                        $mail->Body = $structure;
+                        if(!$mail->Send()){
+                            echo "Mailer Error: " . $mail->ErrorInfo;
+                        }
+                        else{
+                            echo "  ";
+                        }
 
+                        function save_mail($mail)
+                        {
+                            $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
+                            $imapStream = imap_open($path, $mail->Username, $mail->Password);
+                            $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+                            imap_close($imapStream);
+                            return $result;
 
+                        }
 
+                    }
                     ?>
                     <div class="col-lg-3">
                         <div class="panel bg-blue-400">
@@ -723,11 +861,12 @@ include("../hp_header.php");
                                 if (distance <= 0) {
                                     // clearInterval(x);
                                     var workingdistance = now - countDownworkingDate<?php echo $countervariable; ?>;
+                                    var workingdays = Math.floor(workingdistance / (1000 * 60 * 60 * 24));
                                     var workinghours = Math.floor((workingdistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                     var workingminutes = Math.floor((workingdistance % (1000 * 60 * 60)) / (1000 * 60));
                                     var workingseconds = Math.floor((workingdistance % (1000 * 60)) / 1000);
 
-                                    document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workinghours + "h "
+                                    document.getElementById("demo<?php echo $countervariable; ?>").innerHTML = 'Expired: ' + workingdays + "d " + workinghours + "h "
                                         + workingminutes + "m " + workingseconds + "s ";
                                     document.getElementById("demo<?php echo $countervariable; ?>").style.backgroundColor = 'red';
                                 }
@@ -758,7 +897,7 @@ include("../hp_header.php");
     <script>
         setTimeout(function () {
             location.reload();
-        }, 5000);
+        }, 15000);
     </script>
 <!-- /page container -->
     <?php include('../footer.php') ?>
