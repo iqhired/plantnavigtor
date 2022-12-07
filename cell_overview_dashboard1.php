@@ -40,6 +40,171 @@ if (isset($cellID)) {
     }
 }
 ?>
+<?php
+$station_id = null;
+$event_line = $_GET['line'];
+$user_id = $_SESSION["id"];
+$chicagotime = date("Y-m-d H:i:s");
+if (count($_POST) > 0) {
+
+    $station_id = $_POST['station'];
+    if(($station_id == null || $station_id =='') && (($event_line != null) && ($event_line != ''))){
+        $station_id = $event_line;
+    }
+    $part_family_id = $_POST['part_family'];
+    $part_number = $_POST['part_number'];
+    $event_type_id = $_POST['event_type_id'];
+    $e_event_id = $_POST['edit_event_type'];
+    $edit_event_id = explode("_",$e_event_id)[0];
+    $station_event_id = $_POST['station_event_id'];
+    $event_seq = $_POST['event_seq'];
+    $event_total_time = $_POST['total_time'];
+
+    // Edit Event
+    if ($edit_event_id != "") {
+        $reason =  $_POST['edit_reason'];
+        $station_event_id = $_POST['edit_id'];
+
+        /*Update the log table with the event value*/
+        $sql = "select * from event_type where so = (select (MAX(so)) as max_seq_num from event_type)";
+        $res = mysqli_query($db, $sql);
+        $firstrow = mysqli_fetch_array($res);
+        $max_seq = $firstrow['so'];
+        $fr_event_type_id = $firstrow['event_type_id'];
+        $event_status_lat = 1;
+
+        $qur1 = "select (count(station_event_id)) as seq_num from sg_station_event_log WHERE station_event_id='$station_event_id'";
+        $res = mysqli_query($db, $qur1);
+        $firstrow = mysqli_fetch_array($res);
+        $curr_seq = $firstrow['seq_num'];
+        $next_seq = $curr_seq + 1;
+
+        $qur2="Select SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF('$chicagotime', created_on))) as completed_time from `sg_station_event_log` WHERE station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $res = mysqli_query($db, $qur2);
+        $firstrow = mysqli_fetch_array($res);
+        $total_time = $firstrow['completed_time'];
+
+        $qur22="Select event_cat_id as cat_id from `event_type` WHERE event_type_id = '$edit_event_id'";
+        $res = mysqli_query($db, $qur22);
+        $firstrow = mysqli_fetch_array($res);
+        $event_cat_id = $firstrow['cat_id'];
+
+
+
+        $qur3 = "update `sg_station_event_log` set total_time = '$total_time' , is_incomplete = '0' where station_event_id = '$station_event_id' and event_seq = '$curr_seq'";
+        $result0 = mysqli_query($db, $qur3);
+
+
+
+        $res_event = "select event_type_id from sg_station_event where station_event_id = '$station_event_id'";
+        $sta_res = mysqli_query($db,$res_event);
+        $event_row = mysqli_fetch_array($sta_res);
+        $is_present = $event_row['event_type_id'];
+
+        if ($is_present == '7' ){
+            $message_stauts_class = 'alert-success';
+            $import_status_message = 'Event cycle was already Ended.';
+        }else{
+            if ($edit_event_id == $fr_event_type_id) {
+                $sql = "update sg_station_event set event_status = '0' ,event_type_id='$edit_event_id', modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Event Cycle Completed for the Station.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
+
+                $sql = "INSERT INTO `sg_station_event_log`(`station_event_id`  ,`reason`,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',0,'$chicagotime','$user_id')";
+                $result0 = mysqli_query($db, $sql);
+
+
+
+            } else {
+                $sql = "update sg_station_event set event_type_id='$edit_event_id', reason='$reason' ,modified_on='$chicagotime', modified_by='$user_id' where  station_event_id = '$station_event_id'";
+                $result1 = mysqli_query($db, $sql);
+                if ($result1) {
+
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Event status Updated successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
+                $sql = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`reason`,`event_seq` , `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$reason','$next_seq','$edit_event_id','$event_cat_id',1,'$chicagotime','$user_id')";
+                $result0 = mysqli_query($db, $sql);
+
+
+            }
+        }
+    } else {
+        if (($part_number != "") && ($station_id != "") && ($part_family_id != "") && ($event_type_id != "")) {
+
+//production cycle is already active code
+            $sql_production = "select * from sg_station_event where line_id = '$station_id'  and event_status = '1'";
+            $res_production = mysqli_query($db, $sql_production);
+            $firstrow_production = mysqli_fetch_array($res_production);
+//		$condition = $firstrow_production['station_event_id'];
+
+            if ($firstrow_production) {
+                $message_stauts_class = 'alert-danger';
+                $import_status_message = 'Error: This Station already has an active event.';
+            } else {
+
+                $sql0 = "INSERT INTO `sg_station_event`(`line_id` , `part_family_id`, `part_number_id` , `event_type_id` ,`created_on`,`created_by`,`modified_on`,`modified_by`) VALUES ('$station_id','$part_family_id','$part_number','$event_type_id','$chicagotime','$user_id','$chicagotime','$user_id')";
+                $result0 = mysqli_query($db, $sql0);
+                $station_event_id = ($db->insert_id);
+
+                if ($result0) {
+                    $qur1 = "select (count(station_event_id)) as seq_num from sg_station_event_log WHERE station_event_id='$station_event_id'";
+                    $res = mysqli_query($db, $qur1);
+                    $firstrow = mysqli_fetch_array($res);
+                    $curr_seq = $firstrow['seq_num'];
+                    $next_seq = $curr_seq + 1;
+
+//					$qq = "SELECT max(station_event_log_id)  as prev_log_id FROM `sg_station_event_log` as sl inner join sg_station_event as se on sl.station_event_id = se.station_event_id where se.line_id = '$station_id' and sl.event_status = 0 order by sl.created_on";
+                    $qq = "SELECT max(station_event_log_id) as prev_log_id , sl.created_on as prev_st_time FROM `sg_station_event_log` as sl inner join sg_station_event as se on sl.station_event_id = se.station_event_id where se.line_id = '$station_id' and sl.event_status = 0 group by sl.created_on order by sl.created_on desc LIMIT 1";
+                    $res = mysqli_query($db, $qq);
+                    $firstrow = mysqli_fetch_array($res);
+                    $prev_seq = $firstrow['prev_log_id'];
+                    $prev_time = $firstrow['prev_st_time'];
+
+                    $qur22="Select event_cat_id as cat_id from `event_type` WHERE event_type_id = '$event_type_id'";
+                    $res = mysqli_query($db, $qur22);
+                    $firstrow = mysqli_fetch_array($res);
+                    $event_cat_id = $firstrow['cat_id'];
+
+                    $qur2="Select SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF('$chicagotime', '$prev_time'))) as completed_time";
+                    $res = mysqli_query($db, $qur2);
+                    $firstrow = mysqli_fetch_array($res);
+                    $total_time = $firstrow['completed_time'];
+
+                    $qur4 = "update `sg_station_event_log` set total_time = '$total_time' , is_incomplete = '0' where station_event_log_id = '$prev_seq'";
+                    $result0 = mysqli_query($db, $qur4);
+
+
+                    $sql0 = "INSERT INTO `sg_station_event_log`(`station_event_id` ,`event_seq`, `event_type_id`,`event_cat_id`, `event_status` , `created_on` ,`created_by`) VALUES ('$station_event_id','$next_seq','$event_type_id','$event_cat_id',1,'$chicagotime','$user_id')";
+                    $result0 = mysqli_query($db, $sql0);
+
+
+
+
+                    $message_stauts_class = 'alert-success';
+                    $import_status_message = 'Station Event Created successfully.';
+                } else {
+                    $message_stauts_class = 'alert-danger';
+                    $import_status_message = 'Error: Please Insert valid data';
+                }
+
+            }
+        }
+    }
+}else{
+    $station_id = $event_line;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,312 +252,337 @@ if (isset($cellID)) {
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
     <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="assets/js/time_display.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.e_progress .circle').removeClass().addClass('circle');
+            $('.e_progress .bar').removeClass().addClass('bar');
+            $(".circle").first().addClass("active");
+
+            var timer = setInterval(increment, 1000);
+
+            function increment() {
+                $(".circle:not(.done)").first().removeClass("active").addClass("done").children(":first-child").html("&#10003;");
+                $(".circle:not(.done)").first().addClass("active");
+                $(".circle.done").next().addClass("done");
+                if ($(".active").find(".title").text() == $("tr:last-child").find("span").text()) {
+                    clearInterval(timer);
+                }
+            }
+        });
+    </script>
 
 </head>
-    <script>
-        $('#eff_container').load('../gbp_dashboard.php #eff_container');
-    </script>
-    <!--chart -->
-    <style>
-        .panel-body>.heading-elements{
-            z-index: 0;
-        }
-        .panel[class*=bg-]>.panel-body {
-            background-color: inherit;
-            height: 230px!important;
-        }
-        tbody, td, th, thead, tr {
+<script>
+    $('#eff_container').load('../gbp_dashboard.php #eff_container');
+</script>
+<!--chart -->
+<style>
+    .panel-body>.heading-elements{
+        z-index: 0;
+    }
+    .panel[class*=bg-]>.panel-body {
+        background-color: inherit;
+        height: 230px!important;
+    }
+    tbody, td, th, thead, tr {
 
-            font-size: 14px;
-        }
-        .col-lg-3 {
-            /*font-size: 12px!important;*/
-        }
-        .open > .dropdown-menu {
-            min-width: 210px !important;
-        }
+        font-size: 14px;
+    }
+    .col-lg-3 {
+        /*font-size: 12px!important;*/
+    }
+    .open > .dropdown-menu {
+        min-width: 210px !important;
+    }
 
-        td {
-            /*width: 50% !important;*/
-        }
+    td {
+        /*width: 50% !important;*/
+    }
 
-        .heading-elements {
-            background-color: transparent;
-        }
+    .heading-elements {
+        background-color: transparent;
+    }
 
-        .line_card {
-            background-color: #181d50;
-        }
+    .line_card {
+        background-color: #181d50;
+    }
 
-        .bg-blue-400 {
-            border: 1px solid white;
-            /*background-color: #181d50;*/
-        }
+    .bg-blue-400 {
+        border: 1px solid white;
+        /*background-color: #181d50;*/
+    }
 
-        .bg-orange-400 {
-            background-color: #dc6805;
-        }
+    .bg-orange-400 {
+        background-color: #dc6805;
+    }
 
-        .bg-teal-400 {
-            background-color: #218838;
-        }
+    .bg-teal-400 {
+        background-color: #218838;
+    }
 
-        .bg-pink-400 {
-            background-color: #c9302c;
-        }
+    .bg-pink-400 {
+        background-color: #c9302c;
+    }
 
-        tr {
-            background-color: transparent;
-        }
+    tr {
+        background-color: transparent;
+    }
 
+    .dashboard_line_heading {
+        color: #181d50;
+        padding-top: 5px;
+        font-size: 15px !important;
+    }
+
+
+    @media screen and (min-width: 2560px) {
         .dashboard_line_heading {
-            color: #181d50;
+            font-size: 22px !important;
             padding-top: 5px;
-            font-size: 15px !important;
         }
+    }
 
+    .thumb img:not(.media-preview) {
+        height: 150px !important;
+    }
+    .overlay {
+        height: 100%;
+        width: 100%;
+        display: none;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: rgb(0,0,0);
+        /*background-color: rgba(0,0,0, 0.9);*/
+    }
 
-        @media screen and (min-width: 2560px) {
-            .dashboard_line_heading {
-                font-size: 22px !important;
-                padding-top: 5px;
-            }
-        }
+    .overlay-content {
+        position: relative;
+        /*top: 25%;*/
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
 
-        .thumb img:not(.media-preview) {
-            height: 150px !important;
-        }
-        .overlay {
-            height: 100%;
-            width: 100%;
-            display: none;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: rgb(0,0,0);
-            /*background-color: rgba(0,0,0, 0.9);*/
-        }
+    .overlay a {
+        /*padding: 8px;*/
+        /*text-decoration: none;*/
+        /*font-size: 36px;*/
+        /*color: #818181;*/
+        /*display: block;*/
+        /*transition: 0.3s;*/
+    }
 
-        .overlay-content {
-            position: relative;
-            /*top: 25%;*/
-            width: 100%;
-            text-align: center;
-            margin-top: 30px;
-        }
+    .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+    }
 
-        .overlay a {
-            /*padding: 8px;*/
-            /*text-decoration: none;*/
-            /*font-size: 36px;*/
-            /*color: #818181;*/
-            /*display: block;*/
-            /*transition: 0.3s;*/
-        }
+    .overlay .closebtn {
+        position: absolute;
+        top: -20px;
+        right: 45px;
+        font-size: 60px;
+    }
 
-        .overlay a:hover, .overlay a:focus {
-            color: #f1f1f1;
-        }
-
+    @media screen and (max-height: 450px) {
+        .overlay a {font-size: 14px}
         .overlay .closebtn {
-            position: absolute;
-            top: -20px;
-            right: 45px;
-            font-size: 60px;
+            font-size: 40px;
+            top: 0px;
+            right: 30px;
         }
+    }
 
-        @media screen and (max-height: 450px) {
-            .overlay a {font-size: 14px}
-            .overlay .closebtn {
-                font-size: 40px;
-                top: 0px;
-                right: 30px;
-            }
-        }
+    .dataTable {
+        width: 100%!important;
+    }
+    .datatable-footer>div:first-child, .datatable-header>div:first-child {
+        margin-left: 20px;
+    }
+    .dataTables_length {
+        margin: 0 30px 18px 37px!important;
+    }
+    .create {
+        float: right;
+        padding: 38px;
+        margin-top: 0px;
+    }
+</style>    <!-- /theme JS files -->
+<style>
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, main {
+        display: block;
+    }
 
-        .dataTable {
-            width: 100%!important;
-        }
-        .datatable-footer>div:first-child, .datatable-header>div:first-child {
-            margin-left: 20px;
-        }
-        .dataTables_length {
-            margin: 0 30px 18px 37px!important;
-        }
-        .create {
-            float: right;
-            padding: 38px;
-            margin-top: 0px;
-        }
-    </style>    <!-- /theme JS files -->
-    <style>
-        /* HTML5 display-role reset for older browsers */
-        article, aside, details, figcaption, figure,
-        footer, header, hgroup, menu, nav, section, main {
-            display: block;
-        }
+    /* --------------------------------
+    --------------------
 
-        /* --------------------------------
-        --------------------
+    Main components
 
-        Main components
+    -------------------------------- */
 
-        -------------------------------- */
+    .cd-popup-trigger {
+        display: block;
+        width: 246px;
+        height: 50px;
+        line-height: 50px;
+        margin: 3em auto;
+        text-align: center;
+        color: #FFF;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 50em;
+        background: #191e3a;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
+    }
+    /* --------------------------------
 
-        .cd-popup-trigger {
-            display: block;
-            width: 246px;
-            height: 50px;
-            line-height: 50px;
-            margin: 3em auto;
-            text-align: center;
-            color: #FFF;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 50em;
-            background: #191e3a;
-            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
-        }
-        /* --------------------------------
+    xpopup
 
-        xpopup
+    -------------------------------- */
+    .cd-popup {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(94, 110, 141, 0.9);
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+        -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+        transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    }
+    .cd-popup.is-visible {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+        -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+        transition: opacity 0.3s 0s, visibility 0s 0s;
+    }
 
-        -------------------------------- */
-        .cd-popup {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            background-color: rgba(94, 110, 141, 0.9);
-            opacity: 0;
-            visibility: hidden;
-            -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-            -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-            transition: opacity 0.3s 0s, visibility 0s 0.3s;
-        }
-        .cd-popup.is-visible {
-            opacity: 1;
-            visibility: visible;
-            -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
-            -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
-            transition: opacity 0.3s 0s, visibility 0s 0s;
-        }
+    .cd-popup-container {
+        position: relative;
+        width: 100%;
+        height:100%;
+        background: #060818;
+        border-radius: .25em .25em .4em .4em;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        -webkit-transform: translatex(-400px);
+        -moz-transform: translatex(-400px);
+        -ms-transform: translatex(-400px);
+        -o-transform: translatex(-400px);
+        transform: translatex(-400px);
+        /* Force Hardware Acceleration in WebKit */
+        -webkit-backface-visibility: hidden;
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        transition-property: transform;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        overflow: scroll;
+    }
+    .cd-popup-container p {
+        padding: 0px;
+        margin:0px;
+    }
 
-        .cd-popup-container {
-            position: relative;
-            width: 100%;
-            height:100%;
-            background: #FFF;
-            border-radius: .25em .25em .4em .4em;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            -webkit-transform: translatex(-400px);
-            -moz-transform: translatex(-400px);
-            -ms-transform: translatex(-400px);
-            -o-transform: translatex(-400px);
-            transform: translatex(-400px);
-            /* Force Hardware Acceleration in WebKit */
-            -webkit-backface-visibility: hidden;
-            -webkit-transition-property: -webkit-transform;
-            -moz-transition-property: -moz-transform;
-            transition-property: transform;
-            -webkit-transition-duration: 0.5s;
-            -moz-transition-duration: 0.5s;
-            transition-duration: 0.5s;
-            overflow: scroll;
-        }
-        .cd-popup-container p {
-            padding: 0px;
-            margin:0px;
-        }
+    .cd-popup-container .cd-popup-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 30px;
+        height: 30px;
+    }
+    .cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        width: 14px;
+        height: 3px;
+        background-color: #8f9cb5;
+    }
+    .cd-popup-container .cd-popup-close::before {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        left: 8px;
+    }
+    .cd-popup-container .cd-popup-close::after {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        right: 8px;
+    }
+    .is-visible .cd-popup-container {
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+        transform: translateX(0);
+    }
+    .10x_content_img {
+           width: 113px;
+           float: left;
+           margin-right: 5px;
+           border: 1px solid gray;
+           border-radius: 3px;
+           padding: 5px;
+           margin-top: 10px;
+       }
 
-        .cd-popup-container .cd-popup-close {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 30px;
-            height: 30px;
-        }
-        .cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
-            content: '';
-            position: absolute;
-            top: 12px;
-            width: 14px;
-            height: 3px;
-            background-color: #8f9cb5;
-        }
-        .cd-popup-container .cd-popup-close::before {
-            -webkit-transform: rotate(45deg);
-            -moz-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            -o-transform: rotate(45deg);
-            transform: rotate(45deg);
-            left: 8px;
-        }
-        .cd-popup-container .cd-popup-close::after {
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            right: 8px;
-        }
-        .is-visible .cd-popup-container {
-            -webkit-transform: translateX(0);
-            -moz-transform: translateX(0);
-            -ms-transform: translateX(0);
-            -o-transform: translateX(0);
-            transform: translateX(0);
-        }
-        .10x_content_img {
-            width: 113px;
-            float: left;
-            margin-right: 5px;
-            border: 1px solid gray;
-            border-radius: 3px;
-            padding: 5px;
-            margin-top: 10px;
-        }
+    /* Delete */
+    .10x_content_img span {
+           border: 2px solid red;
+           display: inline-block;
+           width: 99%;
+           text-align: center;
+           color: red;
+       }
 
-        /* Delete */
-        .10x_content_img span {
-            border: 2px solid red;
-            display: inline-block;
-            width: 99%;
-            text-align: center;
-            color: red;
-        }
+    .10x_content_img span:hover {
+           cursor: pointer;
+       }
 
-        .10x_content_img span:hover {
-            cursor: pointer;
-        }
+    .mat_content_img {
+        width: 113px;
+        float: left;
+        margin-right: 5px;
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding: 5px;
+        margin-top: 10px;
+    }
 
-        .mat_content_img {
-               width: 113px;
-               float: left;
-               margin-right: 5px;
-               border: 1px solid gray;
-               border-radius: 3px;
-               padding: 5px;
-               margin-top: 10px;
-           }
+    /* Delete */
+    .mat_content_img span {
+        border: 2px solid red;
+        display: inline-block;
+        width: 99%;
+        text-align: center;
+        color: red;
+    }
 
-        /* Delete */
-        .mat_content_img span {
-               border: 2px solid red;
-               display: inline-block;
-               width: 99%;
-               text-align: center;
-               color: red;
-           }
-
-        .mat_content_img span:hover {
-               cursor: pointer;
-           }
-    </style>
+    .mat_content_img span:hover {
+        cursor: pointer;
+    }
+    iframe {
+        width: 90%;
+        border: 0;
+        height: 100%;
+    }
+</style>
 
 </head>
 <body>
@@ -467,79 +657,142 @@ include("heading_banner.php");
         <div class="col-lg-3">
             <div class="panel bg-blue-400">
                 <div class="panel-body">
-                    <div class="heading-elements">
-                        <ul class="icons-list">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                            class="icon-cog3"></i> <span class="caret" style="color:white;"></span></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <?php if ($event_status != '0' && $event_status != '') { ?>
-                                        <li>
-                                            <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                               target="_BLANK"></a><i class="fa fa-line-chart"></i> Good & Bad Piece
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="fa fa-pencil-square"></i> Material Traceability</a>
-                                        </li>
-                                        <li>
-                                            <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="fa fa-pencil-square"></i> View Material Traceability</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>&f_type=n" target="_BLANK">
-                                                <i class="icon-eye"></i> Submit 10x</a>
-                                        </li>
-                                        <li>
-                                            <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                <i class="icon-eye"></i> View 10x </a>
-                                        </li>
-
-                                    <?php } ?>
-
-                                    <li>
-                                        <a href="view_station_status.php?station=<?php echo $line; ?>"
-                                        <i class="icon-eye"></i>View Station
-                                        Status</a></li>
-                                    <li>
-                                        <a href="events_module/station_events.php?line=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
-                                        <i class="icon-sync"></i>Add / Update
-                                        Events</a></li>
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <div class="overlay-content">
+                            <div class="row">
+                                <?php if ($event_status != '0' && $event_status != '') { ?>
+                                    <div class="col-sm-4">
+                                        <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Material Tracability</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Material Tracability</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >Submit 10X</a>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View 10X</a>
+                                    </div>
+                                <?php } ?>
+                                <div class="col-sm-4">
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Station Status</a>
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >Add / Update Events</a>
                                     <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
-                                        <li>
-                                            <a href="form_module/form_settings.php?station=<?php echo $line; ?>"
-                                            <i class="icon-pie5"></i> Create Form</a>
-                                        </li>
+                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >Create Form</a>
                                     <?php } ?>
-                                    <li>
-                                        <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>">
-                                            <i class="icon-pie5"></i> Submit Form</a>
-                                    </li>
-                                    <!--															--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
-                                    <li>
-                                        <a href="assignment_module/assign_crew.php?line=<?php echo $line; ?>"
-                                        <i class="icon-sync"></i>Assign / Unassign Crew</a>
-                                    </li>
-                                    <!--															--><?php //} ?>
-                                    <li>
-                                        <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
-                                        <i class="icon-eye"></i> View Assigned Crew</a>
-                                    </li>
-                                    <li>
-                                        <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
-                                            <i class="fa fa-file"></i> View Document </a>
-                                    </li>
-                                    <li>
-                                        <a href="report_config_module/scan_line_asset.php" target="_BLANK">
-                                            <i class="fa fa-file"></i> Submit Station Assets </a>
-                                    </li>
-                                </ul>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >Submit Form</a>
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >Assign / Unassign Crew</a>
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Assigned Crew</a>
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Document</a>
+                                    <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >Submit Station Assets</a>
+                                </div>
+                            </div>
 
-                            </li>
-                        </ul>
+                            <div id="pop1" class="cd-popup" role="alert">
+                                <div class="cd-popup-container station_event_id" value="<?php echo $station_event_id; ?>">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop2" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop3" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop4" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop5" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop6" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>view_station_status.php?station=<?php echo $line; ?>">
+
+                                    </iframe>
+
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop7" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/station_events.php">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop8" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <iframe id='iframe' src="<?php echo $siteURL; ?>form_module/form_settings.php?station=<?php echo $line; ?>">
+
+                                    </iframe>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop9" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <p>Are you sure you want to delete this element 9 ?</p>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop10" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <p>Are you sure you want to delete this element 10 ?</p>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop11" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <p>Are you sure you want to delete this element 11 ?</p>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+                            <div id="pop12" class="cd-popup" role="alert">
+                                <div class="cd-popup-container">
+                                    <p>Are you sure you want to delete this element 12 ?</p>
+                                    <a href="#0" class="cd-popup-close"></a>
+                                </div> <!-- cd-popup-container -->
+                            </div> <!-- cd-popup -->
+
+
+                        </div>
+
                     </div>
+
+                    <span style="font-size:30px;cursor:pointer;float: right;margin-top: -10px;" onclick="openNav()">&#9776;</span>
                     <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                     <hr/>
 
@@ -641,83 +894,138 @@ include("heading_banner.php");
         <div class="col-lg-3">
         <div class="panel bg-blue-400">
             <div class="panel-body">
-                <div class="heading-elements">
-                    <ul class="icons-list">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog3"></i> <span
-                                        class="caret"
-                                        style="color:white;"></span></a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <?php if ($event_status != '0' && $event_status != '') { ?>
-                                    <li>
-                                        <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                           target="_BLANK"><i class="fa fa-line-chart"></i>Good & Bad Piece
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="fa fa-pencil-square"></i> Material Traceability</a>
-                                    </li>
-                                    <li>
-                                        <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="fa fa-pencil-square"></i> View Material Traceability</a>
-                                    </li>
-                                    <li>
-                                        <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>&f_type=n" target="_BLANK">
-                                            <i class="icon-eye"></i> Submit 10x</a>
-                                    </li>
-                                    <li>
-                                        <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                            <i class="icon-eye"></i> View 10x </a>
-                                    </li>
+                <div id="myNav" class="overlay">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <div class="overlay-content">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Material Tracability</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Material Tracability</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >Submit 10X</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View 10X</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Station Status</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >Add / Update Events</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >Create Form</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >Submit Form</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >Assign / Unassign Crew</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Assigned Crew</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Document</a>
+                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >Submit Station Assets</a>
+                            </div>
+                        </div>
 
-                                <?php } ?>
+                        <div id="pop1" class="cd-popup" role="alert">
+                            <div class="cd-popup-container station_event_id" value="<?php echo $station_event_id; ?>">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>">
 
-                                <li>
-                                    <a href="view_station_status.php?station=<?php echo $rowc["line_id"]; ?>"><i
-                                                class="icon-eye"></i>View Station Status</a>
-                                </li>
-                                <li>
-                                    <a href="events_module/station_events.php?line=<?php echo $rowc["line_id"]; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"><i
-                                                class="icon-sync"></i>Add / Update
-                                        Events</a></li>
-                                <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
-                                    <li>
-                                        <a href="form_module/form_settings.php?station=<?php echo $rowc["line_id"]; ?>"><i
-                                                    class="icon-pie5"></i> Create Form</a>
-                                    </li>
-                                <?php } ?>
-                                <li>
-                                    <a href="form_module/options.php?station=<?php echo $rowc["line_id"]; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"><i
-                                                class="icon-pie5"></i> Submit Form</a>
-                                </li>
-                                <li>
-                                    <a href="form_module/form_search.php?station=<?php echo $rowc["line_id"]; ?>"><i
-                                                class="icon-eye"></i>View Form</a>
-                                </li>
-                                <!--														--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
-                                <li>
-                                    <a href="assignment_module/assign_crew.php?line=<?php echo $rowc["line_id"]; ?>"><i
-                                                class="icon-sync"></i>Assign / Unassign Crew</a>
-                                </li>
-                                <!--														--><?php //} ?>
-                                <li>
-                                    <a href="view_assigned_crew.php?station=<?php echo $rowc["line_id"]; ?>"><i
-                                                class="icon-eye"></i> View Assigned Crew</a>
-                                </li>
-                                <li>
-                                    <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
-                                        <i class="fa fa-file"></i> View Document </a>
-                                </li>
-                                <li>
-                                    <a href="report_config_module/scan_line_asset.php" target="_BLANK">
-                                        <i class="fa fa-file"></i> Submit Station Assets </a>
-                                </li>
-                            </ul>
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
 
-                        </li>
-                    </ul>
+                        <div id="pop2" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop3" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop4" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop5" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop6" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>view_station_status.php?station=<?php echo $line; ?>">
+
+                                </iframe>
+
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop7" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/station_events.php">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop8" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <iframe id='iframe' src="<?php echo $siteURL; ?>form_module/form_settings.php?station=<?php echo $line; ?>">
+
+                                </iframe>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop9" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <p>Are you sure you want to delete this element 9 ?</p>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop10" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <p>Are you sure you want to delete this element 10 ?</p>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop11" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <p>Are you sure you want to delete this element 11 ?</p>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+                        <div id="pop12" class="cd-popup" role="alert">
+                            <div class="cd-popup-container">
+                                <p>Are you sure you want to delete this element 12 ?</p>
+                                <a href="#0" class="cd-popup-close"></a>
+                            </div> <!-- cd-popup-container -->
+                        </div> <!-- cd-popup -->
+
+
+                    </div>
+
                 </div>
+
+                <span style="font-size:30px;cursor:pointer;float: right;margin-top: -10px;" onclick="openNav()">&#9776;</span>
                 <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                 <hr/>
 
@@ -855,96 +1163,154 @@ include("heading_banner.php");
 
             if ($countervariable % 4 == 0) {
                 ?>
-
-
                 <!--								<div class="row">-->
                 <div class="col-lg-3">
                     <div class="panel bg-blue-400">
                         <div class="panel-body">
-                            <div class="heading-elements">
-                                <ul class="icons-list">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                                    class="icon-cog3"></i> <span class="caret"
-                                                                                 style="color:white;"></span></a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <?php if ($event_status != '0' && $event_status != '') { ?>
-                                                <li>
-                                                    <a href="events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>"
-                                                       target="_BLANK"><i class="fa fa-line-chart"></i>Good & Bad Piece
-                                                    </a></li>
-                                                <li>
-                                                    <a href="material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="fa fa-pencil-square"></i> Material Traceability</a>
-                                                </li>
-                                                <li>
-                                                    <a href="material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="fa fa-pencil-square"></i> View Material Traceability</a>
-                                                </li>
-                                                <li>
-                                                    <a href="10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>&f_type=n" target="_BLANK">
-                                                        <i class="icon-eye"></i> Submit 10x</a>
-                                                </li>
-                                                <li>
-                                                    <a href="10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                        <i class="icon-eye"></i> View 10x </a>
-                                                </li>
+                            <div id="myNav" class="overlay">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <div class="overlay-content">
+                                    <div class="row">
+                                        <?php if ($event_status != '0' && $event_status != '') { ?>
+                                            <div class="col-sm-4">
+                                                <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Material Tracability</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Material Tracability</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >Submit 10X</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View 10X</a>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="col-sm-4">
 
-                                            <?php } ?>
-                                            <li>
-
-                                                <a href="view_station_status.php?station=<?php echo $line; ?>"
-                                                ><i class="icon-eye"></i>View Station
-                                                    Status</a></li>
-                                            <li>
-                                                <a href="events_module/station_events.php?line=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
-                                                ><i class="icon-sync"></i>Add / Update
-                                                    Events</a></li>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Station Status</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >Add / Update Events</a>
                                             <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
-                                                <li>
-                                                    <a href="form_module/form_settings.php?station=<?php echo $line; ?>"
-                                                    ><i class="icon-pie5"></i> Create Form</a>
-                                                </li>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >Create Form</a>
                                             <?php } ?>
-                                            <li>
-                                                <a href="form_module/options.php?station=<?php echo $line; ?>&part_family=<?php echo $pf_no; ?>&part_number=<?php echo $p_no; ?>"
-                                                ><i class="icon-pie5"></i> Submit Form</a>
-                                            </li>
-                                            <!--															--><?php //if(($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')){?>
-                                            <li>
-                                                <a href="assignment_module/assign_crew.php?line=<?php echo $line; ?>"
-                                                ><i class="icon-sync"></i>Assign / Unassign Crew</a>
-                                            </li>
-                                            <!--															--><?php //} ?>
-                                            <li>
-                                                <a href="view_assigned_crew.php?station=<?php echo $line; ?>"
-                                                ><i class="icon-eye"></i> View Assigned Crew</a>
-                                            </li>
-                                            <li>
-                                                <a href="document_module/document_form.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>" target="_BLANK">
-                                                    <i class="fa fa-file"></i>Upload Document </a>
-                                            </li>
-                                            <li>
-                                                <a href="document_module/view_document.php?station=<?php echo $line; ?>&part=<?php echo $p_no; ?>" target="_BLANK">
-                                                    <i class="fa fa-file"></i> View Document </a>
-                                            </li>
-                                            <li>
-                                                <a href="report_config_module/scan_line_asset.php" target="_BLANK">
-                                                    <i class="fa fa-file"></i> Submit Station Assets </a>
-                                            </li>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >Submit Form</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >Assign / Unassign Crew</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Assigned Crew</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Document</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >Submit Station Assets</a>
+                                        </div>
+                                    </div>
 
-                                        </ul>
-                                    </li>
-                                </ul>
+                                    <div id="pop1" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container station_event_id" value="<?php echo $station_event_id; ?>">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop2" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop3" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop4" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop5" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop6" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>view_station_status.php?station=<?php echo $line; ?>">
+
+                                            </iframe>
+
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop7" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/station_events.php">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop8" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>form_module/form_settings.php?station=<?php echo $line; ?>">
+
+                                            </iframe>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop9" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 9 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop10" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 10 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop11" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 11 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+                                    <div id="pop12" class="cd-popup" role="alert">
+                                        <div class="cd-popup-container">
+                                            <p>Are you sure you want to delete this element 12 ?</p>
+                                            <a href="#0" class="cd-popup-close"></a>
+                                        </div> <!-- cd-popup-container -->
+                                    </div> <!-- cd-popup -->
+
+
+                                </div>
 
                             </div>
+
+                            <span style="font-size:30px;cursor:pointer;float: right;margin-top: -10px;" onclick="openNav()">&#9776;</span>
                             <h3 class="no-margin dashboard_line_heading"><?php echo $rowc_new["line_name"]; ?></h3>
                             <hr/>
 
                             <table style="width:100%" id="t01">
                                 <tr>
                                     <td>
-                                        <div style="padding-top: 5px;font-size: initial; wi">Part Family :
+                                        <div style="padding-top: 5px;font-size: initial;">Part Family :
                                         </div>
                                     </td>
                                     <td>
@@ -1044,812 +1410,101 @@ include("heading_banner.php");
                                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                 <div class="overlay-content">
                                     <div class="row">
+                                        <?php if ($event_status != '0' && $event_status != '') { ?>
+                                            <div class="col-sm-4">
+                                                <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">Good & Bad Piece</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >Material Tracability</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Material Tracability</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >Submit 10X</a>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View 10X</a>
+                                            </div>
+                                        <?php } ?>
                                         <div class="col-sm-4">
-                                        <a href="#0" id="pop1btn" class="cd-popup-trigger" onclick="openpopup('pop1')">View Pop-up 1</a>
-                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop2')" >View Pop-up 2</a>
-                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop3')" >View Pop-up 3</a>
-                                        <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop4')" >View Pop-up 4</a>
+
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Station Status</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >Add / Update Events</a>
+                                            <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                                <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >Create Form</a>
+                                            <?php } ?>
                                         </div>
                                         <div class="col-sm-4">
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop5')" >View Pop-up 5</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop6')" >View Pop-up 6</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop7')" >View Pop-up 7</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop8')" >View Pop-up 8</a>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >View Pop-up 9</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >View Pop-up 10</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Pop-up 11</a>
-                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Pop-up 12</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop9')" >Submit Form</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop10')" >Assign / Unassign Crew</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop11')" >View Assigned Crew</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >View Document</a>
+                                            <a href="#0" class="cd-popup-trigger" onclick="openpopup('pop12')" >Submit Station Assets</a>
                                         </div>
                                     </div>
 
                                     <div id="pop1" class="cd-popup" role="alert">
-                                        <div class="cd-popup-container">
-                                            <div class="content">
-                                                <?php
-                                                $user_id = $_SESSION["id"];
-                                                $def_ch = $_POST['def_ch'];
-                                                $chicagotime = date("Y-m-d H:i:s");
-                                                //$line = "<b>-</b>";
-                                                $line = "";
-                                                $station_event_id = $rowc01['station_event_id'];
-                                                $sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
-                                                $resultmain = $mysqli->query($sqlmain);
-                                                $rowcmain = $resultmain->fetch_assoc();
-                                                $part_family = $rowcmain['part_family_id'];
-                                                $part_number = $rowcmain['part_number_id'];
-                                                $p_line_id = $rowcmain['line_id'];
+                                        <div class="cd-popup-container station_event_id" value="<?php echo $station_event_id; ?>">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/good_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>">
 
-                                                $sqlprint = "SELECT * FROM `cam_line` where `line_id` = '$p_line_id'";
-                                                $resultnumber = $mysqli->query($sqlprint);
-                                                $rowcnumber = $resultnumber->fetch_assoc();
-                                                $printenabled = $rowcnumber['print_label'];
-                                                $p_line_name = $rowcnumber['line_name'];
-                                                $individualenabled = $rowcnumber['indivisual_label'];
-
-                                                $idddd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
-                                            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
-                                                    , $_SERVER["HTTP_USER_AGENT"]);
-
-                                                $sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-                                                $resultnumber = $mysqli->query($sqlnumber);
-                                                $rowcnumber = $resultnumber->fetch_assoc();
-                                                $pm_part_number = $rowcnumber['part_number'];
-                                                $pm_part_name = $rowcnumber['part_name'];
-                                                $pm_npr= $rowcnumber['npr'];
-                                                if(empty($pm_npr))
-                                                {
-                                                    $npr = 0;
-                                                    $pm_npr = 0;
-                                                }else{
-                                                    $npr = $pm_npr;
-                                                }
-                                                $sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-                                                $resultfamily = $mysqli->query($sqlfamily);
-                                                $rowcfamily = $resultfamily->fetch_assoc();
-                                                $pm_part_family_name = $rowcfamily['part_family_name'];
-
-                                                $sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-                                                $resultaccount = $mysqli->query($sqlaccount);
-                                                $rowcaccount = $resultaccount->fetch_assoc();
-                                                $account_id = $rowcaccount['account_id'];
-
-                                                $sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-                                                $resultcus = $mysqli->query($sqlcus);
-                                                $rowccus = $resultcus->fetch_assoc();
-                                                $cus_name = $rowccus['c_name'];
-                                                $logo = $rowccus['logo'];
-
-                                                $sql2 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where sg_station_event.line_id = '$p_line_id' and sg_station_event.event_status = 1" ;
-                                                $result2 = mysqli_query($db,$sql2);
-                                                $total_time = 0;
-                                                $row2=$result2->fetch_assoc();
-                                                $total_gp =  $row2['good_pieces'] + $row2['rework'];
-
-                                                $sql3 = "SELECT * FROM `sg_station_event_log` where 1 and event_status = 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
-                                                $result3 = mysqli_query($db,$sql3);
-                                                $ttot = null;
-                                                $tt = null;
-                                                while ($row3 = $result3->fetch_assoc()) {
-                                                    $ct = $row3['created_on'];
-                                                    $tot = $row3['total_time'];
-                                                    if(!empty($row3['total_time'])){
-                                                        $ttot = explode(':' , $row3['total_time']);
-                                                        $i = 0;
-                                                        foreach($ttot as $t_time) {
-                                                            if($i == 0){
-                                                                $total_time += ( $t_time * 60 * 60 );
-                                                            }else if( $i == 1){
-                                                                $total_time += ( $t_time * 60 );
-                                                            }else{
-                                                                $total_time += $t_time;
-                                                            }
-                                                            $i++;
-                                                        }
-                                                    }else{
-                                                        $total_time +=  strtotime($chicagotime) - strtotime($ct);
-                                                    }
-                                                }
-                                                $total_time = (($total_time/60)/60);
-                                                $b = round($total_time);
-                                                $target_eff = round($pm_npr * $b);
-                                                $actual_eff = $total_gp;
-                                                if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
-                                                    $eff = 0;
-                                                }else{
-                                                    $eff = round(100 * ($actual_eff/$target_eff));
-                                                }
-
-                                                ?>
-                                                <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;padding-top: 32px;" class="row">
-                                                    <div class="col-lg-6 col-md-8 graph_media">
-                                                        <div class="media">
-                                                            <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
-
-                                                            <div class="media-left">
-                                                                <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
-                                                                <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
-                                                                <!--                                    </a>-->
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <small style="font-size: 22px; margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $pm_part_family_name; ?></small>
-                                                                <small style="font-size: 22px;" class="display-block"><b>Part Number :-</b> <?php echo $pm_part_number; ?></small>
-                                                                <small style="font-size: 22px;" class="display-block"><b>Part Name :-</b> <?php echo $pm_part_name; ?></small>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-8 graph_media">
-                                                        <div class="media">
-                                                            <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin">Current Staff Efficiency</h5>
-                                                            <div class="media-left">
-                                                                <!--                                    <a target="_blank" href="../supplier_logo/--><?php //if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?><!--" data-popup="lightbox">-->
-                                                                <div id="eff_container" class="img-circle"></div>                                                        <!--                                    </a>-->
-                                                            </div>
-                                                            <div class="media_details">
-                                                                <div class="media-body">
-                                                                    <small style="font-size: 22px ;margin-top: 15px;padding-left: 14px;"><b>Target Pieces :-</b> <?php echo $target_eff; ?></small>
-                                                                    <small style="font-size: 22px;padding-left: 17px;" ><b>Actual Pieces :-</b> <?php echo $actual_eff; ?></small>
-                                                                    <small style="font-size: 22px;padding-left: 17px;"><b>Efficiency :-</b> <?php echo $eff; ?>%</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                if (!empty($import_status_message)) {
-                                                    echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                                }
-                                                ?>
-                                                <?php
-                                                if (!empty($_SESSION['import_status_message'])) {
-                                                    echo '<div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                                    $_SESSION['message_stauts_class'] = '';
-                                                    $_SESSION['import_status_message'] = '';
-                                                } ?>
-                                                <div class="panel panel-flat">
-                                                    <?php
-                                                    $station_event_id = $rowc01['station_event_id'];
-                                                    $sql = "select SUM(good_pieces) as good_pieces,SUM(bad_pieces) AS bad_pieces,SUM(rework) as rework from good_bad_pieces where station_event_id ='$station_event_id' ";
-                                                    $result1 = mysqli_query($db, $sql);
-                                                    $rowc = mysqli_fetch_array($result1);
-                                                    $gp = $rowc['good_pieces'];
-                                                    if(empty($gp)){
-                                                        $g = 0;
-                                                    }else{
-                                                        $g = $gp;
-                                                    }
-                                                    $bp = $rowc['bad_pieces'];
-                                                    if(empty($bp)){
-                                                        $b = 0;
-                                                    }else{
-                                                        $b = $bp;
-                                                    }
-                                                    $rwp = $rowc['rework'];
-                                                    if(empty($rwp)){
-                                                        $r = 0;
-                                                    }else{
-                                                        $r = $rwp;
-                                                    }
-                                                    $tp = $gp + $bp+ $rwp;
-                                                    if(empty($tp)){
-                                                        $t = 0;
-                                                    }else{
-                                                        $t = $tp;
-                                                    }
-                                                    ?>
-                                                    <div class="row" style="background-color: #f3f3f3;margin: 0px">
-                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
-                                                            <span>Total Pieces : <?php echo $t ?></span>
-                                                        </div>
-                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#a8d8a8;">
-                                                            <span>Total Good Pieces : <?php echo $g ?></span>
-                                                        </div>
-                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#eca9a9;">
-                                                            <span>Total Bad Pieces : <?php echo $b ?></span>
-                                                        </div>
-                                                        <div class="col-md-3" style="height: 10vh; padding-top: 3vh; padding-bottom: 3vh; font-size: x-large; text-align: center;background-color:#b1cdff;">
-                                                            <span>Rework : <?php echo $r ?></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel-heading" style="padding: 50px;">
-                                                        <div class="row">
-                                                            <div class="search_container"  style="margin-right:10px;">
-                                                                <input id="search" class="search__input"  type="text" placeholder="Search Defect" style="margin-left: 15px;padding: 12px 24px;background-color: transparent;transition: transform 250ms ease-in-out;line-height: 18px;color: #000000;font-size: 18px;background-color: transparent; background-repeat: no-repeat;background-size: 18px 18px;background-position: 95% center;border-radius: 50px;border: 1px solid #575756;transition: all 250ms ease-in-out;backface-visibility: hidden;transform-style: preserve-3d;">
-                                                            </div>
-                                                        </div>
-                                                        </br>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <?php if(($idddd != 0) && ($printenabled == 1)){?>
-                                                                    <iframe height="100" id="resultFrame" style="display: none;" src="./pp.php"></iframe>
-                                                                <?php }?>
-                                                                <!--                    <button type="button" data-toggle="modal" data-target="#view_good_modal_theme_primary"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</button>-->
-                                                                <a href="<?php echo $siteURL; ?>events_module/add_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>"  class="btn btn-primary" style="background-color:#177b09 !important;margin-top: 10px;width: 100%;height: 10vh; padding-top: 3vh; font-size: large; text-align: center;"> IN-SPEC</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <?php
-                                                            $i = 1;
-                                                            $def_list_arr = array();
-                                                            $sql1 = "SELECT * FROM `defect_list` ORDER BY `defect_list_name` ASC";
-                                                            $result1 = $mysqli->query($sql1);
-                                                            while ($row1 = $result1->fetch_assoc()) {
-                                                                $pnums = $row1['part_number_id'];
-                                                                $arr_pnums = explode(',', $pnums);
-                                                                if (in_array($part_number, $arr_pnums)) {
-                                                                    array_push($def_list_arr, $row1['defect_list_id']);
-                                                                }
-                                                            }
-
-                                                            $sql1 = "SELECT sdd.defect_list_id as dl_id FROM sg_defect_group as sdg inner join sg_def_defgroup as sdd on sdg.d_group_id = sdd.d_group_id WHERE FIND_IN_SET('$part_number',sdg.part_number_id) > 0";
-                                                            $result1 = $mysqli->query($sql1);
-                                                            while ($row1 = $result1->fetch_assoc()) {
-                                                                array_push($def_list_arr, $row1['dl_id']);
-                                                            }
-                                                            $def_list_arr = array_unique($def_list_arr);
-                                                            $def_lists = implode("', '", $def_list_arr);
-                                                            $sql1 = "SELECT * FROM `defect_list` where  defect_list_id IN ('$def_lists') ORDER BY `defect_list_name` ASC";
-                                                            $result1 = $mysqli->query($sql1);
-                                                            while ($row1 = $result1->fetch_assoc()) {
-                                                                ?>
-                                                                <div class="col-md-3" style="padding-top: 10px;">
-
-                                                                    <a  href="<?php echo $siteURL; ?>events_module/add_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&defect_list_id=<?php echo $row1['defect_list_id']; ?>&cell_id=<?php echo $cellID; ?>&c_name=<?php echo $cell_name; ?>" class="btn btn-primary view_gpbp"  data-buttonid="<?php echo $row1['defect_list_id']; ?>"
-                                                                        data-defect_name="<?php echo $row1['defect_list_name']; ?>" style="white-space: normal;background-color:#BE0E31 !important;height: 8vh; width:98% ; padding-top: 2vh; font-size: medium; text-align: center;" target="_blank">
-                                                                        <?php echo $row1['defect_list_name']; ?></a>
-
-                                                                </div>
-                                                                <?php
-                                                                if($i == 4)
-                                                                {
-                                                                    echo "<br/>";
-                                                                    echo "<br/>";
-                                                                    echo "<br/>";
-                                                                    $i = 0;
-                                                                }
-
-                                                                $i++;
-                                                            }
-                                                            ?>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <form action="<?php echo $siteURL; ?>events_module/delete_good_bad_piece.php" method="post" class="form-horizontal">
-                                                    <input type="hidden" name="station_event_id" value="<?php echo $station_event_id; ?>">
-                                                    <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
-                                                    <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <button type="submit" class="btn btn-primary" style="background-color:#1e73be;" >Delete</button>
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    <div class="panel panel-flat">
-                                                        <table class="table datatable-basic">
-                                                            <thead>
-                                                            <tr>
-                                                                <th><input type="checkbox" id="checkAll" ></th>
-                                                                <th>S.No</th>
-                                                                <th>Good Pieces</th>
-                                                                <th>Defect Name</th>
-                                                                <th>Bad Pieces</th>
-                                                                <th>Re-Work</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <?php
-                                                            $station_event_id = $_GET['station_event_id'];
-                                                            $query = sprintf("SELECT gbpd.bad_pieces_id as bad_pieces_id , gbpd.good_pieces as good_pieces, gbpd.defect_name as defect_name, gbpd.bad_pieces as bad_pieces ,gbpd.rework as rework FROM good_bad_pieces_details as gbpd where gbpd.station_event_id  = '$station_event_id' order by gbpd.bad_pieces_id DESC");
-                                                            $qur = mysqli_query($db, $query);
-                                                            while ($rowc = mysqli_fetch_array($qur)) {
-                                                                $bad_pieces_id = $rowc['bad_pieces_id'];
-                                                                $good_pieces = $rowc['good_pieces'];
-                                                                $bad_pieces = $rowc['bad_pieces'];
-                                                                $rework = $rowc['rework'];
-                                                                $style = "";
-                                                                if($rowc['good_pieces'] != ""){
-                                                                    $style = "style='background-color:#a8d8a8;'";
-                                                                }
-                                                                if($rowc['bad_pieces'] != ""){
-                                                                    $style = "style='background-color:#eca9a9;'";
-                                                                }
-                                                                if($rowc['rework'] != ""){
-                                                                    $style = "style='background-color:#b1cdff;'";
-                                                                }
-                                                                ?>
-                                                                <tr <?php echo $style; ?>>
-                                                                    <td><input type="checkbox" id="delete_check[]" name="delete_check[]" value="<?php echo $rowc["bad_pieces_id"]; ?>"></td>
-                                                                    <td><?php echo ++$counter; ?></td>
-                                                                    <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
-                                                                    <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
-                                                                    <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
-                                                                    <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
-                                                                    <?php
-                                                                    $qur04 = mysqli_query($db, "SELECT * FROM  good_bad_pieces where station_event_id= '$station_event_id' ORDER BY `good_bad_pieces_id` DESC LIMIT 1");
-                                                                    $rowc04 = mysqli_fetch_array($qur04);
-                                                                    $good_trace_id = $rowc04["good_bad_pieces_id"];
-
-                                                                    $query1 = sprintf("SELECT good_bad_pieces_id,good_image_name FROM  good_piece_images where good_bad_pieces_id = '$good_trace_id'");
-                                                                    $qur1 = mysqli_query($db, $query1);
-                                                                    $rowc1 = mysqli_fetch_array($qur1);
-                                                                    $item_id = $rowc1['good_bad_pieces_id'];
-                                                                    $image_name = $rowc1['good_image_name'];
-
-                                                                    ?>
-                                                                    <td>
-                                                                        <?php   if($rowc['good_pieces'] != ""){ ?>
-                                                                            <a  href="<?php echo $siteURL; ?>events_module/edit_good_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                            </a> <?php } elseif($rowc['bad_pieces'] != ""){?>
-                                                                            <a href="<?php echo $siteURL; ?>events_module/edit_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                            </a>
-                                                                        <?php } else{ ?>
-                                                                            <a href="<?php echo $siteURL; ?>events_module/rework_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>"" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
-                                                                            data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>"
-                                                                            data-image_name="<?php echo $image_name; ?>" class="btn btn-info btn-xs" id="edit">Edit
-                                                                            </a>
-                                                                        <?php } ?>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php } ?>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop2" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <div class="content">
-                                                <?php
-                                                $st = $rowc_new["line_name"];
-                                                ?>
-                                                <div class="panel panel-flat">
-                                                    <div class="panel-heading">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
 
-                                                        <div class="row">
-                                                            <form action="" id="material_tracability" enctype="multipart/form-data"
-                                                                  class="form-horizontal" method="post">
-                                                                <div class="col-md-12">
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                                                        <div class="col-md-6">
-                                                                            <?php $form_id = $_GET['id'];
-                                                                            //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                                                            <input type="hidden" name="station_event_id"
-                                                                                   value="<?php echo $station_event_id ?>">
-                                                                            <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                                                            <input type="hidden" name="station" value="<?php echo $station_id; ?>">
-                                                                            <input type="hidden" name="line_number" value="<?php echo $station_id; ?>">
-                                                                            <input type="hidden" name="cell_id" value="<?php echo $cellID; ?>">
-                                                                            <input type="hidden" name="c_name" value="<?php echo $cell_name; ?>">
-                                                                            <input type="text" name="line_number1" id="line_number"
-                                                                                   value="<?php echo $rowc_new['line_name']; ?>" class="form-control"
-                                                                                   placeholder="Enter Line Number">
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                                                        <div class="col-md-6">
-                                                                            <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
-                                                                            <input type="text" name="part_number1" id="part_number"
-                                                                                   value="<?php echo $pm_part_number; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Number">
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                                                        <div class="col-md-6">
-                                                                            <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
-                                                                            <input type="text" name="part_family1" id="part_family"
-                                                                                   value="<?php echo $pm_part_family_name; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Family">
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                                                        <div class="col-md-6">
-                                                                            <!--                                    <input type="hidden" name="part_name" value="-->
-                                                                            <?php //echo $part_family; ?><!--">-->
-                                                                            <input type="text" name="part_name" id="part_name"
-                                                                                   value="<?php echo $pm_part_name; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Name">
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Material type : </label>
-                                                                        <div class="col-md-6">
-                                                                            <select name="material_type" id="material_type" class="select form-control" data-style="bg-slate" required>
-                                                                                <option value="" selected disabled>--- Select material Type ---</option>
-                                                                                <?php
-                                                                                $sql1 = "SELECT material_id, material_type,serial_num_required FROM `material_config`";
-                                                                                $result1 = mysqli_query($db, $sql1);
-                                                                                while ($row1 = $result1->fetch_assoc()) {
-
-                                                                                    echo "<option value=" . $row1['material_id'] . "_" . $row1['serial_num_required'] . ">" . $row1['material_type'] . "</option>";
-
-                                                                                }
-                                                                                ?>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Image : </label>
-
-                                                                        <div class="col-md-6">
-                                                                            <input type="file" id="material_file" name="file" class="form-control"/>
-                                                                            <div class="container"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <?php
-
-
-                                                                    $m_type = $_POST['material_type'];
-
-                                                                    $sql = "SELECT serial_num_required FROM `material_config` where material_type = '$m_type'";
-                                                                    $row = mysqli_query($db, $sql);
-                                                                    $se_row = mysqli_fetch_assoc($row);
-
-                                                                    $serial = $se_row['serial_num_required'];
-
-                                                                    ?>
-                                                                    <div class="row" id = "serial_num">
-
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Material Status : </label>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-check form-check-inline" style="float: left;">
-                                                                                <input type="radio" id="pass" name="material_status" value="1"
-                                                                                       class="form-check-input" checked required>
-                                                                                <label for="pass" class="item_label">Pass</label>
-
-                                                                                <input type="radio" id="fail" name="material_status" value="0"
-                                                                                       class="form-check-input reject" required>
-                                                                                <label for="fail" class="item_label">Fail</label>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div id="rej_fail" style="display: none;">
-
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Notes : </label>
-                                                                        <div class="col-md-6">
-                                                                            <textarea id="notes"  rows="4" placeholder="Enter Notes..." class="form-control"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <hr/>
-                                                                    <br/>
-                                                                    <div class="panel-footer p_footer">
-                                                                        <button type="submit" id="material_btn" class="btn btn-primary submit_btn"
-                                                                                style="background-color:#1e73be;">Submit
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop3" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <div class="page-container">
-                                                <div class="col-md-2 create">
-                                                    <a href="<?php echo $siteURL; ?>material_tracability/material_tracability.php?station=<?php echo $station; ?>&station_event_id=<?php echo $station_event_id; ?>">
-                                                        <button type="submit" id="create" class="btn btn-primary" style="background-color: #009688;float:right">Add/Create New Material Form</button>
-                                                    </a>
-                                                </div>
-                                                <div class="content" style="padding: 114px 30px !important;">
-                                                    <?php  $result = "SELECT * FROM `material_tracability` where station_event_id = '$station_event_id' ORDER BY `material_id` DESC";
-                                                    $qur = mysqli_query($db,$result); ?>
-                                                    <div class="panel panel-flat" >
-                                                        <table class="table datatable-basic">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Sl. No</th>
-                                                                <th>Action</th>
-                                                                <th>Station</th>
-                                                                <th>Material Type</th>
-                                                                <th>Serial Number</th>
-                                                                <th class="form_create">Created At</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                               <?php
-                                                               while ($rowc = mysqli_fetch_array($qur)) {
-                                                                $line_name = $rowc["line_no"];
-                                                                $sqlnumber = "SELECT * FROM `cam_line` where `line_id` = '$line_name'";
-                                                                $resultnumber = mysqli_query($db,$sqlnumber);
-                                                                $rowcnumber = mysqli_fetch_array($resultnumber);
-                                                                $station = $rowcnumber['line_name'];
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>material_tracability/material_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
 
-                                                                $material_type = $rowc["material_type"];
-                                                                $serial_number = $rowc["serial_number"];
-                                                               if($serial_number == 0){
-                                                                $serial =  '';
-                                                               }else{
-                                                                $serial =  $serial_number;
-                                                                }
-                                                               $material_status = $rowc["material_status"];
-                                                               $created_at= $rowc["created_at"];
-
-                                                               if($material_status == '1'){
-                                                                $style = "style='background-color:#a8d8a8;'";
-                                                               }else{
-                                                                 $style = "style='background-color:#eca9a9;'";
-                                                               }?>
-                                                                   <tr <?php echo $style; ?>>
-                                                                       <td> <?php echo ++$counter; ?></td>
-                                                                       <td >
-                                                                           <a href="view_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-
-                                                                           <a href="edit_material.php?id=<?php echo $rowc['material_id']; ?>" class="btn btn-primary" style="background-color:#1e73be;"> <i class="fa fa-edit"></i></i></a>
-
-                                                                       </td>
-
-                                                                       <td> <?php echo $station ?></td>
-                                                                       <?php
-
-                                                                       $result1 = "SELECT * FROM `material_config` where material_id = '$material_type'";
-                                                                       $qur1 = mysqli_query($db,$result1);
-                                                                       while ($rowc1 = mysqli_fetch_array($qur1)) {
-
-                                                                           $material_type = $rowc1['material_type'];
-
-                                                                       } ?>
-                                                                       <td> <?php echo $material_type ?></td>
-                                                                       <td> <?php echo $serial ?></td>
-                                                                       <td> <?php echo $created_at ?></td>
-                                                                   </tr>
-                                                               <?php } ?>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop4" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <div class="content">
-                                                <div class="panel panel-flat">
-                                                    <div class="panel-heading">
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
 
-                                                        <?php if ($temp == "one") { ?>
-                                                            <br/>
-                                                            <div class="alert alert-success no-border">
-                                                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
-                                                                            class="sr-only">Close</span></button>
-                                                                <span class="text-semibold">10x</span> Created Successfully.
-                                                            </div>
-                                                        <?php } ?>
-                                                        <?php if ($temp == "two") { ?>
-                                                            <br/>
-                                                            <div class="alert alert-success no-border">
-                                                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span
-                                                                            class="sr-only">Close</span></button>
-                                                                <span class="text-semibold">10x.</span> Updated Successfully.
-                                                            </div>
-                                                        <?php } ?>
-                                                        <?php
-                                                        if (!empty($import_status_message)) {
-                                                            echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
-                                                        }
-                                                        ?>
-                                                        <?php
-                                                        if (!empty($_SESSION['import_status_message'])) {
-                                                            echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
-                                                            $_SESSION['message_stauts_class'] = '';
-                                                            $_SESSION['import_status_message'] = '';
-                                                        }
-                                                        ?>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <form action="10x_backend.php" id="10x_setting" enctype="multipart/form-data"
-                                                                      class="form-horizontal" method="post">
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-                                                                        <div class="col-md-6">
-                                                                            <?php //$form_id = $rowc_new["line_id"];
-                                                                                  $line_name = $rowc_new["line_name"];
-                                                                                  $line_no = $rowc_new["line_id"];
-                                                                            //$station_event_id = base64_decode(urldecode($station_event_id)); ?>
-                                                                            <input type="hidden" name="station_event_id"
-                                                                                   value="<?php echo $station_event_id ?>">
-                                                                            <input type="hidden" name="customer_account_id" value="<?php echo $account_id ?>">
-                                                                            <input type="hidden" name="station" value="<?php echo $st; ?>">
-                                                                            <input type="hidden" name="line_number" value="<?php echo $line_no; ?>">
-                                                                            <input type="text" name="line_number1" id="line_number"
-                                                                                   value="<?php echo $line_name ?>" class="form-control"
-                                                                                   placeholder="Enter Line Number">
-                                                                        </div>
-                                                                        <div id="error1" class="red">Line Number</div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Number : </label>
-                                                                        <div class="col-md-6">
-                                                                            <input type="hidden" name="part_number" value="<?php echo $part_number; ?>">
-                                                                            <input type="text" name="part_number1" id="part_number"
-                                                                                   value="<?php echo $pm_part_number; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Number">
-                                                                        </div>
-                                                                        <div id="error1" class="red">Part Number</div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Family : </label>
-                                                                        <div class="col-md-6">
-                                                                            <input type="hidden" name="part_family" value="<?php echo $part_family; ?>">
-                                                                            <input type="text" name="part_family1" id="part_family"
-                                                                                   value="<?php echo $pm_part_family_name; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Family">
-                                                                        </div>
-                                                                        <div id="error1" class="red">Part family</div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label" style="padding-top: 10px;">Part Name : </label>
-                                                                        <div class="col-md-6">
-                                                                            <!--                                    <input type="hidden" name="part_name" value="-->
-                                                                            <?php //echo $part_family; ?><!--">-->
-                                                                            <input type="text" name="part_name" id="part_name"
-                                                                                   value="<?php echo $pm_part_name; ?>" class="form-control"
-                                                                                   placeholder="Enter Part Name">
-                                                                        </div>
-                                                                        <div id="error1" class="red">Part Name</div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Image : </label>
-                                                                        <div class="col-md-6">
-                                                                            <?php if(($idddd == 0)){?>
-                                                                                <div id="my_camera"></div>
-                                                                                <br/>
-                                                                                <input type=button class="btn btn-primary " value="Take Snapshot" onClick="take_snapshot()">
-                                                                                <input type="hidden" name="image" id="image" class="image-tag" accept="image/*,capture=camera"/>
-                                                                            <?php } ?>
-                                                                            <?php if(($idddd != 0)){?>
-                                                                                <div style="display:none;" id="my_camera"></div>
-                                                                                <label for="file" class="btn btn-primary ">Take Snapshot</label>
-                                                                                <input type="file" name="image" id="10x_file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                                                                <div class="container"></div>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row" style="display: none">
-                                                                        <label class="col-lg-2 control-label">Captured Image : </label>
-                                                                        <div class="col-md-6">
-                                                                            <div id="results"></div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Previous Image : </label>
-                                                                        <div class="col-md-6">
-                                                                            <?php
-                                                                            $time_stamp = $_SESSION['timestamp_id'];
-                                                                            if(!empty($time_stamp)){
-                                                                                $query2 = sprintf("SELECT * FROM  10x_images where 10x_id = '$time_stamp'");
-
-                                                                                $qurimage = mysqli_query($db, $query2);
-                                                                                $i =0 ;
-                                                                                while ($rowcimage = mysqli_fetch_array($qurimage)) {
-                                                                                    $image = $rowcimage['image_name'];
-                                                                                    $d_tag = "10x_delete_image_" . $i;
-                                                                                    $r_tag = "10x_remove_image_" . $i;
-                                                                                    ?>
-
-                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                        <div class="thumbnail">
-                                                                                            <div class="thumb">
-                                                                                                <img src="../assets/images/10x/<?php echo $time_stamp; ?>/<?php echo $image; ?>"
-                                                                                                     alt="">
-                                                                                                <input type="hidden"  id="<?php echo $d_tag; ?>" name="<?php echo $d_tag; ?>" class="<?php echo $d_tag; ?>>" value="<?php echo $rowcimage['10x_images_id']; ?>">
-                                                                                                <span class="10x_remove 10x_remove_image" id="<?php echo $r_tag; ?>">Remove Image </span>
-
-
-                                                                                                <!--                                                <div class="caption-overflow">-->
-                                                                                                <!--														<span>-->
-                                                                                                <!--															<a href="../material_images/--><?php //echo $rowcimage['image_name']; ?><!--"-->
-                                                                                                <!--                                                               data-popup="lightbox" rel="gallery"-->
-                                                                                                <!--                                                               class="btn border-white text-white btn-flat btn-icon btn-rounded"><i-->
-                                                                                                <!--                                                                        class="icon-plus3"></i></a>-->
-                                                                                                <!--														</span>-->
-                                                                                                <!---->
-                                                                                                <!--                                                </div>-->
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <?php
-                                                                                    $i++;}
-                                                                            }
-                                                                            ?>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <label class="col-lg-2 control-label">Notes : </label>
-                                                                        <div class="col-md-6">
-                                                                            <textarea id="notes"   name="10x_notes"   rows="4"    placeholder="Enter Notes..." class="form-control"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <hr/>
-                                                                    <div class="panel-footer p_footer">
-
-                                                                        <button type="submit" id="form_submit_btn" class="btn btn-primary submit_btn"
-                                                                                style="background-color:#1e73be;">Submit
-                                                                        </button>
-
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop5" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <p>Are you sure you want to delete this element 5 ?</p>
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>10x/10x_search.php?station=<?php echo $line; ?>&station_event_id=<?php echo $station_event_id; ?>">
+
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop6" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <p>Are you sure you want to delete this element 6 ?</p>
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>view_station_status.php?station=<?php echo $line; ?>">
+
+                                            </iframe>
+
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop7" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <p>Are you sure you want to delete this element 7 ?</p>
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>events_module/station_events.php">
+
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
 
                                     <div id="pop8" class="cd-popup" role="alert">
                                         <div class="cd-popup-container">
-                                            <p>Are you sure you want to delete this element 8 ?</p>
+                                            <iframe id='iframe' src="<?php echo $siteURL; ?>form_module/form_settings.php?station=<?php echo $line; ?>">
+
+                                            </iframe>
                                             <a href="#0" class="cd-popup-close"></a>
                                         </div> <!-- cd-popup-container -->
                                     </div> <!-- cd-popup -->
@@ -1911,12 +1566,6 @@ include("heading_banner.php");
                                     <td><span><?php echo $p_num;
                                             $p_num = ''; ?></span></td>
                                 </tr>
-                                <!--                                        <tr>-->
-                                <!--                                            <td><div style="padding-top: 5px;font-size: initial;">Event Type :  </div></td>-->
-                                <!--                                            <td><span>-->
-                                <?php //echo $last_assignedby;	$last_assignedby = "";
-                                ?><!--</span></span></td>-->
-                                <!--                                        </tr>-->
                                 <tr>
                                     <td>
                                         <div style="padding-top: 5px;font-size: initial;">Part Name :</div>
@@ -1925,7 +1574,7 @@ include("heading_banner.php");
                                             $p_name = ''; ?></span></td>
                                 </tr>
                             </table>
-                         </div>
+                        </div>
                         </main>
                         <?php
                         $variable123 = $time;
@@ -2055,7 +1704,7 @@ if ($i == "") {
                 "                                    <input type=\"text\" size=\"30\" name=\"serial_number\" id=\"serial_number\"\n" +
                 "                                           class=\"form-control\" required/>\n" +
                 "                                </div>\n" ;
-                // "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
+            // "                                <div id=\"error1\" class=\"red\">Enter valid Serial Number</div>";
             document.getElementById("serial_num").style.display = 'block';
             document.getElementById("material_file").required = true;
         }
@@ -2174,7 +1823,7 @@ if ($i == "") {
 
 </script>
 <script>
-     $(document).on("click","#material_btn",function() {
+    $(document).on("click","#material_btn",function() {
         var data = $("#material_tracability").serialize();
         $.ajax({
             type: 'POST',
@@ -2202,10 +1851,10 @@ if ($i == "") {
 <script language="JavaScript">
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
-            var formData =  $(".image-tag").val(data_uri);
+            var formData =  $(".10x_image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
             $.ajax({
-                url: "webcam_backend.php",
+                url: "<?php echo $siteURL; ?>10x/webcam_backend.php",
                 type: "POST",
                 data: formData,
                 success: function (msg) {
@@ -2240,7 +1889,7 @@ if ($i == "") {
 
         // AJAX request
         $.ajax({
-            url: 'add_delete_10x_image.php',
+            url: '<?php echo $siteURL; ?>10x/add_delete_10x_image.php',
             type: 'post',
             data: fd,
             contentType: false,
@@ -2271,7 +1920,7 @@ if ($i == "") {
         var succ = false;
         // AJAX request
         $.ajax({
-            url: 'add_delete_10x_image.php',
+            url: '<?php echo $siteURL; ?>10x/add_delete_10x_image.php',
             type: 'post',
             data: {path: imgElement_src, request: 2},
             async: false,
@@ -2307,13 +1956,241 @@ if ($i == "") {
         var info =  "id="+del_id+"&10x_id="+ x_img_id;
         $.ajax({
             type: "POST",
-            url: "delete_10x_image.php",
+            url: "<?php echo $siteURL; ?>10x/delete_10x_image.php",
             data: info,
             success: function (data) {
             }
         });
         location.reload(true);
     });
+</script>
+<script>
+    $("#slideshow > div:gt(0)").hide();
+
+    setInterval(function() {
+        $('#slideshow > div:first')
+            .fadeOut(3000)
+            .next()
+            .fadeIn(3000)
+            .end()
+            .appendTo('#slideshow');
+    }, 5000);
+
+    // setTimeout(function () {
+    //     //alert("reload");
+    //     location.reload();
+    // }, 20000);
+</script>
+<script>
+
+    $("#edit_save").click(function (e) {
+        if ($("#edit_station_event_form")[0].checkValidity()){
+
+        }
+        // e.preventDefault();
+    });
+    $(document).on('click', '#delete', function () {
+        var element = $(this);
+        var del_id = element.attr("data-id");
+        var info = 'id=' + del_id;
+        $.ajax({
+            type: "POST", url: "ajax_delete.php", data: info, success: function (data) {
+            }
+        });
+        $(this).parents("tr").animate({backgroundColor: "#003"}, "slow").animate({opacity: "hide"}, "slow");
+    });
+</script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(document).on('click', '#edit', function () {
+            var element = $(this);
+            var edit_id = $(this).data("id");
+            var station = $(this).data("station");
+            var part_family = $(this).data("part_family");
+            var part_number = $(this).data("part_number");
+            var event_type = $(this).data("event_type_id");
+            var reason = $(this).data("reason");
+            $("#edit_station").val(station);
+            $("#edit_part_family").val(part_family);
+            $("#edit_part_number").val(part_number);
+            $("#edit_event_type").val(event_type);
+            $("#edit_id").val(edit_id);
+            $("#edit_reason").val(reason);
+        });
+    });
+</script>
+
+<script>
+    $('#edit_event_type').on('change', function () {
+
+        var selected_val = this.value.split("_")[1];
+        if (selected_val == 3) {
+            document.getElementById("reason_div").innerHTML +="<div class=\"col-md-12\">\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label class=\"col-lg-4 control-label\">Reason * :</label>\n" +
+                "                                            <div class=\"col-lg-8\">\n" +
+                "                                                <textarea id=\"edit_reason\" name=\"edit_reason\" rows=\"2\" class=\"form-control\" required></textarea>\n" +
+                "                                            </div>\n" +
+                "                                        </div>\n" +
+                "                                    </div>";
+            // $('#reason_div').attr('required', true);
+            // $('#reason_div').prop('required',true);
+            // document.getElementById("reason_div").required = true;
+            // $("#reason_div").show();
+        } else {
+            document.getElementById("reason_div").innerHTML ="";
+            // document.getElementById("reason_div").required = false;
+            // $("#reason_div").hide();
+        }
+    });
+</script>
+
+
+<script>
+    $("#checkAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    $('#generate').click(function () {
+        let r = Math.random().toString(36).substring(7);
+        $('#newpass').val(r);
+    })
+
+    function submitForm(url) {
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#update-form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                $(':input[type="button"]').prop('disabled', false);
+                location.reload();
+            }
+        });
+    }
+
+    function submitForm11(url) {
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#update-form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                $(':input[type="button"]').prop('disabled', false);
+                location.reload();
+            }
+        });
+    }
+
+    function submitForm12(url) {
+        $(':input[type="button"]').prop('disabled', true);
+        var data = $("#update-form").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (data) {
+                // window.location.href = window.location.href + "?aa=Line 1";
+                $(':input[type="button"]').prop('disabled', false);
+                location.reload();
+            }
+        });
+    }
+
+    $('#choose').on('change', function () {
+        var selected_val = this.value;
+        if (selected_val == 4 || selected_val == 10) {
+            $("#reason_div").show();
+        } else {
+            $("#reason_div").hide();
+        }
+    });
+
+
+    $('#station').on('change', function (e) {
+        $("#station_event_form").submit();
+    });
+    $('#part_family').on('change', function (e) {
+        $("#station_event_form").submit();
+    });
+    $('#part_number').on('change', function (e) {
+        $("#station_event_form").submit();
+    });
+    $(document).on("click",".submit_btn",function() {
+        var station = $("#station").val();
+        var part_family = $("#part_family").val();
+        var part_number = $("#part_number").val();
+        var event_type_id = $("#event_type_id").val();
+
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btn").bind("click", function () {
+            $("#station")[0].selectedIndex = 0;
+            $("#part_family")[0].selectedIndex = 0;
+            $("#part_number")[0].selectedIndex = 0;
+            $("#event_type_id")[0].selectedIndex = 0;
+        });
+    });
+</script>
+<script>
+    function submitFormSettings(url) {
+        //          $(':input[type="button"]').prop('disabled', true);
+        var data = $("#form_settings").serialize();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function(data) {
+                // $("#textarea").val("")
+                // window.location.href = window.location.href + "?aa=Line 1";
+                //                   $(':input[type="button"]').prop('disabled', false);
+                //                   location.reload();
+                //$(".enter-message").val("");
+            }
+        });
+    }
+</script>
+
+
+
+<!--<script>-->
+<!--    $(document).ready(function(){-->
+<!--        $(".cd-popup-trigger").click(function(){-->
+<!--            $("iframe").each(function(){-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<script>
+    iframe.onload = function() {
+        // we can get the reference to the inner window
+        let iframeWindow = iframe.contentWindow; // OK
+        try {
+            // ...but not to the document inside it
+            let doc = iframe.contentDocument; // ERROR
+        } catch(e) {
+            alert(e); // Security Error (another origin)
+        }
+
+        // also we can't READ the URL of the page in iframe
+        try {
+            // Can't read URL from the Location object
+            let href = iframe.contentWindow.location.href; // ERROR
+        } catch(e) {
+            alert(e); // Security Error
+        }
+
+        // ...we can WRITE into location (and thus load something else into the iframe)!
+        iframe.contentWindow.location = '/'; // OK
+
+        iframe.onload = null; // clear the handler, not to run it after the location change
+    };
 </script>
 <?php include("footer.php"); ?> <!-- /page container -->
 <!-- new footer here -->
