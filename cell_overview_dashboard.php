@@ -188,9 +188,10 @@ include("heading_banner.php");
 		$line = $rowc["line_id"];
 
 		//$qur01 = mysqli_query($db, "SELECT created_on as start_time , modified_on as updated_time FROM  sg_station_event where line_id = '$line' and event_status = 1 order BY created_on DESC LIMIT 1");
-		$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
+		$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time,sg_events.event_type_id as event_type_id FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
 		$rowc01 = mysqli_fetch_array($qur01);
 		if ($rowc01 != null) {
+            $event_type_id = $rowc01['event_type_id'];
 			$time = $rowc01['updated_time'];
 			$station_event_id = $rowc01['station_event_id'];
 			$line_status_text = $rowc01['e_name'];
@@ -281,12 +282,19 @@ include("heading_banner.php");
                                         <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                             <i class="fa fa-file"></i> Submit Station Assets </a>
                                     </li>
-                                    <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+
+                                    <?php if($event_type_id == 7) { ?>
                                         <li>
-                                            <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
-                                            <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                            <a href="view_form_status.php?station=<?php echo $line; ?>" target="_BLANK">
+                                                <i class="icon-pie5"></i> Form Submit Dashboard</a>
                                         </li>
-                                    <?php } ?>
+                                    <?php }  else { ?>
+                                        <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                            <li>
+                                                <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                    <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                            </li>
+                                        <?php } }?>
                                 </ul>
 
                             </li>
@@ -432,12 +440,18 @@ include("heading_banner.php");
                                     <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                         <i class="fa fa-file"></i> Submit Station Assets </a>
                                 </li>
-                                <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                <?php if($event_type_id == 7) { ?>
                                     <li>
-                                        <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
-                                        <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                        <a href="view_form_status.php?station=<?php echo $line; ?>" target="_BLANK">
+                                            <i class="icon-pie5"></i> Form Submit Dashboard</a>
                                     </li>
-                                <?php } ?>
+                                <?php }  else { ?>
+                                    <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                        <li>
+                                            <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                        </li>
+                                    <?php } }?>
                             </ul>
 
                         </li>
@@ -524,9 +538,10 @@ include("heading_banner.php");
 			$pf_name = '';
 			$time = '';
 			$countervariable++;
-			$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.pm_part_number_id as p_no, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
+			$qur01 = mysqli_query($db, "SELECT pn.part_number as p_num, pn.pm_part_number_id as p_no, pn.part_name as p_name , pf.part_family_name as pf_name,pf.pm_part_family_id as pf_no, et.event_type_name as e_name ,et.color_code as color_code , sg_events.modified_on as updated_time ,sg_events.station_event_id as station_event_id , sg_events.event_status as event_status , sg_events.created_on as e_start_time,sg_events.event_type_id as event_type_id FROM sg_station_event as sg_events inner join event_type as et on sg_events.event_type_id=et.event_type_id Inner Join pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id inner join pm_part_number as pn on sg_events.part_number_id=pn.pm_part_number_id where sg_events.line_id= '$line' ORDER by sg_events.created_on DESC LIMIT 1");
 			$rowc01 = mysqli_fetch_array($qur01);
 			if ($rowc01 != null) {
+                $event_type_id = $rowc01['event_type_id'];
 				$time = $rowc01['updated_time'];
 				$station_event_id = $rowc01['station_event_id'];
 				$line_status_text = $rowc01['e_name'];
@@ -620,13 +635,18 @@ include("heading_banner.php");
                                                 <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                                     <i class="fa fa-file"></i> Submit Station Assets </a>
                                             </li>
-                                            <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                            <?php if($event_type_id == 7) { ?>
                                                 <li>
-                                                    <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
-                                                    <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                                    <a href="view_form_status.php?station=<?php echo $line; ?>" target="_BLANK">
+                                                        <i class="icon-pie5"></i> Form Submit Dashboard</a>
                                                 </li>
-                                            <?php } ?>
-
+                                            <?php }  else { ?>
+                                                <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                                    <li>
+                                                        <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                            <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                                    </li>
+                                                <?php } }?>
                                         </ul>
                                     </li>
                                 </ul>
@@ -772,12 +792,18 @@ include("heading_banner.php");
                                             <a href="report_config_module/scan_line_asset.php" target="_BLANK">
                                                 <i class="fa fa-file"></i> Submit Station Assets </a>
                                         </li>
-                                        <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                           <?php if($event_type_id == 7) { ?>
                                             <li>
-                                                <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
-                                                <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                                <a href="view_form_status.php?station=<?php echo $line; ?>" target="_BLANK">
+                                                    <i class="icon-pie5"></i> Form Submit Dashboard</a>
                                             </li>
-                                        <?php } ?>
+                                           <?php }  else { ?>
+                                            <?php if (($_SESSION['role_id'] == 'admin') || ($_SESSION['role_id'] == 'super')) { ?>
+                                                <li>
+                                                    <a href="config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line; ?>" target="_BLANK">
+                                                        <i class="icon-pie5"></i> Form Submit Dashboard</a>
+                                                </li>
+                                            <?php } }?>
                                     </ul>
 
                                 </li>
