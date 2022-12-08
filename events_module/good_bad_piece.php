@@ -250,6 +250,14 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
             background-color: #fff;
         }
     }
+    @media only screen and (max-width: 914px), (min-device-width: 412px) and (max-device-width: 1024px) {
+        .img-circle {
+            border-radius: 50%;
+            height: 20vh;
+            width: 34vh;
+            background-color: #fff;
+        }
+    }
     body.alt-menu.sidebar-noneoverflow.pace-done {
         background-color: #ccc !important;
     }
