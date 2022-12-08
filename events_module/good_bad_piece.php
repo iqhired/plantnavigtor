@@ -220,8 +220,8 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
     }
     .img-circle {
         border-radius: 50%;
-        height: 42vh;
-        width: 84vh;
+        height: 36vh;
+        width: 68vh;
         background-color: #fff;
     }
     .media_details{
@@ -245,8 +245,8 @@ if( $actual_eff ===0 || $target_eff === 0 || $target_eff === 0.0){
         }
         .img-circle {
             border-radius: 50%;
-            height: 26vh;
-            width: 35vh;
+            height: 58vh;
+            width: 78vh;
             background-color: #fff;
         }
     }
