@@ -169,11 +169,25 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                 <a target="_blank" href="<?php echo $siteURL; ?>config_module/station_wise_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#008000 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
                             </div>
                         <?php }else{?>
+                        <?php } }}?>
+                <?php
+                $sql1 = "SELECT * FROM `cam_line` WHERE `enabled` = 1 AND `is_deleted` != 1";
+                $result1 = $mysqli->query($sql1);
+                while ($row1 = mysqli_fetch_array($result1)) {
+                    $line_name = $row1['line_name'];
+                    $line_id = $row1['line_id'];
+                    $sql2 = "SELECT count(*) as a  FROM `sg_station_event` where line_id = '$line_id' and event_status = '1' and event_type_id != 7";
+                    $result2 = $mysqli->query($sql2);
+                    while ($row2 = mysqli_fetch_array($result2)) {
+                        $a = $row2['a'];
+                        if($a > 0){
+                            ?>
+                        <?php }else{?>
+
                             <div class="col-md-3">
                                 <a target="_blank" href="<?php echo $siteURL;?>config_module/station_wise_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
                             </div>
-                        <?php }}} ?>
-
+                        <?php } }}?>
             </div>
         </div>
 

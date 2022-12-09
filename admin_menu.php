@@ -988,10 +988,14 @@ $msg = explode(',', $msg); ?>
                                                     <a href="<?php echo $siteURL; ?>config_module/line_utilization.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">Line Utilization Dashboard</h3></a>
                                                 </div>
-                                               <!-- <div class="mb-3">
-                                                    <a href="<?php /*echo $siteURL; */?>form_submit_dashboard.php"
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>config_module/station_dashboard.php"
+                                                       class="mega-link"><h3 class="text-muted fs-6">Station Wise Dashboard</h3></a>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <a href="<?php echo $siteURL; ?>config_module/form_submit_dashboard.php"
                                                        class="mega-link"><h3 class="text-muted fs-6">Form Submit Dashboard</h3></a>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1180,11 +1184,11 @@ $msg = explode(',', $msg); ?>
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if (in_array('87', $msg)) { ?>
+                           <!-- <?php /*if (in_array('87', $msg)) { */?>
                                 <div class='tutorial_section'>
 
                                     <div class="toggle" id="toggle-2">
-                                        <a href="<?php echo $siteURL; ?>config_module/station_dashboard.php">
+                                        <a href="<?php /*echo $siteURL; */?>config_module/station_dashboard.php">
 
                                            <span>
                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -1214,12 +1218,12 @@ $msg = explode(',', $msg); ?>
 
                                     </div>
                                 </div>
-                            <?php } ?>
-                            <?php if (in_array('88', $msg)) { ?>
+                            --><?php /*} */?>
+                         <!--   <?php /*if (in_array('88', $msg)) { */?>
                                 <div class='tutorial_section'>
 
                                     <div class="toggle" id="toggle-2">
-                                        <a href="<?php echo $siteURL; ?>config_module/form_submit_dashboard.php">
+                                        <a href="<?php /*echo $siteURL; */?>config_module/form_submit_dashboard.php">
 
                                            <span>
                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -1249,7 +1253,7 @@ $msg = explode(',', $msg); ?>
 
                                     </div>
                                 </div>
-                            <?php } ?>
+                            --><?php /*} */?>
                         </div>
                     </div>
                 </li>
