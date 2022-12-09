@@ -14,7 +14,7 @@ if (!file_exists("../daily_report/" . $chicagotime)) {
 $exportData = mysqli_query($db,"SELECT s.line_id as line_id,g.`good_pieces` as good_pieces,g.`bad_pieces`,g.`rework` as rework,s.event_cat_id,g.created_at as created_at,g.created_at FROM `good_bad_pieces_details` as g 
     INNER JOIN sg_station_event_log_update as s ON s.station_event_id = g.station_event_id WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' GROUP BY g.station_event_id ORDER BY s.line_id,g.station_event_id");
 $header = "Station" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Category" . "\t" . "Efficiency" . "\t" . "Date&Time" . "\t";
-$p = dateReadFormat($chicagotime) . "  " ."Daily_Efficiency_Report_Log";
+$p = datemdY($chicagotime) . "  " ."Daily_Efficiency_Report_Log";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
