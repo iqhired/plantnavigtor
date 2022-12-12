@@ -238,7 +238,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                     <br/>
 
                                     <div class="row">
-                                        <label class="col-lg-2 control-label">Previous Image : </label>
+                                        <label class="col-lg-2 control-label">Defect Image : </label>
                                         <div class="col-md-6">
                                             <?php
                                             $time_stamp = $_SESSION['good_timestamp_id'];
