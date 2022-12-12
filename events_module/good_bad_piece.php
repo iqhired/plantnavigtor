@@ -535,6 +535,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                 <th>Good Pieces</th>
                 <th>Defect Name</th>
                 <th>Bad Pieces</th>
+                <th>View Images</th>
                 <th>Re-Work</th>
                 <th>Action</th>
             </tr>
@@ -566,7 +567,13 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                     <td><?php if($rowc['good_pieces'] != ""){echo $rowc['good_pieces']; }else{ echo $line; } ?></td>
                     <td><?php $un = $rowc['defect_name']; if($un != ""){ echo $un; }else{ echo $line; } ?></td>
                     <td><?php if($rowc['bad_pieces'] != ""){echo $rowc['bad_pieces'];}else{ echo $line; } ?></td>
+                    <td> <?php if($rowc['bad_pieces'] != "")  { ?>
+                          <a href="<?php echo $siteURL; ?>events_module/view_bad_piece.php?station_event_id=<?php echo $station_event_id; ?>&bad_pieces_id=<?php echo $bad_pieces_id;?>" data-id="<?php echo $rowc['good_bad_pieces_id']; ?>" data-gbid="<?php echo $rowc['bad_pieces_id']; ?>" data-seid="<?php echo $station_event_id; ?>" data-good_pieces="<?php echo $rowc['good_pieces']; ?>"
+                               data-defect_name="<?php echo $rowc['defect_name']; ?>" data-bad_pieces="<?php echo $rowc['bad_pieces']; ?>" data-re_work="<?php echo $rowc['rework']; ?>" data-image="<?php echo $item_id; ?>" class="btn btn-info btn-xs" id="edit">View Image
+                            </a> <?php }else{ echo $line; } ?>
+                    </td>
                     <td><?php if($rowc['rework'] != ""){echo $rowc['rework']; }else{ echo $line; } ?></td>
+
 					<?php
 					$qur04 = mysqli_query($db, "SELECT * FROM good_bad_pieces_details where station_event_id= '$station_event_id' ORDER BY `bad_pieces_id` DESC LIMIT 1");
 					$rowc04 = mysqli_fetch_array($qur04);
