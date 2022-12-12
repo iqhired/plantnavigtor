@@ -153,6 +153,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
             </br>
 
             <div class="row">
+                <div class="col-md-6"  style="width: 100%;border: groove;padding: 10px;">
                 <?php
                 $sql1 = "SELECT * FROM `cam_line` WHERE `enabled` = 1 AND `is_deleted` != 1";
                 $result1 = $mysqli->query($sql1);
@@ -170,6 +171,8 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                             </div>
                         <?php }else{?>
                         <?php } }}?>
+                </div>
+                <div class="col-md-6"  style="width: 100%;border: groove;padding: 10px;">
                 <?php
                 $sql1 = "SELECT * FROM `cam_line` WHERE `enabled` = 1 AND `is_deleted` != 1";
                 $result1 = $mysqli->query($sql1);
@@ -188,6 +191,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                                 <a target="_blank" href="<?php echo $siteURL;?>config_module/station_wise_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
                             </div>
                         <?php } }}?>
+                </div>
             </div>
         </div>
 
