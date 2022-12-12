@@ -1,15 +1,15 @@
 <?php
 ob_start();
 include '../config.php';
-$chicagotime = date('m-d-Y', strtotime('-1 days'));
-$chicagotime2 = date('m-d-Y', strtotime('-1 days'));
+$chicagotime = date('m-d-Y', strtotime('-5 days'));
+$chicagotime2 = date('m-d-Y', strtotime('-5 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
 //$sql2 = sprintf("SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE `form_type` = '4' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') >= '%d' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') <= '%d'" , $chicagotime1, $chicagotime1);
 //$exportData = mysqli_query($db, "SELECT `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 4 group by station");
 $exportData = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
-$header = "Station" . "\t" . "Form Type Name" . "\t" . "Count" . "\t" . "Form Type Name" . "\t" . "Count" . "\t";
+$header = "Station" . "\t" . "First Piece Sheet Lab Count" . "\t" . "First Piece Sheet Op Count" . "\t";
 $p = $chicagotime2 . "  " ."First_Piece_Sheet_Submit_Log";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
@@ -29,18 +29,12 @@ while ($row = mysqli_fetch_row($exportData)) {
                     $form_type = $r3["form_type"];
                     $cr = $r3["cr"];
                     $ce = $r3["ce"];
-                    /*$qur051 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$form_type'");
-                    $rowc051 = $qur051->fetch_assoc();*/
-                    $pnn = 'First Piece Sheet Lab';
                     $q31 = mysqli_query($db, "SELECT `station`,`form_type`,created_at as ct,count(form_name) as cnt FROM `form_user_data` where `station` = '$line_id' and form_type = 5 and DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2'");
                     $r31 = $q31->fetch_assoc();
                     $form_type1 = $r31["form_type"];
                     $cnt = $r31["cnt"];
-                /*    $q41 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$form_type1'");
-                    $r41 = $q41->fetch_assoc();*/
-                    $p1 = 'First Piece Sheet Op';
                 }
-                $value = $pnn;
+                $value = $ce;
             }
             $value = '"' . $value . '"' . "\t";
         }
@@ -48,7 +42,7 @@ while ($row = mysqli_fetch_row($exportData)) {
 
         $j++;
     }
-    $result .= trim($line) . "\t" . trim($ce) . "\t" . trim($p1) . "\t" . trim($cnt) ."\n";
+    $result .= trim($line) . "\t" . trim($cnt) ."\n";
 }
 $result = str_replace("\r", "", $result ."\n\n\n");
 if ($result == "") {
