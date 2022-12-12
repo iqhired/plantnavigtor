@@ -265,7 +265,7 @@ include("../heading_banner.php");
                                         <div style="display:none;" id="my_camera"></div>
                                         <label for="file" class="btn btn-primary ">Take Snapshot</label>
                                         <input type="file" name="image" id="file" class="image-tag" multiple accept="image/*;capture=camera" capture="environment" value="Take Snapshot" style="display: none"/>
-                                        <!--                                        <div class="container"></div>-->
+                                         <div class="container"></div>
 									<?php } ?>
                                 </div>
                             </div>
@@ -283,7 +283,7 @@ include("../heading_banner.php");
 									<?php
 									$time_stamp = $_SESSION['good_timestamp_id'];
 									if(!empty($time_stamp)){
-										$query2 = sprintf("SELECT * FROM good_piece_images where station_event_id = '$time_stamp'");
+                                        $query2 = sprintf("SELECT * FROM good_piece_images where bad_piece_id = '$time_stamp'");
 
 										$qurimage = mysqli_query($db, $query2);
 										$i =0 ;
