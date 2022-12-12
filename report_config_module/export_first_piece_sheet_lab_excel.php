@@ -9,7 +9,8 @@ if (!file_exists("../daily_report/" . $chicagotime)) {
 //$sql2 = sprintf("SELECT distinct `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE `form_type` = '4' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') >= '%d' and DATE_FORMAT(`created_at`,'%%Y-%%m-%%d') <= '%d'" , $chicagotime1, $chicagotime1);
 //$exportData = mysqli_query($db, "SELECT `station`,`form_type`,created_at,count(form_name) as ce FROM `form_user_data` WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' and form_type = 4 group by station");
 $exportData = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
-$header = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
+$header = "Station" . "\t" . "Form Type Name" . "\t" . "Count" . "\t" . "Form Type Name" . "\t" . "Count" . "\t";
+$p = $chicagotime2 . "  " ."First_Piece_Sheet_Submit_Log";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
@@ -28,9 +29,16 @@ while ($row = mysqli_fetch_row($exportData)) {
                     $form_type = $r3["form_type"];
                     $cr = $r3["cr"];
                     $ce = $r3["ce"];
-                    $qur051 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$form_type'");
-                    $rowc051 = $qur051->fetch_assoc();
-                    $pnn = $rowc051["form_type_name"];
+                    /*$qur051 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$form_type'");
+                    $rowc051 = $qur051->fetch_assoc();*/
+                    $pnn = 'First Piece Sheet Lab';
+                    $q31 = mysqli_query($db, "SELECT `station`,`form_type`,created_at as ct,count(form_name) as cnt FROM `form_user_data` where `station` = '$line_id' and form_type = 5 and DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2'");
+                    $r31 = $q31->fetch_assoc();
+                    $form_type1 = $r31["form_type"];
+                    $cnt = $r31["cnt"];
+                /*    $q41 = mysqli_query($db, "SELECT * FROM `form_type` where `form_type_id` = '$form_type1'");
+                    $r41 = $q41->fetch_assoc();*/
+                    $p1 = 'First Piece Sheet Op';
                 }
                 $value = $pnn;
             }
@@ -40,13 +48,13 @@ while ($row = mysqli_fetch_row($exportData)) {
 
         $j++;
     }
-    $result .= trim($line) . "\t" . trim($cr) . "\t" . trim($ce) ."\n";
+    $result .= trim($line) . "\t" . trim($ce) . "\t" . trim($p1) . "\t" . trim($cnt) ."\n";
 }
 $result = str_replace("\r", "", $result ."\n\n\n");
 if ($result == "") {
     $result = "\nNo Record(s) Found!\n";
 }
-$exportData1 = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
+/*$exportData1 = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
 $header1 = "Station" . "\t" . "Form Type Name" . "\t" . "Created Date" . "\t" . "Count" . "\t";
 while ($row1 = mysqli_fetch_row($exportData1)) {
     $line1 = '';
@@ -83,11 +91,13 @@ while ($row1 = mysqli_fetch_row($exportData1)) {
 $result1 = str_replace("\r", "", $result1);
 if ($result1 == "") {
     $result1 = "\nNo Record(s) Found!\n";
-}
+}*/
 header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename= " . $chicagotime . ".xls");
+header("Content-Disposition: attachment; filename= " . "First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls");
 header("Pragma: no-cache");
 header("Expires: 0");
-print $header . "\n" . $result .$header1 ."\n" . $result1;
-file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls", $header . "\n" . $result . $header1 . "\n" . $result1);
+//print "\n\n" . $p . "\n\n" . $header . "\n" . $result ."\n\n" . $p . "\n\n" . $header1 ."\n" . $result1;
+//file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls",  "\n\n" . $p . "\n\n" . $header . "\n" . $result . "\n\n" . $p . "\n\n" . $header1 . "\n" . $result1);
+print "\n\n" . $p . "\n\n" . $header . "\n" . $result;
+file_put_contents("../daily_report/" . $chicagotime . "/First_Piece_Sheet_Submit_Log_" . $chicagotime . ".xls",  "\n\n" . $p . "\n\n" . $header . "\n" . $result);
 ?>
