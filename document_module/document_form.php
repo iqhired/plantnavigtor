@@ -347,24 +347,79 @@ include("../heading_banner.php");
                             <div class="row">
 
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
+
                                 <div class="col-md-6">
-<!--                                    <input type="hidden" name="station" value="--><?php //echo $st; ?><!--">-->
-                                    <select name="station" id="station" class="select form-control"
+
+                                    <select name="station" id="station" class="select form-control station_name"
                                             style="float: left;width: initial;">
+
                                         <option value="" selected disabled>--- Select Station ---</option>
                                         <?php
-                                        $sql1 = "SELECT * FROM `cam_line` ";
-                                        $result1 = $mysqli->query($sql1);
-                                        //                                            $entry = 'selected';
-                                        while ($row1 = $result1->fetch_assoc()) {
-                                            $lin = $row1['line_id'];
-
-                                            if ($st == $lin) {
-                                                $entry = 'selected';
-                                            } else {
-                                                $entry = '';
+                                        if($_SESSION["role_id"] == "pn_user" &&  (!empty($is_tab_login) || $is_tab_login == 1) && (empty($is_cell_login) || $is_cell_login == 0)){
+                                            $is_tab_login = 1;
+                                            $tab_line = $_REQUEST['station'];
+                                            if(empty($tab_line)){
+                                                $tab_line = $_SESSION['tab_station'];
                                             }
-                                            echo "<option value='" . $row1['line_id'] . "' $entry >" . $row1['line_name'] . "</option>";
+                                        }
+                                        if($is_tab_login){
+                                            $sql1 = "SELECT line_id, line_name FROM `cam_line`  where enabled = '1' and line_id = '$tab_line' and is_deleted != 1 ORDER BY `line_name` ASC";
+                                            $result1 = $mysqli->query($sql1);
+                                            //                                            $entry = 'selected';
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                $entry = 'selected';
+                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                                            }
+                                        }else if($is_cell_login){
+                                            if(empty($_REQUEST)) {
+                                                $c_stations = implode("', '", $c_login_stations_arr);
+                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id IN ('$c_stations') and is_deleted != 1 ORDER BY `line_name` ASC";
+                                                $result1 = $mysqli->query($sql1);
+                                                //													                $                        $entry = 'selected';
+                                                $i = 0;
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    //														$entry = 'selected';
+                                                    if ($i == 0) {
+                                                        $entry = 'selected';
+                                                        echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                                                        $c_station = $row1['line_id'];
+                                                    } else {
+                                                        echo "<option value='" . $row1['line_id'] . "'  >" . $row1['line_name'] . "</option>";
+
+                                                    }
+                                                    $i++;
+                                                }
+                                            }else{
+                                                $line_id = $_REQUEST['line'];
+                                                if(empty($line_id)){
+                                                    $line_id = $_REQUEST['station'];
+                                                }
+                                                $sql1 = "SELECT line_id,line_name FROM `cam_line`  where enabled = '1' and line_id ='$line_id' and is_deleted != 1";
+                                                $result1 = $mysqli->query($sql1);
+                                                while ($row1 = $result1->fetch_assoc()) {
+                                                    $entry = 'selected';
+                                                    $station = $row1['line_id'];
+                                                    echo "<option value='" . $station . "'  $entry>" . $row1['line_name'] . "</option>";
+
+                                                }
+                                            }
+                                        }else{
+                                            $st_dashboard = $_POST['station'];
+                                            if (!isset($st_dashboard)) {
+                                                $st_dashboard = $_REQUEST['station'];
+                                            }
+                                            $sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
+                                            $result1 = $mysqli->query($sql1);
+                                            //                                            $entry = 'selected';
+                                            while ($row1 = $result1->fetch_assoc()) {
+                                                if ($st_dashboard == $row1['line_id']) {
+                                                    $entry = 'selected';
+                                                } else {
+                                                    $entry = '';
+
+                                                }
+                                                echo "<option value='" . $row1['line_id'] . "'  $entry>" . $row1['line_name'] . "</option>";
+                                            }
                                         }
                                         ?>
                                     </select>
@@ -434,13 +489,9 @@ include("../heading_banner.php");
 
                                         <input type="radio" id="fail" name="doc_type"  value ="0" class="form-check-input reject" required>
                                         <label for="fail" class="item_label">Part Number</label>
-
-
                                     </div>
-
                                 </div>
                                 <div id="error7" class="red">Please select station or part number</div>
-
                             </div>
 
 
@@ -475,28 +526,30 @@ include("../heading_banner.php");
 <!--                                    </div>-->
 <!--                                </div>-->
                                 <br/>
-
+                                <?php
+                                echo "Result: "."<script>document.writeln(selectedstation);</script>";
+                                ?>
                                 <div class="row">
-
-
                                     <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Number *  :</label>
-
                                     <div class="col-md-6">
                                         <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
-                                            <option value="" selected disabled>--- Select Part Number ---</option>
                                             <?php
-//
-                                            $sql1 = "SELECT * FROM `pm_part_number` where station = '$st' ORDER BY `part_number` ASC  ";
+                                            $station = $_POST['station'];
+                                            $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' and is_deleted != 1  ORDER BY `part_name` ASC";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
+                                                if ($st_dashboard == $row1['pm_part_number_id']) {
+                                                    $entry = 'selected';
+                                                } else {
+                                                    $entry = '';
 
-                                                echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                                }
+                                                echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                             <br/>
                             <div class="row">
@@ -588,15 +641,21 @@ include("../heading_banner.php");
     $(document).ready(function() {
         $('.select').select2();
     });
-</script>
 
+
+</script>
 <script>
-    $('#station').on('change', function (e) {
-     //   $("#document_setting").submit();
+    $(document).ready(function(){
+        $("select.station_name").change(function(){
+            var selectedstation = $(this).children("option:selected").val();
+         //   alert("You have selected the country - " + selectedstation);
+            console.log(selectedstation);
+        });
     });
-    $('#part_family').on('change', function (e) {
-     //   $("#document_setting").submit();
-    });
+
+</script>
+<script>
+
     function group1()
     {
         $("#out_of_tolerance_mail_list").select2("open");

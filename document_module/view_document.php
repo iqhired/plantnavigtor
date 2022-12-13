@@ -139,12 +139,7 @@ include("../config.php");
             .border-primary {
                 border-color: #ffffff;
             }
-
-
-
         }
-
-
     </style>
 </head>
 <body>
@@ -162,13 +157,14 @@ include("../heading_banner.php");
     <!-- Content area -->
     <div class="content">
        <?php
-             $id = $_GET['id'];
+
              $station = $_GET['station'];
              $part = $_GET['part'];
        $sql_file_station = sprintf("SELECT * FROM `document_data` where part_number = '$part'");
        $qurmain = mysqli_query($db, $sql_file_station);
        while($rowcmain = mysqli_fetch_array($qurmain)){
            $doc_type = $rowcmain['doc_type'];
+
 
        }
        $sql_station = "SELECT * FROM `cam_line` where line_id = '$station'";
@@ -191,19 +187,27 @@ include("../heading_banner.php");
                         $qurmain1 = mysqli_query($db, $sql_file);
                         while($rowcmain1 = mysqli_fetch_array($qurmain1)){
                             $file_name = $rowcmain1['file_name'];
-                            $id =  $rowcmain1['doc_id'];?>
+                            $id =  $rowcmain1['doc_id'];
+
+                        $img_file = sprintf("SELECT * FROM `document_data` where doc_id = '$id'");
+                        $qurmain1_d = mysqli_query($db, $img_file);
+                        while($rowcmain1_d = mysqli_fetch_array($qurmain1_d)){
+                            $doc_name_station = $rowcmain1_d['doc_name'];
+
+                            ?>
+
 
                         <div class="form_row row">
                             <a href="../document_files/<?php echo $id; ?>/<?php echo $file_name; ?>">
                             <div class="col-md-6">
 
                             <input type="text" name="notes" class="form-control pn_none" id="notes"
-                                       value="<?php echo $file_name; ?>">
+                                       value="<?php echo $doc_name_station; ?>">
                             </div>
                             </a>
 
                         </div>
-                        <?php } ?>
+                        <?php } }?>
 
                             </div>
                         </form>
@@ -234,18 +238,24 @@ include("../heading_banner.php");
                                 $file_name = $rowcmain1['file_name'];
                                 $id =  $rowcmain1['doc_id'];
 
+                                $img_file_p = sprintf("SELECT * FROM `document_data` where doc_id = '$id'");
+                                $qurmain1_p = mysqli_query($db, $img_file_p);
+                                while($rowcmain1_p = mysqli_fetch_array($qurmain1_p)){
+                                    $doc_name_part = $rowcmain1_p['doc_name'];
+
+                                    ?>
+
                                 ?>
                                 <div class="form_row row">
                                     <a href="../document_files/<?php echo $id; ?>/<?php echo $file_name; ?>" target="_blank">
                                         <div class="col-md-6">
-
                                             <input type="text" name="notes" class="form-control pn_none" id="notes"
-                                                   value="<?php echo $file_name; ?>">
+                                                   value="<?php echo $doc_name_part; ?>">
                                         </div>
                                     </a>
 
                                 </div>
-                            <?php } ?>
+                            <?php } } ?>
 
                         </div>
                     </form>
