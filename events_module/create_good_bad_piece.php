@@ -538,7 +538,7 @@ else if($good_bad_piece_name != "")
                     }
                 }
                 rename( $folderPath, $newfolder) ;
-                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id = '$gs'";
+                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id in ($g_str)";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $_SESSION['temp_gp_id'] = '';
