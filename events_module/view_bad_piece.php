@@ -258,17 +258,15 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div class="thumbnail">
                                                             <div class="thumb">
-                                                               <!-- <img src="<?php /*echo $image; */?>"
-                                                                     alt="">-->
-                                                                <?php echo '<img src="data:image/gif;base64,' . $image . '" style="height:50px;width:150px;border: 1px solid #555;" alt=""/>'; ?>
-                                                                <!--<div class="caption-overflow">
+                                                                <?php echo '<img src="' . $image . '" style="height:50px;width:150px;" />'; ?>
+                                                                <div class="caption-overflow">
 														        <span>
-														     	<a href="<?php /*echo $image; */?>"
+														     	<a href="<?php echo $image; ?>"
                                                                    data-popup="lightbox" rel="gallery"
                                                                    class="btn border-white text-white btn-flat btn-icon btn-rounded">
                                                                     <i class="icon-plus3"></i></a>
 													         	</span>
-                                                                </div>-->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
