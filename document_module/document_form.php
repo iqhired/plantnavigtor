@@ -347,12 +347,10 @@ include("../heading_banner.php");
                             <div class="row">
 
                                 <label class="col-lg-2 control-label" style="padding-top: 10px;">Station : </label>
-
                                 <div class="col-md-6">
-
-                                    <select name="station" id="station" class="select form-control station_name"
+<!--                                    <input type="hidden" name="station" value="--><?php //echo $st; ?><!--">-->
+                                    <select name="station" id="station" class="select form-control"
                                             style="float: left;width: initial;">
-
                                         <option value="" selected disabled>--- Select Station ---</option>
                                         <?php
                                         if($_SESSION["role_id"] == "pn_user" &&  (!empty($is_tab_login) || $is_tab_login == 1) && (empty($is_cell_login) || $is_cell_login == 0)){
@@ -489,9 +487,13 @@ include("../heading_banner.php");
 
                                         <input type="radio" id="fail" name="doc_type"  value ="0" class="form-check-input reject" required>
                                         <label for="fail" class="item_label">Part Number</label>
+
+
                                     </div>
+
                                 </div>
                                 <div id="error7" class="red">Please select station or part number</div>
+
                             </div>
 
 
@@ -526,30 +528,28 @@ include("../heading_banner.php");
 <!--                                    </div>-->
 <!--                                </div>-->
                                 <br/>
-                                <?php
-                                echo "Result: "."<script>document.writeln(selectedstation);</script>";
-                                ?>
+
                                 <div class="row">
+
+
                                     <label class="col-lg-2 control-label" style="margin-left: 10px;">Part Number *  :</label>
+
                                     <div class="col-md-6">
                                         <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
+                                            <option value="" selected disabled>--- Select Part Number ---</option>
                                             <?php
-                                            $station = $_POST['station'];
-                                            $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' and is_deleted != 1  ORDER BY `part_name` ASC";
+                                           $station = $_POST['station'];
+                                            $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' ORDER BY `part_number` ASC  ";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
-                                                if ($st_dashboard == $row1['pm_part_number_id']) {
-                                                    $entry = 'selected';
-                                                } else {
-                                                    $entry = '';
 
-                                                }
-                                                echo "<option value='" . $row1['pm_part_number_id'] . "' $entry >" . $row1['part_number'] . " - " . $row1['part_name'] . "</option>";
+                                                echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
                             <br/>
                             <div class="row">
@@ -641,21 +641,15 @@ include("../heading_banner.php");
     $(document).ready(function() {
         $('.select').select2();
     });
-
-
 </script>
+
 <script>
-    $(document).ready(function(){
-        $("select.station_name").change(function(){
-            var selectedstation = $(this).children("option:selected").val();
-         //   alert("You have selected the country - " + selectedstation);
-            console.log(selectedstation);
-        });
+    $('#station').on('change', function (e) {
+     //   $("#document_setting").submit();
     });
-
-</script>
-<script>
-
+    $('#part_family').on('change', function (e) {
+     //   $("#document_setting").submit();
+    });
     function group1()
     {
         $("#out_of_tolerance_mail_list").select2("open");
