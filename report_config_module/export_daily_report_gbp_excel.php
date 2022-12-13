@@ -8,12 +8,12 @@ $chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
-/*$exportData = mysqli_query($db,"SELECT distinct sg_station_event_log_update.`line_id` as line_id,good_bad_pieces_details.good_pieces as good_pieces,good_bad_pieces_details.bad_pieces,good_bad_pieces_details.rework as rework, sg_station_event_log_update.event_cat_id,good_bad_pieces_details.created_at as created_at FROM `sg_station_event_log_update`
-    INNER JOIN good_bad_pieces_details ON good_bad_pieces_details.`station_event_id` = sg_station_event_log_update.`station_event_id` 
-    where DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' ORDER BY line_id ASC");*/
-$exportData = mysqli_query($db,"SELECT s.line_id as line_id,g.`good_pieces` as good_pieces,g.`bad_pieces`,g.`rework` as rework,s.event_cat_id,g.created_at as created_at,g.created_at FROM `good_bad_pieces_details` as g 
-    INNER JOIN sg_station_event_log_update as s ON s.station_event_id = g.station_event_id WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' GROUP BY g.station_event_id ORDER BY s.line_id,g.station_event_id");
-$header = "Station" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Category" . "\t" . "Efficiency" . "\t" . "Date&Time" . "\t";
+//$exportData = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
+$exportData = mysqli_query($db,"SELECT s.line_id as line_id,s.total_time,g.`good_pieces` as good_pieces,g.`bad_pieces`,g.`rework` as rework,g.created_at as created_at,g.created_at,ss.part_number_id,ss.part_family_id,ss.part_number_id FROM `good_bad_pieces_details` as g
+    INNER JOIN sg_station_event_log_update as s ON s.station_event_id = g.station_event_id 
+    INNER JOIN sg_station_event as ss ON ss.station_event_id = s.station_event_id 
+    WHERE DATE_FORMAT(`created_at`,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(`created_at`,'%m-%d-%Y') <= '$chicagotime2' GROUP BY g.station_event_id ORDER BY s.line_id,g.station_event_id");
+$header = "Station" . "\t" . "TotalUp-time" . "\t"  . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency" . "\t" . "Actual NPR" . "\t" . "Estimated NPR" . "\t" . "Part Family" . "\t" . "Part Number&Name" . "\t";
 $p = $chicagotime2 . "  " ."Daily_Efficiency_Report_Log";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
@@ -31,15 +31,6 @@ while ($row = mysqli_fetch_row($exportData)) {
                     $ln = $rowc04["line_id"];
                 }
                 $value = $lnn;
-            }
-            if ($j == 5) {
-                $un = $value;
-                $qur041 = mysqli_query($db, "SELECT events_cat_name FROM  events_category where events_cat_id = '$un' ");
-
-                while ($rowc041 = mysqli_fetch_array($qur041)) {
-                    $lnn1 = $rowc041["events_cat_name"];
-                }
-                $value = $lnn1;
             }
             if ($j == 6) {
                 $un = $value;
@@ -83,6 +74,67 @@ while ($row = mysqli_fetch_row($exportData)) {
                     }
                 }
                 $value = $eff;
+            }
+            if ($j == 7) {
+                $un = $value;
+                $q21 = mysqli_query($db, "SELECT * FROM `good_bad_pieces_details` where `created_at` = '$un'");
+                while ($row21 = mysqli_fetch_array($q21)) {
+                    $station_event_id1 = $row21["station_event_id"];
+                    $good_pieces1 = $row21["good_pieces"];
+                    if(empty($good_pieces1)){
+                        $g1 = 0;
+                    }else{
+                        $g1 = $good_pieces1;
+                    }
+                    $rework1 = $row21["rework"];
+                    if(empty($rework1)){
+                        $r1 = 0;
+                    }else{
+                        $r1 = $rework1;
+                    }
+                    $gpr1 = $g1 + $r1;
+                    $q31 = mysqli_query($db, "SELECT * FROM `sg_station_event_log_update` where `station_event_id` = '$station_event_id1'");
+                    $r31 = $q31->fetch_assoc();
+                    $total_time1 = $r31["total_time"];
+                    if ($total_time1 === '0'|| $total_time1 === '0.0' ||$gpr1 === 0 || $gpr1 === 0.0) {
+                        $a_npr = 0;
+                    } else {
+                        $a_npr = round($gpr1/$total_time1 , 2);
+                    }
+                }
+                $value = $a_npr;
+            }
+            if ($j == 8) {
+                $un = $value;
+                $qur077 = mysqli_query($db, "SELECT part_number,part_name FROM pm_part_number where pm_part_number_id = '$un' ");
+
+                while ($rowc077 = mysqli_fetch_array($qur077)) {
+                    $npr77 = $rowc077["npr"];
+                    if(empty($npr77)){
+                        $npr771 = 30;
+                    }else{
+                        $npr771 = $npr77;
+                    }
+                }
+                $value = $npr771;
+            }
+            if ($j == 9) {
+                $un = $value;
+                $qur061 = mysqli_query($db, "SELECT part_family_name FROM  pm_part_family where pm_part_family_id = '$un' ");
+
+                while ($rowc061 = mysqli_fetch_array($qur061)) {
+                    $lnn6 = $rowc061["part_family_name"];
+                }
+                $value = $lnn6;
+            }
+            if ($j == 10) {
+                $un = $value;
+                $qur071 = mysqli_query($db, "SELECT part_number,part_name FROM pm_part_number where pm_part_number_id = '$un' ");
+
+                while ($rowc071 = mysqli_fetch_array($qur071)) {
+                    $lnn7 = $rowc071["part_number"].' - '.$rowc071["part_name"] ;
+                }
+                $value = $lnn7;
             }
             $value = '"' . $value . '"' . "\t";
         }

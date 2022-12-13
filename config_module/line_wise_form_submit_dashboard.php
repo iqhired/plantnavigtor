@@ -12,6 +12,10 @@ while ($cam1 = mysqli_fetch_array($result1)) {
     $station1 = $cam1['line_id'];
     $station2 = $cam1['line_name'];
 }
+$sql2 = "SELECT * FROM `sg_station_event` WHERE line_id = '$station1' and event_status = 1 and event_type_id != 7";
+$result2 = mysqli_query($db, $sql2);
+$cam2 = mysqli_fetch_array($result2);
+$station_event_id = $cam2['station_event_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,7 +152,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable = 0;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 4 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 4 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
@@ -402,7 +406,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable++;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_user_data_id = $rowc["form_user_data_id"];
@@ -656,7 +660,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable++;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
@@ -915,7 +919,7 @@ include("../hp_header.php");
     <script>
         setTimeout(function () {
             location.reload();
-        }, 15000);
+        }, 25000);
     </script>
 <!-- /page container -->
     <?php include('../footer.php') ?>
