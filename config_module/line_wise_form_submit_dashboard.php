@@ -12,7 +12,7 @@ while ($cam1 = mysqli_fetch_array($result1)) {
     $station1 = $cam1['line_id'];
     $station2 = $cam1['line_name'];
 }
-$sql2 = "SELECT * FROM `sg_station_event` WHERE line_id = '$station1' and event_status = 1 and and event_type_id != 7 order by `station_event_id` desc limit 1";
+$sql2 = "SELECT * FROM `sg_station_event` WHERE line_id = '$station1' and event_status = 1 and event_type_id != 7";
 $result2 = mysqli_query($db, $sql2);
 $cam2 = mysqli_fetch_array($result2);
 $station_event_id = $cam2['station_event_id'];
