@@ -189,7 +189,7 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
                         if($a > 0){  } else{ ?>
 
                                 <div class="col-md-3">
-                                    <a target="_blank" href="<?php echo $siteURL;?>config_module/line_wise_form_submit_dashboard.php?id=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
+                                    <a target="_blank" href="<?php echo $siteURL; ?>view_form_status.php?station=<?php echo $line_id ?>"> <button type="button" class="btn btn-primary view_gpbp" style="white-space: normal;background-color:#020d7ce6 !important;width:98% ; padding-top: 1vh; font-size: medium; text-align: center;"><?php echo $line_name ?></button></a>
                                 </div>
 
 

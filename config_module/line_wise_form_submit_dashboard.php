@@ -12,12 +12,15 @@ while ($cam1 = mysqli_fetch_array($result1)) {
     $station1 = $cam1['line_id'];
     $station2 = $cam1['line_name'];
 }
+$sql2 = "SELECT * FROM `sg_station_event` WHERE line_id = '$station1' and event_status = 1 and and event_type_id != 7 order by `station_event_id` desc limit 1";
+$result2 = mysqli_query($db, $sql2);
+$cam2 = mysqli_fetch_array($result2);
+$station_event_id = $cam2['station_event_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Refresh" content="15">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $sitename; ?> | Form Submit Dashboard</title>
@@ -149,7 +152,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable = 0;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 4 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 4 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
@@ -403,7 +406,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable++;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 5 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_user_data_id = $rowc["form_user_data_id"];
@@ -464,7 +467,7 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 2 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
                     if($updated_at == $cur)
@@ -657,7 +660,7 @@ include("../hp_header.php");
                     <?php
                     $countervariable++;
                     //select the form based on station
-                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 order by created_at desc limit 1";
+                    $sql1 = "SELECT * FROM `form_user_data` WHERE `station` = '$station' and `form_type` = 3 and station_event_id = '$station_event_id' order by created_at desc limit 1";
                     $result1 = $mysqli->query($sql1);
                     while ($rowc = $result1->fetch_assoc()) {
                     $form_create_id = $rowc["form_create_id"];
@@ -916,7 +919,7 @@ include("../hp_header.php");
     <script>
         setTimeout(function () {
             location.reload();
-        }, 15000);
+        }, 25000);
     </script>
 <!-- /page container -->
     <?php include('../footer.php') ?>
