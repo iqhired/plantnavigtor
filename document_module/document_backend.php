@@ -32,6 +32,7 @@ if(count($_POST)>0) {
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
         $_SESSION['import_status_message'] = 'Document Created Sucessfully.';
+        header("Refresh:0");
     } else {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
@@ -108,4 +109,5 @@ if($doc_trace_id > 0){
 
 $page = "document_form.php?station=$station";
 header('Location: '.$page, true, 303);
+
 exit;
