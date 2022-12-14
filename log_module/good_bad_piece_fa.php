@@ -125,34 +125,32 @@ if($_POST['fa_op'] == 1){
 	$response1['posts1'] = $posts1;
 	echo json_encode($response1);
 }else if($_POST['fa_op'] == 2) {
-    $sqlpnum = "SELECT * FROM `pm_part_number`";
-    $resultpnum = mysqli_query($db, $sqlpnum);
-    $rowcpnum = $resultpnum->fetch_assoc();
-    $pm_bsr = $rowcpnum['budget_scrape_rate'];
-    $pm_avg_bsr = $pm_bsr - 2;
-    $sqlvv = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
-    $response = array();
-    $posts = array();
-    $resultvv = mysqli_query($db, $sqlvv);
-    $data = array();
-    if (null != $resultvv) {
-        $total = 0;
-        while ($row = $resultvv->fetch_assoc()) {
-            $total = $row['good_pieces'] + $row['bad_pieces'] + $row['rework'];
-            $actual_bsr = round(100 * ($row['bad_pieces'] / $total), 2);
-            $posts[] = array( 'bsr'=> $pm_bsr, 'avg_bsr'=> $pm_avg_bsr, 'actual_bsr'=> $actual_bsr,);
+    if(!empty($pn)) {
+        $sqlpnum = "SELECT * FROM `pm_part_number` where pm_part_number_id = '$pn'";
+        $resultpnum = mysqli_query($db, $sqlpnum);
+        $rowcpnum = $resultpnum->fetch_assoc();
+        $pm_bsr = $rowcpnum['budget_scrape_rate'];
+        $pm_avg_bsr = $pm_bsr - 2;
+        $sqlvv = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
+        $response = array();
+        $posts = array();
+        $resultvv = mysqli_query($db, $sqlvv);
+        $data = array();
+        if (null != $resultvv) {
+            $total = 0;
+            while ($row = $resultvv->fetch_assoc()) {
+                $total = $row['good_pieces'] + $row['bad_pieces'] + $row['rework'];
+                $actual_bsr = round(100 * ($row['bad_pieces'] / $total), 2);
+                $posts[] = array('bsr' => $pm_bsr, 'avg_bsr' => $pm_avg_bsr, 'actual_bsr' => $actual_bsr,);
+            }
         }
+        $response['posts'] = $posts;
+        echo json_encode($response);
     }
-    $response['posts'] = $posts;
-    echo json_encode($response);
 
 }else if($_POST['fa_op'] == 3) {
-    $sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$sta' and event_status = 1";
-    $resultmain = mysqli_query($db,$sqlmain);
-    $rowcmain = $resultmain->fetch_assoc();
-    $station_event_id = $rowcmain['station_event_id'];
-    $part_number = $rowcmain['part_number_id'];
-    $sqlpnum1 = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
+    if(!empty($pn)){
+    $sqlpnum1 = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$pn'";
     $resultpnum1 = mysqli_query($db, $sqlpnum1);
     $rowcpnum1 = $resultpnum1->fetch_assoc();
     $pm_npr= $rowcpnum1['npr'];
@@ -204,75 +202,72 @@ if($_POST['fa_op'] == 1){
     }
     $response['posts'] = $posts;
     echo json_encode($response);
+    }
 }else if($_POST['fa_op'] == 4) {
-    $sqlmain = "SELECT * FROM `sg_station_event` where `line_id` = '$sta' and event_status = 1";
-    $resultmain = mysqli_query($db,$sqlmain);
-    $rowcmain = $resultmain->fetch_assoc();
-    $station_event_id = $rowcmain['station_event_id'];
-    $part_number = $rowcmain['part_number_id'];
-    $sqlpnum1 = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-    $resultpnum1 = mysqli_query($db, $sqlpnum1);
-    $rowcpnum1 = $resultpnum1->fetch_assoc();
-    $pm_npr= $rowcpnum1['npr'];
-    if(empty($pm_npr))
-    {
-        $npr = 0;
-    }else{
-        $npr = $pm_npr;
-    }
-    $sql11 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
-    $response = array();
-    $posts = array();
-    $result11 = mysqli_query($db, $sql11);
-    $row2=$result11->fetch_assoc();
-    $total_gp =  $row2['good_pieces'] + $row2['rework'];
-    $data = array();
-    $sql3 = "SELECT * FROM `sg_station_event_log` where 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)" ;
-    $result3 = mysqli_query($db,$sql3);
-    $ttot = null;
-    $tt = null;
-    if (null != $result3) {
-        $total_time = 0;
-        while ($row3 = $result3->fetch_assoc()) {
-            $ct = $row3['created_on'];
-            $tot = $row3['total_time'];
-            if(!empty($row3['total_time'])){
-                $ttot = explode(':' , $row3['total_time']);
-                $i = 0;
-                foreach($ttot as $t_time) {
-                    if($i == 0){
-                        $total_time += ( $t_time * 60 * 60 );
-                    }else if( $i == 1){
-                        $total_time += ( $t_time * 60 );
-                    }else{
-                        $total_time += $t_time;
-                    }
-                    $i++;
-                }
-            }else{
-                $total_time +=  strtotime($chicagotime) - strtotime($ct);
-            }
+    if(!empty($pn)) {
+        $sqlpnum1 = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$pn'";
+        $resultpnum1 = mysqli_query($db, $sqlpnum1);
+        $rowcpnum1 = $resultpnum1->fetch_assoc();
+        $pm_npr = $rowcpnum1['npr'];
+        if (empty($pm_npr)) {
+            $npr = 0;
+        } else {
+            $npr = $pm_npr;
         }
-        $total_time = (($total_time/60)/60);
-        $b = round($total_time);
-        $target_eff = round($npr * $b);
-        $actual_eff = $total_gp;
-        $eff = round(100 * ($actual_eff/$target_eff));
-        // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
-        $posts[] = array( 'target_eff'=> $target_eff,  'actual_eff'=> $actual_eff, 'eff'=> $eff,);
-    }
+        $sql11 = "SELECT SUM(good_pieces) AS good_pieces,SUM(bad_pieces)AS bad_pieces,SUM(rework) AS rework FROM `good_bad_pieces`  INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id where 1 " . $wc;
+        $response = array();
+        $posts = array();
+        $result11 = mysqli_query($db, $sql11);
+        $row2 = $result11->fetch_assoc();
+        $total_gp = $row2['good_pieces'] + $row2['rework'];
+        $data = array();
+        $sql3 = "SELECT * FROM `sg_station_event_log` where 1 and station_event_id = '$station_event_id' and event_cat_id in (SELECT events_cat_id FROM `events_category` where npr = 1)";
+        $result3 = mysqli_query($db, $sql3);
+        $ttot = null;
+        $tt = null;
+        if (null != $result3) {
+            $total_time = 0;
+            while ($row3 = $result3->fetch_assoc()) {
+                $ct = $row3['created_on'];
+                $tot = $row3['total_time'];
+                if (!empty($row3['total_time'])) {
+                    $ttot = explode(':', $row3['total_time']);
+                    $i = 0;
+                    foreach ($ttot as $t_time) {
+                        if ($i == 0) {
+                            $total_time += ($t_time * 60 * 60);
+                        } else if ($i == 1) {
+                            $total_time += ($t_time * 60);
+                        } else {
+                            $total_time += $t_time;
+                        }
+                        $i++;
+                    }
+                } else {
+                    $total_time += strtotime($chicagotime) - strtotime($ct);
+                }
+            }
+            $total_time = (($total_time / 60) / 60);
+            $b = round($total_time);
+            $target_eff = round($npr * $b);
+            $actual_eff = $total_gp;
+            $eff = round(100 * ($actual_eff / $target_eff));
+            // $pm_avg_npr = (($target_npr + 2) > 0)? ($target_npr + 2) : $target_npr;
+            $posts[] = array('target_eff' => $target_eff, 'actual_eff' => $actual_eff, 'eff' => $eff,);
+        }
 
-    $response['posts'] = $posts;
-    echo json_encode($response);
+        $response['posts'] = $posts;
+        echo json_encode($response);
+    }
 }else if($_POST['fa_op'] == 5) {
-    $sql11 = "SELECT SUM(`npr_g`) AS good_pieces,SUM(`npr_b`)AS bad_pieces,SUM(`npr_rework`) AS rework FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 00 and npr_h < 08 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $sql11 = "SELECT SUM(good_pieces) as good_pieces,SUM(bad_pieces) as bad_pieces,SUM(rework) as rework FROM `good_bad_pieces` INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id WHERE sg_station_event.line_id = '$sta' AND hour(good_bad_pieces.created_at) >= 00 and hour(good_bad_pieces.created_at) < 08 and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') <= '$dateto'";
     $result11 = mysqli_query($db,$sql11);
     while ($row11=$result11->fetch_assoc()){
         $good_pieces = $row11['good_pieces'];
         $bad_pieces = $row11['bad_pieces'];
         $rework = $row11['rework'];
     }
-    $sql21 = "SELECT SUM(`npr_g`) AS good_pieces1,SUM(`npr_b`)AS bad_pieces1,SUM(`npr_rework`) AS rework1 FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 08 and npr_h < 16 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $sql21 = "SELECT SUM(good_pieces) as good_pieces1,SUM(bad_pieces) as bad_pieces1,SUM(rework) as rework1 FROM `good_bad_pieces` INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id WHERE sg_station_event.line_id = '$sta' AND hour(good_bad_pieces.created_at) >= 08 and hour(good_bad_pieces.created_at) < 16 and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') <= '$dateto'";
     $result21 = mysqli_query($db,$sql21);
     while ($row21=$result21->fetch_assoc()){
         $good_pieces1 = $row21['good_pieces1'];
@@ -280,7 +275,7 @@ if($_POST['fa_op'] == 1){
         $rework1 = $row21['rework1'];
     }
 
-    $sql31 = "SELECT SUM(`npr_g`) AS good_pieces2,SUM(`npr_b`)AS bad_pieces2,SUM(`npr_rework`) AS rework2 FROM `npr_station_data` WHERE line_id = '$sta' AND `npr_h` >= 16 and npr_h <= 23 and date(created_on) >= '$datefrom' AND date(created_on) < '$dateto'";
+    $sql31 = "SELECT SUM(good_pieces) as good_pieces2,SUM(bad_pieces) as bad_pieces2,SUM(rework) as rework2 FROM `good_bad_pieces` INNER JOIN sg_station_event ON good_bad_pieces.station_event_id = sg_station_event.station_event_id WHERE sg_station_event.line_id = '$sta' AND hour(good_bad_pieces.created_at) >= 16 and hour(good_bad_pieces.created_at) <= 23 and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(good_bad_pieces.`created_at`,'%Y-%m-%d') <= '$dateto'";
     $response = array();
     $posts = array();
     $result31 = mysqli_query($db,$sql31);
