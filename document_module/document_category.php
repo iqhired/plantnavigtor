@@ -5,8 +5,6 @@ $temp = "";
 if (!isset($_SESSION['user'])) {
 	header('location: ../logout.php');
 }
-
-
 //Set the session duration for 10800 seconds - 3 hours
 $duration = $auto_logout_duration;
 //Read the request time of the user
@@ -227,8 +225,6 @@ include("../heading_banner.php");
                                 <th><input type="checkbox" id="checkAll"></th>
                                 <th>S.No</th>
                                 <th>Form Type</th>
-                                <!--                                      <th>Created At</th>-->
-                                <!--                                      <th>Updated At</th>-->
                                 <th>Is Work Order/Lot required ?</th>
                                 <th>Action</th>
                             </tr>
@@ -287,23 +283,19 @@ include("../heading_banner.php");
                                             <div class="col-lg-6">
                                                 <input type="text" name="edit_name" id="edit_name" class="form-control"
                                                        required>
-
                                                 <input type="hidden" name="edit_id" id="edit_id">
                                             </div>
                                         </div>
                                     </div>
                                         <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-lg-5 control-label">Enabled/Disbled:*</label>
-
+                                            <label class="col-lg-5 control-label">Enabled/Disabled:*</label>
                                             <div class="col-lg-6">
 
                                                     <input type="radio" id="edit_yes" name="edit_enabled" value="yes" >
                                                     <label for="yes" class="item_label" id="">Yes</label>
                                                     <input type="radio" id="edit_no" name="edit_enabled" value="no">
                                                     <label for="no" class="item_label" id="">No</label>
-
-
                                             </div>
                                         </div>
                                         </div>

@@ -117,6 +117,9 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                     width: 12%;
                     float: right;
                 }
+                .thumbnail {
+                    width: 150px!important;
+                }
             }
             input[type="file"] {
                 display: block;
@@ -258,8 +261,7 @@ $idd = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div class="thumbnail">
                                                             <div class="thumb">
-                                                                <img src="<?php echo $image; ?>"
-                                                                     alt="">
+                                                                <?php echo '<img src="' . $image . '" style="" />'; ?>
                                                                 <div class="caption-overflow">
 														        <span>
 														     	<a href="<?php echo $image; ?>"
