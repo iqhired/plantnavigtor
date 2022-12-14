@@ -380,19 +380,11 @@ include("../heading_banner.php");
                             <div class="col-lg-8">
                                 <select name="station" id="station" class="select"
                                         style="float: left;width: initial;">
-                                    <option value="" selected disabled>--- Select Station ---</option>
-
 									<?php
 									$entry = '';
 									$st_dashboard = $_POST['station'];
-									$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_name` ASC ";
+									$sql1 = "SELECT * FROM `cam_line` where enabled = '1' and is_deleted != 1 ORDER BY `line_id` ASC";
 									$result1 = $mysqli->query($sql1);
-									if ($st_dashboard == 'all') {
-										$entry = 'selected';
-									}
-									echo "<option value='all'  $entry>" . '--- All Stations ---' . "</option>";
-
-									//                                            $entry = 'selected';
 									while ($row1 = $result1->fetch_assoc()) {
 										if ($st_dashboard == $row1['line_id']) {
 											$entry = 'selected';
