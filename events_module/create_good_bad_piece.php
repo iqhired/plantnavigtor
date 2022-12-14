@@ -294,9 +294,13 @@ if ($good_name != "") {
                 }
                 $_SESSION['message_stauts_class'] = 'alert-success';
                 $_SESSION['import_status_message'] = 'Good Pieces Added Sucessfully.';
+                $page = "good_bad_piece.php?station_event_id=$station_event_id";
+                header('Location: ' . $page, true, 303);
             } else {
                 $_SESSION['message_stauts_class'] = 'alert-danger';
                 $_SESSION['import_status_message'] = 'Error: Please Retry';
+                $page = "good_bad_piece.php?station_event_id=$station_event_id";
+                header('Location: ' . $page, true, 303);
             }
 
         }
@@ -582,7 +586,7 @@ else if($good_bad_piece_name != "")
                     }
                 }
                 rename( $folderPath, $newfolder) ;
-                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id = '$gs'";
+                $sql = "update `good_piece_images` SET bad_piece_id = '$bad_trace_id' where bad_piece_id in ($g_str)";
                 $result1 = mysqli_query($db, $sql);
                 if ($result1) {
                     $_SESSION['temp_gp_id'] = '';
@@ -738,7 +742,6 @@ else
         }
     }
 }
-$page = "good_bad_piece.php?station_event_id=$station_event_id";
+$page = $siteURL."events_module/good_bad_piece.php?station_event_id=$station_event_id";
 header('Location: ' . $page, true, 303);
-
 ?>
