@@ -9,6 +9,9 @@ if(count($_POST)>0) {
     $station = $_POST['station'];
     $category = $_POST['category'];
     $part_number = $_POST['part_number'];
+    if (empty($part_number)){
+        $part_number = 0;
+    }
     $status = $_POST['status'];
     $exp_date = $_POST['exp_date'];
     $created_by = date("Y-m-d H:i:s");

@@ -213,27 +213,27 @@ include("../heading_banner.php");
                     </div>
                     <br>
 
-                    <div class="row">
-                        <div class="col-md-6 date">
-
-                            <label class="control-label"
-                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                From : &nbsp;&nbsp;</label>
-                            <input type="date" name="date_from" id="date_from" class="form-control"
-                                   value="<?php echo $datefrom; ?>" style="float: left;width: initial;"
-                                   required>
-                        </div>
-                        <div class="col-md-6 date">
-                            <label class="control-label"
-                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date
-                                To: &nbsp;&nbsp;</label>
-                            <input type="date" name="date_to" id="date_to" class="form-control"
-                                   value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-
-                        </div>
-
-                    </div>
-                    <br/>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-6 date">-->
+<!---->
+<!--                            <label class="control-label"-->
+<!--                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date-->
+<!--                                From : &nbsp;&nbsp;</label>-->
+<!--                            <input type="date" name="date_from" id="date_from" class="form-control"-->
+<!--                                   value="--><?php //echo $datefrom; ?><!--" style="float: left;width: initial;"-->
+<!--                                   required>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6 date">-->
+<!--                            <label class="control-label"-->
+<!--                                   style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date-->
+<!--                                To: &nbsp;&nbsp;</label>-->
+<!--                            <input type="date" name="date_to" id="date_to" class="form-control"-->
+<!--                                   value="--><?php //echo $dateto; ?><!--" style="float: left;width: initial;" required>-->
+<!---->
+<!--                        </div>-->
+<!---->
+<!--                    </div>-->
+<!--                    <br/>-->
                     <?php
                                         if (!empty($import_status_message)) {
                                             echo '<div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
@@ -257,7 +257,7 @@ include("../heading_banner.php");
                             </button>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary"  onclick="location.reload();"
+                            <button type="button" class="btn btn-primary"  onclick="window.reload();"
                                     style="background-color:#1e73be;">Reset
                             </button>
                         </div>
@@ -271,23 +271,25 @@ include("../heading_banner.php");
             <table class="table datatable-basic">
                 <thead>
                 <tr>
+
                     <th>Action</th>
-                    <th>Station</th>
-                    <th>Part</th>
                     <th>Document Name</th>
-                    <th>Time</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Expiry date</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <?php
 
                 if ($station != "" && $pn == ""){
-                    $q = ("SELECT cl.line_name,dd.created_at,dd.doc_id,dd.doc_name,dd.part_number from document_data as dd INNER JOIN cam_line as cl ON dd.station = cl.line_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station';");
+                    $q = ("SELECT cl.line_name,dd.created_at,dd.doc_id,dd.doc_name,dd.part_number,dd.doc_category,dd.status,dd.expiry_date from document_data as dd INNER JOIN cam_line as cl ON dd.station = cl.line_id where cl.line_id='$station';");
 
                 }
 
                 if ($station != ""  && $pn != ""){
-                    $q = ("SELECT pn.part_number,pn.part_name,cl.line_name,dd.created_at,dd.doc_id,dd.doc_name FROM  document_data as dd inner join cam_line as cl on dd.station = cl.line_id inner join pm_part_number as pn on dd.part_number=pn.pm_part_number_id where DATE_FORMAT(dd.created_at,'%Y-%m-%d') >= '$datefrom' and DATE_FORMAT(dd.created_at,'%Y-%m-%d') <= '$dateto' and cl.line_id='$station' and pn.pm_part_number_id='$pn'");
+                    $q = ("SELECT pn.part_number,pn.part_name,cl.line_name,dd.created_at,dd.doc_id,dd.doc_name,dd.doc_category,dd.status,dd.expiry_date FROM  document_data as dd inner join cam_line as cl on dd.station = cl.line_id inner join pm_part_number as pn on dd.part_number=pn.pm_part_number_id where  cl.line_id='$station' and pn.pm_part_number_id='$pn'");
 
                 }
 
@@ -307,19 +309,19 @@ include("../heading_banner.php");
 
                         <a href="<?php echo $siteURL; ?>document_module/edit_document.php?id=<?php echo $rowc['doc_id'];?>" class="btn btn-primary legitRipple" style="background-color:#1e73be;" target="_blank"><i class="fa fa-edit" aria-hidden="true"></i></a>
                         </td>
-                        <td><?php echo $lnn; ?></td>
-                        <td><?php
-                            $part_number =  $rowc['part_number'];
-                            $part_sql ="select pm_part_number_id,part_number,part_name from pm_part_number where pm_part_number_id = '$part_number'";
-                            $que = mysqli_query($db,$part_sql);
-                            while ($row_part = mysqli_fetch_array($que)) {
-                                $part_number = $row_part['part_number'];
-                                $part_name = $row_part['part_name'];
-                                echo $part_number . " - " . $part_name;
-                            }?>
-                        </td>
                         <td><?php echo $rowc['doc_name']; ?></td>
-                        <td><?php echo $rowc['created_at']; ?></td>
+                        <td><?php
+                            $doc_cat =  $rowc['doc_category'];
+                            $doc_sql ="select document_type_id,document_type_name from document_type where document_type_id = '$doc_cat'";
+                            $doc_que = mysqli_query($db,$doc_sql);
+                            while ($row_doc = mysqli_fetch_array($doc_que)) {
+                                $doc_name = $row_doc['document_type_name'];
+                                echo $doc_name;
+                            }
+                            ?></td>
+                        <td><?php echo $rowc['status']; ?></td>
+
+                        <td><?php echo $rowc['expiry_date']; ?></td>
 
                     </tr>
                 <?php } ?>
