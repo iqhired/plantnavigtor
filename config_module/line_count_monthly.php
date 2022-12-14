@@ -55,7 +55,7 @@ while ($rowv=$resultv->fetch_assoc()){
     }else{
         $d3 = $t;
     }
-    $posts[] = array('others2'=> $d0,'line_up2'=> $d1,'line_down2'=> $d2,'eof2'=> $d3,'mf'=> $fdl_monthdate,'mt'=> $ld_monthdate,'mh'=> $m);
+    $posts[] = array('others2'=> $d0,'line_up2'=> $d1,'line_down2'=> $d2,'eof2'=> $d3,'mf'=> onlydateReadFormat($fdl_monthdate),'mt'=> onlydateReadFormat($ld_monthdate),'mh'=> $m);
 }
 $response['posts'] = $posts;
 echo json_encode($response);

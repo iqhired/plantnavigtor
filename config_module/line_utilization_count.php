@@ -86,7 +86,7 @@ while ($row3=$result3->fetch_assoc()){
         $d3 = $t3;
     }
     if($st != ""){
-        $posts[] = array('others0'=> $d0,'line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> $datefrom,'dt'=> $dateto,'h'=> $t);
+        $posts[] = array('others0'=> $d0,'line_up'=> $d1,'line_down'=> $d2,'eop'=> $d3,'df'=> onlydateReadFormat($datefrom),'dt'=> onlydateReadFormat($dateto),'h'=> $t);
     }
 }
 $response['posts'] = $posts;

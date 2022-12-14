@@ -55,7 +55,7 @@ while ($rowv=$resultv->fetch_assoc()){
         $d3 = $t;
     }
     $d0 = $y - $d1 - $d2 - $d3;
-    $posts[] = array('others3'=>$d0,'line_up3'=> $d1,'line_down3'=> $d2,'eof3'=> $d3,'yf'=> $yes_yeardate,'yt'=> $chicagotime1,'yh'=> $y);
+    $posts[] = array('others3'=>$d0,'line_up3'=> $d1,'line_down3'=> $d2,'eof3'=> $d3,'yf'=> onlydateReadFormat($yes_yeardate),'yt'=> onlydateReadFormat($chicagotime1),'yh'=> $y);
 }
 $response['posts'] = $posts;
 echo json_encode($response);

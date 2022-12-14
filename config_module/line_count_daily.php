@@ -47,7 +47,7 @@ while ($rowv=$resultv->fetch_assoc()){
 	}
 //	$dh = $t1 + $t2 + $t + $d0;
 //	$dh = round($dh, 2);
-	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> $chicagotime,'dh'=> $dh);
+	$posts[] = array('others'=>$d0,'line_up'=> $t,'line_down'=> $t1,'eof'=> $t2,'d'=> onlydateReadFormat($chicagotime),'dh'=> $dh);
 }
 $response['posts'] = $posts;
 echo json_encode($response);
