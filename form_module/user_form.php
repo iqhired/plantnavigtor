@@ -680,7 +680,7 @@ include("../heading_banner.php");
                                         <div class="col-md-3 form">
                                             <input type="hidden" name="form_item_array[]"
                                                    value="<?php echo $rowc['form_item_id']; ?>"/>
-                                            <input type="text" class="form-control" name="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
+                                            <input type="text" class="form-control text_num" name="<?php echo $rowc['form_item_id']; ?>" autocomplete="off"
                                                    id="<?php echo $rowc['form_item_id']; ?>" <?php if ($rowc['optional'] != '1') {
 												echo 'required';
 											} ?> />
@@ -1148,6 +1148,17 @@ $('#reject').on('change', function () {
                 }
             },
         });
+    });
+</script>
+<script>
+    $(".text_num").keyup(function () {
+
+        var bypass_approve = $("#bypass_approve").val();
+        if (bypass_approve == 'yes') {
+            document.getElementById("app_list").style.display = "none"
+            document.getElementById("sub_app").style.display = "none"
+           // $('#success_msg_app').text('Form submitted Successfully').css('background-color', '#0080004f');
+        }
     });
 </script>
 <script>
