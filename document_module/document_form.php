@@ -330,6 +330,7 @@ include("../heading_banner.php");
                 <?php
                 if (!empty($import_status_message)) {
                     echo '<br/><div class="alert ' . $message_stauts_class . '">' . $import_status_message . '</div>';
+                    header("Refresh:0");
                 }
                 ?>
                <?php
@@ -337,6 +338,7 @@ include("../heading_banner.php");
                     echo '<br/><div class="alert ' . $_SESSION['message_stauts_class'] . '">' . $_SESSION['import_status_message'] . '</div>';
                     $_SESSION['message_stauts_class'] = '';
                     $_SESSION['import_status_message'] = '';
+                    header("Refresh:0");
                 }
                 ?>
 

@@ -32,41 +32,43 @@ if(count($_POST)>0) {
     if ($result0) {
         $_SESSION['message_stauts_class'] = 'alert-success';
         $_SESSION['import_status_message'] = 'Document Created Sucessfully.';
-        header("Refresh:0");
+
     } else {
         $_SESSION['message_stauts_class'] = 'alert-danger';
         $_SESSION['import_status_message'] = 'Please retry';
 
     }
+    $sql = "update `document_files` SET doc_id = '$doc_trace_id', station = '$station',part_number = '$part_number' where doc_id = '$ts'";
+    $result1 = mysqli_query($db, $sql);
+    if($result1){
+        $_SESSION['temp_doc_id'] = '';
+    }
+
 }
 
 
-$qur04 = mysqli_query($db, "SELECT * FROM  document_data where doc_name = '$doc_name' ORDER BY `doc_id` DESC ");
-$rowc04 = mysqli_fetch_array($qur04);
-$doc_id = $rowc04["doc_id"];
-$station = $rowc04["station"];
-$part_number = $rowc04["part_number"];
-
-
-if($doc_trace_id > 0){
-	$temp_docid = $_SESSION['temp_doc_id'];
-	$doc_arr = explode ( ',' , $temp_docid);
-	$doc_str = '';
-	$i = 0 ;
-	foreach ($doc_arr as $docid){
-		if(($i == 0) && ($docid != "")){
-            $doc_str = '\'' . $docid . '\'';
-			$i++;
-		}else if($docid != ""){
-            $doc_str .= ',' . '\'' . $docid . '\'';
-		}
-	}
-	$sql = "update `document_files` SET doc_id = '$doc_trace_id', station = '$station',part_number = '$part_number' where doc_id in ($doc_str)";
-	$result1 = mysqli_query($db, $sql);
-	if($result1){
-		$_SESSION['temp_doc_id'] = '';
-	}
-}
+//$qur04 = mysqli_query($db, "SELECT * FROM  document_data where doc_name = '$doc_name' ORDER BY `doc_id` DESC ");
+//$rowc04 = mysqli_fetch_array($qur04);
+//$doc_id = $rowc04["doc_id"];
+//$station = $rowc04["station"];
+//$part_number = $rowc04["part_number"];
+//
+//
+//if($doc_trace_id > 0){
+//	$temp_docid = $_SESSION['temp_doc_id'];
+//	$doc_arr = explode ( ',' , $temp_docid);
+//	$doc_str = '';
+//	$i = 0 ;
+//	foreach ($doc_arr as $docid){
+//		if(($i == 0) && ($docid != "")){
+//            $doc_str = '\'' . $docid . '\'';
+//			$i++;
+//		}else if($docid != ""){
+//            $doc_str .= ',' . '\'' . $docid . '\'';
+//		}
+//	}
+//
+//}
 
 //multiple image
 //if (isset($_FILES['file'])) {
@@ -107,7 +109,7 @@ if($doc_trace_id > 0){
 //    }
 //}
 
-$page = "document_form.php?station=$station";
+$page = "document_form.php";
 header('Location: '.$page, true, 303);
 
 exit;
