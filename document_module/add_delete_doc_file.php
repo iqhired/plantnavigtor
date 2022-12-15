@@ -14,8 +14,8 @@ if($request == 1){
     $uploadOk = 1;
     $imageFileType = pathinfo($filename,PATHINFO_EXTENSION);
     $doc_timestamp = time();
-    $temp_docid = $_SESSION['temp_doc_id'];
-    $_SESSION['temp_doc_id'] = $temp_docid . ',' .$doc_timestamp;
+   // $temp_docid = $_SESSION['temp_doc_id'];
+    $_SESSION['temp_doc_id'] = $doc_timestamp;
 	if(empty($_SESSION['timestamp_id'])){
 		$_SESSION['timestamp_id'] = $doc_timestamp;
 	}
@@ -36,9 +36,7 @@ if($request == 1){
 		mkdir($location.'/'.$doc_timestamp, 0777, true);
 		$f_name =  $doc_timestamp.'_'.$fname;
 		$destination = $location.$doc_timestamp.'/'.$f_name;
-
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
-
         if( move_uploaded_file($file_tmp, $destination)){
             $sql = "INSERT INTO `document_files`(`file_name`,`doc_id`,`part_number`,`station`,`created_at`) VALUES ('$f_name','$doc_timestamp','$part_number' ,'$station','$created_by' )";
             $result1 = mysqli_query($db, $sql);
