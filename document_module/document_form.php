@@ -314,7 +314,7 @@ include("../heading_banner.php");
         <!-- Main charts -->
         <!-- Basic datatable -->
         <div class="panel panel-flat">
-            <form action="document_backend.php" id="document_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
+            <form action="" id="document_setting" enctype="multipart/form-data" class="form-horizontal" method="post">
             <div class="panel-heading">
 
                 <?php if ($temp == "one") { ?>
@@ -647,7 +647,7 @@ include("../heading_banner.php");
 
 <script>
     $('#station').on('change', function (e) {
-     //   $("#document_setting").submit();
+        $("#document_setting").submit();
     });
     $('#part_family').on('change', function (e) {
      //   $("#document_setting").submit();
