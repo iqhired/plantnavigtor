@@ -188,7 +188,7 @@ include("../heading_banner.php");
                         while($rowcmain1 = mysqli_fetch_array($qurmain1)){
                             $file_name = $rowcmain1['file_name'];
                             $id =  $rowcmain1['doc_id'];
-                            $station =  $rowcmain1['doc_id'];
+                            $station =  $rowcmain1['station'];
 
                         $img_file = sprintf("SELECT * FROM `document_data` where doc_id = '$id'");
                         $qurmain1_d = mysqli_query($db, $img_file);
@@ -221,7 +221,7 @@ include("../heading_banner.php");
                     $part_name = $row_part['part_name'];
                 }
                 ?>
-                <?php $query = sprintf("SELECT line_id,event_status FROM `sg_station_event` where line_id = '$station'");
+                <?php $query = sprintf("SELECT line_id,event_status FROM `sg_station_event` where line_id = '$station' ORDER BY created_on DESC");
 
                 $qur_st = mysqli_query($db, $query);
                 while($row_st = mysqli_fetch_array($qur_st)){
