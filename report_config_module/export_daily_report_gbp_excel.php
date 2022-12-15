@@ -3,20 +3,21 @@ ob_start();
 ini_set('display_errors', 'off');
 session_start();
 include '../config.php';
+$date = date('d-M-Y', strtotime('-1 days'));
 $chicagotime = date('m-d-Y', strtotime('-1 days'));
 $chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
 //$exportData = mysqli_query($db, "SELECT line_name,line_id FROM `cam_line` where enabled = 1 and is_deleted != 1 order by line_id asc");
-$exportData = mysqli_query($db,"SELECT cl.line_id as station,e_log.station_event_id,sum(e_log.total_time) as total_time,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,pn.part_number as p_num, pf.part_family_name as pf_name,pn.part_number as p_num, pn.part_name as p_name from sg_station_event_log_update as e_log 
+$exportData = mysqli_query($db,"SELECT cl.line_id as station,/*e_log.station_event_id,*/sum(e_log.total_time) as total_time,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,e_log.station_event_id,pn.part_number as p_num, pf.part_family_name as pf_name,pn.part_number as p_num, pn.part_name as p_name from sg_station_event_log_update as e_log 
     inner join sg_station_event as sg_events on e_log.station_event_id = sg_events.station_event_id 
     INNER JOIN pm_part_family as pf on sg_events.part_family_id = pf.pm_part_family_id 
     inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
     inner join cam_line as cl on e_log.line_id = cl.line_id 
     where DATE_FORMAT(e_log.created_on,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(e_log.created_on,'%m-%d-%Y') <= '$chicagotime2' GROUP BY e_log.station_event_id order by cl.line_id,e_log.station_event_id asc");
-$header = "Station" . "\t" . "station_event_id" . "\t"  . "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency(%)" . "\t" . "Actual NPR/hr" . "\t" . "Estimated NPR/hr" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
-$p = $chicagotime2 . "  " ."Daily_Efficiency_Report_Log";
+$header = "Station" . "\t" /*. "station_event_id" . "\t"  */. "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency" . "\t" . "Actual NPR/hr" . "\t" . "Estimated NPR/hr" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
+$p = onlydateReadFormat($date) . "\n" ."Daily Efficiency Report Log Data";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
     $j = 1;
@@ -34,11 +35,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $lnn;
             }
-            if ($j == 2) {
-                $un1 = $value;
-                $value = $un1;
-            }
-            if ($j == 4) {
+            if ($j == 3) {
                 $un = $value;
                 $qur05 = mysqli_query($db, "SELECT sum(good_pieces) as good_pieces FROM good_bad_pieces_details where station_event_id = '$un' ");
                 while ($rowc05 = mysqli_fetch_array($qur05)) {
@@ -46,7 +43,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $good_pieces;
             }
-            if ($j == 5) {
+            if ($j == 4) {
                 $un = $value;
                 $qur06 = mysqli_query($db, "SELECT sum(bad_pieces) as bad_pieces FROM good_bad_pieces_details where station_event_id = '$un' ");
                 while ($rowc06 = mysqli_fetch_array($qur06)) {
@@ -54,7 +51,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $bad_pieces;
             }
-            if ($j == 6) {
+            if ($j == 5) {
                 $un = $value;
                 $qur07 = mysqli_query($db, "SELECT sum(rework) as rework FROM good_bad_pieces_details where station_event_id = '$un' ");
                 while ($rowc07 = mysqli_fetch_array($qur07)) {
@@ -62,7 +59,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $rework;
             }
-            if ($j == 7) {
+            if ($j == 6) {
                 $un = $value;
                 $q211 = mysqli_query($db, "SELECT sum(total_time) as total_time,station_event_id FROM sg_station_event_log_update where station_event_id = '$un'");
                 while ($row211 = mysqli_fetch_array($q211)) {
@@ -103,9 +100,9 @@ while ($row = mysqli_fetch_row($exportData)) {
                         $eff = round(100 * ($actual_eff / $target_eff));
                     }
                 }
-                $value = $eff;
+                $value = $eff . '%';
             }
-            if ($j == 8) {
+            if ($j == 7) {
                 $un = $value;
                 $q21 = mysqli_query($db, "SELECT sum(total_time) as total_time,station_event_id FROM sg_station_event_log_update where station_event_id = '$un'");
                 while ($row21 = mysqli_fetch_array($q21)) {
@@ -134,7 +131,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                 }
                 $value = $a_npr;
             }
-            if ($j == 9) {
+            if ($j == 8) {
                 $un = $value;
                 $qur077 = mysqli_query($db, "SELECT npr as npr FROM pm_part_number where part_number = '$un'");
                 while ($rowc077 = mysqli_fetch_array($qur077)) {

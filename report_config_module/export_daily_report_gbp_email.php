@@ -2,7 +2,8 @@
 ini_set('display_errors', false);
 include("../config.php");
 $chicagotime = date('m-d-Y', strtotime('-1 days'));
-$date = onlydateReadFormat($chicagotime);
+$date1 = date('d-M-Y', strtotime('-1 days'));
+$date = onlydateReadFormat($date1);
 $subject = "Daily Mail Report";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
