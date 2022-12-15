@@ -16,7 +16,7 @@ $exportData = mysqli_query($db,"SELECT cl.line_id as station,/*e_log.station_eve
     inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
     inner join cam_line as cl on e_log.line_id = cl.line_id 
     where DATE_FORMAT(e_log.created_on,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(e_log.created_on,'%m-%d-%Y') <= '$chicagotime2' GROUP BY e_log.station_event_id order by cl.line_id,e_log.station_event_id asc");
-$header = "Station" . "\t" /*. "station_event_id" . "\t"  */. "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency(%)" . "\t" . "Actual NPR/hr" . "\t" . "Estimated NPR/hr" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
+$header = "Station" . "\t" /*. "station_event_id" . "\t"  */. "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency" . "\t" . "Actual NPR/hr" . "\t" . "Estimated NPR/hr" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
 $p = onlydateReadFormat($date) . "\n" ."Daily Efficiency Report Log Data";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
@@ -100,7 +100,7 @@ while ($row = mysqli_fetch_row($exportData)) {
                         $eff = round(100 * ($actual_eff / $target_eff));
                     }
                 }
-                $value = $eff;
+                $value = $eff . '%';
             }
             if ($j == 7) {
                 $un = $value;
