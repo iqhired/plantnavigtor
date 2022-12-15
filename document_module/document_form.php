@@ -34,36 +34,6 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
-$s_event_id = $_GET['station_event_id'];
-$station_event_id = base64_decode(urldecode($s_event_id));
-$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
-$resultmain = mysqli_query($db,$sqlmain);
-$rowcmain = mysqli_fetch_array($resultmain);
-$part_family = $rowcmain['part_family_id'];
-$part_number = $rowcmain['part_number_id'];
-
-$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-$resultnumber = mysqli_query($db,$sqlnumber);
-$rowcnumber = mysqli_fetch_array($resultnumber);
-$pm_part_number = $rowcnumber['part_number'];
-$pm_part_name = $rowcnumber['part_name'];
-
-$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-$resultfamily = mysqli_query($db,$sqlfamily);
-$rowcfamily = mysqli_fetch_array($resultfamily);
-$pm_part_family_name = $rowcfamily['part_family_name'];
-
-$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-$resultaccount = mysqli_query($db,$sqlaccount);
-$rowcaccount = mysqli_fetch_array($resultaccount);
-$account_id = $rowcaccount['account_id'];
-
-$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-$resultcus =mysqli_query($db,$sqlcus);
-$rowccus = mysqli_fetch_array($resultcus);
-$cus_name = $rowccus['c_name'];
-$logo = $rowccus['logo'];
-
 
 $yesdate = date('Y-m-d',strtotime("365 days"));
 $datefrom = $yesdate;
@@ -540,7 +510,7 @@ include("../heading_banner.php");
                                         <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                             <option value="" selected disabled>--- Select Part Number ---</option>
                                             <?php
-                                           $station = $_POST['station'];
+                                            $station = $_POST['station'];
                                             $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' ORDER BY `part_number` ASC  ";
                                             $result1 = $mysqli->query($sql1);
                                             while ($row1 = $result1->fetch_assoc()) {
@@ -661,17 +631,22 @@ include("../heading_banner.php");
         $("#out_of_control_list").select2("open");
     }
 
+
+</script>
+<script>
     $(document).on("click",".submit_btn",function() {
-        //$("#form_settings").submit(function() {
+        var data = $("#document_setting").serialize();
+        $.ajax({
+            type: 'POST',
+            url:' document_backend.php',
+            data: data,
 
-        var line_number = $("#line_number").val();
-        var material_type = $("#material_type").val();
-        var material_status = $("#material_status").val();
+            success: function () {
 
-
+            }
+        });
 
     });
-
 </script>
 <script>
     // Upload

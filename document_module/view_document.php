@@ -159,7 +159,7 @@ include("../heading_banner.php");
        <?php
 
              $station = $_GET['station'];
-             $part = $_GET['part'];
+             $part =   $_GET['part_number'];
        $sql_file_station = sprintf("SELECT * FROM `document_data` where part_number = '$part'");
        $qurmain = mysqli_query($db, $sql_file_station);
        while($rowcmain = mysqli_fetch_array($qurmain)){
@@ -188,6 +188,7 @@ include("../heading_banner.php");
                         while($rowcmain1 = mysqli_fetch_array($qurmain1)){
                             $file_name = $rowcmain1['file_name'];
                             $id =  $rowcmain1['doc_id'];
+                            $station =  $rowcmain1['doc_id'];
 
                         $img_file = sprintf("SELECT * FROM `document_data` where doc_id = '$id'");
                         $qurmain1_d = mysqli_query($db, $img_file);
@@ -216,6 +217,7 @@ include("../heading_banner.php");
                 $sql_part = "SELECT * FROM `pm_part_number` where pm_part_number_id = '$part'";
                 $qur_part = mysqli_query($db, $sql_part);
                 while($row_part = mysqli_fetch_array($qur_part)){
+                    $part_number = $row_part['part_number'];
                     $part_name = $row_part['part_name'];
                 }
                 ?>
@@ -226,7 +228,7 @@ include("../heading_banner.php");
                 $event_status = $row_st['event_status'];
 
                 if ($event_status == '1'){ ?>
-                        <h5 class="panel-title form_panel_title"><?php echo $part_name; ?></h5>
+                        <h5 class="panel-title form_panel_title"><?php echo $part_number."-".$part_name; ?></h5>
                 <div class="row ">
                     <form action="" id="form_settings" enctype="multipart/form-data"
                           class="form-horizontal" method="post" autocomplete="off">
@@ -245,7 +247,6 @@ include("../heading_banner.php");
 
                                     ?>
 
-                                ?>
                                 <div class="form_row row">
                                     <a href="../document_files/<?php echo $id; ?>/<?php echo $file_name; ?>" target="_blank">
                                         <div class="col-md-6">

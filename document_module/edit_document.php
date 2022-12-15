@@ -34,35 +34,7 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     header('location: ../dashboard.php');
 }
-$s_event_id = $_GET['station_event_id'];
-$station_event_id = base64_decode(urldecode($s_event_id));
-$sqlmain = "SELECT * FROM `sg_station_event` where `station_event_id` = '$station_event_id'";
-$resultmain = mysqli_query($db,$sqlmain);
-$rowcmain = mysqli_fetch_array($resultmain);
-$part_family = $rowcmain['part_family_id'];
-$part_number = $rowcmain['part_number_id'];
 
-$sqlnumber = "SELECT * FROM `pm_part_number` where `pm_part_number_id` = '$part_number'";
-$resultnumber = mysqli_query($db,$sqlnumber);
-$rowcnumber = mysqli_fetch_array($resultnumber);
-$pm_part_number = $rowcnumber['part_number'];
-$pm_part_name = $rowcnumber['part_name'];
-
-$sqlfamily = "SELECT * FROM `pm_part_family` where `pm_part_family_id` = '$part_family'";
-$resultfamily = mysqli_query($db,$sqlfamily);
-$rowcfamily = mysqli_fetch_array($resultfamily);
-$pm_part_family_name = $rowcfamily['part_family_name'];
-
-$sqlaccount = "SELECT * FROM `part_family_account_relation` where `part_family_id` = '$part_family'";
-$resultaccount = mysqli_query($db,$sqlaccount);
-$rowcaccount = mysqli_fetch_array($resultaccount);
-$account_id = $rowcaccount['account_id'];
-
-$sqlcus = "SELECT * FROM `cus_account` where `c_id` = '$account_id'";
-$resultcus =mysqli_query($db,$sqlcus);
-$rowccus = mysqli_fetch_array($resultcus);
-$cus_name = $rowccus['c_name'];
-$logo = $rowccus['logo'];
 
 
 $yesdate = date('Y-m-d',strtotime("365 days"));
@@ -419,7 +391,7 @@ include("../heading_banner.php");
                                 <div class="row">
                                     <label class="col-lg-2 control-label">Document file : </label>
                                     <div class="col-md-6">
-                                        <input type="file" name="file[]" id="file" class="form-control" required>
+                                        <input type="file" name="file[]" id="file" class="form-control">
                                         <div class="container"></div>
                                     </div>
                                 </div>
@@ -483,7 +455,7 @@ include("../heading_banner.php");
 
                                 </div>
 
-                               <?php if($doc_type == "part_number"){ ?>
+                               <?php if($doc_type == "0"){ ?>
                                 <div class="row desc" id="Carspart_number">
                                     <br/>
 
@@ -493,7 +465,7 @@ include("../heading_banner.php");
                                             <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                                 <option value="" selected disabled>--- Select Part Number ---</option>
                                                 <?php
-                                                $sql1 = "SELECT * FROM `pm_part_number` ORDER BY `part_number` ASC  ";
+                                                $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' ORDER BY `part_number` ASC  ";
                                                 $result1 = $mysqli->query($sql1);
                                                 while ($row1 = $result1->fetch_assoc()) {
                                                     if ($part_number = $row1['pm_part_number_id']){
@@ -520,11 +492,16 @@ include("../heading_banner.php");
                                                <select name="part_number" id="part_number" class="select" data-style="bg-slate" >
                                                    <option value="" selected disabled>--- Select Part Number ---</option>
                                                    <?php
-                                                   $sql1 = "SELECT * FROM `pm_part_number` where station = '$st' ORDER BY `part_number` ASC  ";
+                                                   $sql1 = "SELECT * FROM `pm_part_number` where station = '$station' ORDER BY `part_number` ASC  ";
                                                    $result1 = $mysqli->query($sql1);
                                                    while ($row1 = $result1->fetch_assoc()) {
+                                                       if ($part_number = $row1['pm_part_number_id']){
+                                                           $entry = 'selected';
+                                                       }else{
+                                                           $entry = '';
+                                                       }
 
-                                                       echo "<option value='" . $row1['pm_part_number_id'] . "' >" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
+                                                       echo "<option value='" . $row1['pm_part_number_id'] . "' $entry>" . $row1['part_number'] ." - ".$row1['part_name'] . "</option>";
                                                    }
                                                    ?>
                                                </select>
