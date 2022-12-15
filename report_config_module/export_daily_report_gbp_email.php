@@ -2,6 +2,7 @@
 ini_set('display_errors', false);
 include("../config.php");
 $chicagotime = date('m-d-Y', strtotime('-1 days'));
+$date = onlydateReadFormat($chicagotime);
 $subject = "Daily Mail Report";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -22,7 +23,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
     $group = explode(',', $rowc["teams"]);
     $arrusrs = explode(',', $rowc["users"]);
     $subject = $rowc["subject"];
-    $message = $rowc["message"];
+    $message = $rowc["message"] . "$date";
     $signature = $rowc["signature"];
     $mail_box = $rowc["mail_box"];
 }
