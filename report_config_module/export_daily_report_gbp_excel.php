@@ -3,8 +3,8 @@ ob_start();
 ini_set('display_errors', 'off');
 session_start();
 include '../config.php';
-$chicagotime = date('m-d-Y', strtotime('-7 days'));
-$chicagotime2 = date('m-d-Y', strtotime('-7 days'));
+$chicagotime = date('m-d-Y', strtotime('-1 days'));
+$chicagotime2 = date('m-d-Y', strtotime('-1 days'));
 if (!file_exists("../daily_report/" . $chicagotime)) {
     mkdir("../daily_report/" . $chicagotime, 0777, true);
 }
@@ -15,7 +15,7 @@ $exportData = mysqli_query($db,"SELECT cl.line_id as station,e_log.station_event
     inner join pm_part_number as pn on sg_events.part_number_id = pn.pm_part_number_id 
     inner join cam_line as cl on e_log.line_id = cl.line_id 
     where DATE_FORMAT(e_log.created_on,'%m-%d-%Y') >= '$chicagotime2' and DATE_FORMAT(e_log.created_on,'%m-%d-%Y') <= '$chicagotime2' GROUP BY e_log.station_event_id order by cl.line_id,e_log.station_event_id asc");
-$header = "Station" . "\t" . "station_event_id" . "\t"  . "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency" . "\t" . "Actual NPR" . "\t" . "Estimated NPR" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
+$header = "Station" . "\t" . "station_event_id" . "\t"  . "Total Up-Time" . "\t" . "Good Piece" . "\t" . "Bad Piece" . "\t" . "Rework" . "\t" . "Efficiency(%)" . "\t" . "Actual NPR/hr" . "\t" . "Estimated NPR/hr" . "\t" . "Part Family" . "\t" . "Part Number" . "\t" . "Part Name" . "\t";
 $p = $chicagotime2 . "  " ."Daily_Efficiency_Report_Log";
 while ($row = mysqli_fetch_row($exportData)) {
     $line = '';
