@@ -248,7 +248,7 @@ include("../heading_banner.php");
                                         <h6 class="mb-0">Email:</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="email_id" value="<?php echo $email; ?>" class="form-control" required>
+                                        <input type="text" name="email_id" value="<?php echo $email; ?>" class="form-control">
                                     </div>
                                 </div>
                                 <hr>
