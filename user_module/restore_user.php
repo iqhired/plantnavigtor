@@ -26,7 +26,7 @@ $_SESSION['LAST_ACTIVITY'] = $time;
 $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin") {
     header('location: ../dashboard.php');
-}
+ }
 $idd = $_GET['users_id'];
 ?>
 <!DOCTYPE html>

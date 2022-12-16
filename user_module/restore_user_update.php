@@ -169,7 +169,7 @@ if ($id != "") {
             $import_status_message = 'Error: Please Try Again.';
         }
     }
-}
+ }
 }
 ?>
 <!DOCTYPE html>
