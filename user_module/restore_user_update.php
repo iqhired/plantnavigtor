@@ -66,6 +66,8 @@ if (count($_POST) > 0) {
     $edit_mobile = $_POST['edit_mobile'];
     $newpass = $_POST['newpass'];
     $edit_role = $_POST['edit_role'];
+    $sql121 = "delete from `restore_cam_users` where users_id = '$edit_user_id'";
+	mysqli_query($db, $sql121);
     $sql11 = "INSERT INTO `restore_cam_users` select * from cam_users where users_id = '$edit_user_id'";
     if (!mysqli_query($db, $sql11)) {
         $message_stauts_class = 'alert-danger';
@@ -83,102 +85,6 @@ if (count($_POST) > 0) {
 			exit;
         }
     }
-$id = $_POST['edit_id'];
-if ($id != "") {
-    $id = $_POST['edit_id'];
-    $validator = $_FILES['image']['name'];
-    if ($validator != "") {
-        if (isset($_FILES['image'])) {
-            $errors = array();
-            $file_name = $_FILES['image']['name'];
-            $file_size = $_FILES['image']['size'];
-            $file_tmp = $_FILES['image']['tmp_name'];
-            $file_type = $_FILES['image']['type'];
-            $file_ext = strtolower(end(explode('.', $file_name)));
-            $extensions = array("jpeg", "jpg", "png", "pdf");
-            if (in_array($file_ext, $extensions) === false) {
-                $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-                $message_stauts_class = 'alert-danger';
-                $import_status_message = 'Error: Extension not allowed, please choose a JPEG or PNG file.';
-            }
-            if ($file_size > 2097152) {
-                $errors[] = 'File size must be excately 2 MB';
-                $message_stauts_class = 'alert-danger';
-                $import_status_message = 'Error: File size must be excately 2 MB';
-            }
-            if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "../restore_user_images/" . $file_name);
-                $pass = $_POST['newpass'];
-                if ($pass != "") {
-                    $mmm = $_POST['email_id'];
-                    $fnm = $_POST['edit_firstname'];
-                    $message = "Password has been Updated. Your new password is :- " . $pass;
-                    $subject = "Password Updated.";
-                    $mail->addAddress($mmm, $fnm);
-                    $mail->isHTML(true);
-                    $mail->Subject = $subject;
-                    $mail->Body = $message;
-                    if (!$mail->send()) {
-                    } else {
-                    }
-                    function save_mail($mail) {
-                        $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
-                        $imapStream = imap_open($path, $mail->Username, $mail->Password);
-                        $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-                        imap_close($imapStream);
-                        return $result;
-                    }
-                    $sql = "update cam_users set password = '" . (md5($_POST["newpass"])) . "',user_name='$_POST[username]',profile_pic='$file_name',mobile='$_POST[edit_mobile]',email='$_POST[email_id]',role='$_POST[edit_role]',updated_at='$chicagotime',firstname='$_POST[edit_firstname]',lastname='$_POST[edit_lastname]',hiring_date='$_POST[edit_hiring_date]',job_title_description='$_POST[edit_job_title_description]',shift_location='$_POST[edit_shift_location]',is_deleted = '0',is_restored = '1' where users_id='$edit_user_id'";
-                } else {
-                    $sql = "update cam_users set profile_pic='$file_name',user_name='$_POST[username]',mobile='$_POST[edit_mobile]',email='$_POST[email_id]',role='$_POST[edit_role]',updated_at='$chicagotime',firstname='$_POST[edit_firstname]',lastname='$_POST[edit_lastname]',hiring_date='$_POST[edit_hiring_date]',job_title_description='$_POST[edit_job_title_description]',shift_location='$_POST[edit_shift_location]',is_deleted = '0',is_restored = '1' where users_id='$edit_user_id'";
-                }
-                $result1 = mysqli_query($db, $sql);
-                if ($result1) {
-                    $message_stauts_class = 'alert-success';
-                    $import_status_message = 'User Updated Successfully.';
-                } else {
-                    $message_stauts_class = 'alert-danger';
-                    $import_status_message = 'Error: Please Try Again.';
-                }
-            }
-        }
-    } else {
-        $pass = $_POST['newpass'];
-        if ($pass != "") {
-            $sql = "update cam_users set password = '" . (md5($_POST["newpass"])) . "',user_name='$_POST[username]',mobile='$_POST[edit_mobile]',email='$_POST[email_id]',role='$_POST[edit_role]',updated_at='$chicagotime',firstname='$_POST[edit_firstname]',lastname='$_POST[edit_lastname]',hiring_date='$_POST[edit_hiring_date]',job_title_description='$_POST[edit_job_title_description]',shift_location='$_POST[edit_shift_location]',is_deleted = '0',is_restored = '1' where users_id='$edit_user_id'";
-            $emailto = $_POST['email_id'];
-            $fnm = $_POST['edit_firstname'];
-            if ($emailto != "") {
-                $subject = "Password changed";
-                $message = "Your Password has been changed. New Password is :- " . $pass;
-                $mail->addAddress($emailto, $fnm);
-                $mail->isHTML(true);
-                $mail->Subject = $subject;
-                $mail->Body = $message;
-                if (!$mail->send()) {
-                } else {
-                }
-                function save_mail($mail) {
-                    $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
-                    $imapStream = imap_open($path, $mail->Username, $mail->Password);
-                    $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-                    imap_close($imapStream);
-                    return $result;
-                }
-            }
-        } else {
-            $sql = "update cam_users set training_station='$_POST[edit_station]',training_position='$_POST[edit_position]', mobile='$_POST[edit_mobile]',user_name='$_POST[edit_name]',email='$_POST[edit_email]',role='$_POST[edit_role]',firstname='$_POST[edit_firstname]',lastname='$_POST[edit_lastname]',hiring_date='$_POST[edit_hiring_date]',job_title_description='$_POST[edit_job_title_description]',shift_location='$_POST[edit_shift_location]' where users_id='$id'";
-        }
-        $result1 = mysqli_query($db, $sql);
-        if ($result1) {
-            $message_stauts_class = 'alert-success';
-            $import_status_message = 'User Updated Successfully.';
-        } else {
-            $message_stauts_class = 'alert-danger';
-            $import_status_message = 'Error: Please Try Again.';
-        }
-    }
- }
 }
 ?>
 <!DOCTYPE html>
