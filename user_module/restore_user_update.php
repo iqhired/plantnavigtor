@@ -71,8 +71,17 @@ if (count($_POST) > 0) {
         $message_stauts_class = 'alert-danger';
         $import_status_message = 'No Data Stored..';
     } else {
-        $message_stauts_class = 'alert-success';
-        $import_status_message = 'User Data Restored Successfully.';
+		$sql = "update cam_users set user_name='$name',mobile='$edit_mobile',email='$email_id',role='$edit_role',updated_at='$chicagotime',firstname='$edit_firstname',lastname='$edit_lastname',hiring_date='$edit_hiring_date',job_title_description='$edit_job_title_description',shift_location='$edit_shift_location',is_deleted = '0',is_restored = '1' where users_id='$edit_user_id'";
+        $result1 = mysqli_query($db, $sql);
+        if ($result1) {
+            $message_stauts_class = 'alert-success';
+            $import_status_message = 'User Data Restored Successfully.';
+			$_SESSION['message_stauts_class'] = 'alert-success';
+			$_SESSION['import_status_message'] = 'User Data Restored Successfully.';
+			$page = "users_list.php";
+			header('Location: '.$page, true, 303);
+			exit;
+        }
     }
 $id = $_POST['edit_id'];
 if ($id != "") {
@@ -421,7 +430,7 @@ include("../heading_banner.php");
                                         <h6 class="mb-0">Mobile:</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text"  name="edit_mobile" id="edit_mobile" class="form-control" pattern= "[0-9]{10}" value="<?php echo $mobile; ?>" class="form-control" required>
+                                        <input type="text"  name="edit_mobile" id="edit_mobile" class="form-control" pattern= "[0-9]{10}" value="<?php echo $mobile; ?>" class="form-control" >
                                     </div>
                                 </div>
                                 <hr>
@@ -430,22 +439,22 @@ include("../heading_banner.php");
                                         <h6 class="mb-0">New Password: </h6>
                                     </div>
                                     <div class="col-sm-7 text-secondary">
-                                        <input type="text" name="newpass" id="newpass" class="form-control">
+                                        <input type="text" name="newpass" id="newpass" class="form-control" required>
                                     </div>
                                     <div class="col-sm-2 text-secondary">
                                         <button type="button" name="generate" id="generate" >Generate</button>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Profile Pic: </h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="file" name="image" id="image" class="form-control" >
-                                    </div>
-                                </div>
-                                <hr>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-3">-->
+<!--                                        <h6 class="mb-0">Profile Pic: </h6>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-9 text-secondary">-->
+<!--                                        <input type="file" name="image" id="image" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <hr>-->
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Role: </h6>
@@ -474,7 +483,7 @@ include("../heading_banner.php");
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-info ">Update</button>
+                                        <button type="submit" class="btn btn-info ">Restore</button>
                                     </div>
                                 </div>
                             </div>

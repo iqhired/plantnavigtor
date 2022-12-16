@@ -231,7 +231,7 @@ include("../heading_banner.php");
 
                     </td>
                     <td>
-                        <a href="restore_user_update.php?user_id=<?php echo $rowc['users_id']; ?>&user_name=<?php echo $rowc['user_name']; ?>" class="btn btn-primary" style="background-color:#1e73be;" target="_blank" >Restore</a>
+                        <a href="restore_user_update.php?user_id=<?php echo $rowc['users_id']; ?>&user_name=<?php echo $rowc['user_name']; ?>" class="btn btn-primary restore_btn" style="background-color:#1e73be;">Restore</a>
                         <!--<button type="button" id="edit" class="btn btn-info btn-xs" data-trainee="<?php /*echo $rowc['training']; */?>"  data-station="<?php /*echo $rowc['training_station']; */?>" data-position="<?php /*echo $rowc['training_position']; */?>"  data-id="<?php /*echo $rowc['users_id']; */?>" data-name="<?php /*echo $rowc['user_name']; */?>"   data-email="<?php /*echo $rowc['email']; */?>" data-phone="<?php /*echo $rowc['mobile']; */?>" data-role="<?php /*echo $rowc['role']; */?>" data-s_q1="<?php /*echo $rowc['s_question1']; */?>" data-s_q2="<?php /*echo $rowc['s_question2']; */?>" data-s_q3="<?php /*echo $rowc['s_question3']; */?>" data-firstname="<?php /*echo $rowc['firstname']; */?>" data-lastname="<?php /*echo $rowc['lastname']; */?>" data-hiring_date="<?php /*echo $rowc['hiring_date']; */?>" data-total_days="<?php /*echo $rowc['total_days']; */?>" data-job_title_description="<?php /*echo $rowc['job_title_description']; */?>" data-shift_location="<?php /*echo $rowc['shift_location']; */?>" data-toggle="modal" style="background-color:#1e73be;" data-target="#edit_modal_theme_primary">Edit </button>-->
                         <!--<a href="restore_user_update.php?user_id=<?php /*echo $rowc['users_id']; */?>&user_name=<?php /*echo $rowc['user_name']; */?>&email=<?php /*echo $rowc['email']; */?>&trainee=<?php /*echo $rowc['training']; */?>&training_station=<?php /*echo $rowc['training_station']; */?>&training_position=<?php /*echo $rowc['training_position']; */?>&mobile=<?php /*echo $rowc['mobile']; */?>&role=<?php /*echo $rowc['role']; */?>&s_question1=<?php /*echo $rowc['s_question1']; */?>&s_question2=<?php /*echo $rowc['s_question2']; */?>&s_question3=<?php /*echo $rowc['s_question3']; */?>&firstname=<?php /*echo $rowc['firstname']; */?>&lastname=<?php /*echo $rowc['lastname']; */?>&hiring_date=<?php /*echo $rowc['hiring_date']; */?>&total_days=<?php /*echo $rowc['total_days']; */?>&job_title_description=<?php /*echo $rowc['job_title_description']; */?>&shift_location=<?php /*echo $rowc['shift_location']; */?>" class="btn btn-primary" style="background-color:#1e73be;" target="_blank" ><i class="fas fa-trash-restore"></i></a>-->
                     </td>
@@ -306,6 +306,9 @@ include("../heading_banner.php");
 
 
 <script>
+    $(".restore_btn").click(function () {
+        location.reload();
+    });
     function filePreview(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
