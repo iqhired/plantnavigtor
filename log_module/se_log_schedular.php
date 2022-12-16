@@ -138,12 +138,12 @@ while ($row_st_202 = mysqli_fetch_array($result_st_202)) {
 						}
 						if ($loop_tot_time > 24) {
 							$end_time2 = $crea_date[0] . ' ' . '23:59:59';
-							$datetime31 = strtotime($d_sql['created_on']);
-							$datetime32 = strtotime($end_time2);
-							$t_32 = $datetime32 - $datetime31;
-							$end_t32 = $t_32 / 3600;
-							$end_t32 = round($end_t32, 2);
-							$rem_day_time = $end_t32;
+//							$datetime31 = strtotime($d_sql['created_on']);
+//							$datetime32 = strtotime($end_time2);
+//							$t_32 = $datetime32 - $datetime31;
+//							$end_t32 = $t_32 / 3600;
+//							$end_t32 = round($end_t32, 2);
+//							$rem_day_time = $end_t32;
 							if($rem_day_time != 0 ){
 								$sql_up = "update sg_station_event_log_update set total_time = '$rem_day_time' , end_time = '$end_time2' where day_seq = '$z' AND station_event_id = '$station_event_id' and  sg_station_event_old_id = '$station_event_log_id'";
 								$result_up = mysqli_query($db, $sql_up);
