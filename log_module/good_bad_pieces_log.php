@@ -538,8 +538,9 @@ include("../heading_banner.php");
         </div>
 
     </div>
-
+    <br/>
     <div class="row">
+        <?php if($pn != "" && $pf != ""){ ?>
         <div class="col-md-4 col-md-8 media_bsr">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
                 <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
@@ -550,14 +551,15 @@ include("../heading_banner.php");
         </div>
         <div class="col-md-4 col-md-8 media">
             <div class="media">
-            <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
+                <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
 
-                <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
-					class="text-semibold no-margin">Budget Scrap Rate</h8>-->
-                <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px;"></div>
+                    <!--<h8 style="font-size: large;padding : 5px; text-align: center;"
+                        class="text-semibold no-margin">Budget Scrap Rate</h8>-->
+                    <div id="npr_container" style="height: 450px;border:1px solid #efefef; margin-top: 20px;"></div>
 
+                </div>
             </div>
-            </div>
+
         </div>
         <div class="col-md-4 col-md-8 media_eff">
             <div id="" style="padding: 10px 20px;height: 500px;background-color: #f7f7f7; margin-top: 10px">
@@ -567,7 +569,9 @@ include("../heading_banner.php");
 
             </div>
         </div>
+        <?php } ?>
     </div>
+    <br/>
     <div class="row">
             <div class="col-md-4 col-md-8 media_ex">
                 <div id="container" style="height: 500px; width: 100%;"></div>

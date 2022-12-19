@@ -8,8 +8,8 @@ $temp = "";
 </a>
 <br>
 <h3>SPC Analytics graph </h3>
-<a href="<?php echo $siteURL ?>form_module/form_graph.php" target="_blank">
-    <h3><?php echo $siteURL ?>form_module/form_graph.php</h3>
+<a href="<?php echo $siteURL ?>form_module/form_graph1.php" target="_blank">
+    <h3><?php echo $siteURL ?>form_module/form_graph1.php</h3>
 </a>
 <br>
 <h3>Spliting Records Through page_from to page_to </h3>

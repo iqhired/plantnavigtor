@@ -213,7 +213,7 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 1 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
                     if($updated_at == $cur)
@@ -467,7 +467,7 @@ include("../hp_header.php");
                         }
                     }
 
-                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 1 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
                     if($updated_at == $cur)
@@ -718,7 +718,7 @@ include("../hp_header.php");
                             $_SESSION['import_status_message'] = 'Form Frequency Updated Successfully.';
                         }
                     }
-                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 30 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
+                    $qur0354 = mysqli_query($db, "select DATE_FORMAT(date_add(updated_at,interval 1 minute), '%Y-%m-%d %H:%i') as updated_at from `form_frequency_data` where form_create_id = '$form_create_id' order by updated_at desc limit 1");
                     $rowc0354 = mysqli_fetch_array($qur0354);
                     $updated_at = $rowc0354['updated_at'];
                     if($updated_at == $cur)

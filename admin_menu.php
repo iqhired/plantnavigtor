@@ -806,7 +806,15 @@ $msg = explode(',', $msg); ?>
                                                     User Station-Pos Ratings
                                                 </a>
                                             </div>
-										<?php } ?>
+                                        <?php }
+                                        if (in_array('89', $msg)) { ?>
+                                            <div class="mt-3">
+                                                <a href="<?php echo $siteURL; ?>user_module/restore_user.php"
+                                                   class="text-muted mobile">
+                                                    Restore User
+                                                </a>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
 
@@ -1774,7 +1782,13 @@ $msg = explode(',', $msg); ?>
                                                             <a href="<?php echo $siteURL; ?>user_module/user_ratings.php"
                                                                class="mega-link"><h3 class="text-muted fs-6">User Station-Pos Ratings</h3></a>
                                                         </div>
-													<?php } ?>
+                                                    <?php }
+                                                    if (in_array('89', $msg)) { ?>
+                                                        <div class="mb-3">
+                                                            <a href="<?php echo $siteURL; ?>user_module/restore_user.php"
+                                                               class="mega-link"><h3 class="text-muted fs-6">Restore User</h3></a>
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
 
