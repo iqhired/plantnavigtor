@@ -81,38 +81,25 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" ) {
     <link href="<?php echo $siteURL; ?>assets/css/form_css/style-transparent.css" rel="stylesheet">
     <!---Internal Fancy uploader css-->
     <link href="<?php echo $siteURL; ?>assets/css/form_css/fancy_fileupload.css" rel="stylesheet" />
-
-
     <!--Internal  Datepicker js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/datepicker.js"></script>
     <!-- Internal Select2.min js -->
-
     <!--Internal  jquery.maskedinput js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/jquery.maskedinput.js"></script>
-
     <!--Internal  spectrum-colorpicker js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/spectrum.js"></script>
-
-
-
     <!--Internal  jquery-simple-datetimepicker js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/datetimepicker.min.js"></script>
-
     <!-- Ionicons js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/jquery.simple-dtpicker.js"></script>
-
     <!--Internal  pickerjs js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/picker.min.js"></script>
-
     <!--internal color picker js-->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/pickr.es5.min.js"></script>
     <script src="<?php echo $siteURL; ?>assets/js/form_js/colorpicker.js"></script>
-
     <!--Bootstrap-datepicker js-->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/bootstrap-datepicker.js"></script>
-
     <script src="<?php echo $siteURL; ?>assets/js/form_js/select2.min.js"></script>
-
     <!-- Internal form-elements js -->
     <script src="<?php echo $siteURL; ?>assets/js/form_js/form-elements.js"></script>
     <link href="<?php echo $siteURL; ?>assets/js/form_js/demo.css" rel="stylesheet"/>
