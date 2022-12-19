@@ -79,8 +79,17 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-cartesian.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
     <style> .sidebar-default .navigation li > a {
             color: #f5f5f5
         }
@@ -140,6 +149,9 @@ if ($is_tab_login || ($_SESSION["role_id"] == "pn_user")) {
 ?>
 <?php
 $form_create_id = $_GET['id'];
+$form_item_id = $_GET['item_id'];
+$date_from = $_GET['date_from'];
+$date_to = $_GET['date_to'];
 
 $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_number.part_number as part_number,pm_part_number.part_name as part_name,cus_account.c_name as c_name,cus_account.logo as logo FROM `form_create` 
           INNER JOIN pm_part_family ON pm_part_family.pm_part_family_id = form_create.`part_family` 
@@ -159,6 +171,7 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
 ?>
 <!-- Content area -->
 <div class="content">
+    <form action="" id="line_graph" class="form-horizontal" enctype="multipart/form-data" method="post">
     <div style="background-color: #fff;padding-bottom: 50px; margin-left:0px !important; margin-right: 0px !important;" class="row">
         <div class="col-lg-3 col-md-8"></div>
         <div class="col-lg-6 col-md-12">
@@ -168,6 +181,9 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
                 </div>
 
                 <div class="media-body">
+                    <input type="hidden" value="<?php echo $date_to; ?>" name="date_to" id="date_to">
+                    <input type="hidden" value="<?php echo $date_from; ?>" name="date_from" id="date_from">
+                    <input type="hidden" value="<?php echo $form_item_id; ?>" name="form_item_id" id="form_item_id">
                     <input type="hidden" value="<?php echo $form_create_id; ?>" name="form_create" id="form_create">
                     <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
                     <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $part_family_name; ?></small>
@@ -180,6 +196,7 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
         </div>
 
     </div>
+    </form>
     <div class="panel panel-flat">
         <div class="row" style="background-color: #f3f3f3;margin: 0px">
             <div class="col-md-12" style="height: 10vh; padding-top: 3vh; font-size: x-large; text-align: center;">
@@ -189,76 +206,119 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
         </div>
     </div>
     <!-- Basic datatable -->
-    <div id="container"></div>
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
-    <script type="text/javascript">
-        anychart.onDocumentReady(function () {
+    <div class="row">
+        <div class="col-md-12">
+            <div id="container" style="height: 500px; width: 100%;"></div>
+        </div>
+    </div>
 
-            // create data
-            var data = [
-                {x: "January", value: 10000},
-                {x: "February", value: 12000},
-                {x: "March", value: 18000},
-                {x: "April", value: 11000},
-                {x: "May", value: 9000}
-            ];
-
-            // create a chart
-            var chart = anychart.line();
-
-            // create a spline series and set the data
-            var series = chart.spline(data);
-
-            // set the chart title
-            chart.title("Spline Chart");
-
-            // set the titles of the axes
-            var xAxis = chart.xAxis();
-            xAxis.title("Month");
-            var yAxis = chart.yAxis();
-            yAxis.title("Sales, $");
-
-            // set the container id
-            chart.container("container");
-
-            // initiate drawing the chart
-            chart.draw();
-        });
-
-        function getData() {
-            return [
-                ['1986', 3.6, 2.3, 2.8, 11.5],
-                ['1987', 7.1, 4.0, 4.1, 14.1],
-                ['1988', 8.5, 6.2, 5.1, 17.5],
-                ['1989', 9.2, 11.8, 6.5, 18.9],
-                ['1990', 10.1, 13.0, 12.5, 20.8],
-                ['1991', 11.6, 13.9, 18.0, 22.9],
-                ['1992', 16.4, 18.0, 21.0, 25.2],
-                ['1993', 18.0, 23.3, 20.3, 27.0],
-                ['1994', 13.2, 24.7, 19.2, 26.5],
-                ['1995', 12.0, 18.0, 14.4, 25.3],
-                ['1996', 3.2, 15.1, 9.2, 23.4],
-                ['1997', 4.1, 11.3, 5.9, 19.5],
-                ['1998', 6.3, 14.2, 5.2, 17.8],
-                ['1999', 9.4, 13.7, 4.7, 16.2],
-                ['2000', 11.5, 9.9, 4.2, 15.4],
-                ['2001', 13.5, 12.1, 1.2, 14.0],
-                ['2002', 14.8, 13.5, 5.4, 12.5],
-                ['2003', 16.6, 15.1, 6.3, 10.8],
-                ['2004', 18.1, 17.9, 8.9, 8.9],
-                ['2005', 17.0, 18.9, 10.1, 8.0],
-                ['2006', 16.6, 20.3, 11.5, 6.2],
-                ['2007', 14.1, 20.7, 12.2, 5.1],
-                ['2008', 15.7, 21.6, 10, 3.7],
-                ['2009', 12.0, 22.5, 8.9, 1.5]
-            ];
-        }
-    </script>
 </div>
-<!-- /content area -->
+<script>
+    anychart.onDocumentReady(function () {
+        var data = $("#line_graph").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'form_line_graph.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var item_value = data.posts.map(function (elem) {
+                    return elem.item_value;
+                });
+                // console.log(goodpiece);
+               /* var bad_pieces = data.posts.map(function (elem) {
+                    return elem.bad_pieces;
+                });
+                var rework = data.posts.map(function (elem) {
+                    return elem.rework;
+                });*/
+                var data = [
+                    {x: '', value: item_value, fill: '#177b09'},
+                   // {x: '', value: item_value[1], fill: '#177b09'},
+                  /*  {x: 'Bad', value: bad_pieces, fill: '#BE0E31'},
+                    {x: 'Rework', value: rework, fill: '#2643B9'},
+*/
+                ];
+                // create pareto chart with data
+                var chart = anychart.line(data);
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>"
+                );
 
+                // set measure y axis title
+                // chart.yAxis(0).title('Numbers');
+                // cumulative percentage y axis title
+                // chart.yAxis(1).title(' Percentage');
+                // set interval
+                // chart.yAxis(1).scale().ticks().interval(10);
+
+                // get pareto column series and set settings
+                var column = chart.getSeriesAt(0);
+
+                column.labels().enabled(true).format('{%Value}');
+                column.tooltip().format('Value: {%Value}');
+
+                var labels = column.labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(24);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                var xLabelsBackground = column.labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
+
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(18);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(false);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                var xLabelsBackground = chart.xAxis().labels().background();
+                xLabelsBackground.enabled(true);
+                xLabelsBackground.stroke("#cecece");
+                xLabelsBackground.cornerType("round");
+                xLabelsBackground.corners(5);
+
+                //
+                // // get pareto line series and set settings
+                // var line = chart.getSeriesAt(1);
+                // line
+                //     .tooltip()
+                //     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
+                //     .format('Percent : {%RF}%');
+                //
+                // // turn on the crosshair and set settings
+                // chart.crosshair().enabled(true).xLabel(false);
+                // chart.xAxis().labels().rotation(-90);
+
+                // set container id for the chart
+                chart.container('container');
+                // initiate chart drawing
+                chart.draw();
+            }
+        });
+    });
+</script>
 <?php include('../footer.php') ?>
 <!--<script type="text/javascript" src="../assets/js/core/app.js">-->
 </body>

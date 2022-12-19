@@ -77,7 +77,7 @@ while ($rowc = mysqli_fetch_array($qur)) {
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-
+        echo 'success';
     }
  }
     function save_mail($mail)
