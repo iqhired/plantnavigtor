@@ -193,7 +193,6 @@ include("../admin_menu.php");
                         <div class="card-header">
                             <span class="main-content-title mg-b-0 mg-b-lg-1">FORM CREATE</span>
                         </div>
-
                         <div class="card-body pt-0">
                             <div class="pd-30 pd-sm-20">
                                     <div class="row row-xs align-items-center mg-b-20">
