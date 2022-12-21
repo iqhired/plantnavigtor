@@ -24,7 +24,7 @@ if ($request == 1) {
         echo 0;
     } else {
         /* Upload file */
-        $destination = $location . $form_timestamp . '_' . $fname;
+        $destination = $location.$fname;
         $f_name = $form_timestamp . '_' . $fname;
 //        if(move_uploaded_file($_FILES['file']['name'],$location)){
         if (move_uploaded_file($file_tmp, $destination)) {
