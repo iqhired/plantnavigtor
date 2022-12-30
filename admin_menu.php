@@ -868,10 +868,27 @@ $msg = explode(',', $msg); ?>
                                 </a>
                             </div>
 						<?php }
-						if (in_array('40', $msg)) { ?>
+                        if (in_array('59', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>log_module/task_crew_log.php" class="text-muted mobile">
-                                    <span class="ms-2 ">Task Crew Log</span>
+                                <a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php"
+                                   class="text-muted mobile">
+                                    <span class="ms-2 ">Good Bad Pieces Log</span>
+                                </a>
+                            </div>
+                        <?php }
+                        if (in_array('73', $msg)) { ?>
+                            <div class="mt-3">
+                                <a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php"
+                                   class="text-muted mobile">
+                                    <span class="ms-2 ">Material Traceability Log</span>
+                                </a>
+                            </div>
+                        <?php }
+                        if (in_array('74', $msg)) { ?>
+                            <div class="mt-3">
+                                <a href="<?php echo $siteURL; ?>log_module/10x_log.php"
+                                   class="text-muted mobile">
+                                    <span class="ms-2 ">10x Log</span>
                                 </a>
                             </div>
 						<?php }
@@ -883,44 +900,25 @@ $msg = explode(',', $msg); ?>
                                 </a>
                             </div>
 						<?php }
-						if (in_array('59', $msg)) { ?>
+                        if (in_array('86', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php"
-                                   class="text-muted mobile">
-                                    <span class="ms-2 ">Good Bad Pieces Log</span>
+                                <a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php" class="text-muted mobile">
+                                    <span class="ms-2 ">Station Assets Log</span>
                                 </a>
                             </div>
-						<?php }
-						if (in_array('73', $msg)) { ?>
+                        <?php } if (in_array('90', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php"
-                                   class="text-muted mobile">
-                                    <span class="ms-2 ">Material Traceability Log</span>
+                                <a href="<?php echo $siteURL; ?>form_module/form_graph.php" class="text-muted mobile">
+                                    <span class="ms-2 ">SPC Analytics</span>
                                 </a>
                             </div>
-						<?php }
-						if (in_array('74', $msg)) { ?>
+                        <?php } if (in_array('40', $msg)) { ?>
                             <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>log_module/10x_log.php"
-                                   class="text-muted mobile">
-                                    <span class="ms-2 ">10x Log</span>
+                                <a href="<?php echo $siteURL; ?>log_module/task_crew_log.php" class="text-muted mobile">
+                                    <span class="ms-2 ">Task Crew Log</span>
                                 </a>
                             </div>
-						<?php }
-						if (in_array('21', $msg)) { ?>
-                            <div class="mt-3">
-                                <a href="<?php echo $siteURL; ?>table.php" class="text-muted mobile">
-                                    <span class="ms-2 ">Training Matrix</span>
-                                </a>
-                            </div>
-						<?php } if (in_array('86', $msg)) { ?>
-                        <div class="mt-3">
-                            <a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php" class="text-muted mobile">
-                                <span class="ms-2 ">Station Assets Log</span>
-                            </a>
-                        </div>
-                        <?php } ?> ?>
-
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -1366,30 +1364,31 @@ $msg = explode(',', $msg); ?>
 								<?php if (in_array('36', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>log_module/assign_crew_log.php">Crew Assignment
                                             Log</a></li>
-								<?php }
+                                <?php }
+                                if (in_array('59', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php">Good Bad
+                                            Pieces Log</a></li>
+                                <?php }
+                                if (in_array('74', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/10x_log.php">10x Log</a></li>
+                                <?php }
+                                if (in_array('73', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php">Material Traceability Log</a></li>
+                                <?php }
+                                if (in_array('51', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>log_module/sg_station_event_log.php">Station
+                                            Events Log</a></li>
+                                <?php } if (in_array('86', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php"> Station Assets Log</a></li>
+                                <?php }
+                                if (in_array('90', $msg)) { ?>
+                                    <li><a href="<?php echo $siteURL; ?>form_module/form_graph.php">SPC Analytics</a>
+                                    </li>
+                                <?php }
 								if (in_array('40', $msg)) { ?>
                                     <li><a href="<?php echo $siteURL; ?>log_module/task_crew_log.php">Task Crew Log</a>
                                     </li>
-								<?php }
-								if (in_array('51', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/sg_station_event_log.php">Station
-                                            Events Log</a></li>
-								<?php }
-								if (in_array('59', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/good_bad_pieces_log.php">Good Bad
-                                            Pieces Log</a></li>
-								<?php }
-								if (in_array('73', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/material_tracability_log.php">Material Traceability Log</a></li>
-								<?php }
-								if (in_array('74', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>log_module/10x_log.php">10x Log</a></li>
-								<?php }
-								if (in_array('21', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>table.php"> Training Matrix</a></li>
-								<?php } if (in_array('86', $msg)) { ?>
-                                    <li><a href="<?php echo $siteURL; ?>report_config_module/station_asset_log.php"> Station Assets Log</a></li>
-                                <?php } ?>?>
+                                <?php } ?>
                             </ul>
                         </div>
                     </li>
