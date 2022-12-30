@@ -36,23 +36,7 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
 }
-if (count($_POST) > 0) {
-
-    $dateto = $_POST['date_to'];
-    $datefrom = $_POST['date_from'];
-    $button = $_POST['button'];
-
-    //$_SESSION['createid'] = $_POST['createid'];
-    $_SESSION['date_from_1'] = $_POST['date_from'];
-    $_SESSION['date_to_1'] = $_POST['date_to'];
-    $_SESSION['timezone_1'] = $_POST['timezone'];
-}else{
-    $curdate = date('Y-m-d');
-    $dateto = $curdate;
-    $yesdate = date('Y-m-d',strtotime("-1 days"));
-    $datefrom = $yesdate;
-}
-
+$form_iitem_id = $_GET['item_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,327 +44,457 @@ if (count($_POST) > 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $sitename; ?> | Analytics Trend Form view</title>
+    <title>
+        <?php echo $sitename; ?> |Analytics Trend Form view</title>
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 
 
-    <link href="<?php echo $siteURL; ?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $siteURL; ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $siteURL; ?>assets/css/core.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $siteURL; ?>assets/css/components.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $siteURL; ?>assets/css/colors.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $siteURL; ?>assets/css/style_main.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/core.css" rel="stylesheet" type="text/css">
+
+
     <!-- /global stylesheets -->
     <!-- Core JS files -->
-    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>
+    <!--    <script type="text/javascript" src="../assets/js/libs/jquery-3.6.0.min.js"> </script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
+    <script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- Theme JS files -->
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/core/app.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/components_modals.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/ui/ripple.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_bootstrap_select.js"></script>
-    <script type="text/javascript" src="<?php echo $siteURL; ?>assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="../assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/datatables_basic.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/form_bootstrap_select.js"></script>
+    <script type="text/javascript" src="../assets/js/pages/form_layouts.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/ui/ripple.min.js"></script>
+
+    <!--Internal  Datetimepicker-slider css -->
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/amazeui.datetimepicker.css" rel="stylesheet">
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/jquery.simple-dtpicker.css" rel="stylesheet">
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/picker.min.css" rel="stylesheet">
+    <!--Bootstrap-datepicker css-->
+    <link rel="stylesheet" href="<?php echo $siteURL; ?>assets/css/form_css/bootstrap-datepicker.css">
+    <!-- Internal Select2 css -->
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/select2.min.css" rel="stylesheet">
+    <!-- STYLES CSS -->
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/style.css" rel="stylesheet">
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/style-dark.css" rel="stylesheet">
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/style-transparent.css" rel="stylesheet">
+    <!---Internal Fancy uploader css-->
+    <link href="<?php echo $siteURL; ?>assets/css/form_css/fancy_fileupload.css" rel="stylesheet" />
+    <!--Internal  Datepicker js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/datepicker.js"></script>
+    <!-- Internal Select2.min js -->
+    <!--Internal  jquery.maskedinput js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/jquery.maskedinput.js"></script>
+    <!--Internal  spectrum-colorpicker js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/spectrum.js"></script>
+    <!--Internal  jquery-simple-datetimepicker js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/datetimepicker.min.js"></script>
+    <!-- Ionicons js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/jquery.simple-dtpicker.js"></script>
+    <!--Internal  pickerjs js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/picker.min.js"></script>
+    <!--internal color picker js-->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/pickr.es5.min.js"></script>
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/colorpicker.js"></script>
+    <!--Bootstrap-datepicker js-->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/bootstrap-datepicker.js"></script>
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/select2.min.js"></script>
+    <!-- Internal form-elements js -->
+    <script src="<?php echo $siteURL; ?>assets/js/form_js/form-elements.js"></script>
+    <link href="<?php echo $siteURL; ?>assets/js/form_js/demo.css" rel="stylesheet"/>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-data-adapter.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pareto.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/8.11.0/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/8.11.0/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-cartesian.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
     <style>
-        .red {
-            color: red;
-            display: none;
+        .navbar {
+
+            padding-top: 0px!important;
         }
-        .tooltip {
-            position: relative;
+        .dropdown .arrow {
+
+            margin-top: -25px!important;
+            width: 1.5rem!important;
+        }
+        #ic .arrow {
+            margin-top: -22px!important;
+            width: 1.5rem!important;
+        }
+        .fs-6 {
+            font-size: 1rem!important;
+        }
+
+        .content_img {
+            width: 113px;
+            float: left;
+            margin-right: 5px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        /* Delete */
+        .content_img span {
+            border: 2px solid red;
             display: inline-block;
-            /*border-bottom: 1px dotted black;*/
-            opacity: 1!important;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #26a69a;
-            color: #fff;
+            width: 99%;
             text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            color: red;
+        }
+        .remove_btn{
+            float: right;
+        }
+        .contextMenu{ position:absolute;  width:min-content; left: 204px; background:#e5e5e5; z-index:999;}
+        .collapse.in {
+            display: block!important;
+        }
+        .file-image-1 .icons li a {
+            height: 30px;
+            width: 30px;
+        }
+        .remove {
+            display: block;
+            background: #444;
+            border: 1px solid black;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove:hover {
+            background: white;
+            color: black;
+        }
+        input[type="file"] {
+            display: block;
+        }
+        .imageThumb {
+            max-height: 100px;
+            border: 2px solid;
+            padding: 1px;
+            cursor: pointer;
+        }
+        .pip {
+            display: inline-block;
+            margin: 10px 10px 0 0;
         }
 
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
+        button.remove {
+            margin-left: 15px;
         }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+        .row-body {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -8.75rem;
+            margin-right: 6.25rem;
         }
-        .col-md-6.date {
-            width: 25%;
-        }
+        @media (min-width: 320px) and (max-width: 480px) {
+            .row-body {
 
-
-        @media
-        only screen and (max-width: 760px),
-        (min-device-width: 768px) and (max-device-width: 1024px)  {
-
-            .form_mob{
-                display: none;
+                margin-left: 0rem;
+                margin-right: 0rem;
             }
-            .form_create{
-                display: none;
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .row-body {
+
+                margin-left: -15rem;
+                margin-right: 0rem;
             }
+            .col-md-1 {
+                flex: 0 0 8.33333%;
+                max-width: 10.33333%!important;
+            }
+        }
 
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .row-body {
 
-
+                margin-left:-15rem;
+                margin-right: 0rem;
+            }
 
         }
-        @media
-        only screen and (max-width: 400px),
-        (min-device-width: 400px) and (max-device-width: 670px)  {
-
-            .form_mob{
-                display: none;
-            }
-            .form_create{
-                display: none;
-            }
-            .col-md-6.date {
-                width: 100%;
-                float: right;
-            }
-
-
-
-
-
+        .red-star {
+            color: red;
         }
+        #sub_app {
+            padding: 20px 40px;
+            color: red;
+            font-size: initial;
+        }
+
+
     </style>
-
 </head>
-<body>
 <!-- Main navbar -->
-<?php $cust_cam_page_header = "Analytics Trend Form view";
-include("../header.php");
-
+<?php include("../header.php");
 if (($is_tab_login || $is_cell_login)) {
     include("../tab_menu.php");
 } else {
     include("../admin_menu.php");
 }
-include("../heading_banner.php");
 ?>
-<body class="alt-menu sidebar-noneoverflow">
-<div class="page-container">
-    <!-- Content area -->
-    <div class="content">
-        <!-- Main charts -->
-        <!-- Basic datatable -->
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-
-                <form action="" id="form_item" class="form-horizontal" method="post" autocomplete="off">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?php
-                            $form_createid = $_GET['id'];
-                            $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$form_createid' ");
-                            $qur1 = mysqli_query($db, $query1);
-                            $rowc1 = mysqli_fetch_array($qur1);
-                            $name = $rowc1['name'];
-                            $item_id = $rowc1['form_create_id'];
-                            $part_family = $rowc1['part_family'];
-                            $station = $rowc1['station'];
-                            $form_type = $rowc1['form_type'];
-                            $part_number = $rowc1['part_number'];
-
-                            ?>
-                            <b><h4 class="panel-title form_panel_title"><?php echo $name; ?>
-                                </h4></b>
-                            <input type="hidden" name="name" id="name" value="<?php echo $name; ?>">
-                            <input type="hidden" name="createid" id="createid" value="<?php echo $form_createid; ?>">
-                            <?php
-                            $qur2 = mysqli_query($db, "SELECT * FROM form_type where form_type_id = '$form_type'");
-                            $row2 = mysqli_fetch_array($qur2);
-                            $form_type_name = $row2["form_type_name"];
-                            ?>
-
-                            <div class="form_row row">
-                                <label class="col-lg-3 control-label">Form Type : </label>
-                                <div class="col-md-7">
-                                    <input type="text" name="form_type" id="form_type" class="form-control"
-                                           value="<?php echo $form_type_name; ?>"
-                                           disabled>
-                                </div>
-                            </div>
-                            <br/>
-                            <?php
-                            $qur1 = mysqli_query($db, "SELECT * FROM cam_line where line_id = '$station' and enabled = 1");
-                            $row1 = mysqli_fetch_array($qur1);
-                            $line_name = $row1["line_name"];
-                            ?>
-
-                            <div class="form_row row">
-                                <label class="col-lg-3 control-label">Station : </label>
-                                <div class="col-md-7">
-                                    <input type="text" name="station" id="station" class="form-control"
-                                           value="<?php echo $line_name; ?>"
-                                           disabled>
-                                </div>
-                            </div>
-
-                            <br/>
-                            <?php
-                            $qurtemp = mysqli_query($db, "SELECT * FROM pm_part_family where pm_part_family_id = '$part_family' ");
-                            $rowctemp = mysqli_fetch_array($qurtemp);
-                            $part_family_name = $rowctemp["part_family_name"];
-                            ?>
-
-                            <div class="form_row row">
-                                <label class="col-lg-3 control-label">Part Family : </label>
-                                <div class="col-md-7">
-                                    <input type="text" name="part_family" id="part_family" class="form-control"
-                                           value="<?php echo $part_family_name; ?>"
-                                           disabled>
-                                </div>
-                            </div>
-                            <br/>
-                            <?php
-                            $qur3 = mysqli_query($db, "SELECT * FROM pm_part_number where pm_part_number_id = '$part_number'");
-                            $row3 = mysqli_fetch_array($qur3);
-                            $part_number = $row3["part_number"];
-                            $part_name = $row3["part_name"];
-                            ?>
-
-                            <div class="form_row row">
-                                <label class="col-lg-3 control-label">Part Number : </label>
-                                <div class="col-md-7">
-                                    <input type="text" name="part_number" id="part_number" class="form-control"
-                                           value="<?php echo $part_number . ' - ' . $part_name; ?>"
-                                           disabled>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="form_row row">
-                                <div class="col-md-3 date">
-                                    <!--                                            <label class="control-label" style="float: left;padding: 10px 110px 10px 2px; font-weight: 500;">Date Range : &nbsp;&nbsp;</label>-->
-                                    <?php
-                                    $myDate = date("m/d/y h:i:s");
-
-                                    ?>
-
-                                    <input type="radio" name="button" id="button1" class="form-control" value="button1" style="float: left;width: initial; display: none;" checked>
-
-                                    <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date From : &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_from" id="date_from" class="form-control" value="<?php echo $datefrom; ?>" style="float: left;width: initial;" required>
-                                </div>
-                                <div class="col-md-3 date">
-                                    <label class="control-label" style="float: left;padding-top: 10px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;Date To: &nbsp;&nbsp;</label>
-                                    <input type="date" name="date_to" id="date_to" class="form-control" value="<?php echo $dateto; ?>" style="float: left;width: initial;" required>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" id="submit_btn" class="btn btn-primary submit_btn"  style="width:120px;background-color:#1e73be;">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <hr/>
-        <?php
-        if(count($_POST) > 0)
-        {
-            ?>
-                <b><h4 class="panel-title form_panel_title">Form Item Information</h4></b>
-                <form action="" id="form_trend" class="form-horizontal" method="post" autocomplete="off">
-
-                    <?php
-                    $dateto = $_POST['date_to'];
-                    $datefrom = $_POST['date_from'];
-                    $button = $_POST['button'];
-
-                    if ($button == "button1") {
-                        if ($form_createid != "") {
-                            $result = "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC";
-                            $qur = mysqli_query($db,$result);
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC ");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid == "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
-                        } else if ($form_createid == "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid == "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item`");
-                        }
-
-                    }else {
-                        if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE  form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_createid' and `item_val` IN ('numeric','binary')");
-                        } else if ($form_createid != "") {
-                            $qur = mysqli_query($db, "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item`");
-                        }
-                    }
-
-                    while ($rowc = mysqli_fetch_array($qur)) {
-                        $item_desc = $rowc["item_desc"];
-                        ?>
-
-                    <div class="form_row row">
-
-                        <div class="col-md-7">
-                            <input type="text" name="item_desc" id="item_desc"  class="form-control"
-                                   value="<?php echo $item_desc; ?>" style="cursor: pointer;" disabled></a>
-                        </div>
-                        <div class="col-md-1">
-                            <a href="form_analytics.php?id=<?php echo $form_createid; ?>" class="btn btn-primary" style="background-color:#1e73be;" target="_blank" >Trend</a>
-                        </div>
-                    </div>
-                    <?php } ?>
-                </form>
+<body class="ltr main-body app sidebar-mini">
+<div class="main-content app-content">
+    <div class="row-body row-sm">
+        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="breadcrumb-header justify-content-between">
+                <div class="left-content">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item tx-15"><a href="javascript:void(0);">Logs</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Analytics Trend Form view</li>
+                    </ol>
+                </div>
             </div>
         </div>
-            </div>
-            <?php
+    </div>
+    <form action="" id="line_graph" class="form-horizontal" method="post" autocomplete="off">
+        <?php
+        $form_create_id = $_GET['id'];
+        $date_from = $_GET['date_from'];
+        $date_to = $_GET['date_to'];
+
+        $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_number.part_number as part_number,pm_part_number.part_name as part_name,cus_account.c_name as c_name,cus_account.logo as logo FROM `form_create` 
+          INNER JOIN pm_part_family ON pm_part_family.pm_part_family_id = form_create.`part_family` 
+          INNER JOIN pm_part_number ON pm_part_number.pm_part_number_id = form_create.part_number 
+          INNER JOIN part_family_account_relation ON part_family_account_relation.part_family_id = form_create.part_family 
+          INNER JOIN cus_account ON cus_account.c_id = part_family_account_relation.account_id 
+          WHERE form_create.`form_create_id` = '$form_create_id'";
+
+        $result = mysqli_query($db,$query);
+        while ($row = mysqli_fetch_array($result)){
+            $part_family_name = $row['part_family_name'];
+            $part_number = $row['part_number'];
+            $part_name = $row['part_name'];
+            $logo = $row['logo'];
+            $cus_name = $row['c_name'];
         }
         ?>
 
-    </div>
+        <div class="row-body row-sm">
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                <div class="card  box-shadow-0">
+                    <div class="card-header">
+                        <span class="main-content-title mg-b-0 mg-b-lg-1">Analytics Trend Form view</span>
+                    </div>
+                    <div class="card-body pt-0">
+                        <?php
+                        $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$form_create_id'");
+                        $qur1 = mysqli_query($db, $query1);
+                        $rowc1 = mysqli_fetch_array($qur1);
+                        $name = $rowc1['name'];
+                        $item_id = $rowc1['form_create_id'];
+                        $part_family = $rowc1['part_family'];
+                        $station = $rowc1['station'];
+                        $form_type = $rowc1['form_type'];
+                        $part_number = $rowc1['part_number'];
+                        ?>
+                        <div class="card-header">
+                            <span class="main-content-title mg-b-0 mg-b-lg-1"><?php echo $name; ?></span>
+                        </div>
+                        <div class="pd-30 pd-sm-20">
+                                <div class=" row row-xs align-items-center mg-b-20">
+                                    <div class="col-md-2">
+                                            <div class="media-left">
+                                                <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
+                                            </div>
+                                    </div>
+                                    <div class="col-md-10 mg-t-5 mg-md-t-0">
+                                                <input type="hidden" value="<?php echo $form_iitem_id; ?>" name="form_item_id" id="form_item_id">
+                                                <input type="hidden" value="<?php echo $date_to; ?>" name="date_to" id="date_to">
+                                                <input type="hidden" value="<?php echo $date_from; ?>" name="date_from" id="date_from">
+                                                <input type="hidden" value="<?php echo $form_create_id; ?>" name="form_create" id="form_create">
+                                                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
+                                                <?php
+                                                   $qur2 = mysqli_query($db, "SELECT * FROM form_type where form_type_id = '$form_type'");
+                                                   $row2 = mysqli_fetch_array($qur2);
+                                                   $form_type_name = $row2["form_type_name"];
+                                                ?>
+                                                <input type="hidden" value="<?php echo $form_type; ?>" name="form_type" id="form_type">
+                                                <small style="font-size: x-large;" class="display-block"><b>Form Type :-</b> <?php echo $form_type_name; ?></small><br/>
+                                               <?php
+                                                   $qur1 = mysqli_query($db, "SELECT * FROM cam_line where line_id = '$station' and enabled = 1");
+                                                   $row1 = mysqli_fetch_array($qur1);
+                                                   $line_name = $row1["line_name"];
+                                               ?>
+                                                <input type="hidden" value="<?php echo $station; ?>" name="station" id="station">
+                                                <small style="font-size: x-large;" class="display-block"><b>Station :-</b> <?php echo $line_name; ?></small><br/>
+                                                <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $part_family_name; ?></small><br/>
+                                                <?php
+                                                   $qur3 = mysqli_query($db, "SELECT * FROM pm_part_number where pm_part_number_id = '$part_number'");
+                                                   $row3 = mysqli_fetch_array($qur3);
+                                                  $part_number = $row3["part_number"];
+                                                ?>
+                                                <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $part_number; ?></small><br/>
+                                                <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $part_name; ?></small><br/>
+                                                <input type="hidden" name="name" id="name" value="<?php echo $name; ?>">
+                                                <input type="hidden" name="createid" id="createid" value="<?php echo $form_createid; ?>">
+
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+            <div class="row-body row-sm">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <div class="card  box-shadow-0">
+                        <div class="card-header">
+                            <span class="main-content-title mg-b-0 mg-b-lg-1">Form Item Information</span>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="pd-30 pd-sm-20">
+                                <?php
+                                $result = "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_create_id' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC";
+                                $qur = mysqli_query($db,$result);
+                                while ($rowc = mysqli_fetch_array($qur)) {
+                                    $item_desc = $rowc["item_desc"];
+                                    $form_iitem_id = $rowc["form_item_id"];
+                                    $item_val = $rowc["item_val"];
+                                    if($item_val == "numeric"){
+                                        $i_val = '(N)';
+                                    }else{
+                                        $i_val = '(B)';
+                                    }
+                                    ?>
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-10">
+                                            <input type="hidden" value="<?php echo $form_item_id; ?>" name="form_iitem_id" id="form_item_id">
+                                            <input type="text" name="item_desc" id="item_desc"  class="form-control pn_none"
+                                                   value="<?php echo $i_val.'  '.$item_desc; ?>" disabled>
+                                        </div>
+                                        <div class="col-md-2 mg-t-5 mg-md-t-0">
+                                            <a href="form_item_data_view.php?id=<?php echo $rowc['form_create_id']; ?>&station=<?php echo $rowc1['station']; ?>&form_type=<?php echo $rowc1['form_type']; ?>&date_from=<?php echo $datefrom; ?>&date_to=<?php echo $dateto; ?>&item_id=<?php echo $form_iitem_id; ?>" class="btn btn-primary" style="background-color:#1e73be;" target="_blank" ><i class="fa fa-line-chart"></i></a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <?php
+                                $item_idd = $form_iitem_id;
+                                if(!empty($item_idd)){
+                                    ?>
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-12 mg-t-5 mg-md-t-0">
+                                            <div id="container" style="height: 500px; width: 100%;"></div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
 </div>
-<!-- Dashboard content -->
-<!-- /dashboard content -->
+<script>
+    anychart.onDocumentReady(function () {
+        var data = $("#line_graph").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'form_line_graph.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var item_value = data.posts.map(function (elem) {
+                    return elem.item_value;
+                });
+                // Creates data.
+                var dataSet = anychart.data.set([]);
+
+                var mapping = dataSet.mapAs({x: 0, value: 1 , fill:2});
+
+
+                for (var i = 0; i < item_value.length; i++) {
+                    const i_val = item_value[i];
+                    const myArray = i_val.split("~");
+                    dataSet.append([myArray[0], myArray[1] , '#177b09']);
+                }
+                // create pareto chart with data
+                var chart = anychart.line(dataSet);
+
+                // chart.xGrid().enabled(true);
+                chart.yGrid().enabled(true);
+                chart.xAxis().labels().rotation(-90);
+                // set chart padding
+                chart.padding([10, 20, 5, 20]);
+
+                // turn on chart animation
+                chart.animation(true);
+                // var xLabels = chart.xAxis().labels();
+                // xLabels.width(150);
+                // xLabels.wordWrap("break-word");
+                // xLabels.wordBreak("break-all");
+
+                // turn on X Scroller
+                chart.xScroller(true);
+                chart.xZoom().setToPointsCount(5, false);
+                chart.labels().fontSize(14);
+                // enable HTML for tooltips
+                chart.tooltip().useHtml(true);
+
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>"
+                );
+
+                // get pareto column series and set settings
+                var column = chart.getSeriesAt(0);
+
+                column.labels().enabled(true).format('{%Value}');
+                column.tooltip().format('Value: {%Value}');
+
+                var labels = column.labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(true);
+                // // background border color
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(true);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                // var xLabelsBackground = chart.xAxis().labels().background();
+                // xLabelsBackground.enabled(true);
+                // xLabelsBackground.stroke("#cecece");
+                // xLabelsBackground.cornerType("round");
+                // xLabelsBackground.corners(5);
+
+                // set container id for the chart
+                chart.container('container');
+                // initiate chart drawing
+                chart.draw();
+            }
+        });
+    });
+</script>
 <script>
     $(function () {
         $('input:radio').change(function () {
@@ -395,7 +509,6 @@ include("../heading_banner.php");
         });
     });
 </script>
-</div>
 <script type="text/javascript">
     $(function () {
         $("#btn").bind("click", function () {
@@ -425,6 +538,9 @@ include("../heading_banner.php");
     });
 </script>
 <?php include ('../footer.php') ?>
+<!--<script>
+    window.onload = function () {
+        history.replaceState("", "", "<?php /*echo $scriptName; */?>form_module/form_item_data_view.php");
+    }
+</script>-->
 </body>
-</html>
-

@@ -24,14 +24,21 @@ while ($rowcmain = mysqli_fetch_array($qurmain)) {
         $q2 = mysqli_query($db, $q1);
         $row1 = mysqli_fetch_array($q2);
         $item_val = $row1['item_val'];
+        $numeric_lower_tol = $row1['numeric_lower_tol'];
+        $numeric_upper_tol = $row1['numeric_upper_tol'];
         if(empty($station_event_id)){
             $station_event_id = 0;
         }
-        if(($item_val == 'numeric') || ( $item_val == 'binary')){
-            $sql = "INSERT INTO `spc_schedular_data`(`form_user_data_id`, `form_create_id`, `form_type`, `station_event_id`, `data_item_id`, `data_item_value`,`data_item_desc`,`form_status`, `created_at`) 
-               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','$form_status','$created_at')";
-
+        if($item_val == 'numeric'){
+            $sql = "INSERT INTO `spc_schedular_data`(`form_user_data_id`, `form_create_id`, `form_type`, `station_event_id`, `data_item_id`, `data_item_value`, `data_item_desc`, `item_upper_tol`, `item_lower_tol`, `item_upper_control_limit`, `item_lower_control_limi`, `form_status`, `created_at`) 
+               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','$numeric_upper_tol','$numeric_lower_tol','0','0','$form_status','$created_at')";
             $result1 = mysqli_query($s_db, $sql);
+        }else if( $item_val == 'binary'){
+            $sql = "INSERT INTO `spc_schedular_data`(`form_user_data_id`, `form_create_id`, `form_type`, `station_event_id`, `data_item_id`, `data_item_value`, `data_item_desc`, `item_upper_tol`, `item_lower_tol`, `item_upper_control_limit`, `item_lower_control_limi`, `form_status`, `created_at`) 
+               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','1','0','0','0','$form_status','$created_at')";
+            $result1 = mysqli_query($s_db, $sql);
+        }else{
+
         }
 
     }
