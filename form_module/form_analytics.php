@@ -227,22 +227,40 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
                 var item_value = data.posts.map(function (elem) {
                     return elem.item_value;
                 });
-                // console.log(goodpiece);
-               /* var bad_pieces = data.posts.map(function (elem) {
-                    return elem.bad_pieces;
-                });
-                var rework = data.posts.map(function (elem) {
-                    return elem.rework;
-                });*/
-                var data = [
-                    {x: '', value: item_value, fill: '#177b09'},
-                   // {x: '', value: item_value[1], fill: '#177b09'},
-                  /*  {x: 'Bad', value: bad_pieces, fill: '#BE0E31'},
-                    {x: 'Rework', value: rework, fill: '#2643B9'},
-*/
-                ];
+                // Creates data.
+                var dataSet = anychart.data.set([]);
+
+                var mapping = dataSet.mapAs({x: 0, value: 1 , fill:2});
+
+
+                for (var i = 0; i < item_value.length; i++) {
+                    const i_val = item_value[i];
+                    const myArray = i_val.split("~");
+                    dataSet.append([myArray[0], myArray[1] , '#177b09']);
+                }
                 // create pareto chart with data
-                var chart = anychart.line(data);
+                var chart = anychart.line(dataSet);
+
+                // chart.xGrid().enabled(true);
+                chart.yGrid().enabled(true);
+                chart.xAxis().labels().rotation(-90);
+                // set chart padding
+                chart.padding([10, 20, 5, 20]);
+
+                // turn on chart animation
+                chart.animation(true);
+                // var xLabels = chart.xAxis().labels();
+                // xLabels.width(150);
+                // xLabels.wordWrap("break-word");
+                // xLabels.wordBreak("break-all");
+
+                // turn on X Scroller
+                chart.xScroller(true);
+                chart.xZoom().setToPointsCount(5, false);
+                chart.labels().fontSize(14);
+                // enable HTML for tooltips
+                chart.tooltip().useHtml(true);
+
                 // set chart title text settings
                 // chart.title('Good Pieces & Bad Pieces');
                 var title = chart.title();
@@ -253,13 +271,6 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
                     "<br><br>"
                 );
 
-                // set measure y axis title
-                // chart.yAxis(0).title('Numbers');
-                // cumulative percentage y axis title
-                // chart.yAxis(1).title(' Percentage');
-                // set interval
-                // chart.yAxis(1).scale().ticks().interval(10);
-
                 // get pareto column series and set settings
                 var column = chart.getSeriesAt(0);
 
@@ -268,48 +279,27 @@ $query = "SELECT pm_part_family.part_family_name as part_family_name,pm_part_num
 
                 var labels = column.labels();
                 labels.fontFamily("Courier");
-                labels.fontSize(24);
+                labels.fontSize(14);
                 labels.fontColor("#125393");
                 labels.fontWeight("bold");
-                labels.useHtml(false);
+                labels.useHtml(true);
                 // // background border color
-                // column.labels().background().stroke("#663399");
-                // column.labels().background().enabled(true).stroke("Green");
-
-                var xLabelsBackground = column.labels().background();
-                xLabelsBackground.enabled(true);
-                xLabelsBackground.stroke("#cecece");
-                xLabelsBackground.cornerType("round");
-                xLabelsBackground.corners(5);
-
 
                 var labels = chart.xAxis().labels();
                 labels.fontFamily("Courier");
-                labels.fontSize(18);
+                labels.fontSize(14);
                 labels.fontColor("#125393");
                 labels.fontWeight("bold");
-                labels.useHtml(false);
+                labels.useHtml(true);
                 // // background border color
                 // column.labels().background().stroke("#663399");
                 // column.labels().background().enabled(true).stroke("Green");
 
-                var xLabelsBackground = chart.xAxis().labels().background();
-                xLabelsBackground.enabled(true);
-                xLabelsBackground.stroke("#cecece");
-                xLabelsBackground.cornerType("round");
-                xLabelsBackground.corners(5);
-
-                //
-                // // get pareto line series and set settings
-                // var line = chart.getSeriesAt(1);
-                // line
-                //     .tooltip()
-                //     // .format('Good Pieces: {%CF}% \n Bad Pieces: {%RF}%');
-                //     .format('Percent : {%RF}%');
-                //
-                // // turn on the crosshair and set settings
-                // chart.crosshair().enabled(true).xLabel(false);
-                // chart.xAxis().labels().rotation(-90);
+                // var xLabelsBackground = chart.xAxis().labels().background();
+                // xLabelsBackground.enabled(true);
+                // xLabelsBackground.stroke("#cecece");
+                // xLabelsBackground.cornerType("round");
+                // xLabelsBackground.corners(5);
 
                 // set container id for the chart
                 chart.container('container');
