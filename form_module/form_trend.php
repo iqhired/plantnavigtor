@@ -36,6 +36,7 @@ $i = $_SESSION["role_id"];
 if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'] != 1 && $_SESSION['is_cell_login'] != 1 ) {
     header('location: ../dashboard.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +45,7 @@ if ($i != "super" && $i != "admin" && $i != "pn_user" && $_SESSION['is_tab_user'
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $sitename; ?> |Analytics Trend Form view</title>
+        <?php echo $sitename; ?> |SPC Analytics Trend Graph</title>
     <!-- Global stylesheets -->
 
 
@@ -254,7 +255,7 @@ if (($is_tab_login || $is_cell_login)) {
                 <div class="left-content">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item tx-15"><a href="javascript:void(0);">Logs</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Analytics Trend Form view</li>
+                        <li class="breadcrumb-item active" aria-current="page">SPC Analytics Trend Graph</li>
                     </ol>
                 </div>
             </div>
@@ -262,6 +263,9 @@ if (($is_tab_login || $is_cell_login)) {
     </div>
     <form action="" id="line_graph" class="form-horizontal" method="post" autocomplete="off">
         <?php
+        $form_iitem_id = $_GET['item_id'];
+        $station = $_GET['station'];
+        $form_type = $_GET['form_type'];
         $form_create_id = $_GET['id'];
         $date_from = $_GET['date_from'];
         $date_to = $_GET['date_to'];
@@ -287,154 +291,200 @@ if (($is_tab_login || $is_cell_login)) {
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card  box-shadow-0">
                     <div class="card-header">
-                        <span class="main-content-title mg-b-0 mg-b-lg-1">Analytics Trend Form view</span>
+                        <span class="main-content-title mg-b-0 mg-b-lg-1">SPC Analytics Item Information</span>
                     </div>
                     <div class="card-body pt-0">
-                        <?php
-                        $query1 = sprintf("SELECT * FROM  form_create where form_create_id = '$form_create_id'");
-                        $qur1 = mysqli_query($db, $query1);
-                        $rowc1 = mysqli_fetch_array($qur1);
-                        $name = $rowc1['name'];
-                        $item_id = $rowc1['form_create_id'];
-                        $part_family = $rowc1['part_family'];
-                        $station = $rowc1['station'];
-                        $form_type = $rowc1['form_type'];
-                        $part_number = $rowc1['part_number'];
-                        ?>
-                        <div class="card-header">
-                            <span class="main-content-title mg-b-0 mg-b-lg-1"><?php echo $name; ?></span>
-                        </div>
                         <div class="pd-30 pd-sm-20">
-                                <div class=" row row-xs align-items-center mg-b-20">
-                                    <div class="col-md-2">
-                                            <div class="media-left">
-                                                <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
-                                            </div>
-                                    </div>
-                                    <div class="col-md-10 mg-t-5 mg-md-t-0">
-                                                <input type="hidden" value="<?php echo $form_iitem_id; ?>" name="form_item_id" id="form_item_id">
-                                                <input type="hidden" value="<?php echo $date_to; ?>" name="date_to" id="date_to">
-                                                <input type="hidden" value="<?php echo $date_from; ?>" name="date_from" id="date_from">
-                                                <input type="hidden" value="<?php echo $form_create_id; ?>" name="form_create" id="form_create">
-                                                <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
-                                                <?php
-                                                   $qur2 = mysqli_query($db, "SELECT * FROM form_type where form_type_id = '$form_type'");
-                                                   $row2 = mysqli_fetch_array($qur2);
-                                                   $form_type_name = $row2["form_type_name"];
-                                                ?>
-                                                <input type="hidden" value="<?php echo $form_type; ?>" name="form_type" id="form_type">
-                                                <small style="font-size: x-large;" class="display-block"><b>Form Type :-</b> <?php echo $form_type_name; ?></small><br/>
-                                               <?php
-                                                   $qur1 = mysqli_query($db, "SELECT * FROM cam_line where line_id = '$station' and enabled = 1");
-                                                   $row1 = mysqli_fetch_array($qur1);
-                                                   $line_name = $row1["line_name"];
-                                               ?>
-                                                <input type="hidden" value="<?php echo $station; ?>" name="station" id="station">
-                                                <small style="font-size: x-large;" class="display-block"><b>Station :-</b> <?php echo $line_name; ?></small><br/>
-                                                <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $part_family_name; ?></small><br/>
-                                                <?php
-                                                   $qur3 = mysqli_query($db, "SELECT * FROM pm_part_number where pm_part_number_id = '$part_number'");
-                                                   $row3 = mysqli_fetch_array($qur3);
-                                                  $part_number = $row3["part_number"];
-                                                ?>
-                                                <input type="hidden" value="<?php echo $part_number; ?>" name="part_number" id="part_number">
-                                                <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $part_number; ?></small><br/>
-                                                <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $part_name; ?></small><br/>
-                                                <input type="hidden" name="name" id="name" value="<?php echo $name; ?>">
-                                                <input type="hidden" name="createid" id="createid" value="<?php echo $form_createid; ?>">
-
+                            <div class=" row row-xs align-items-center mg-b-20">
+                                <div class="col-md-2">
+                                    <div class="media-left">
+                                        <img src="../supplier_logo/<?php if($logo != ""){ echo $logo; }else{ echo "user.png"; } ?>" style=" height: 20vh;width:20vh;margin : 15px 25px 5px 5px;background-color: #ffffff;" class="img-circle" alt="">
                                     </div>
                                 </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-            <div class="row-body row-sm">
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                    <div class="card  box-shadow-0">
-                        <div class="card-header">
-                            <span class="main-content-title mg-b-0 mg-b-lg-1">Form Item Information</span>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="pd-30 pd-sm-20">
-                                <?php
-                                $result = "SELECT form_item_id,form_create_id,item_desc,item_val,created_at,updated_at FROM `form_item` WHERE form_create_id = '$form_create_id' and `item_val` IN ('numeric','binary') ORDER BY form_item_id ASC";
-                                $qur = mysqli_query($db,$result);
-                                while ($rowc = mysqli_fetch_array($qur)) {
-                                    $item_desc = $rowc["item_desc"];
-                                    $form_iitem_id = $rowc["form_item_id"];
-                                    $item_val = $rowc["item_val"];
-                                    if($item_val == "numeric"){
-                                        $i_val = '(N)';
-                                    }else{
-                                        $i_val = '(B)';
-                                    }
+                                <div class="col-md-10 mg-t-5 mg-md-t-0">
+                                    <input type="hidden" value="<?php echo $form_iitem_id; ?>" name="form_item_id" id="form_item_id">
+                                    <input type="hidden" value="<?php echo $date_to; ?>" name="date_to" id="date_to">
+                                    <input type="hidden" value="<?php echo $date_from; ?>" name="date_from" id="date_from">
+                                    <input type="hidden" value="<?php echo $form_create_id; ?>" name="form_create" id="form_create">
+                                    <h5 style="font-size: xx-large;background-color: #009688; color: #ffffff;padding : 5px; text-align: center;" class="text-semibold no-margin"><?php if($cus_name != ""){ echo $cus_name; }else{ echo "Customer Name";} ?> </h5>
+                                    <?php
+                                    $qur2 = mysqli_query($db, "SELECT * FROM form_type where form_type_id = '$form_type'");
+                                    $row2 = mysqli_fetch_array($qur2);
+                                    $form_type_name = $row2["form_type_name"];
                                     ?>
-                                    <div class="row row-xs align-items-center mg-b-20">
-                                        <div class="col-md-10">
-                                            <input type="hidden" value="<?php echo $form_item_id; ?>" name="form_iitem_id" id="form_item_id">
-                                            <input type="text" name="item_desc" id="item_desc"  class="form-control pn_none"
-                                                   value="<?php echo $i_val.'  '.$item_desc; ?>" disabled>
-                                        </div>
-                                        <div class="col-md-2 mg-t-5 mg-md-t-0">
-                                            <a href="form_trend.php?id=<?php echo $rowc['form_create_id']; ?>&station=<?php echo $rowc1['station']; ?>&form_type=<?php echo $rowc1['form_type']; ?>&part_number=<?php echo $part_number; ?>&date_from=<?php echo $date_from; ?>&date_to=<?php echo $date_to; ?>&item_id=<?php echo $form_iitem_id; ?>" class="btn btn-primary" style="background-color:#1e73be;" target="_blank" ><i class="fa fa-line-chart"></i></a>
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                                    <small style="font-size: x-large;" class="display-block"><b>Form Type :-</b> <?php echo $form_type_name; ?></small><br/>
+                                    <?php
+                                    $qur1 = mysqli_query($db, "SELECT * FROM cam_line where line_id = '$station' and enabled = 1");
+                                    $row1 = mysqli_fetch_array($qur1);
+                                    $line_name = $row1["line_name"];
+                                    ?>
+                                    <small style="font-size: x-large;" class="display-block"><b>Station :-</b> <?php echo $line_name; ?></small><br/>
+                                    <small style="font-size: x-large;margin-top: 15px;" class="display-block"><b>Part Family :-</b> <?php echo $part_family_name; ?></small><br/>
+                                    <small style="font-size: x-large;" class="display-block"><b>Part Number :-</b> <?php echo $part_number; ?></small><br/>
+                                    <small style="font-size: x-large;" class="display-block"><b>Part Name :-</b> <?php echo $part_name; ?></small><br/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row-body row-sm">
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                <div class="card  box-shadow-0">
+                    <div class="card-header">
+                        <span class="main-content-title mg-b-0 mg-b-lg-1">SPC Analytics Trend Graph</span>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="pd-30 pd-sm-20">
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-12 mg-t-5 mg-md-t-0">
+                                    <div id="container" style="height: 500px; width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 <script>
-    $(function () {
-        $('input:radio').change(function () {
-            var abc = $(this).val()
-            //alert(abc)
-            if (abc == "button1")
-            {
-                $('#date_from').prop('disabled', false);
-                $('#date_to').prop('disabled', false);
-                $('#timezone').prop('disabled', true);
+    anychart.onDocumentReady(function () {
+        var data = $("#line_graph").serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'form_line_graph.php',
+            // dataType: 'good_bad_piece_fa.php',
+            data: data,
+            success: function (data1) {
+                var data = JSON.parse(data1);
+                // console.log(data);
+                var item_value = data.posts.map(function (elem) {
+                    return elem.item_value;
+                });
+                var upper_tol = data.posts.map(function (elem) {
+                    return elem.upper_tol;
+                });
+                var lower_tol = data.posts.map(function (elem) {
+                    return elem.lower_tol;
+                });
+                // Creates data.
+                var dataSet = anychart.data.set([]);
+                var dataSet1 = anychart.data.set([]);
+                var dataSet2 = anychart.data.set([]);
+
+                var mapping = dataSet.mapAs({x: 0, value: 1 , fill:2});
+                var mapping1 = dataSet1.mapAs({x: 0, value: 1 , fill:2});
+                var mapping2 = dataSet2.mapAs({x: 0, value: 1 , fill:2});
+
+
+                for (var i = 0; i < item_value.length; i++) {
+                    const i_val = item_value[i];
+                    const myArray = i_val.split("~");
+                    dataSet.append([myArray[0], myArray[1] , '#008000']);
+                }
+                for (var j = 0; j < upper_tol.length; j++) {
+                    const up_tol = upper_tol[j];
+                    const myArray = up_tol.split("~");
+                    dataSet1.append([myArray[0], myArray[1] , '#FFA500']);
+                }
+                for (var k = 0; k < lower_tol.length; k++) {
+                    const low_tol = lower_tol[k];
+                    const myArray = low_tol.split("~");
+                    dataSet2.append([myArray[0], myArray[1] , '#FFA500']);
+                }
+                // create pareto chart with data
+                var chart = anychart.line();
+
+                var series1 = chart.line(dataSet);
+                series1.markers(true);
+                // disable clipping series by data plot
+                series1.clip(false);
+                // place series under axis
+                series1.zIndex(100);
+
+                var series2 = chart.line(dataSet1);
+                series2.markers(true);
+                // disable clipping series by data plot
+                series2.clip(false);
+                // place series under axis
+                series2.zIndex(100);
+
+                var series3 = chart.line(dataSet2);
+                series3.markers(true);
+                // disable clipping series by data plot
+                series3.clip(false);
+                // place series under axis
+                series3.zIndex(100);
+
+                // chart.xGrid().enabled(true);
+                chart.yGrid().enabled(true);
+                chart.xAxis().labels().rotation(-90);
+                // set chart padding
+                chart.padding([10, 20, 5, 20]);
+
+                // turn on chart animation
+                chart.animation(true);
+                // var xLabels = chart.xAxis().labels();
+                // xLabels.width(150);
+                // xLabels.wordWrap("break-word");
+                // xLabels.wordBreak("break-all");
+
+                // turn on X Scroller
+                chart.xScroller(true);
+                chart.xZoom().setToPointsCount(5, false);
+                chart.labels().fontSize(14);
+                // enable HTML for tooltips
+                chart.tooltip().useHtml(true);
+
+                // set chart title text settings
+                // chart.title('Good Pieces & Bad Pieces');
+                var title = chart.title();
+                title.enabled(true);
+//enables HTML tags
+                title.useHtml(true);
+                title.text(
+                    "<br><br>"
+                );
+
+                // get pareto column series and set settings
+                var column = chart.getSeriesAt(0);
+
+                column.labels().enabled(true).format('{%Value}');
+                column.tooltip().format('Value: {%Value}');
+
+                var labels = column.labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(true);
+                // // background border color
+
+                var labels = chart.xAxis().labels();
+                labels.fontFamily("Courier");
+                labels.fontSize(14);
+                labels.fontColor("#125393");
+                labels.fontWeight("bold");
+                labels.useHtml(true);
+                // // background border color
+                // column.labels().background().stroke("#663399");
+                // column.labels().background().enabled(true).stroke("Green");
+
+                // var xLabelsBackground = chart.xAxis().labels().background();
+                // xLabelsBackground.enabled(true);
+                // xLabelsBackground.stroke("#cecece");
+                // xLabelsBackground.cornerType("round");
+                // xLabelsBackground.corners(5);
+
+                // set container id for the chart
+                chart.container('container');
+                // initiate chart drawing
+                chart.draw();
             }
         });
     });
 </script>
-<script type="text/javascript">
-    $(function () {
-        $("#btn").bind("click", function () {
-            $("#station")[0].selectedIndex = 0;
-            $("#part_family")[0].selectedIndex = 0;
-            $("#part_number")[0].selectedIndex = 0;
-            $("#form_type")[0].selectedIndex = 0;
-        });
-    });
-</script>
-<script>
-    $(function(){
-        var dtToday = new Date();
-
-        var month = dtToday.getMonth() + 1;
-        var day = dtToday.getDate();
-        var year = dtToday.getFullYear();
-        if(month < 10)
-            month = '0' + month.toString();
-        if(day < 10)
-            day = '0' + day.toString();
-
-        var maxDate = year + '-' + month + '-' + day;
-
-        $('#date_to').attr('max', maxDate);
-        $('#date_from').attr('max', maxDate);
-    });
-</script>
 <?php include ('../footer.php') ?>
-<!--<script>
-    window.onload = function () {
-        history.replaceState("", "", "<?php /*echo $scriptName; */?>form_module/form_item_data_view.php");
-    }
-</script>-->
 </body>

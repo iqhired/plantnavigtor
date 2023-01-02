@@ -1,5 +1,4 @@
-<?php
-include("../s_config.php");
+<?php include("../s_config.php");
 include("../config.php");
 $chicagotime2 = date('Y-m-d', strtotime('-365 days'));
 $chicagotime = date('Y-m-d', strtotime('-1 days'));
@@ -26,21 +25,22 @@ while ($rowcmain = mysqli_fetch_array($qurmain)) {
         $item_val = $row1['item_val'];
         $numeric_lower_tol = $row1['numeric_lower_tol'];
         $numeric_upper_tol = $row1['numeric_upper_tol'];
+        if($item_val == 'binary')
+        {
+            $numeric_upper_tol1 = 1;
+            $numeric_lower_tol1 = 0;
+        }else{
+            $numeric_upper_tol1 = $row1['numeric_upper_tol'];
+            $numeric_lower_tol1 = $row1['numeric_lower_tol'];
+        }
         if(empty($station_event_id)){
             $station_event_id = 0;
         }
-        if($item_val == 'numeric'){
+        if(($item_val == 'numeric') || ( $item_val == 'binary')){
             $sql = "INSERT INTO `spc_schedular_data`(`form_user_data_id`, `form_create_id`, `form_type`, `station_event_id`, `data_item_id`, `data_item_value`, `data_item_desc`, `item_upper_tol`, `item_lower_tol`, `item_upper_control_limit`, `item_lower_control_limi`, `form_status`, `created_at`) 
-               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','$numeric_upper_tol','$numeric_lower_tol','0','0','$form_status','$created_at')";
+               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','$numeric_upper_tol1','$numeric_lower_tol1','0','0','$form_status','$created_at')";
             $result1 = mysqli_query($s_db, $sql);
-        }else if( $item_val == 'binary'){
-            $sql = "INSERT INTO `spc_schedular_data`(`form_user_data_id`, `form_create_id`, `form_type`, `station_event_id`, `data_item_id`, `data_item_value`, `data_item_desc`, `item_upper_tol`, `item_lower_tol`, `item_upper_control_limit`, `item_lower_control_limi`, `form_status`, `created_at`) 
-               VALUES ('$form_user_data_id','$form_create_id','$form_type','$station_event_id','$f_itm','$f_val','$item_val','1','0','0','0','$form_status','$created_at')";
-            $result1 = mysqli_query($s_db, $sql);
-        }else{
-
         }
-
     }
 }
 ?>
