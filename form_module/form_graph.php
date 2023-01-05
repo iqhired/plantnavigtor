@@ -598,6 +598,8 @@ include("../admin_menu.php");
     });
 </script>
 <script>
+    $('#date_to').datepicker({ dateFormat: 'yy-mm-dd' });
+    $('#date_from').datepicker({ dateFormat: 'yy-mm-dd' });
     $(function () {
         $('input:radio').change(function () {
             var abc = $(this).val()
@@ -606,6 +608,7 @@ include("../admin_menu.php");
             {
                 $('#date_from').prop('disabled', false);
                 $('#date_to').prop('disabled', false);
+
                 $('#timezone').prop('disabled', true);
             }
         });
