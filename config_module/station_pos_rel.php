@@ -411,21 +411,21 @@ include("../heading_banner.php");
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">Position : </label>
                                             <div class="col-lg-7">
-                                                <select name="edit_position_name" id="edit_position_name"
-                                                        class="select form-control">
+                                                <select name="edit_position_name" id="edit_position_name" class="form-control">
                                                     <option value="" disabled>--- Select Position ---</option>
-													<?php
-													$sql1 = "SELECT * FROM `cam_position`";
-													$result1 = $mysqli->query($sql1);
-													while ($row1 = $result1->fetch_assoc()) {
-														echo "<option value='" . $row1['position_id'] . "'$entry>" . $row1['position_name'] . "</option>";
-													}
-													?>
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `cam_position`";
+                                                    $result1 = $mysqli->query($sql1);
+                                                    while ($row1 = $result1->fetch_assoc()) {
+                                                        echo "<option value='" . $row1['position_id'] . "'$entry>" . $row1['position_name'] . "</option>";
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -589,6 +589,5 @@ include("../heading_banner.php");
     });
 </script>
 <?php include('../footer.php') ?>
-<script type="text/javascript" src="../assets/js/core/app.js"></script>
 </body>
 </html>
