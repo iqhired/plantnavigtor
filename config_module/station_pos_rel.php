@@ -397,7 +397,7 @@ include("../heading_banner.php");
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">Station : </label>
                                             <div class="col-lg-7">
-                                                <select name="edit_line_name" id="edit_line_name" class="select form-control">
+                                                <select name="edit_line_name" id="edit_line_name" class="form-control">
                                                     <option value="" disabled>--- Select Station ---</option>
 													<?php
 													$sql1 = "SELECT * FROM `cam_line` where enabled = '1'";
